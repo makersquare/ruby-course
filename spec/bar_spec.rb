@@ -62,16 +62,16 @@ describe Bar do
   describe '#happy_hour', :pending => false do
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
       # TODO: CONTROL TIME
-      @time_start = Time.parse("2014-02-11 15:00:00 -0600")
-      Time.stub(:now).and_return(@time_start)
+      @time_3pm = Time.parse("2014-02-11 15:00:00 -0600")
+      Time.stub(:now).and_return(@time_3pm)
 
       expect(@bar.happy_hour?).to eq(true)
     end
 
     it "is not happy hour otherwise" do
       # TODO: CONTROL TIME
-      @time_start = Time.parse("2014-02-11 20:00:00 -0600")
-      Time.stub(:now).and_return(@time_start)
+      @time_8pm = Time.parse("2014-02-11 20:00:00 -0600")
+      Time.stub(:now).and_return(@time_8pm)
       expect(@bar.happy_hour?).to eq(false)
     end
   end
@@ -81,8 +81,8 @@ describe Bar do
     before do
       @bar = Bar.new "The Irish Yodel"
       @bar.add_menu_item('Cosmo', 5.40)
-      @time_start = Time.parse("2014-02-11 20:00:00 -0600")
-      Time.stub(:now).and_return(@time_start)
+      @time_8pm = Time.parse("2014-02-11 20:00:00 -0600")
+      Time.stub(:now).and_return(@time_8pm)
     end
 
     it "returns a price for a given drink name" do
@@ -97,8 +97,8 @@ describe Bar do
     before do
       @bar = Bar.new "The Irish Yodel"
       @bar.add_menu_item('Cosmo', 5.40)
-      @time_start = Time.parse("2014-02-11 15:00:00 -0600")
-      Time.stub(:now).and_return(@time_start)
+      @time_3pm = Time.parse("2014-02-11 15:00:00 -0600")
+      Time.stub(:now).and_return(@time_3pm)
       @bar.happy_discount = 0.5
     end
 
