@@ -33,6 +33,14 @@ class Bar
     end
   end
 
+  def get_price(drink_name)
+    @menu_items.each do |item|
+      if item.name == drink_name
+        return item.price
+      end
+    end
+  end
+
 
 
 
