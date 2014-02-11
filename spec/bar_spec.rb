@@ -85,9 +85,33 @@ describe Bar do
 
   context "During normal hours" do
     # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+    it "does not give a discount on drinks" do
+      @bar.add_menu_item('Long Island', 9.30)
+      @bar.add_menu_item('Cosmo', 12.25)
+      @bar.add_menu_item('Bloody Mary', 6.10)
+
+      item = @bar.menu_items.first
+
+      Time.stub(:now).and_return('1pm')
+
+      expect(item.price).to eq(9.30)
+    end
+
   end
 
   context "During happy hours" do
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
+
+    it "gives out a discount on drinks" do
+      @bar.add_menu_item('Long Island', 9.30)
+      @bar.add_menu_item('Cosmo', 12.25)
+      @bar.add_menu_item('Bloody Mary', 6.10)
+
+      item = @bar.menu_items.first
+
+      Time.stub(:now).and_return('3pm')
+
+      expect(item.price).to eq(4.65)
+    end
   end
 end

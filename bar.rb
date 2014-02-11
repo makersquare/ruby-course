@@ -41,6 +41,16 @@ class Bar
     end
   end
 
+  def discount
+    if happy_hour?
+      @menu_items.each do |item|
+        item.price *= 0.5
+      end
+    else
+      false
+    end
+  end
+
 
 
 
@@ -48,7 +58,7 @@ end
 
 class Item
   attr_reader :name
-  attr_reader :price
+  attr_accessor :price
 
   def initialize(name,price)
     @name = name
