@@ -46,7 +46,7 @@ describe Bar do
     expect(@bar.happy_discount).to eq 0.5
   end
 
-  xit "constrains its happy hour discount to between zero and one" do
+  it "constrains its happy hour discount to between zero and one" do
     # HINT: You need to write your own setter
     @bar.happy_discount = 2
     expect(@bar.happy_discount).to eq 1
@@ -59,20 +59,52 @@ describe Bar do
   # DO NOT CHANGE SPECS ABOVE THIS LINE #
 # # # # # # # # # # # # # # # # # # # # # #
 
-  describe '#happy_hour', :pending => true do
+  describe '#happy_hour' do
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
       # TODO: CONTROL TIME
+      happy_time = Time.parse('3 pm')
+      Time.stub(:now).and_return(happy_time)
       expect(@bar.happy_hour?).to eq(true)
     end
 
     it "is not happy hour otherwise" do
       # TODO: CONTROL TIME
+      happy_time = Time.parse('5 pm')
+      Time.stub(:now).and_return(happy_time)
       expect(@bar.happy_hour?).to eq(false)
+    end
+  end
+
+  describe 'check drink agains menu_items, return price' do
+    before do
+      @bar = Bar.new "The Irish Yodel"
+      @bar.add_menu_item('Cosmo', 5.40)
+      @bar.add_menu_item('Salty Dog', 7.80)
+    end
+
+    xit "can find the drink and price in menu_items" do
+      expect(@bar.get_price('Cosmo')).to eq(5.40)
     end
   end
 
   context "During normal hours" do
     # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+    before do
+      @bar = Bar.new "The Irish Yodel"
+      @bar.add_menu_item('Cosmo', 5.40)
+    end
+
+    it "is during normal hours NO DISCOUNT FOR YOU" do
+      happy_time = Time.parse('5 pm')
+      Time.stub(:now).and_return(happy_time)
+      expect(@bar.get_price('Cosmo')).to eq(5.40)
+    end
+
+    it "is during happy hour, cheap drinks" do
+      happy_time = Time.parse('3 pm')
+      Time.stub(:now).and_return(happy_time)
+      expect(@bar.get_price('Cosmo')).to eq(2.7)
+    end
   end
 
   context "During happy hours" do
