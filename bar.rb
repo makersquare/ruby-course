@@ -46,9 +46,13 @@ class Bar
   def get_price(drink_name)
     @menu_items.each do |item|
       if item.name == drink_name
-        if happy_hour?
-          new_price = (item.price * happy_discount)
+        if item.status == 'exempt'
+          new_price = item.price
           return new_price
+        end
+        if happy_hour?
+            new_price = (item.price * happy_discount)
+            return new_price
         else
           return item.price
         end
@@ -56,10 +60,14 @@ class Bar
     end
   end
 
-  def exempt?(drink_name)
-    return true
-  end
 
+  def exempt(drink_name)
+    @menu_items.each do |item|
+      if item.name == drink_name
+        item.status = 'exempt'
+      end
+    end
+  end
 
 
 
@@ -68,12 +76,14 @@ end
 
 class Item
   attr_reader :name
-  attr_accessor :price
+  attr_accessor :price, :status
 
   def initialize(name,price)
     @name = name
     @price = price
+    @status = 'available'
   end
+
 end
 
 

@@ -160,7 +160,7 @@ describe Bar do
       @bar.add_menu_item('Cosmo', 12.25)
       @bar.add_menu_item('Bloody Mary', 6.10)
 
-      @bar.exempt_drink('Cosmo')
+      @bar.exempt('Cosmo')
 
       Time.stub(:now).and_return(Time.local(2014, "Feb", 11, 15, 30))
 
