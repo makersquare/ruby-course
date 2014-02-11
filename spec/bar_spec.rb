@@ -170,6 +170,23 @@ describe Bar do
 
   end
 
+  context "record of most popular drinks" do
+
+    it "records a drink purchase" do
+      @bar.add_menu_item('Long Island', 9.30)
+      @bar.add_menu_item('Cosmo', 12.25)
+      @bar.add_menu_item('Bloody Mary', 6.10)
+
+      @bar.purchase('Bloody Mary')
+
+      expect(@bar.purchase_record.count).to eq(1)
+
+
+    end
+
+
+  end
+
 
 
 
