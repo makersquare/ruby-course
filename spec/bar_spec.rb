@@ -76,7 +76,7 @@ describe Bar do
 
 
 
-  describe '#get_drink' do
+  describe '#get_price' do
 
   before do
     @bar = Bar.new "The Irish Yodel"
@@ -85,7 +85,7 @@ describe Bar do
   end
 
     it "returns the price of the Cosmo" do
-
+      expect(@bar.get_price('Cosmo')).to eq(5.4)
     end
   end
 

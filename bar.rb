@@ -3,12 +3,13 @@ require 'time' # you're gonna need it
 class Bar
 
   attr_reader :name
-  attr_accessor :menu_items, :happy_discount
+  attr_accessor :menu_items, :happy_discount, :menu_items_hash
 
   def initialize(name, happy_discount=0)
     @name = name
     @menu_items = []
     @happy_discount = happy_discount
+    @menu_items_hash = {}
   end
 
   def happy_discount=(value)
@@ -22,8 +23,10 @@ class Bar
   end
 
   def add_menu_item(name,price)
+    @menu_items_hash.store(name,price)
     item = Drink.new(name,price)
     @menu_items.push(item)
+
   end
 
   def happy_hour?
@@ -35,7 +38,8 @@ class Bar
   end
 
   def get_price(drink)
-
+    #how do i pull the value of a drink from an array?
+    return @menu_items_hash[drink]
   end
 
 
