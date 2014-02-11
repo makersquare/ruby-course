@@ -8,4 +8,8 @@ class Bar
 		@menu_items = Array.new
 	end
 
+	def add_menu_item(item, price)
+		menu_items << {item: price}
+	end
+
 end
