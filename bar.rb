@@ -37,7 +37,7 @@ class Bar
     @menu_items.each do |item|
       if name == item.name
         if self.happy_hour? == true
-          return item.price/(self.happy_discount)
+          return item.price * self.happy_discount
         else
           return item.price
         end
