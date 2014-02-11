@@ -180,7 +180,22 @@ describe Bar do
       @bar.purchase('Bloody Mary')
 
       expect(@bar.purchase_record.count).to eq(1)
+    end
 
+    it "returns a log of the most popular drinks" do
+      @bar.add_menu_item('Long Island', 9.30)
+      @bar.add_menu_item('Cosmo', 12.25)
+      @bar.add_menu_item('Bloody Mary', 6.10)
+
+      @bar.purchase('Bloody Mary')
+      @bar.purchase('Bloody Mary')
+      @bar.purchase('Bloody Mary')
+      @bar.purchase('Cosmo')
+      @bar.purchase('Cosmo')
+      @bar.purchase('Long Island')
+
+      expect(@bar.purchase_record.count).to eq(3)
+      expect(@bar.most_popular).to eq('Bloody Mary')
 
     end
 
