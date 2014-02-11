@@ -70,15 +70,39 @@ describe Bar do
 
     it "is not happy hour otherwise" do
       # TODO: CONTROL TIME
+      x = Time.now
+      four_thirty_pm = Time.local(x.year, x.month, x.day, 16, 30)
+      Time.stub(:now).and_return(four_thirty_pm)
       expect(@bar.happy_hour?).to eq(false)
     end
   end
 
   context "During normal hours" do
     # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+    it "does not discount prices" do
+      @bar.add_menu_item('Cosmo', 5.40)
+      @bar.add_menu_item('Salty Dog', 7.80)
+      @bar.happy_discount = 0.5
+
+      t = Time.parse("6 pm")
+      Time.stub(:now).and_return(t)
+
+      expect(@bar.get_price('Cosmo')).to eq(5.40)
+    end
+
   end
 
   context "During happy hours" do
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
+    it "does discount prices" do
+      @bar.add_menu_item('Cosmo', 5.40)
+      @bar.add_menu_item('Salty Dog', 7.80)
+      @bar.happy_discount = 0.5
+
+      t = Time.parse("3:30 pm")
+      Time.stub(:now).and_return(t)
+
+      expect(@bar.get_price('Cosmo')).to eq(2.70)
+    end
   end
 end

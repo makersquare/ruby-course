@@ -22,11 +22,21 @@ class Bar
   end
 
   def happy_hour?
-    t = Time.now
-    if t.hour >= 15 && t.hour <= 16
+    t = Time.now.hour
+    if t >= 15 && t < 16
+      # alternatively, just t == 15. Thanks Gilbert!
       true
     else
       false
+    end
+  end
+
+  def get_price(drink_name)
+    case self.happy_hour?
+    when true
+      @menu_items.select { |item| item.name == drink_name }.first.price*0.5
+    else
+      @menu_items.select { |item| item.name == drink_name }.first.price
     end
   end
 
