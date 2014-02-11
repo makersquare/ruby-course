@@ -1,13 +1,14 @@
 require 'time' # you're gonna need it
 
 class Bar
-  attr_reader :name, :menu_items
+  attr_reader :name, :menu_items, :purchase_record
   attr_accessor :happy_discount
 
   def initialize(name)
     @name = name
     @menu_items = []
     @happy_discount = 0
+    @purchase_record = {}
   end
 
   def add_menu_item(dish, price)
@@ -69,6 +70,14 @@ class Bar
     end
   end
 
+  def purchase(drink_name)
+    @menu_items.each do |item|
+      if item.name == drink_name
+        item.counter += 1
+        @purchase_record[item.name] = item.counter
+      end
+    end
+  end
 
 
 
@@ -76,12 +85,13 @@ end
 
 class Item
   attr_reader :name
-  attr_accessor :price, :status
+  attr_accessor :price, :status, :counter
 
   def initialize(name,price)
     @name = name
     @price = price
     @status = 'available'
+    @counter = 0
   end
 
 end
