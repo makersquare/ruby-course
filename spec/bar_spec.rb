@@ -63,25 +63,37 @@ describe Bar do
 
     before do
       @bar = Bar.new("The Liberty")
-      @bar.happy_discount = 0.5
     end
 
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
       @three_pm = Time.parse("2014-02-11 15:00:00 -0600")
       Time.stub(:now).and_return(@three_pm)
-      # TODO: CONTROL TIME
+
       expect(@bar.happy_hour?).to eq(true)
     end
 
     it "is not happy hour otherwise" do
       @five_pm = Time.parse("2014-02-11 17:00:00 -0600")
       Time.stub(:now).and_return(@five_pm)
-      # TODO: CONTROL TIME
+
       expect(@bar.happy_hour?).to eq(false)
     end
   end
 
   context "During normal hours" do
+
+    before do
+      @bar = Bar.new("The Liberty")
+      @bar.happy_discount = 0.5
+    end
+
+    it "does not discount drinks during normal hours" do
+      @five_pm = Time.parse("2014-02-11 17:00:00 -0600")
+      Time.stub(:now).and_return(@five_pm)
+      @bar.add_menu_item('Pecan Porter', 5.50)
+
+      expect(@bar.get_price('Pecan Porter')).to eq(5.50)
+    end
     # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
   end
 
