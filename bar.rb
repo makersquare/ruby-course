@@ -24,7 +24,12 @@ class Bar
   end
 
   def happy_hour?
-    Time.now.between?(Time.parse('3 pm'), Time.parse('3 pm'))
+    Time.now.between?(Time.parse('3 pm'), Time.parse('4 pm'))
+  end
+
+  def get_price(drink)
+    price = @menu_items.select { |item| item.name == drink }.first.price
+    self.happy_hour? ? (price * @happy_discount).round(2) : price
   end
 
 end
