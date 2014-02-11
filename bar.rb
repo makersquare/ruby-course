@@ -32,6 +32,16 @@ class Bar
 			false
 		end
 	end
+
+	def get_price(name)
+		@menu_items.each do |item|
+			if item.name = name
+				return item.price
+			end
+		end
+		# We Want To Return This - @menu_items[0].price
+			
+	end
 end
 
 class MenuItem

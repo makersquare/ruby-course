@@ -93,8 +93,9 @@ describe Bar do
   context ".get_price" do
     it "gets the price of drinks" do
       @bar.add_menu_item("Whiskey", 5.00)
-
-      expect(@bar.get_price("Whiskey").to eq(5.00))
+      @bar.add_menu_item("Vodka", 6.00)
+      # binding.pry
+      expect(@bar.get_price("Whiskey")).to eq(5.00)
     end
   end
 end
