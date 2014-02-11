@@ -15,6 +15,14 @@ class Bar
     @menu_items << new_item
   end
 
+  # def happy_discount
+  #   if Time.now.monday? || Time.now.wednesday?
+  #     @happy_discount = 0.5
+  #   else
+  #     @happy_discount = 0.25
+  #   end
+  # end
+
   def happy_discount=(value)
     if value > 1
       @happy_discount = 1
@@ -36,20 +44,23 @@ class Bar
   def get_price(drink_name)
     @menu_items.each do |item|
       if item.name == drink_name
-        return item.price
+        if happy_hour?
+          new_price = (item.price * happy_discount)
+          return new_price
+        else
+          return item.price
+        end
       end
     end
   end
 
-  def discount
-    if happy_hour?
-      @menu_items.each do |item|
-        item.price *= 0.5
-      end
-    else
-      false
-    end
-  end
+  # def discount
+  #   if happy_hour?
+  #     return happy_discount
+  #   else
+  #     return false
+  #   end
+  # end
 
 
 

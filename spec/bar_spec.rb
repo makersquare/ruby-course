@@ -90,11 +90,9 @@ describe Bar do
       @bar.add_menu_item('Cosmo', 12.25)
       @bar.add_menu_item('Bloody Mary', 6.10)
 
-      item = @bar.menu_items.first
+      Time.stub(:now).and_return(Time.parse('1pm'))
 
-      Time.stub(:now).and_return('1pm')
-
-      expect(item.price).to eq(9.30)
+      expect(@bar.get_price('Long Island')).to eq(9.30)
     end
 
   end
@@ -107,11 +105,34 @@ describe Bar do
       @bar.add_menu_item('Cosmo', 12.25)
       @bar.add_menu_item('Bloody Mary', 6.10)
 
-      item = @bar.menu_items.first
+      Time.stub(:now).and_return(Time.parse('3pm'))
 
-      Time.stub(:now).and_return('3pm')
+      @bar.happy_discount = 0.5
 
-      expect(item.price).to eq(4.65)
+      expect(@bar.get_price('Long Island')).to eq(4.65)
     end
   end
+
+
+  context "Monday and Wednesday special" do
+
+    xit "gives a 50% discount" do
+      @bar.add_menu_item('Long Island', 9.30)
+      @bar.add_menu_item('Cosmo', 12.25)
+      @bar.add_menu_item('Bloody Mary', 6.10)
+
+      Time.stub_chain(:now,:monday?).and_return(true)
+
+      expect(@bar.happy_discount).to eq(0.5)
+    end
+
+
+  end
+
+
+
+
+
+
+
 end
