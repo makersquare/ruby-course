@@ -47,7 +47,7 @@ describe Bar do
   end
 
   it "constrains its happy hour discount to between zero and one" do
-    # HINT: You need to write your own setter
+
     @bar.happy_discount = 2
     expect(@bar.happy_discount).to eq 1
 
@@ -84,7 +84,6 @@ describe Bar do
 
     before do
       @bar = Bar.new("The Liberty")
-      @bar.happy_discount = 0.5
     end
 
     it "does not discount drinks during normal hours" do
@@ -94,10 +93,26 @@ describe Bar do
 
       expect(@bar.get_price('Pecan Porter')).to eq(5.50)
     end
-    # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+
   end
 
   context "During happy hours" do
-    # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
+
+    before do
+      @bar = Bar.new("The Liberty")
+      @bar.happy_discount = 0.5
+    end
+
+    it "discounts drinks during happy hours" do
+      @three_pm = Time.parse("2014-02-11 15:00:00 -0600")
+      Time.stub(:now).and_return(@three_pm)
+      @bar.add_menu_item('Pecan Porter', 5.50)
+
+      expect(@bar.get_price('Pecan Porter')).to eq(2.75)
+    end
   end
+
 end
+
+
+
