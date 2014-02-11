@@ -23,8 +23,9 @@ class Bar
 
   def happy_hour?
     t = Time.now.hour
-    if t >= 15 && t < 16
-      # alternatively, just t == 15. Thanks Gilbert!
+
+    # if t >= 15 && t < 16   <--- yuck.
+    if t == 15 # thanks Gilbert!
       true
     else
       false
