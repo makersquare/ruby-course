@@ -59,16 +59,28 @@ describe Bar do
   # DO NOT CHANGE SPECS ABOVE THIS LINE #
 # # # # # # # # # # # # # # # # # # # # # #
 
-  describe '#happy_hour', :pending => true do
+  describe '#happy_hour' do
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
       # TODO: CONTROL TIME
+      Time.stub(:now).and_return(Time.parse('3pm'))
       expect(@bar.happy_hour?).to eq(true)
     end
 
     it "is not happy hour otherwise" do
       # TODO: CONTROL TIME
+      Time.stub(:now).and_return(Time.parse('2pm'))
       expect(@bar.happy_hour?).to eq(false)
     end
+
+    it "returns the price for a given drink name" do
+      @bar.add_menu_item('Long Island', 9.30)
+      @bar.add_menu_item('Cosmo', 12.25)
+      @bar.add_menu_item('Bloody Mary', 6.10)
+
+      expect(@bar.get_price('Cosmo')).to eq(12.25)
+
+    end
+
   end
 
   context "During normal hours" do
