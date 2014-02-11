@@ -15,6 +15,16 @@ class Bar
     @menu_items << new_item
   end
 
+  def happy_discount=(value)
+    if value > 1
+      @happy_discount = 1
+    elsif value < 0
+      @happy_discount = 0
+    else
+      @happy_discount = value
+    end
+  end
+
 
 
 
