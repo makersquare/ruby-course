@@ -60,6 +60,12 @@ describe Bar do
 # # # # # # # # # # # # # # # # # # # # # #
 
 
+  it "records drink purchases" do
+    @bar.add_menu_item('Little Johnny', 9.95)
+    @bar.record_sale('Little Johnny')
+    expect(@bar.sales['Little Johnny'].first).to eq 9.95
+  end
+
   describe '#happy_hour' do
 
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
@@ -101,15 +107,16 @@ describe Bar do
       expect(@bar.get_price('Little Johnny')).to eq 4.97
     end
 
-    it "gives customers a 25 percent discount on other days" do
+    before do
       Time.stub(:now).and_return(Time.parse('3:30 pm'))
-      Date.stub(:today).and_return(Date.parse('Saturday'))
+      Date.stub(:today).and_return(Date.parse('Tuesday'))
+    end
+
+    it "gives customers a 25 percent discount on other days" do
       expect(@bar.get_price('Little Johnny')).to eq 7.46
     end
 
     it "exempts certain drinks from the discount" do
-      Time.stub(:now).and_return(Time.parse('3:30 pm'))
-      Date.stub(:today).and_return(Date.parse('Monday'))
       item = @bar.menu_items.first
       item.discount = false
       expect(@bar.get_price('Little Johnny')).to eq 9.95

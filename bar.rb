@@ -1,13 +1,14 @@
 require 'time' # you're gonna need it
 
 class Bar
-  attr_reader :name, :menu_items, :happy_discount
+  attr_reader :name, :menu_items, :happy_discount, :sales
 
   def initialize(name)
     @name = name
     @menu_items = []
     @happy_discount = 0
     @slow_days = ["monday", "wednesday"]
+    @sales = {}
   end
 
   def add_menu_item(name, price)
@@ -42,8 +43,14 @@ class Bar
     self.happy_hour? && item.discount ? (price -= (price * discount)).round(2) : price
   end
 
+  def record_sale(drink)
+    unless @sales[drink] then @sales[drink] = [] end
+    @sales[drink] << get_price(drink)
+  end
 
+  def popular_drinks
 
+  end
 end
 
 
