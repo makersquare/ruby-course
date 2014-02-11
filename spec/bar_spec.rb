@@ -78,7 +78,7 @@ describe Bar do
 
   context "During normal hours" do
     #TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
-      before do
+    before do
       @bar = Bar.new "The Irish Yodel"
       @bar.add_menu_item('Cosmo', 5.40)
       @time_start = Time.parse("2014-02-11 20:00:00 -0600")
@@ -86,12 +86,24 @@ describe Bar do
     end
 
     it "returns a price for a given drink name" do
-    # binding.pry
     expect(@bar.get_price('Cosmo')).to eq(5.40)
-  end
+    end
   end
 
   context "During happy hours" do
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
+
+# binding.pry
+    before do
+      @bar = Bar.new "The Irish Yodel"
+      @bar.add_menu_item('Cosmo', 5.40)
+      @time_start = Time.parse("2014-02-11 15:00:00 -0600")
+      Time.stub(:now).and_return(@time_start)
+      @bar.happy_discount = 0.5
+    end
+
+    it "returns a price * 0.5 for a given drink name" do
+    expect(@bar.get_price('Cosmo')).to eq(5.40 * 0.5)
+    end
   end
 end
