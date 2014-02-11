@@ -1,16 +1,32 @@
 require 'time' # you're gonna need it
 
 class Bar
-  attr_reader :name
-  attr_reader :menu_items
+  attr_reader :name, :menu_items, :happy_discount
 
   def initialize(name)
     @name = name
     @menu_items = []
+    @happy_discount = 0
   end
 
   def add_menu_item(dish, price)
-    @menu_items << [ dish, price ]
+    new_item = Item.new(dish,price)
+    @menu_items << new_item
   end
 
+
+
+
 end
+
+class Item
+  attr_reader :name
+  attr_reader :price
+
+  def initialize(name,price)
+    @name = name
+    @price = price
+  end
+end
+
+
