@@ -21,9 +21,37 @@ class Bar
       @happy_discount = 1
     else
       @happy_discount = discount
+    end
+
+  end
+
+  def get_price(name)
+    price = 0
+   if @happy_discount == 0 && (Time.now.wday == 1 || Time.now.wday == 3)
+      @happy_discount = 0.5
+    else
+      @happy_discount = 0.75
+    end
+    menu_items.each do |x|
+      if x.name == name
+        price = x.price
+      end
+    end
+    if happy_hour?
+          puts "#{Time.now.wday}"
+      price * happy_discount
+
+
+    else
+                puts "#{Time.now.wday}"
+      price
 
     end
   end
+
+
+
+
 
   def happy_hour?
     t = Time.now
@@ -34,19 +62,7 @@ class Bar
     end
   end
 
-  def get_price(name)
-    price = 0
-    menu_items.each do |x|
-      if x.name == name
-        price = x.price
-      end
-    end
-    if happy_hour?
-      price / 2
-    else
-      price
-    end
-  end
+
 end
 
 

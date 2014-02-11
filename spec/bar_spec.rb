@@ -86,16 +86,21 @@ describe Bar do
 
   end
 
-  context "During happy hours" do
+  context "During happy hours on Mon and Wed" do
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
-
     it 'gets the price of a drink given a name' do
-            @three_pm = Time.parse("2014-2-1
-              1 15:00:00")
-       Time.stub(:now).and_return(@three_pm)
-        @bar.add_menu_item('Cosmo', 5.40)
+       Time.stub(:now).and_return(Time.parse("2014-2-10 15:00:00"))
+        @bar.add_menu_item('Cosmo', 4)
+     expect(@bar.get_price('Cosmo')).to eq(2)
+  end
+end
 
-     expect(@bar.get_price('Cosmo')).to eq(2.70)
+  context "During happy hours on other days" do
+    # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
+    it 'gets the price of a drink given a name' do
+       Time.stub(:now).and_return(Time.parse("2014-2-11 15:00:00"))
+        @bar.add_menu_item('Cosmo', 4)
+     expect(@bar.get_price('Cosmo')).to eq(3)
   end
 end
 end
