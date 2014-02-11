@@ -22,7 +22,13 @@ class Bar
   end
 
   def happy_discount
-    @happy_discount
+    if @happy_discount >= 1
+      1
+    elsif @happy_discount > 0
+       @happy_discount
+    else
+      0
+    end
   end
 
 end
