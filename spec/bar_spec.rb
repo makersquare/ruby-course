@@ -154,6 +154,22 @@ describe Bar do
 
   end
 
+  context "Exempt drinks" do
+    it "exempts certain drinks from Happy Hour discount specials" do
+      @bar.add_menu_item('Long Island', 9.30)
+      @bar.add_menu_item('Cosmo', 12.25)
+      @bar.add_menu_item('Bloody Mary', 6.10)
+
+      @bar.exempt_drink('Cosmo')
+
+      Time.stub(:now).and_return(Time.local(2014, "Feb", 11, 15, 30))
+
+      expect(@bar.get_price('Cosmo')).to eq(12.25)
+
+    end
+
+  end
+
 
 
 

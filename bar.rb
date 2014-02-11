@@ -56,13 +56,10 @@ class Bar
     end
   end
 
-  # def discount
-  #   if happy_hour?
-  #     return happy_discount
-  #   else
-  #     return false
-  #   end
-  # end
+  def exempt?(drink_name)
+    return true
+  end
+
 
 
 
