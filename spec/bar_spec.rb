@@ -63,6 +63,10 @@ describe Bar do
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
       # TODO: CONTROL TIME
       t = Time.now
+
+      # Didn't fully read the Learn app at the time.
+      # Should have just used Time.parse("3:30pm")
+      # Used Time.parse in last two tests.
       three_thirty_pm = Time.local(t.year, t.month, t.day, 15, 30)
       Time.stub(:now).and_return(three_thirty_pm)
       expect(@bar.happy_hour?).to eq(true)
