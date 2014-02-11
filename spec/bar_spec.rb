@@ -89,25 +89,31 @@ describe Bar do
   context "During happy hours" do
 
     before do
-    @bar = Bar.new "The Irish Yodel"
-    @bar.happy_discount = 0.5
-    @bar.add_menu_item('Little Johnny', 9.95)
-    @bar.add_menu_item('Salty Dog', 7.80)
+      @bar = Bar.new "The Irish Yodel"
+      @bar.happy_discount = 0.5
+      @bar.add_menu_item('Little Johnny', 9.95)
+      @bar.add_menu_item('Salty Dog', 7.80)
     end
 
     it "gives customers a 50 percent discount on slow days" do
-    Time.stub(:now).and_return(Time.parse('3:30 pm'))
-    Date.stub(:today).and_return(Date.parse('Monday'))
-    expect(@bar.get_price('Little Johnny')).to eq 4.97
+      Time.stub(:now).and_return(Time.parse('3:30 pm'))
+      Date.stub(:today).and_return(Date.parse('Monday'))
+      expect(@bar.get_price('Little Johnny')).to eq 4.97
     end
 
     it "gives customers a 25 percent discount on other days" do
-    Time.stub(:now).and_return(Time.parse('3:30 pm'))
-    Date.stub(:today).and_return(Date.parse('Saturday'))
-    expect(@bar.get_price('Little Johnny')).to eq 7.46
+      Time.stub(:now).and_return(Time.parse('3:30 pm'))
+      Date.stub(:today).and_return(Date.parse('Saturday'))
+      expect(@bar.get_price('Little Johnny')).to eq 7.46
     end
 
-
+    it "exempts certain drinks from the discount" do
+      Time.stub(:now).and_return(Time.parse('3:30 pm'))
+      Date.stub(:today).and_return(Date.parse('Monday'))
+      item = @bar.menu_items.first
+      item.discount = false
+      expect(@bar.get_price('Little Johnny')).to eq 9.95
+    end
 
   end
 end

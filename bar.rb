@@ -29,27 +29,31 @@ class Bar
   end
 
   def get_price(drink)
-    price = @menu_items.select { |item| item.name == drink }.first.price
+    item = @menu_items.select { |item| item.name == drink }.first
+    price = item.price
     discount = (@happy_discount / 2)
 
     @slow_days.each do |day|
-      if Date.today.send(day + "?")
+      if Date.today.send(day.downcase + "?")
         discount = @happy_discount
       end
     end
 
-    self.happy_hour? ? (price -= (price * discount)).round(2) : price
+    self.happy_hour? && item.discount ? (price -= (price * discount)).round(2) : price
   end
+
+
 
 end
 
 
 class MenuItem
-  attr_accessor :name, :price
+  attr_accessor :name, :price, :discount
 
   def initialize(name, price)
     @name = name
     @price = price
+    @discount = true
   end
 
 end
