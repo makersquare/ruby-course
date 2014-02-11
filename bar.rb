@@ -1,7 +1,7 @@
 require 'time' # you're gonna need it
 
 class Bar
-  attr_reader :name, :happy_discount
+  attr_reader :name, :happy_discount, :happy_hour
   attr_accessor :menu_items
   def initialize(name)
     @name = name
@@ -20,6 +20,15 @@ class Bar
       @happy_discount = 1
     else
       @happy_discount = discount
+    end
+  end
+
+  def happy_hour?
+    time = Time.now
+    if time.hour >= 15 && time.hour <= 16
+      return true
+    else
+      return false
     end
   end
 end
