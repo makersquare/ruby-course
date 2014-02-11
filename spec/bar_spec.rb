@@ -86,7 +86,6 @@ describe Bar do
     it "does not discount prices" do
       @bar.add_menu_item('Cosmo', 5.40)
       @bar.add_menu_item('Salty Dog', 7.80)
-      @bar.happy_discount = 0.5
 
       t = Time.parse("6 pm")
       Time.stub(:now).and_return(t)
@@ -101,7 +100,6 @@ describe Bar do
     it "does discount prices" do
       @bar.add_menu_item('Cosmo', 5.40)
       @bar.add_menu_item('Salty Dog', 7.80)
-      @bar.happy_discount = 0.5
 
       t = Time.parse("3:30 pm")
       Time.stub(:now).and_return(t)
