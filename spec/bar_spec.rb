@@ -46,7 +46,7 @@ describe Bar do
     expect(@bar.happy_discount).to eq 0.5
   end
 
-  xit "constrains its happy hour discount to between zero and one" do
+  it "constrains its happy hour discount to between zero and one" do
     # HINT: You need to write your own setter
     @bar.happy_discount = 2
     expect(@bar.happy_discount).to eq 1
