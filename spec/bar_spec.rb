@@ -37,16 +37,16 @@ describe Bar do
     expect(item.price).to eq 9.95
   end
 
-  xit "has a default happy hour discount of zero" do
+  it "has a default happy hour discount of zero" do
     expect(@bar.happy_discount).to eq 0
   end
 
-  xit "can set its happy hour discount" do
+  it "can set its happy hour discount" do
     @bar.happy_discount = 0.5
     expect(@bar.happy_discount).to eq 0.5
   end
 
-  xit "constrains its happy hour discount to between zero and one" do
+  it "constrains its happy hour discount to between zero and one" do
     # HINT: You need to write your own setter
     @bar.happy_discount = 2
     expect(@bar.happy_discount).to eq 1
@@ -59,9 +59,9 @@ describe Bar do
   # DO NOT CHANGE SPECS ABOVE THIS LINE #
 # # # # # # # # # # # # # # # # # # # # # #
 
-  describe '#happy_hour', :pending => true do
+  describe '#happy_hour' do
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
-      # TODO: CONTROL TIME
+      Time.stub(:now).and_return(Time.parse('3:30 PM'))
       expect(@bar.happy_hour?).to eq(true)
     end
 
@@ -71,7 +71,7 @@ describe Bar do
     end
   end
 
-  context "During normal hours" do
+   context "During normal hours" do
     # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
   end
 
