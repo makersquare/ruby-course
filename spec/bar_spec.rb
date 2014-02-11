@@ -60,8 +60,9 @@ describe Bar do
 # # # # # # # # # # # # # # # # # # # # # #
 
   describe '#happy_hour' do
+  
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
-      Time.stub(:now).and_return(Time.parse('3:30 PM'))
+       Time.stub(:now).and_return(Time.parse('3:30 PM'))
       expect(@bar.happy_hour?).to eq(true)
     end
 
@@ -73,9 +74,19 @@ describe Bar do
 
    context "During normal hours" do
     # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+    it "knows not to discount during happy hour" do
+      Time.stub(:now).and_return(Time.parse('5 PM'))
+      @bar.happy_hour?
+      expect(@bar.happy_discount).to eq(0)
+    end
   end
 
   context "During happy hours" do
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
+    it "knows to discount during happy hour" do
+      Time.stub(:now).and_return(Time.parse('3 PM'))
+      @bar.happy_hour?
+      expect(@bar.happy_discount).to eq(0.5)
+    end
   end
 end

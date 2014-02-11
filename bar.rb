@@ -26,6 +26,7 @@ class Bar
 
 	def happy_hour?
 		if (Time.now >= Time.parse("3 PM")) && (Time.now <= Time.parse("4 PM"))
+			@happy_discount = 0.5
 			true
 		else
 			false
