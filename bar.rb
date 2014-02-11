@@ -25,15 +25,15 @@ class Bar
     end
   end
 
-  # def happy_discount
-  #   if (Time.now.monday? && happy_hour?) || (Time.now.wednesday? && happy_hour?)
-  #     @happy_discount = 0.5
-  #   elsif happy_hour?
-  #     @happy_discount = 0.25
-  #   else
-  #     @happy_discount = 0
-  #   end
-  # end
+  def set_discount
+      if (Time.now.monday? || Time.now.wednesday? ) && happy_hour?
+        return @happy_discount = 0.5
+      elsif happy_hour?
+        return @happy_discount = 0.25
+      else
+        @happy_discount = 0
+      end
+  end
 
   def happy_hour?
     if Time.now >= Time.parse('3pm') && Time.now <= Time.parse('4pm')

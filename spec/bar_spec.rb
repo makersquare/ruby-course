@@ -116,16 +116,41 @@ describe Bar do
 
   context "Monday and Wednesday special" do
 
-    it "gives a 50% discount" do
+    it "gives a 50% discount on Monday" do
       @bar.add_menu_item('Long Island', 9.30)
       @bar.add_menu_item('Cosmo', 12.25)
       @bar.add_menu_item('Bloody Mary', 6.10)
 
-      Time.stub_chain(:now,:monday?).and_return(true)
+      Time.stub(:now).and_return(Time.local(2014, "Feb", 10, 15, 30))
 
-      expect(@bar.happy_discount).to eq(0.5)
+      @bar.set_discount
+
+      expect(@bar.happy_discount).to eq(0.50)
     end
 
+    it "gives a 50% discount on Wednesday" do
+      @bar.add_menu_item('Long Island', 9.30)
+      @bar.add_menu_item('Cosmo', 12.25)
+      @bar.add_menu_item('Bloody Mary', 6.10)
+
+      Time.stub(:now).and_return(Time.local(2014, "Feb", 12, 15, 30))
+
+      @bar.set_discount
+
+      expect(@bar.happy_discount).to eq(0.50)
+    end
+
+    it "gives a 25% discount on other Happy Hours" do
+      @bar.add_menu_item('Long Island', 9.30)
+      @bar.add_menu_item('Cosmo', 12.25)
+      @bar.add_menu_item('Bloody Mary', 6.10)
+
+      Time.stub(:now).and_return(Time.local(2014, "Feb", 11, 15, 30))
+
+      @bar.set_discount
+
+      expect(@bar.happy_discount).to eq(0.25)
+    end
 
   end
 
