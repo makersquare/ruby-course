@@ -69,12 +69,13 @@ describe Bar do
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
       @three_pm = Time.parse("2014-02-11 15:00:00 -0600")
       Time.stub(:now).and_return(@three_pm)
-
       # TODO: CONTROL TIME
       expect(@bar.happy_hour?).to eq(true)
     end
 
-    xit "is not happy hour otherwise" do
+    it "is not happy hour otherwise" do
+      @five_pm = Time.parse("2014-02-11 17:00:00 -0600")
+      Time.stub(:now).and_return(@five_pm)
       # TODO: CONTROL TIME
       expect(@bar.happy_hour?).to eq(false)
     end
