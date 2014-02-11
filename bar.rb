@@ -32,8 +32,17 @@ class Bar
     end
   end
 
-  def get_price(drink)
-
+  def get_price(name)
+    @menu_items.each do |item|
+      # if name == item.name
+      if item.name == name
+        if self.happy_hour? == true
+          return item.price * self.happy_discount
+        else
+          return item.price
+        end
+      end
+    end
   end
 end
 
