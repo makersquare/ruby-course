@@ -30,6 +30,7 @@ class Bar
   end
 
   def happy_hour?
+    #need to add a method under true that multiples all price values by 0.5
     if (Time.now.hour >= 15 && Time.now.hour <=16)
       return true
     else
@@ -39,7 +40,13 @@ class Bar
 
   def get_price(drink)
     #how do i pull the value of a drink from an array?
-    return @menu_items_hash[drink]
+    # add the 50% break happy hour
+    if happy_hour?
+      return @menu_items_hash[drink] * 0.5
+    else
+      return @menu_items_hash[drink]
+    end
+
   end
 
 

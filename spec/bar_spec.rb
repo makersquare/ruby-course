@@ -1,7 +1,6 @@
 require 'pry-debugger'
 require "./bar.rb"
 
-
 describe Bar do
 
   before do
@@ -74,27 +73,50 @@ describe Bar do
     end
   end
 
-
-
   describe '#get_price' do
 
-  before do
-    @bar = Bar.new "The Irish Yodel"
-    @bar.add_menu_item('Cosmo', 5.40)
-    @bar.add_menu_item('Salty Dog', 7.80)
-  end
+    before do
+      @bar = Bar.new "The Irish Yodel"
+      @bar.add_menu_item('Cosmo', 5.40)
+      @bar.add_menu_item('Salty Dog', 7.80)
+      @two_pm = Time.parse("2pm")
+      Time.stub(:now).and_return(@two_pm)
+    end
 
     it "returns the price of the Cosmo" do
       expect(@bar.get_price('Cosmo')).to eq(5.4)
     end
-  end
-
 
   context "During normal hours" do
+    before do
+      @bar = Bar.new "The Irish Yodel"
+      @bar.add_menu_item('Cosmo', 5.40)
+      @bar.add_menu_item('Salty Dog', 7.80)
+      @two_pm = Time.parse("2pm")
+      Time.stub(:now).and_return(@two_pm)
+    end
+
     # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+    it 'the price should not be discounted if its not happyhour' do
+      expect(@bar.get_price('Cosmo')).to eq(5.4)
+    end
   end
 
   context "During happy hours" do
+    before do
+      @bar = Bar.new "The Irish Yodel"
+      @bar.add_menu_item('Cosmo', 5.40)
+      @bar.add_menu_item('Salty Dog', 7.80)
+      @three_pm = Time.parse("3 pm")
+      Time.stub(:now).and_return(@three_pm)
+    end
+
+    it 'the price should be half price during happy hour' do
+      expect(@bar.get_price('Cosmo')).to eq(2.7)
+    end
+
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
   end
+end
+
 end
