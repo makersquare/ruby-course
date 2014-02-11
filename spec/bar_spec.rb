@@ -3,62 +3,79 @@ require "./bar.rb"
 
 
 describe Bar do
+
   before do
-    @bar = Bar.new(
-      "The Irish Yodel",
-      {
-        'Cosmo' => 5.40,
-        'Genoa' => 12.20,
-        'Sake' => 8.70,
-        'Salty Dog' => 7.80,
-        'Tequila' => 10.50
-      })
-      @drink = 'Sake'
-      @regular_price = @bar.menu[@drink]
+    @bar = Bar.new "The Irish Yodel"
   end
 
-  it 'has a name and menu' do
-    binding.pry
-
+  it "initializes with a name" do
     expect(@bar.name).to eq("The Irish Yodel")
-    expect(@bar.menu).to eq({
-        'Cosmo' => 5.40,
-        'Genoa' => 12.20,
-        'Sake' => 8.70,
-        'Salty Dog' => 7.80,
-        'Tequila' => 10.50
-      })
+  end
 
+  xit "cannot change its name" do
+    # That would require a lengthy marketing meeting
+    expect {
+      @bar.name = 'lolcat cave'
+    }.to raise_error
+  end
+
+  xit "initializes with an empty menu" do
+    expect(@bar.menu_items.count).to eq(0)
+  end
+
+  xit "can add menu items" do
+    @bar.add_menu_item('Cosmo', 5.40)
+    @bar.add_menu_item('Salty Dog', 7.80)
+
+    expect(@bar.menu_items.count).to eq(2)
+  end
+
+  xit "can retrieve menu items" do
+    @bar.add_menu_item('Little Johnny', 9.95)
+    item = @bar.menu_items.first
+    expect(item.name).to eq 'Little Johnny'
+    expect(item.price).to eq 9.95
+  end
+
+  xit "has a default happy hour discount of zero" do
+    expect(@bar.happy_discount).to eq 0
+  end
+
+  xit "can set its happy hour discount" do
+    @bar.happy_discount = 0.5
+    expect(@bar.happy_discount).to eq 0.5
+  end
+
+  xit "constrains its happy hour discount to between zero and one" do
+    # HINT: You need to write your own setter
+    @bar.happy_discount = 2
+    expect(@bar.happy_discount).to eq 1
+
+    @bar.happy_discount = -3
+    expect(@bar.happy_discount).to eq 0
+  end
+
+# # # # # # # # # # # # # # # # # # # # # #
+  # DO NOT CHANGE SPECS ABOVE THIS LINE #
+# # # # # # # # # # # # # # # # # # # # # #
+
+  describe '#happy_hour', :pending => true do
+    it "knows when it is happy hour (3:00pm to 4:00pm)" do
+      # TODO: CONTROL TIME
+      expect(@bar.happy_hour?).to eq(true)
+    end
+
+    it "is not happy hour otherwise" do
+      # TODO: CONTROL TIME
+      expect(@bar.happy_hour?).to eq(false)
+    end
   end
 
   context "During normal hours" do
-    before do
-      @time_now = Time.parse("6 pm")
-      Time.stub(:now).and_return(@time_now)
-
-    end
-
-    it "getting item price shows regular price for item" do
-
-      expect(@bar.get_price(@drink)).to eq(@bar.menu[@drink])
-    end
-
+    # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
   end
 
   context "During happy hours" do
-    before do
-      @time_now = Time.parse("2 pm")
-      Time.stub(:now).and_return(@time_now)
-    end
-
-    it "getting item price shows happy hour price for item" do
-      # binding.pry
-      expect(@bar.get_price(@drink)).to eq(@regular_price -= @regular_price*0.10 )
-
-    end
-
+    # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
   end
-
-
-
 end
