@@ -15,14 +15,6 @@ class Bar
     @menu_items << new_item
   end
 
-  # def happy_discount
-  #   if Time.now.monday? || Time.now.wednesday?
-  #     @happy_discount = 0.5
-  #   else
-  #     @happy_discount = 0.25
-  #   end
-  # end
-
   def happy_discount=(value)
     if value > 1
       @happy_discount = 1
@@ -32,6 +24,16 @@ class Bar
       @happy_discount = value
     end
   end
+
+  # def happy_discount
+  #   if (Time.now.monday? && happy_hour?) || (Time.now.wednesday? && happy_hour?)
+  #     @happy_discount = 0.5
+  #   elsif happy_hour?
+  #     @happy_discount = 0.25
+  #   else
+  #     @happy_discount = 0
+  #   end
+  # end
 
   def happy_hour?
     if Time.now >= Time.parse('3pm') && Time.now <= Time.parse('4pm')

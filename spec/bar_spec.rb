@@ -116,7 +116,7 @@ describe Bar do
 
   context "Monday and Wednesday special" do
 
-    xit "gives a 50% discount" do
+    it "gives a 50% discount" do
       @bar.add_menu_item('Long Island', 9.30)
       @bar.add_menu_item('Cosmo', 12.25)
       @bar.add_menu_item('Bloody Mary', 6.10)
