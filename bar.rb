@@ -8,4 +8,8 @@ class Bar
     @menu_items = []
   end
 
+  def add_menu_item(name, price)
+    @menu_items << [name, price]
+  end
+
 end
