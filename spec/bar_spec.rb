@@ -55,11 +55,6 @@ describe Bar do
     expect(@bar.happy_discount).to eq 0
   end
 
-  it "returns a price for a given drink name" do
-    drink1 = @bar.add_menu_item('Cosmo', 5.40)
-
-    expect(@bar.get_price(drink1)).to eq(5.40)
-  end
 # # # # # # # # # # # # # # # # # # # # # #
   # DO NOT CHANGE SPECS ABOVE THIS LINE #
 # # # # # # # # # # # # # # # # # # # # # #
@@ -82,13 +77,18 @@ describe Bar do
   end
 
   context "During normal hours" do
-    # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
-    #   before do
-    #   @bar = Bar.new "The Irish Yodel"
-    #   @bar.add_menu_item('Cosmo', 5.40)
-    #   @bar.add_menu_item('Salty Dog', 7.80)
-    # end
+    #TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+      before do
+      @bar = Bar.new "The Irish Yodel"
+      @bar.add_menu_item('Cosmo', 5.40)
+      @time_start = Time.parse("2014-02-11 20:00:00 -0600")
+      Time.stub(:now).and_return(@time_start)
+    end
 
+    it "returns a price for a given drink name" do
+    # binding.pry
+    expect(@bar.get_price('Cosmo')).to eq(5.40)
+  end
   end
 
   context "During happy hours" do
