@@ -93,13 +93,21 @@ describe Bar do
     @bar.happy_discount = 0.5
     @bar.add_menu_item('Little Johnny', 9.95)
     @bar.add_menu_item('Salty Dog', 7.80)
-    Time.stub(:now).and_return(Time.parse('3:30 pm'))
-
     end
 
-    it "it gives customers a discount" do
+    it "gives customers a 50 percent discount on slow days" do
+    Time.stub(:now).and_return(Time.parse('3:30 pm'))
+    Date.stub(:today).and_return(Date.parse('Monday'))
     expect(@bar.get_price('Little Johnny')).to eq 4.97
     end
+
+    it "gives customers a 25 percent discount on other days" do
+    Time.stub(:now).and_return(Time.parse('3:30 pm'))
+    Date.stub(:today).and_return(Date.parse('Saturday'))
+    expect(@bar.get_price('Little Johnny')).to eq 7.46
+    end
+
+
 
   end
 end

@@ -7,6 +7,7 @@ class Bar
     @name = name
     @menu_items = []
     @happy_discount = 0
+    @slow_days = ["monday", "wednesday"]
   end
 
   def add_menu_item(name, price)
@@ -29,7 +30,15 @@ class Bar
 
   def get_price(drink)
     price = @menu_items.select { |item| item.name == drink }.first.price
-    self.happy_hour? ? (price * @happy_discount).round(2) : price
+    discount = (@happy_discount / 2)
+
+    @slow_days.each do |day|
+      if Date.today.send(day + "?")
+        discount = @happy_discount
+      end
+    end
+
+    self.happy_hour? ? (price -= (price * discount)).round(2) : price
   end
 
 end
