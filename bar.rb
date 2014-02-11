@@ -26,6 +26,11 @@ class Bar
 	def happy_hour?
 		Time.now.hour == 15 ? true : false
 	end
+
+	def get_price(name)
+		item =@menu_items.select { |i| i.name == name }
+		happy_hour? ? item.first.price * 0.5 : item.first.price
+	end
 end
 
 class MenuItem
