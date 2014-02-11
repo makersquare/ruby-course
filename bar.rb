@@ -8,8 +8,18 @@ class Bar
 		@menu_items = Array.new
 	end
 
-	def add_menu_item(item, price)
-		menu_items << {item: price}
+	def add_menu_item(name, price)
+
+		menu_items << MenuItem.new( name, price )
 	end
 
+end
+
+class MenuItem
+	attr_reader :name, :price
+
+	def initialize(name, price)
+		@name = name
+		@price = price
+	end
 end
