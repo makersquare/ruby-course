@@ -22,6 +22,10 @@ class Bar
 			@happy_discount = 1
 		end
 	end
+
+	def happy_hour?
+		Time.now.hour == 15 ? true : false
+	end
 end
 
 class MenuItem
