@@ -89,4 +89,12 @@ describe Bar do
       expect(@bar.happy_discount).to eq(0.5)
     end
   end
+
+  context ".get_price" do
+    it "gets the price of drinks" do
+      @bar.add_menu_item("Whiskey", 5.00)
+
+      expect(@bar.get_price("Whiskey").to eq(5.00))
+    end
+  end
 end
