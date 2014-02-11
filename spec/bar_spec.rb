@@ -68,17 +68,31 @@ describe Bar do
       expect(@bar.happy_hour?).to eq(true)
     end
 
-    xit "is not happy hour otherwise" do
+    it "is not happy hour otherwise" do
       # TODO: CONTROL TIME
+      not_happy_hour = Time.parse('1am')
+      Time.stub(:now).and_return(not_happy_hour)
       expect(@bar.happy_hour?).to eq(false)
     end
   end
 
   context "During normal hours" do
     # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+      it "no discount during normal hours" do
+      not_happy_hour = Time.parse('1am')
+      Time.stub(:now).and_return(not_happy_hour)
+      expect(@bar.happy_hour?).to eq(false)
+      expect(@bar.happy_discount).to eq 0
+    end
   end
 
   context "During happy hours" do
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
+     it "discount during happy hour" do
+      happy_hour = Time.parse('3pm')
+      Time.stub(:now).and_return(happy_hour)
+      expect(@bar.happy_hour?).to eq (true)
+      expect(@bar.happy_discount).to eq (1)
+    end
   end
 end
