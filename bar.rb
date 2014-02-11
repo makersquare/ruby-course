@@ -31,6 +31,10 @@ class Bar
       return false
     end
   end
+
+  def get_price(drink)
+
+  end
 end
 
 
