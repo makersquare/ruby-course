@@ -41,7 +41,7 @@ describe Bar do
     expect(@bar.happy_discount).to eq 0
   end
 
-  xit "can set its happy hour discount" do
+  it "can set its happy hour discount" do
     @bar.happy_discount = 0.5
     expect(@bar.happy_discount).to eq 0.5
   end

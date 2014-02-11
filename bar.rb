@@ -1,7 +1,8 @@
 require 'time' # you're gonna need it
 
 class Bar
-  attr_reader :name, :menu_items, :happy_discount
+  attr_reader :name, :menu_items
+  attr_accessor :happy_discount
 
   def initialize(name)
     @name = name
