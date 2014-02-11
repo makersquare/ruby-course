@@ -6,6 +6,7 @@ describe "Puzzle Exercises" do
 
     # TODO:
     # def get_fruit_color(???)
+    #   ???
     # end
 
     it "returns a color for 'washington' by default" do
