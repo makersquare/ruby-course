@@ -73,15 +73,3 @@ class MenuItem
   end
 
 end
- @bar = Bar.new "The Irish Yodel"
-@bar.add_menu_item('Little Johnny', 9.95)
-    @bar.add_menu_item('Cosmo', 5.40)
-    @bar.add_menu_item('Salty Dog', 7.80)
-    @bar.record_sale('Little Johnny')
-    @bar.record_sale('Little Johnny')
-    @bar.record_sale('Little Johnny')
-    @bar.record_sale('Salty Dog')
-    @bar.record_sale('Salty Dog')
-    @bar.record_sale('Cosmo')
-    @bar.popular_drinks
-
