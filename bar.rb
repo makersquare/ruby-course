@@ -7,7 +7,7 @@ class Bar
     @name = name
     @menu_items = []
     @happy_discount = 0
-    @slow_days = ["monday", "wednesday"]
+    @slow_days = ["Monday", "Wednesday"]
     @sales = {}
   end
 
@@ -49,8 +49,17 @@ class Bar
   end
 
   def popular_drinks
-
+    if @sales == {}
+      return "No sales recorded."
+    else
+      @sales.each_pair do |drink, sales_arr|
+        total = sales_arr.inject { |sum, sale| sum + sale }
+        average = (total/ sales_arr.count)
+        return "Drink: #{drink} - Total Sales: $#{sprintf('%.2f', total)} / Average Price: $#{sprintf('%.2f', average)}"
+      end
+    end
   end
+
 end
 
 
@@ -64,4 +73,15 @@ class MenuItem
   end
 
 end
+ @bar = Bar.new "The Irish Yodel"
+@bar.add_menu_item('Little Johnny', 9.95)
+    @bar.add_menu_item('Cosmo', 5.40)
+    @bar.add_menu_item('Salty Dog', 7.80)
+    @bar.record_sale('Little Johnny')
+    @bar.record_sale('Little Johnny')
+    @bar.record_sale('Little Johnny')
+    @bar.record_sale('Salty Dog')
+    @bar.record_sale('Salty Dog')
+    @bar.record_sale('Cosmo')
+    @bar.popular_drinks
 

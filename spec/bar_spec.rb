@@ -66,6 +66,20 @@ describe Bar do
     expect(@bar.sales['Little Johnny'].first).to eq 9.95
   end
 
+  it "retrieves the most popular drinks" do
+    @bar.add_menu_item('Little Johnny', 9.95)
+    @bar.add_menu_item('Cosmo', 5.40)
+    @bar.add_menu_item('Salty Dog', 7.80)
+    @bar.record_sale('Little Johnny')
+    @bar.record_sale('Little Johnny')
+    @bar.record_sale('Little Johnny')
+    @bar.record_sale('Salty Dog')
+    Time.stub(:now).and_return(Time.parse('3 pm'))
+    @bar.record_sale('Salty Dog')
+    @bar.record_sale('Cosmo')
+    expect(@bar.popular_drinks.class).to eq String
+  end
+
   describe '#happy_hour' do
 
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
@@ -121,6 +135,5 @@ describe Bar do
       item.discount = false
       expect(@bar.get_price('Little Johnny')).to eq 9.95
     end
-
   end
 end
