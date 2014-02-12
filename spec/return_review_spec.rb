@@ -4,20 +4,29 @@ describe "Puzzle Exercises" do
 
   describe "Puzzle #1" do
 
-    # TODO:
-    # def get_fruit_color(???)
-    #   ???
-    # end
+    def get_wash_color(fruit)
+      fruit
+    end
 
-    it "returns a color for 'washington' by default" do
+    it "returns a color for 'washington'" do
       apples = { 'washington' => 'red' }
-      result = @result.get_fruit_color(apples)
+      # TODO: Uncomment and complete
+      # result = get_wash_color(???)???
       expect(result).to eq 'red'
 
       apples = { 'washington' => 'not orange' }
-      result = @result.get_fruit_color(apples)
+      result = get_washington_color(apples)
       expect(result).to eq 'not orange'
     end
+
+  end
+
+  describe "Puzzle #2" do
+
+    # TODO: Uncomment and complete this method
+    # def get_fruit_color(???)
+    #   ???
+    # end
 
     it "returns the correct color for a specified fruit" do
       apples = {
@@ -26,12 +35,13 @@ describe "Puzzle Exercises" do
         'pink lady' => 'pink'
       }
 
-      result = @review.get_fruit_color(apples, 'granny smith')
+      result = get_fruit_color(apples, 'granny smith')
       expect(result).to eq 'green'
     end
+
   end
 
-  describe "Puzzle #2", :pending => true do
+  describe "Puzzle #3", :pending => true do
     class ArtMuseum
       def initialize
         @collection  = ['The Last Supper', 'Mona Lisa']
@@ -50,7 +60,7 @@ describe "Puzzle Exercises" do
     end
   end
 
-  describe "Puzzle #3", :pending => true do
+  describe "Puzzle #4", :pending => true do
     def greet(x)
       if x
         'Hello'
@@ -58,13 +68,13 @@ describe "Puzzle Exercises" do
     end
 
     it "greets correctly" do
-      # TODO:
+      # TODO: Uncomment and complete
       # result = greet(???)
       expect(result).to eq 'Hello there, World'
     end
   end
 
-  describe "Puzzle #4", :pending => true do
+  describe "Puzzle #5", :pending => true do
     def collection
       array = ['cap', 'box']
       array.each do |item|
@@ -73,13 +83,13 @@ describe "Puzzle Exercises" do
     end
 
     it "outputs 'sea otter'" do
-      # TODO:
+      # TODO: Uncomment and complete
       # result = collection.???
       expect(result).to eq 'sea otter'
     end
   end
 
-  describe "Puzzle #5", :pending => true do
+  describe "Puzzle #6", :pending => true do
     def puzzle_5(x)
       if x == true # TODO: Change this ONE LINE
         "It's true!"
@@ -94,7 +104,7 @@ describe "Puzzle Exercises" do
     end
   end
 
-  describe "Puzzle #6", :pending => true do
+  describe "Puzzle #7", :pending => true do
     def compare(x, y)
       x == y
     end
@@ -108,10 +118,10 @@ describe "Puzzle Exercises" do
     end
 
     it "compares" do
-      # TODO:
+      # TODO: Uncomment and complete
       # message = ???
       expect( compare(2,3) ).to eq(message)
-      # TODO:
+      # TODO: Uncomment and complete
       # result = compare(???)
       expect(result).to eq "Yep, these inputs evalute to true"
     end
