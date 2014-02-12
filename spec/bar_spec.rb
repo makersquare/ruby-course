@@ -74,10 +74,31 @@ describe Bar do
   end
 
   context "During normal hours" do
-    # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+    it "takes in a drink order and returns the cost" do
+      @bar = Bar.new "The Irish Yodel"
+      # # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+      @bar.happy_discount = 0.5
+      Time.stub(:now).and_return(Time.new(2014, 2, 11, 14, 30, 0))
+      @bar.add_menu_item('Cosmo', 5.40)
+      @bar.add_menu_item('Salty Dog', 7.80)
+      @bar.add_to_order('Cosmo',3)
+      @bar.add_to_order('Salty Dog', 2)
+      expect(@bar.check_out.round(2)).to eq(31.8)
+    end
   end
 
   context "During happy hours" do
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
+    it "takes in a drink order and returns the cost" do
+      @bar = Bar.new "The Irish Yodel"
+      # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+      @bar.happy_discount = 0.5
+      Time.stub(:now).and_return(Time.new(2014, 2, 11, 15, 30, 0))
+      @bar.add_menu_item('Cosmo', 5.40)
+      @bar.add_menu_item('Salty Dog', 7.80)
+      @bar.add_to_order('Cosmo',3)
+      @bar.add_to_order('Salty Dog', 2)
+      expect(@bar.check_out.round(2)).to eq(15.9)
+    end
   end
 end

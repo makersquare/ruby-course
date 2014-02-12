@@ -9,6 +9,7 @@ class Bar
     @menu_items = []
     @name = name
     @happy_discount = 0
+    @order = []
   end
 
   def happy_hour?
@@ -33,6 +34,25 @@ class Bar
     end
   end
 
+  def add_to_order(name,number)
+    @menu_items.each do |drink|
+      if drink.name == name
+        if happy_hour?
+          @order << [drink, number, @happy_discount]
+        else
+          @order << [drink, number, 0]
+        end
+      end
+    end
+  end
+
+  def check_out
+    total = 0
+    @order.each do |line_item|
+      total += line_item[1]*line_item[0].price*(1-line_item[2])
+    end
+    return total
+  end
 
 end
 
