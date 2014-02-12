@@ -196,16 +196,8 @@ describe Bar do
 
       expect(@bar.purchase_record.count).to eq(3)
       expect(@bar.most_popular).to eq('Bloody Mary')
-
     end
 
-
   end
-
-
-
-
-
-
 
 end

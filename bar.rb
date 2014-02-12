@@ -86,10 +86,6 @@ class Bar
       end
     end
   end
-
-
-
-
 end
 
 class Item
