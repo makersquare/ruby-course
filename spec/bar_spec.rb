@@ -31,6 +31,13 @@ describe Bar do
     expect(@bar.menu_items.count).to eq(2)
   end
 
+  it 'sets a menu item exempt from discount' do
+        @bar.add_menu_item('Top Shelf', 4, exempt = true)
+        item = @bar.menu_items.last
+            expect(item.name).to eq 'Top Shelf'
+     expect(item.exempt).to eq true
+  end
+
   it "can retrieve menu items" do
     @bar.add_menu_item('Little Johnny', 9.95)
     item = @bar.menu_items.first
@@ -95,7 +102,7 @@ describe Bar do
   end
 end
 
-  context "During happy hours on other days" do
+  context "During happy hours on not Mon or Wed" do
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
     it 'gets the price of a drink given a name' do
        Time.stub(:now).and_return(Time.parse("2014-2-11 15:00:00"))
@@ -103,4 +110,15 @@ end
      expect(@bar.get_price('Cosmo')).to eq(3)
   end
 end
+
+  context "exempt drinks should never be discounted" do
+    # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
+    it 'gets the price of a drink given a name' do
+       Time.stub(:now).and_return(Time.parse("2014-2-11 15:00:00"))
+        @bar.add_menu_item('Top Shelf', 8, exempt = true)
+     expect(@bar.get_price('Top Shelf')).to eq(8)
+  end
+end
+
+
 end

@@ -10,8 +10,9 @@ class Bar
   @happy_discount = 0
   end
 
-  def add_menu_item(name, price)
-    @menu_items  << Menu.new(name, price)
+  def add_menu_item(name, price, exempt = false)
+    @menu_items << Menu.new(name, price, exempt)
+    puts "#{@menu_items}"
   end
 
   def happy_discount=(discount)
@@ -27,6 +28,7 @@ class Bar
 
   def get_price(name)
     price = 0
+    drink_exempt = false
    if @happy_discount == 0 && (Time.now.wday == 1 || Time.now.wday == 3)
       @happy_discount = 0.5
     else
@@ -35,23 +37,20 @@ class Bar
     menu_items.each do |x|
       if x.name == name
         price = x.price
+        drink_exempt = x.exempt
       end
     end
     if happy_hour?
-          puts "#{Time.now.wday}"
+      if drink_exempt == true
+        price
+      else
       price * happy_discount
-
-
+    end
     else
-                puts "#{Time.now.wday}"
       price
 
     end
   end
-
-
-
-
 
   def happy_hour?
     t = Time.now
@@ -61,18 +60,16 @@ class Bar
       true
     end
   end
-
-
 end
 
 
-
 class Menu
-attr_accessor :name, :price
+attr_accessor :name, :price, :exempt
 
-def initialize(name, price)
+def initialize(name, price, exempt = false)
   @name = name
   @price = price
+  @exempt = exempt
 end
 
 end
