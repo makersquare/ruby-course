@@ -1,1 +1,1 @@
-require './return_review.rb'
+require 'return_review_spec.rb'

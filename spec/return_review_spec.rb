@@ -15,7 +15,8 @@ describe "Puzzle Exercises" do
       expect(result).to eq 'red'
 
       apples = { 'washington' => 'not orange' }
-      result = get_washington_color(apples)
+      # TODO: Uncomment and complete
+      # result = get_wash_color(apples)???
       expect(result).to eq 'not orange'
     end
 
