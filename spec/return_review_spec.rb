@@ -121,7 +121,7 @@ describe "Puzzle Exercises" do
     it "compares" do
       # TODO: Uncomment and complete
       # message = ???
-      expect( compare(2,3) ).to eq(message)
+      expect( check(2,3) ).to eq(message)
       # TODO: Uncomment and complete
       # result = compare(???)
       expect(result).to eq "Yep, these inputs evalute to true"
