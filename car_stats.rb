@@ -1,0 +1,3 @@
+class CarStats
+  # TODO
+end
