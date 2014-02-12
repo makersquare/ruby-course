@@ -74,10 +74,19 @@ class Bar
     @menu_items.each do |item|
       if item.name == drink_name
         item.counter += 1
-        @purchase_record[item.name] = item.counter
+        @purchase_record[item] = item.counter
       end
     end
   end
+
+  def most_popular
+    @purchase_record.each do |k,v|
+      if v == @purchase_record.values.max
+        return k.name
+      end
+    end
+  end
+
 
 
 
