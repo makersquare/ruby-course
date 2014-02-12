@@ -80,7 +80,7 @@ describe "Puzzle Exercises" do
       array = ['cap', 'box']
       array.each do |item|
         puts item
-      end.push('footrest, sea otter')
+      end.push('footrest', 'sea otter')
     end
 
     it "outputs 'sea otter'" do
