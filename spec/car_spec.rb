@@ -35,7 +35,7 @@ describe 'BigRig', :pending => true do
   end
 
   it "honks" do
-    expect(@car.honk).to eq 'BBBBBRRRRRRAAAAAWWWHHHHH'
+    expect(@truck.honk).to eq 'BBBBBRRRRRRAAAAAWWWHHHHH'
   end
 
   it "has 18 wheels" do
