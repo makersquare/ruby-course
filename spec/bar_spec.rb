@@ -81,7 +81,7 @@ describe Bar do
     before do
       @bar = Bar.new "The Irish Yodel"
       @bar.add_menu_item('Cosmo', 5.40)
-      @time_8pm = Time.parse("2014-02-11 20:00:00 -0600")
+      @time_8pm = Time.parse("8 pm")
       Time.stub(:now).and_return(@time_8pm)
     end
 
@@ -97,7 +97,7 @@ describe Bar do
     before do
       @bar = Bar.new "The Irish Yodel"
       @bar.add_menu_item('Cosmo', 5.40)
-      @time_3pm = Time.parse("2014-02-11 15:00:00 -0600")
+      @time_3pm = Time.parse("3 pm")
       Time.stub(:now).and_return(@time_3pm)
       @bar.happy_discount = 0.5
     end
