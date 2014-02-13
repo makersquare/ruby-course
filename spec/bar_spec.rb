@@ -59,23 +59,45 @@ describe Bar do
   # DO NOT CHANGE SPECS ABOVE THIS LINE #
 # # # # # # # # # # # # # # # # # # # # # #
 
-  describe '#happy_hour', :pending => true do
+  describe '#happy_hour' do
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
-      # TODO: CONTROL TIME
+
+      Time.stub(:now).and_return(Time.parse('3 pm'))
       expect(@bar.happy_hour?).to eq(true)
     end
 
     it "is not happy hour otherwise" do
-      # TODO: CONTROL TIME
+      Time.stub(:now).and_return(Time.parse('4 pm'))
       expect(@bar.happy_hour?).to eq(false)
     end
   end
 
   context "During normal hours" do
     # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+    it "knows when not to discount" do
+      @bar.add_menu_item('Blue Moon', 6)
+      @bar.add_menu_item('Shirley', 8)
+      Time.stub(:now).and_return(Time.parse('5 pm'))
+
+      @bar.happy_discount=0.5
+      @bar.add_order('Blue Moon', 2)
+      @bar.add_order('Shirley', 5)
+      expect(@bar.check_out.round(2)).to eq 52
+    end
   end
 
   context "During happy hours" do
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
+    it "knows when to discount" do
+      @bar.add_menu_item('Blue Moon', 6)
+      @bar.add_menu_item('Shirley', 8)
+      Time.stub(:now).and_return(Time.parse('3 pm'))
+
+      @bar.happy_discount=0.5
+      @bar.add_order('Blue Moon', 2)
+      @bar.add_order('Shirley', 5)
+      expect(@bar.check_out.round(2)).to eq 26
+
+    end
   end
 end
