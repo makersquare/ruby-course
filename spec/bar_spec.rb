@@ -125,7 +125,7 @@ describe Bar do
       @time_friday_3pm = Time.parse("Feb 6 1981 3 pm") # Feb 6 1981 is a friday
       @bar.add_menu_item("Spensive Drank", 9.00, discount: false)
       Time.stub(:now).and_return(@time_friday_3pm)
-
+# binding.pry
       expect(@bar.get_price("Spensive Drank")).to eq(9.00)
     end
   end
