@@ -34,10 +34,15 @@ class Bar
   end
 
   def get_price(name)
+    t = Time.now
     @menu_items.each do |item|
       if name == item.name
         if self.happy_hour? == true
-          return item.price * self.happy_discount
+          if t.strftime("%A") === 'Monday' || t.strftime("%A") == 'Wednesday'
+            return item.price - (item.price * 0.25)
+          else
+            return item.price * 0.5
+          end
         else
           return item.price
         end
