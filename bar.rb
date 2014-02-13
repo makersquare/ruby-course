@@ -9,7 +9,7 @@ class Bar
     @happy_discount = 0
   end
 
-  def add_menu_item(name, price, discount=true)
+  def add_menu_item(name, price, discount: true)
     @menu_items << MenuItem.new(name, price, discount)
   end
 

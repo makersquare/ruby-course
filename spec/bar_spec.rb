@@ -115,11 +115,14 @@ describe Bar do
     end
 
     it "returns price * 0.25 for a given drink name during Wednesday happy hour" do
-      @time_wednesday_3pm = Time.parse("Feb 4
-       1981 3 pm") # Feb 4 1981 is a Wednesday
+      @time_wednesday_3pm = Time.parse("Feb 4 1981 3 pm") # Feb 4 1981 is a Wednesday
       Time.stub(:now).and_return(@time_wednesday_3pm)
 
       expect(@bar.get_price('Cosmo')).to eq(5.40 * 0.25)
+    end
+
+    it "only allows certain drinks to receive happy hour discount" do
+
     end
   end
 end
