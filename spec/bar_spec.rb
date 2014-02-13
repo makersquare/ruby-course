@@ -99,7 +99,7 @@ describe Bar do
       @bar.add_menu_item('Cosmo', 5.40)
       @time_3pm = Time.parse("3 pm")
       Time.stub(:now).and_return(@time_3pm)
-      @bar.happy_discount = 0.5
+      # @bar.happy_discount = 0.5
     end
 
     it "returns a price * 0.5 for a given drink name" do
