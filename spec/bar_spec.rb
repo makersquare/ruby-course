@@ -90,20 +90,36 @@ describe Bar do
     end
   end
 
-  context "During busy day (Not Monday's or Wednesday's) happy hours" do
+  context "During happy hours" do
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
 
 # binding.pry
     before do
       @bar = Bar.new "The Irish Yodel"
       @bar.add_menu_item('Cosmo', 5.40)
-      @time_friday_3pm = Time.parse("Feb 6 1981 3 pm") # Feb 6 1981 is a friday
-      Time.stub(:now).and_return(@time_friday_3pm)
       # @bar.happy_discount = 0.5
     end
 
-    it "returns a price * 0.5 for a given drink name" do
-    expect(@bar.get_price('Cosmo')).to eq(5.40 * 0.5)
+    it "returns a price * 0.5 for a given drink name during busy days (Any day except Mon and Wed)" do
+      @time_friday_3pm = Time.parse("Feb 6 1981 3 pm") # Feb 6 1981 is a friday
+      Time.stub(:now).and_return(@time_friday_3pm)
+
+      expect(@bar.get_price('Cosmo')).to eq(5.40 * 0.5)
+    end
+
+    it "returns price * 0.25 for a given drink name during Monday happy hour" do
+      @time_monday_3pm = Time.parse("Feb 2 1981 3 pm") # Feb 2 1981 is a Monday
+      Time.stub(:now).and_return(@time_monday_3pm)
+
+      expect(@bar.get_price('Cosmo')).to eq(5.40 * 0.25)
+    end
+
+    it "returns price * 0.25 for a given drink name during Wednesday happy hour" do
+      @time_wednesday_3pm = Time.parse("Feb 4
+       1981 3 pm") # Feb 4 1981 is a Wednesday
+      Time.stub(:now).and_return(@time_wednesday_3pm)
+
+      expect(@bar.get_price('Cosmo')).to eq(5.40 * 0.25)
     end
   end
 end
