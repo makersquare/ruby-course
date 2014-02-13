@@ -100,16 +100,23 @@ describe Bar do
 
     before do
       @bar = Bar.new("The Liberty")
-      @bar.happy_discount = 0.5
+      @bar.add_menu_item('Pecan Porter', 5.50)
     end
 
     it "discounts drinks during happy hours" do
       @three_pm = Time.parse("2014-02-11 15:00:00 -0600")
       Time.stub(:now).and_return(@three_pm)
-      @bar.add_menu_item('Pecan Porter', 5.50)
 
       expect(@bar.get_price('Pecan Porter')).to eq(2.75)
     end
+
+    it "discounts 25% on Mondays and Wednesdays" do
+      @monday = Time.parse("2014-02-10 15:00:00 -0600")
+      Time.stub(:now).and_return(@monday)
+
+      expect(@bar.get_price('Pecan Porter')).to eq(4.125)
+    end
+
   end
 
 end
