@@ -121,8 +121,12 @@ describe Bar do
       expect(@bar.get_price('Cosmo')).to eq(5.40 * 0.25)
     end
 
-    it "only allows certain drinks to receive happy hour discount" do
+    it "does not allow menu_item with discount: false to receive happy hour discount" do
+      @time_friday_3pm = Time.parse("Feb 6 1981 3 pm") # Feb 6 1981 is a friday
+      @bar.add_menu_item("Spensive Drank", 9.00, discount: false)
+      Time.stub(:now).and_return(@time_friday_3pm)
 
+      expect(@bar.get_price("Spensive Drank")).to eq(9.00)
     end
   end
 end
