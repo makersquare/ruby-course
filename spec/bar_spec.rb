@@ -90,15 +90,15 @@ describe Bar do
     end
   end
 
-  context "During happy hours" do
+  context "During busy day (Not Monday's or Wednesday's) happy hours" do
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
 
 # binding.pry
     before do
       @bar = Bar.new "The Irish Yodel"
       @bar.add_menu_item('Cosmo', 5.40)
-      @time_3pm = Time.parse("3 pm")
-      Time.stub(:now).and_return(@time_3pm)
+      @time_friday_3pm = Time.parse("Feb 6 1981 3 pm") # Feb 6 1981 is a friday
+      Time.stub(:now).and_return(@time_friday_3pm)
       # @bar.happy_discount = 0.5
     end
 
