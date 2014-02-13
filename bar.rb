@@ -26,6 +26,7 @@ class Bar
   def happy_hour?
     time = Time.now
     if time.hour >= 15 && time.hour <= 16
+       @happy_discount = 0.5
        true
     else
        false
