@@ -9,8 +9,8 @@ class Bar
     @happy_discount = 0
   end
 
-  def add_menu_item(name, price)
-    @menu_items << MenuItem.new(name, price)
+  def add_menu_item(name, price, discount=true)
+    @menu_items << MenuItem.new(name, price, discount)
   end
 
   def happy_discount=(discount)
@@ -54,9 +54,10 @@ end
 
 
 class MenuItem
-  attr_accessor :name, :price
-  def initialize(name, price)
+  attr_accessor :name, :price, :discount
+  def initialize(name, price, discount)
     @name = name
     @price = price
+    @discount = discount
   end
 end
