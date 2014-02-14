@@ -7,7 +7,7 @@ class TaxiMeter
 
   def initialize(airport: false)
     @amount_due = 0
-    @miles_driven = 0.0
+    @miles_driven = 0
     @start_time = nil
     @stop_time = nil
     @airport = airport
@@ -29,9 +29,10 @@ class TaxiMeter
       @amount_due += (29.0/60)*(Time.now-@start_time)/60
       #Adds the amount due to the drunk tax (9PM-4AM)
       @amount_due += 1 if (@start_time.hour >= 21 || @start_time.hour < 4)
-
+      #Makes the amount 13.10 if coming from the airport and the minimum hasn't been met
+      @amount_due = 13.10 if @airport && @amount_due < 13.10
       #Returns the amount_due, rounded for cents
-      return @amount_due.round(2)
+      return (@amount_due*100).round(0)
     else
       return 0
     end
