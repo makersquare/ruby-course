@@ -79,7 +79,23 @@ describe TaxiMeter do
 
       expect(@meter.amount_due).to eq(690)
     end
+  end
 
+  context "The taxi meter ends" do
+    before do
+      start_time = Time.now
+      Time.stub(:now).and_return(start_time)
+
+      @meter = TaxiMeter.new
+      @meter.start
+      Time.stub(:now).and_return(start_time + 60 * 60)
+      @meter.stop
+    end
+
+    # it "should charge $29.00 for an hour wait time" do
+
+
+    # end
   end
 
 
