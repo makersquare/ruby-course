@@ -1,3 +1,5 @@
+require 'time'
+
 class TaxiMeter
   attr_reader :amount_due, :start_time, :stop_time
   attr_accessor :miles_driven
@@ -13,15 +15,20 @@ class TaxiMeter
   def start
     @start_time = Time.now
     if @airport then @amount_due += 1310 end
-    if @start_time.
+
+    seven_hours = 420 * 60
+    if @start_time.between?(Time.parse('9 pm'), (Time.parse('9 pm') + seven_hours)) then @amount_due += 100 end
   end
 
   def stop
     @stop_time = Time.now
     sixth = (1.0/6.0)
-    if @miles_driven <= (1.0/6.0)
-      @amount_due += 250
-    end
+    @amount_due += 250
+    @miles_driven <= (sixth) ? @amount_due : @miles_driven -= sixth
+
+
+
+    @amount_due
   end
 
 

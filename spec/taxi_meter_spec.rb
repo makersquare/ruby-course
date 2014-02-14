@@ -89,11 +89,13 @@ describe TaxiMeter do
       expect(@meter.amount_due).to eq(250)
     end
 
-    it "charges an additional $1.00 (recorded in cents) if the start time is between 9am and 4pm" do
+    it "charges $2.50 for each additional mile (prorated by each 1/6 mile)" do
       @meter.miles_driven = one_sixth
       @meter.stop
-      expect(@meter.amount_due).to eq(350)
+      expect(@meter.amount_due).to eq(250)
     end
+
+
 
   end
 
@@ -115,4 +117,30 @@ describe TaxiMeter do
     end
   end
 
+  context "The taxi meter charges more or less for different start times" do
+
+    it "charges an additional $1.00 (recorded in cents) between 9 pm and 4 am" do
+      # Set time to 11 pm when the meter starts
+      start_time = Time.parse('11 pm')
+      Time.stub(:now).and_return(start_time)
+
+      @meter = TaxiMeter.new
+      @meter.start
+      @meter.miles_driven = one_sixth
+      @meter.stop
+      expect(@meter.amount_due).to eq(350)
+    end
+
+    it "does not charge an additional $1.00 (recorded in cents)" do
+      # Set time to 11 pm when the meter starts
+      start_time = Time.parse('4 pm')
+      Time.stub(:now).and_return(start_time)
+
+      @meter = TaxiMeter.new
+      @meter.start
+      @meter.miles_driven = one_sixth
+      @meter.stop
+      expect(@meter.amount_due).to eq(250)
+    end
+  end
 end
