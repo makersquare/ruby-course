@@ -1,4 +1,6 @@
 require './taxi_meter.rb'
+require 'pry-debugger'
+require 'time'
 
 describe TaxiMeter do
 
@@ -41,7 +43,13 @@ describe TaxiMeter do
       expect(@meter.start_time).to eq(start_time)
     end
 
-    it "records the time it stopped"
+    it "records the time it stopped" do
+      @meter.start
+      time = Time.now
+      Time.stub(:now).and_return(time + 5 * 60)
+      @meter.stop
+      expect(@meter.stop_time).to eq(time + 5 * 60)
+    end
   end
 
   context "The taxi meter starts" do
@@ -54,7 +62,18 @@ describe TaxiMeter do
       @meter.start
     end
 
-    it "charges $2.50 for the first 1/6 mile (recorded in cents)"
+    #binding.pry
+
+    it "charges $2.50 for the first 1/6 mile (recorded in cents)" do
+      @meter.distance(1.0 / 6.0)
+      expect(@meter.amount_due).to eq('2.50')
+    end
+
+    it "charges $.40 for an additional 1/6 mile (recorded in cents)" do
+      @meter.distance(2.0 / 6.0)
+      expect(@meter.amount_due).to eq('2.90')
+    end
+
   end
 
 
