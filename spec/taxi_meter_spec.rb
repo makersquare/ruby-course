@@ -1,4 +1,5 @@
 require './taxi_meter.rb'
+require 'pry-debugger'
 
 describe TaxiMeter do
 
@@ -61,7 +62,27 @@ describe TaxiMeter do
       @meter.start
     end
 
-    it "charges $2.50 for the first 1/6 mile (recorded in cents)"
+    it "charges $2.50 for the first 1/6 mile (recorded in cents, not including time)" do
+      #miles driven will be 1/6 of mile, and the time will be prorate at 0(fastcar)
+      @meter.stop
+      expect(@meter.stop).to eq(250)
+    end
+
+    it "charges $2.40 for each additional mile (recorded in cents, not including time)" do
+      price_of_5_miles = @meter.stop(5)
+      expect(price_of_5_miles).to eq(1410)
+    end
+
+    it "charges 2900 for the hour and doesn't drive anywhere" do
+      start_time = Time.now
+      Time.stub(:now).and_return(start_time)
+      @meter.start
+      stop_time = start_time + 60*60
+      Time.stub(:now).and_return(stop_time)
+      @meter.stop
+      expect(@meter.stop).to eq(2900)
+    end
+
   end
 
 
