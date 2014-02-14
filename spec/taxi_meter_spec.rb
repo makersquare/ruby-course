@@ -1,4 +1,5 @@
 require './taxi_meter.rb'
+require 'pry-debugger'
 
 describe TaxiMeter do
 
@@ -13,8 +14,9 @@ describe TaxiMeter do
     end
 
     it "starts at zero" do
-      @meter.amount_due = 0
-      @meter.miles_driven = 0
+			binding.pry
+      expect(@meter.amount_due).to eq(0)
+      expect(@meter.miles_driven).to eq(0)
     end
 
     it "can start and stop" do
@@ -67,7 +69,12 @@ describe TaxiMeter do
       @meter.start
     end
 
-    xit "charges $2.50 for the first 1/6 mile (recorded in cents)" do
+    it "charges $2.50 for the first 1/6 mile (recorded in cents)" do
+
+			@meter.miles_driven = one_sixth
+#			binding.pry
+
+			expect(@meter.amount_due).to eq(250)
     end
   end
 
