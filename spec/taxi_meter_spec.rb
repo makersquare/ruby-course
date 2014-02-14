@@ -136,4 +136,24 @@ describe TaxiMeter do
     end
   end
 
+  context "The taxi meter stops running after the stop time" do
+
+    it "doesn't add more time after the meter stops running" do
+      start_time = Time.parse("Feb 24 2013 3 PM")
+      Time.stub(:now).and_return(start_time)
+
+      @meter = TaxiMeter.new
+      @meter.start
+      stop_time = Time.parse("Feb 24 2013 4 PM")
+      Time.stub(:now).and_return(stop_time)
+      @meter.miles_driven = 4
+      @meter.stop
+      time_later = Time.parse("Feb 24 2013 5 PM")
+      Time.stub(:now).and_return(time_later)
+
+      expect(@meter.amount_due).to eq(41.7)
+
+    end
+  end
+
 end
