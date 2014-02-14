@@ -41,7 +41,19 @@ describe TaxiMeter do
       expect(@meter.start_time).to eq(start_time)
     end
 
-    it "records the time it stopped"
+    it "records the time it stopped" do
+      # stub the stopping time
+      stop_time = Time.now
+      Time.stub(:now).and_return(stop_time)
+
+      #This should grab the current time
+      @meter.stop
+
+      #Re-stub Time to be 5 minutes into the future
+      Time.stub(:now).and_return(stop_time + 5 * 60)
+
+      expect(@meter.stop_time).to eq(stop_time)
+    end
   end
 
   context "The taxi meter starts" do
@@ -54,8 +66,30 @@ describe TaxiMeter do
       @meter.start
     end
 
-    it "charges $2.50 for the first 1/6 mile (recorded in cents)"
+    it "charges $2.50 for the first 1/6 mile (recorded in cents)" do
+      @meter.miles_driven = one_sixth
+     
+      expect(@meter.amount_due).to eq(250)
+    end
+
+      it "charges $2.40 for each additional mile (prorated by each sixth)" do
+      @meter.miles_driven = one_sixth * 2
+      expect(@meter.amount_due).to eq(290)
+ 
+      @meter.miles_driven = 10 + one_sixth
+      expect(@meter.amount_due).to eq(2650)
+ 
+      @meter.miles_driven = one_sixth * 20
+      expect(@meter.amount_due).to eq(1010)
+ 
+      # Make sure it rounds up to gouge as
+      # much money from the customer as possible
+      @meter.miles_driven = one_sixth * 20 + 0.1
+      expect(@meter.amount_due).to eq(1050)
+    end
+    
   end
+
 
 
   context "The taxi meter starts from ABIA" do
@@ -68,7 +102,10 @@ describe TaxiMeter do
       @meter.start
     end
 
-    it "has a minimum fare of $13.10"
+    it "has a minimum fare of $13.10" do
+
   end
+
+
 
 end
