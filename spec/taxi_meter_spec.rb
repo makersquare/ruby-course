@@ -1,4 +1,5 @@
 require './taxi_meter.rb'
+require 'pry-debugger'
 
 describe TaxiMeter do
 
@@ -41,7 +42,14 @@ describe TaxiMeter do
       expect(@meter.start_time).to eq(start_time)
     end
 
-    it "records the time it stopped"
+    it "records the time it stopped" do
+      stop_time = Time.now
+      Time.stub(:now).and_return(stop_time)
+
+      @meter.stop
+
+      expect(@meter.stop_time).to eq(stop_time)
+    end
   end
 
   context "The taxi meter starts" do
@@ -54,7 +62,9 @@ describe TaxiMeter do
       @meter.start
     end
 
-    it "charges $2.50 for the first 1/6 mile (recorded in cents)"
+    it "charges $2.50 for the first 1/6 mile (recorded in cents)" do
+      expect(@meter.start).to eq(2.50)
+    end
   end
 
 
@@ -68,7 +78,42 @@ describe TaxiMeter do
       @meter.start
     end
 
-    it "has a minimum fare of $13.10"
+    it "has a minimum fare of $13.10" do
+      expect(@meter.start).to eq(13.10)
+    end
   end
 
+  context "The taxi can determine amount due based on miles driven" do
+    before do
+      # We want to freeze time to the point when the meter starts
+      start_time = Time.now
+      Time.stub(:now).and_return(start_time)
+
+      @meter = TaxiMeter.new
+      @meter.start
+    end
+
+    it "can calculate amount due base on miles driven and waiting time" do
+      @meter.miles_traveled(11.5)
+      @waiting = @meter.waiting_time(90)
+      @cost = @meter.total_cost
+
+      expect(@cost).to eq(73.57)
+    end
+  end
+  
+  context "Adds additional fees after 9pm" do
+    it "if between 9pm and 4am adds an additional $1 per mile" do
+      start_time = Time.parse("10:00pm")
+      Time.stub(:now).and_return(start_time)
+
+      @meter = TaxiMeter.new
+      @meter.start
+      @meter.miles_traveled(11.5)
+      @waiting = @meter.waiting_time(90)
+      @cost = @meter.total_cost
+
+      expect(@cost).to eq(74.57)
+    end
+  end
 end
