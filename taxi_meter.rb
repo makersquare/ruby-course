@@ -23,6 +23,8 @@ class TaxiMeter
   # end
 
   def amount_due
-    @amount_due = @miles_driven / 6.0 * 15.00
+    first_sixth_cost = 250
+    each_sixth_cost = (@miles_driven * 6.0 - 1) * 240 / 6.0
+    @amount_due = first_sixth_cost + each_sixth_cost
   end
 end

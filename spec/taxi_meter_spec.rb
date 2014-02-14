@@ -67,18 +67,19 @@ describe TaxiMeter do
     end
 
     it "charges $2.50 for the first 1/6 mile (recorded in cents)" do
-      @meter.miles_driven = 1
+      @meter.miles_driven = 1.0 / 6
 
 
-      expect(@meter.amount_due).to eq(2.50)
+      expect(@meter.amount_due).to eq(250) # 250 centers or $2.50
     end
 
     it "charges $5.00 for the first and second 1/6 mile (recorded in cents)" do
       @meter.miles_driven = 2
 
 
-      expect(@meter.amount_due).to eq(5.00)
+      expect(@meter.amount_due).to eq(690)
     end
+
   end
 
 
