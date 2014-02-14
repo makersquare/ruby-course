@@ -1,3 +1,5 @@
 class TaxiMeter
-  # TODO
+	attr_accessor :amount_due, :miles_driven
+
+
 end
