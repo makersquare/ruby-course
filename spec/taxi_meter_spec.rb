@@ -13,8 +13,8 @@ describe TaxiMeter do
     end
 
     it "starts at zero" do
-      @meter.amount_due = 0
-      @meter.miles_driven = 0
+      expect(@meter.amount_due).to eq(0)
+      expect(@meter.miles_driven).to eq(0)
     end
 
     it "can start and stop" do
@@ -41,6 +41,7 @@ describe TaxiMeter do
       expect(@meter.start_time).to eq(start_time)
     end
 
+    ### CHECK THIS TEST ###
     it "records the time it stopped" do
       stop_time = Time.now
       Time.stub(:now).and_return(stop_time)
@@ -60,7 +61,16 @@ describe TaxiMeter do
       @meter.start
     end
 
-    it "charges $2.50 for the first 1/6 mile (recorded in cents)"
+    ### CHECK THIS TEST ###
+    it "charges $2.50 for the first 1/6 mile (recorded in cents)" do
+      @meter.miles_driven = 0.1
+      expect(@meter.amount_due).to eq(2.50)
+
+      #charges 2.40 per mile prorated for each additional 1/6 mile
+      @meter.miles_driven = 1.0
+      expect(@meter.amount_due).to eq(4.50)
+      # (2.50+(2.40*(5.0/6.0))).ceil_to(2)
+    end
   end
 
 
@@ -74,7 +84,40 @@ describe TaxiMeter do
       @meter.start
     end
 
-    it "has a minimum fare of $13.10"
+    it "has a minimum fare of $13.10" do
+      @meter.miles_driven = 1.0
+      expect(@meter.amount_due).to eq(13.10)
+      @meter.miles_driven = 2.0
+      expect(@meter.amount_due).to eq(13.10)
+      @meter.miles_driven = 6.0
+      expect(@meter.amount_due).to eq(16.50)
+    end
+  end
+
+  context "The taxi meter starts between 9pm and 4am" do
+    before do
+      @meter = TaxiMeter.new
+
+      start_time = Time.parse("9:30 pm")
+      Time.stub(:now).and_return(start_time)
+      @meter.start
+
+      stop_time = Time.parse("10:30 pm")
+      Time.stub(:now).and_return(stop_time)
+      @meter.stop
+
+
+    end
+
+    it "charges an additional $1.00 if start between 9pm and 4am" do
+
+      @meter.miles_driven = 0.1
+      expect(@meter.amount_due).to eq(32.50)
+
+      @meter.miles_driven = 1.0
+      expect(@meter.amount_due).to eq(34.50)
+    end
+
   end
 
 end
