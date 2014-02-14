@@ -119,6 +119,17 @@ describe Bar do
 
   end
 
+  describe Item do
+
+    it "specifies drinks that are exempt from discount" do
+      @bar = Bar.new("The Liberty")
+      @bar.add_menu_item('Pecan Porter', 5.50, exempt: true)
+
+      expect(@bar.get_price('Pecan Porter')).to eq(5.50)
+    end
+
+  end
+
 end
 
 
