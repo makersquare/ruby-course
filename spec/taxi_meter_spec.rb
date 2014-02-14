@@ -1,4 +1,5 @@
 require './taxi_meter.rb'
+require 'pry-debugger'
 
 describe TaxiMeter do
 
@@ -54,7 +55,21 @@ describe TaxiMeter do
       @meter.start
     end
 
-    it "charges $2.50 for the first 1/6 mile (recorded in cents)"
+    it "charges $2.50 for the first 1/6 mile (recorded in cents)" do
+      @meter.miles_driven = 1.0 / 6.0
+
+      binding.pry
+
+      expect(@meter.amount_due).to eq(2.5)
+    end
+
+    it "charges $2.40 for each additional mile, prorated by 1/6 of a mile" do
+      @meter.miles_driven = 4 + (1.0 / 6.0)
+
+      binding.pry
+
+      expect(@meter.amount_due).to eq(12.1)
+    end
   end
 
 
