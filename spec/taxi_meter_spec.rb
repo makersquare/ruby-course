@@ -96,10 +96,8 @@ describe TaxiMeter do
       expect(@meter.stop).to eq(start_time + 60 * 60)
     end
 
-    it "should charge $29.00 for an hour wait time" do
-      @meter.wait_time = ((@meter.stop_time - @meter.start_time) / 60)
-# binding.pry
-    expect(@meter.amount_due).to eq(29.00)
+    it "should charge $29.00 for an hour wait time (plus $2.50 for first 1/6th mile)" do
+      expect(@meter.amount_due).to eq(3150)
     end
   end
 
