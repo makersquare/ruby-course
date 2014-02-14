@@ -105,7 +105,7 @@ describe TaxiMeter do
 
   context "Drunk tax is in effect late night" do
     before do
-      @start_time = Time.new(2014, 2, 1, 20, 0, 0)
+      @start_time = Time.new(2014, 2, 1, 23, 0, 0)
       Time.stub(:now).and_return(@start_time)
 
       @meter = TaxiMeter.new
@@ -117,12 +117,33 @@ describe TaxiMeter do
       expect(@meter.amount_due).to eq(8.73)
     end
 
-    it "charges $ for a 16 min wait time, 5.7 mile trip" do
+    it "charges $24.83 for a 16 min wait time, 5.7 mile trip" do
       Time.stub(:now).and_return(@meter.start_time + 16 * 60)
       @meter.miles_driven = 5.7
       expect(@meter.amount_due).to eq(24.83)
     end
 
+  end
+
+  context "Drunk tax is in effect early morning" do
+      before do
+      @start_time = Time.new(2014, 2, 1, 3, 59, 0)
+      Time.stub(:now).and_return(@start_time)
+
+      @meter = TaxiMeter.new
+      @meter.start
+    end
+
+    it "charges $8.73 for a 16 min wait time, no distance" do
+      Time.stub(:now).and_return(@meter.start_time + 16 * 60)
+      expect(@meter.amount_due).to eq(8.73)
+    end
+
+    it "charges $24.83 for a 16 min wait time, 5.7 mile trip" do
+      Time.stub(:now).and_return(@meter.start_time + 16 * 60)
+      @meter.miles_driven = 5.7
+      expect(@meter.amount_due).to eq(24.83)
+    end
   end
 
   context "The taxi meter starts from ABIA" do
