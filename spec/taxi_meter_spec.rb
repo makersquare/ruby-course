@@ -66,7 +66,12 @@ describe TaxiMeter do
       @meter.start
     end
 
-    it "charges $2.50 for the first 1/6 mile (recorded in cents)"
+    it "charges $2.50 for the first 1/6 mile (recorded in cents)" do
+      Time.stub(:now).and_return(@start_time + (60*10))
+
+      expect(@meter.miles_driven).to eq(one_sixth)
+      expect(@meter.amount_due).to eq(2.50)
+    end
   end
 
 
