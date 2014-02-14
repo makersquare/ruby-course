@@ -130,6 +130,32 @@ describe Bar do
 
   end
 
+  describe Bar do
+
+    before do
+      @bar = Bar.new("The Liberty")
+      @bar.add_menu_item('Lone Star', 2.00)
+      @bar.add_menu_item('Pecan Porter', 5.50)
+    end
+
+    it "records drink purchases" do
+      @bar.drink_purchase('Lone Star')
+      @bar.drink_purchase('Pecan Porter')
+
+      expect(@bar.drink_record.count).to eq(2)
+      expect(@bar.drink_record.first.name).to eq('Lone Star')
+    end
+
+    it "gets most popular drinks" do
+      @bar.drink_purchase('Lone Star')
+      @bar.drink_purchase('Pecan Porter')
+      @bar.drink_purchase('Pecan Porter')
+
+      expect(@bar.most_popular_drink).to eq('Pecan Porter')
+    end
+
+  end
+
 end
 
 
