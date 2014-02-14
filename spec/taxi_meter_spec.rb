@@ -1,5 +1,6 @@
 require './taxi_meter.rb'
 
+
 describe TaxiMeter do
 
   def one_sixth
@@ -20,7 +21,7 @@ describe TaxiMeter do
       expect(@meter.miles_driven).to eq(0)
     end
 
-    xit "can start and stop" do
+    it "can start and stop" do
       @meter.start
       expect(@meter.start_time).to_not be_nil
       expect(@meter.stop_time).to be_nil
@@ -29,7 +30,7 @@ describe TaxiMeter do
       expect(@meter.stop_time).to_not be_nil
     end
 
-    xit "records the time it started" do
+    it "records the time it started" do
       # We want to freeze time to the point when the meter starts
       start_time = Time.now
       Time.stub(:now).and_return(start_time)
