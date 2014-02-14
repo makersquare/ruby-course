@@ -86,8 +86,12 @@ describe TaxiMeter do
     it "has a minimum fare of $13.10" do
       @meter.miles_driven = 4
 
+      #binding.pry
+
       expect(@meter.amount_due).to eq(24.8)
     end
   end
+
+  context "The taxi meter starts between 9am and 4pm"
 
 end
