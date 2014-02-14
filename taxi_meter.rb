@@ -15,24 +15,30 @@ class TaxiMeter
     @start_time = Time.now
   end
 
-  def stop(miles_driven=0)
+  def stop
     @stop_time = Time.now
-    waiting_cost_per_hour = 2900
+  end
+
+  def amount_due(m
+    )
+    time = Time.now
     always_one_sixth = 0.16666666666
-    @stop_time = Time.now
-    time_traveled_in_minutes = (@start_time-@stop_time)/60
-    cost_of_waiting = waiting_cost_per_hour * (time_traveled_in_minutes/60)
-    # 250 for first1/6, 240 each additional prorated
     price = (250 + 240*(miles_driven-always_one_sixth))
     if miles_driven<=always_one_sixth
-      return @amount_due = 250
+      return price = 250
     else
-      @amount_due = price
-      return (@amount_due).floor
+      return price.floor
     end
   end
 
 
 
+    # waiting_cost_per_hour = 2900.0
+    # always_one_sixth = 0.16666666666
+    # time_traveled_in_minutes = (@start_time-@stop_time)/60
+    # cost_of_waiting = waiting_cost_per_hour * (time_traveled_in_minutes/60)
+
+
+    # 250 for first1/6, 240 each additional prorated
 
 end

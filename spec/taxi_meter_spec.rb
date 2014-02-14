@@ -64,16 +64,15 @@ describe TaxiMeter do
 
     it "charges $2.50 for the first 1/6 mile (recorded in cents, not including time)" do
       #miles driven will be 1/6 of mile, and the time will be prorate at 0(fastcar)
-      @meter.stop
-      expect(@meter.stop).to eq(250)
+      expect(@meter.amount_due).to eq(250)
     end
 
-    it "charges $2.40 for each additional mile (recorded in cents, not including time)" do
+    xit "charges $2.40 for each additional mile (recorded in cents, not including time)" do
       price_of_5_miles = @meter.stop(5)
       expect(price_of_5_miles).to eq(1410)
     end
 
-    it "charges 2900 for the hour and doesn't drive anywhere" do
+    xit "charges 2900 for the hour and doesn't drive anywhere" do
       start_time = Time.now
       Time.stub(:now).and_return(start_time)
       @meter.start
