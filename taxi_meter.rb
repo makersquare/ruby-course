@@ -7,22 +7,26 @@ class TaxiMeter
   def initialize(elapsed = 0, airport: false)
     @elapsed = 0
     @miles_driven = 0
-    puts "#{airport}"
     @airport = airport
-    if airport == true
-      @amount_due = 1310
-    else
-      @amount_due = 0
-    end
   end
 
-  def calc_due(miles_driven)
-    sixth = miles_driven * 6
-    puts "#{sixth}"
+  def amount_due
+    elapsed = @stop_time - @start_time
+    @distance = miles_driven
+    sixth = (miles_driven * 6).ceil
+    due = 210 + (40 * sixth)
 
-    @amount_due = (210 + (40 * sixth))
+      if @airport == true
+          if due > 1310
+             due = due
+          else
+             due = 1310
+          end
+      else
+        due
+      end
 
-  end
+  end #amount_due
 
 
   def start
@@ -33,10 +37,6 @@ class TaxiMeter
     @stop_time = Time.now
   end
 
-  def miles_driven(miles_driven)
-    @miles_driven = miles_driven
-    @amount_due = self.calc_due(miles_driven)
-  end
 
 
 
