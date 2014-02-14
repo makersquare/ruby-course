@@ -71,6 +71,15 @@ describe TaxiMeter do
 
       expect(@meter.amount_due).to eq(2.50)
     end
+
+    it "charges $2.40 for each additional mile, prorated by each 1/6 mile" do
+      @meter.miles_driven = 1 + one_sixth
+      expect(@meter.amount_due).to eq(4.90)
+
+      @meter.miles_driven = 2 + (one_sixth) + (one_sixth/2)
+      expect(@meter.amount_due).to eq(7.70)
+    end
+
   end
 
 
@@ -84,7 +93,10 @@ describe TaxiMeter do
       @meter.start
     end
 
-    it "has a minimum fare of $13.10"
+    it "has a minimum fare of $13.10" do
+      @meter.miles_driven = one_sixth
+      expect(@meter.amount_due).to eq(15.60)
+    end
   end
 
 end
