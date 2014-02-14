@@ -11,9 +11,12 @@ class TaxiMeter
   end
 
   def amount_due
-    if self.miles_driven <= (1.0 / 6.0)
-      @amount_due = 250
-    end
+      if self.miles_driven <= (1.0 / 6.0)
+        @amount_due = 250
+      elsif self.miles_driven > (1.0 / 6.0)
+        one_sixth = (self.miles_driven * 6) - 1
+        @amount_due = 250 + (one_sixth * 40)
+      end
   end
 
   def start
