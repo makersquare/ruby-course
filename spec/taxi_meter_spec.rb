@@ -90,6 +90,9 @@ describe TaxiMeter do
 			expect(@meter.amount_due).to eq(1050)
 		end
 
+		xit "$29.00 an hour for waiting time, prorated by minute" do
+		end
+
   end
 
 
