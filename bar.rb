@@ -9,8 +9,8 @@ class Bar
     @happy_discount = 0
   end
 
-  def add_menu_item(name, price)
-    new_item = Item.new(name, price)
+  def add_menu_item(name, price, exempt = false)
+    new_item = Item.new(name, price, exempt = false)
     @menu_items << new_item
   end
 
@@ -33,19 +33,24 @@ class Bar
     end
   end
 
+#Get price of drinks. If happy hour, 50% discount. If Monday
+#or Wednesday, 25% discount. If item is exempt, no discount
+#during happy hour.
   def get_price(name)
     t = Time.now
     @menu_items.each do |item|
-      if name == item.name
-        if self.happy_hour? == true
-          if t.strftime("%A") === 'Monday' || t.strftime("%A") == 'Wednesday'
-            return item.price - (item.price * 0.25)
+      if name == item.name && item.exempt == false
+          if self.happy_hour? == true
+            if t.strftime("%A") === 'Monday' || t.strftime("%A") == 'Wednesday'
+              return item.price - (item.price * 0.25)
+            else
+              return item.price * (0.5)
+            end
           else
-            return item.price * 0.5
+            return item.price
           end
-        else
-          return item.price
-        end
+      elsif item.exempt == true
+        return item.price
       else
         return nil
       end
@@ -55,11 +60,12 @@ class Bar
 end
 
 class Item
-  attr_accessor :name, :price
+  attr_accessor :name, :price, :exempt
 
-  def initialize(name, price)
+  def initialize(name, price, exempt = false)
     @name = name
     @price = price
+    @exempt = exempt
   end
 
 end
