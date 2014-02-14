@@ -25,6 +25,12 @@ class Bar
     end
   end
 
+  def most_popular_drink
+    @drink_record.group_by do |item|
+      item
+    end.values.max_by(&:size).first.name
+  end
+
   def happy_discount=(value)
     if value < 0
       @happy_discount = 0
