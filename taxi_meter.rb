@@ -1,5 +1,5 @@
 class TaxiMeter
-  attr_accessor :amount_due, :miles_driven, :start_time
+  attr_accessor :amount_due, :miles_driven, :start_time, :wait_time
   attr_reader :stop_time
 
   def initialiaze
@@ -7,6 +7,7 @@ class TaxiMeter
     @miles_driven = 0
     @start_time = nil
     @stop_time = nil
+    @wait_time = 0
   end
 
   def start
@@ -18,6 +19,7 @@ class TaxiMeter
   end
 
   def amount_due
-    (2.10 + 0.4 * (@miles_driven * 6)) * 100
+
+    (2.10 + 0.4 * (@miles_driven * 6.0)) * 100
   end
 end
