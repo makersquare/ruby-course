@@ -1,4 +1,5 @@
 require './taxi_meter.rb'
+require 'pry-debugger'
 
 describe TaxiMeter do
 
@@ -41,7 +42,18 @@ describe TaxiMeter do
       expect(@meter.start_time).to eq(start_time)
     end
 
-    it "records the time it stopped"
+    it "records the time it stopped" do
+      time = Time.now
+      Time.stub(:now).and_return(time)
+      @meter.start
+
+      new_time = time + (5 * 60)
+      Time.stub(:now).and_return(new_time)
+      @meter.stop
+
+      expect(@meter.stop_time).to eq(new_time)
+    end
+
   end
 
   context "The taxi meter starts" do
