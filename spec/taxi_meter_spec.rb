@@ -15,9 +15,12 @@ describe TaxiMeter do
     it "starts at zero" do
       @meter.amount_due = 0
       @meter.miles_driven = 0
+
+      expect(@meter.amount_due).to eq(0)
+      expect(@meter.miles_driven).to eq(0)
     end
 
-    it "can start and stop" do
+    xit "can start and stop" do
       @meter.start
       expect(@meter.start_time).to_not be_nil
       expect(@meter.stop_time).to be_nil
@@ -26,7 +29,7 @@ describe TaxiMeter do
       expect(@meter.stop_time).to_not be_nil
     end
 
-    it "records the time it started" do
+    xit "records the time it started" do
       # We want to freeze time to the point when the meter starts
       start_time = Time.now
       Time.stub(:now).and_return(start_time)
@@ -41,7 +44,7 @@ describe TaxiMeter do
       expect(@meter.start_time).to eq(start_time)
     end
 
-    it "records the time it stopped"
+    xit "records the time it stopped"
   end
 
   context "The taxi meter starts" do
@@ -54,7 +57,7 @@ describe TaxiMeter do
       @meter.start
     end
 
-    it "charges $2.50 for the first 1/6 mile (recorded in cents)"
+    xit "charges $2.50 for the first 1/6 mile (recorded in cents)"
   end
 
 
@@ -68,7 +71,7 @@ describe TaxiMeter do
       @meter.start
     end
 
-    it "has a minimum fare of $13.10"
+    xit "has a minimum fare of $13.10"
   end
 
 end
