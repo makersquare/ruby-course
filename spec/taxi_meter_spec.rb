@@ -89,8 +89,8 @@ describe TaxiMeter do
       expect(@meter.amount_due).to eq(2900)
     end
 
-    it "charges $7.73 for 16 min wait time, no distance" do
-      Time.stub(:now).and_return(@meter.start_time + 16 * 60)
+    it "charges $7.73 for 15.5 min wait time, no distance" do
+      Time.stub(:now).and_return(@meter.start_time + 15.5 * 60)
       expect(@meter.amount_due).to eq(773)
     end
 
@@ -98,6 +98,26 @@ describe TaxiMeter do
       Time.stub(:now).and_return(@meter.start_time + 16 * 60)
       @meter.miles_driven = 5.7
       expect(@meter.amount_due).to eq(2383)
+    end
+
+
+  end
+
+  context "Checking amount due after stop_time has been set" do
+    before do
+
+      @meter = TaxiMeter.new
+      @meter.start
+
+      # We want to freeze time to the point when the meter starts
+      @meter.start_time = Time.new(2014, 2, 1, 11, 0, 0)
+      @meter.stop_time = Time.new(2014, 2, 1, 12, 0, 0)
+      Time.stub(:now).and_return(@meter.start_time + 70*60) #Sets current time past stop time
+
+    end
+
+    it "Charges $29 for a 1 hour wait time, no distance" do
+      expect(@meter.amount_due).to eq(2900)
     end
 
 

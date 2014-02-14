@@ -26,7 +26,11 @@ class TaxiMeter
       #Adds the amount due to distance travelled. Only happens if distance has been travelled
       @amount_due += 2.1 + ((@miles_driven*6).ceil)*0.4 if (@miles_driven > 0)
       #Adds the amount due to the waiting time
-      @amount_due += (29.0/60)*(Time.now-@start_time)/60
+      if @stop_time
+        @amount_due += (29.0/60)*((@stop_time-@start_time)/60).ceil
+      else
+        @amount_due += (29.0/60)*((Time.now-@start_time)/60).ceil
+      end
       #Adds the amount due to the drunk tax (9PM-4AM)
       @amount_due += 1 if (@start_time.hour >= 21 || @start_time.hour < 4)
       #Makes the amount 13.10 if coming from the airport and the minimum hasn't been met
