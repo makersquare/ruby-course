@@ -84,6 +84,8 @@ describe TaxiMeter do
 			@meter.miles_driven = one_sixth * 20
 			expect(@meter.amount_due).to eq(1010)
 
+			# Make sure it rounds up to gouge as
+			# much money from the customer as possible
 			@meter.miles_driven = one_sixth * 20 + 0.1
 			expect(@meter.amount_due).to eq(1050)
 		end
@@ -101,7 +103,13 @@ describe TaxiMeter do
       @meter.start
     end
 
-    xit "has a minimum fare of $13.10" do
+    it "has a minimum fare of $13.10" do
+
+			@meter.miles_driven = one_sixth * 20
+			expect(@meter.amount_due).to eq(1310)
+
+			@meter.miles_driven = 10 + one_sixth
+			expect(@meter.amount_due).to eq(2650)
     end
   end
 end
