@@ -1,7 +1,7 @@
 class TaxiMeter
   # TODO
-  attr_accessor :amount_due, :miles_driven, :minutes, :stop, :stop_time, :start_time
-  def initialize(amount_due=0, miles_driven=0, stop_time = nil)
+  attr_accessor :amount_due, :miles_driven, :minutes, :stop, :stop_time, :start_time, :airport
+  def initialize(amount_due=0, miles_driven=0, stop_time = nil, airport: false)
   	@amount_due
   	@miles_driven
   	@stop
@@ -15,13 +15,16 @@ class TaxiMeter
   	@stop_time = Time.now
   end
 
- def amount_due(distance)
- 	d = distance
- 	if d < 1.0/6
+ def amount_due(miles)
+ 	total_units = miles * 6
+ 	if total_units < 1.0/6
  		250
  	else
- 		(210 + (40 * d)).round(2)
+ 		(210 + (40 * total_units)).round(2)
  	end
+ end
+
+ def elapsed_time(minutes)
  end
 
 end

@@ -59,12 +59,12 @@ describe TaxiMeter do
 
     it "charges $2.50 for the first 1/6 mile (recorded in cents)" do
       expect(@meter.amount_due(1/6)).to eq(250)
-      expect(@meter.amount_due(24)).to eq(1170)
-      expect(@meter.amount_due(47)).to eq(2090)
+      expect(@meter.amount_due(4)).to eq(1170)
+      expect(@meter.amount_due(8)).to eq(2130)
+    end
 
-
-
-
+    it "charges $29.00 for an hour of elapsed time" do 
+      expect(@meter.elapsed_time(60)).to eq(2900)
     end
   end
 
