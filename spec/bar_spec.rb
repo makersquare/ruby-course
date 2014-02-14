@@ -66,9 +66,16 @@ describe Bar do
       @bar.add_menu_item('PBR', 3.50)
     end
 
-      it 'allows you to order and keep track of a drink' do
+      it 'allows you to order a drink' do
+
       @bar.purchase_drink('Cosmo')
-      expect(@bar.drinks_ordered.count).to eq 0
+      # binding.pry
+    end
+
+    it 'allows you to log frequency of type of drink ordered' do
+      @bar.purchase_drink('Cosmo')
+
+      expect(@bar.drinks_ordered.count).to eq 1
     end
   end
 
