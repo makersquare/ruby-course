@@ -41,7 +41,10 @@ describe TaxiMeter do
       expect(@meter.start_time).to eq(start_time)
     end
 
-    it "records the time it stopped"
+    it "records the time it stopped" do
+      @meter.stop
+    end
+  
   end
 
   context "The taxi meter starts" do
