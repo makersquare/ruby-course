@@ -74,6 +74,23 @@ describe TaxiMeter do
 
   end
 
+  context "The taxi meter is running" do
+
+    before do
+      @start_time = Time.now
+      Time.stub(:now).and_return(@start_time)
+      @meter = TaxiMeter.new
+      @meter.start
+    end
+
+    it "charges $2.40 for each additional mile, prorated by each 1/6 mile" do
+      @meter.miles_driven = 2 + (2.0 / 6.0)
+
+      expect(@meter.amount_due).to eq(770)
+    end
+
+  end
+
 
   context "The taxi meter starts from ABIA" do
     before do
@@ -85,7 +102,14 @@ describe TaxiMeter do
       @meter.start
     end
 
-    it "has a minimum fare of $13.10"
+    xit "has a minimum fare of $13.10" do
+    end
+
   end
 
 end
+
+
+
+
+
