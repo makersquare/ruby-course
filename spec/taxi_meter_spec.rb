@@ -42,7 +42,20 @@ describe TaxiMeter do
       expect(@meter.start_time).to eq(start_time)
     end
 
-    it "records the time it stopped"
+    it "records the time it stopped" do
+      start_time = Time.now
+      Time.stub(:now).and_return(start_time)
+
+      # This should grab the current time
+      @meter.start
+
+      # Re-stub Time to be 5 minutes into the future
+      Time.stub(:now).and_return(start_time + 5 * 60)
+      @meter.stop
+
+      expect(@meter.stop_time).to eq(start_time + 5 * 60)
+
+    end
   end
 
   context "The taxi meter starts" do
@@ -106,7 +119,7 @@ describe TaxiMeter do
     it "adds $29.00 an hour, prorated in minutes to wait times" do
       @meter.miles_driven = 4
       @meter.stop
-
+      binding.pry
       expect(@meter.amount_due).to eq(40.7)
     end
   end

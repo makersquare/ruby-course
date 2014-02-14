@@ -1,6 +1,6 @@
 class TaxiMeter
   attr_accessor :amount_due, :miles_driven, :start_time, :stop_time
-  attr_reader :airport
+  attr_reader :airport, :elapsed_time
 
   def initialize(airport: false)
     @airport = airport
@@ -15,7 +15,6 @@ class TaxiMeter
 
   def stop
     @stop_time = Time.now
-    @amount_due += (@start_time - @stop_time) * (29 / 60)
   end
 
   def amount_due
@@ -26,11 +25,13 @@ class TaxiMeter
     elsif @miles_driven == 1.0 / 6.0 && @airport == true
       amount = (2.5 + 13.1)
     elsif @airport == true
-      amount = ((2.5 + 2.4 * (@miles_driven - (1.0 / 6.0))) + 13.1).round(1)
+      amount = ((2.5 + 2.4 * (@miles_driven - (1.0 / 6.0))) + 13.1)
     else
-      amount = (2.5 + 2.4 * (@miles_driven - (1.0 / 6.0))).round(1)
+      amount = ((2.5 + 2.4 * (@miles_driven - (1.0 / 6.0))))
     end
-
+    # @elapsed_time = @stop_time - @start_time
+    # amount += (@elapsed_time * (29 / 60))
+    return amount.round(2)
 
   end
 end
