@@ -83,7 +83,11 @@ describe TaxiMeter do
       @meter.start
     end
 
-    it "has a minimum fare of $13.10"
+    it "has a minimum fare of $13.10" do
+      @meter.miles_driven = 4
+
+      expect(@meter.amount_due).to eq(24.8)
+    end
   end
 
 end
