@@ -16,4 +16,13 @@ class TaxiMeter
   def stop
     @stop_time = Time.now
   end
+
+  # def drive(miles)
+  #   @miles_driven = miles
+  #   @amount_due = miles / 6.0 * 15.00
+  # end
+
+  def amount_due
+    @amount_due = self.miles_driven / 6.0 * 15.00
+  end
 end
