@@ -6,7 +6,7 @@ class TaxiMeter
 		@miles_driven = 0
 		@sixth = 1.0 / 6.0
 		@first_sixth = 250
-		@additional_sixth = 240
+		@additional_sixth = 40
 	end
 
 	def start
@@ -21,9 +21,11 @@ class TaxiMeter
 		if @miles_driven == 0
 			0
 		else
-			@miles_driven = @miles_driven - @sixth
-			fare = @first_sixth + @miles_driven * @additional_sixth
-			fare.ceil
+			# Divide miles driven into sixths 
+			# and remove the first sixth
+			sixths_miles = (@miles_driven / @sixth).ceil - 1
+
+		fare = @first_sixth + sixths_miles * @additional_sixth
 		end
 	end
 end
