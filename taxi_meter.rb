@@ -24,7 +24,7 @@ class TaxiMeter
   end
 
   def amount_due
-    if @miles_driven >= 0.166666667
+    if @miles_driven >= one_sixth
       @amount_due += 250
     end
     if @airport

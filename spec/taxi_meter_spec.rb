@@ -78,15 +78,27 @@ describe TaxiMeter do
       @meter.stop
 
       #sets miles driven to exactly 1/6 mile
-      @meter.miles_driven = 0.166666667
+      @meter.miles_driven = 1.0 / 6.0
 
       # calculates price by miles driven expects inital 2.50 charge
       expect(@meter.amount_due).to eq(250)
+    end
+
+    it "charges $2.40 a miles prorated by 1/6" do
+      #stops time to simulate end of trip
+      @meter.stop_time
+
+      #sets miles driven to number greater than min and not a whole number
+      @meter.miles_driven = 30.854
+
+      #calculates price by miles driven
+      expect(@meter.amount_due).to eq(7400)
     end
   end
 
 
   context "The taxi meter starts from ABIA" do
+
     before do
       # We want to freeze time to the point when the meter starts
       start_time = Time.now
