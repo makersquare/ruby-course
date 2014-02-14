@@ -23,6 +23,6 @@ class TaxiMeter
   # end
 
   def amount_due
-    @amount_due = self.miles_driven / 6.0 * 15.00
+    @amount_due = @miles_driven / 6.0 * 15.00
   end
 end
