@@ -41,7 +41,12 @@ describe TaxiMeter do
       expect(@meter.start_time).to eq(start_time)
     end
 
-    it "records the time it stopped"
+    it "records the time it stopped" do
+      start_time = Time.now
+      sleep(2)
+      @meter.stop
+      expect(@meter.stop_time).should be_within(0.1).of(start_time+2)
+    end
   end
 
   context "The taxi meter starts" do
@@ -54,7 +59,15 @@ describe TaxiMeter do
       @meter.start
     end
 
-    it "charges $2.50 for the first 1/6 mile (recorded in cents)"
+    it "charges $2.50 for the first 1/6 mile (recorded in cents)" do
+      @meter.miles_driven = 1.0/6.0
+      expect(@meter.amount_due).to eq(250)
+    end
+
+    it "charges $2.40 for every mile after, prorated by each 1/6" do
+      @meter.miles_driven = 3.0/6.0
+      expect(@meter.amount_due).to eq(250+80)
+    end
   end
 
 
@@ -68,7 +81,24 @@ describe TaxiMeter do
       @meter.start
     end
 
-    it "has a minimum fare of $13.10"
-  end
+    it "has a minimum fare of $13.10" do
+      expect(@meter.amount_due).to eq(1310)
+    end
 
+    it "has a fare of 13.10 + the fare for the first mile" do
+      @meter.miles_driven = 1.0/6.0
+      expect(@meter.amount_due).to eq(1310+250)
+    end
+
+    it "has a fare of 13.10 + the fare for the first two miles" do
+      #should prorate the second mile
+      @meter.miles_driven = 2+(1.0/6.0)
+      expect(@meter.amount_due).to eq(1310+250+(240*2))
+      #should not prorate over into a third mile
+      @meter.miles_driven = 7.0/6.0
+      expect(@meter.amount_due).to eq(1310+250+(240*1))
+    end
+  end
 end
+
+
