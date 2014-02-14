@@ -19,15 +19,17 @@ class TaxiMeter
 
   def amount_due
     if @miles_driven == 0 && @airport == false
-      0
+      amount = 0
     elsif @miles_driven == 1.0 / 6.0 && @airport == false
-      2.5
+      amount = 2.5
     elsif @miles_driven == 1.0 / 6.0 && @airport == true
-      (2.5 + 13.1)
+      amount = (2.5 + 13.1)
     elsif @airport == true
-      ((2.5 + 2.4 * (@miles_driven - (1.0 / 6.0))) + 13.1).round(1)
+      amount = ((2.5 + 2.4 * (@miles_driven - (1.0 / 6.0))) + 13.1).round(1)
     else
-      (2.5 + 2.4 * (@miles_driven - (1.0 / 6.0))).round(1)
+      amount = (2.5 + 2.4 * (@miles_driven - (1.0 / 6.0))).round(1)
     end
+
+
   end
 end

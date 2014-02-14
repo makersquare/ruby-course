@@ -92,6 +92,22 @@ describe TaxiMeter do
     end
   end
 
-  context "The taxi meter starts between 9am and 4pm"
+  context "The taxi meter starts between 9am and 4pm", :pending => true do
+    before do
+      # We want to freeze time to between 9am and 4pm
+      start_time = Time.parse("Feb 24 2013 3 PM")
+      Time.stub(:now).and_return(start_time)
+
+      @meter = TaxiMeter.new
+      @meter.start
+    end
+
+    it "adds $1.00 if the time if between 9am and 3pm" do
+      @meter.miles_driven = 4
+      binding.pry
+
+      expect(@meter.amount_due).to eq(12.7)
+    end
+  end
 
 end
