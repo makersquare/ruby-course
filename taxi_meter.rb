@@ -10,9 +10,14 @@ class TaxiMeter
 
   def amount_due
     miles_driven = @miles_driven
+    if @stop_time != nil && @start_time != nil
+      elapsed_time_in_hours = (@stop_time - @start_time)/60
+    else
+      elapsed_time_in_hours = 0
+    end
     if miles_driven > 0
       miles_driven = miles_driven - (1.0/6.0)
-      amount_due = 250
+      amount_due = 250 + elapsed_time_in_hours * 2900
     else
       amount_due = 0
     end

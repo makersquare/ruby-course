@@ -68,6 +68,22 @@ describe TaxiMeter do
       @meter.miles_driven = 3.0/6.0
       expect(@meter.amount_due).to eq(250+80)
     end
+
+    context "Once the meter has been stopped, waiting charge is added"
+      before do
+        # We want to freeze time to the point when the meter starts
+        @start_time = Time.now
+        Time.stub(:now).and_return(@start_time)
+
+        @meter = TaxiMeter.new
+        @meter.start
+        sleep(2)
+        @meter.stop
+      end
+
+    it "charges for a full trip"
+
+
   end
 
 
