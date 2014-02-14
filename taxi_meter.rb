@@ -15,7 +15,13 @@ class TaxiMeter
   	@stop_time = Time.now
   end
 
- def amount_due
+ def amount_due(distance)
+ 	d = distance
+ 	if d < 1.0/6
+ 		250
+ 	else
+ 		(210 + (40 * d)).round(2)
+ 	end
  end
 
 end
