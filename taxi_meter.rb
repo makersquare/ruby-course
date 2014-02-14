@@ -39,9 +39,20 @@ class TaxiMeter
       # end
     end
 
+    charge_per_wait_min = 29.00 / 60
+
+    if @start_time && @stop_time.nil?
+      @wait_time = Time.now - @start_time
+      wait_charge = (@wait_time / 60).ceil * charge_per_wait_min
+      total_charge += wait_charge
+
+      if @start_time.hour < 4 || @start_time.hour >= 21
+        total_charge += 1.00
+      end
+    end
+
     if @start_time && @stop_time
       @wait_time = @stop_time - @start_time
-      charge_per_wait_min = 29.00 / 60
       wait_charge = (@wait_time / 60).ceil * charge_per_wait_min
       total_charge += wait_charge
 
