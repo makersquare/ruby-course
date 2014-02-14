@@ -3,6 +3,7 @@ require 'pry'
 class TaxiMeter
 
   attr_accessor :miles_driven, :start_time, :stop_time, :airport
+  attr_writer :amount_due
 
   def initialize(airport: false)
     @miles_driven = 0
@@ -10,6 +11,7 @@ class TaxiMeter
     @stop_time = nil
     @wait_time = 0
     @airport = airport
+    @amount_due = 0
   end
 
   def start
@@ -30,11 +32,11 @@ class TaxiMeter
     elsif @miles_driven <= (1.0/6.0)
       total_charge = 2.50
     else
-      if (@miles_driven - (1.0/6.0) / (1.0/6.0)) % 1.0 == 0
-        total_charge = (@miles_driven - (1.0/6.0)) / (1.0/6.0) * charge_per_sixth + 2.50
-      else
-        total_charge = (@miles_driven - (1.0/6.0)) / (1.0/6.0) * charge_per_sixth + charge_per_sixth + 2.50
-      end
+      # if ((@miles_driven - (1.0/6.0)) / (1.0/6.0)) % 1.0 == 0
+        total_charge = @miles_driven / (1.0/6.0) * charge_per_sixth + 2.10
+      # else 5.7
+        # total_charge = (@miles_driven - (1.0/6.0)) / (1.0/6.0) * charge_per_sixth + charge_per_sixth + 2.50
+      # end
     end
 
     if @start_time && @stop_time
@@ -52,7 +54,7 @@ class TaxiMeter
       total_charge = 13.10
     end
 
-    total_charge.ceil_to(2)
+    (total_charge*100).round
   end
 end
 
