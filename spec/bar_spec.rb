@@ -58,6 +58,19 @@ describe Bar do
 # # # # # # # # # # # # # # # # # # # # # #
   # DO NOT CHANGE SPECS ABOVE THIS LINE #
 # # # # # # # # # # # # # # # # # # # # # #
+  describe '#purchase_drink' do
+    before do
+      @bar = Bar.new "The Irish Yodel"
+      @bar.add_menu_item('Cosmo', 5.40)
+      @bar.add_menu_item('Martini', 7.00, discount: false)
+      @bar.add_menu_item('PBR', 3.50)
+    end
+
+      it 'allows you to order and keep track of a drink' do
+      @bar.purchase_drink('Cosmo')
+      expect(@bar.drinks_ordered.count).to eq 0
+    end
+  end
 
   describe '#happy_hour', :pending => false do
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
