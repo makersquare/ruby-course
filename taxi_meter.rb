@@ -11,11 +11,22 @@ class TaxiMeter
   end
 
   def amount_due
-      if self.miles_driven <= (1.0 / 6.0)
-        @amount_due = 250
-      elsif self.miles_driven > (1.0 / 6.0)
-        one_sixth = (self.miles_driven * 6) - 1
-        @amount_due = 250 + (one_sixth * 40)
+      t = Time.now
+      if t.hour > @start_time.hour
+        wait_time = ((60 - @start_time.min) + t.min) + (60 * ((t.hour - @start_time.hour) - 1))
+      elsif t.hour < @start_time.hour
+        wait_time = t.hour * ((60 - @start_time.min) + t.min)
+      elsif t.hour == @start_time.hour
+        minutes = t.min
+        minutes2 = @start_time.min
+        wait_time = (minutes - minutes2)
+      end
+
+      if @miles_driven <= (1.0 / 6.0)
+        @amount_due = (250 + ((2900 / 60.0) * wait_time)).round(0)
+      elsif @miles_driven > (1.0 / 6.0)
+        one_sixth = (@miles_driven * 6) - 1
+        @amount_due = ((250 + (one_sixth * 40)) + ((2900 / 60.0) * wait_time)).round(0)
       end
   end
 
@@ -25,6 +36,9 @@ class TaxiMeter
 
   def stop
     self.stop_time = Time.now
+    #Check that after stop_time is called, amount_due doesn't change.
   end
 
 end
+
+
