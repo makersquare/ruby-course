@@ -13,15 +13,7 @@ class TaxiMeter
   end
 
   def stop
-  	@stop = true
-  end
-
-  def stop_time
-  	if @stop == true
-  		@stop_time = Time.now
-  	else 
-  		@stop_time = nil
-  	end
+  	@stop_time = Time.now
   end
 
 end
