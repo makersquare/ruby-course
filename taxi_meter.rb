@@ -21,5 +21,12 @@ class TaxiMeter
   def stop
     @stop_time = Time.now
   end
+
+  def amount_due
+    if @miles_driven >= 0.166666667
+      @amount_due += 250
+    end
+      @amount_due
+  end
 end
 

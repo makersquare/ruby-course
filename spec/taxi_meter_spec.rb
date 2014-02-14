@@ -73,7 +73,16 @@ describe TaxiMeter do
       @meter.start
     end
 
-    it "charges $2.50 for the first 1/6 mile (recorded in cents)"
+    it "charges $2.50 for the first 1/6 mile (recorded in cents)" do
+      #stops time to simulate end of trip
+      @meter.stop
+
+      #sets miles driven to exactly 1/6 mile
+      @meter.miles_driven = 0.166666667
+
+      # calculates price by miles driven expects inital 2.50 charge
+      expect(@meter.amount_due).to eq(250)
+    end
   end
 
 
@@ -89,5 +98,5 @@ describe TaxiMeter do
 
     it "has a minimum fare of $13.10"
   end
-
 end
+
