@@ -83,19 +83,24 @@ describe TaxiMeter do
 
   context "The taxi meter ends" do
     before do
+      @meter = TaxiMeter.new
       start_time = Time.now
       Time.stub(:now).and_return(start_time)
 
-      @meter = TaxiMeter.new
       @meter.start
+
       Time.stub(:now).and_return(start_time + 60 * 60)
+
       @meter.stop
+
+      expect(@meter.stop).to eq(start_time + 60 * 60)
     end
 
-    # it "should charge $29.00 for an hour wait time" do
-
-
-    # end
+    it "should charge $29.00 for an hour wait time" do
+      @meter.wait_time = ((@meter.stop_time - @meter.start_time) / 60)
+# binding.pry
+    expect(@meter.amount_due).to eq(29.00)
+    end
   end
 
 
