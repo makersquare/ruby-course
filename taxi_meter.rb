@@ -10,13 +10,11 @@ class TaxiMeter
   end
 
   def calc_due(miles_driven)
-     if miles_driven == 1.0 / 6.0
-       @amount_due = sprintf('%.2f', 2.50)
-     else miles_driven > 1.0
-       calc_minus_first = (miles_driven - 1.0) / 6.0
-       puts "#{calc_minus_first}"
-       @amount_due = sprintf('%.2f', 2.50 + (0.4 * calc_minus_first))
-     end
+    sixth = miles_driven * 6
+    puts "#{sixth}"
+
+    @amount_due = (210 + (40 * sixth))
+
 
   end
 
