@@ -17,14 +17,7 @@ class TaxiMeter
     @stop_time = Time.now
   end
 
-  # def drive(miles)
-  #   @miles_driven = miles
-  #   @amount_due = miles / 6.0 * 15.00
-  # end
-
   def amount_due
-    first_sixth_cost = 250
-    each_sixth_cost = (@miles_driven * 6.0 - 1) * 240 / 6.0
-    @amount_due = first_sixth_cost + each_sixth_cost
+    (2.10 + 0.4 * (@miles_driven * 6)) * 100
   end
 end
