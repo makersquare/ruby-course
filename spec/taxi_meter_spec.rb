@@ -58,17 +58,17 @@ describe TaxiMeter do
     it "charges $2.50 for the first 1/6 mile (recorded in cents)" do
       @meter.miles_driven = 1.0 / 6.0
 
-      binding.pry
+      #binding.pry
 
       expect(@meter.amount_due).to eq(2.5)
     end
 
     it "charges $2.40 for each additional mile, prorated by 1/6 of a mile" do
-      @meter.miles_driven = 4 + (1.0 / 6.0)
+      @meter.miles_driven = 4
 
-      binding.pry
+      #binding.pry
 
-      expect(@meter.amount_due).to eq(12.1)
+      expect(@meter.amount_due).to eq(11.7)
     end
   end
 
