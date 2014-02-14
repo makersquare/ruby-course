@@ -15,4 +15,7 @@ class TaxiMeter
   	@stop_time = Time.now
   end
 
+ def amount_due
+ end
+
 end
