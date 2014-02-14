@@ -2,11 +2,12 @@ require 'time' # you're gonna need it
 
 class Bar
   attr_reader :name, :happy_discount, :happy_hour
-  attr_accessor :menu_items
+  attr_accessor :menu_items, :drinks_ordered
   def initialize(name)
     @name = name
     @menu_items = []
     @happy_discount = 0
+    @drinks_ordered = {}
   end
 
   def add_menu_item(name, price, discount: true)
@@ -46,6 +47,18 @@ class Bar
           return item.price * self.happy_discount
         else
           return item.price
+        end
+      end
+    end
+  end
+
+  def purchase_drink(name)
+    @menu_items.each do |item|
+      if item.name == name
+        if (self.happy_hour? == true) && (item.discount == true)
+          return @drinks_ordered[name] = (item.price * self.happy_discount)
+        else
+          return @drinks_ordered[name] = item.price
         end
       end
     end
