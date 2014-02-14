@@ -41,7 +41,26 @@ describe TaxiMeter do
       expect(@meter.start_time).to eq(start_time)
     end
 
-    it "records the time it stopped"
+    it "records the time it stopped" do
+      #starts meter
+      @meter.start
+
+      #stubs time to add 15 minutes
+      later = @meter.start_time + (15 * 60)
+      Time.stub(:now).and_return(later)
+
+      #stops meter using stubbed time
+      @meter.stop
+
+      #restub time to even later
+      much_later = @meter.start_time + (30 * 60)
+      Time.stub(:now).and_return(much_later)
+
+      #stop_time should reflect stopped time
+      expect(@meter.stop_time).to eq(later)
+      expect(@meter.stop_time).to_not eq(@meter.start_time)
+      expect(@meter.stop_time).to_not eq(much_later)
+    end
   end
 
   context "The taxi meter starts" do
