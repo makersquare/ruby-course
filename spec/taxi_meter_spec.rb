@@ -92,6 +92,25 @@ describe TaxiMeter do
     end
   end
 
+  context "The taxi meter adds a waiting time surcharge" do
+    before do
+
+      @meter = TaxiMeter.new
+      @meter.start
+      time = Time.now
+      new_time = Time.now + (60 * 60)
+      Time.stub(:now).and_return(new_time)
+
+    end
+
+    it "adds $29.00 an hour, prorated in minutes to wait times" do
+      @meter.miles_driven = 4
+      @meter.stop
+
+      expect(@meter.amount_due).to eq(40.7)
+    end
+  end
+
   context "The taxi meter starts between 9am and 4pm", :pending => true do
     before do
       # We want to freeze time to between 9am and 4pm

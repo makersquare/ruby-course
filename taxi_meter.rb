@@ -15,6 +15,7 @@ class TaxiMeter
 
   def stop
     @stop_time = Time.now
+    @amount_due += (@start_time - @stop_time) * (29 / 60)
   end
 
   def amount_due
