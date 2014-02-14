@@ -17,7 +17,7 @@ describe TaxiMeter do
       @meter.miles_driven = 0
     end
 
-    xit "can start and stop" do
+    it "can start and stop" do
       @meter.start
       expect(@meter.start_time).to_not be_nil
       expect(@meter.stop_time).to be_nil
