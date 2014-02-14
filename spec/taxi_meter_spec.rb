@@ -96,7 +96,22 @@ describe TaxiMeter do
       @meter.start
     end
 
-    it "has a minimum fare of $13.10"
+    it "has a minimum fare of $13.10" do
+      #stops time to simulate end of trip
+      @meter.stop
+
+      #sets milage to a small amount
+      @meter.miles_driven = 3
+
+      #calculates price based on miles expects airport minimum
+      expect(@meter.amount_due).to eq(1310)
+
+      # #sets milage to a large amount
+      # @meter.miles_driven = 20
+
+      # #calculates price based on miles expects normal fare
+      # expect(@meter.amount_due).to eq(###)
+    end
   end
 end
 
