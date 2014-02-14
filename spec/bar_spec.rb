@@ -69,13 +69,14 @@ describe Bar do
       it 'allows you to order a drink' do
 
       @bar.purchase_drink('Cosmo')
-      # binding.pry
     end
 
-    it 'allows you to log frequency of type of drink ordered' do
+    it 'allows you to log ordered drinks' do
       @bar.purchase_drink('Cosmo')
+      @bar.purchase_drink('Martini')
+      @bar.purchase_drink('PBR')
 
-      expect(@bar.drinks_ordered.count).to eq 1
+      expect(@bar.drinks_ordered.count).to eq 3
     end
   end
 
