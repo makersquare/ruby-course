@@ -71,15 +71,12 @@ describe TaxiMeter do
     it "charges $2.50 for the first 1/6 mile (recorded in cents)" do
       @meter.miles_driven = 1.0 / 6.0
 
-      #binding.pry
 
       expect(@meter.amount_due).to eq(2.5)
     end
 
     it "charges $2.40 for each additional mile, prorated by 1/6 of a mile" do
       @meter.miles_driven = 4
-
-      #binding.pry
 
       expect(@meter.amount_due).to eq(11.7)
     end
@@ -99,7 +96,6 @@ describe TaxiMeter do
     it "has a minimum fare of $13.10" do
       @meter.miles_driven = 4
 
-      #binding.pry
 
       expect(@meter.amount_due).to eq(24.8)
     end
@@ -119,12 +115,11 @@ describe TaxiMeter do
     it "adds $29.00 an hour, prorated in minutes to wait times" do
       @meter.miles_driven = 4
       @meter.stop
-      binding.pry
-      expect(@meter.amount_due).to eq(40.7)
+      expect(@meter.amount_due).to eq(41.7)
     end
   end
 
-  context "The taxi meter starts between 9am and 4pm", :pending => true do
+  context "The taxi meter starts between 9am and 4pm" do
     before do
       # We want to freeze time to between 9am and 4pm
       start_time = Time.parse("Feb 24 2013 3 PM")
@@ -134,10 +129,9 @@ describe TaxiMeter do
       @meter.start
     end
 
-    it "adds $1.00 if the time if between 9am and 3pm" do
+    it "adds $1.00 if the time is between 9am and 3pm" do
       @meter.miles_driven = 4
-      binding.pry
-
+      @meter.stop
       expect(@meter.amount_due).to eq(12.7)
     end
   end
