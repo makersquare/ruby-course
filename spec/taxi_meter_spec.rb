@@ -13,8 +13,8 @@ describe TaxiMeter do
     end
 
     it "starts at zero" do
-      @meter.amount_due = 0
-      @meter.miles_driven = 0
+      expect(@meter.amount_due).to eq 0
+      expect(@meter.miles_driven).to eq 0
     end
 
     it "can start and stop" do
