@@ -91,6 +91,25 @@ describe TaxiMeter do
 
   end
 
+  context "The taxi is waiting" do
+
+    before do
+      @start_time = Time.now
+      Time.stub(:now).and_return(@start_time)
+      @meter = TaxiMeter.new
+      @meter.start
+    end
+
+    it "charges $29.00 an hour for waiting time, prorated by minute" do
+      time = @start_time + (40 * 60)
+      Time.stub(:now).and_return(time)
+      @meter.miles_driven = 10
+
+      expect(@meter.amount_due).to eq(4543)
+    end
+
+  end
+
 
   context "The taxi meter starts from ABIA" do
     before do
