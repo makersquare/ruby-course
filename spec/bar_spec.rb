@@ -58,28 +58,39 @@ describe Bar do
 # # # # # # # # # # # # # # # # # # # # # #
   # DO NOT CHANGE SPECS ABOVE THIS LINE #
 # # # # # # # # # # # # # # # # # # # # # #
-  describe '#purchase_drink' do
-    before do
-      @bar = Bar.new "The Irish Yodel"
-      @bar.add_menu_item('Cosmo', 5.40)
-      @bar.add_menu_item('Martini', 7.00, discount: false)
-      @bar.add_menu_item('PBR', 3.50)
-    end
+  context "Purchasing and logging popular drinks" do
 
+    before do
+        @bar = Bar.new "The Irish Yodel"
+        @bar.add_menu_item('Cosmo', 5.40)
+        @bar.add_menu_item('Martini', 7.00, discount: false)
+        @bar.add_menu_item('PBR', 3.50)
+      end
+    describe '#purchase_drink' do
       it 'allows you to order a drink' do
 
-      @bar.purchase_drink('Cosmo')
+        @bar.purchase_drink('Cosmo')
+      end
+
+      it 'allows you to log ordered drinks' do
+        @bar.purchase_drink('Cosmo')
+        @bar.purchase_drink('Martini')
+        @bar.purchase_drink('PBR')
+
+        expect(@bar.drinks_ordered.count).to eq 3
+      end
     end
 
-    it 'allows you to log ordered drinks' do
-      @bar.purchase_drink('Cosmo')
-      @bar.purchase_drink('Martini')
-      @bar.purchase_drink('PBR')
-
-      expect(@bar.drinks_ordered.count).to eq 3
+    describe 'self.calc_top_selling_drinks' do
+      it 'displays frequency of purchased drinks' do
+        3.times { @bar.purchase_drink('Cosmo') }
+        9.times { @bar.purchase_drink('PBR') }
+        2.times { @bar.purchase_drink('Martini') }
+        binding.pry
+        expect(@bar.calc_top_selling_drinks).to eq("don't know yet")
+      end
     end
   end
-
   describe '#happy_hour', :pending => false do
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
       # TODO: CONTROL TIME

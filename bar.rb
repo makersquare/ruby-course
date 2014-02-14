@@ -63,6 +63,11 @@ class Bar
       end
     end
   end
+
+  def calc_top_selling_drinks
+    order_log = Hash.new(0)
+    puts @drinks_ordered.each { |drink| order_log[drink] += 1 }
+  end
 end
 
 
