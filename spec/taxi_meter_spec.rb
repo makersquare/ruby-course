@@ -71,7 +71,13 @@ describe TaxiMeter do
 
 
       expect(@meter.amount_due).to eq(2.50)
-      binding.pry
+    end
+
+    it "charges $5.00 for the first and second 1/6 mile (recorded in cents)" do
+      @meter.miles_driven = 2
+
+
+      expect(@meter.amount_due).to eq(5.00)
     end
   end
 
