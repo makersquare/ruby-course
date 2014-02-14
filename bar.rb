@@ -18,9 +18,36 @@ class Bar
 
 	end
 
-	# def happy_discount
-	# 	@happy_discount + 0.5
-	# end
+	def happy_discount
+		@happy_discount
+		if @happy_discount >1
+			@happy_discount=1
+		elsif @happy_discount<0
+			@happy_discount=0
+		else
+			@happy_discount
+		end	
+	end
+
+	def happy_hour?
+		t1=Time.now
+		t2=Time.parse("3:00pm")
+		t3=Time.parse("4:00pm")
+		#binding.pry
+		if t1.between?(t2, t3)
+			true
+		else
+			false
+		end
+
+		# t1=Time.new
+		# t2=Time.parse("3:30")
+		# if t1 == t2
+		# 	true
+		# else
+		# 	false
+		# end
+	end
 end
 
 class BarItem
