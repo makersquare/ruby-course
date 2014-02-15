@@ -86,8 +86,12 @@ describe Bar do
         3.times { @bar.purchase_drink('Cosmo') }
         9.times { @bar.purchase_drink('PBR') }
         2.times { @bar.purchase_drink('Martini') }
-        binding.pry
-        expect(@bar.calc_top_selling_drinks).to eq("don't know yet")
+
+        drinks = @bar.calc_top_selling_drinks
+
+        expect(drinks[0][0]).to eq("PBR")
+        expect(drinks[1][0]).to eq("Cosmo")
+        expect(drinks[2][0]).to eq("Martini")
       end
     end
   end
