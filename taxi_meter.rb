@@ -16,16 +16,23 @@ class TaxiMeter
   end
 
  def amount_due
- 	# if total_units < 1.0/6
- 	# 	250
- 	# else
- 	# 	(210 + (40 * total_units)).round(2)
- 	# end
- 	if @miles_driven < 1.0/6
- 		250
+ 	total = @amount_due
+ 	if @stop_time
+ 		if @miles_driven == 0
+ 			total = ((@stop_time - @start_time)*29.0/36).round(0)
+		elsif @miles_driven < 1.0/6.0
+ 			total = ((@stop_time - @start_time)*29.0/36).round(0) + 250
+ 		else 
+ 			total = ((@stop_time - @start_time)*29.0/36).round(0) + (@miles_driven * 6 * 40 + 210).round(2)
+ 		end 
  	else 
- 		(@miles_driven * 6 * 40 + 210).round(2)
+ 		if @miles_driven === 0
+ 			total = ((Time.now - @start_time)*29.0/36).round(0)
+ 		elsif @miles_driven < 1.0/6
+ 			total = ((Time.now - @start_time)* 29.0/36).round(0) + 250
+ 		else
+ 			total = ((Time.now - @start_time)* 29.0/36).round(0) + (@miles_driven * 6 * 40 + 210).round(2)
+ 		end
  	end
  end
-
 end
