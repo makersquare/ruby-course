@@ -40,7 +40,12 @@ class TaxiMeter
     return 1310 if (@amount_due < 1310 && @airport == true); 0
   end
 
+  def after_hours_surcharge
+    time = Time.now
+    return 100.0 if time.hour > 20 || time.hour < 5; 0
+  end
+
   def amount_due
-    mileage_amount_due + time_amount_due + airport_surcharge
+    mileage_amount_due + time_amount_due + airport_surcharge + after_hours_surcharge
   end
 end
