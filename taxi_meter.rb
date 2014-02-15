@@ -33,7 +33,7 @@ class TaxiMeter
       total_charge = 2.50
     else
       # if ((@miles_driven - (1.0/6.0)) / (1.0/6.0)) % 1.0 == 0
-        total_charge = @miles_driven / (1.0/6.0) * charge_per_sixth + 2.10
+        total_charge = (@miles_driven * 6).ceil * charge_per_sixth + 2.10
       # else 5.7
         # total_charge = (@miles_driven - (1.0/6.0)) / (1.0/6.0) * charge_per_sixth + charge_per_sixth + 2.50
       # end
