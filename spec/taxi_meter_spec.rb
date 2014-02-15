@@ -96,8 +96,8 @@ describe TaxiMeter do
       expect(@meter.stop).to eq(start_time + 60 * 60)
     end
 
-    it "should charge $29.00 for an hour wait time (plus $2.50 for first 1/6th mile)" do
-      expect(@meter.amount_due).to eq(3150)
+    it "should charge $29.00 for an hour wait time (recorded in cents" do
+      expect(@meter.amount_due).to eq(2900)
     end
   end
 
@@ -113,7 +113,7 @@ describe TaxiMeter do
     end
 
     it "has a minimum fare of $13.10" do #actually checking for 13.10 plus 2.50 charge
-      expect(@meter.amount_due).to eq(1560)
+      expect(@meter.amount_due).to eq(1310)
     end
   end
 
