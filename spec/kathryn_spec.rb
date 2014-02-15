@@ -97,7 +97,7 @@ describe TaxiMeter do
       Time.stub(:now).and_return(new_time)
       @meter.miles_driven = 10
 
-      expect(@meter.amount_due).to eq(4544)
+      expect(@meter.amount_due).to eq(4643)
     end
 
   end
