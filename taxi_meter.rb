@@ -3,7 +3,7 @@ class TaxiMeter
 
   def initialize(airport: false)
     @amount_due = 0
-    @miles_driven = 0.0
+    @miles_driven = 0
     @airport = airport
   end
 
@@ -12,8 +12,16 @@ class TaxiMeter
   end
 
   def amount_due
-    if @miles_driven == 1.0/6.0
+    # ADDS ADDITIONAL $1 FOR EVERY TRIP BETWEEN 9PM AND 4AM
+
+    # WAITING TIME CALCULATION
+    if @miles_driven == 0
+        current_time = Time.now
+        @amount_due += (29.0/60.0) * ((current_time-@start_time)/60.0)
+    # IF TRIP WAS ONLY 1/6 MILE
+    elsif @miles_driven <= 1.0/6.0 && @miles_driven > 0
       @amount_due += 2.50
+    # MILE CALCULATION BREAKDOWN
     elsif @miles_driven > 1.0/6.0
       # FIRST 1/6 MILE
       @amount_due += 2.50
@@ -44,7 +52,7 @@ class TaxiMeter
       @amount_due += 13.10
     end
     # RETURN THE TOTAL AMOUNT DUE AFTER ALL CALCULATIONS
-    @amount_due
+    @amount_due.round(2)
   end
 
   def stop

@@ -78,6 +78,9 @@ describe TaxiMeter do
     end
 
     it "charges an additional $1 if started between 9pm and 4am" do
+      Time.stub(:now).and_return(Time.parse('10pm'))
+      @meter.miles_driven = 0
+      expect(@meter.amount_due).to eq(1)
     end
 
   end
@@ -89,16 +92,25 @@ describe TaxiMeter do
 
       @meter = TaxiMeter.new
       @meter.start
+      @meter.miles_driven = 0
     end
 
-    it "charges $29 an hour for waiting, prorated for every minute" do
-      @meter.miles_driven = 0
-
-      Time.stub(:now).and_return(@start_time + (60*60))
-
+    it "charges $29 an hour for waiting" do
+      new_time = @start_time + (60*60)
+      Time.stub(:now).and_return(new_time)
       expect(@meter.amount_due).to eq(29)
+    end
 
+    it "charges $14.5 for waiting a half hour" do
+      new_time = @start_time + (60*30)
+      Time.stub(:now).and_return(new_time)
+      expect(@meter.amount_due).to eq(14.5)
+    end
 
+    it "charges a prorated amount by the minute" do
+      new_time = @start_time + (60*13)
+      Time.stub(:now).and_return(new_time)
+      expect(@meter.amount_due).to eq(6.28)
     end
 
   end
@@ -115,9 +127,15 @@ describe TaxiMeter do
     end
 
     it "has a minimum fare of $13.10" do
+      @meter.miles_driven = 0
+      expect(@meter.amount_due).to eq(13.10)
+    end
+
+    it "adds on to an already started trip" do
       @meter.miles_driven = one_sixth
       expect(@meter.amount_due).to eq(15.60)
     end
+
   end
 
 end
