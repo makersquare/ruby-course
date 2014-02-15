@@ -77,16 +77,27 @@ describe TaxiMeter do
   context "The taxi meter is running" do
 
     before do
-      @start_time = Time.now
-      Time.stub(:now).and_return(@start_time)
       @meter = TaxiMeter.new
-      @meter.start
     end
 
     it "charges $2.40 for each additional mile, prorated by each 1/6 mile" do
+      @start_time = Time.now
+      Time.stub(:now).and_return(@start_time)
+      @meter.start
       @meter.miles_driven = 2 + (2.0 / 6.0)
 
       expect(@meter.amount_due).to eq(770)
+    end
+
+    it "charges additional dollar if start time between 9pm and 4am" do
+      @three_am = Time.parse("2014-02-11 03:00:00 -0600")
+      Time.stub(:now).and_return(@three_am)
+      @meter.start
+      new_time = @three_am + (40 * 60)
+      Time.stub(:now).and_return(new_time)
+      @meter.miles_driven = 10
+
+      expect(@meter.amount_due).to eq(4643)
     end
 
   end
@@ -94,14 +105,14 @@ describe TaxiMeter do
   context "The taxi is waiting" do
 
     before do
-      @start_time = Time.now
-      Time.stub(:now).and_return(@start_time)
+      @seven_pm = Time.parse("2014-02-11 19:00:00 -0600")
+      Time.stub(:now).and_return(@seven_pm)
       @meter = TaxiMeter.new
       @meter.start
     end
 
     it "charges $29.00 an hour for waiting time, prorated by minute" do
-      time = @start_time + (40 * 60)
+      time = @seven_pm + (40 * 60)
       Time.stub(:now).and_return(time)
       @meter.miles_driven = 10
 
@@ -110,6 +121,25 @@ describe TaxiMeter do
 
   end
 
+  context "The taxi meter is stopped" do
+    before do
+      @meter = TaxiMeter.new
+      @seven_pm = Time.parse("2014-02-11 19:00:00 -0600")
+      Time.stub(:now).and_return(@seven_pm)
+      @meter.start
+    end
+
+    it "gives correct amount due after meter stops" do
+      @meter.miles_driven = 10
+      new_time = Time.parse("2014-02-11 19:40:00 -0600")
+      Time.stub(:now).and_return(new_time)
+      @meter.stop
+      Time.stub(:now).and_return(@meter.start_time + 80 * 60)
+
+      expect(@meter.amount_due).to eq(4543)
+    end
+
+  end
 
   context "The taxi meter starts from ABIA" do
     before do
