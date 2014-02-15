@@ -5,8 +5,8 @@ class TaxiMeter
   def initialize(airport: false)
     @amount_due = 0
     @miles_driven = 0
-    # @start_time = nil
-    # @stop_time = nil
+    @start_time = nil
+    @stop_time = nil
     @wait_time = 0
     @airport = airport
   end
@@ -20,13 +20,13 @@ class TaxiMeter
   end
 
   def wait_time
-    return 0 if @stop_time.nil? || @start_time.nil?
+    # return 0 if @stop_time.nil? || @start_time.nil?
 
-    (@stop_time - @start_time) / 60
+    (Time.now - @start_time) / 60
   end
 
   def time_amount_due
-    wait_time * (2900 / 60.0)
+    (wait_time * (2900 / 60.0)).round(-1)
   end
 
   def mileage_amount_due
