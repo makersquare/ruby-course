@@ -40,25 +40,26 @@ class TaxiMeter
     #calcs waiting time
     if @stop_time 
       @waiting_time = @stop_time - @start_time
-    else
+    elsif @start_time
       @waiting_time = Time.now - @start_time
     end
     #calcs waiting_cost
     if @waiting_time
-      @waiting_cost = (@waiting_time/60) * (29.0/60)
+      @waiting_cost = (@waiting_time/60).ceil * (29.0/60)
     else
       @waiting_cost = 0
     end
 
     #calc total cost
     @total_cost = (@mileage_cost * 100).round(0) + (@waiting_cost * 100).round(0)
+    
     #calcs drunk tax
-    if (@start_time >= Time.parse("9 PM")) || (@start_time < Time.parse("4 AM"))
+    if @start_time && ((@start_time >= Time.parse("9 PM")) || (@start_time < Time.parse("4 AM")))
       @total_cost += 100
     end
     
     #calcs airport
-    if (@total_cost < 13.10) && (@airport == true)
+    if (@airport == true) && (@total_cost < 1310)
       @total_cost = (13.10 * 100)
     end
 

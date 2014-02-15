@@ -11,7 +11,7 @@ describe TaxiMeter do
 
     before do
       @meter = TaxiMeter.new
-      @meter.start
+      # @meter.start
     end
 
     it "starts at zero" do
@@ -114,7 +114,7 @@ describe TaxiMeter do
 
   end
 
-  context "Drunk Tax from 9AM - 4 AM" do
+  context "Drunk Tax from 9PM - 4 AM" do
       before do
       @start_time = Time.new(2014, 2, 1, 3, 59, 0)
       Time.stub(:now).and_return(@start_time)
@@ -123,15 +123,15 @@ describe TaxiMeter do
       @meter.start
     end
 
-    it "charges $8.73 for a 16 min wait time, no distance" do
-      Time.stub(:now).and_return(@meter.start_time + 16 * 60)
-      expect(@meter.amount_due).to eq(873)
+    it "charge for a 1 hour wait time plus drunk tax" do
+      Time.stub(:now).and_return(@meter.start_time + 60 * 60)
+      expect(@meter.amount_due).to eq(3000)
     end
 
-    it "charges $24.83 for a 16 min wait time, 5.7 mile trip" do
+    it "charges for a 1 hour wait time and 10 mile trip" do
       Time.stub(:now).and_return(@meter.start_time + 16 * 60)
-      @meter.miles_driven = 5.7
-      expect(@meter.amount_due).to eq(2483)
+      @meter.miles_driven = 10
+      expect(@meter.amount_due).to eq(3483)
     end
   end
 
