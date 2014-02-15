@@ -80,6 +80,9 @@ describe TaxiMeter do
       @meter.miles_driven = one_sixth * 20
       expect(@meter.amount_due).to eq(1010)
 
+      @meter.miles_driven = 1.5
+      expect(@meter.amount_due).to eq(570)
+
       # Make sure it rounds up to gouge as
       # much money from the customer as possible
       @meter.miles_driven = one_sixth * 20 + 0.1
@@ -104,4 +107,41 @@ describe TaxiMeter do
     end
 
   end #end context
+
+  context "The taxi meter should have a rolling balance" do
+    before do
+      time = Time.now
+      Time.stub(:now).and_return(time)
+      @meter = TaxiMeter.new
+      @meter.start
+    end
+
+    it "should have a fare based on elapsed time" do
+      time = Time.now
+      Time.stub(:now).and_return(time + 5 * 60)
+      expect(@meter.amount_due).to eq(240)
+    end
+
+    it "should have a waiting time fare of $29.00 an hour" do
+      time = Time.now
+      Time.stub(:now).and_return(time + 60 * 60)
+      expect(@meter.amount_due).to eq(2900)
+    end
+
+        it "should have a waiting time fare of $58.00 for 2 hours" do
+      time = Time.now
+      Time.stub(:now).and_return(time + 120 * 60)
+      expect(@meter.amount_due).to eq(5800)
+    end
+
+    it "should calculate elapsed time and distance together" do
+      time = Time.now
+      Time.stub(:now).and_return(time + 5 * 60)
+      @meter.miles_driven = 1.5
+      expect(@meter.amount_due).to eq(810)
+
+    end
+
+  end #end context
+
 end #end class
