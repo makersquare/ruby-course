@@ -1,3 +1,5 @@
+require 'time'
+
 class TaxiMeter
   attr_accessor :miles_driven, :start_time, :stop_time
   attr_reader :airport
@@ -13,34 +15,36 @@ class TaxiMeter
   end
 
   def amount_due
-      # Find wait time in minutes between start time and current time.
       t = Time.now
-      if t.hour > @start_time.hour
-        wait_time = ((60 - @start_time.min) + t.min) + (60 * ((t.hour - @start_time.hour) - 1))
-      elsif t.hour < @start_time.hour
-        wait_time = t.hour * ((60 - @start_time.min) + t.min)
-      elsif t.hour == @start_time.hour
-        minutes = t.min
-        minutes2 = @start_time.min
-        wait_time = (minutes - minutes2)
+
+      # Find wait time in minutes between start time and current time.
+      if @stop_time != nil
+        wait_time = ((@stop_time - @start_time) / 60)
+      else
+        wait_time = ((t - @start_time) / 60)
       end
 
       # Calculate amount due with miles driven and wait time.
-      if @miles_driven <= (1.0 / 6.0)
+      if @miles_driven == 0
+        @amount_due = wait_time * (2900 / 60.0)
+      elsif @miles_driven <= (1.0 / 6.0)
         @amount_due = (250 + ((2900 / 60.0) * wait_time)).round(0)
-      elsif @miles_driven > (1.0 / 6.0)
-        one_sixth = (@miles_driven * 6) - 1
-        @amount_due = ((250 + (one_sixth * 40)) + ((2900 / 60.0) * wait_time)).round(0)
+      else
+        one_sixth = (@miles_driven * 6)
+        @amount_due = ((210 + (one_sixth * 40)) + ((2900 / 60.0) * wait_time)).round(0)
       end
 
-      if self.airport != true
+      if self.airport != true || @amount_due >= 1310
         @amount_due
       else
-        if @amount_due < 1310
           @amount_due = 1310
-        else
-          @amount_due
-        end
+      end
+
+      # Adds $1 if time is between 9pm and 4am
+      if t.hour <= 4 || t.hour >= 21
+        @amount_due += 100
+      else
+        @amount_due
       end
 
   end
@@ -51,7 +55,6 @@ class TaxiMeter
 
   def stop
     self.stop_time = Time.now
-    #Check that after stop_time is called, amount_due doesn't change.
   end
 
 end
