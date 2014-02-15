@@ -56,7 +56,7 @@ describe TaxiMeter do
     end
   end
 
-  context "The taxi meter starts" do
+  context "The taxi meter starts (mileage charges)" do
     before do
       # We want to freeze time to the point when the meter starts
       @start_time = Time.now
@@ -98,7 +98,7 @@ describe TaxiMeter do
     end
   end
 
-  context "The taxi meter ends" do
+  context "The taxi meter starts (time charges)" do
     before do
       @meter = TaxiMeter.new
       @time = Time.parse("3 pm")
