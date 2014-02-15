@@ -54,7 +54,6 @@ describe TaxiMeter do
 
       expect(@meter.stop_time).to eq(stop_time)
     end
-  end
 
   context "The taxi meter starts" do
     before do
@@ -72,6 +71,10 @@ describe TaxiMeter do
       expect(@meter.amount_due).to eq(250)
     end
 
+      # it "charges $4.50 for the first mile (recorded in cents)" do
+      # @meter.miles_driven = 1
+      # expect(@meter.amount_due).to eq(450)
+
       it "charges $2.40 for each additional mile (prorated by each sixth)" do
       @meter.miles_driven = one_sixth * 2
       expect(@meter.amount_due).to eq(290)
@@ -82,17 +85,14 @@ describe TaxiMeter do
       @meter.miles_driven = one_sixth * 20
       expect(@meter.amount_due).to eq(1010)
  
-      # Make sure it rounds up to gouge as
-      # much money from the customer as possible
+      # Make sure it rounds up
       @meter.miles_driven = one_sixth * 20 + 0.1
       expect(@meter.amount_due).to eq(1050)
     end
-    
+
   end
 
-
-
-  context "The taxi meter starts from ABIA" do
+  context "The taxi meter starts from ABIA"
     before do
       # We want to freeze time to the point when the meter starts
       start_time = Time.now
@@ -103,9 +103,9 @@ describe TaxiMeter do
     end
 
     it "has a minimum fare of $13.10" do
+      expect(@meter.amount_due).to eq(1310)
+    end
 
   end
-
-
 
 end

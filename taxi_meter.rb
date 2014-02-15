@@ -1,7 +1,7 @@
 class TaxiMeter
 
 	attr_accessor :meter, :amount_due, :miles_driven
-	attr_accessor :start_time, :stop_time
+	attr_accessor :start_time, :stop_time, :mileage_cost
   
   def initialize(airport: false)
     @meter=meter
@@ -9,6 +9,7 @@ class TaxiMeter
   	@miles_driven=0
   	@start_time=nil
   	@stop_time=nil
+  	@airport=airport
 
   end
 
@@ -21,13 +22,20 @@ class TaxiMeter
   end
 
   def amount_due
-  	if @miles_driven == (1.0 / 6.0)
-  		@amount_due = 250
-  	else
-  		@amount_due = 250
-  	end
-
+  dist = @miles_driven
+  cost = 0
+  if @start_time
+  	if @stop_time
+  		time_elapsed = 2900/((@stop_time - @start_time) / 60)
+   		elsif dist == (1.0 / 6.0)
+  			250
+  		elsif dist >= (1.0 / 6.0) 		
+  			Time.now-@start_time + (cost+=(dist*6).ceil*40+210)
+  		elsif @airport==true && cost < 1310
+  			cost=1310
+  		else
+  		0
+  	    end
+  	 end
   end
-
-  	
 end
