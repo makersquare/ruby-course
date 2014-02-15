@@ -108,8 +108,7 @@ describe TaxiMeter do
     end
 
     it "should have a fare based on elapsed time" do
-      time = Time.parse("3 pm")
-      Time.stub(:now).and_return(time + 5 * 60)
+      Time.stub(:now).and_return(@time + 5 * 60)
 
       expect(@meter.amount_due).to eq(240)
     end
@@ -121,8 +120,8 @@ describe TaxiMeter do
     end
 
     it "should have a waiting time fare of $58.00 for 2 hours" do
-      time = Time.parse("3 pm")
-      Time.stub(:now).and_return(time + 120 * 60)
+      Time.stub(:now).and_return(@time + 120 * 60)
+
       expect(@meter.amount_due).to eq(5800)
     end
   end
