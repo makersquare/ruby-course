@@ -15,16 +15,17 @@ class TaxiMeter
   	@stop_time = Time.now
   end
 
- def amount_due(miles)
- 	total_units = miles * 6
- 	if total_units < 1.0/6
+ def amount_due
+ 	# if total_units < 1.0/6
+ 	# 	250
+ 	# else
+ 	# 	(210 + (40 * total_units)).round(2)
+ 	# end
+ 	if @miles_driven < 1.0/6
  		250
- 	else
- 		(210 + (40 * total_units)).round(2)
+ 	else 
+ 		(@miles_driven * 6 * 40 + 210).round(2)
  	end
- end
-
- def elapsed_time(minutes)
  end
 
 end
