@@ -17,16 +17,21 @@ class TaxiMeter
   def amount_due
       t = Time.now
 
+      # Reads amount due as 0 if taxi meter hasn't started.
+      if @start_time == nil
+        return @amount_due = 0
+      end
+
       # Find wait time in minutes between start time and current time.
-      if @stop_time != nil
-        wait_time = ((@stop_time - @start_time) / 60)
-      else
+      if @stop_time == nil
         wait_time = ((t - @start_time) / 60)
+      else
+        wait_time = ((@stop_time - @start_time) / 60)
       end
 
       # Calculate amount due with miles driven and wait time.
       if @miles_driven == 0
-        @amount_due = wait_time * (2900 / 60.0)
+        @amount_due = (wait_time * (2900 / 60.0)).round(0)
       elsif @miles_driven <= (1.0 / 6.0)
         @amount_due = (250 + ((2900 / 60.0) * wait_time)).round(0)
       else
@@ -34,10 +39,11 @@ class TaxiMeter
         @amount_due = ((210 + (one_sixth * 40)) + ((2900 / 60.0) * wait_time)).round(0)
       end
 
+      # Ensures minimum of $13.10 for fares starting from ABIA.
       if self.airport != true || @amount_due >= 1310
         @amount_due
       else
-          @amount_due = 1310
+        @amount_due = 1310
       end
 
       # Adds $1 if time is between 9pm and 4am
