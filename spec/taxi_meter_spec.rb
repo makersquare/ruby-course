@@ -11,12 +11,14 @@ describe TaxiMeter do
 
     before do
       @meter = TaxiMeter.new
+      @meter.start
     end
 
-    xit "starts at zero" do
+    it "starts at zero" do
       @meter.amount_due = 0
       @meter.miles_driven = 0
 
+      puts @meter.amount_due
       expect(@meter.amount_due).to eq(0)
       expect(@meter.miles_driven).to eq(0)
     end
@@ -97,8 +99,8 @@ describe TaxiMeter do
   context "The taxi meter starts from ABIA" do
     before do
       # We want to freeze time to the point when the meter starts
-      start_time = Time.now
-      Time.stub(:now).and_return(start_time)
+      @start_time = Time.new(2014, 2, 1, 11, 0, 0)
+      Time.stub(:now).and_return(@start_time)
 
       @meter = TaxiMeter.new(airport: true)
       @meter.start
@@ -109,5 +111,29 @@ describe TaxiMeter do
 
     expect(@meter.amount_due).to eq(1310)
   end
+
+  end
+
+  context "Drunk Tax from 9AM - 4 AM" do
+      before do
+      @start_time = Time.new(2014, 2, 1, 3, 59, 0)
+      Time.stub(:now).and_return(@start_time)
+
+      @meter = TaxiMeter.new
+      @meter.start
+    end
+
+    it "charges $8.73 for a 16 min wait time, no distance" do
+      Time.stub(:now).and_return(@meter.start_time + 16 * 60)
+      expect(@meter.amount_due).to eq(873)
+    end
+
+    it "charges $24.83 for a 16 min wait time, 5.7 mile trip" do
+      Time.stub(:now).and_return(@meter.start_time + 16 * 60)
+      @meter.miles_driven = 5.7
+      expect(@meter.amount_due).to eq(2483)
+    end
+  end
+
 
 end
