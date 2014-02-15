@@ -56,17 +56,22 @@ class Bar
     @menu_items.each do |item|
       if item.name == name
         if (self.happy_hour? == true) && (item.discount == true)
-           @drinks_ordered << [name,  item.price * self.happy_discount]
+           @drinks_ordered << {:name => name, :happy_hour => true }
         else
-           @drinks_ordered << [name, item.price]
+           @drinks_ordered << { :name => name, :happy_hour => false }
         end
       end
     end
   end
 
   def calc_top_selling_drinks
-    order_log = Hash.new(0)
-    puts @drinks_ordered.each { |drink| order_log[drink] += 1 }
+    # order_log = Hash.new(0)
+    # puts @drinks_ordered.each { |drink| order_log[drink] += 1 }
+    drink_stats = Hash.new(0)
+    drinks_ordered.each do |drink|
+      drink_stats[drink[:name]] += 1
+    end
+    popular_drinks = drink_stats.sort_by { |name, count| -count }
   end
 end
 
