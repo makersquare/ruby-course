@@ -23,8 +23,6 @@ class TaxiMeter
   end
 
   def amount_due
-    # sprintf("%.2f",item[:price].to_f * item[:quantity])
-
     charge_per_sixth = 2.40 / 6.0
 
     if @miles_driven == 0
@@ -32,11 +30,7 @@ class TaxiMeter
     elsif @miles_driven <= (1.0/6.0)
       total_charge = 2.50
     else
-      # if ((@miles_driven - (1.0/6.0)) / (1.0/6.0)) % 1.0 == 0
-        total_charge = (@miles_driven * 6).ceil * charge_per_sixth + 2.10
-      # else 5.7
-        # total_charge = (@miles_driven - (1.0/6.0)) / (1.0/6.0) * charge_per_sixth + charge_per_sixth + 2.50
-      # end
+      total_charge = (@miles_driven * 6).ceil * charge_per_sixth + 2.10
     end
 
     charge_per_wait_min = 29.00 / 60
@@ -64,10 +58,11 @@ class TaxiMeter
   end
 end
 
-class Float
-  def ceil_to(x)
-    # Rounds up to the nearest x decimal place
-    (self * 10**x).ceil.to_f / 10**x
-  end
-end
+# Not needed anymore since returning amount_due as cents.
+# class Float
+#   def ceil_to(x)
+#     # Rounds up to the nearest x decimal place
+#     (self * 10**x).ceil.to_f / 10**x
+#   end
+# end
 
