@@ -1,4 +1,8 @@
 class TaxiMeter
+
+  WAIT_TIME_SURCHARGE_PER_MINUTE = 2900 / 60.0 # $29.00 per hour
+  AIRPORT_SURCHARGE_IN_CENTS = 1310 # $13.10 when starting at airport
+
   attr_accessor :amount_due, :miles_driven, :wait_time, :airport
   attr_reader :stop_time, :start_time
 
@@ -22,7 +26,7 @@ class TaxiMeter
   end
 
   def time_amount_due
-    (wait_time * (2900 / 60.0)).round(-1)
+    (wait_time * WAIT_TIME_SURCHARGE_PER_MINUTE).round(-1)
   end
 
   def mileage_amount_due
@@ -31,10 +35,10 @@ class TaxiMeter
   end
 
   def airport_surcharge
-    return 1310 if (@amount_due < 1310 && @airport == true); 0
+    return AIRPORT_SURCHARGE_IN_CENTS if (@amount_due < 1310 && @airport == true); 0
   end
 
-  def after_hours_surcharge
+  def after_hours_surcharge # $1 (in cents) extra fee if meter run after hours
     time = Time.now
     return 100.0 if time.hour > 20 || time.hour < 5; 0
   end
