@@ -92,13 +92,13 @@ describe TaxiMeter do
 
     it "charges $7.73 for 15.5 min wait time, no distance" do
       Time.stub(:now).and_return(@meter.start_time + 15.5 * 60)
-      expect(@meter.amount_due).to eq(773)
+      expect(@meter.amount_due).to eq(774)
     end
 
     it "charges $23.83 for a 16 min wait time, 5.7 mile trip" do
       Time.stub(:now).and_return(@meter.start_time + 16 * 60)
       @meter.miles_driven = 5.7
-      expect(@meter.amount_due).to eq(2383)
+      expect(@meter.amount_due).to eq(2384)
     end
 
 
@@ -135,13 +135,13 @@ describe TaxiMeter do
 
     it "charges $8.73 for a 16 min wait time, no distance" do
       Time.stub(:now).and_return(@meter.start_time + 16 * 60)
-      expect(@meter.amount_due).to eq(873)
+      expect(@meter.amount_due).to eq(874)
     end
 
     it "charges $24.83 for a 16 min wait time, 5.7 mile trip" do
       Time.stub(:now).and_return(@meter.start_time + 16 * 60)
       @meter.miles_driven = 5.7
-      expect(@meter.amount_due).to eq(2483)
+      expect(@meter.amount_due).to eq(2484)
     end
 
   end
@@ -157,13 +157,13 @@ describe TaxiMeter do
 
     it "charges $8.73 for a 16 min wait time, no distance" do
       Time.stub(:now).and_return(@meter.start_time + 16 * 60)
-      expect(@meter.amount_due).to eq(873)
+      expect(@meter.amount_due).to eq(874)
     end
 
     it "charges $24.83 for a 16 min wait time, 5.7 mile trip" do
       Time.stub(:now).and_return(@meter.start_time + 16 * 60)
       @meter.miles_driven = 5.7
-      expect(@meter.amount_due).to eq(2483)
+      expect(@meter.amount_due).to eq(2484)
     end
   end
 
@@ -185,7 +185,7 @@ describe TaxiMeter do
     it "over the 13.10 minimum, should be 23.83" do
       Time.stub(:now).and_return(@meter.start_time + 16 * 60)
       @meter.miles_driven = 5.7
-      expect(@meter.amount_due).to eq(2383)
+      expect(@meter.amount_due).to eq(2384)
     end
   end
 
