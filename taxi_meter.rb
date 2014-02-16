@@ -27,6 +27,8 @@ class TaxiMeter
       else
         check_for_charges
       end
+    else
+      0
     end
   end
 
