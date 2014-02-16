@@ -97,7 +97,7 @@ describe TaxiMeter do
 
     it "charges $29.00 an hour prorate by minute" do
       #stub time for testing stop_time
-      Time.stub(:now).and_return(@start_time + (40 * 60))
+      Time.stub(:now).and_return(@start_time + (40.5 * 60))
 
       #end the trip
       @meter.stop
@@ -106,7 +106,7 @@ describe TaxiMeter do
       @meter.miles_driven = 0
 
       #exect amout due to caluclate cost based on time
-      expect(@meter.amount_due).to eq(1960)
+      expect(@meter.amount_due).to eq(2009)
     end
   end
 

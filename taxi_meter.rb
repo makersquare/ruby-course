@@ -24,7 +24,14 @@ class TaxiMeter
   end
 
   def amount_due
-
+    if @stop_time.nil?
+      calculate_at_time = Time.now
+    else
+      calculate_at_time = @stop_time
+    end
+    minutes = ((calculate_at_time - @start_time) / 60).ceil
+    charge_by_minutes = ((minutes * 0.49) * 100).floor
+    @amount_due += charge_by_minutes
     if @miles_driven >= one_sixth
       @amount_due += 250
     end
