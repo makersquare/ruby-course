@@ -6,6 +6,8 @@ class TaxiMeter
     @airport = airport
     @amount_due = 0
     @miles_driven = 0
+    @price_per_unit_driven = 240
+    @price_per_minute = (2900 / 60.0)
 
   end
 
@@ -18,30 +20,37 @@ class TaxiMeter
   end
 
   def amount_due
-    if @start_time.hour < 9 || start_time.hour > 16
-      check_for_surcharges
+    if @start_time.hour > 21 || @start_time.hour < 4
+      check_for_surcharges + 100
     else
-      check_for_surcharges + 1
+      check_for_surcharges
     end
   end
 
   def check_for_surcharges
-    if @miles_driven == 0 && @airport == false
+    @miles_driven = (@miles_driven * 6.0).ceil
+    (@miles_driven = @miles_driven * one_sixth).round
+
+    if @miles_driven == 0 && !@airport
       amount = 0
-    elsif @miles_driven == 1.0 / 6.0 && @airport == false
-      amount = 2.5
-    elsif @miles_driven == 1.0 / 6.0 && @airport == true
-      amount = (2.5 + 13.1)
+    elsif @miles_driven < 1.0 / 6 && !@airport
+      amount = 250
+    elsif @miles_driven <= 4.7 && @airport
+      amount = 1310
     elsif @airport == true
-      amount = ((2.5 + 2.4 * (@miles_driven - (1.0 / 6.0))) + 13.1)
+      amount = ((@miles_driven - one_sixth) * 240 + 250).round
     else
-      amount = ((2.5 + 2.4 * (@miles_driven - (1.0 / 6.0))))
+      amount = ((@miles_driven - one_sixth) * 240 + 250).round
     end
 
     if @stop_time
-      amount.round(2)  + ((@stop_time - @start_time) / 60 * (29.0/60)).round(2)
+      amount  + (((@stop_time - @start_time) / 60).ceil * @price_per_minute).round
     else
-      amount.round(2)  + ((Time.now - @start_time) / 60 * (29.0/60)).round(2)
+      amount  + (((Time.now - @start_time) / 60).ceil * @price_per_minute).round
     end
+  end
+
+  def one_sixth
+    1.0 / 6.0
   end
 end
