@@ -32,7 +32,7 @@ class TaxiMeter
   def mileage_amount_due
     # return 250 if @miles_driven.zero?
     return 0 if @miles_driven.zero?
-    210 + 40 * (@miles_driven * 6.0)
+    210 + 40 * (@miles_driven * 6.0).round
   end
 
   def airport_surcharge
