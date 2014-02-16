@@ -18,6 +18,7 @@ class TaxiMeter
   end
 
   def stop
+    puts "Thank you for riding with Eazy Sleazy Cab Co.  You owe $#{amount_due}."
     @stop_time = Time.now
   end
 
@@ -44,6 +45,6 @@ class TaxiMeter
   end
 
   def amount_due
-    mileage_amount_due + time_amount_due + airport_surcharge + after_hours_surcharge
+    @amount_due = (mileage_amount_due + time_amount_due + airport_surcharge + after_hours_surcharge)
   end
 end
