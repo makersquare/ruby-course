@@ -2,3 +2,4 @@
 vendor/bundle
 .DS_Store
 taxi_meter.back
+taxi_meter_spec.back
