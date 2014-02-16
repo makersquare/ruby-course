@@ -26,7 +26,7 @@ class TaxiMeter
       #Adds the amount due to distance travelled. Only happens if distance has been travelled
       @amount_due += 2.1 + ((@miles_driven*6).ceil)*0.4 if (@miles_driven > 0)
       #Adds the amount due to the waiting time
-      if @stop_time
+      if @stop_time #This is for if the amount_due is being checked during the ride or not
         @amount_due += (29.0/60)*((@stop_time-@start_time)/60).ceil
       else
         @amount_due += (29.0/60)*((Time.now-@start_time)/60).ceil

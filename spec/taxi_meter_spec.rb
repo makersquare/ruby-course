@@ -59,10 +59,10 @@ describe TaxiMeter do
 
   end
 
-  context "The taxi meter starts" do
+  context "The taxi meter starts and no drunk tax" do
     before do
       # We want to freeze time to the point when the meter starts
-      @start_time = Time.now
+      @start_time = Time.new(2014, 2, 1, 11, 0, 0)
       Time.stub(:now).and_return(@start_time)
 
       @meter = TaxiMeter.new
@@ -169,7 +169,7 @@ describe TaxiMeter do
   context "The taxi meter starts from ABIA" do
     before do
       # We want to freeze time to the point when the meter starts
-      start_time = Time.now
+      start_time = Time.new(2014, 2, 1, 11, 0, 0)
       Time.stub(:now).and_return(start_time)
 
       @meter = TaxiMeter.new(airport: true)
