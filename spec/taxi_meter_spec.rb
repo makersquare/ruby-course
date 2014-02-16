@@ -223,6 +223,8 @@ describe TaxiMeter do
   context 'When the meter stops' do
     before do
       @meter = TaxiMeter.new
+      @time = Time.parse("3 pm")
+      Time.stub(:now).and_return(@time)
       @meter.start
 
       @meter.miles_driven = 10
@@ -232,6 +234,13 @@ describe TaxiMeter do
       @meter.stop
 
       expect(@meter.amount_due).to eq(2610)
+    end
+
+    it 'should charge $55.10 for 10 miles and an hour wait time' do
+      Time.stub(:now).and_return(@time + 60 * 60)
+      @meter.stop
+
+      expect(@meter.amount_due).to eq(5510)
     end
   end
 end
