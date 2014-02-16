@@ -22,20 +22,29 @@ class TaxiMeter
   end
 
   def amount_due
+  #binding.pry
   dist = @miles_driven
   cost = 0
+  balance =0 
   if @start_time
   	if @stop_time
-  		time_elapsed = 2900/((@stop_time - @start_time) / 60)
-   		elsif dist == (1.0 / 6.0)
-  			250
-  		elsif dist >= (1.0 / 6.0) 		
-  			Time.now-@start_time + (cost+=(dist*6).ceil*40+210)
-  		elsif @airport==true && cost < 1310
-  			cost=1310
-  		else
-  		0
-  	    end
+  			#elapsed_time=(@stop_time - @start_time) 
+  			#2900/((@stop_time - @start_time) / 60)
+	   		elsif dist == 0.1 #(1.0 / 6.0)
+	  			250
+	  		elsif dist >= (1.0 / 6.0) 	
+	  			((dist*6).ceil*40+210) 
+	  		elsif @airport==true && cost < 1310
+	  			cost=1310	
+	  		else
+	  		0
+
+	  	end
   	 end
-  end
+end
+
+
+  # if @start_time.to_i > 2100 && @stop_time.to_i < 0400
+
+
 end
