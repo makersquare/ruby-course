@@ -111,6 +111,36 @@ describe TaxiMeter do
       @meter.start_time = Time.now-3600
       expect(@meter.amount_due).to eq(4070)
     end
+    it "charges $40.70 during a 4-mile, 1-hour fare" do
+      @meter.miles_driven = 4
+      @meter.start_time = Time.now-3600
+      expect(@meter.amount_due).to eq(4070)
+    end
+    it "rounds up to the next 1/6th of a mile" do
+      @meter.miles_driven = 0.5
+      @meter.start_time = Time.now-3600
+      expect(@meter.amount_due).to eq(3230)
+    end
+    it "rounds up to the next 1/6th of a mile" do
+      @meter.miles_driven = 0.55
+      @meter.start_time = Time.now-3600
+      expect(@meter.amount_due).to eq(3270)
+    end
+    it "rounds up to the next 1/6th of a mile" do
+      @meter.miles_driven = 4.0/6
+      @meter.start_time = Time.now-3600
+      expect(@meter.amount_due).to eq(3270)
+    end
+    it "rounds up to the next 1/6th of a mile" do
+      @meter.miles_driven = 0.7
+      @meter.start_time = Time.now-3600
+      expect(@meter.amount_due).to eq(3310)
+    end
+    it "doesn't cahrge anything miles for negative miles" do
+      @meter.miles_driven = -1.0
+      @meter.start_time = Time.now-3600
+      expect(@meter.amount_due).to eq(2900)
+    end
   end
 
 end
