@@ -21,10 +21,12 @@ class TaxiMeter
   end
 
   def amount_due
-    if @start_time.hour > 21 || @start_time.hour < 4
-      check_for_charges + 100
-    else
-      check_for_charges
+    if @start_time
+      if @start_time.hour > 21 || @start_time.hour < 4
+        check_for_charges + 100
+      else
+        check_for_charges
+      end
     end
   end
 
