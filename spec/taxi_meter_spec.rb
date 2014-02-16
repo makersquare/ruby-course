@@ -92,7 +92,7 @@ describe TaxiMeter do
       @meter.miles_driven = 30.854
 
       #calculates price by miles driven
-      expect(@meter.amount_due).to eq(7400)
+      expect(@meter.amount_due).to eq(7650)
     end
   end
 

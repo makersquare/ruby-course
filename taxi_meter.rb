@@ -24,8 +24,14 @@ class TaxiMeter
   end
 
   def amount_due
+
     if @miles_driven >= one_sixth
       @amount_due += 250
+    end
+    if @miles_driven > one_sixth
+      num_of_charge_points = ((@miles_driven - one_sixth) / one_sixth).ceil
+      current_mile_charge = ((num_of_charge_points * 0.40) * 100).floor
+      @amount_due += current_mile_charge
     end
     if @airport
       if @amount_due < 1310
