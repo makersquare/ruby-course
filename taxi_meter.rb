@@ -22,17 +22,15 @@ class TaxiMeter
         return @amount_due = 0
       end
 
-      # Find wait time in minutes.
+      # Finds wait time in minutes.
       if @stop_time == nil
         wait_time = ((t - @start_time) / 60).ceil
       else
         wait_time = ((@stop_time - @start_time) / 60).ceil
       end
 
-      # Calculate amount due with miles driven and wait time.
-      if @miles_driven == 0
-        @amount_due = (wait_time * (2900 / 60.0)).round(0)
-      elsif @miles_driven <= (1.0 / 6.0)
+      # Calculates amount due with miles driven and wait time.
+      if @miles_driven <= (1.0 / 6.0)
         @amount_due = (250 + ((2900.0 / 60.0) * wait_time)).round(0)
       else
         one_sixth = (@miles_driven * 6).ceil
