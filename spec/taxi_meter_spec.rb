@@ -86,8 +86,8 @@ describe TaxiMeter do
       @meter.miles_driven = 1.5
       expect(@meter.amount_due).to eq(570)
 
-      # @meter.miles_driven = one_sixth * 20 + 0.1
-      # expect(@meter.amount_due).to eq(1050)
+      @meter.miles_driven = one_sixth * 20 + 0.1
+      expect(@meter.amount_due).to eq(1050)
     end
 
     it "charges $6.90 for 2 miles (recorded in cents)" do
