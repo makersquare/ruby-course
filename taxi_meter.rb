@@ -9,7 +9,7 @@ class TaxiMeter
     @price_per_unit_driven = 240
     @price_per_minute = (2900 / 60.0)
     @amount = 0
-
+    @start_time = nil
   end
 
   def start
@@ -32,9 +32,7 @@ class TaxiMeter
     @miles_driven = (@miles_driven * 6.0).ceil
     (@miles_driven = @miles_driven * one_sixth).round
 
-    if @miles_driven == 0
-      @amount = 0
-    elsif @miles_driven < 1.0 / 6
+    if @miles_driven < 1.0 / 6
       @amount = 250
     else
       @amount = ((@miles_driven - one_sixth) * 240 + 250).round
@@ -49,6 +47,7 @@ class TaxiMeter
         @amount  + (((Time.now - @start_time) / 60).ceil * @price_per_minute).round
       end
     end
+  end
 
   def one_sixth
     1.0 / 6.0
