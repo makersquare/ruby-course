@@ -1,10 +1,13 @@
+require 'time'
+
 class TaxiMeter
 	attr_accessor :miles_driven
 	attr_writer :amount_due
-	attr_reader :start_time, :stop_time, :sixth, :time
+	attr_reader :start_time, :stop_time, :sixth, :time, :drunk
 
 	def initialize(airport: false)
 		@airport = airport
+		@drunk = false
 		@miles_driven = 0
 		@sixth = 1.0 / 6.0
 		@first_sixth = 250
@@ -14,6 +17,8 @@ class TaxiMeter
 
 	def start
 		@start_time = Time.now
+		hour = @start_time.hour
+		@drunk = true if hour < 4 || hour  >= 21
 	end
 
 	def stop
@@ -50,7 +55,11 @@ class TaxiMeter
 		if @airport && fare < 1310
 			fare = 1310
 		else
-			fare.ceil
+			fare = fare.ceil
 		end
+
+		fare += 100 if @drunk
+
+		fare
 	end
 end
