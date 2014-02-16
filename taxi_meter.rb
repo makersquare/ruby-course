@@ -18,7 +18,7 @@ class TaxiMeter
   end
 
   def stop
-    puts "Thank you for riding with Eazy Sleazy Cab Co.  You owe $#{amount_due}."
+    puts "Thank you for riding with Eazy Sleazy Cab Co.  You owe $#{amount_due / 100.0}."
     @stop_time = Time.now
   end
 
