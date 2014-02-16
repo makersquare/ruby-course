@@ -113,7 +113,7 @@ describe TaxiMeter do
       expect(@meter.amount_due).to eq(240)
     end
 
-    it "should charge $29.00 for an hour wait time (recorded in cents" do
+    it "should charge $29.00 for an hour wait time (recorded in cents)" do
       Time.stub(:now).and_return(@time + 60 * 60)
 
       expect(@meter.amount_due).to eq(2900)
@@ -156,11 +156,67 @@ describe TaxiMeter do
       @meter = TaxiMeter.new
       @meter.start
 
-      @meter.miles_driven = 1.5 # meter#amount_due #=> 570 + 100 (cents) for after hours charge
     end
 
     it "should charge $1 extra" do
+      @meter.miles_driven = 1.5 # meter#amount_due #=> 570 + 100 (cents) for after hours charge
+
       expect(@meter.amount_due).to eq(670)
+    end
+
+    it "should charge $1 extra" do
+      @meter.miles_driven = one_sixth * 2 # 250 cents for first 1/6th mile,
+                                          # plus 40 cents for additional 1/6th mile
+
+      expect(@meter.amount_due).to eq(390) # 290 cents + 100 cent surcharge = 390 cents
+    end
+
+    it "should return $1 extra (4 am)" do
+      start_time = Time.parse("4 am")
+      Time.stub(:now).and_return(start_time)
+
+      @meter = TaxiMeter.new
+      @meter.start
+
+      @meter.miles_driven = 1.5
+
+      expect(@meter.amount_due).to eq(670)
+    end
+
+    it "should return $1 extra (12 am)" do
+      start_time = Time.parse("12 am")
+      Time.stub(:now).and_return(start_time)
+
+      @meter = TaxiMeter.new
+      @meter.start
+
+      @meter.miles_driven = 1.5
+
+      expect(@meter.amount_due).to eq(670)
+    end
+
+    it "should return regular charge during normal hours (8 pm)" do
+      start_time = Time.parse("8 pm")
+      Time.stub(:now).and_return(start_time)
+
+      @meter = TaxiMeter.new
+      @meter.start
+
+      @meter.miles_driven = 1.5
+
+      expect(@meter.amount_due).to eq(570)
+    end
+
+    it "should return regular charge during normal hours (5 am)" do
+      start_time = Time.parse("5 am")
+      Time.stub(:now).and_return(start_time)
+
+      @meter = TaxiMeter.new
+      @meter.start
+
+      @meter.miles_driven = 1.5
+
+      expect(@meter.amount_due).to eq(570)
     end
   end
 end
