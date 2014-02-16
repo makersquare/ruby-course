@@ -25,9 +25,9 @@ class TaxiMeter
   def amount_due
     charge_per_sixth = 2.40 / 6.0
 
-    if @miles_driven == 0
-      total_charge = 0.00
-    elsif @miles_driven <= (1.0/6.0)
+    # if @miles_driven == 0
+    #   total_charge = 0.00
+    if @miles_driven <= (1.0/6.0)
       total_charge = 2.50
     else
       total_charge = (@miles_driven * 6).ceil * charge_per_sixth + 2.10
