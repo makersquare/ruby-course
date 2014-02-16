@@ -17,6 +17,19 @@ describe TaxiMeter do
       expect(@meter.miles_driven).to eq 0
     end
 
+    it "cannot set amount due" do
+      expect { @meter.amount = 99 }.to raise_error
+    end
+
+    it "cannot set start time nor stop time" do
+      expect { @meter.start_time = Time.now }.to raise_error
+      expect { @meter.stop_time = Time.now }.to raise_error
+    end
+
+    it "can specify miles driven" do
+      expect { @meter.miles_driven = 5 }.to_not raise_error
+    end
+
     it "can start and stop" do
       @meter.start
       expect(@meter.start_time).to_not be_nil
