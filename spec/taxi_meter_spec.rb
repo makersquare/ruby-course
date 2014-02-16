@@ -82,12 +82,12 @@ describe TaxiMeter do
     end
 
     it "charges $2.40 for each additional mile, prorated by each 1/6 mile" do
-      @start_time = Time.now
+      @start_time = Time.parse("2014-02-11 07:00:00 -0600")
       Time.stub(:now).and_return(@start_time)
       @meter.start
-      @meter.miles_driven = 2 + (2.0 / 6.0)
+      @meter.miles_driven = (2 + (2.0 / 6.0)) + (1.0 / 8.0)
 
-      expect(@meter.amount_due).to eq(770)
+      expect(@meter.amount_due).to eq(810)
     end
 
     it "charges additional dollar if start time between 9pm and 4am" do
