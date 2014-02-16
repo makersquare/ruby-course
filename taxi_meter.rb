@@ -12,20 +12,17 @@ class TaxiMeter
   end
 
   def amount_due
-    per_minute = 48
+    per_minute = 0.4833
       if !@stop_time
         #puts "#{start_time}"
         #puts "#{Time.now}"
           rolling_time = Time.now
           time_elapsed = (rolling_time - @start_time) / 60
-          if time_elapsed > 0 && time_elapsed % 60 == 0
-            time_fare = (2900 * (time_elapsed / 60)).round
-          else
-           time_fare = (time_elapsed * per_minute).round
-          end
+
+        time_fare = (time_elapsed * per_minute) * 100
         else
           time_elapsed = (@stop_time - @start_time) / 60
-          time_fare = (time_elapsed * per_minute).round
+          time_fare = (time_elapsed * per_minute) * 100
       end
     sixth = (miles_driven * 6).ceil
     dist_fare = (40 * sixth)
@@ -38,23 +35,23 @@ class TaxiMeter
     #puts "#{late_night}"
     #puts "#{airport}"
     due = 210 + dist_fare + time_fare
-      if late_night == true
-        due = due + 100
+      if late_night == true && @airport == false
+        due = (due + 100).round
       end
       if @airport == true
           if due >= 1310 && late_night == true
-             due = due + 100
+             due = (due + 100).round
           elsif due < 1310 && late_night == true
              due = 1410
-          else
+          elsif due < 1310 && late_night == false
             due = 1310
           end
       end
-      due
+      due.round
   end #amount_due
 
   def start
-    @start_time = Time.now
+    @start_time ||= Time.now
   end
 
   def stop

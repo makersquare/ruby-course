@@ -51,14 +51,22 @@ describe TaxiMeter do
       @meter.stop
       expect(@meter.stop_time).to eq(time + 5 * 60)
     end
-  end
+
+    it "doesn't change the start time if started again" do
+      start_time = Time.now
+      Time.stub(:now).and_return(start_time)
+      @meter.start
+      Time.stub(:now).and_return(start_time + 5 * 60)
+      @meter.start
+      expect(@meter.start_time).to eq(start_time)
+    end
+  end #context
 
   context "The taxi meter starts" do
     before do
       # We want to freeze time to the point when the meter starts
       @start_time = Time.now
       Time.stub(:now).and_return(@start_time)
-
       @meter = TaxiMeter.new
       @meter.start
     end
@@ -70,7 +78,6 @@ describe TaxiMeter do
       expect(@meter.amount_due).to eq(250)
     end
 
-
     it "charges $2.40 for each additional mile (prorated by each sixth)" do
       @meter.miles_driven = one_sixth * 2
       expect(@meter.amount_due).to eq(290)
@@ -80,6 +87,9 @@ describe TaxiMeter do
 
       @meter.miles_driven = 1.5
       expect(@meter.amount_due).to eq(570)
+
+      @meter.miles_driven = one_sixth * 7
+      expect(@meter.amount_due).to eq(490)
 
       # Make sure it rounds up to gouge as
       # much money from the customer as possible
@@ -103,7 +113,10 @@ describe TaxiMeter do
       expect(@meter.amount_due).to eq(1310)
     end
 
-
+    it "doesn't always use the minimum fare" do
+      @meter.miles_driven = 10 + one_sixth
+      expect(@meter.amount_due).to eq(2650)
+    end
 
   end #end context
 
@@ -118,7 +131,7 @@ describe TaxiMeter do
     it "should have a fare based on elapsed time" do
       time = Time.now
       Time.stub(:now).and_return(time + 5 * 60)
-      expect(@meter.amount_due).to eq(240)
+      expect(@meter.amount_due).to eq(242)
     end
 
     it "should have a waiting time fare of $29.00 an hour" do
@@ -137,7 +150,7 @@ describe TaxiMeter do
       time = Time.now
       Time.stub(:now).and_return(time + 5 * 60)
       @meter.miles_driven = 1.5
-      expect(@meter.amount_due).to eq(810)
+      expect(@meter.amount_due).to eq(812)
     end
 
     it "should calculate based on start time, stop time, and distance" do
@@ -146,7 +159,7 @@ describe TaxiMeter do
       @meter.miles_driven = 1.5
       @meter.stop
       Time.stub(:now).and_return(time + 10 * 60)
-      expect(@meter.amount_due).to eq(810)
+      expect(@meter.amount_due).to eq(812)
     end
 
     it "should retain stop time even if stop is called again" do
@@ -156,7 +169,7 @@ describe TaxiMeter do
       @meter.stop
       Time.stub(:now).and_return(time + 10 * 60)
       @meter.stop
-      expect(@meter.amount_due).to eq(810)
+      expect(@meter.amount_due).to eq(812)
     end
 
   end #end context
@@ -171,7 +184,7 @@ describe TaxiMeter do
 
       it "should add a dollar if start time after 9pm " do
       Time.stub(:now).and_return(Time.parse("2014-2-15 21:05:00"))
-      expect(@meter.amount_due).to eq(340)
+      expect(@meter.amount_due).to eq(342)
     end
 
     it "from AIBA minimum fare of $14.10 after 9pm" do
@@ -181,6 +194,15 @@ describe TaxiMeter do
       expect(@meter.amount_due).to eq(1410)
     end
 
+    it "doesn't always use the minimum fare from the airport" do
+      @meter = TaxiMeter.new(airport: true)
+      @meter.start
+      Time.stub(:now).and_return(Time.parse("2014-2-15 21:05:00"))
+      @meter.miles_driven = 10 + one_sixth
+      expect(@meter.amount_due).to eq(2992)
+    end
+
   end #end context
+
 
 end #end class
