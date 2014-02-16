@@ -219,4 +219,19 @@ describe TaxiMeter do
       expect(@meter.amount_due).to eq(570)
     end
   end
+
+  context 'When the meter stops' do
+    before do
+      @meter = TaxiMeter.new
+      @meter.start
+
+      @meter.miles_driven = 10
+    end
+
+    it 'should charge $26.10 for 10 miles and no wait time' do
+      @meter.stop
+
+      expect(@meter.amount_due).to eq(2610)
+    end
+  end
 end
