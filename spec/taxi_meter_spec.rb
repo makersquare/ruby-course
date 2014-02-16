@@ -108,6 +108,23 @@ describe TaxiMeter do
       #exect amout due to caluclate cost based on time
       expect(@meter.amount_due).to eq(2009)
     end
+
+    it "charges an additional $1 if start time is between 9pm and 4am" do
+      #stub time for testing reseting start time
+      Time.stub(:now).and_return(Time.parse('12am'))
+
+      #reset @start_time
+      @meter.start
+
+      #stub time for testing stop_time
+      Time.stub(:now).and_return(@start_time + (1 * 60))
+
+      #end the trip
+      @meter.stop
+
+      #exect amout due to caluclate cost based on time
+      expect(@meter.amount_due).to eq(149)
+    end
   end
 
 
