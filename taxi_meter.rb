@@ -7,6 +7,7 @@ class TaxiMeter
     @start_time
     @stop_time
     @airport = airport
+    @meter_started = false
   end
 
   def amount_due
@@ -56,10 +57,15 @@ class TaxiMeter
 
   def start
     @start_time = Time.now
+    @meter_started = true
   end
 
   def stop
-    @stop_time = Time.now
+    if @meter_started
+      @stop_time = Time.now
+    else
+      puts "The meter hasn't been started yet."
+    end
   end
 
 end

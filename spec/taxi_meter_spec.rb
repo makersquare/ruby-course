@@ -188,4 +188,15 @@ describe TaxiMeter do
     end
   end
 
+  context  "Predicting weird user behaviors" do
+    before do
+      @meter = TaxiMeter.new(airport: true)
+    end
+
+    it "doesn't let you stop the meter if it's not started" do
+      expect(@meter.stop).to eq(nil)
+    end
+
+  end
+
 end
