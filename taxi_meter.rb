@@ -44,7 +44,7 @@ class TaxiMeter
     else
       amount_due = amount_due + (miles_driven * 40)
     end
-    amount_due.round(0)
+    amount_due.ceil
   end
 
   def amount_due=(amount_due)
