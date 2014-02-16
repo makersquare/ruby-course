@@ -1,5 +1,6 @@
 require './taxi_meter.rb'
 require 'pry-debugger'
+require 'time'
 
 describe TaxiMeter do
 
@@ -133,4 +134,20 @@ describe TaxiMeter do
 			expect(@meter.amount_due).to eq(1310)
     end
   end
+  context "Between 9pm and 4am" do
+    before do
+      # We want to freeze time to the point when the meter starts
+      start_time = Time.parse('9pm')
+      Time.stub(:now).and_return(start_time)
+
+      @meter = TaxiMeter.new
+      @meter.start
+    end
+
+		it "charges an extra $1" do
+      Time.stub(:now).and_return(@meter.start_time + 60 * 60)
+			@meter.miles_driven = 1
+			expect(@meter.amount_due).to eq(3450)
+		end
+	end
 end
