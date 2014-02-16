@@ -46,8 +46,8 @@ class TaxiMeter
 		end
 
 		if @start_time
-		# Find how many minutes have passed
-		clock = (time - @start_time) / 60
+		# Find the ceiling of how many minutes have passed
+		clock = ((time - @start_time) / 60).ceil
 
 		fare += clock * @minute_rate
 		end
