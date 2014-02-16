@@ -43,6 +43,7 @@ describe TaxiMeter do
 
     it "records the time it stopped" do
       # We want to freeze time to the point when the meter starts
+      @meter.start
       stop_time = Time.now
       Time.stub(:now).and_return(stop_time)
 
