@@ -1,4 +1,5 @@
 require './taxi_meter.rb'
+require 'time'
 
 describe TaxiMeter do
 
@@ -13,8 +14,8 @@ describe TaxiMeter do
     end
 
     it "starts at zero" do
-      @meter.amount_due = 0
-      @meter.miles_driven = 0
+      expect(@meter.amount_due).to eq(0)
+      expect(@meter.miles_driven).to eq(0)
     end
 
     it "can start and stop" do
@@ -66,7 +67,7 @@ describe TaxiMeter do
   context "The taxi meter starts" do
     before do
       # We want to freeze time to the point when the meter starts
-      @start_time = Time.now
+      @start_time = Time.parse('11am', Time.now)
       Time.stub(:now).and_return(@start_time)
 
       @meter = TaxiMeter.new
@@ -108,23 +109,6 @@ describe TaxiMeter do
       #exect amout due to caluclate cost based on time
       expect(@meter.amount_due).to eq(2009)
     end
-
-    it "charges an additional $1 if start time is between 9pm and 4am" do
-      #stub time for testing reseting start time
-      Time.stub(:now).and_return(Time.parse('12am'))
-
-      #reset @start_time
-      @meter.start
-
-      #stub time for testing stop_time
-      Time.stub(:now).and_return(@start_time + (1 * 60))
-
-      #end the trip
-      @meter.stop
-
-      #exect amout due to caluclate cost based on time
-      expect(@meter.amount_due).to eq(149)
-    end
   end
 
 
@@ -148,13 +132,26 @@ describe TaxiMeter do
 
       #calculates price based on miles expects airport minimum
       expect(@meter.amount_due).to eq(1310)
-
-      # #sets milage to a large amount
-      # @meter.miles_driven = 20
-
-      # #calculates price based on miles expects normal fare
-      # expect(@meter.amount_due).to eq(###)
     end
   end
-end
+    it "charges an additional $1 if start time is between 9pm and 4am" do
+      meter = TaxiMeter.new
 
+      now = Time.now
+
+      #stub time for testing reseting start time
+      Time.stub(:now).and_return(Time.parse('3 am', now))
+
+      #reset @start_time
+      meter.start
+
+      #stub time for testing stop_time
+      Time.stub(:now).and_return(meter.start_time + (1 * 60))
+
+      #end the trip
+      meter.stop
+
+      #exect amout due to caluclate cost based on time
+      expect(meter.amount_due).to eq(149)
+    end
+end
