@@ -86,13 +86,27 @@ describe TaxiMeter do
 
     it "charges $2.40 a miles prorated by 1/6" do
       #stops time to simulate end of trip
-      @meter.stop_time
+      @meter.stop
 
       #sets miles driven to number greater than min and not a whole number
       @meter.miles_driven = 30.854
 
       #calculates price by miles driven
       expect(@meter.amount_due).to eq(7650)
+    end
+
+    it "charges $29.00 an hour prorate by minute" do
+      #stub time for testing stop_time
+      Time.stub(:now).and_return(@start_time + (40 * 60))
+
+      #end the trip
+      @meter.stop
+
+      #sets miles driven to 0
+      @meter.miles_driven = 0
+
+      #exect amout due to caluclate cost based on time
+      expect(@meter.amount_due).to eq(1960)
     end
   end
 
