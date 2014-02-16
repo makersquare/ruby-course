@@ -29,7 +29,7 @@ describe TaxiMeter do
 
     it "records the time it started" do
       # We want to freeze time to the point when the meter starts
-      start_time = Time.now
+      start_time = Time.parse("Feb 24 2013 3 PM")
       Time.stub(:now).and_return(start_time)
 
       # This should grab the current time
@@ -43,7 +43,7 @@ describe TaxiMeter do
     end
 
     it "records the time it stopped" do
-      start_time = Time.now
+      start_time = Time.parse("Feb 24 2013 3 PM")
       Time.stub(:now).and_return(start_time)
 
       # This should grab the current time
@@ -61,8 +61,8 @@ describe TaxiMeter do
   context "The taxi meter starts" do
     before do
       # We want to freeze time to the point when the meter starts
-      @start_time = Time.now
-      Time.stub(:now).and_return(@start_time)
+      start_time = Time.parse("Feb 24 2013 3 PM")
+      Time.stub(:now).and_return(start_time)
 
       @meter = TaxiMeter.new
       @meter.start
@@ -86,7 +86,7 @@ describe TaxiMeter do
   context "The taxi meter starts from ABIA" do
     before do
       # We want to freeze time to the point when the meter starts
-      start_time = Time.now
+      start_time = Time.parse("Feb 24 2013 3 PM")
       Time.stub(:now).and_return(start_time)
 
       @meter = TaxiMeter.new(airport: true)
