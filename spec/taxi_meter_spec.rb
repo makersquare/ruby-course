@@ -27,7 +27,8 @@ describe TaxiMeter do
     end
 
     it "can specify miles driven" do
-      expect { @meter.miles_driven = 5 }.to_not raise_error
+      @meter.miles_driven = 5
+      expect(@meter.miles_driven).to eq 5
     end
 
     it "can start and stop" do
