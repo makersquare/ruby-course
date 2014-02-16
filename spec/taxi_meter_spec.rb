@@ -140,6 +140,12 @@ describe TaxiMeter do
     it "has a minimum fare of $13.10" do #actually checking for 13.10 plus 2.50 charge
       expect(@meter.amount_due).to eq(1310)
     end
+
+    it "charges $15.60 for first 1/6th of mile away from airport" do
+      @meter.miles_driven = one_sixth
+
+      expect(@meter.amount_due).to eq(1560)
+    end
   end
 
   context "The taxi meter is running between 9pm and 4am" do
