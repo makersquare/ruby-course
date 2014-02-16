@@ -1,4 +1,5 @@
 require './taxi_meter.rb'
+require 'pry-debugger'
 
 describe TaxiMeter do
 
@@ -87,11 +88,28 @@ describe TaxiMeter do
       @meter.start
     end
 
-    it "has a minimum fare of $13.10" do
+    it "has a minimum fare of $13.10 for airport rides" do
       @meter.miles_driven = 0
       @meter.start_time = Time.new(2014, 2, 1, 11, 0, 0)
       @meter.stop_time = Time.new(2014, 2, 1, 11, 15, 0)
       expect(@meter.amount_due).to eq(1310)
+    end
+    it "has a minimum fare of $13.10 for airport rides" do
+      @meter.miles_driven = 1.0/6
+      @meter.start_time = Time.new(2014, 2, 1, 11, 0, 0)
+      @meter.stop_time = Time.new(2014, 2, 1, 11, 15, 0)
+      expect(@meter.amount_due).to eq(1310)
+    end
+    it "charges $40.70 at the end of a 4-mile, 1-hour fare" do
+      @meter.miles_driven = 4
+      @meter.start_time = Time.new(2014, 2, 1, 11, 0, 0)
+      @meter.stop_time = Time.new(2014, 2, 1, 12, 0, 0)
+      expect(@meter.amount_due).to eq(4070)
+    end
+    it "charges $40.70 during a 4-mile, 1-hour fare" do
+      @meter.miles_driven = 4
+      @meter.start_time = Time.now-3600
+      expect(@meter.amount_due).to eq(4070)
     end
   end
 
