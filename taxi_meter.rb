@@ -5,7 +5,8 @@ class TaxiMeter
   attr_accessor :miles_driven, :amount_due, :start_time, :stop_time, :wait_time
   attr_reader :stop_time, :sixth
 
-  def initialize()
+  def initialize(airport: false)
+    @airport = airport
     @miles_driven = 0
     @sixth = 1.0 / 6.0
     @base_charge = 210
@@ -48,6 +49,7 @@ def time
         @amount_due += wait_time*((Time.now-@start_time)/60).ceil
       end
       @amount_due += 100 if (@start_time.hour >= 21 || @start_time.hour < 4)
+      @amount_due = 1310 if @airport && @amount_due < 1310
         @amount_due.round(0)
     else
       0
