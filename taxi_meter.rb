@@ -63,6 +63,7 @@ class TaxiMeter
   end
 
   def amount_due
+    @amount_due = 0
     if !@start_time.nil?
       twilight_charge
       time_based_cost
