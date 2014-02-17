@@ -8,7 +8,7 @@ class TaxiMeter
     @miles_driven = 0
     @start_time = start_time
     @stop_time = stop_time
-    @amount_due = 0
+    @amount_due = amount_due
   end
 
   def start
@@ -27,8 +27,15 @@ class TaxiMeter
     if @miles_driven == 0
       return 0
     else
-      return price.ceil
+      return price.round + amount_time
     end
+  end
+
+  def amount_time
+    time = Time.now
+    minutes_elapsed = (-1*(@start_time - time)/60).round
+    amount_from_time_lapsed = 2900.0*minutes_elapsed/60
+    return amount_from_time_lapsed
   end
 
 

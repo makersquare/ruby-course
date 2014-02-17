@@ -91,17 +91,17 @@ describe TaxiMeter do
       # expect(@meter.amount_due).to eq(1050)
     end
 
-    xit "$29.00 an hour for waiting time, prorated by minute" do
+    it "$29.00 an hour for waiting time, prorated by minute" do
       # For one hour
       Time.stub(:now).and_return(@start_time + 60 * 60)
-      expect(@meter.amount_due).to eq(2900)
+      expect(@meter.amount_time).to eq(2900)
 
       # For two hours
       Time.stub(:now).and_return(@start_time + 60 * 60 * 2)
-      expect(@meter.amount_due).to eq(5800)
+      expect(@meter.amount_time).to eq(5800)
     end
 
-    xit "charges $33.50 for an hour of time and one mile of travel" do
+    it "charges $33.50 for an hour of time and one mile of travel" do
       Time.stub(:now).and_return(@start_time + 60 * 60)
       @meter.miles_driven = 1
       expect(@meter.amount_due).to eq(3350)
