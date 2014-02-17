@@ -1,14 +1,14 @@
 
 class TaxiMeter
 
-  attr_accessor :meter, :total_cost, :miles_driven, :start_time, :stop_time, :amount_due
+  attr_accessor :meter, :miles_driven, :start_time, :stop_time, :amount_due
 
   def initialize
     @meter = meter
-    @amount_due = 0
     @miles_driven = 0
     @start_time = start_time
     @stop_time = stop_time
+    @amount_due = 0
   end
 
   def start
@@ -17,19 +17,20 @@ class TaxiMeter
 
   def stop
     @stop_time = Time.now
+    #calling stop calls amount due, resets meter, miles driven, startime, etcs
   end
 
-  def amount_due(m
-    )
+  def amount_due
     time = Time.now
-    always_one_sixth = 0.16666666666
-    price = (250 + 240*(miles_driven-always_one_sixth))
-    if miles_driven<=always_one_sixth
-      return price = 250
+    always_one_sixth = 1.0/6.0
+    price = (@miles_driven*6)*40 + 210
+    if @miles_driven == 0
+      return 0
     else
-      return price.floor
+      return price.ceil
     end
   end
+
 
 
 
