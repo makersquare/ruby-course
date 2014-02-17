@@ -1,7 +1,7 @@
 
 class TaxiMeter
 
-  attr_accessor :meter, :miles_driven, :start_time, :stop_time, :amount_due
+  attr_accessor :meter, :miles_driven, :start_time, :stop_time, :amount_due, :airport
 
   def initialize
     @meter = meter
@@ -9,6 +9,7 @@ class TaxiMeter
     @start_time = start_time
     @stop_time = stop_time
     @amount_due = amount_due
+    @airport = false
   end
 
   def start
@@ -21,13 +22,19 @@ class TaxiMeter
   end
 
   def amount_due
-    time = Time.now
-    always_one_sixth = 1.0/6.0
     price = (@miles_driven*6)*40 + 210
-    if @miles_driven == 0
-      return 0
-    else
-      return price.round + amount_time
+    if @airport == false
+      if @miles_driven == 0
+        return 0
+      else
+        return price.round + amount_time
+      end
+    elsif @airport == true
+      if (price.round + amount_time) > 1310
+        return price.round + amount_time
+      else
+        return 1310
+      end
     end
   end
 

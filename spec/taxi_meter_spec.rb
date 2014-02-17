@@ -115,19 +115,18 @@ describe TaxiMeter do
       # We want to freeze time to the point when the meter starts
       start_time = Time.now
       Time.stub(:now).and_return(start_time)
-
-      @meter = TaxiMeter.new(airport: true)
+      @meter = TaxiMeter.new
       @meter.start
+      @meter.airport = true
     end
 
-    xit "has a minimum fare of $13.10" do
+    it "has a minimum fare of $13.10" do
 
       @meter.miles_driven = one_sixth * 20
       expect(@meter.amount_due).to eq(1310)
 
       @meter.miles_driven = 10 + one_sixth
       expect(@meter.amount_due).to eq(2650)
-
 
       Time.stub(:now).and_return(@meter.start_time + 60)
       @meter.miles_driven = one_sixth * 20
