@@ -24,6 +24,7 @@ class TaxiMeter
   end
 
   def amount_due
+    @amount_due = 0
     if @start_time != nil #Only returns if the meter is running
       #Adds the amount due to distance travelled. Updates to give a 2.50 amount if no distance travelled
       @miles_driven > 0 ? @amount_due += 2.1 + ((@miles_driven*6).ceil)*0.4 : @amount_due += 2.50
