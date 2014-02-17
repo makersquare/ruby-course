@@ -74,7 +74,13 @@ describe TaxiMeter do
       @meter.miles_driven = 0
       @meter.start_time = Time.new(2014, 2, 1, 11, 0, 0)
       @meter.stop_time = Time.new(2014, 2, 1, 12, 0, 0)
-      expect(@meter.amount_due).to eq(2900)
+      expect(@meter.amount_due).to eq(3150)
+    end
+    it "charges $32.50 for a 1-hour fare starting at 2am" do 
+      @meter.miles_driven = 0
+      @meter.start_time = Time.new(2014, 2, 1, 2, 0, 0)
+      @meter.stop_time = Time.new(2014, 2, 1, 3, 0, 0)
+      expect(@meter.amount_due).to eq(3250)
     end
   end
 
@@ -111,11 +117,6 @@ describe TaxiMeter do
       @meter.start_time = Time.now-3600
       expect(@meter.amount_due).to eq(4070)
     end
-    it "charges $40.70 during a 4-mile, 1-hour fare" do
-      @meter.miles_driven = 4
-      @meter.start_time = Time.now-3600
-      expect(@meter.amount_due).to eq(4070)
-    end
     it "rounds up to the next 1/6th of a mile" do
       @meter.miles_driven = 0.5
       @meter.start_time = Time.now-3600
@@ -136,11 +137,26 @@ describe TaxiMeter do
       @meter.start_time = Time.now-3600
       expect(@meter.amount_due).to eq(3310)
     end
-    it "doesn't cahrge anything miles for negative miles" do
+    it "doesn't charge anything miles for negative miles" do
       @meter.miles_driven = -1.0
       @meter.start_time = Time.now-3600
-      expect(@meter.amount_due).to eq(2900)
+      expect(@meter.amount_due).to eq(3150)
+    end
+    it "doesn't charge anything miles for negative miles" do
+      @meter.miles_driven = -1.0
+      @meter.start_time = Time.now-3600
+      expect(@meter.amount_due).to eq(3150)
+    end
+    it "doesn't charge anything miles for negative miles" do
+      @meter.miles_driven = -1.0
+      @meter.start_time = Time.now-3600
+      expect(@meter.amount_due).to eq(3150)
+    end
+    it "charges $13.10 for a 10-minute airport fare starting at 2am" do 
+      @meter.miles_driven = 0
+      @meter.start_time = Time.new(2014, 2, 1, 2, 0, 0)
+      @meter.stop_time = Time.new(2014, 2, 1, 2, 10, 0)
+      expect(@meter.amount_due).to eq(1310)
     end
   end
-
 end
