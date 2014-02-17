@@ -101,18 +101,10 @@ describe TaxiMeter do
       expect(@meter.amount_due).to eq(4643)
     end
 
-  end
-
-  context "The taxi is waiting" do
-
-    before do
+    it "charges $29.00 an hour for waiting time, prorated by minute" do
       @seven_pm = Time.parse("2014-02-11 19:00:00 -0600")
       Time.stub(:now).and_return(@seven_pm)
-      @meter = TaxiMeter.new
       @meter.start
-    end
-
-    it "charges $29.00 an hour for waiting time, prorated by minute" do
       time = @seven_pm + (40 * 60)
       Time.stub(:now).and_return(time)
       @meter.miles_driven = 10
