@@ -27,12 +27,7 @@ class TaxiMeter
 
     sixth = (miles_driven * 6).ceil
     dist_fare = (40 * sixth)
-    puts "miles driven - #{sixth}"
 
-    #puts "#{dist_fare}"
-    #puts "#{time_fare}"
-    #puts "#{late_night}"
-    #puts "#{airport}"
     due = 210 + dist_fare + time_fare
       if late_night == true && @airport == false
         due = (due + 100).round
