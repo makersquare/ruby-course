@@ -24,12 +24,11 @@ class TaxiMeter
           time_elapsed = (@stop_time - @start_time) / 60
           time_fare = (time_elapsed * per_minute) * 100
       end
+
     sixth = (miles_driven * 6).ceil
     dist_fare = (40 * sixth)
+    puts "miles driven - #{sixth}"
 
-    if dist_fare == 0
-      dist_fare = -210
-    end
     #puts "#{dist_fare}"
     #puts "#{time_fare}"
     #puts "#{late_night}"
@@ -52,6 +51,7 @@ class TaxiMeter
 
   def start
     @start_time ||= Time.now
+    @miles_driven = 0.16
   end
 
   def stop

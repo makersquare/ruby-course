@@ -78,6 +78,14 @@ describe TaxiMeter do
       expect(@meter.amount_due).to eq(250)
     end
 
+    it "rounds up for miles driven" do
+      @meter.miles_driven = 0.01
+      expect(@meter.amount_due).to eq(250)
+
+      @meter.miles_driven = one_sixth  + 0.01
+      expect(@meter.amount_due).to eq(290)
+    end
+
     it "charges $2.40 for each additional mile (prorated by each sixth)" do
       @meter.miles_driven = one_sixth * 2
       expect(@meter.amount_due).to eq(290)
@@ -91,10 +99,7 @@ describe TaxiMeter do
       @meter.miles_driven = one_sixth * 7
       expect(@meter.amount_due).to eq(490)
 
-      # Make sure it rounds up to gouge as
-      # much money from the customer as possible
-      @meter.miles_driven = one_sixth * 20 + 0.1
-      expect(@meter.amount_due).to eq(1050)
+
     end
 
   end
@@ -131,19 +136,19 @@ describe TaxiMeter do
     it "should have a fare based on elapsed time" do
       time = Time.now
       Time.stub(:now).and_return(time + 5 * 60)
-      expect(@meter.amount_due).to eq(242)
+      expect(@meter.amount_due).to eq(492)
     end
 
     it "should have a waiting time fare of $29.00 an hour" do
       time = Time.now
       Time.stub(:now).and_return(time + 60 * 60)
-      expect(@meter.amount_due).to eq(2900)
+      expect(@meter.amount_due).to eq(3150)
     end
 
     it "should have a waiting time fare of $29.48 for 1 hour 1 min" do
       time = Time.now
       Time.stub(:now).and_return(time + 61 * 60)
-      expect(@meter.amount_due).to eq(2948)
+      expect(@meter.amount_due).to eq(3198)
     end
 
     it "should calculate elapsed time and distance together" do
@@ -184,7 +189,7 @@ describe TaxiMeter do
 
       it "should add a dollar if start time after 9pm " do
       Time.stub(:now).and_return(Time.parse("2014-2-15 21:05:00"))
-      expect(@meter.amount_due).to eq(342)
+      expect(@meter.amount_due).to eq(592)
     end
 
     it "from AIBA minimum fare of $14.10 after 9pm" do
