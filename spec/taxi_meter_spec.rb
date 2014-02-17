@@ -57,10 +57,11 @@ describe TaxiMeter do
 
       @meter = TaxiMeter.new
       @meter.start
+      @meter.first_sixth
     end
 
     it "charges $2.50 for the first 1/6 mile (recorded in cents)" do
-      expect(@meter.amount_due).to eq(2.50)
+      expect(@meter.amount_due).to eq(250)
       expect(@meter.miles_driven).to eq(1.0/6.0)
   end
 end
@@ -73,10 +74,11 @@ end
 
       @meter = TaxiMeter.new(airport: true)
       @meter.start
+      @meter.airport_rate
     end
 
     it "has a minimum fare of $13.10" do
-      expect(@meter.amount_due).to eq(15.60)
+      expect(@meter.amount_due).to eq(1310)
     end
   end
 
@@ -86,6 +88,40 @@ end
       Time.stub(:now).and_return(start_time)
       @meter = TaxiMeter.new
       @meter.start
+      @meter.add_distance(1)
+      @meter.stop
+      @meter.calculate_rate
     end
+    it "calculates the base rate correctly" do
+      expect(@meter.calculate_rate).to eq(5.75)
+    end
+  end
+
+  context "The taxi meter charges $29 per hour" do
+    before do
+      start_time = Time.now
+      Time.stub(:now).and_return(start_time)
+      @meter = TaxiMeter.new
+      @meter.start
+      Time.stub(:now).and_return(start_time + 3600)
+      @meter.stop
+    end
+    it "calculate the hourly rate correctly" do
+      expect(@meter.calculate_rate).to eq(31.9)
+    end
+  end
+
+  context "The taxi meter charges an additional dollar after 9 pm" do
+    before do
+      start_time = Time.parse("10 pm")
+      Time.stub(:now).and_return(start_time)
+      @meter = TaxiMeter.new
+      @meter.start
+      @meter.late_rate
+    end
+    it "calculates the late night rate correctly" do
+      expect(@meter.amount_due).to eq(100)
+    end
+  end
 
 end
