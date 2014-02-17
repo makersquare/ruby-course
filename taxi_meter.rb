@@ -31,11 +31,12 @@ class TaxiMeter
   end
 
   def mileage_amount_due
-    return 250 if @miles_driven.zero?; 0
+    return 0 if @miles_driven.zero?
     210 + 40 * (@miles_driven * 6.0).round
   end
 
   def airport_surcharge
+    return 250 if @miles_driven.zero? && @airport == false
     return AIRPORT_SURCHARGE_IN_CENTS if (@amount_due < 1310 && @airport == true); 0
   end
 

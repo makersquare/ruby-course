@@ -137,8 +137,9 @@ describe TaxiMeter do
       @meter.start
     end
 
-    it "has a minimum fare of $13.10 (plus $2.50 initial charge" do #actually checking for 13.10 plus 2.50 charge
-      expect(@meter.amount_due).to eq(1560)
+    it "has a minimum fare of $13.10" do #actually checking for 13.10 plus 2.50 charge
+      binding.pry
+      expect(@meter.amount_due).to eq(1310)
     end
 
     it "charges $15.60 for first 1/6th of mile away from airport" do
