@@ -12,10 +12,6 @@ class TaxiMeter
   end
 
   def amount_due
-    # ADDS ADDITIONAL $1 FOR EVERY TRIP BETWEEN 9PM AND 4AM
-    # if @start_time <= Time.parse('4am') || @start_time >= Time.parse('9pm')
-    #   @amount_due += 100
-    # end
     # WAITING TIME CALCULATION
     if @miles_driven == 0
         current_time = Time.now
@@ -52,6 +48,10 @@ class TaxiMeter
     # AIRPORT FARE?
     if @airport
       @amount_due += 1310
+    end
+    # ADDS ADDITIONAL $1 FOR EVERY TRIP BETWEEN 9PM AND 4AM
+    if @start_time <= Time.parse('4am') || @start_time >= Time.parse('9pm')
+      @amount_due += 100
     end
     # RETURN THE TOTAL AMOUNT DUE AFTER ALL CALCULATIONS
     @amount_due.round(2)

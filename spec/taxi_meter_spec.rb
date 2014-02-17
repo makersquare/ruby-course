@@ -77,8 +77,8 @@ describe TaxiMeter do
       expect(@meter.amount_due).to eq(810)
     end
 
-    xit "charges an additional $1 if started between 9pm and 4am" do
-      new_time = Time.parse('3am')
+    it "charges an additional $1 if started between 9pm and 4am" do
+      new_time = Time.new(2014, 2, 1, 23, 0, 0)
       Time.stub(:now).and_return(new_time)
       @meter.miles_driven = one_sixth
       expect(@meter.amount_due).to eq(350)
