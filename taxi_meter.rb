@@ -13,16 +13,12 @@ class TaxiMeter
 
   def start
   	 @start_time = Time.now
- 
   end
 
   def stop
-    unless @start_time != nil
-  	 @stop_time = Time.now
-    else
-      @stop_time = false
+  	@stop_time = Time.now
+    if @start_time == nil 
       puts "You can't stop a ride you haven't started!"
-
     end
   end
 
