@@ -41,13 +41,24 @@ class TaxiMeter
             wait_time = ((Time.now - @start_time)/60.0).ceil
 
             balance+= (wait_time*(2900/60.0)).round
-          else
-            0
+
           end
 
         elsif @airport==true && balance < 1310
 
           balance+=1310
+
+          elsif @airport==true && balance > 1310
+            balance += ((dist*6).ceil*40+210)
+
+            if @stop_time==nil
+
+            wait_time = ((Time.now - @start_time)/60.0).ceil
+
+            balance+= (wait_time*(2900/60.0)).round
+
+
+          end
 
         else @stop_time==nil
 
@@ -64,9 +75,6 @@ class TaxiMeter
     else
       0
     end
-
-
-
 
 
 end
