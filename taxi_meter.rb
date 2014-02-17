@@ -31,7 +31,7 @@ class TaxiMeter
   end
 
   def mileage_amount_due
-    return 0 if @miles_driven.zero?
+    return 250 if @miles_driven.zero?; 0
     210 + 40 * (@miles_driven * 6.0).round
   end
 

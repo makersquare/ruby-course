@@ -110,19 +110,19 @@ describe TaxiMeter do
     it "should have a fare based on elapsed time" do
       Time.stub(:now).and_return(@time + 5 * 60)
 
-      expect(@meter.amount_due).to eq(240)
+      expect(@meter.amount_due).to eq(490) # $2.50 initial charge + 2900/60 * 5 minutes
     end
 
-    it "should charge $29.00 for an hour wait time (recorded in cents)" do
+    it "should charge $31.50 ($29.00 an hour plus initial $2.50) for an hour wait time (recorded in cents)" do
       Time.stub(:now).and_return(@time + 60 * 60)
 
-      expect(@meter.amount_due).to eq(2900)
+      expect(@meter.amount_due).to eq(3150)
     end
 
-    it "should have a waiting time fare of $58.00 for 2 hours" do
+    it "should have a waiting time fare of $60.50 ($58.00 for 2 hours plus inital $2.50" do
       Time.stub(:now).and_return(@time + 120 * 60)
 
-      expect(@meter.amount_due).to eq(5800)
+      expect(@meter.amount_due).to eq(6050)
     end
   end
 
@@ -137,8 +137,8 @@ describe TaxiMeter do
       @meter.start
     end
 
-    it "has a minimum fare of $13.10" do #actually checking for 13.10 plus 2.50 charge
-      expect(@meter.amount_due).to eq(1310)
+    it "has a minimum fare of $13.10 (plus $2.50 initial charge" do #actually checking for 13.10 plus 2.50 charge
+      expect(@meter.amount_due).to eq(1560)
     end
 
     it "charges $15.60 for first 1/6th of mile away from airport" do
