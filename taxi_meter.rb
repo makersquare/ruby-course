@@ -25,43 +25,34 @@ class TaxiMeter
   dist = @miles_driven
   balance = 0
   rolling_balance =0
-  
 
-  if @start_time
-    if @stop_time
-      elsif dist == 0.1
-        balance += 250
-        return balance
-      elsif dist > 0.1  
-        balance += ((dist*6).ceil*40+210)
-        return balance
-      elsif @airport==true && balance < 1310
-        balance+=1310
-        return balance
-      else @stop_time==nil
-      wait_time = ((Time.now - @start_time)/60).ceil
-      if wait_time<60
-      rolling_balance+= ((2900/60) * wait_time).ceil
-      return rolling_balance
-      else 
-      rolling_balance+= ((2900.0/60.0) * wait_time).ceil
-    end
-      end  
-   end
- end
+    if @start_time
+      if @stop_time
 
-  #  if @stop_time = nil
-  #   balance+=rolling_balance
-  # end
-     #((dist*6).ceil*40+210)+
-     # if @stop_time=nil
+        elsif dist == 0.1
+
+          balance += 250
+
+        elsif dist > 0.1  
+
+          balance += ((dist*6).ceil*40+210)
+
+        elsif @airport==true && balance < 1310
+
+          balance+=1310
+
+        else @stop_time==nil
+
+          wait_time = ((Time.now - @start_time)/60.0).ceil
+
+          balance+= (wait_time*(2900/60.0)).round
+ 
+      end
+     end
+  end
 
 
 
 
 
-          #  else 
-          # @stop_time == nil
-          # cost +=(2900/((Time.now - @start_time)/60)) + ((dist*6).ceil*40+210)
-          # return cost
 end
