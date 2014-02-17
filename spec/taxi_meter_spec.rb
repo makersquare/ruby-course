@@ -1,4 +1,5 @@
 require './taxi_meter.rb'
+require 'pry-debugger'
 
 describe TaxiMeter do
 
@@ -12,9 +13,22 @@ describe TaxiMeter do
       @meter = TaxiMeter.new
     end
 
-    it "starts at zero" do
-      @meter.amount_due = 0
-      @meter.miles_driven = 0
+    it "starts at zero miles driven" do
+      expect(@meter.miles_driven).to eq 0
+    end
+
+    # it "cannot set amount due" do
+    #   expect { @meter.amount = 99 }.to raise_error
+    # end
+
+    # it "cannot set start time nor stop time" do
+    #   expect { @meter.start_time = Time.now }.to raise_error
+    #   expect { @meter.stop_time = Time.now }.to raise_error
+    # end
+
+    it "can specify miles driven" do
+      @meter.miles_driven = 5
+      expect(@meter.miles_driven).to eq 5
     end
 
     it "can start and stop" do
@@ -28,7 +42,7 @@ describe TaxiMeter do
 
     it "records the time it started" do
       # We want to freeze time to the point when the meter starts
-      start_time = Time.now
+      start_time = Time.parse('1:00pm')
       Time.stub(:now).and_return(start_time)
 
       # This should grab the current time
@@ -41,35 +55,47 @@ describe TaxiMeter do
       expect(@meter.start_time).to eq(start_time)
     end
 
-    it "doesn't stop time if time hasn't been started" do
-
-      @meter.stop
-      expect(@meter.stop_time).to eq(nil)
-    end
-
     it "records the time it stopped" do
-      # We want to freeze time to the point when the meter starts
-      stop_time = Time.now
-      Time.stub(:now).and_return(stop_time)
+      # Explicitly set a start time
+      start_time = Time.parse('1:00pm')
+      Time.stub(:now).and_return(start_time)
 
-      @meter.start #Added this line because you shouldn't be able to stop time if time hasn't been started
-      # This should grab the current time
-      @meter.stop
+      @meter.start
 
       # Re-stub Time to be 5 minutes into the future
-      Time.stub(:now).and_return(stop_time + 5 * 60)
+      end_time = start_time + 5 * 60
+      Time.stub(:now).and_return(end_time)
 
-      # Once started, start_time shouldn't rely on the current time
-      expect(@meter.stop_time).to eq(stop_time)
+      # Stop time should be what we stubbed
+      @meter.stop
+      expect(@meter.stop_time).to eq(end_time)
     end
 
+    it "doesn't change amount due after it stops" do
+      # Explicitly set a start time
+      start_time = Time.parse('1:00pm')
+      Time.stub(:now).and_return(start_time)
+      @meter.start
 
+      # Re-stub Time to be 5 minutes into the future
+      end_time = start_time + 5 * 60
+      Time.stub(:now).and_return(end_time)
+      @meter.stop
+
+      amount_due_at_stop = @meter.amount_due
+
+      # Re-stub Time to be 30 minutes into the future
+      Time.stub(:now).and_return(end_time + 30 * 60)
+
+      # The amount due should not increase
+      expect(@meter.amount_due).to eq(amount_due_at_stop)
+    end
   end
 
-  context "The taxi meter starts and no drunk tax" do
+  context "The taxi meter starts during normal hours" do
     before do
       # We want to freeze time to the point when the meter starts
-      @start_time = Time.new(2014, 2, 1, 11, 0, 0)
+      @start_time = Time.parse('1:00pm')
       Time.stub(:now).and_return(@start_time)
 
       @meter = TaxiMeter.new
@@ -77,132 +103,128 @@ describe TaxiMeter do
     end
 
     it "charges $2.50 for the first 1/6 mile (recorded in cents)" do
-      @meter.miles_driven = 0.1
-      expect(@meter.amount_due).to eq(250)
+      @meter.miles_driven = one_sixth
+      expect(@meter.amount_due).to eq 250
     end
 
-    it "charges $2.50 for the first 1/6 mile (recorded in cents)" do
-      @meter.miles_driven = 0.0
-      expect(@meter.amount_due).to eq(250)
+    it "assumes the taxi is going to drive an distance greater than zero" do
+      expect(@meter.amount_due).to eq 250
+    end
+# binding.pry
+    it "charges $2.40 per mile afterwards, prorated by each 1/6 mile" do
+      @meter.miles_driven = 1 + one_sixth
+      expect(@meter.amount_due).to eq 490
+
+      @meter.miles_driven = 1 + one_sixth + 0.01
+      expect(@meter.amount_due).to eq 530
+
+      @meter.miles_driven = 1 + (one_sixth * 2)
+      expect(@meter.amount_due).to eq 530
+
+      @meter.miles_driven = 1 + (one_sixth * 3)
+      expect(@meter.amount_due).to eq 570
     end
 
-    it "charges $4.50 for the first mile (recorded in cents)" do
-      @meter.miles_driven = 1
-      expect(@meter.amount_due).to eq(450)
+    it "charges $29.00 per hour, prorated by minute" do
+      # Test 30 minutes later
+      Time.stub(:now).and_return(@start_time + 30 * 60)
+      expect(@meter.amount_due).to eq(250 + (2900 / 2))
+
+      # Test 29.5 minutes later
+      Time.stub(:now).and_return(@start_time + 30 * 60 - 0.5)
+      expect(@meter.amount_due).to eq(250 + (2900 / 2))
+
+      # Test 60 minutes later
+      Time.stub(:now).and_return(@start_time + 60 * 60)
+      expect(@meter.amount_due).to eq(250 + 2900)
+
+      # Test 19 hours later
+      Time.stub(:now).and_return(@start_time + 19 * 60 * 60)
+      expect(@meter.amount_due).to eq(250 + (2900 * 19))
     end
 
-    it "charges $16.10 for a 5.7 mile trip with no time" do
-      @meter.miles_driven = 5.7
-      expect(@meter.amount_due).to eq(1610)
-    end
+    it "charges for both distance and time" do
+      # 120 minutes, 2 1/6 miles
+      Time.stub(:now).and_return(@start_time + 2 * 60 * 60)
+      @meter.miles_driven = 2 + one_sixth
+      expect(@meter.amount_due).to eq(250 + 240*2 + 2900*2)
 
-    it "charges $31.50 for 1 hour wait time, no distance" do
-      Time.stub(:now).and_return(@meter.start_time + 60 * 60)
-      expect(@meter.amount_due).to eq(3150)
-    end
-
-    it "charges $10.23 for 15.5 min wait time, no distance" do
-      Time.stub(:now).and_return(@meter.start_time + 15.5 * 60)
-      expect(@meter.amount_due).to eq(1023)
-    end
-
-    it "charges $23.83 for a 16 min wait time, 5.7 mile trip" do
-      Time.stub(:now).and_return(@meter.start_time + 16 * 60)
-      @meter.miles_driven = 5.7
-      expect(@meter.amount_due).to eq(2383)
-    end
-
-
-  end
-
-  context "Checking amount due after stop_time has been set" do
-    before do
-
-      @meter = TaxiMeter.new
-      @meter.start
-
-      # We want to freeze time to the point when the meter starts
-      @meter.start_time = Time.new(2014, 2, 1, 11, 0, 0)
-      @meter.stop_time = Time.new(2014, 2, 1, 12, 0, 0)
-      Time.stub(:now).and_return(@meter.start_time + 70*60) #Sets current time past stop time
-
-    end
-    it "Charges $31.50 for a 1 hour wait time, no distance" do
-      expect(@meter.amount_due).to eq(3150)
-    end
-
-  end
-
-  context "Drunk tax is in effect late night" do
-    before do
-      @start_time = Time.new(2014, 2, 1, 23, 0, 0)
-      Time.stub(:now).and_return(@start_time)
-
-      @meter = TaxiMeter.new
-      @meter.start
-    end
-
-    it "charges $11.23 for a 16 min wait time, no distance" do
-      Time.stub(:now).and_return(@meter.start_time + 16 * 60)
-      expect(@meter.amount_due).to eq(1123)
-    end
-
-    it "charges $24.83 for a 16 min wait time, 5.7 mile trip" do
-      Time.stub(:now).and_return(@meter.start_time + 16 * 60)
-      @meter.miles_driven = 5.7
-      expect(@meter.amount_due).to eq(2483)
-    end
-
-  end
-
-  context "Drunk tax is in effect early morning" do
-      before do
-      @start_time = Time.new(2014, 2, 1, 3, 59, 0)
-      Time.stub(:now).and_return(@start_time)
-
-      @meter = TaxiMeter.new
-      @meter.start
-    end
-
-    it "charges $11.23 for a 16 min wait time, no distance" do
-      Time.stub(:now).and_return(@meter.start_time + 16 * 60)
-      expect(@meter.amount_due).to eq(1123)
-    end
-
-    it "charges $24.83 for a 16 min wait time, 5.7 mile trip" do
-      Time.stub(:now).and_return(@meter.start_time + 16 * 60)
-      @meter.miles_driven = 5.7
-      expect(@meter.amount_due).to eq(2483)
+      # 14 minutes, just over 3/6 miles (counted at 4/6 miles)
+      Time.stub(:now).and_return(@start_time + 14 * 60)
+      @meter.miles_driven = one_sixth * 3 + 0.01
+      expect(@meter.amount_due).to eq(250 + 240/2 + 677)
     end
   end
+
+
+  it "charges an extra $1 between 9pm and 4am" do
+    7.times do |n|
+      Time.stub(:now).and_return(Time.parse('9:15pm') + n * 60 * 60)
+      meter = TaxiMeter.new
+      meter.start
+      # We wrap our amount in an array to make it easier to debug which hour n is
+      expect([n, meter.amount_due]).to eq [n, 350]
+    end
+  end
+
 
   context "The taxi meter starts from ABIA" do
     before do
       # We want to freeze time to the point when the meter starts
-      start_time = Time.new(2014, 2, 1, 11, 0, 0)
-      Time.stub(:now).and_return(start_time)
+      @start_time = Time.parse('1:00pm')
+      Time.stub(:now).and_return(@start_time)
 
       @meter = TaxiMeter.new(airport: true)
       @meter.start
     end
 
-    it "has a minimum fare of $13.10, usually 7.73" do
-      Time.stub(:now).and_return(@meter.start_time + 16 * 60)
-      expect(@meter.amount_due).to eq(1310)
+    it "has a minimum fare of $13.10" do
+      expect(@meter.amount_due).to eq 1310
+
+      # 2 1/6 miles drives is only 250 + 480
+      @meter.miles_driven = 2 + one_sixth
+      expect(@meter.amount_due).to eq 1310
+
+      # 10 minutes is only 250 + 290
+      @meter.miles_driven = 0
+      Time.stub(:now).and_return(@start_time + 10 * 60)
+      expect(@meter.amount_due).to eq 1310
     end
 
-    it "over the 13.10 minimum, should be 23.83" do
-      Time.stub(:now).and_return(@meter.start_time + 16 * 60)
-      @meter.miles_driven = 5.7
-      expect(@meter.amount_due).to eq(2383)
+    it "charges correctly when the total fare is over $13.10" do
+      # 2 2/6 miles and 15 minutes is 250 + 520 + 725 = 1495
+      @meter.miles_driven = 2 + (2 * one_sixth)
+      Time.stub(:now).and_return(@start_time + 15 * 60)
+      expect(@meter.amount_due).to eq 1495
     end
   end
 
-  it "Makes sure that you can't stop time that hasn't been started" do
-    @meter = TaxiMeter.new
-    @meter.stop
 
-    expect(@meter.stop_time).to be_nil
+  context "The taxi meter starts from ABIA after 9pm" do
+    before do
+      # We want to freeze time to the point when the meter starts
+      @start_time = Time.parse('10:00pm')
+      Time.stub(:now).and_return(@start_time)
+
+      @meter = TaxiMeter.new(airport: true)
+      @meter.start
+    end
+
+    it "has a minimum fare of $13.10" do
+      expect(@meter.amount_due).to eq 1310
+
+      # 10 minutes is only 100 + 250 + 290
+      @meter.miles_driven = 0
+      Time.stub(:now).and_return(@start_time + 10 * 60)
+      expect(@meter.amount_due).to eq 1310
+    end
+
+    it "charges correctly when the total fare is over $13.10" do
+      # 1 1/6 miles and 15 minutes is 250 + 240 + 725 + 100 = 1410
+      @meter.miles_driven = 1 + one_sixth
+      Time.stub(:now).and_return(@start_time + 15 * 60)
+      expect(@meter.amount_due).to eq 1315
+    end
   end
 
 end
