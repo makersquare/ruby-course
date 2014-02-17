@@ -110,7 +110,7 @@ describe TaxiMeter do
     it "should have a fare based on elapsed time" do
       Time.stub(:now).and_return(@time + 5 * 60)
 
-      expect(@meter.amount_due).to eq(490) # $2.50 initial charge + 2900/60 * 5 minutes
+      expect(@meter.amount_due).to eq(492) # $2.50 initial charge + 2900/60 * 5 minutes
     end
 
     it "should charge $31.50 ($29.00 an hour plus initial $2.50) for an hour wait time (recorded in cents)" do

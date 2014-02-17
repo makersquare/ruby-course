@@ -27,7 +27,7 @@ class TaxiMeter
   end
 
   def time_amount_due
-    (wait_time * WAIT_TIME_SURCHARGE_PER_MINUTE).round(-1)
+    (wait_time * WAIT_TIME_SURCHARGE_PER_MINUTE).round
   end
 
   def mileage_amount_due
