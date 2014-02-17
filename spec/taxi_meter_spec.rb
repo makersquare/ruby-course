@@ -62,7 +62,7 @@ describe TaxiMeter do
   context "The taxi meter starts" do
     before do
       # We want to freeze time to the point when the meter starts
-      @start_time = Time.now
+      @start_time = Time.parse('3 pm')
       Time.stub(:now).and_return(@start_time)
 
       @meter = TaxiMeter.new
@@ -113,7 +113,7 @@ describe TaxiMeter do
   context "The taxi meter starts from ABIA" do
     before do
       # We want to freeze time to the point when the meter starts
-      start_time = Time.now
+      start_time = Time.parse('3 pm')
       Time.stub(:now).and_return(start_time)
       @meter = TaxiMeter.new
       @meter.start
@@ -143,10 +143,18 @@ describe TaxiMeter do
       @meter.start
     end
 
-    xit "charges an extra $1" do
+    it "charges an extra $1" do
       Time.stub(:now).and_return(@meter.start_time + 60 * 60)
       @meter.miles_driven = 1
       expect(@meter.amount_due).to eq(3450)
     end
+
+    it 'charge an extra $1 at 3am' do
+      start_time = Time.parse('3 am')
+      Time.stub(:now).and_return(@meter.start_time + 60 * 60)
+      @meter.miles_driven = 1
+      expect(@meter.amount_due).to eq(3450)
+    end
+
   end
 end

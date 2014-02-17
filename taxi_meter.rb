@@ -22,7 +22,11 @@ class TaxiMeter
   end
 
   def amount_due
-    price = (@miles_driven*6)*40 + 210
+    if extra_hour?
+      price = (@miles_driven*6)*40 + 210 + 100
+    else
+      price = (@miles_driven*6)*40 + 210
+    end
     if @airport == false
       if @miles_driven == 0
         return 0
@@ -46,14 +50,13 @@ class TaxiMeter
   end
 
 
-
-
-    # waiting_cost_per_hour = 2900.0
-    # always_one_sixth = 0.16666666666
-    # time_traveled_in_minutes = (@start_time-@stop_time)/60
-    # cost_of_waiting = waiting_cost_per_hour * (time_traveled_in_minutes/60)
-
-
-    # 250 for first1/6, 240 each additional prorated
+  def extra_hour?
+    #need to add a method under true that multiples all price values by 0.5
+    if (Time.now.hour >= 21 || Time.now.hour <=4)
+      return true
+    else
+      return false
+    end
+  end
 
 end
