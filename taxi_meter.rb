@@ -13,6 +13,7 @@ class TaxiMeter
     @wait_time = 2900.0 / 60.0
     @start_time = nil
     @stop_time = nil
+
   end
 
   def start
@@ -40,11 +41,13 @@ def time
         fare = @base_charge + prorated * @additional_sixth
         @amount_due = fare
       end
+
       if @stop_time 
         @amount_due += wait_time*((@stop_time-@start_time)/60).ceil
       else
         @amount_due += wait_time*((Time.now-@start_time)/60).ceil
       end
+      @amount_due += 100 if (@start_time.hour >= 21 || @start_time.hour < 4)
         @amount_due.round(0)
     else
       0
