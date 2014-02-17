@@ -78,8 +78,8 @@ describe TaxiMeter do
       #stops time to simulate end of trip
       @meter.stop
 
-      #sets miles driven to exactly 1/6 mile
-      @meter.miles_driven = 1.0 / 6.0
+      #sets miles driven to less than 1/6 mile
+      @meter.miles_driven = 0.04
 
       # calculates price by miles driven expects inital 2.50 charge
       expect(@meter.amount_due).to eq(250)
@@ -107,7 +107,7 @@ describe TaxiMeter do
       @meter.miles_driven = 0
 
       #exect amout due to caluclate cost based on time
-      expect(@meter.amount_due).to eq(2009)
+      expect(@meter.amount_due).to eq(2232)
     end
   end
 
@@ -152,6 +152,6 @@ describe TaxiMeter do
       meter.stop
 
       #exect amout due to caluclate cost based on time
-      expect(meter.amount_due).to eq(149)
+      expect(meter.amount_due).to eq(399)
     end
 end

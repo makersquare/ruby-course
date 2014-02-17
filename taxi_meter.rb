@@ -1,4 +1,4 @@
-require 'pry-debugger'
+
 
 class TaxiMeter
 
@@ -35,24 +35,20 @@ class TaxiMeter
   end
 
   def time_based_cost
-    if !@start_time.nil?
-      if @stop_time.nil?
-        calculate_at_time = Time.now
-      else
-        calculate_at_time = @stop_time
-      end
-      minutes = ((calculate_at_time - @start_time) / 60).ceil
-      charge_by_minutes = ((minutes * 0.49) * 100).floor
-      @amount_due += charge_by_minutes
+    if @stop_time.nil?
+      calculate_at_time = Time.now
+    else
+      calculate_at_time = @stop_time
     end
+    minutes = ((calculate_at_time - @start_time) / 60).ceil
+    charge_by_minutes = (minutes * (2900.0 / 60.0)).ceil
+    @amount_due += charge_by_minutes
   end
 
   def distance_based_cost
-    if @miles_driven >= one_sixth
-      @amount_due += 250
-    end
+    @amount_due += 250
     if @miles_driven > one_sixth
-      num_of_charge_points = ((@miles_driven - one_sixth) / one_sixth).ceil
+      num_of_charge_points = ((@miles_driven - one_sixth) / one_sixth).round(3).ceil
       current_mile_charge = ((num_of_charge_points * 0.40) * 100).floor
       @amount_due += current_mile_charge
     end
@@ -67,10 +63,12 @@ class TaxiMeter
   end
 
   def amount_due
-    twilight_charge
-    time_based_cost
-    distance_based_cost
-    airport_charge
+    if !@start_time.nil?
+      twilight_charge
+      time_based_cost
+      distance_based_cost
+      airport_charge
+    end
     @amount_due
   end
 end
