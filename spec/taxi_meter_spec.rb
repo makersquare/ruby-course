@@ -177,6 +177,14 @@ describe TaxiMeter do
       expect(@meter.amount_due).to eq(812)
     end
 
+    it "Makes sure that you can't stop time that hasn't been started" do
+    @meter = TaxiMeter.new
+    @meter.stop
+
+    expect(@meter.stop_time).to be_nil
+  end
+
+
   end #end context
 
     context "The taxi meter should add a dollar if start time is between 9pm and 4am" do

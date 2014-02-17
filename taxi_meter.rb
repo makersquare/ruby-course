@@ -50,7 +50,9 @@ class TaxiMeter
   end
 
   def stop
+    if start_time != nil
     @stop_time ||= Time.now
+  end
   end
 
   def late_night
