@@ -26,20 +26,22 @@ class TaxiMeter
     @x = 0
     @sixths = (@miles_driven * 6).ceil
 
+   if @miles_driven > 0 || @start_time != nil
+      @x += 250
+      if @sixths > 1
+        @x += (@sixths-1) * 40
+      end
+    end
+
   	if @start_time != nil && stop_time == nil
-  		@x += (((Time.now - @start_time)/60).ceil * 2900/60)
+  		@x += (((Time.now - @start_time)/60).ceil * 2900.0/60)
       if @start_time.hour >= 21 || @start_time.hour <= 4
         @x += 100
       end
     end
 
     if @stop_time != nil && start_time  != nil
-      @x += (((@stop_time - @start_time)/60).ceil * 2900/60)
-    end
-
-    if @miles_driven > 0
-      @x += 210
-      @x += (@sixths * 40)
+      @x += (((@stop_time - @start_time)/60).ceil * 2900.0/60)
     end
 
 	  if @airport && @x < 1310
