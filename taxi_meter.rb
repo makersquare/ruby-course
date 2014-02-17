@@ -18,13 +18,15 @@ class TaxiMeter
   end
 
   def stop
-    @stop_time = Time.now
+    if @start_time
+      return @stop_time = Time.now
+    end
   end
 
   def amount_due
     if @start_time != nil #Only returns if the meter is running
-      #Adds the amount due to distance travelled. Only happens if distance has been travelled
-      @amount_due += 2.1 + ((@miles_driven*6).ceil)*0.4 if (@miles_driven > 0)
+      #Adds the amount due to distance travelled. Updates to give a 2.50 amount if no distance travelled
+      @miles_driven > 0 ? @amount_due += 2.1 + ((@miles_driven*6).ceil)*0.4 : @amount_due += 2.50
       #Adds the amount due to the waiting time
       if @stop_time #This is for if the amount_due is being checked during the ride or not
         @amount_due += (29.0/60)*((@stop_time-@start_time)/60).ceil
