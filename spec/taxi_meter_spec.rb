@@ -154,6 +154,30 @@ describe TaxiMeter do
 
   end
 
+  context "The taxi meter starts from ABIA after 9pm" do
+    before do
+      @meter = TaxiMeter.new(airport: true)
+      @start_time = Time.parse("11:00pm")
+      Time.stub(:now).and_return(@start_time)
+      @meter.start
+    end
+
+    it "has a minimum $13.10 fare" do
+      time = @start_time + (2 * 60)
+      Time.stub(:now).and_return(time)
+      @meter.miles_driven = 2
+
+      expect(@meter.amount_due).to eq(1310)
+    end
+
+    it "charges correctly with fare over $13.10" do
+      @meter.miles_driven = 1 + (1.0 / 6.0)
+      Time.stub(:now).and_return(@start_time + 15 * 60)
+
+      expect(@meter.amount_due).to eq(1315)
+    end
+  end
+
 end
 
 
