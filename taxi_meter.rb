@@ -37,18 +37,18 @@ class TaxiMeter
         @amount_due = ((210 + (one_sixth * 40)) + ((2900.0 / 60.0) * wait_time)).round(0)
       end
 
-      # Ensures minimum of $13.10 for fares starting from ABIA.
-      if @airport != true || @amount_due >= 1310
-        @amount_due
-      else
-        @amount_due = 1310
-      end
-
       # Adds $1 if start time is between 9pm and 4am
       if @start_time.hour <= 4 || @start_time.hour >= 21
         @amount_due += 100
       else
         @amount_due
+      end
+
+      # Ensures minimum of $13.10 for fares starting from ABIA.
+      if @airport != true || @amount_due >= 1310
+        @amount_due
+      else
+        @amount_due = 1310
       end
 
   end
