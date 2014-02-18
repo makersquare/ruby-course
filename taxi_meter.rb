@@ -29,7 +29,7 @@ class TaxiMeter
   
   def amount_due
 	  #calc miles driven cost
-    if @miles_driven <= one_sixth && @miles_driven > 0
+    if @miles_driven <= one_sixth && @miles_driven >= 0
 	  	@mileage_cost = 2.5
 	  elsif @miles_driven > one_sixth
 			@mileage_cost = 2.10 + 0.4 * (@miles_driven * 6).ceil
