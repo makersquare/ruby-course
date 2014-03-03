@@ -234,7 +234,7 @@ class ArraysAndHashes
     #          then `puts` both "egg: 12" and "milk: 1"
     grocery_lists.each do |item|
       item.each do |x, y|
-        puts "#{x}: #{y}"
+        puts "#{x}: #{y} "
       end
     end
   end
