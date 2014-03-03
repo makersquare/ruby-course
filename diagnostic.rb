@@ -181,6 +181,9 @@ class ArrayProblems
 
   def self.greet_everyone(people)
     # TODO: Select and return all numbers higher than `min`
+    people.map {|person|
+      "Hello, #{person}"
+    }
   end
 end
 
@@ -193,6 +196,7 @@ class HashProblems
 
   def self.create_empty_hash
     # TODO: Complete this method
+    h = Hash.new
   end
 
   # # # # # # #
