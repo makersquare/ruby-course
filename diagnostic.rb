@@ -167,7 +167,7 @@ class HashProblems
   # # # # # # #
 
   def self.create_empty_hash
-    # TODO: Complete this method
+    result = Hash.new
   end
 
   # # # # # # #
