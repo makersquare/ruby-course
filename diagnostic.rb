@@ -159,7 +159,7 @@ class ArrayProblems
 
   def self.greet_everyone(people)
     # TODO: Select and return all numbers higher than `min`
-    people.map { |x| x>min }
+    people.map { |person| "Hello, #{person}" }
   end
 end
 
@@ -172,7 +172,7 @@ class HashProblems
 
   def self.create_empty_hash
     # TODO: Complete this method
-
+    Hash.new
   end
 
   # # # # # # #
@@ -181,6 +181,7 @@ class HashProblems
 
   def self.create_veggie_color_hash
     # TODO: Complete this method by returning a hash
+    result = {:tomato => "red", :kale => "green"}
   end
 
   # # # # # # #
@@ -204,5 +205,8 @@ class ArraysAndHashes
     # TODO: Iterate over this array and `puts` each key and value
     # Example: if array is [{ egg: 12 }, { milk: 1 }],
     #          then `puts` both "egg: 12" and "milk: 1"
+
+    grocery_list.each do |x,y|
+      puts x": "+y
   end
 end
