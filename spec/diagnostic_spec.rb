@@ -13,7 +13,7 @@ describe "Ruby Diagnostic: You" do
   xyou "know how to call a method within another method" do
     result = give_me_seven
     expect(result).to eq 7
-    expect(@source).to include_code(:multiply).in_method(:p1_get_result)
+    expect(@source).to include_code(:multiply).in_method(:give_me_seven)
   end
 
 
