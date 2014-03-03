@@ -67,11 +67,11 @@ module ClassesAndInstances
     attr_accessor :size
     # TODO: Fix incorrect use of local and instance variables
     def initialize(initial_size)
-      size = initial_size
+      @size = initial_size
     end
 
     def grow
-      size = size + 1
+      @size = @size + 1
     end
   end
 end
@@ -87,6 +87,14 @@ module GettersSetters
     def initialize
       @secret = 50
     end
+
+    def secret=(new_secret)
+      @secret = new_secret
+    end
+
+    def secret
+      @secret
+    end
     # TODO: Write getter and setter methods for secret
   end
 
@@ -94,7 +102,9 @@ module GettersSetters
   # Getters/Setters 2 #
   # # # # # # # # # # #
   class Person
-
+    attr_reader :age
+    attr_writer :secret
+    attr_accessor :name
     def initialize(name, age)
       @name = name
       @age = age
@@ -104,21 +114,21 @@ module GettersSetters
     # NOTE: Don't provide any more access than necessary.
     #       For example, don't use attr_accessible when all you really need is attr_writer
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-    def age
-      @age
-    end
+    # def age
+    #   @age
+    # end
 
-    def secret=(value)
-      @secret = value
-    end
+    # def secret=(value)
+    #   @secret = value
+    # end
 
-    def name
-      @name
-    end
+    # def name
+    #   @name
+    # end
 
-    def name=(value)
-      @name = value
-    end
+    # def name=(value)
+    #   @name = value
+    # end
   end
 end
 
@@ -131,6 +141,7 @@ class ArrayProblems
 
   def self.add_cake_to_array(array)
     # TODO: Complete this method
+    array << "cake"
   end
 
   # # # # # # #
@@ -139,6 +150,7 @@ class ArrayProblems
 
   def self.uppercase_third_element(array)
     # TODO: Complete this method
+    array[2].upcase!
   end
 
   # # # # # # #

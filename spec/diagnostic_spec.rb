@@ -39,7 +39,7 @@ describe "Ruby Diagnostic: You" do
       expect(zoo.animals.count).to eq 3
     end
 
-    xyou "know the difference between local variables and instance variables" do
+    you "know the difference between local variables and instance variables" do
       plant = ClassesAndInstances::Plant.new(1)
 
       plant.grow
@@ -53,7 +53,7 @@ describe "Ruby Diagnostic: You" do
 
   describe "Your knowledge of getters and setters" do
 
-    xyou "know how to write a getter method" do
+    you "know how to write a getter method" do
       box = GettersSetters::Box.new
       expect(box.secret).to eq 50
 
@@ -61,7 +61,7 @@ describe "Ruby Diagnostic: You" do
       expect(@source).to_not include_code(:attr_accessor).in(:Box).for(:GettersSetters)
     end
 
-    xyou "know how to write a setter method" do
+    you "know how to write a setter method" do
       box = GettersSetters::Box.new
       box.secret = 99
       expect(box.secret).to eq 99
@@ -70,7 +70,7 @@ describe "Ruby Diagnostic: You" do
       expect(@source).to_not include_code(:attr_accessor).in(:Box).for(:GettersSetters)
     end
 
-    xyou "can properly refactor getters/setters to their attr_ shortcut equivalents" do
+    you "can properly refactor getters/setters to their attr_ shortcut equivalents" do
       bob = GettersSetters::Person.new('Bob', 38)
       expect(bob.name).to eq 'Bob'
       expect(bob.age).to eq 38
@@ -85,7 +85,7 @@ describe "Ruby Diagnostic: You" do
 
   describe "Your knowledge of Arrays" do
 
-    xyou "know how to add an element to an array" do
+    you "know how to add an element to an array" do
       desserts = ['apple', 'ice cream']
       ArrayProblems.add_cake_to_array(desserts)
       expect(desserts).to eq ['apple', 'ice cream', 'cake']
@@ -95,7 +95,7 @@ describe "Ruby Diagnostic: You" do
       expect(desserts).to eq ['orange', 'froyo', 'cake']
     end
 
-    xyou "know how to manipulate an element in an array" do
+    you "know how to manipulate an element in an array" do
       fruits = ['radish', 'rutabaga', 'orange', 'apple']
       ArrayProblems.uppercase_third_element(fruits)
       expect(fruits).to eq ['radish', 'rutabaga', 'ORANGE', 'apple']
