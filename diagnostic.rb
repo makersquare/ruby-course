@@ -208,3 +208,13 @@ class ArraysAndHashes
     }
   end
 end
+
+def toggle_oven(bool)
+  if (bool == true)
+    return "The oven is now on"
+
+  else
+    return "The oven is now off"
+  end
+end
+
