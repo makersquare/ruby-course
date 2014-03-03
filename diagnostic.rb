@@ -149,6 +149,9 @@ class ArrayProblems
   # # # # # # #
 
   def self.iterate_and_print(array)
+     array.each do |i|
+      puts i
+    end
     # TODO: Iterate over this array and `puts` each element.
   end
 
@@ -157,6 +160,9 @@ class ArrayProblems
   # # # # # # #
 
   def self.select_higher(array, min)
+    array.select{|num| num>min}
+
+
     # TODO: Select and return all numbers higher than `min`
   end
 
@@ -165,6 +171,7 @@ class ArrayProblems
   # # # # # # #
 
   def self.greet_everyone(people)
+    people.map {|x| "Hello, #{x}"}
     # TODO: Select and return all numbers higher than `min`
   end
 end
@@ -178,6 +185,7 @@ class HashProblems
 
   def self.create_empty_hash
     # TODO: Complete this method
+    h=Hash.new
   end
 
   # # # # # # #
@@ -186,6 +194,8 @@ class HashProblems
 
   def self.create_veggie_color_hash
     # TODO: Complete this method by returning a hash
+    {:tomato=>"red", :kale=>"green"}
+
   end
 
   # # # # # # #
@@ -194,6 +204,7 @@ class HashProblems
 
   def self.update_father_last_name(hash)
     # TODO: Complete this method by writing A SINGLE LINE
+  hash["father"]["name"][:last]="James XXX"
   end
 end
 
@@ -208,5 +219,10 @@ class ArraysAndHashes
     # TODO: Iterate over this array and `puts` each key and value
     # Example: if array is [{ egg: 12 }, { milk: 1 }],
     #          then `puts` both "egg: 12" and "milk: 1"
+  grocery_lists.each do |item|
+    item.each do |x,y|
+      puts "#{x}: #{y}"
+  end
+end
   end
 end
