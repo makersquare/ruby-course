@@ -175,7 +175,7 @@ class HashProblems
   # # # # # # #
 
   def self.create_veggie_color_hash
-    # TODO: Complete this method by returning a hash
+    result = {tomato: "red", kale: "green"}
   end
 
   # # # # # # #
