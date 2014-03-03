@@ -1,6 +1,5 @@
 require 'ruby_parser'
 require 'sexp_path'
-require 'pry-debugger'
 require './diagnostic.rb'
 
 RSpec.configure do |c|
