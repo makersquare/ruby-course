@@ -133,7 +133,7 @@ describe "Ruby Diagnostic: You" do
       expect(result).to include(67, 95, 110)
     end
 
-    xyou "know how to use the map method" do
+    you "know how to use the map method" do
       people = ['Alice', 'Bob']
 
       result = ArrayProblems.greet_everyone(people)
