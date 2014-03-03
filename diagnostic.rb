@@ -213,7 +213,9 @@ class ArraysAndHashes
     # Example: if array is [{ egg: 12 }, { milk: 1 }],
     #          then `puts` both "egg: 12" and "milk: 1"
     grocery_lists.each do |item|
-      puts "#{item}"
+      item.each do |k, v|
+        puts "#{k}: #{v}"
+      end
     end
   end
 end
