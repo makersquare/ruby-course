@@ -193,7 +193,7 @@ class HashProblems
 
   def self.create_veggie_color_hash
     # TODO: Complete this method by returning a hash
-    hash = {}
+    hash = {tomato: 'red', kale: 'green'}
   end
 
   # # # # # # #
@@ -202,6 +202,7 @@ class HashProblems
 
   def self.update_father_last_name(hash)
     # TODO: Complete this method by writing A SINGLE LINE
+
   end
 end
 
