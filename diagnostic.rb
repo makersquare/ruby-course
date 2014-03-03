@@ -195,6 +195,8 @@ class ArraysAndHashes
   # # # # # # # # # # #
 
   def self.iterate_and_print(grocery_lists)
+    grocery_lists.each{|hash| hash.each{|k, v| puts "#{k}: #{v}"}}
+
     # TODO: Iterate over this array and `puts` each key and value
     # Example: if array is [{ egg: 12 }, { milk: 1 }],
     #          then `puts` both "egg: 12" and "milk: 1"
