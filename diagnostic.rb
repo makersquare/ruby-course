@@ -4,18 +4,30 @@
 # # # # # # #
 
 # TODO: Write a method caled `toggle_oven`
-
+def toggle_oven(x)
+  if x===true
+    return "The oven is now on"
+  else
+    return "The oven is now off"
+  end
+end
 # # # # # # #
 # Problem 2 #
 # # # # # # #
+
 
 def multiply(x, y)
   result = x * y
 end
 
 def give_me_seven
+  multiply(7,1)
   # TODO: Use the `multiply` method
 end
+
+def p1_get_result
+  result=multiply(7,1)
+  end
 
 
 
@@ -28,6 +40,7 @@ module ClassesAndInstances
     attr_reader :name
     def initialize(name)
       # TODO: Set name
+      @name=name
     end
   end
 
@@ -41,9 +54,12 @@ module ClassesAndInstances
       @animals = []
     end
 
+    def adopt(animal)
+      @animals<<animal
     # TODO: Write a method `adopt` that takes one paramater `animal`
     # and adds it to its animals array
   end
+end
 
   # # # # # # # # # # # #
   # Classes/Instances 3 #
@@ -52,11 +68,11 @@ module ClassesAndInstances
     attr_accessor :size
     # TODO: Fix incorrect use of local and instance variables
     def initialize(initial_size)
-      size = initial_size
+      @size = initial_size
     end
 
     def grow
-      size = size + 1
+      @size = @size + 1
     end
   end
 end
@@ -69,43 +85,44 @@ module GettersSetters
   # Getters/Setters 1 #
   # # # # # # # # # # #
   class Box
+
     def initialize
       @secret = 50
     end
+
+    def secret=(a)
+      @secret=a
     # TODO: Write getter and setter methods for secret
   end
+
+    def secret
+      @secret
+end
+end
 
   # # # # # # # # # # #
   # Getters/Setters 2 #
   # # # # # # # # # # #
   class Person
+     attr_accessor :name
+     attr_writer :secret
+     attr_reader :age
 
     def initialize(name, age)
       @name = name
       @age = age
     end
+
+
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     # TODO: Refator the following to use attr_[reader|writer|accessible] shortcuts
     # NOTE: Don't provide any more access than necessary.
     #       For example, don't use attr_accessible when all you really need is attr_writer
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-    def age
-      @age
-    end
 
-    def secret=(value)
-      @secret = value
-    end
-
-    def name
-      @name
-    end
-
-    def name=(value)
-      @name = value
-    end
   end
 end
+
 
 
 
