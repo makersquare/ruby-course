@@ -3,6 +3,9 @@ require 'spec_helper.rb'
 # Note: In these tests we've aliased `you` to the method `it`. This
 # is to make the tests easier to read :)
 
+
+
+
 describe "Ruby Diagnostic: You" do
 
   you "can deduce how to write a method based on a spec" do
@@ -10,7 +13,7 @@ describe "Ruby Diagnostic: You" do
     expect( toggle_oven(false) ).to eq "The oven is now off"
   end
 
-  xyou "know how to call a method within another method" do
+  you "know how to call a method within another method" do
     result = give_me_seven
     expect(result).to eq 7
     expect(@source).to include_code(:multiply).in_method(:give_me_seven)
@@ -19,12 +22,12 @@ describe "Ruby Diagnostic: You" do
 
   describe "Your knowledge of Classes and Instances" do
 
-    xyou "know how to set an instance variable" do
+    you "know how to set an instance variable" do
       animal = ClassesAndInstances::Animal.new('bird')
       expect(animal.name).to eq 'bird'
     end
 
-    xyou "know how to write an instance method" do
+    you "know how to write an instance method" do
       lion = ClassesAndInstances::Animal.new('lion')
       tiger = ClassesAndInstances::Animal.new('tiger')
       liger = ClassesAndInstances::Animal.new('liger')
@@ -41,7 +44,7 @@ describe "Ruby Diagnostic: You" do
       expect(zoo.animals.count).to eq 3
     end
 
-    xyou "know the difference between local variables and instance variables" do
+    you "know the difference between local variables and instance variables" do
       plant = ClassesAndInstances::Plant.new(1)
 
       plant.grow
@@ -55,7 +58,7 @@ describe "Ruby Diagnostic: You" do
 
   describe "Your knowledge of getters and setters" do
 
-    xyou "know how to write a getter method" do
+    you "know how to write a getter method" do
       box = GettersSetters::Box.new
       expect(box.secret).to eq 50
 
@@ -63,7 +66,7 @@ describe "Ruby Diagnostic: You" do
       expect(@source).to_not include_code(:attr_accessor).in(:Box).for(:GettersSetters)
     end
 
-    xyou "know how to write a setter method" do
+    you "know how to write a setter method" do
       box = GettersSetters::Box.new
       box.secret = 99
       expect(box.secret).to eq 99
@@ -72,7 +75,7 @@ describe "Ruby Diagnostic: You" do
       expect(@source).to_not include_code(:attr_accessor).in(:Box).for(:GettersSetters)
     end
 
-    xyou "can properly refactor getters/setters to their attr_ shortcut equivalents" do
+    you "can properly refactor getters/setters to their attr_ shortcut equivalents" do
       bob = GettersSetters::Person.new('Bob', 38)
       expect(bob.name).to eq 'Bob'
       expect(bob.age).to eq 38
@@ -87,7 +90,7 @@ describe "Ruby Diagnostic: You" do
 
   describe "Your knowledge of Arrays" do
 
-    xyou "know how to add an element to an array" do
+    you "know how to add an element to an array" do
       desserts = ['apple', 'ice cream']
       ArrayProblems.add_cake_to_array(desserts)
       expect(desserts).to eq ['apple', 'ice cream', 'cake']
@@ -97,7 +100,7 @@ describe "Ruby Diagnostic: You" do
       expect(desserts).to eq ['orange', 'froyo', 'cake']
     end
 
-    xyou "know how to manipulate an element in an array" do
+    you "know how to manipulate an element in an array" do
       fruits = ['radish', 'rutabaga', 'orange', 'apple']
       ArrayProblems.uppercase_third_element(fruits)
       expect(fruits).to eq ['radish', 'rutabaga', 'ORANGE', 'apple']
@@ -107,7 +110,7 @@ describe "Ruby Diagnostic: You" do
       expect(fruits).to eq ['pear', 'banana', 'GRAPE']
     end
 
-    xyou "know how to iterate over an array" do
+    you "know how to iterate over an array" do
       # Take 1
       expect(ArrayProblems).to receive(:puts).with('top')
       expect(ArrayProblems).to receive(:puts).with('bowler')
@@ -126,14 +129,14 @@ describe "Ruby Diagnostic: You" do
       expect(@source).to include_code(:each).in_class_method(:ArrayProblems, :iterate_and_print)
     end
 
-    xyou "know how to use the select method" do
+    you "know how to use the select method" do
       numbers = [33, 11, 5, 55, 67, 8, 95, 0, 110]
 
       result = ArrayProblems.select_higher(numbers, 55)
       expect(result).to include(67, 95, 110)
     end
 
-    xyou "know how to use the map method" do
+    you "know how to use the map method" do
       people = ['Alice', 'Bob']
 
       result = ArrayProblems.greet_everyone(people)
@@ -146,18 +149,18 @@ describe "Ruby Diagnostic: You" do
 
   describe "Your knowledge of Hashes" do
 
-    xyou "know how to create an empty hash" do
+    you "know how to create an empty hash" do
       result = HashProblems.create_empty_hash
       expect(result.length).to eq 0
     end
 
-    xyou "know how to create a hash with keys and values" do
+    you "know how to create a hash with keys and values" do
       result = HashProblems.create_veggie_color_hash
       expect(result[:tomato]).to eq 'red'
       expect(result[:kale]).to eq 'green'
     end
 
-    xyou "know how to access a nested hash" do
+    you "know how to access a nested hash" do
       james = {
           "name" => {
               :first => "King",
@@ -182,7 +185,7 @@ describe "Ruby Diagnostic: You" do
 
   describe "Your handle on using Hashes with Arrays" do
 
-    xyou "know how to iterate through an array of hashes and output its contents" do
+    you "know how to iterate through an array of hashes and output its contents" do
       expect(ArraysAndHashes).to receive(:puts).with("oranges: 5")
       expect(ArraysAndHashes).to receive(:puts).with("eggplants: 8")
       expect(ArraysAndHashes).to receive(:puts).with("apples: 14")
