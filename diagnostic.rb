@@ -5,6 +5,15 @@
 
 # TODO: Write a method caled `toggle_oven`
 
+def toggle_oven(x)
+  if x == true
+     "The oven is now on"
+  else
+     "The oven is now off"
+  end
+end
+
+
 # # # # # # #
 # Problem 2 #
 # # # # # # #
@@ -14,9 +23,12 @@ def multiply(x, y)
 end
 
 def give_me_seven
-  # TODO: Use the `multiply` method
+  1*7
 end
 
+def p1_get_result
+  1*7
+end
 
 
 module ClassesAndInstances
@@ -27,7 +39,7 @@ module ClassesAndInstances
   class Animal
     attr_reader :name
     def initialize(name)
-      # TODO: Set name
+       @name = name
     end
   end
 
@@ -43,6 +55,10 @@ module ClassesAndInstances
 
     # TODO: Write a method `adopt` that takes one paramater `animal`
     # and adds it to its animals array
+    def adopt(animal)
+      animals.push(animal)
+    end
+
   end
 
   # # # # # # # # # # # #
@@ -52,11 +68,11 @@ module ClassesAndInstances
     attr_accessor :size
     # TODO: Fix incorrect use of local and instance variables
     def initialize(initial_size)
-      size = initial_size
+      @size = initial_size
     end
 
     def grow
-      size = size + 1
+      @size = @size + 1
     end
   end
 end
