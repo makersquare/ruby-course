@@ -10,7 +10,7 @@ describe "Ruby Diagnostic: You" do
     expect( toggle_oven(false) ).to eq "The oven is now off"
   end
 
-  xyou "know how to call a method within another method" do
+  you "know how to call a method within another method" do
     result = give_me_seven
     expect(result).to eq 7
     expect(@source).to include_code(:multiply).in_method(:p1_get_result)
@@ -72,7 +72,7 @@ describe "Ruby Diagnostic: You" do
       expect(@source).to_not include_code(:attr_accessor).in(:Box).for(:GettersSetters)
     end
 
-    xyou "can properly refactor getters/setters to their attr_ shortcut equivalents" do
+    you "can properly refactor getters/setters to their attr_ shortcut equivalents" do
       bob = GettersSetters::Person.new('Bob', 38)
       expect(bob.name).to eq 'Bob'
       expect(bob.age).to eq 38
@@ -87,7 +87,7 @@ describe "Ruby Diagnostic: You" do
 
   describe "Your knowledge of Arrays" do
 
-    xyou "know how to add an element to an array" do
+    you "know how to add an element to an array" do
       desserts = ['apple', 'ice cream']
       ArrayProblems.add_cake_to_array(desserts)
       expect(desserts).to eq ['apple', 'ice cream', 'cake']
@@ -97,7 +97,7 @@ describe "Ruby Diagnostic: You" do
       expect(desserts).to eq ['orange', 'froyo', 'cake']
     end
 
-    xyou "know how to manipulate an element in an array" do
+    you "know how to manipulate an element in an array" do
       fruits = ['radish', 'rutabaga', 'orange', 'apple']
       ArrayProblems.uppercase_third_element(fruits)
       expect(fruits).to eq ['radish', 'rutabaga', 'ORANGE', 'apple']
@@ -107,7 +107,7 @@ describe "Ruby Diagnostic: You" do
       expect(fruits).to eq ['pear', 'banana', 'GRAPE']
     end
 
-    xyou "know how to iterate over an array" do
+    you "know how to iterate over an array" do
       # Take 1
       expect(ArrayProblems).to receive(:puts).with('top')
       expect(ArrayProblems).to receive(:puts).with('bowler')
