@@ -197,6 +197,7 @@ class HashProblems
 
   def self.update_father_last_name(hash)
     # TODO: Complete this method by writing A SINGLE LINE
+    hash["father"]["name"][:last] = "James XXX"
   end
 end
 
@@ -211,5 +212,8 @@ class ArraysAndHashes
     # TODO: Iterate over this array and `puts` each key and value
     # Example: if array is [{ egg: 12 }, { milk: 1 }],
     #          then `puts` both "egg: 12" and "milk: 1"
+    grocery_lists.each do |item|
+      puts "#{item}"
+    end
   end
 end
