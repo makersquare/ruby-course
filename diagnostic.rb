@@ -206,7 +206,12 @@ class ArraysAndHashes
     # Example: if array is [{ egg: 12 }, { milk: 1 }],
     #          then `puts` both "egg: 12" and "milk: 1"
 
-    grocery_list.each do |x,y|
-      puts x": "+y
-  end
+    grocery_lists.each do |i|
+      key_name = i.keys
+      val_name = i.values
+      for j in 0...key_name.length
+      puts key_name[j].to_s+": "+val_name[j].to_s
+end
+end
+end
 end
