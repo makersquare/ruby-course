@@ -171,6 +171,7 @@ class ArrayProblems
 
   def self.greet_everyone(people)
     # TODO: Select and return all numbers higher than `min`
+    people.map {|x| "Hello, #{x}"}
   end
 end
 
