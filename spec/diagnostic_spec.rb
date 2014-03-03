@@ -19,12 +19,12 @@ describe "Ruby Diagnostic: You" do
 
   describe "Your knowledge of Classes and Instances" do
 
-    xyou "know how to set an instance variable" do
+    you "know how to set an instance variable" do
       animal = ClassesAndInstances::Animal.new('bird')
       expect(animal.name).to eq 'bird'
     end
 
-    xyou "know how to write an instance method" do
+    you "know how to write an instance method" do
       lion = ClassesAndInstances::Animal.new('lion')
       tiger = ClassesAndInstances::Animal.new('tiger')
       liger = ClassesAndInstances::Animal.new('liger')
@@ -41,7 +41,7 @@ describe "Ruby Diagnostic: You" do
       expect(zoo.animals.count).to eq 3
     end
 
-    xyou "know the difference between local variables and instance variables" do
+    you "know the difference between local variables and instance variables" do
       plant = ClassesAndInstances::Plant.new(1)
 
       plant.grow
@@ -55,7 +55,7 @@ describe "Ruby Diagnostic: You" do
 
   describe "Your knowledge of getters and setters" do
 
-    xyou "know how to write a getter method" do
+    you "know how to write a getter method" do
       box = GettersSetters::Box.new
       expect(box.secret).to eq 50
 
@@ -63,7 +63,7 @@ describe "Ruby Diagnostic: You" do
       expect(@source).to_not include_code(:attr_accessor).in(:Box).for(:GettersSetters)
     end
 
-    xyou "know how to write a setter method" do
+    you "know how to write a setter method" do
       box = GettersSetters::Box.new
       box.secret = 99
       expect(box.secret).to eq 99
