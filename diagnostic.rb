@@ -151,6 +151,7 @@ class ArrayProblems
 
   def self.uppercase_third_element(array)
     # TODO: Complete this method
+    array[2].upcase!
   end
 
   # # # # # # #
@@ -159,6 +160,7 @@ class ArrayProblems
 
   def self.iterate_and_print(array)
     # TODO: Iterate over this array and `puts` each element.
+    array.each { |x| puts x }
   end
 
   # # # # # # #
@@ -167,6 +169,7 @@ class ArrayProblems
 
   def self.select_higher(array, min)
     # TODO: Select and return all numbers higher than `min`
+    array.select { |x| x }
   end
 
   # # # # # # #
@@ -175,6 +178,7 @@ class ArrayProblems
 
   def self.greet_everyone(people)
     # TODO: Select and return all numbers higher than `min`
+    people.map { |x| "Hello, #{x}"}
   end
 end
 
@@ -187,6 +191,7 @@ class HashProblems
 
   def self.create_empty_hash
     # TODO: Complete this method
+    {}
   end
 
   # # # # # # #
@@ -195,6 +200,7 @@ class HashProblems
 
   def self.create_veggie_color_hash
     # TODO: Complete this method by returning a hash
+    {tomato: "red", kale: "green"}
   end
 
   # # # # # # #
