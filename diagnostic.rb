@@ -4,6 +4,13 @@
 # # # # # # #
 
 # TODO: Write a method caled `toggle_oven`
+def toggle_oven(condition)
+  if condition
+    "The oven is now on"
+  else
+    "The oven is now off"
+  end
+end
 
 # # # # # # #
 # Problem 2 #
@@ -15,6 +22,7 @@ end
 
 def give_me_seven
   # TODO: Use the `multiply` method
+result = multiply(1,7)
 end
 
 
@@ -28,6 +36,7 @@ module ClassesAndInstances
     attr_reader :name
     def initialize(name)
       # TODO: Set name
+      @name = name
     end
   end
 
@@ -41,6 +50,9 @@ module ClassesAndInstances
       @animals = []
     end
 
+    def adopt(animal)
+      @animals << animal
+    end
     # TODO: Write a method `adopt` that takes one paramater `animal`
     # and adds it to its animals array
   end
@@ -52,11 +64,11 @@ module ClassesAndInstances
     attr_accessor :size
     # TODO: Fix incorrect use of local and instance variables
     def initialize(initial_size)
-      size = initial_size
+      @size = initial_size
     end
 
     def grow
-      size = size + 1
+      @size = @size + 1
     end
   end
 end
@@ -69,16 +81,28 @@ module GettersSetters
   # Getters/Setters 1 #
   # # # # # # # # # # #
   class Box
+
     def initialize
       @secret = 50
     end
     # TODO: Write getter and setter methods for secret
+
+    def secret=(input)
+      @secret = input
+    end
+
+    def secret
+      @secret
+    end
   end
 
   # # # # # # # # # # #
   # Getters/Setters 2 #
   # # # # # # # # # # #
   class Person
+    attr_reader :age
+    attr_writer :secret
+    attr_accessor :name
 
     def initialize(name, age)
       @name = name
@@ -89,24 +113,26 @@ module GettersSetters
     # NOTE: Don't provide any more access than necessary.
     #       For example, don't use attr_accessible when all you really need is attr_writer
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-    def age
-      @age
-    end
 
-    def secret=(value)
-      @secret = value
-    end
 
-    def name
-      @name
-    end
+    # def age
+    #   @age
+    # end
 
-    def name=(value)
-      @name = value
-    end
+    # def secret=(value)
+    #   @secret = value
+    # end
+
+    # def name
+    #   @name
+    # end
+
+    # def name=(value)
+    #   @name = value
+    # end
+
   end
 end
-
 
 
 class ArrayProblems
@@ -116,7 +142,7 @@ class ArrayProblems
 
   def self.add_cake_to_array(array)
     # TODO: Complete this method
-    array.push 'cake'
+    array << 'cake'
   end
 
   # # # # # # #
@@ -134,7 +160,9 @@ class ArrayProblems
 
   def self.iterate_and_print(array)
     # TODO: Iterate over this array and `puts` each element.
-    array.each {|x| puts x}
+    array.each do |i|
+      puts i
+    end
   end
 
   # # # # # # #
@@ -143,7 +171,7 @@ class ArrayProblems
 
   def self.select_higher(array, min)
     # TODO: Select and return all numbers higher than `min`
-    array.select {|x| x > min }
+    array.select{|i| i > min}
   end
 
   # # # # # # #
@@ -152,7 +180,7 @@ class ArrayProblems
 
   def self.greet_everyone(people)
     # TODO: Select and return all numbers higher than `min`
-    people.map {|person| "Hello, #{person}" }
+    people.map{|name| "Hello, #{name}"}
   end
 end
 
@@ -165,7 +193,7 @@ class HashProblems
 
   def self.create_empty_hash
     # TODO: Complete this method
-    {}
+    a_hash = {}
   end
 
   # # # # # # #
@@ -174,10 +202,7 @@ class HashProblems
 
   def self.create_veggie_color_hash
     # TODO: Complete this method by returning a hash
-    {
-      :tomato => 'red',
-      :kale => 'green'
-    }
+    veggie_color = {tomato: "red", kale:"green"}
   end
 
   # # # # # # #
@@ -186,7 +211,7 @@ class HashProblems
 
   def self.update_father_last_name(hash)
     # TODO: Complete this method by writing A SINGLE LINE
-    hash["father"]["name"][:last] = 'James XXX'
+    hash["father"]["name"][:last]= "James XXX"
   end
 end
 
@@ -201,10 +226,13 @@ class ArraysAndHashes
     # TODO: Iterate over this array and `puts` each key and value
     # Example: if array is [{ egg: 12 }, { milk: 1 }],
     #          then `puts` both "egg: 12" and "milk: 1"
-    grocery_lists.each {|list|
-      list.each do |item, count|
-        puts "#{item}: #{count}"
+
+    grocery_lists.each do |i|
+      keyVals = i.keys
+      vals = i.values
+      for j in 0...keyVals.length
+        puts keyVals[j].to_s + ": " + vals[j].to_s
       end
-    }
+    end
   end
 end
