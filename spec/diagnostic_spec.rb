@@ -157,7 +157,7 @@ describe "Ruby Diagnostic: You" do
       expect(result[:kale]).to eq 'green'
     end
 
-    xyou "know how to access a nested hash" do
+    you "know how to access a nested hash" do
       james = {
           "name" => {
               :first => "King",
