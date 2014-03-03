@@ -85,17 +85,28 @@ module GettersSetters
   # Getters/Setters 1 #
   # # # # # # # # # # #
   class Box
+
     def initialize
       @secret = 50
     end
     # TODO: Write getter and setter methods for secret
+
+    def secret=(secret)
+      @secret = secret
+    end
+
+    def secret
+      @secret
+    end
   end
 
   # # # # # # # # # # #
   # Getters/Setters 2 #
   # # # # # # # # # # #
   class Person
-
+    attr_reader :age
+    attr_writer :secret
+    attr_accessor :name
     def initialize(name, age)
       @name = name
       @age = age
@@ -105,20 +116,22 @@ module GettersSetters
     # NOTE: Don't provide any more access than necessary.
     #       For example, don't use attr_accessible when all you really need is attr_writer
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-    def age
-      @age
+
+
+    def secret=(secret)
+      @secret = secret
     end
 
-    def secret=(value)
-      @secret = value
+    def secret
+      @secret
+    end
+
+    def name=(name)
+      @name = name
     end
 
     def name
       @name
-    end
-
-    def name=(value)
-      @name = value
     end
   end
 end
