@@ -155,7 +155,7 @@ describe "Ruby Diagnostic: You" do
       expect(result[:kale]).to eq 'green'
     end
 
-    xyou "know how to access a nested hash" do
+    you "know how to access a nested hash" do
       james = {
           "name" => {
               :first => "King",
@@ -180,7 +180,7 @@ describe "Ruby Diagnostic: You" do
 
   describe "Your handle on using Hashes with Arrays" do
 
-    xyou "know how to iterate through an array of hashes and output its contents" do
+    you "know how to iterate through an array of hashes and output its contents" do
       expect(ArraysAndHashes).to receive(:puts).with("oranges: 5")
       expect(ArraysAndHashes).to receive(:puts).with("eggplants: 8")
       expect(ArraysAndHashes).to receive(:puts).with("apples: 14")
