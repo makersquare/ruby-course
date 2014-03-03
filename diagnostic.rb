@@ -139,7 +139,7 @@ class ArrayProblems
   # # # # # # #
 
   def self.iterate_and_print(array)
-    # TODO: Iterate over this array and `puts` each element.
+    array.each {|x| puts x}
   end
 
   # # # # # # #
@@ -147,7 +147,7 @@ class ArrayProblems
   # # # # # # #
 
   def self.select_higher(array, min)
-    # TODO: Select and return all numbers higher than `min`
+    result = array.select {|x| x > min}
   end
 
   # # # # # # #
@@ -155,7 +155,7 @@ class ArrayProblems
   # # # # # # #
 
   def self.greet_everyone(people)
-    # TODO: Select and return all numbers higher than `min`
+    result = people.map
   end
 end
 
