@@ -122,7 +122,7 @@ class ArrayProblems
   # # # # # # #
 
   def self.add_cake_to_array(array)
-    # TODO: Complete this method
+    array << "cake"
   end
 
   # # # # # # #
@@ -130,7 +130,8 @@ class ArrayProblems
   # # # # # # #
 
   def self.uppercase_third_element(array)
-    # TODO: Complete this method
+    third = array[2].upcase
+    array[2] = third
   end
 
   # # # # # # #
