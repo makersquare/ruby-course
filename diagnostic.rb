@@ -155,7 +155,7 @@ class ArrayProblems
   # # # # # # #
 
   def self.greet_everyone(people)
-    result = people.map
+    result = people.map {|x| "Hello, " + x}
   end
 end
 
