@@ -126,14 +126,14 @@ describe "Ruby Diagnostic: You" do
       expect(@source).to include_code(:each).in_class_method(:ArrayProblems, :iterate_and_print)
     end
 
-    xyou "know how to use the select method" do
+    you "know how to use the select method" do
       numbers = [33, 11, 5, 55, 67, 8, 95, 0, 110]
 
       result = ArrayProblems.select_higher(numbers, 55)
       expect(result).to include(67, 95, 110)
     end
 
-    xyou "know how to use the map method" do
+    you "know how to use the map method" do
       people = ['Alice', 'Bob']
 
       result = ArrayProblems.greet_everyone(people)
@@ -146,18 +146,18 @@ describe "Ruby Diagnostic: You" do
 
   describe "Your knowledge of Hashes" do
 
-    xyou "know how to create an empty hash" do
+    you "know how to create an empty hash" do
       result = HashProblems.create_empty_hash
       expect(result.length).to eq 0
     end
 
-    xyou "know how to create a hash with keys and values" do
+    you "know how to create a hash with keys and values" do
       result = HashProblems.create_veggie_color_hash
       expect(result[:tomato]).to eq 'red'
       expect(result[:kale]).to eq 'green'
     end
 
-    xyou "know how to access a nested hash" do
+    you "know how to access a nested hash" do
       james = {
           "name" => {
               :first => "King",
@@ -182,7 +182,7 @@ describe "Ruby Diagnostic: You" do
 
   describe "Your handle on using Hashes with Arrays" do
 
-    xyou "know how to iterate through an array of hashes and output its contents" do
+    you "know how to iterate through an array of hashes and output its contents" do
       expect(ArraysAndHashes).to receive(:puts).with("oranges: 5")
       expect(ArraysAndHashes).to receive(:puts).with("eggplants: 8")
       expect(ArraysAndHashes).to receive(:puts).with("apples: 14")
