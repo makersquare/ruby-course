@@ -3,13 +3,15 @@ class Book
   attr_reader :author
   attr_accessor :title
   attr_accessor :status
+  attr_accessor :current_borrower
 
 
-  def initialize(title="", author="")
+  def initialize(title="", author="", book_id = nil)
     @author = author
     @title = title
-    @book_id = nil
+    @book_id = book_id
     @status = "available"
+    @current_borrower = nil
   end
 
   def id
@@ -21,9 +23,10 @@ class Book
   end
 
 
-  def check_out
+  def check_out(current_borrower=nil)
     if @status == "available"
       @status = "checked_out"
+      @current_borrower = current_borrower
       return true
     else
       return false
@@ -38,17 +41,19 @@ class Book
       return false
     end
   end
-
-
-
 end
+
 
 class Borrower
   attr_accessor :name
+  attr_accessor :has_this_book
 
   def initialize(name)
     @name = name
+    @has_this_book = nil
   end
+
+
 end
 
 class Library
@@ -62,10 +67,9 @@ class Library
 
   def register_new_book(title, author)
     #create the new book
-    new_book = Book.new(title, author)
+    new_book = Book.new(title, author, current_id)
 
-    #give it an id and increment @current_id
-    new_book.id = @current_id
+    #increment @current_id
     @current_id = @current_id + 1
 
     #add it to the array
@@ -82,6 +86,32 @@ class Library
   end
 
   def check_out_book(book_id, borrower)
+
+    # find the book with that id
+    current_book = nil
+    @books.each do |x|
+      if x.id == book_id
+        current_book = x
+      else
+        puts "ID not found"
+        return nil
+      end
+    end
+
+    # if borrower doesn't already have a book out
+    if (borrower.has_this_book == nil)
+
+      #Check it out if it's available
+      if current_book.check_out(borrower)
+        borrower.has_this_book = book_id
+        return current_book
+      else
+        return nil
+      end
+    else
+      return nil
+    end
+
   end
 
   def check_in_book(book)
