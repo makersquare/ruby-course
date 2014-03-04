@@ -74,8 +74,8 @@ describe "Ruby Review: You" do
     end
 
     xyou "know how to use the map method part 3" do
-      hat_collection = [ 
-        { :size => "medium", :style => "cap"}, 
+      hat_collection = [
+        { :size => "medium", :style => "cap"},
         { :size => "small", :style => "fedora"} ]
 
       result = ArrayProblems.list_my_hats(hat_collection)
@@ -90,11 +90,55 @@ describe "Ruby Review: You" do
 
     xyou "know how to explicitly return a statement" do
       numbers_array = [4,5,2]
-      result = ImplicitAndExplicitReturns.confirm_if_include(numbers_array, 2)
-      expect(result).to eq("The array contains the search item")
+      result = MethodReturns.include?(numbers_array, 2)
+      expect(result).to eq(true)
+
+      result = MethodReturns.include?(numbers_array, 4)
+      expect(result).to eq(true)
+
+      result = MethodReturns.include?(numbers_array, 7)
+      expect(result).to eq(false)
+    end
+
+    xyou "know what puts returns" do
+      result = MethodReturns.get_name
+      expect(result).to eq "Bob"
     end
 
   end
+
+
+  describe "Your knowledge of scope in Ruby" do
+
+    xyou "know about method scope" do
+      bob = Scopes::Person.new
+      expect(bob.jump(10)).to eq "I can jump 10 inches!"
+      expect(bob.last_jump_height).to eq "I last jumped 10 inches."
+
+      expect(bob.jump(2)).to eq "I can jump 2 inches!"
+      expect(bob.last_jump_height).to eq "I last jumped 2 inches."
+    end
+
+    xyou "know about block scope" do
+      data = [
+        { :name => "Joe", :salary => 100 },
+        { :name => "Sally", :salary => 1000 }
+      ]
+      finder = Scopes::Finder.new(data)
+
+      person = finder.find_first(1000)
+      expect(person[:name]).to eq "Sally"
+
+      person = finder.find_first(100)
+      expect(person[:name]).to eq "Joe"
+
+      person = finder.find_first(999)
+      expect(person).to eq nil
+
+      expect(@source).to_not include_code(:return).in(:Finder).for(:Scopes)
+    end
+  end
+
 
   # You can safely ignore this block
   before(:all) do
