@@ -123,6 +123,10 @@ class Library
   end
 
   def check_in_book(book)
+    book.current_borrower.has_this_book = nil
+    book.current_borrower = nil
+    book.status = "available"
+
   end
 
   def available_books
