@@ -52,23 +52,22 @@ end
 
 describe Library do
 
-  xit "starts with an empty array of books" do
+  it "starts with an empty array of books" do
     lib = Library.new
     expect(lib.books.count).to eq(0)
   end
 
-  xit "add new books and assigns it an id" do
+  it "add new books and assigns it an id" do
     lib = Library.new
     lib.register_new_book("Nausea", "Jean-Paul Sartre")
     expect(lib.books.count).to eq(1)
-
     created_book = lib.books.first
     expect(created_book.title).to eq "Nausea"
     expect(created_book.author).to eq "Jean-Paul Sartre"
     expect(created_book.id).to_not be_nil
   end
 
-  xit "can add multiple books" do
+  it "can add multiple books" do
     lib = Library.new
     lib.register_new_book("One", "Bob")
     lib.register_new_book("Two", "Bob")
@@ -87,7 +86,7 @@ describe Library do
     book = lib.check_out_book(book_id, sam)
 
     # The checkout should return the book
-    expect(book).to be_a?(Book)
+    expect(book).to be_a(Book)
     expect(book.title).to eq "Green Eggs and Ham"
 
     # The book should now be marked as checked out
