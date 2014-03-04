@@ -1,6 +1,6 @@
 require 'ruby_parser'
 require 'sexp_path'
-require './diagnostic.rb'
+require './review.rb'
 
 RSpec.configure do |c|
   # FOR THE CURIOUS: This is the line we alias `you` to `it`
