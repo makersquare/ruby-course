@@ -1,6 +1,7 @@
 
 class Book
-  attr_reader :author, :title, :status, :id
+  attr_reader :author, :title, :status
+  attr_accessor :id
 
   def initialize(title, author)
     @title = title
@@ -29,18 +30,26 @@ end
 
 class Borrower
   attr_reader :name
-
   def initialize(name)
     @name = name
   end
 end
 
 class Library
+
   def initialize(name)
+    @name = name
     @books = []
   end
 
   def books
+    @books
+  end
+
+  def register_new_book(title, author)
+    new_book = Book.new(title, author)
+    new_book.id = rand(1..100)
+    books << new_book
   end
 
   def add_book(title, author)
