@@ -118,6 +118,8 @@ class Library
   end
 
   def get_borrower(book_id)
+    current_book = find_by_id(book_id)
+    return current_book.current_borrower.name
   end
 
   def check_in_book(book)
