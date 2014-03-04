@@ -49,13 +49,22 @@ class Library
   def register_new_book(title, author)
     new_book = Book.new(title, author)
     new_book.id = rand(1..100)
-    books << new_book
+    add_book(title, author)
+    @books << new_book
   end
 
   def add_book(title, author)
   end
 
   def check_out_book(book_id, borrower)
+
+    @books.each do |book|
+      if book.id == book_id
+      book.check_out
+      return book
+      end
+    end
+
   end
 
   def check_in_book(book)
