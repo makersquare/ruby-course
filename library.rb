@@ -16,6 +16,11 @@ class Book
     @book_id
   end
 
+  def id=(id)
+    @book_id = id
+  end
+
+
   def check_out
     if @status == "available"
       @status = "checked_out"
@@ -48,10 +53,28 @@ end
 
 class Library
   attr_accessor :books
+  attr_accessor :current_id
 
   def initialize
     @books = []
+    @current_id = 1
   end
+
+  def register_new_book(title, author)
+    #create the new book
+    new_book = Book.new(title, author)
+
+    #give it an id and increment @current_id
+    new_book.id = @current_id
+    @current_id = @current_id + 1
+
+    #add it to the array
+    @books << new_book
+
+  end
+
+
+
 
 
 
