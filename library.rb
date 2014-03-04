@@ -22,6 +22,7 @@ class Book
   def check_in()
     if @status == "checked_out"
       @status="available"
+      @borrower=nil
       return true
     else
       false
@@ -58,7 +59,7 @@ class Library
     if @books[book_id].check_out(borrower)
       return @books[book_id]
     else
-      false
+      nil
     end
   end
 
@@ -67,6 +68,7 @@ class Library
   end
 
   def check_in_book(book)
+    book.check_in()
   end
 
   def available_books
