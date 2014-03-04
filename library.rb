@@ -60,6 +60,7 @@ class Library
   attr_accessor :books
   attr_accessor :current_id
 
+
   def initialize
     @books = []
     @current_id = 1
@@ -78,6 +79,16 @@ class Library
   end
 
 
+  def find_by_id(book_id)   # Takes a book_id and returns the book object
+    @books.each do |x|
+      if x.id == book_id
+        return x
+      else
+        puts "ID not found"
+        return nil
+      end
+    end
+  end
 
 
 
@@ -88,15 +99,7 @@ class Library
   def check_out_book(book_id, borrower)
 
     # find the book with that id
-    current_book = nil
-    @books.each do |x|
-      if x.id == book_id
-        current_book = x
-      else
-        puts "ID not found"
-        return nil
-      end
-    end
+    current_book = self.find_by_id(book_id)
 
     # if borrower doesn't already have a book out
     if (borrower.has_this_book == nil)
@@ -112,6 +115,9 @@ class Library
       return nil
     end
 
+  end
+
+  def get_borrower(book_id)
   end
 
   def check_in_book(book)
