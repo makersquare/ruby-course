@@ -19,11 +19,19 @@ class Book
   end
 
   def check_in
+    if @status == "checked_out"
+    @status = "available"
+  end
   end
 end
+#  END OF BOOK CLASS DEFINITION
+
 
 class Borrower
+  attr_reader :name
+
   def initialize(name)
+    @name = name
   end
 end
 
