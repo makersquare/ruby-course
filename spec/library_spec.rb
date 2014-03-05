@@ -12,20 +12,20 @@ describe Book do
     expect(book.id).to be_nil
   end
 
-  xit "has a default status of available" do
-    book = Book.new
+  it "has a default status of available" do
+    book = Book.new("title", "author")
     expect(book.status).to eq 'available'
   end
 
-  xit "can be checked out" do
-    book = Book.new
+  it "can be checked out" do
+    book = Book.new("title", "author")
     did_it_work = book.check_out
     expect(did_it_work).to be_true
     expect(book.status).to eq 'checked_out'
   end
 
-  xit "can't be checked out twice in a row" do
-    book = Book.new
+  it "can't be checked out twice in a row" do
+    book = Book.new("thetitle", "theauthor")
     did_it_work = book.check_out
     expect(did_it_work).to eq(true)
 
