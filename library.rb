@@ -1,12 +1,19 @@
 
 class Book
-  attr_reader :author, :title, :id, :status, :borrower
+  attr_reader :author, :title, :id, :status, :borrower, :reviews, :year, :edition
 
-  def initialize(title="", author="",id=nil)
+  def initialize(title="", author="",id=nil,year=nil,edition=nil)
     @title = title
     @author = author
     @status = "available"
     @id = id
+    @reviews = {}
+    @year = year
+    @edition = edition
+  end
+
+  def review(borrower,rating,review="")
+    @reviews["#{borrower.name}"] = {rating: rating, review:review}
   end
 
   def check_out(borrower=nil)
@@ -45,8 +52,8 @@ class Library
     @books = []
   end
 
-  def register_new_book(name,author)
-    @books.push(Book.new(name,author,@books.count))
+  def register_new_book(name, author, year=nil, edition=nil)
+    @books.push(Book.new(name, author, @books.count, year, edition))
   end
 
   # def books

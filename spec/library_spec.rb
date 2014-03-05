@@ -219,4 +219,30 @@ describe Library do
     expect(lib.borrowed_books.count).to eq(1)
     expect(lib.borrowed_books.first).to be_a(Book)
   end
+
+  it "allows us to rate books" do
+    jeff = Borrower.new("Jeff")
+    lib = Library.new
+    lib.register_new_book("Cool Book","Brian Provost")
+
+    book = lib.check_out_book(0,jeff)
+    book.review(jeff,5,"It was OK")
+    expect( book.reviews[jeff.name][:rating] ).to eq 5
+    expect( book.reviews[jeff.name][:review] ).to eq "It was OK"
+  end
+
+  it "Allows us to add year and edition to new books" do
+    lib = Library.new
+    lib.register_new_book("Garfield", "The guy who wrote Garfield")
+    brian = Borrower.new("Brian")
+    book1 = lib.check_out_book(0,brian)
+    expect( book1.year ).to eq nil
+    expect( book1.edition ).to eq nil
+
+    lib.register_new_book("Moby Dick", "The guy who wrote Moby Dick",1996,3)
+    jessie = Borrower.new("Jessie")
+    book2 = lib.check_out_book(1,jessie)
+    expect( book2.year ).to eq 1996
+    expect( book2.edition ).to eq 3
+  end
 end
