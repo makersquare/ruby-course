@@ -13,6 +13,7 @@ class Book
 
   def check_out
     @status = "checked_out"
+    return true
   end
 end
 

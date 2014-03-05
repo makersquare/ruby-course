@@ -20,7 +20,7 @@ describe Book do
   it "can be checked out" do
     book = Book.new("title", "author")
     did_it_work = book.check_out
-    expect(did_it_work).to be_true
+    expect(did_it_work).to eq(true)
     expect(book.status).to eq 'checked_out'
   end
 
@@ -28,6 +28,7 @@ describe Book do
     book = Book.new("thetitle", "theauthor")
     did_it_work = book.check_out
     expect(did_it_work).to eq(true)
+
 
     did_it_work_again = book.check_out
     expect(did_it_work_again).to eq(false)
