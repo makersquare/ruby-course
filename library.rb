@@ -28,8 +28,10 @@ end
 class Borrower
 
   attr_reader :name
+  attr_accessor :book_count
 
-  def initialize(name)
+  def initialize(name, book_count=0)
+    @book_count = book_count
     @name = name
   end
 end
@@ -50,28 +52,24 @@ class Library
   end
 
   def check_out_book(book_id, borrower)
-      books.select do |book|
 
-        if (book.id == book_id)
-          if(book.status == 'checked_out')
-              return nil
-            else
-              chosen_book = book
-              book.status = 'checked_out'
-              book.borrower = Borrower.new(borrower).name
-            end
-        end
+    book = books.find { |book| book.id == book_id  }
 
-        return chosen_book
-      end
+    if (book.status == "checked_out")
+      return nil
+    elsif (borrower.book_count > 0)
+      return nil
+    else
+      book.status = "checked_out"
+      book.borrower = borrower
+      book.borrower.book_count += 1
+    end
+    return book
   end
 
   def get_borrower(book_id)
-    books.select do |book|
-      if book.id == book_id
-        return book.borrower.name
-      end
-    end
+    book = books.find {|b| b.id == book_id}
+    return book.borrower.name
 
 
   end
@@ -80,13 +78,18 @@ class Library
     books.select do |b|
       if (b.borrower.name == book.borrower.name)
         b.status = "available"
+        b.borrower = nil
       end
     end
   end
 
   def available_books
+    books.select do |book|
+      book.status == 'available'
+    end
   end
 
   def borrowed_books
-  end
+   borrowed_b = books.select {|book| book.status == "checked_out"}
+end
 end
