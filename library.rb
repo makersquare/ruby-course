@@ -56,11 +56,16 @@ class Library
   # end
 
   def check_out_book(book_id, borrower)
-    if @books[book_id].check_out(borrower)
-      return @books[book_id]
-    else
-      nil
+    @books.each do |book|
+      if book.borrower == borrower
+        return nil
+      end
     end
+      if @books[book_id].check_out(borrower)
+        return @books[book_id]
+      else
+        nil
+     end
   end
 
   def get_borrower(book_id)
