@@ -13,12 +13,14 @@ describe TaxiMeter do
     end
 
     it "starts at zero" do
+      # Don't change this test;
+      # amount_due and miles_driven are required to work this way
       expect(@meter.amount_due).to eq 0
       expect(@meter.miles_driven).to eq 0
     end
 
     it "cannot set amount due" do
-      expect { @meter.amount = 99 }.to raise_error
+      expect { @meter.amount_due = 99 }.to raise_error
     end
 
     it "cannot set start time nor stop time" do
@@ -32,6 +34,8 @@ describe TaxiMeter do
     end
 
     it "can start and stop" do
+      # Don't change this test;
+      # start and stop are required to work this way
       @meter.start
       expect(@meter.start_time).to_not be_nil
       expect(@meter.stop_time).to be_nil
