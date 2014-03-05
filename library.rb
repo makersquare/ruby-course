@@ -44,9 +44,14 @@ class Library
 
   def check_out_book(book_id, borrower)
     book = books.find { |bk| bk.id == book_id }
+
+    if book.status == "checked_out"
+      return nil
+    else
     book.status = "checked_out"
     book.borrower = borrower
     return book
+    end
   end
 
   def get_borrower(book_id)
