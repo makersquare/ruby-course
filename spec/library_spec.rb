@@ -1,5 +1,5 @@
 require "./library.rb"
-# require 'pry-debugger'
+require 'pry-debugger'
 
 describe Book do
   it "has a title and author, and nil id" do
@@ -13,12 +13,12 @@ describe Book do
   end
 
   xit "has a default status of available" do
-    book = Book.new
+    book = Book.new(title, author) # commit
     expect(book.status).to eq 'available'
   end
 
-  xit "can be checked out" do
-    book = Book.new
+  xit "can be checked out" do # commit
+    book = Book.new(title, author)
     did_it_work = book.check_out
     expect(did_it_work).to be_true
     expect(book.status).to eq 'checked_out'
