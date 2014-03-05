@@ -1,7 +1,7 @@
 
 class Book
   attr_reader :title, :author
-  attr_accessor :status, :id
+  attr_accessor :status, :id, :borrower
 
   def initialize(title, author)
     @title = title
@@ -43,6 +43,10 @@ class Library
   end
 
   def check_out_book(book_id, borrower)
+    book = books.find { |bk| bk.id == book_id }
+    book.status = "checked_out"
+    book.borrower = borrower
+    return book
   end
 
   def check_in_book(book)
