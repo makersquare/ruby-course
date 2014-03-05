@@ -11,9 +11,19 @@ class Book
     @status = "available"
   end
 
-  def check_out
-    @status = "checked_out"
+  # def check_out
+  #   @status = "checked_out"
+  # end
+
+   def check_out # made a condital to see what happen run twice 4th test
+    if @status == "available"
+      @status = "checked_out"
+      return true
+    else
+      return false
+    end
   end
+
 end
 
 class Borrower
