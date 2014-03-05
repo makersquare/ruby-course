@@ -17,7 +17,7 @@ describe Book do
     expect(book.status).to eq 'available'
   end
 
-  xit "can be checked out" do # commit
+  it "can be checked out" do # commit
     book = Book.new("The Stranger", "Albert Camus")
     did_it_work = book.check_out
     expect(did_it_work).to be_true
@@ -44,7 +44,7 @@ describe Book do
 end
 
 describe Borrower do
-  xit "has a name" do
+  it "has a name" do
     borrower = Borrower.new("Mike")
     expect(borrower.name).to eq "Mike"
   end
