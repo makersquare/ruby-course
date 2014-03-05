@@ -1,6 +1,4 @@
-# require_relative 'books.txt'
 require 'csv'
-require 'fastercsv'
 
 class Borrower
   attr_reader :name
