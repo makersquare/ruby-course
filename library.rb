@@ -49,6 +49,11 @@ class Library
     return book
   end
 
+  def get_borrower(book_id)
+    borrowed_book_id = @books.find {|bk| bk.id == book_id}
+    return borrowed_book_id.borrower.name
+  end
+
   def check_in_book(book)
   end
 
