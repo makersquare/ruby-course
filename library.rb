@@ -1,11 +1,12 @@
 
 class Book
-  attr_reader :author, :id, :title, :status
+  attr_reader :author, :id
+  attr_accessor :status, :borrower, :title
 
-  def initialize(title, author)
+  def initialize(title, author, id=nil)
     @author = author
     @title = title
-    #@id = nil
+    @id = id
     @status = "available"
   end
 
@@ -34,20 +35,53 @@ class Borrower
 end
 
 class Library
+
+  attr_reader :books
+
   def initialize(name)
     @books = []
   end
 
-  def books
-  end
+  # def books
+  # end
 
   def add_book(title, author)
+    books.push(Book.new(title, author, books.count))
   end
 
   def check_out_book(book_id, borrower)
+      books.select do |book|
+
+        if (book.id == book_id)
+          if(book.status == 'checked_out')
+              return nil
+            else
+              chosen_book = book
+              book.status = 'checked_out'
+              book.borrower = Borrower.new(borrower).name
+            end
+        end
+
+        return chosen_book
+      end
+  end
+
+  def get_borrower(book_id)
+    books.select do |book|
+      if book.id == book_id
+        return book.borrower.name
+      end
+    end
+
+
   end
 
   def check_in_book(book)
+    books.select do |b|
+      if (b.borrower.name == book.borrower.name)
+        b.status = "available"
+      end
+    end
   end
 
   def available_books
