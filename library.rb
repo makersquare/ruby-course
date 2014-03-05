@@ -24,6 +24,10 @@ class Book
     end
   end
 
+  def check_in
+    @status = "available"
+  end
+
 end
 
 class Borrower
