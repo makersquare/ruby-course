@@ -1,9 +1,7 @@
 
 class Book
   attr_reader :author
-  attr_accessor :title, :status, :current_borrower
-
-
+  attr_accessor :title, :status, :current_borrower, :id
 
   def initialize(title="", author="", id = nil)
     @author = author
@@ -12,15 +10,6 @@ class Book
     @status = "available"
     @current_borrower = nil
   end
-
-  def id
-    @id
-  end
-
-  def id=(id)
-    @id = id
-  end
-
 
   def check_out(current_borrower=nil)
     if @status == "available"
@@ -45,8 +34,7 @@ end
 
 
 class Borrower
-  attr_accessor :name
-  attr_accessor :has_this_book
+  attr_accessor :name, :has_this_book
 
   def initialize(name)
     @name = name
@@ -57,9 +45,7 @@ class Borrower
 end
 
 class Library
-  attr_accessor :books
-  attr_accessor :current_id
-  attr_accessor :available_books, :borrowed_books
+  attr_accessor :books, :current_id, :available_books, :borrowed_books
 
   def initialize
     @books = []
@@ -77,12 +63,8 @@ class Library
 
     #add it to the arrays
     @books << new_book
-    puts "@books array:"
-    puts @books
     @available_books << new_book
-    puts "@available_books array"
     puts @available_books
-
   end
 
 
@@ -92,14 +74,7 @@ class Library
         return x
       end
     end
-
     return nil
-  end
-
-
-
-
-  def add_book(title, author)
   end
 
   def check_out_book(book_id, borrower)
@@ -111,11 +86,15 @@ class Library
     if (borrower.has_this_book.count < 2)
 
 
+      # If checkout is successful...
       if current_book.check_out(borrower)
+
+        # Update the borrower's has_this_book status
         borrower.has_this_book << book_id
+
+        # Update our own arrays and return the book
         @available_books.delete(current_book)
         @borrowed_books << current_book
-
         return current_book
       else
         return nil
@@ -123,7 +102,6 @@ class Library
     else
       return nil
     end
-
   end
 
   def get_borrower(book_id)
@@ -134,7 +112,8 @@ class Library
   def check_in_book(book)
     book.current_borrower.has_this_book.delete(book.id)
     book.check_in
-
+    @borrowed_books.delete(book)
+    @available_books << book
   end
 
 end
