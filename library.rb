@@ -59,19 +59,20 @@ class Library
     @id_counter += 1
   end
 
-def check_out_book(book_id, borrower)
-       @borrowers = {}
-       @books.each do |book|
-           if book.id == book_id
-            @borrowers[book_id] = borrower
-            book.check_out
-            return book
-           end
-       end
-   end
-
 
   def check_out_book(book_id, borrower)
+    @books.each { |book_instance|
+      if book_instance.id == book_id
+        book_instance.check_out
+        return book_instance
+      else
+        return "no book"
+      end
+    }
+  end
+
+  def get_borrower
+
   end
 
   def check_in_book(book)
