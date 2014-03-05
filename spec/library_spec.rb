@@ -11,9 +11,9 @@ describe Book do
     expect(book.author).to eq "Albert Camus"
     expect(book.id).to be_nil
   end
-
-  xit "has a default status of available" do
-    book = Book.new(title, author) # commit
+                    # had title author here ---
+  it "has a default status of available" do
+    book = Book.new("The Stranger", "Albert Camus") # commit
     expect(book.status).to eq 'available'
   end
 
