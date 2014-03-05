@@ -1,3 +1,6 @@
+# require_relative 'books.txt'
+require 'csv'
+require 'fastercsv'
 
 class Borrower
   attr_reader :name
@@ -37,6 +40,7 @@ def check_in
 
   else
     false
+end
 end
 def leave_rating(rating, review=nil)
   @ratings.push(rating)
@@ -80,6 +84,12 @@ title.id = @books.count - 1
     books[book_id].borrower.name
   end
 
+  def create_books_from_csv(file_path)
+    CSV.foreach(file_path) do |row|
+      register_new_book(row[0], row[1])
+    end
+  end
+
   def check_in_book(book)
     if book.status = "checked_out"
       book.status = "available"
@@ -96,3 +106,9 @@ title.id = @books.count - 1
   end
 
 end
+
+
+
+
+
+
