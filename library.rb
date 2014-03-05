@@ -1,4 +1,3 @@
-# require_relative 'books.txt'
 require 'csv'
 
 class Borrower
