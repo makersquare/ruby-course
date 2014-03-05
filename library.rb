@@ -60,6 +60,8 @@ class Library
   end
 
   def check_in_book(book)
+    book.status = "available"
+    @books << book
   end
 
   def available_books
