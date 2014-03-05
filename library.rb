@@ -9,6 +9,18 @@ class Book
     @id = nil
     @status = 'available'
   end
+
+  def check_out
+    if @status == 'available'
+      @status = 'checked_out'
+    end
+  end
+
+  def check_in
+    if @status == 'checked_out'
+      @status = 'available'
+    end
+  end
 end
 
 class Borrower
