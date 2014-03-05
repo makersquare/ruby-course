@@ -1,3 +1,4 @@
+require 'csv'
 
 class Book
   attr_reader :author, :title, :id, :status, :borrower, :reviews, :year, :edition
@@ -56,11 +57,11 @@ class Library
     @books.push(Book.new(name, author, @books.count, year, edition))
   end
 
-  # def books
-  # end
-
-  # def add_book(title, author)
-  # end
+  def import_books(file)
+    CSV.foreach(File.path("#{file}")) do |col|
+      register_new_book(col[0],col[1])
+    end
+  end
 
   def check_out_book(book_id, borrower)
     @books.each do |book|

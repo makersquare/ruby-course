@@ -245,4 +245,14 @@ describe Library do
     expect( book2.year ).to eq 1996
     expect( book2.edition ).to eq 3
   end
+
+  it "Imports list of books from CSV" do
+    lib = Library.new
+    lib.import_books("import_books.csv")
+
+    brian = Borrower.new("Brian")
+    book = lib.check_out_book(0,brian)
+
+    expect( book.title ).to eq "Cool Book"
+  end
 end
