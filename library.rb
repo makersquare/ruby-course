@@ -23,10 +23,15 @@ class Book
   end
 end
 
+
 class Borrower
+  attr_reader :name
+
   def initialize(name)
+    @name = name
   end
 end
+
 
 class Library
   def initialize(name)
