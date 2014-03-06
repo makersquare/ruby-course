@@ -58,6 +58,7 @@ class Library
     book.borrower.book_count += 1
     return book
     end
+
   end
 
   def get_borrower(book_id)
@@ -71,6 +72,7 @@ class Library
   end
 
   def available_books
+    books.select { |book| book.status == "available"}
   end
 
   def borrowed_books

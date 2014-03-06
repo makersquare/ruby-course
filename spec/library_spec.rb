@@ -176,7 +176,7 @@ describe Library do
 
     # At first, all books are available
     expect(lib.available_books.count).to eq(3)
-    expect(lib.available_books.first).to be_a?(Book)
+    expect(lib.available_books.first).to be_a(Book)
 
     jordan = Borrower.new("Michael Jordan")
     book = lib.check_out_book(lib.available_books.first.id, jordan)
@@ -185,7 +185,7 @@ describe Library do
     expect(lib.available_books.count).to eq(2)
   end
 
-  xit "after a book it returned, it can be checked out again" do
+  it "after a book it returned, it can be checked out again" do
     lib = Library.new("Library of the People")
     lib.register_new_book("Harry Potter", "J. K. Rowling")
     book_id = lib.books.first.id
