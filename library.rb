@@ -84,6 +84,7 @@ class Library
   end
 
   def check_in_book(book)
+    @books.each { |book_instance| book_instance.status = "available"}
   end
 
   def available_books
