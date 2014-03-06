@@ -26,16 +26,18 @@ end
 
 
 class Borrower
-  attr_reader :name
+  attr_reader :name 
+  attr_accessor :books_borrowed
 
   def initialize(name)
     @name = name
+    @books_borrowed = 0
   end
 end
 
 
 class Library
-  attr_reader :books, :book_id
+  attr_reader :books, :book_id, :available_books, :borrowed_books
 
   def initialize
     @books = []
@@ -55,16 +57,19 @@ class Library
   end
 
   def check_out_book(book_id, borrower)
-    # look up a method called 'select'. Sometimes the method 'find' is better.
-    @books.each do |book|
-      if book.id == book_id && book.status == 'available'
-        book.status = 'checked_out'
-        book.borrower = borrower
-        return book
-      else
-        return nil
-      end
-    end 
+    if borrower.books_borrowed < 3
+      # look up a method called 'select'. Sometimes the method 'find' is better.
+      @books.each do |book|
+        if book.id == book_id && book.status == 'available'
+          book.status = 'checked_out'
+          book.borrower = borrower
+          borrower.books_borrowed += 1
+          return book
+        else
+          return nil
+        end
+      end 
+    end
   end
 
   def get_borrower(book_id)
