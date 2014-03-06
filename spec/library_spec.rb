@@ -107,9 +107,9 @@ describe Library do
     expect( lib.get_borrower(book_id) ).to eq 'Big Brother'
   end
 
-  xit "does not allow a book to be checked out twice in a row" do
-    lib = Library.new
-    lib.register_new_book = Book.new("Surely You're Joking Mr. Feynman", "Richard Feynman")
+  it "does not allow a book to be checked out twice in a row" do
+    lib = Library.new("name")
+    lib.register_new_book("Surely You're Joking Mr. Feynman", "Richard Feynman")
     book_id = lib.books.first.id
 
     # Leslie Nielsen wants to double check on that
@@ -117,7 +117,7 @@ describe Library do
     book = lib.check_out_book(book_id, nielsen)
 
     # The first time should be successful
-    expect(book).to be_a?(Book)
+    expect(book).to be_a(Book) # how to run this in irb
 
     # However, you can't check out the same book twice!
     book_again = lib.check_out_book(book_id, nielsen)
@@ -146,7 +146,7 @@ describe Library do
 
   xit "does not allow a Borrower to check out more than one Book at any given time" do
     # yeah it's a stingy library
-    lib = Library.new
+    lib = Library.new("name")
     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
     lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
     lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")

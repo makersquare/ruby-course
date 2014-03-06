@@ -65,10 +65,10 @@ class Library
 
     def check_out_book(book_id, borrower)
     @books.each do |book_instance|
-        if  book_instance.id == book_id
-            book_instance.borrower = borrower
-            book_instance.status = "checked_out"
-            return book_instance
+        if  book_instance.id == book_id && book_instance.status == "available"
+          book_instance.borrower = borrower
+          book_instance.status = "checked_out"
+          return book_instance
         end
     end
     nil   #only reach this code if book doesnt exist in library
