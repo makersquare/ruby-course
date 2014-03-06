@@ -2,7 +2,7 @@
 class Book
   attr_accessor :borrower, :title, :author, :status, :id
 
-  def initialize(title, author, status="available", borrower="", id=nil)
+  def initialize(title, author, id=nil, status="available", borrower="")
     @author = author
     @title = title
     @status = status
@@ -27,8 +27,10 @@ class Book
 
 class Borrower
   attr_reader :name
+  attr_accessor :borrower_books
   def initialize(name)
   @name = name
+  @borrower_books = []
   end
 end
 
@@ -54,16 +56,17 @@ class Library
 
 
   def check_out_book(book_id, borrower)
-    book = @books.find {|book| book.id == book_id}
-
-    if (book.status == 'checked_out')
-      return nil
-    else
-      book.status = 'checked_out'
-      book.borrower = borrower
+    final_book = nil
+    bookish = @books[book_id]
+    if bookish.status == "available"
+      if borrower.borrower_books.length < 2
+        bookish.status = "checked_out"
+        bookish.borrower = borrower
+        borrower.borrower_books.push(bookish.title)
+        final_book = bookish
+      end
     end
-
-    return book
+    final_book
   end
 
   def get_borrower(book_id)
@@ -82,3 +85,18 @@ class Library
   def borrowed_books
   end
 end
+
+
+lib = Library.new
+    lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
+    lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
+    lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
+
+    jackson = Borrower.new("Michael Jackson")
+    book_1 = lib.books[0]
+    book_2 = lib.books[1]
+    book_3 = lib.books[2]
+
+    lib.check_out_book(book_1.id, jackson)
+    lib.check_out_book(book_2.id, jackson)
+    lib.check_out_book(book_3.id, jackson)
