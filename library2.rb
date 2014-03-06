@@ -66,7 +66,7 @@ class Library
 
   def check_out_book(book_id, borrower)
     thisbook = @books[book_id]
-    if (thisbook.status == "available") && (borrower.bookcount < 2)
+    if (thisbook.status == "available") && (borrower.bookcount < 3)
       thisbook.check_out
       thisbook.theguysnamewhoreadsforfree = borrower
       borrower.bookcount += 1
@@ -93,23 +93,8 @@ class Library
   end
 
   def available_books
-    @availablebooksarray = []
-
-    @books.each do |x|
-      if x.status == "available"
-        @availablebooksarray << x
-      end
-    end
-    return @availablebooksarray
   end
 
   def borrowed_books
-    @borrowedbooksarray = []
-      @books.each do |x|
-        if x.status == "checked_out"
-          @borrowedbooksarray << x
-        end
-      end
-    return @borrowedbooksarray
   end
 end
