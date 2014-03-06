@@ -100,5 +100,6 @@ class Library
     return book.borrower.name
   end
   def borrowed_books
+    book = books.select {|bk| bk.status == 'checked_out'}
   end
 end
