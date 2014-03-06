@@ -5,14 +5,14 @@ class Book
   attr_accessor :id
   attr_accessor :status
   attr_accessor :borrower
-
+  attr_accessor :borrowed_books
   def initialize(title, author)
     @author = author
     @title = title
     @status = "available"
     @id = nil
     @borrower = nil
-
+    @borrowed_books = []
   end
 
   # def check_out
@@ -108,4 +108,5 @@ class Library
       book_instance.status == "checked_out"
     end
   end
+
 end
