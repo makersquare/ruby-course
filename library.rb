@@ -3,10 +3,11 @@ class Book
   attr_reader :title, :author
   attr_accessor :status, :id, :borrower
 
-  def initialize(title, author)
+  def initialize(title, author, id=nil)
     @title = title
     @author = author
     @status = "available"
+    @id = id
   end
 
   def check_out
@@ -39,9 +40,11 @@ class Library
   end
 
   def register_new_book(title, author)
-    book = Book.new(title, author)
-    @books << book
-    book.id = books.count
+    # book = Book.new(title, author)
+    # @books << book
+    # book.id = books.count
+
+    books.push(Book.new(title, author, books.count))
   end
 
   def check_out_book(book_id, borrower)
@@ -56,13 +59,13 @@ class Library
     book.status = "checked_out"
     book.borrower = borrower
     book.borrower.book_count += 1
-    return book
     end
+    return book
 
   end
 
   def get_borrower(book_id)
-    borrowed_book_id = @books.find {|bk| bk.id == book_id}
+    borrowed_book_id = books.find {|bk| bk.id == book_id}
     return borrowed_book_id.borrower.name
   end
 
@@ -72,9 +75,10 @@ class Library
   end
 
   def available_books
-    books.select { |book| book.status == "available"}
+    available = books.select { |book| book.status == "available"}
   end
 
   def borrowed_books
+    borrowed = books.select { |book| book.status == "checked_out" }
   end
 end
