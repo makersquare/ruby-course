@@ -217,4 +217,36 @@ describe Library do
     expect(lib.borrowed_books.count).to eq(1)
     expect(lib.borrowed_books.first).to be_a(Book)
   end
+
+  it "can store year_published and edition" do
+    lib = Library.new
+    lib.register_new_book("Bullshitty Java for Newbies", "I.M. Asshole")
+    bs = lib.books[0]
+    bs.year_published = "2015"
+    bs.edition = "1st"
+
+    expect(bs.year_published).to eq("2015")
+    expect(bs.edition).to eq("1st")
+  end
+
+  xit "allows borrowers to leave ratings with optional review" do
+    lib = Library.new
+    lib.register_new_book("Bullshitty Java for Newbies", "I.M. Asshole")
+    bs = lib.books[0]
+    borrower = Borrower.new("Joe Schmoe")
+    borrower2 = Borrower.new("Jill Schmoe")
+    borrower.leave_review(bs, 1, "Worst book in history")
+    borrower2.leave_review(bs, 4)
+
+    expect(bs.review).to eq(["Worst book in history"])
+    expect(bs.ratings).to eq([1,4])
+  end
+
+
+
+
+
+
+
+
 end
