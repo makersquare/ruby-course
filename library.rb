@@ -12,6 +12,7 @@ class Book
     @status = "available"
     @id = nil
     @borrower = nil
+
   end
 
   # def check_out
@@ -34,10 +35,11 @@ class Book
 end
 
 class Borrower
-
+  attr_accessor :havebook
   attr_reader :name
   def initialize(name)
     @name = name
+    @havebook = [] # list of data think an array , had havebook = 0 before
   end
 end
 
@@ -63,33 +65,45 @@ class Library
 
 
 
-    def check_out_book(book_id, borrower)
+  def check_out_book(book_id, borrower)
     @books.each do |book_instance|
-        if  book_instance.id == book_id && book_instance.status == "available"
-          book_instance.borrower = borrower
-          book_instance.status = "checked_out"
-          return book_instance
+      if  book_instance.id == book_id && book_instance.status == "available"
+        if borrower.havebook.count < 2
+          borrower.havebook << book_id
+        book_instance.borrower = borrower # don't know why this works
+        book_instance.status = "checked_out"
+        book_instance.borrower.havebook.count
+        return book_instance
+        end
         end
     end
     nil   #only reach this code if book doesnt exist in library
   end
 
   def get_borrower(book_id)
-     @books.each do |book|
-       if book.id == book_id
-         return book.borrower.name
-       end
-     end
-     nil
+    @books.each do |book|
+      if book.id == book_id
+        return book.borrower.name    #
+      end
+    end
+    nil
   end
 
-  def check_in_book(book)
-    @books.each { |book_instance| book_instance.status = "available"}
+  def check_in_book(book) #not correct just chaniign,#delete from @books
+    @books.each do |book_instance|
+      if book_instance == book
+        book_instance.status = "available"
+      end
+    end
   end
 
   def available_books
+    @books.select do|book_instance|
+      book_instance.status == "available"
+    end
   end
 
   def borrowed_books
+
   end
 end
