@@ -86,6 +86,9 @@ class Library
   end
 
   def borrowed_books
+    borrowed_books = []
+    borrowed_books = books.select{|book| book.status == "checked_out"}
+    borrowed_books
   end
 end
 
