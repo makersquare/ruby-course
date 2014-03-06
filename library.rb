@@ -25,8 +25,10 @@ end
 
 class Borrower
   attr_reader :name
-  def initialize(name)
+  attr_accessor :book_count
+  def initialize(name, book_count=0)
     @name = name
+    @book_count = book_count
   end
 end
 
@@ -43,13 +45,17 @@ class Library
   end
 
   def check_out_book(book_id, borrower)
+    
     book = books.find { |bk| bk.id == book_id }
 
     if book.status == "checked_out"
       return nil
+    elsif borrower.book_count > 0
+      return nil
     else
     book.status = "checked_out"
     book.borrower = borrower
+    book.borrower.book_count += 1
     return book
     end
   end

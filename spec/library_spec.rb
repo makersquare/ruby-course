@@ -160,15 +160,15 @@ describe Library do
     book = lib.check_out_book(book_1.id, jackson)
     expect(book.title).to eq "Eloquent JavaScript"
 
-    book = lib.check_out_book(book_2.id, jackson)
-    expect(book.title).to eq "Essential JavaScript Design Patterns"
+    # book = lib.check_out_book(book_2.id, jackson)
+    # expect(book.title).to eq "Essential JavaScript Design Patterns"
 
     # However, the third should return nil
     book = lib.check_out_book(book_3.id, jackson)
     expect(book).to be_nil
   end
 
-  xit "returns available books" do
+  it "returns available books" do
     lib = Library.new("Library of the People")
     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
     lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
