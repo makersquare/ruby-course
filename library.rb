@@ -1,12 +1,13 @@
 class Book
   attr_reader :author, :title
-  attr_accessor :status, :id
+  attr_accessor :status, :id, :borrower
 
   def initialize(title, author)
     @author = author
     @title = title
     @status = "available"
     @id = id
+    @borrower = nil
   end
 
   def check_out
@@ -39,10 +40,11 @@ attr_accessor :name, :checked_out
 end
 
 class Library
-attr_accessor :books, :title
+attr_accessor :books, :title, :records, :available_books, :borrowed_books
   def initialize(name)
     @books = []
-    @library = {}
+    @records = {}
+
   end
 
   def books
@@ -61,22 +63,41 @@ attr_accessor :books, :title
   def check_out_book(book_id, borrower)
     @books.each do |book|
       if book.id == book_id
-        if book.status == "checked_out"
-          return "checkout out"
+        if book.status == "checked_out" || borrower.checked_out.any? == true
+          return nil
         else
-          book.status = "checked_out"
+          @records.store(book_id, borrower)     #updates registry
+          book.status = "checked_out"           #updates book
+          @books[book_id].borrower = borrower   #updates book's borrower
+          borrower.checked_out << book_id       #updates borrower's checked_out
           return book
         end
       end
     end
   end
 
+  def get_borrower(book_id)
+    @records[book_id].name
+  end
+
   def check_in_book(book)
+    book.status = "available"
+
   end
 
   def available_books
+    @books.select do |book|
+      if book.status == "available"
+        book
+      end
+    end
   end
 
   def borrowed_books
+    @books.select do |book|
+      if book.status == "checked_out"
+        book
+      end
+    end
   end
 end
