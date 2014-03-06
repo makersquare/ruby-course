@@ -141,7 +141,7 @@ describe Library do
     book = lib.check_out_book(book_id, bob)
 
     # o wait he changed his mind
-    lib.check_in_book(book)
+    lib.check_in_book(book_id)
 
     # The book should now be marked as available!
     expect(book.status).to eq 'available'
@@ -199,7 +199,7 @@ describe Library do
     expect( lib.get_borrower(book_id) ).to eq 'Michael Vick'
 
     # When we check in a book, the Library does not care who checks it in
-    lib.check_in_book(book)
+    lib.check_in_book(book.id)
 
     # Another person should be able to check the book out
     schumacher = Borrower.new("Michael Schumacher")

@@ -7,6 +7,7 @@ class Borrower
     @name = name
     @books_borrowed = []
   end
+
 end
 
 class Book
@@ -19,6 +20,8 @@ class Book
     @status = "available"
     @id = nil
     @borrower = nil
+    @year_published = year_published
+    @edition = edition
     @ratings = []
     @reviews = []
   end
@@ -88,10 +91,14 @@ title.id = @books.count - 1
     end
   end
 
-  def check_in_book(book)
-    if book.status = "checked_out"
+  def check_in_book(book_id)
+    book = books[book_id]
+    blue = book.borrower
+  if book.status = "checked_out"
+      blue.books_borrowed.delete(book.title)
       book.status = "available"
       book.borrower = nil
+
     end
   end
 
