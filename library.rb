@@ -2,6 +2,7 @@
 class Book
   attr_reader :author
   attr_accessor :title, :status, :current_borrower, :id, :year_published, :edition
+  attr_accessor :ratings, :reviews
 
   def initialize(title="", author="", id = nil)
     @author = author
@@ -11,6 +12,8 @@ class Book
     @current_borrower = nil
     @year_published = ""
     @edition = ""
+    @ratings = []
+    @reviews = []
   end
 
   def check_out(current_borrower=nil)
@@ -42,6 +45,14 @@ class Borrower
     @name = name
     @has_this_book = []
   end
+
+  def leave_review(book, rating, review=nil)
+    book.ratings << rating
+    if review
+      book.reviews << review
+    end
+  end
+
 
 
 

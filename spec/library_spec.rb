@@ -229,7 +229,7 @@ describe Library do
     expect(bs.edition).to eq("1st")
   end
 
-  xit "allows borrowers to leave ratings with optional review" do
+  it "allows borrowers to leave ratings with optional review" do
     lib = Library.new
     lib.register_new_book("Bullshitty Java for Newbies", "I.M. Asshole")
     bs = lib.books[0]
@@ -238,7 +238,7 @@ describe Library do
     borrower.leave_review(bs, 1, "Worst book in history")
     borrower2.leave_review(bs, 4)
 
-    expect(bs.review).to eq(["Worst book in history"])
+    expect(bs.reviews).to eq(["Worst book in history"])
     expect(bs.ratings).to eq([1,4])
   end
 
