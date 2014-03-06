@@ -242,6 +242,14 @@ describe Library do
     expect(bs.ratings).to eq([1,4])
   end
 
+  it "imports books by csv file" do
+    lib = Library.new
+    lib.import_by_csv("csv.txt")
+
+    expect(lib.books[3].author).to eq("Douglas Crockford")
+    expect(lib.books[0].author).to eq("I.M. Asshole")
+
+  end
 
 
 

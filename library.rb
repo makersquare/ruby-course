@@ -1,3 +1,4 @@
+##require 'csv'
 
 class Book
   attr_reader :author
@@ -129,6 +130,18 @@ class Library
     book.check_in
     @borrowed_books.delete(book)
     @available_books << book
+  end
+
+  def import_by_csv(csv)
+    lines=IO.readlines(csv)
+    lines.each { |line|
+      line.chomp!   #Get rid of \n character
+      split_line = line.split(',')  #split line into array
+      self.register_new_book(split_line[0].strip, split_line[1].strip)
+    }
+
+
+
   end
 
 end
