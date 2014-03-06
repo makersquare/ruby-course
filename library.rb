@@ -1,16 +1,15 @@
 
 class Book
-  attr_reader :author
-  attr_reader :title
+  attr_accessor :id, :status, :borrower
+  attr_reader :author, :title
 
-  def initialize(title, author, status='available', borrowed_to='none')
+
+  def initialize(title, author, status='available')
     @title = title
     @author = author
     @status = status
-  end
-
-  def id
-    nil
+    @id = nil
+    @borrower = nil
   end
 
   def status
@@ -46,39 +45,52 @@ class Borrower
 end
 
 class Library
-  attr_accessor :books
+  attr_accessor :books, :available, :borrowed
 
   def initialize
     @books = []
-    @id = 1
+    @books_borrowed = []
   end
 
-
   def add_book(title, author)
-    @books << {"title" => "#{title}", "author" => "#{author}", "id" => @id}
-    @id = @id+=1
+    new_book = Book.new(title, author)
+    @books << new_book
+    new_book.id = @books.length - 1
   end
 
   def check_out_book(book_id, borrower)
-    @books.each { |book|
-        if book["id"] = book_id
-            @check_title = book["title"]
-            @check_author = book["author"]
-        end }
-    check_book = Book.new(@check_title, @check_author, "checked_out", borrower)
+    if @books_borrowed.length < 2
+      if (@books[book_id].status == 'available')
+        @books[book_id].status = "checked_out"
+        @books[book_id].borrower = borrower
+        @books_borrowed << borrower
+        @books[book_id]
+      end
+    end
   end
 
   def get_borrower(book_id)
-
+    @books[book_id].borrower.name
   end
 
   def check_in_book(book)
+    book.status = 'available'
   end
 
   def available_books
+    @books.select { |book|
+      if book.status == 'available'
+        book
+      end
+    }
   end
 
   def borrowed_books
+    @books.select { |book|
+      if book.status == 'checked_out'
+        book
+      end
+    }
 
   end
 end
