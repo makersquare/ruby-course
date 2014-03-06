@@ -1,4 +1,4 @@
-require
+require 'csv'
 
 class Borrower
   attr_reader :name
