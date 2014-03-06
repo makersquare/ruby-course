@@ -3,13 +3,15 @@ class Book
   attr_reader :author
   attr_reader :title
   attr_accessor :id
-  attr_reader :status
+  attr_accessor :status
+  attr_accessor :borrower
 
   def initialize(title, author)
     @author = author
     @title = title
     @status = "available"
     @id = nil
+    @borrower = nil
   end
 
   # def check_out
@@ -45,7 +47,7 @@ class Library
   attr_reader :id
   def initialize(name)
     @books = []
-    @id_counter = 1
+    @id_counter = 0
   end
 
   def count
@@ -60,19 +62,25 @@ class Library
   end
 
 
-  def check_out_book(book_id, borrower)
-    @books.each { |book_instance|
-      if book_instance.id == book_id
-        book_instance.check_out
-        return book_instance
-      else
-        return "no book"
-      end
-    }
+
+    def check_out_book(book_id, borrower)
+    @books.each do |book_instance|
+        if  book_instance.id == book_id
+            book_instance.borrower = borrower
+            book_instance.status = "checked_out"
+            return book_instance
+        end
+    end
+    nil   #only reach this code if book doesnt exist in library
   end
 
-  def get_borrower
-
+  def get_borrower(book_id)
+     @books.each do |book|
+       if book.id == book_id
+         return book.borrower.name
+       end
+     end
+     nil
   end
 
   def check_in_book(book)
