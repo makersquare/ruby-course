@@ -1,0 +1,4 @@
+Bullshitty Java for Newbies, I.M. Asshole
+Eloquent JavaScript, Marijn Haverbeke
+Essential JavaScript Design Patterns", Addy Osmani
+JavaScript: The Good Parts, Douglas Crockford
