@@ -104,6 +104,8 @@ class Library
   end
 
   def borrowed_books
-
+    @books.select do |book_instance|
+      book_instance.status == "checked_out"
+    end
   end
 end

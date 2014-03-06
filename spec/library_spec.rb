@@ -185,8 +185,8 @@ describe Library do
     expect(lib.available_books.count).to eq(2)
   end
 
-  xit "after a book it returned, it can be checked out again" do
-    lib = Library.new
+  it "after a book it returned, it can be checked out again" do
+    lib = Library.new("name")
     lib.register_new_book("Harry Potter", "J. K. Rowling")
     book_id = lib.books.first.id
 
@@ -205,7 +205,7 @@ describe Library do
   end
 
   xit "returns borrowed books" do
-    lib = Library.new
+    lib = Library.new("name")
     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
     lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
     lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
