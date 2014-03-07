@@ -17,12 +17,27 @@ class Bar
   end
 
   def happy_hour?
-    true
+    time = Time.now
+    if time.hour >= 15 && time.hour <= 16
+      true
+    else
+      false
+    end
   end
 
   def happy_discount
     return @happy_discount if self.happy_hour?
     0
+  end
+
+  def happy_discount=(discount)
+      if discount < 0
+        @happy_discount = 0
+      elsif discount > 1
+        @happy_discount = 1
+      else
+        @happy_discount = discount
+      end
   end
 
 end
@@ -34,4 +49,5 @@ class Item
     @name = name
     @price = price
   end
+
 end
