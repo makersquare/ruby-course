@@ -41,14 +41,15 @@ describe Bar do
     expect(@bar.happy_discount).to eq 0
   end
 
-<<<<<<< HEAD
-  it "can set its happy hour discount" do
+
+  xit "can set its happy hour discount" do
     @bar.happy_discount = 0.5
     expect(@bar.happy_discount).to eq 0.5
-=======
-  xit "can set its happy hour discount" do
+  end
+
+  it "can set its happy hour discount" do
     expect { @bar.happy_discount = 0.5 }.to_not raise_error
->>>>>>> ab5b444553385611ce1b40d0e6508fad2f259757
+
   end
 
   it "only returns a discount when it's happy hour" do
@@ -72,7 +73,13 @@ describe Bar do
     expect(@bar.happy_discount).to eq 0.3
   end
 
+<<<<<<< Updated upstream
   xit "constrains its happy hour discount to between zero and one" do
+    expect(@bar).to receive(:happy_hour?).twice.and_return(true)
+
+=======
+  it "constrains its happy hour discount to between zero and one" do
+>>>>>>> Stashed changes
     # HINT: You need to write your own setter
     @bar.happy_discount = 2
     expect(@bar.happy_discount).to eq 1
@@ -88,6 +95,7 @@ describe Bar do
   describe '#happy_hour', :pending => true do
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
       # TODO: CONTROL TIME
+      current_time = Time.now
       expect(@bar.happy_hour?).to eq(true)
     end
 
