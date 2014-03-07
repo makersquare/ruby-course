@@ -38,15 +38,18 @@ describe Bar do
   end
 
   it "has a default happy hour discount of zero" do
+    expect(@bar).to receive(:happy_hour?).and_return(false)
     expect(@bar.happy_discount).to eq 0
   end
 
   it "can set its happy hour discount" do
     @bar.happy_discount = 0.5
+
+    expect(@bar).to receive(:happy_hour?).and_return(true)
     expect(@bar.happy_discount).to eq 0.5
   end
 
-  xit "only returns a discount when it's happy hour" do
+  it "only returns a discount when it's happy hour" do
     @bar.happy_discount = 0.5
     # HINT: You need to write your own getter
 
@@ -67,14 +70,16 @@ describe Bar do
     expect(@bar.happy_discount).to eq 0.3
   end
 
-  xit "constrains its happy hour discount to between zero and one" do
-    expect(@bar).to receive(:happy_hour?).and_return(true)
+  it "constrains its happy hour discount to between zero and one" do
+    #expect(@bar).to receive(:happy_hour?).and_return(true)
 
     # HINT: You need to write your own setter
     @bar.happy_discount = 2
+    expect(@bar).to receive(:happy_hour?).and_return(true)
     expect(@bar.happy_discount).to eq 1
 
     @bar.happy_discount = -3
+    expect(@bar).to receive(:happy_hour?).and_return(true)
     expect(@bar.happy_discount).to eq 0
   end
 
@@ -82,20 +87,38 @@ describe Bar do
   # DO NOT CHANGE SPECS ABOVE THIS LINE #
 # # # # # # # # # # # # # # # # # # # # # #
 
-  describe '#happy_hour', :pending => true do
+  describe '#happy_hour' do
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
       # TODO: CONTROL TIME
+      Time.stub(:now).and_return(Time.new(2014,month=1,day=1,hour=15,min=30))
       expect(@bar.happy_hour?).to eq(true)
     end
 
     it "is not happy hour otherwise" do
       # TODO: CONTROL TIME
+      Time.stub(:now).and_return(Time.new(2014,month=1,day=1,hour=17,min=30))
       expect(@bar.happy_hour?).to eq(false)
     end
   end
 
+
   context "During normal hours" do
     # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+    # Stub a non-happy-hour time
+
+    #Before these tests make some menu items
+    before do
+      @bar.add_menu_item("Tacos", 1000)
+      @bar.add_menu_item("Beer", 1)
+      @bar.add_menu_item("Conversation", 0)
+    end
+
+    it "does not return a discount price when it's not happy hour" do
+      Time.stub(:now).and_return(Time.new(2014,month=1,day=1,hour=17,min=30))
+      expect(@bar.ring_up_item(@bar.menu_items[0])).to eq(1000)
+    end
+
+
   end
 
   context "During happy hours" do
