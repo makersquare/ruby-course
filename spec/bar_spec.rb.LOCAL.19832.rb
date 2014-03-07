@@ -41,8 +41,9 @@ describe Bar do
     expect(@bar.happy_discount).to eq 0
   end
 
-  it "can set its happy hour discount" do
-    expect { @bar.happy_discount = 0.5 }.to_not raise_error
+  xit "can set its happy hour discount" do
+    @bar.happy_discount = 0.5
+    expect(@bar.happy_discount).to eq 0.5
   end
 
   it "only returns a discount when it's happy hour" do
@@ -67,7 +68,7 @@ describe Bar do
   end
 
   xit "constrains its happy hour discount to between zero and one" do
-    expect(@bar).to receive(:happy_hour?).twice.and_return(true)
+    # expect(@bar).to receive(:happy_hour?).and_return(true)
 
     # HINT: You need to write your own setter
     @bar.happy_discount = 2
@@ -82,10 +83,6 @@ describe Bar do
 # # # # # # # # # # # # # # # # # # # # # #
 
   describe '#happy_hour' do
-   before do
-     @bar = Bar.new "The Irish Yodel"
-   end
-
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
       # TODO: CONTROL TIME
       expect(Time).to receive(:now).and_return(Time.new(2014,3,7,15,30,0, "-05:00"))
@@ -101,19 +98,9 @@ describe Bar do
 
   context "During normal hours" do
     # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
-    it "has no discount during normal hours" do
-      expect(Time).to receive(:now).and_return(Time.new(2014,3,7,18,30,0, "-05:00"))
-      @bar.happy_discount = 0.5
-      expect(@bar.happy_discount).to eq(0)
-    end
   end
 
   context "During happy hours" do
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
-    it "Has a discount during happy hour" do
-      expect(Time).to receive(:now).and_return(Time.new(2014,3,7,15,30,0, "-05:00"))
-      @bar.happy_discount = 0.5
-      expect(@bar.happy_discount).to eq(0.5)
-    end
   end
 end
