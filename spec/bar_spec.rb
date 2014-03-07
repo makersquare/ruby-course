@@ -30,18 +30,18 @@ describe Bar do
     expect(@bar.menu_items.count).to eq(2)
   end
 
-  xit "can retrieve menu items" do
+  it "can retrieve menu items" do
     @bar.add_menu_item('Little Johnny', 9.95)
     item = @bar.menu_items.first
     expect(item.name).to eq 'Little Johnny'
     expect(item.price).to eq 9.95
   end
 
-  xit "has a default happy hour discount of zero" do
+  it "has a default happy hour discount of zero" do
     expect(@bar.happy_discount).to eq 0
   end
 
-  xit "can set its happy hour discount" do
+  it "can set its happy hour discount" do
     @bar.happy_discount = 0.5
     expect(@bar.happy_discount).to eq 0.5
   end
