@@ -17,12 +17,12 @@ class Bar
   end
 
   def happy_hour?
-    time = Time.now
-    if time.hour >= 15 && time.hour <= 16
+    if Time.now.hour == 15
       true
     else
       false
     end
+
   end
 
   def happy_discount

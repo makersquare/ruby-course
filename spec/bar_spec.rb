@@ -41,14 +41,8 @@ describe Bar do
     expect(@bar.happy_discount).to eq 0
   end
 
-<<<<<<< HEAD
   it "can set its happy hour discount" do
-    @bar.happy_discount = 0.5
-    expect(@bar.happy_discount).to eq 0.5
-=======
-  xit "can set its happy hour discount" do
     expect { @bar.happy_discount = 0.5 }.to_not raise_error
->>>>>>> ab5b444553385611ce1b40d0e6508fad2f259757
   end
 
   it "only returns a discount when it's happy hour" do
@@ -72,13 +66,7 @@ describe Bar do
     expect(@bar.happy_discount).to eq 0.3
   end
 
-<<<<<<< HEAD
-  it "constrains its happy hour discount to between zero and one" do
-    # expect(@bar).to receive(:happy_hour?).and_return(true)
-
-=======
   xit "constrains its happy hour discount to between zero and one" do
->>>>>>> ab5b444553385611ce1b40d0e6508fad2f259757
     # HINT: You need to write your own setter
     @bar.happy_discount = 2
     expect(@bar.happy_discount).to eq 1
@@ -91,24 +79,34 @@ describe Bar do
   # DO NOT CHANGE SPECS ABOVE THIS LINE #
 # # # # # # # # # # # # # # # # # # # # # #
 
-  describe '#happy_hour', :pending => true do
+# , :pending => true
+  describe '#happy_hour' do
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
       # TODO: CONTROL TIME
-      Time.stub(:now).and_return(15)
+      Time.stub(:now).and_return(Time.parse("3 pm"))
       expect(@bar.happy_hour?).to eq(true)
     end
 
     it "is not happy hour otherwise" do
       # TODO: CONTROL TIME
+      Time.stub(:now).and_return(Time.parse("7 pm"))
       expect(@bar.happy_hour?).to eq(false)
     end
   end
 
   context "During normal hours" do
     # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+    it "does not discount during normal hours" do
+      Time.stub(:now).and_return(Time.parse("7 pm"))
+      expect(@bar.happy_discount).to eq(0)
+    end
   end
 
   context "During happy hours" do
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
+    it "applies the discount during happy hour" do
+      Time.stub(:now).and_return(Time.parse("7 pm"))
+      expect(@bar.happy_discount).to eq(0)
+    end
   end
 end
