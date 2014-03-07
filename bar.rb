@@ -10,5 +10,19 @@ class Bar
     @menu_items = []
   end
 
+  def add_menu_item(name, price)
+    new_item = Menu_Item.new(name, price)
+    @menu_items << new_item
+  end
 
+end
+
+class Menu_Item
+  attr_accessor :name
+  attr_accessor :price
+
+  def initialize(name, price)
+    @name = name
+    @price = price
+  end
 end
