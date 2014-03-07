@@ -32,7 +32,7 @@ class Bar
 
   def happy_hour
       current_time = Time.now.hour
-      if current_time >= 16 && current_time <= 16.59
+      if current_time >= 15 && current_time <= 15.59
         true
       else
         false
