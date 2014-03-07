@@ -57,6 +57,14 @@ describe Bar do
 
     expect(@bar).to receive(:happy_hour?).and_return(true)
     expect(@bar.happy_discount).to eq 0.5
+
+    # Take 2
+    @bar.happy_discount = 0.3
+    expect(@bar).to receive(:happy_hour?).and_return(false)
+    expect(@bar.happy_discount).to eq 0
+
+    expect(@bar).to receive(:happy_hour?).and_return(true)
+    expect(@bar.happy_discount).to eq 0.3
   end
 
   xit "constrains its happy hour discount to between zero and one" do
