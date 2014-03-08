@@ -2,7 +2,7 @@ require 'time' # you're gonna need it
 
 class Bar
   attr_reader :name
-  attr_accessor :menu_items
+  attr_accessor :menu_items, :transactions
 
 
   def initialize(name)
@@ -15,6 +15,7 @@ class Bar
       friday: 0,
       saturday: 0,
       sunday: 0}
+    @transactions = []
   end
 
   def add_menu_item(name, price)
@@ -97,6 +98,23 @@ class Bar
       return item.price
     end
   end
+
+  def ring_sale(item)
+    new_transaction = ItemSold.new(item, self.happy_hour?, self.current_price(item), Time.now)
+    transactions << new_transaction
+  end
+
+  def most_popular_drinks
+    # count the occurences of drinks and store them in a hash
+    most_popular_drinks = Hash.new 0
+    @transactions.each do |x|
+      most_popular_drinks[x.item] += 1
+    end
+
+    # return them in order of most popular to least popular
+    return most_popular_drinks.sort { |a1,a2| a2[1] <=> a1[1] }
+  end
+
 end  #end Class Bar
 
 
@@ -122,16 +140,14 @@ class MenuItem
 end
 
 class ItemSold
-  attr_accessor :item, :happy_hour?, :discount_applied, :time_of_transaction
+  attr_accessor :item, :happy_hour, :price, :time_of_transaction
 
-  def initialize(item, happy_hour?, discount_applied, time_sold)
+  def initialize(item, happy_hour, price, time_of_transaction)
     @item = item
-    @happy_hour? = happy_hour?
-    @discount_applied = discount_applied
-    @time_sold = time_of_transaction
+    @happy_hour = happy_hour
+    @price = price
+    @time_of_transaction = time_of_transaction
   end
+
+
 end
-
-
-
-
