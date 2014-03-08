@@ -6,6 +6,8 @@ describe Bar do
 
   before do
     @bar = Bar.new "The Irish Yodel"
+    @well_drink = Item.new("Popov",3)
+    @fancy_drink = Item.new("Macallan",15,true)
   end
 
   it "initializes with a name" do
@@ -123,17 +125,29 @@ describe Bar do
 
   describe "Extension 2: Does not discount 'top shelf' drinks" do
     it "Discounts non-top_shelf drink correctly" do
-      @well_drink = Item.new("Popov",3)
       @bar.happy_discount = 0.5
       Time.stub(:now).and_return(Time.parse("15:36"))
       expect(@bar.current_cost(@well_drink)).to eq(1.5)
     end
 
     it "Does not discount top_shelf drink" do
-      @fancy_drink = Item.new("Macallan",15,true)
       @bar.happy_discount = 0.5
       Time.stub(:now).and_return(Time.parse("15:36"))
       expect(@bar.current_cost(@fancy_drink)).to eq(15)
     end
   end
+
+  # describe "Extension 3: Tracks drink purchases and can determine most popular drink" do
+  #   it "Can access number of purchases of each drink" do
+  #     @well_drink = Item.new("Popov",3)
+  #     @bar.buy(@well_drink)
+  #     @bar.buy(@well_drink)
+  #     @bar.buy(@well_drink)
+  #     expect(@bar.times_purchased(@well_drink)).to eq(3)
+  #   end
+
+  #   it "Returns most popular drink" do
+
+  #   end
+  # end
 end
