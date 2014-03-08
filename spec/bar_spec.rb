@@ -111,16 +111,41 @@ describe Bar do
       expect(@bar.current_price(@bar.menu_items[1])).to eq(2.50)
       expect(@bar.current_price(@bar.menu_items[2])).to eq(0)
     end
+
     context "During happy hours" do
       # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
       it "does discount prices during happy hour" do
-        Time.stub(:now).and_return(Time.parse('4:30 pm'))  # happy hour
+        Time.stub(:now).and_return(Time.new(2014, 3, 3, 15, 0, 0))  # happy hour
 
         expect(@bar.current_price(@bar.menu_items[0])).to eq(75)
         expect(@bar.current_price(@bar.menu_items[1])).to eq(1.25)
         expect(@bar.current_price(@bar.menu_items[2])).to eq(0)
       end
+
+    end # end context
+
+    before do
+      @bar.add_menu_item("Coccaine", 150)
+      @bar.add_menu_item("Beer", 2.50)
+      @bar.add_menu_item("Earplugs", 0)
+      @bar.happy_discount = 0.25
+      @bar.happy_discount = [:monday, 0.5]
+      @bar.happy_discount = [:wednesday, 0.5]
     end
+
+    it "discounts 25% for any day but Mon & Wed" do
+      Time.stub(:now).and_return(Time.new(2014, 3, 3,  15, 0, 0))
+      expect(@bar.happy_discount).to eq(0.50)
+
+      Time.stub(:now).and_return(Time.new(2014, 3, 5,  15, 0, 0))
+      expect(@bar.happy_discount).to eq(0.50)
+
+      Time.stub(:now).and_return(Time.new(2014, 3, 4,  15, 0, 0))
+      expect(@bar.happy_discount).to eq(0.25)
+    end
+
+
+
   end
 
 end
