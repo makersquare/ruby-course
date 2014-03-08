@@ -52,15 +52,22 @@ attr_writer :happy_discount
   end
 
   def buy(item)
-    if !@items_sold.key?(item.name)
-      @items_sold[item.name] = 1
+    if !@items_sold.key?(item)
+      @items_sold[item] = 1
     else
-     @items_sold[item.name] += 1
+     @items_sold[item] += 1
    end
   end
 
   def times_purchased(item)
-    @items_sold[item.name]
+    @items_sold[item]
+  end
+
+  def most_popular
+    placeholder = {}
+    max = 0
+    @items_sold.each { |item, times_sold| placeholder = item if times_sold > max }
+    placeholder
   end
 end
 
