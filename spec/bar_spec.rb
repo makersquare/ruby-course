@@ -148,7 +148,12 @@ describe Bar do
     it "Returns most popular drink" do
       6.times{ @bar.buy(@well_drink) }
       3.times{ @bar.buy(@fancy_drink) }
+
       expect(@bar.most_popular).to eq(@well_drink)
+
+      9.times{ @bar.buy(@special_drink) }
+
+      expect(@bar.most_popular).to eq(@special_drink)
     end
   end
 
