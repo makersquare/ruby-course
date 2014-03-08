@@ -144,7 +144,7 @@ describe Bar do
       expect(@bar.times_purchased(@well_drink)).to eq(4)
     end
 
-    it "Returns most popular drink" do
+    xit "Returns most popular drink" do
       3.times{ @bar.buy(@well_drink) }
       6.times{ @bar.buy(@fancy_drink) }
       expect(@bar.most_popular).to eq(@fancy_drink)

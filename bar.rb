@@ -8,6 +8,7 @@ attr_writer :happy_discount
     @name = name
     @menu_items = []
     @happy_discount = 0
+    @items_sold = {}
   end
 
   def add_menu_item(name,price)
@@ -18,7 +19,6 @@ attr_writer :happy_discount
     return true if Time.now.hour == 15
     false
   end
-
 
 # Implemented Extension 1 (Higher discount on slow days) by doubling the default discount on Monday and Wednesday
   def happy_discount
@@ -49,6 +49,18 @@ attr_writer :happy_discount
   def current_cost(item)
     return item.price * (1 - @happy_discount) if happy_hour? && !item.top_shelf
     item.price
+  end
+
+  def buy(item)
+    if !@items_sold.key?(item.name)
+      @items_sold[item.name] = 1
+    else
+     @items_sold[item.name] += 1
+   end
+  end
+
+  def times_purchased(item)
+    @items_sold[item.name]
   end
 end
 
