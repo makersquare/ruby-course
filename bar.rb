@@ -44,7 +44,6 @@ class Bar
   end
 
   def current_price(item)
-
     if self.happy_hour?
       return item.price - (item.price * @happy_discount)
     else

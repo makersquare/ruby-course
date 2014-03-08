@@ -102,17 +102,25 @@ describe Bar do
       @bar.add_menu_item("Beer", 2.50)
       @bar.add_menu_item("Earplugs", 0)
       @bar.happy_discount = 0.5
-      Time.stub(:now).and_return(Time.parse('9 pm'))
     end
 
     it "does not discount prices during normal hours" do
+      Time.stub(:now).and_return(Time.parse('9 pm'))  #not happy hour
+
       expect(@bar.current_price(@bar.menu_items[0])).to eq(150)
       expect(@bar.current_price(@bar.menu_items[1])).to eq(2.50)
       expect(@bar.current_price(@bar.menu_items[2])).to eq(0)
     end
+    context "During happy hours" do
+      # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
+      it "does discount prices during happy hour" do
+        Time.stub(:now).and_return(Time.parse('4:30 pm'))  # happy hour
+
+        expect(@bar.current_price(@bar.menu_items[0])).to eq(75)
+        expect(@bar.current_price(@bar.menu_items[1])).to eq(1.25)
+        expect(@bar.current_price(@bar.menu_items[2])).to eq(0)
+      end
+    end
   end
 
-  context "During happy hours" do
-    # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
-  end
 end
