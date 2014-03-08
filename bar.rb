@@ -76,10 +76,7 @@ attr_writer :happy_discount
   end
 
   def most_popular(items_sold=@items_sold)
-    placeholder = {}
-    max = 0
-    items_sold.each { |item, times_sold| placeholder = item if times_sold > max }
-    placeholder
+    items_sold.max_by { |item, times_sold| times_sold }[0]
   end
 end
 
