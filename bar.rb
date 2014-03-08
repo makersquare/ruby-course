@@ -15,7 +15,8 @@ attr_writer :happy_discount
   end
 
   def happy_hour?
-    true
+    return true if Time.now.hour == 15
+    false
   end
 
   def happy_discount
