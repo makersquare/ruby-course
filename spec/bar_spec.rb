@@ -137,17 +137,17 @@ describe Bar do
     end
   end
 
-  # describe "Extension 3: Tracks drink purchases and can determine most popular drink" do
-  #   it "Can access number of purchases of each drink" do
-  #     @well_drink = Item.new("Popov",3)
-  #     @bar.buy(@well_drink)
-  #     @bar.buy(@well_drink)
-  #     @bar.buy(@well_drink)
-  #     expect(@bar.times_purchased(@well_drink)).to eq(3)
-  #   end
+  describe "Extension 3: Tracks drink purchases and can determine most popular drink" do
+    it "Can access number of purchases of each drink" do
+      @well_drink = Item.new("Popov",3)
+      4.times{ @bar.buy(@well_drink) }
+      expect(@bar.times_purchased(@well_drink)).to eq(4)
+    end
 
-  #   it "Returns most popular drink" do
-
-  #   end
-  # end
+    it "Returns most popular drink" do
+      3.times{ @bar.buy(@well_drink) }
+      6.times{ @bar.buy(@fancy_drink) }
+      expect(@bar.most_popular).to eq(@fancy_drink)
+    end
+  end
 end
