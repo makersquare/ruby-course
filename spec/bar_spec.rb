@@ -150,4 +150,15 @@ describe Bar do
       expect(@bar.most_popular).to eq(@fancy_drink)
     end
   end
+
+  describe "Extension 4: Allow some drinks to have a specified discount" do
+    it "Discounts equal to an Item.special_discount if it exists for the item" do
+      @special_drink = Item.new("Draft Beer",5)
+      @special_drink.special_discount = 0.75
+
+      Time.stub(:now).and_return(Time.parse("15:36"))
+
+      expect(@bar.current_cost(@special_drink)).to eq(@special_drink.price * (1 - @special_drink.special_discount))
+    end
+  end
 end
