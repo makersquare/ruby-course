@@ -119,7 +119,19 @@ describe Bar do
       Time.stub(:now).and_return(Time.new(2014,3,5,15,45)) #Wednesday
       expect(@bar.happy_discount).to eq(0.5)
     end
+  end
 
+  describe "Extension 2: Does not discount 'top shelf' drinks" do
+    it "Discounts non-top_shelf drink correctly" do
+      @well_drink = Item.new("Popov",3)
+      Time.stub(:now).and_return(Time.parse("15:36"))
+      expect(@well_drink.current_cost).to eq(1.5)
+    end
 
+    it "Does not discount top_shelf drink" do
+      @fancy_drink = Item.new("Macallan",15,true)
+      Time.stub(:now).and_return(Time.parse("15:36"))
+      expect(@fancy_drink.current_cost).to eq(15)
+    end
   end
 end

@@ -19,6 +19,8 @@ attr_writer :happy_discount
     false
   end
 
+
+# Implemented Extension 1 (Higher discount on slow days) by doubling the default discount on Monday and Wednesday
   def happy_discount
     if self.happy_hour?
       if Time.now.monday? || Time.now.wednesday?
@@ -47,10 +49,11 @@ end
 
 
 class Item
-  attr_reader :name, :price
+  attr_reader :name, :price, :top_shelf
 
-  def initialize(name, price)
+  def initialize(name, price, top_shelf=false)
     @name = name
     @price = price
+    @top_shelf = top_shelf
   end
 end
