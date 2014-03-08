@@ -4,7 +4,6 @@ class Bar
   attr_reader :name
   attr_accessor :menu_items, :transactions
 
-
   def initialize(name)
     @name = name
     @menu_items = []
