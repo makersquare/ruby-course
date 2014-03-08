@@ -110,4 +110,16 @@ describe Bar do
       expect(@bar.happy_discount).to eq(1)
     end
   end
+
+  describe "Extension 1: 50% discount M W, 25% other days." do
+    it "Discounts 25% on Friday" do
+      Time.stub(:now).and_return(Time.new(2014,3,7,15,45)) #Friday
+      @bar.happy_discount = 0.25
+      expect(@bar.happy_discount).to eq(0.25)
+      Time.stub(:now).and_return(Time.new(2014,3,5,15,45)) #Wednesday
+      expect(@bar.happy_discount).to eq(0.5)
+    end
+
+
+  end
 end
