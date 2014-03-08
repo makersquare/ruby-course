@@ -47,7 +47,15 @@ attr_writer :happy_discount
   end
 
   def current_cost(item)
-    return item.price * (1 - @happy_discount) if happy_hour? && !item.top_shelf
+    if happy_hour?
+      if item.special_discount
+        return item.price * (1 - item.special_discount)
+      elsif !item.top_shelf
+        return item.price * (1 - @happy_discount)
+      else
+        return item.price
+      end
+    end
     item.price
   end
 
@@ -74,10 +82,12 @@ end
 
 class Item
   attr_reader :name, :price, :top_shelf
+  attr_accessor :special_discount
 
   def initialize(name, price, top_shelf=false)
     @name = name
     @price = price
     @top_shelf = top_shelf
+    @special_discount = nil
   end
 end

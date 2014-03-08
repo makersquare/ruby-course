@@ -151,7 +151,7 @@ describe Bar do
     end
   end
 
-  describe "Extension 4: Allow some drinks to have a specified discount" do
+  describe "Extension 4: Allow some drinks to have a specified discount. This discount will ignore whether or not the item is 'top shelf'. This discount will still only be applied during happy hour" do
     it "Discounts equal to an Item.special_discount if it exists for the item" do
       @special_drink = Item.new("Draft Beer",5)
       @special_drink.special_discount = 0.75
