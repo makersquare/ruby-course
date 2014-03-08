@@ -161,4 +161,26 @@ describe Bar do
       expect(@bar.current_cost(@special_drink)).to eq(@special_drink.price * (1 - @special_drink.special_discount))
     end
   end
+
+  describe "Extension 5: Count number of drinks ordered during happy hour" do
+    it "Adds drinks to Bar.happy_hour_count during happy hour" do
+      Time.stub(:now).and_return(Time.parse("15:36"))
+      9.times { @bar.buy(@fancy_drink) }
+      expect(@bar.happy_hour_count).to eq(9)
+    end
+
+    it "Does not add drinks to Bar.happy_hour_count during regular hours" do
+      Time.stub(:now).and_return(Time.parse("09:36"))
+      9.times { @bar.buy(@fancy_drink) }
+      expect(@bar.happy_hour_count).to eq(0)
+    end
+
+    it "Mix it together. Some happy hour purchases, some not." do
+      Time.stub(:now).and_return(Time.parse("15:36"))
+      9.times { @bar.buy(@fancy_drink) }
+      Time.stub(:now).and_return(Time.parse("09:36"))
+      9.times { @bar.buy(@fancy_drink) }
+      expect(@bar.happy_hour_count).to eq(9)
+    end
+  end
 end
