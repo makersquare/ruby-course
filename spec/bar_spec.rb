@@ -45,7 +45,7 @@ describe Bar do
     expect { @bar.happy_discount = 0.5 }.to_not raise_error
   end
 
-  it "only returns a discount when it's happy hour" do
+  xit "only returns a discount when it's happy hour" do
     @bar.happy_discount = 0.5
     # HINT: You need to write your own getter
 
@@ -109,4 +109,28 @@ describe Bar do
       expect(@bar.happy_discount).to eq(0)
     end
   end
+
+  it "initializes with empty array of special undiscounted drinks" do
+    expect(@bar.exempt_drinks.count).to eq(0)
+  end
+
+  it "keeps track of discount-exempt drinks" do
+    mojito = Item.new("Mojito", 5.45)
+    @bar.add_exempt(mojito)
+    expect(@bar.exempt_drinks.count).to eq(1)
+   end
+
+   it "initializes an empty hash tracking drink popularity with values set to zero" do
+      expect(@bar.pop_drinks.count).to eq(0)
+   end
+
+   it "keeps track of drink popularity during and outside of happy hour" do
+    mojito = Item.new("Mojito", 5.45)
+    added = @bar.drink_graph(mojito)
+    expect(added[mojito.name]).to eq(1)
+    Time.stub(:now).and_return(Time.parse("3 pm"))
+    added = @bar.drink_graph(mojito)
+    expect(added[mojito.name]).to eq(1)
+   end
+
 end
