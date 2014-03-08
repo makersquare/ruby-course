@@ -108,11 +108,32 @@ class Bar
     # count the occurences of drinks and store them in a hash
     most_popular_drinks = Hash.new 0
     @transactions.each do |x|
-      most_popular_drinks[x.item] += 1
+      most_popular_drinks[x.item.name] += 1
     end
 
     # return them in order of most popular to least popular
-    return most_popular_drinks.sort { |a1,a2| a2[1] <=> a1[1] }
+    return most_popular_drinks.sort_by { |k,v| v }.reverse
+
+  end
+
+  def most_popular_happy_hour_drinks
+    happy_hour_drink_sales = Hash.new(0)
+    @transactions.each do |x|
+      if x.happy_hour == true
+        happy_hour_drink_sales[x.item.name] += 1
+      end
+    end
+    return happy_hour_drink_sales.sort_by { |k,v| v }.reverse
+  end
+
+  def most_popular_non_happy_hour_drinks
+    non_happy_hour_drink_sales = Hash.new(0)
+    @transactions.each do |x|
+      if x.happy_hour == false
+        non_happy_hour_drink_sales[x.item.name] += 1
+      end
+    end
+    return non_happy_hour_drink_sales.sort_by { |k,v| v }.reverse
   end
 
 end  #end Class Bar

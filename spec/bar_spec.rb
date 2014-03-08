@@ -2,10 +2,10 @@ require 'pry-debugger'
 require "./bar.rb"
 
 # Store some times for later easy use
-monday_happy_hour = Time.new(2014, 3, 3,  15, 0, 0)  # Monday Happy Hour
-tuesday_happy_hour = Time.new(2014, 3, 4,  15, 0, 0) # Tuesday Happy Hour
-wednesday_happy_hour = Time.new(2014, 3, 5,  15, 0, 0) # Wednesday Happy Hour
-tuesday_regular_hour = Time.new(2014, 3, 4,  12, 0, 0)
+MONDAY_HAPPY_HOUR = Time.new(2014, 3, 3,  15, 0, 0)  # Monday Happy Hour
+TUESDAY_HAPPY_HOUR = Time.new(2014, 3, 4,  15, 0, 0) # Tuesday Happy Hour
+WEDNESDAY_HAPPY_HOUR = Time.new(2014, 3, 5,  15, 0, 0) # Wednesday Happy Hour
+TUESDAY_REGULAR_HOUR = Time.new(2014, 3, 4,  12, 0, 0)
 
 
 describe Bar do
@@ -139,6 +139,7 @@ describe Bar do
       @bar.happy_discount = [:wednesday, 0.5]
     end
 
+
     it "discounts 25% for any day but Mon & Wed" do
       Time.stub(:now).and_return(Time.new(2014, 3, 3,  15, 0, 0))
       expect(@bar.happy_discount).to eq(0.50)
@@ -151,101 +152,122 @@ describe Bar do
     end
 
     it "applies proper discounts for proper weekdays"do
-      Time.stub(:now).and_return(monday_happy_hour)
+      Time.stub(:now).and_return(MONDAY_HAPPY_HOUR)
       expect(@bar.current_price(@bar.menu_items[0])).to eq(75)
 
-      Time.stub(:now).and_return(wednesday_happy_hour) # Wednesday Happy Hour
+      Time.stub(:now).and_return(WEDNESDAY_HAPPY_HOUR) # Wednesday Happy Hour
       expect(@bar.current_price(@bar.menu_items[1])).to eq(1.25)
 
-      Time.stub(:now).and_return(tuesday_happy_hour) # Tuesday Happy Hour
+      Time.stub(:now).and_return(TUESDAY_HAPPY_HOUR) # Tuesday Happy Hour
       expect(@bar.current_price(@bar.menu_items[0])).to eq(112.5)
     end
 
     it "does not apply discount to exempt items" do
       @bar.menu_items[0].special_discount = 0
 
-      Time.stub(:now).and_return(monday_happy_hour)  # Monday Happy Hour
+      Time.stub(:now).and_return(MONDAY_HAPPY_HOUR)  # Monday Happy Hour
       expect(@bar.current_price(@bar.menu_items[0])).to eq(150)
 
-      Time.stub(:now).and_return(wednesday_happy_hour) # Wednesday Happy Hour
+      Time.stub(:now).and_return(WEDNESDAY_HAPPY_HOUR) # Wednesday Happy Hour
       expect(@bar.current_price(@bar.menu_items[1])).to eq(1.25)
 
-      Time.stub(:now).and_return(tuesday_happy_hour) # Tuesday Happy Hour
+      Time.stub(:now).and_return(TUESDAY_HAPPY_HOUR) # Tuesday Happy Hour
       expect(@bar.current_price(@bar.menu_items[0])).to eq(150)
     end
 
     it "applies special_discount if appropriate" do
       @bar.menu_items[0].special_discount = 0.9
 
-      Time.stub(:now).and_return(monday_happy_hour)  # Monday Happy Hour
+      Time.stub(:now).and_return(MONDAY_HAPPY_HOUR)  # Monday Happy Hour
       expect(@bar.current_price(@bar.menu_items[0])).to eq(15)
 
-      Time.stub(:now).and_return(wednesday_happy_hour) # Wednesday Happy Hour
+      Time.stub(:now).and_return(WEDNESDAY_HAPPY_HOUR) # Wednesday Happy Hour
       expect(@bar.current_price(@bar.menu_items[1])).to eq(1.25)
 
-      Time.stub(:now).and_return(tuesday_happy_hour) # Tuesday Happy Hour
+      Time.stub(:now).and_return(TUESDAY_HAPPY_HOUR) # Tuesday Happy Hour
       expect(@bar.current_price(@bar.menu_items[0])).to eq(15)
     end
 
     it "can change special_discount back to nil" do
       @bar.menu_items[0].special_discount = 0.9
 
-      Time.stub(:now).and_return(monday_happy_hour)  # Monday Happy Hour
+      Time.stub(:now).and_return(MONDAY_HAPPY_HOUR)  # Monday Happy Hour
       expect(@bar.current_price(@bar.menu_items[0])).to eq(15)
 
 
-      Time.stub(:now).and_return(wednesday_happy_hour) # Wednesday Happy Hour
+      Time.stub(:now).and_return(WEDNESDAY_HAPPY_HOUR) # Wednesday Happy Hour
       expect(@bar.current_price(@bar.menu_items[1])).to eq(1.25)
 
       @bar.menu_items[0].special_discount = -1  # Turn it back to a normal item
 
-      Time.stub(:now).and_return(tuesday_happy_hour) # Tuesday Happy Hour
+      Time.stub(:now).and_return(TUESDAY_HAPPY_HOUR) # Tuesday Happy Hour
       expect(@bar.current_price(@bar.menu_items[0])).to eq(112.5)
     end
 
 
     it "stores information about transactions" do
 
-      Time.stub(:now).and_return(tuesday_regular_hour) # Tuesday non-Happy Hour
+      Time.stub(:now).and_return(TUESDAY_REGULAR_HOUR) # Tuesday non-Happy Hour
       @bar.ring_sale(@bar.menu_items[0])
-      Time.stub(:now).and_return(monday_happy_hour)  # Monday Happy Hour
+      Time.stub(:now).and_return(MONDAY_HAPPY_HOUR)  # Monday Happy Hour
       @bar.ring_sale(@bar.menu_items[1])
 
       expect(@bar.transactions[0].happy_hour).to eq(false)
-      expect(@bar.transactions[0].time_of_transaction).to eq(tuesday_regular_hour)
+      expect(@bar.transactions[0].time_of_transaction).to eq(TUESDAY_REGULAR_HOUR)
       expect(@bar.transactions[0].price).to eq(150)
-      expect(@bar.transactions[0].item.name).to eq(@bar.menu_items[0].name)
+      expect(@bar.transactions[0].item.name).to eq("Coccaine")
 
-      Time.stub(:now).and_return(tuesday_regular_hour) # Tuesday non-Happy Hour
+      Time.stub(:now).and_return(TUESDAY_REGULAR_HOUR) # Tuesday non-Happy Hour
       @bar.ring_sale(@bar.menu_items[1])
 
       expect(@bar.transactions[2].happy_hour).to eq(false)
-      expect(@bar.transactions[2].time_of_transaction).to eq(tuesday_regular_hour)
+      expect(@bar.transactions[2].time_of_transaction).to eq(TUESDAY_REGULAR_HOUR)
       expect(@bar.transactions[2].price).to eq(2.50)
       expect(@bar.transactions[2].item.name).to eq(@bar.menu_items[1].name)
       expect(@bar.transactions.count).to eq(3)
     end
 
-    it "rubs the lotion on its skin or else it gets the hose" do
+    it "rubs the lotion on its skin or else it gets the hose again" do
     end
 
     it "can return a list of sales in order of most popular items" do
-
       # ring some stuff Tuesday non-happy-hour
-      Time.stub(:now).and_return(tuesday_regular_hour) # Tuesday non-Happy Hour
+      Time.stub(:now).and_return(TUESDAY_REGULAR_HOUR) # Tuesday non-Happy Hour
       8.times { @bar.ring_sale(@bar.menu_items[0]) }
       4.times { @bar.ring_sale(@bar.menu_items[2]) }
 
       # ring some stuff Monday happy-hour
-      Time.stub(:now).and_return(monday_happy_hour)  # Monday Happy Hour
+      Time.stub(:now).and_return(MONDAY_HAPPY_HOUR)  # Monday Happy Hour
       10.times { @bar.ring_sale(@bar.menu_items[1]) }
       12.times { @bar.ring_sale(@bar.menu_items[0]) }
 
-      expect(@bar.most_popular_drinks[0][0].name).to eq(@bar.menu_items[0].name)
+      expect(@bar.most_popular_drinks[0][0]).to eq("Coccaine")
       expect(@bar.most_popular_drinks[0][1]).to eq(20)
       expect(@bar.most_popular_drinks.count).to eq(3)
-
     end
+
+    it "can return a list of happy-hour sales and non-happy-hour sales" do
+      # ring some stuff Tuesday non-happy-hour
+      Time.stub(:now).and_return(TUESDAY_REGULAR_HOUR) # Tuesday non-Happy Hour
+      4.times { @bar.ring_sale(@bar.menu_items[0]) }
+      8.times { @bar.ring_sale(@bar.menu_items[2]) }
+
+      # ring some stuff Monday happy-hour
+      Time.stub(:now).and_return(MONDAY_HAPPY_HOUR)  # Monday Happy Hour
+      10.times { @bar.ring_sale(@bar.menu_items[1]) }
+      12.times { @bar.ring_sale(@bar.menu_items[0]) }
+
+      expect(@bar.most_popular_happy_hour_drinks.max).to eq(["Coccaine", 12])
+      expect(@bar.most_popular_non_happy_hour_drinks.max).to eq(["Earplugs", 8])
+
+      expect(@bar.most_popular_happy_hour_drinks.count).to eq(2)
+      expect(@bar.most_popular_non_happy_hour_drinks.count).to eq(2)
+    end
+
+
+
+
+
 
 
 
