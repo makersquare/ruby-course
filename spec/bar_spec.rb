@@ -221,9 +221,9 @@ describe Bar do
       Time.stub(:now).and_return(Time.parse("09:36"))
       @special_drink.special_discount = 0.2
       5.times { @bar.buy(@fancy_drink) } # 75
-      4.times { @bar.buy(@special_drink) } # 16
+      4.times { @bar.buy(@special_drink) } # 20
       1.times { @bar.buy(@well_drink) } # 3
-      expect(@bar.gross_profit).to eq(94)
+      expect(@bar.gross_profit).to eq(98)
 
       # Happy hour! Macallan still expensive though.
       Time.stub(:now).and_return(Time.parse("15:36"))
@@ -231,7 +231,7 @@ describe Bar do
       2.times { @bar.buy(@fancy_drink) } # 30
       5.times { @bar.buy(@special_drink) } # 20
       10.times { @bar.buy(@well_drink) } # 15
-      expect(@bar.gross_profit).to eq(139)
+      expect(@bar.gross_profit).to eq(163)
     end
   end
 end

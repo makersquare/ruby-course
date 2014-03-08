@@ -1,7 +1,7 @@
 require 'time' # you're gonna need it
 
 class Bar
-attr_reader :name, :menu_items, :happy_hour_count, :items_sold
+attr_reader :name, :menu_items, :happy_hour_count, :items_sold, :gross_profit
 attr_writer :happy_discount
 
   def initialize(name)
@@ -12,6 +12,7 @@ attr_writer :happy_discount
     @items_sold_happy = {}
     @items_sold_regular = {}
     @happy_hour_count = 0
+    @gross_profit = 0
   end
 
   def add_menu_item(name,price)
@@ -71,6 +72,8 @@ attr_writer :happy_discount
   end
 
   def buy(item)
+    @gross_profit += self.current_cost(item)
+
     self.buy_general(item, @items_sold)
     if happy_hour?
       self.buy_general(item, @items_sold_happy)
