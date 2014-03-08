@@ -119,9 +119,19 @@ class MenuItem
       @special_discount = special_discount
     end
   end
-
-
-
 end
+
+class ItemSold
+  attr_accessor :item, :happy_hour?, :discount_applied, :time_of_transaction
+
+  def initialize(item, happy_hour?, discount_applied, time_sold)
+    @item = item
+    @happy_hour? = happy_hour?
+    @discount_applied = discount_applied
+    @time_sold = time_of_transaction
+  end
+end
+
+
 
 
