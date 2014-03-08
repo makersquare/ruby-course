@@ -45,6 +45,11 @@ attr_writer :happy_discount
       @happy_discount = discount
     end
   end
+
+  def current_cost(item)
+    return item.price * (1 - @happy_discount) if happy_hour? && !item.top_shelf
+    item.price
+  end
 end
 
 
