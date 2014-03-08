@@ -12,18 +12,18 @@ describe Bar do
     expect(@bar.name).to eq("The Irish Yodel")
   end
 
-  xit "cannot change its name" do
+  it "cannot change its name" do
     # That would require a lengthy marketing meeting
     expect {
       @bar.name = 'lolcat cave'
     }.to raise_error
   end
 
-  xit "initializes with an empty menu" do
+  it "initializes with an empty menu" do
     expect(@bar.menu_items.count).to eq(0)
   end
 
-  xit "can add menu items" do
+  it "can add menu items" do
     @bar.add_menu_item('Cosmo', 5.40)
     @bar.add_menu_item('Salty Dog', 7.80)
 
