@@ -59,11 +59,11 @@ class Bar
   def happy_discount=(discount) # Accepts either a number or an array -- if it's array it requires
                                 # [day-of-week-symbol, discount]
 
-    # if it's been passed a number, store the values
+    # if it's been passed a number, load the variables
     if !discount.is_a?(Array)
       fixed_discount = discount
       day = nil
-    else  # if it's been passed an array, store the values
+    else  # if it's been passed an array, load the variables
       fixed_discount = discount[1]
       day = discount[0]
     end
@@ -75,9 +75,12 @@ class Bar
       fixed_discount = 0
     end
 
+    ## if it's been passed a value for the week, load the hash
     case day
     when nil
       @happy_discount.each { |k,v| @happy_discount[k] = fixed_discount }
+
+      ## Otherwise, put the correct discount on the correct day
     when :sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday
       @happy_discount[day] = fixed_discount
     else
@@ -88,7 +91,11 @@ class Bar
 
   def current_price(item)  #takes an item and returns it's current adjusted price
     if self.happy_hour?
-      return item.price - (item.price * self.happy_discount)
+      if item.special_discount
+        return item.price - (item.price * item.special_discount)
+      else
+        return item.price - (item.price * self.happy_discount)
+      end
     else
       return item.price
     end
@@ -98,11 +105,25 @@ end  #end Class Bar
 
 class MenuItem
   attr_accessor :name, :price
+  attr_reader :special_discount
 
   def initialize(name, price)
     @name = name
     @price = price
+    @discount_amount = nil
   end
+
+  def special_discount=(special_discount)
+    if special_discount < 0   # if input is less than 0, invalidate it
+      @special_discount = nil
+    elsif special_discount > 1
+      @special_discount = 1
+    else
+      @special_discount = special_discount
+    end
+  end
+
+
 end
 
 

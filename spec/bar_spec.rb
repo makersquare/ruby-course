@@ -144,6 +144,31 @@ describe Bar do
       expect(@bar.happy_discount).to eq(0.25)
     end
 
+    it "applies proper discounts for proper weekdays"do
+      Time.stub(:now).and_return(Time.new(2014, 3, 3,  15, 0, 0))  # Monday Happy Hour
+      expect(@bar.current_price(@bar.menu_items[0])).to eq(75)
+
+      Time.stub(:now).and_return(Time.new(2014, 3, 5,  15, 0, 0)) # Wednesday Happy Hour
+      expect(@bar.current_price(@bar.menu_items[1])).to eq(1.25)
+
+      Time.stub(:now).and_return(Time.new(2014, 3, 4,  15, 0, 0)) # Tuesday Happy Hour
+      expect(@bar.current_price(@bar.menu_items[0])).to eq(112.5)
+    end
+
+    it "does not apply discount to exempt items" do
+      @bar.menu_items[0].special_discount = 0
+
+      Time.stub(:now).and_return(Time.new(2014, 3, 3,  15, 0, 0))  # Monday Happy Hour
+      expect(@bar.current_price(@bar.menu_items[0])).to eq(150)
+
+      Time.stub(:now).and_return(Time.new(2014, 3, 5,  15, 0, 0)) # Wednesday Happy Hour
+      expect(@bar.current_price(@bar.menu_items[1])).to eq(1.25)
+
+      Time.stub(:now).and_return(Time.new(2014, 3, 4,  15, 0, 0)) # Tuesday Happy Hour
+      expect(@bar.current_price(@bar.menu_items[0])).to eq(150)
+    end
+
+
 
 
   end
