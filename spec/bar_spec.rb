@@ -45,15 +45,17 @@ describe Bar do
     expect { @bar.happy_discount = 0.5 }.to_not raise_error
   end
 
-  xit "only returns a discount when it's happy hour" do
+  it "only returns a discount when it's happy hour" do
     @bar.happy_discount = 0.5
     # HINT: You need to write your own getter
 
     # We are STUBBING `happy_hour?` to return a specified value.
     # Because of this, you don't have to write a happy_hour? method (yet)
+    Time.stub(:now).and_return(Time.parse('9 pm'))
     expect(@bar).to receive(:happy_hour?).and_return(false)
     expect(@bar.happy_discount).to eq 0
 
+    Time.stub(:now).and_return(Time.parse('4 pm'))
     expect(@bar).to receive(:happy_hour?).and_return(true)
     expect(@bar.happy_discount).to eq 0.5
 
