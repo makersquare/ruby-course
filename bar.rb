@@ -1,7 +1,7 @@
 require 'time' # you're gonna need it
 
 class Bar
-attr_reader :name, :menu_items, :happy_hour_count
+attr_reader :name, :menu_items, :happy_hour_count, :items_sold
 attr_writer :happy_discount
 
   def initialize(name)
@@ -65,6 +65,7 @@ attr_writer :happy_discount
       @items_sold[item] = 1
     else
      @items_sold[item] += 1
+     # puts "Sold #{item.name} #{items_sold[item]} times"
    end
 
    @happy_hour_count += 1 if self.happy_hour?
@@ -74,10 +75,10 @@ attr_writer :happy_discount
     @items_sold[item]
   end
 
-  def most_popular
+  def most_popular(items_sold=@items_sold)
     placeholder = {}
     max = 0
-    @items_sold.each { |item, times_sold| placeholder = item if times_sold > max }
+    items_sold.each { |item, times_sold| placeholder = item if times_sold > max }
     placeholder
   end
 end

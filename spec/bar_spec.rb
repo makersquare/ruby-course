@@ -8,6 +8,7 @@ describe Bar do
     @bar = Bar.new "The Irish Yodel"
     @well_drink = Item.new("Popov",3)
     @fancy_drink = Item.new("Macallan",15,true)
+    @special_drink = Item.new("Draft Beer",5)
   end
 
   it "initializes with a name" do
@@ -145,15 +146,14 @@ describe Bar do
     end
 
     it "Returns most popular drink" do
-      3.times{ @bar.buy(@well_drink) }
-      6.times{ @bar.buy(@fancy_drink) }
-      expect(@bar.most_popular).to eq(@fancy_drink)
+      6.times{ @bar.buy(@well_drink) }
+      3.times{ @bar.buy(@fancy_drink) }
+      expect(@bar.most_popular).to eq(@well_drink)
     end
   end
 
   describe "Extension 4: Allow some drinks to have a specified discount. This discount will ignore whether or not the item is 'top shelf'. This discount will still only be applied during happy hour" do
     it "Discounts equal to an Item.special_discount if it exists for the item" do
-      @special_drink = Item.new("Draft Beer",5)
       @special_drink.special_discount = 0.75
 
       Time.stub(:now).and_return(Time.parse("15:36"))
@@ -181,6 +181,32 @@ describe Bar do
       Time.stub(:now).and_return(Time.parse("09:36"))
       9.times { @bar.buy(@fancy_drink) }
       expect(@bar.happy_hour_count).to eq(9)
+    end
+  end
+
+  describe "Extension 6: Keep track of most popular drink during regular hours and happy hours" do
+    xit "Tracks popular drink for regular hours, happy hours, and all hours" do
+      # Buy some drinks in the morning
+      Time.stub(:now).and_return(Time.parse("09:36"))
+      5.times { @bar.buy(@fancy_drink) }
+      4.times { @bar.buy(@special_drink) }
+      1.times { @bar.buy(@well_drink) }
+
+      # Buy some drinks during happy hour
+      Time.stub(:now).and_return(Time.parse("15:36"))
+      1.times { @bar.buy(@fancy_drink) }
+      4.times { @bar.buy(@special_drink) }
+      5.times { @bar.buy(@well_drink) }
+
+      puts @bar.items_sold[@fancy_drink]
+      # Most popular overall
+      expect(@bar.most_popular).to eq(@special_drink)
+
+      # Most popular during happy hour
+      expect(@bar.most_popular_happy).to eq(@well_drink)
+
+      # Most popular during non happy hours
+      expect(@bar.most_popular_regular).to eq(@fancy_drink)
     end
   end
 end
