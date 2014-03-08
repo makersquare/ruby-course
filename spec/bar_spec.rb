@@ -48,7 +48,8 @@ describe Bar do
   it "only returns a discount when it's happy hour" do
     @bar.happy_discount = 0.5
     # HINT: You need to write your own getter
-
+    happy_hour = Time.parse("2:00 pm")
+    Time.stub(:now).and_return(happy_hour)
     # We are STUBBING `happy_hour?` to return a specified value.
     # Because of this, you don't have to write a happy_hour? method (yet)
     expect(@bar).to receive(:happy_hour?).and_return(false)
