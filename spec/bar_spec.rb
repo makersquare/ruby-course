@@ -111,6 +111,7 @@ describe Bar do
       @bar.add_menu_item("Tacos", 1000)
       @bar.add_menu_item("Beer", 1)
       @bar.add_menu_item("Conversation", 0)
+      @bar.happy_discount = 0.5
     end
 
     it "does not return a discount price when it's not happy hour" do
@@ -119,9 +120,26 @@ describe Bar do
     end
 
 
+
   end
 
   context "During happy hours" do
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
+    before do
+      @bar.add_menu_item("Tacos", 1000)
+      @bar.add_menu_item("Beer", 1)
+      @bar.add_menu_item("Conversation", 0)
+      @bar.happy_discount = 0.5
+    end
+
+    it "does return a discount price" do
+
+      #Stub in a non-happy hour time
+      Time.stub(:now).and_return(Time.new(2014,month=1,day=1,hour=15,min=30))
+      expect(@bar.ring_up_item(@bar.menu_items[0])).to eq(500)
+    end
+
+
+
   end
 end

@@ -42,14 +42,12 @@ class Bar
   end
 
   def ring_up_item(item)  # takes an item and returns current price
-    item.price - (item.price * happy_discount)
+    if self.happy_hour?
+      item.price - (item.price * @happy_discount)
+    else
+      item.price
+    end
   end
-
-
-
-
-
-
 
 end
 
