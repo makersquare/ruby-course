@@ -214,4 +214,24 @@ describe Bar do
       expect(@bar.most_popular_regular).to eq(@fancy_drink)
     end
   end
+
+  describe "How much is this bar pulling in?" do
+    it "Can calculate gross profit after some drinks are bought" do
+      # Buy some drinks in the morning, the beer is on special but everything else is regular price
+      Time.stub(:now).and_return(Time.parse("09:36"))
+      @special_drink.special_discount = 0.2
+      5.times { @bar.buy(@fancy_drink) } # 75
+      4.times { @bar.buy(@special_drink) } # 16
+      1.times { @bar.buy(@well_drink) } # 3
+      expect(@bar.gross_profit).to eq(94)
+
+      # Happy hour! Macallan still expensive though.
+      Time.stub(:now).and_return(Time.parse("15:36"))
+      @bar.happy_discount = 0.5
+      2.times { @bar.buy(@fancy_drink) } # 30
+      5.times { @bar.buy(@special_drink) } # 20
+      10.times { @bar.buy(@well_drink) } # 15
+      expect(@bar.gross_profit).to eq(139)
+    end
+  end
 end
