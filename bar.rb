@@ -22,6 +22,16 @@ attr_writer :happy_discount
     return @happy_discount if self.happy_hour?
     0
   end
+
+  def happy_discount=(discount)
+    if discount > 1
+      @happy_discount = 1
+    elsif discount < 0
+      @happy_discount = 0
+    else
+      @happy_discount = discount
+    end
+  end
 end
 
 
