@@ -9,6 +9,8 @@ attr_writer :happy_discount
     @menu_items = []
     @happy_discount = 0
     @items_sold = {}
+    @items_sold_happy = {}
+    @items_sold_regular = {}
     @happy_hour_count = 0
   end
 
@@ -60,15 +62,22 @@ attr_writer :happy_discount
     item.price
   end
 
-  def buy(item)
-    if !@items_sold.key?(item)
-      @items_sold[item] = 1
+  def buy_general(item, hash)
+    if !hash.key?(item)
+      hash[item] = 1
     else
-     @items_sold[item] += 1
-     # puts "Sold #{item.name} #{items_sold[item]} times"
+      hash[item] += 1
    end
+  end
 
-   @happy_hour_count += 1 if self.happy_hour?
+  def buy(item)
+    self.buy_general(item, @items_sold)
+    if happy_hour?
+      self.buy_general(item, @items_sold_happy)
+      @happy_hour_count += 1
+    else
+      self.buy_general(item, @items_sold_regular)
+    end
   end
 
   def times_purchased(item)
@@ -77,6 +86,14 @@ attr_writer :happy_discount
 
   def most_popular(items_sold=@items_sold)
     items_sold.max_by { |item, times_sold| times_sold }[0]
+  end
+
+  def most_popular_happy
+    self.most_popular(@items_sold_happy)
+  end
+
+  def most_popular_regular
+    self.most_popular(@items_sold_regular)
   end
 end
 

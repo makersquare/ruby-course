@@ -190,7 +190,7 @@ describe Bar do
   end
 
   describe "Extension 6: Keep track of most popular drink during regular hours and happy hours" do
-    xit "Tracks popular drink for regular hours, happy hours, and all hours" do
+    it "Tracks popular drink for regular hours, happy hours, and all hours" do
       # Buy some drinks in the morning
       Time.stub(:now).and_return(Time.parse("09:36"))
       5.times { @bar.buy(@fancy_drink) }
