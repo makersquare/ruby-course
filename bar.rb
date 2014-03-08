@@ -103,7 +103,7 @@ class Bar
     transactions << new_transaction
   end
 
-  def most_popular_drinks
+  def most_popular_drinks  # returns an 2dim array of [name, number-sold] in order of most popular
     # count the occurences of drinks and store them in a hash
     most_popular_drinks = Hash.new 0
     @transactions.each do |x|
@@ -115,7 +115,7 @@ class Bar
 
   end
 
-  def most_popular_happy_hour_drinks
+  def most_popular_happy_hour_drinks  # returns an 2dim array of [name, number-sold] in order of most popular
     happy_hour_drink_sales = Hash.new(0)
     @transactions.each do |x|
       if x.happy_hour == true
@@ -125,7 +125,7 @@ class Bar
     return happy_hour_drink_sales.sort_by { |k,v| v }.reverse
   end
 
-  def most_popular_non_happy_hour_drinks
+  def most_popular_non_happy_hour_drinks   # returns an 2dim array of [name, number-sold] in order of most popular
     non_happy_hour_drink_sales = Hash.new(0)
     @transactions.each do |x|
       if x.happy_hour == false
