@@ -20,7 +20,17 @@ attr_writer :happy_discount
   end
 
   def happy_discount
-    return @happy_discount if self.happy_hour?
+    if self.happy_hour?
+      if Time.now.monday? || Time.now.wednesday?
+        if @happy_discount <= 0.5
+          return @happy_discount * 2
+        else
+          return 1
+        end
+      else
+        return @happy_discount
+      end
+    end
     0
   end
 
