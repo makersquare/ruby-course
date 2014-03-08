@@ -168,6 +168,38 @@ describe Bar do
       expect(@bar.current_price(@bar.menu_items[0])).to eq(150)
     end
 
+    it "applies special_discount if appropriate" do
+      @bar.menu_items[0].special_discount = 0.9
+
+      Time.stub(:now).and_return(Time.new(2014, 3, 3,  15, 0, 0))  # Monday Happy Hour
+      expect(@bar.current_price(@bar.menu_items[0])).to eq(15)
+
+      Time.stub(:now).and_return(Time.new(2014, 3, 5,  15, 0, 0)) # Wednesday Happy Hour
+      expect(@bar.current_price(@bar.menu_items[1])).to eq(1.25)
+
+      Time.stub(:now).and_return(Time.new(2014, 3, 4,  15, 0, 0)) # Tuesday Happy Hour
+      expect(@bar.current_price(@bar.menu_items[0])).to eq(15)
+    end
+
+    it "can change special_discount back to nil" do
+      @bar.menu_items[0].special_discount = 0.9
+
+      Time.stub(:now).and_return(Time.new(2014, 3, 3,  15, 0, 0))  # Monday Happy Hour
+      expect(@bar.current_price(@bar.menu_items[0])).to eq(15)
+
+
+      Time.stub(:now).and_return(Time.new(2014, 3, 5,  15, 0, 0)) # Wednesday Happy Hour
+      expect(@bar.current_price(@bar.menu_items[1])).to eq(1.25)
+
+      @bar.menu_items[0].special_discount = -1  # Turn it back to a normal item
+
+      Time.stub(:now).and_return(Time.new(2014, 3, 4,  15, 0, 0)) # Tuesday Happy Hour
+      expect(@bar.current_price(@bar.menu_items[0])).to eq(112.5)
+    end
+
+
+
+
 
 
 

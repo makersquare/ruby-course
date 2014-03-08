@@ -53,9 +53,6 @@ class Bar
     end
   end
 
-
-
-
   def happy_discount=(discount) # Accepts either a number or an array -- if it's array it requires
                                 # [day-of-week-symbol, discount]
 
@@ -91,7 +88,7 @@ class Bar
 
   def current_price(item)  #takes an item and returns it's current adjusted price
     if self.happy_hour?
-      if item.special_discount
+      if (item.special_discount != nil)
         return item.price - (item.price * item.special_discount)
       else
         return item.price - (item.price * self.happy_discount)
@@ -114,14 +111,15 @@ class MenuItem
   end
 
   def special_discount=(special_discount)
-    if special_discount < 0   # if input is less than 0, invalidate it
+    if special_discount < 0   # if input is less than 0, empty it
       @special_discount = nil
-    elsif special_discount > 1
+    elsif special_discount > 1  # if input is greater than 1, make it 1
       @special_discount = 1
     else
       @special_discount = special_discount
     end
   end
+
 
 
 end
