@@ -122,7 +122,7 @@ describe Bar do
     expect(@bar).to receive(:slowday?).and_return(true)
     expect(@bar).to receive(:happy_hour?).and_return(true)
     @bar.happy_discount = 0.5
-    expect(@bar.happy_discount(Item.new("tequila",2,true))).to eq(0.5)
+    expect(@bar.happy_discount(Item.new("tequila",2,true,true))).to eq(0.5)
 end
 
   it "determines whether a drink is eligible for discount" do
@@ -144,4 +144,32 @@ end
   @bar.purchase_drink(jose)
   expect(@bar.most_popular).to eq(["tequila", "gin"])
 end
+
+it "records drink purchases during happy hour" do
+  current_time = Time.parse("3 pm")
+  Time.stub(:now).and_return(current_time)
+  expect(@bar.happy_hour?).to eq(true)
+  @bar.purchase_drink(Item.new("tequila",2, true))
+  expect(@bar.happy_purchase).to eq(1)
+end
+
+it "keeps track of most popular happy hour and normal purchases" do
+  jose = Item.new("tequila",2,true)
+  gin = Item.new("gin",2,true)
+  tequila = Item.new("tequila",2,true)
+  current_time = Time.parse('3 pm')
+  Time.stub(:now).and_return(current_time)
+  @bar.purchase_drink(tequila)
+  @bar.purchase_drink(gin)
+  @bar.purchase_drink(jose)
+  expect(@bar.most_popular_happy).to eq(["tequila","gin"])
+end
+
+it "gives different discounts to unique items" do
+  jose = Item.new("tequila",2,true,true)
+  @bar.unique?(jose)
+  current_time = Time.parse('3 pm')
+  Time.stub(:now).and_return(current_time)
+  expect(@bar.happy_discount(jose)).to eq(0.7)
+  end
 end
