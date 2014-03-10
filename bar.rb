@@ -15,6 +15,17 @@ class Bar
 		@menu_items.push(Item.new(item,price))
 	end 
 
+  def slowday?
+    monday = Time.now.monday?
+    wednesday = Time.now.wednesday?
+    if monday && wendesday
+      true
+      else 
+      false
+      end
+
+  end
+
   def happy_hour?
     current_time = Time.now
     three = Time.parse('3 pm')
@@ -27,6 +38,8 @@ class Bar
 
 
 	def happy_discount
+    if slowday?
+      @happy_discount = .5
     if happy_hour?
       @happy_discount 
     else
