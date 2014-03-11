@@ -98,11 +98,17 @@ describe Bar do
     end
   end
 
-  context "During normal hours" do
+  describe "During normal hours" do
     # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+    it "knows not to discount during normal hours" do
+    normal_hour = Time.parse("6:30 pm")
+    Time.stub(:now).and_return(normal_hour)
+
+    expect(@bar.happy_hour?).to eq(false)
+  end
   end
 
-  context "During happy hours" do
+  describe "During happy hours" do
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
   end
 end
