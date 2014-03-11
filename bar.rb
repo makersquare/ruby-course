@@ -17,15 +17,21 @@ class Bar
 	end
 
 	def happy_discount
-		if happy_hour?
-			@happy_discount || 0
+		if happy_hour? && @happy_discount
+			if @happy_discount > 1
+				@happy_discount = 1
+			elsif @happy_discount < 0
+				@happy_discount = 0
+			else
+				@happy_discount || 0
+			end
 		else
 			return 0
 		end
 	end
 
 	def happy_hour?
-		if Time.now.hour >=10 && Time.now.hour < 16
+		if Time.now.hour >=15 && Time.now.hour < 16
 			return true
 		else
 			return false

@@ -67,7 +67,7 @@ describe Bar do
     expect(@bar.happy_discount).to eq 0.3
   end
 
-  xit "constrains its happy hour discount to between zero and one" do
+  it "constrains its happy hour discount to between zero and one" do
     expect(@bar).to receive(:happy_hour?).twice.and_return(true)
 
     # HINT: You need to write your own setter
@@ -82,14 +82,18 @@ describe Bar do
   # DO NOT CHANGE SPECS ABOVE THIS LINE #
 # # # # # # # # # # # # # # # # # # # # # #
 
-  describe '#happy_hour', :pending => true do
+  describe '#happy_hour' do
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
       # TODO: CONTROL TIME
+      happy_hour = Time.parse("3:00 pm")
+      Time.stub(:now).and_return(happy_hour)
       expect(@bar.happy_hour?).to eq(true)
     end
 
     it "is not happy hour otherwise" do
       # TODO: CONTROL TIME
+      happy_hour = Time.parse("2:00 pm")
+      Time.stub(:now).and_return(happy_hour)
       expect(@bar.happy_hour?).to eq(false)
     end
   end
