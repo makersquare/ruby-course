@@ -15,6 +15,11 @@ class Bar
   end
 
   def happy_hour?
+    if Time.now >= Time.parse("3 pm") && Time.now <= Time.parse("4 pm")
+      true
+    else
+      false
+    end
   end
 
   def happy_discount
@@ -34,6 +39,25 @@ class Bar
     else
       @happy_discount = amount
     end
+  end
+
+  def get_price(name)
+    if happy_hour? == false
+      @menu_items.each do |item|
+        if item.name == name
+          return item.price
+        end
+      end
+    end
+    if happy_hour? == true
+      @menu_items.each do |item|
+        if item.name == name
+          new_price = item.price - (item.price * @happy_discount)
+          return new_price
+        end
+      end
+    end
+
   end
 
 end
