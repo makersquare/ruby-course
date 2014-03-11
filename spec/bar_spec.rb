@@ -81,7 +81,7 @@ describe Bar do
   # DO NOT CHANGE SPECS ABOVE THIS LINE #
 # # # # # # # # # # # # # # # # # # # # # #
 
-  describe '#happy_hour', :pending => true do
+  describe '#happy_hour?', :pending => true do
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
       # TODO: CONTROL TIME
       expect(@bar.happy_hour?).to eq(true)
