@@ -109,6 +109,13 @@ describe Bar do
   end
 
   describe "During happy hours" do
+    it "knows to discount 50% during happy hour" do
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
+    happy_hour = Time.parse("3:00 pm")
+    Time.stub(:now).and_return(happy_hour)
+    @bar.happy_discount = (0.5)
+
+    expect(@bar.happy_discount).to eq(0.5)
+  end
   end
 end
