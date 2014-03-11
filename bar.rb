@@ -14,6 +14,18 @@ class Bar
     @menu_items << (Item.new(name,price))
   end
 
+  def happy_hour?
+
+  end
+
+  def happy_discount
+    if happy_hour? == false
+      0
+    else
+      @happy_discount
+    end
+  end
+
 end
 
 class Item
