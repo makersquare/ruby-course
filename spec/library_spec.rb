@@ -1,6 +1,6 @@
 require "./library2nd.rb"
 require 'pry-debugger'
-# Books should have optional attributes for year-published and edition.
+# Borrowers should be able to leave reviews on Books with both a rating and an optional written review.
 describe Book do
   it "has a title and author, and nil id" do
     book = Book.new("The Stranger", "Albert Camus", 1984, 2)
@@ -50,6 +50,19 @@ describe Borrower do
     borrower = Borrower.new("Mike")
     expect(borrower.name).to eq "Mike"
   end
+
+  it "leave a rating on book, and optional written opinion" do
+    borrower = Borrower.new("Mike")
+    book = Book.new("The Stranger", "Albert Camus", 1984, 2)
+
+    expect(book.rating).to eq(nil)
+    borrower.give_review(2,"good",book)
+    expect(book.rating).to eq 2
+    expect(book.opinion).to eq "good"
+
+    expect(borrower.give_review(11,"good",book)).to eq ("please rate between 0 and 10")
+  end
+
 end
 
 describe Library do

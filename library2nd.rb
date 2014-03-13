@@ -1,6 +1,6 @@
 class Book
-attr_accessor :title, :author, :id, :status
-attr_accessor :borrower, :year, :edition
+  attr_accessor :title, :author, :id, :status
+  attr_accessor :borrower, :year, :edition, :rating, :opinion
   def initialize(title, author, year, edition)
     @title = title
     @author = author
@@ -25,10 +25,20 @@ attr_accessor :borrower, :year, :edition
 end
 
 class Borrower
-attr_accessor :name, :book_count
+attr_accessor :name, :book_count, :give_review
   def initialize(name)
     @name = name
     @book_count = 0
+  end
+
+  def give_review(rating, opinion = nil, book)
+    if rating >= 0 && rating <= 10
+      book.rating = rating
+      book.opinion = opinion
+      return book
+    else
+      return "please rate between 0 and 10"
+    end
   end
 
 end
