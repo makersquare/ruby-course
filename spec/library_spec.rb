@@ -1,31 +1,33 @@
 require "./library2nd.rb"
 require 'pry-debugger'
-
+# Books should have optional attributes for year-published and edition.
 describe Book do
   it "has a title and author, and nil id" do
-    book = Book.new("The Stranger", "Albert Camus")
+    book = Book.new("The Stranger", "Albert Camus", 1984, 2)
 
     # binding.pry
 
     expect(book.title).to eq "The Stranger"
     expect(book.author).to eq "Albert Camus"
     expect(book.id).to be_nil # one
+    expect(book.year).to eq 1984
+    expect(book.edition). to eq 2
   end
                     # had title author here ---
   it "has a default status of available" do
-    book = Book.new("The Stranger", "Albert Camus") # commit
+    book = Book.new("The Stranger", "Albert Camus", 1984, 2) # commit
     expect(book.status).to eq 'available'
   end
 
   it "can be checked out" do # commit
-    book = Book.new("The Stranger", "Albert Camus")
+    book = Book.new("The Stranger", "Albert Camus", 1984, 2)
     did_it_work = book.check_out
     expect(did_it_work).to eq(true)
     expect(book.status).to eq 'checked_out'
   end
 
   it "can't be checked out twice in a row" do
-    book = Book.new("The Stranger", "Albert Camus")
+    book = Book.new("The Stranger", "Albert Camus", 1984, 2)
     did_it_work = book.check_out
     expect(did_it_work).to eq(true)
 
@@ -36,7 +38,7 @@ describe Book do
   end
 
   it "can be checked in" do
-    book = Book.new("The Stranger", "Albert Camus")
+    book = Book.new("The Stranger", "Albert Camus", 1984, 2)
     book.check_out
     book.check_in
     expect(book.status).to eq 'available'
@@ -59,7 +61,7 @@ describe Library do
 
   it "add new books and assigns it an id" do
     lib = Library.new("name")
-    lib.register_new_book("Nausea", "Jean-Paul Sartre")
+    lib.register_new_book("Nausea", "Jean-Paul Sartre", 1977, 4)
     expect(lib.books.count).to eq(1)
 
     created_book = lib.books.first
@@ -70,16 +72,16 @@ describe Library do
 
   it "can add multiple books" do
     lib = Library.new("name")
-    lib.register_new_book("One", "Bob")
-    lib.register_new_book("Two", "Bob")
-    lib.register_new_book("Three", "Bob")
+    lib.register_new_book("One", "Bob", 2008, 1)
+    lib.register_new_book("Two", "Bob", 2009, 2)
+    lib.register_new_book("Three", "Bob", 2010, 3)
 
     expect(lib.books.count).to eq(3)
   end
 
   it "allows a Borrower to check out a book by its id" do
     lib = Library.new("name")
-    lib.register_new_book("Green Eggs and Ham", "Dr. Seuss")
+    lib.register_new_book("Green Eggs and Ham", "Dr. Seuss", 1969, 2)
     book_id = lib.books.first.id
 
     # Sam wants to check out Green Eggs and Ham
@@ -89,14 +91,15 @@ describe Library do
     # The checkout should return the book
     expect(book).to be_a(Book)
     expect(book.title).to eq "Green Eggs and Ham"
-
+    expect(book.edition). to eq 2
+    expect(book.year). to eq 1969
     # The book should now be marked as checked out
     expect(book.status).to eq 'checked_out'
   end
 
   it "knows who borrowed a book" do
     lib = Library.new("name")
-    lib.register_new_book("The Brothers Karamazov", "Fyodor Dostoesvky")
+    lib.register_new_book("The Brothers Karamazov", "Fyodor Dostoesvky", 1929, 4)
     book_id = lib.books.first.id
 
     # Big Brother wants to check out The Brothers Karamazov
@@ -109,7 +112,7 @@ describe Library do
 
   it "does not allow a book to be checked out twice in a row" do
     lib = Library.new("name")
-    lib.register_new_book("Surely You're Joking Mr. Feynman", "Richard Feynman")
+    lib.register_new_book("Surely You're Joking Mr. Feynman", "Richard Feynman", 1982, 7)
     book_id = lib.books.first.id
 
     # Leslie Nielsen wants to double check on that
@@ -130,7 +133,7 @@ describe Library do
 
   it "allows a Borrower to check a book back in" do
     lib = Library.new("name")
-    lib.register_new_book("Finnegans Wake", "James Joyce")
+    lib.register_new_book("Finnegans Wake", "James Joyce", 1972, 4)
     book_id = lib.books.first.id
 
     # Bob wants to check out Finnegans Wake
@@ -147,9 +150,9 @@ describe Library do
   it "does not allow a Borrower to check out more than one Book at any given time" do
     # yeah it's a stingy library
     lib = Library.new("name")
-    lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
-    lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
-    lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
+    lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke", 2011, 2)
+    lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani", 2012, 7)
+    lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford", 2009, 1)
 
     jackson = Borrower.new("Michael Jackson")
     book_1 = lib.books[0]
@@ -159,10 +162,12 @@ describe Library do
     # The first two books should check out fine
     book = lib.check_out_book(book_1.id, jackson) # why 2?
     expect(book.title).to eq "Eloquent JavaScript"
+    expect(book.year). to eq 2011
     # binding.pry
     book = lib.check_out_book(book_2.id, jackson)
     expect(book.title).to eq "Essential JavaScript Design Patterns"
-
+    expect(book.year). to eq 2012
+    expect(book.edition). to eq 7
     # However, the third should return nil
     book = lib.check_out_book(book_3.id, jackson)
     expect(book).to be_nil
@@ -170,9 +175,9 @@ describe Library do
 
   it "returns available books" do
     lib = Library.new("name")
-    lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
-    lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
-    lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
+    lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke", 2011, 2)
+    lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani", 2012, 7)
+    lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford", 2009, 1)
 
     # At first, all books are available
     expect(lib.available_books.count).to eq(3)
@@ -187,7 +192,7 @@ describe Library do
 
   it "after a book it returned, it can be checked out again" do
     lib = Library.new("name")
-    lib.register_new_book("Harry Potter", "J. K. Rowling")
+    lib.register_new_book("Harry Potter", "J. K. Rowling", 2008, 2)
     book_id = lib.books.first.id
 
     # First, we check out the book
@@ -206,9 +211,10 @@ describe Library do
 
   it "returns borrowed books" do
     lib = Library.new("name")
-    lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
-    lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
-    lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
+    lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke", 2011, 2)
+    lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani", 2012, 7)
+    lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford", 2009, 1)
+
     # At first, no books are checked out
     expect(lib.borrowed_books.count).to eq(0)
 
@@ -218,5 +224,6 @@ describe Library do
     # But now there should be one checked out book
     expect(lib.borrowed_books.count).to eq(1)
     expect(lib.borrowed_books.first).to be_a(Book)
+    expect(lib.books.first.year).to eq 2011
   end
 end

@@ -1,10 +1,12 @@
 class Book
 attr_accessor :title, :author, :id, :status
-attr_accessor :borrower
-  def initialize(title, author)
+attr_accessor :borrower, :year, :edition
+  def initialize(title, author, year, edition)
     @title = title
     @author = author
     @status = "available"
+    @year = year
+    @edition = edition
   end
 
   def check_out
@@ -40,8 +42,8 @@ attr_accessor :id  # not book object
     @id_counter = 1
   end
 
-  def register_new_book(title, author)
-    new_book = Book.new(title,author)
+  def register_new_book(title, author, year, edition)
+    new_book = Book.new(title,author, year, edition)
     @books << new_book
 
     new_book.id = @id_counter
