@@ -155,7 +155,7 @@ describe Library do
     book_1 = lib.books[0]
     book_2 = lib.books[1]
     book_3 = lib.books[2]
-    binding.pry
+    # binding.pry
     # The first two books should check out fine
     book = lib.check_out_book(book_1.id, jackson) # why 2?
     expect(book.title).to eq "Eloquent JavaScript"
@@ -168,7 +168,7 @@ describe Library do
     expect(book).to be_nil
   end
 
-  xit "returns available books" do
+  it "returns available books" do
     lib = Library.new("name")
     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
     lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
@@ -185,7 +185,7 @@ describe Library do
     expect(lib.available_books.count).to eq(2)
   end
 
-  xit "after a book it returned, it can be checked out again" do
+  it "after a book it returned, it can be checked out again" do
     lib = Library.new("name")
     lib.register_new_book("Harry Potter", "J. K. Rowling")
     book_id = lib.books.first.id
@@ -204,7 +204,7 @@ describe Library do
     expect( lib.get_borrower(book_id) ).to eq 'Michael Schumacher'
   end
 
-  xit "returns borrowed books" do
+  it "returns borrowed books" do
     lib = Library.new("name")
     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
     lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")

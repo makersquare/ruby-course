@@ -51,36 +51,16 @@ attr_accessor :id  # not book object
   def check_out_book(book_id, borrower)
     # return a book
     @books.each do |book|
-      if borrower.book_count < 2
+      if borrower.book_count < 2  # why <= 2 doesn't work?
         if book.id == book_id && book.status == "available"
           book.status = "checked_out"
           book.borrower = borrower
           borrower.book_count += 1
           return book
         end
-      # else
-      #   return nil
       end
     end
-
     nil
-
-    #   if book.id == book_id && book.status == "available"
-
-    #     if borrower.book_count <= 2
-    #       # binding.pry
-    #       book.status = "checked_out"
-    #       book.borrower = borrower
-    #       borrower.book_count += 1
-    #       return book
-    #     end
-
-    #   else
-    #     return nil
-    #   end
-
-    # end
-
   end
 
   def get_borrower(book_id)
@@ -100,5 +80,44 @@ attr_accessor :id  # not book object
     end
   end
 
+  def available_books
+    @books.select do |book|
+      book.status == "available"
+    end
+  end
+
+  # def available_books
+  #   available_book_list = []  #this was new
+  #   @books.each do |book|
+  #     if book.status === "available"
+  #       # available_book_list = []
+  #       available_book_list << book
+  #       # return available_book_list
+  #     end
+  #   end
+  #   return available_book_list #this was new
+  # end
+
+
+  def borrowed_books
+    borrowed_books_list = []
+    @books.each do |book|
+      if book.status == "checked_out"
+        borrowed_books_list << book
+      end
+    end
+    return borrowed_books_list
+  end
+
+
+  # def borrowed_books # why does this return 3 w/count?
+  #   borrowed_books_list = []
+  #   @books.each do |book|
+  #     if book.status == "checked_out"
+  #       borrowed_books_list << book
+  #       borrowed_books_list
+  #     end
+  #   end
+  # end
 
 end
