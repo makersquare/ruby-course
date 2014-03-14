@@ -45,7 +45,7 @@ describe Bar do
     expect { @bar.happy_discount = 0.5 }.to_not raise_error
   end
 
-  xit "only returns a discount when it's happy hour" do
+  it "only returns a discount when it's happy hour" do
     @bar.happy_discount = 0.5
     # HINT: You need to write your own getter
 
@@ -66,7 +66,7 @@ describe Bar do
     expect(@bar.happy_discount).to eq 0.3
   end
 
-  xit "constrains its happy hour discount to between zero and one" do
+  it "constrains its happy hour discount to between zero and one" do
     expect(@bar).to receive(:happy_hour?).twice.and_return(true)
 
     # HINT: You need to write your own setter
@@ -81,23 +81,44 @@ describe Bar do
   # DO NOT CHANGE SPECS ABOVE THIS LINE #
 # # # # # # # # # # # # # # # # # # # # # #
 
-  describe '#happy_hour', :pending => true do
+  describe '#happy_hour' do
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
       # TODO: CONTROL TIME
+      happy_time = Time.parse("3pm")
+      Time.stub(:now).and_return(happy_time)
       expect(@bar.happy_hour?).to eq(true)
     end
 
     it "is not happy hour otherwise" do
       # TODO: CONTROL TIME
+      not_happy_time = Time.parse("8pm")
+      Time.stub(:now).and_return(not_happy_time)
       expect(@bar.happy_hour?).to eq(false)
     end
   end
 
   context "During normal hours" do
     # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+    it "shows the regular prices of the items" do
+      @bar.add_menu_item('Little Johnny', 9.95)
+      item_id = @bar.menu_items.first.id
+
+      not_happy_time = Time.parse("8pm")
+      Time.stub(:now).and_return(not_happy_time)
+
+      expect(@bar.get_price(item_id)).to eq 9.95
+    end
   end
 
   context "During happy hours" do
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
+    it "shows the discounted prices of the items" do
+      @bar.add_menu_item('Little Johnny', 9.95)
+      item_id = @bar.menu_items.first.id
+      happy_time = Time.parse("3pm")
+      Time.stub(:now).and_return(happy_time)
+
+      expect(@bar.get_price(item_id)).to eq 4.975
+    end
   end
 end
