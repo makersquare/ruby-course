@@ -188,6 +188,13 @@ describe Bar do
     bar.item_bought(steak)
     expect(bar.most_popular_item).to eq("steak")
   end
+
+  it "allows you to give an item a specific happy hour discount" do
+    Time.stub(:now).and_return(Time.parse("3pm"))
+    bar = Bar.new("bar")
+    blue_moon = Item.new("blue moon", 100, true, 0.75)
+    expect(bar.get_price(blue_moon)).to eq(25)
+  end
 end
 end
 
