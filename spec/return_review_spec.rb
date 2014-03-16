@@ -70,7 +70,7 @@ describe "Puzzle Exercises" do
 
     it "greets correctly" do
       # TODO: Uncomment and complete
-      # result = greet(???)
+      # result = greet(???)???
       expect(result).to eq 'Hello there, World'
     end
   end
@@ -126,6 +126,53 @@ describe "Puzzle Exercises" do
       # result = compare(???)
       expect(result).to eq "Yep, these inputs evalute to true"
     end
+  end
+
+  describe "Puzzle #8", :pending => true do
+    def match_item(array, item)
+      array.each do |elem|
+        if elem == item
+          return elem
+        # TODO: Change the code below this section
+        # some code needs to be removed here
+        else
+          return nil
+        end
+      end
+      # Some code needs to be added here
+    end
+
+    item_ary = ["pigeon", "fox", "turtle"]
+
+    expect(match_item(item_ary, "fox")).to eq("fox")
+    expect(match_item(item_ary, "cat")).to be_nil
+
+  end
+
+  describe "Puzzle #9", :pending => true do
+
+    class Book
+      def initialize(
+        title)
+        @title = title
+      end
+    end
+
+    class Library
+      attr_reader :books
+      def initialize
+        x = Book.new("Eating Healthy")
+        y = Book.new("Beautiful People")
+        z = Book.new("Unintented Secrets")
+        @books = [x, y, z]
+      end
+    end
+
+    # TODO: fix this line of code
+    # DO NOT write `book_count = 3`
+    book_count = Library.new.count
+
+    expect(book_count).to eq(3)
   end
 
 end
