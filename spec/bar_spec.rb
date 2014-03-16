@@ -195,6 +195,21 @@ describe Bar do
     blue_moon = Item.new("blue moon", 100, true, 0.75)
     expect(bar.get_price(blue_moon)).to eq(25)
   end
+
+  it "most popular happy hour drink" do
+    bar = Bar.new("bar")
+    blue_moon = Item.new("blue moon", 5)
+    steak = Item.new("steak", 20)
+    Time.stub(:now).and_return(Time.parse("3pm"))
+    bar.item_bought(blue_moon)
+    Time.stub(:now).and_return(Time.parse("6pm"))
+    bar.item_bought(steak)
+    bar.item_bought(steak)
+    expect(bar.most_popular_item).to eq("steak")
+    expect(bar.most_popular_happy_hour_item).to eq("blue moon")
+    expect(bar.most_popular_nonhappy_hour_item).to eq("steak")
+    expect(bar.happy_hour_items_bought).to eq(1)
+  end
 end
 end
 

@@ -2,12 +2,14 @@ require 'time' # you're gonna need it
 
 class Bar
   attr_reader :name
-  attr_accessor :menu_items, :happy_discount, :happy_hour, :items_purchased
+  attr_accessor :menu_items, :happy_discount, :happy_hour, :items_purchased, :happy_hour_purchased, :nonhappy_hour_purchased
   def initialize(name)
     @name = name
     @menu_items = []
     @happy_discount = 0
     @items_purchased = []
+    @happy_hour_purchased = []
+    @nonhappy_hour_purchased = []
   end
   def add_menu_item(name, price)
     @menu_items.push(Item.new(name, price))
@@ -66,10 +68,27 @@ end
 
   def item_bought(item)
       @items_purchased.push(item.name)
+      if happy_hour?
+      @happy_hour_purchased.push(item.name)
+      else
+        @nonhappy_hour_purchased.push(item.name)
+      end
   end
 
   def most_popular_item
       @items_purchased.inject(Hash.new(0)){ |h,i| h[i] += 1; h }.max{ |a,b| a[1] <=> b[1] }.first
+  end
+
+  def most_popular_happy_hour_item
+      @happy_hour_purchased.inject(Hash.new(0)){ |h,i| h[i] += 1; h }.max{ |a,b| a[1] <=> b[1] }.first
+  end
+
+  def most_popular_nonhappy_hour_item
+      @nonhappy_hour_purchased.inject(Hash.new(0)){ |h,i| h[i] += 1; h }.max{ |a,b| a[1] <=> b[1] }.first
+  end
+
+  def happy_hour_items_bought
+    @happy_hour_purchased.count
   end
 end
 
