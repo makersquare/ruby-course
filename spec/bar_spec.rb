@@ -112,6 +112,42 @@ describe Bar do
         expect(bar.get_price(blue_moon)).to eq(2.50)
       end
 
+  it "gives 0.5 discount on mondays and wednesdays" do
+      #test 1
+      Time.stub(:now).and_return(Time.parse("2014-03-17 3pm"))
+      bar = Bar.new("bar")
+      steak = Item.new("steak", 20)
+      blue_moon = Item.new("blue moon", 5)
+      expect(bar.get_price(steak)).to eq(10)
+      expect(bar.get_price(blue_moon)).to eq(2.50)
+      #test 2
+      Time.stub(:now).and_return(Time.parse("2014-03-19 3pm"))
+      bar = Bar.new("bar")
+      steak = Item.new("steak", 20)
+      blue_moon = Item.new("blue moon", 5)
+      expect(bar.get_price(steak)).to eq(10)
+      expect(bar.get_price(blue_moon)).to eq(2.50)
+  end
+
+  it "gives 0.25 discount on all other days" do
+    #test 1
+      Time.stub(:now).and_return(Time.parse("2014-03-18 3pm"))
+      bar = Bar.new("bar")
+      bar.day_checker
+      steak = Item.new("steak", 20)
+      blue_moon = Item.new("blue moon", 5)
+      expect(bar.get_price(steak)).to eq(15)
+      expect(bar.get_price(blue_moon)).to eq(3.75)
+
+    #test 2
+      Time.stub(:now).and_return(Time.parse("2014-03-20 3pm"))
+      bar = Bar.new("bar")
+      bar.day_checker
+      steak = Item.new("steak", 20)
+      blue_moon = Item.new("blue moon", 5)
+      expect(bar.get_price(steak)).to eq(15)
+      expect(bar.get_price(blue_moon)).to eq(3.75)
+  end
 end
 end
 

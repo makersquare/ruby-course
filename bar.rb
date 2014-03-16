@@ -40,12 +40,23 @@ class Bar
 
   def get_price(item)
     if happy_hour?
-      item.price * @happy_discount
+          item.price * (1 - @happy_discount)
     else
-      item.price
+        item.price
     end
   end
+
+  def day_checker
+    today = Time.now
+    if today.monday? || today.wednesday?
+      @happy_discount = 0.5
+    else
+      @happy_discount = 0.25
+    end
 end
+end
+
+
 
 class Item
 attr_reader :name, :price
