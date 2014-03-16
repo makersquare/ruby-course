@@ -6,7 +6,7 @@ class Bar
   def initialize(name)
     @name = name
     @menu_items = []
-    @happy_discount = 0.5
+    @happy_discount = 0
   end
   def add_menu_item(name, price)
     @menu_items.push(Item.new(name, price))
@@ -39,7 +39,7 @@ class Bar
   end
 
   def get_price(item)
-    if happy_hour?
+    if happy_hour?  && item.happy_item == true
           item.price * (1 - @happy_discount)
     else
         item.price
@@ -59,10 +59,11 @@ end
 
 
 class Item
-attr_reader :name, :price
-  def initialize(name, price)
+attr_reader :name, :price, :happy_item
+  def initialize(name, price, happy_item=true)
     @name = name
     @price = price
+    @happy_item = happy_item
   end
 
 

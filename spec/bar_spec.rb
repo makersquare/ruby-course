@@ -37,7 +37,7 @@ describe Bar do
     expect(item.price).to eq 9.95
   end
 
-  xit "has a default happy hour discount of zero" do
+  it "has a default happy hour discount of zero" do
     expect(@bar.happy_discount).to eq 0
   end
 
@@ -97,6 +97,7 @@ describe Bar do
     it "gives a normal price for item during normal hours" do
         Time.stub(:now).and_return(Time.parse("4pm"))
         bar = Bar.new("bar")
+        bar.happy_discount = 0.5
         steak = Item.new("steak", 20)
         blue_moon = Item.new("blue moon", 5)
         expect(bar.get_price(steak)).to eq(20)
@@ -106,6 +107,7 @@ describe Bar do
   it "gives a discounted price for items during happy hour" do
        Time.stub(:now).and_return(Time.parse("3pm"))
         bar = Bar.new("bar")
+        bar.happy_discount = 0.5
         steak = Item.new("steak", 20)
         blue_moon = Item.new("blue moon", 5)
         expect(bar.get_price(steak)).to eq(10)
@@ -116,6 +118,8 @@ describe Bar do
       #test 1
       Time.stub(:now).and_return(Time.parse("2014-03-17 3pm"))
       bar = Bar.new("bar")
+      bar.happy_discount = 0.5
+      bar.day_checker
       steak = Item.new("steak", 20)
       blue_moon = Item.new("blue moon", 5)
       expect(bar.get_price(steak)).to eq(10)
@@ -123,6 +127,8 @@ describe Bar do
       #test 2
       Time.stub(:now).and_return(Time.parse("2014-03-19 3pm"))
       bar = Bar.new("bar")
+      bar.happy_discount = 0.5
+      bar.day_checker
       steak = Item.new("steak", 20)
       blue_moon = Item.new("blue moon", 5)
       expect(bar.get_price(steak)).to eq(10)
@@ -133,6 +139,7 @@ describe Bar do
     #test 1
       Time.stub(:now).and_return(Time.parse("2014-03-18 3pm"))
       bar = Bar.new("bar")
+      bar.happy_discount = 0.5
       bar.day_checker
       steak = Item.new("steak", 20)
       blue_moon = Item.new("blue moon", 5)
@@ -142,11 +149,22 @@ describe Bar do
     #test 2
       Time.stub(:now).and_return(Time.parse("2014-03-20 3pm"))
       bar = Bar.new("bar")
+      bar.happy_discount = 0.5
       bar.day_checker
       steak = Item.new("steak", 20)
       blue_moon = Item.new("blue moon", 5)
       expect(bar.get_price(steak)).to eq(15)
       expect(bar.get_price(blue_moon)).to eq(3.75)
+  end
+
+  it "allows specific item to either be or not be happy hour discounted" do
+      Time.stub(:now).and_return(Time.parse("3pm"))
+      bar = Bar.new("bar")
+      bar.happy_discount = 0.5
+      steak = Item.new("steak", 20, false)
+      blue_moon = Item.new("blue moon", 5)
+      expect(bar.get_price(steak)).to eq(20)
+      expect(bar.get_price(blue_moon)).to eq(2.50)
   end
 end
 end
