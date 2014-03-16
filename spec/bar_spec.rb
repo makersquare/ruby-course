@@ -166,6 +166,28 @@ describe Bar do
       expect(bar.get_price(steak)).to eq(20)
       expect(bar.get_price(blue_moon)).to eq(2.50)
   end
+
+  it "record of items purchased" do
+    bar = Bar.new("bar")
+    blue_moon = Item.new("blue moon", 5)
+    expect(bar.items_purchased.count).to eq(0)
+    bar.item_bought(blue_moon)
+    expect(bar.items_purchased.count).to eq(1)
+    steak = Item.new("steak", 20)
+    expect(bar.items_purchased.count).to eq(1)
+    bar.item_bought(steak)
+    expect(bar.items_purchased.count).to eq(2)
+  end
+
+  it "gives most popular item ordered at bar" do
+    bar = Bar.new("bar")
+    blue_moon = Item.new("blue moon", 5)
+    steak = Item.new("steak", 20)
+    bar.item_bought(blue_moon)
+    bar.item_bought(steak)
+    bar.item_bought(steak)
+    expect(bar.most_popular_item).to eq("steak")
+  end
 end
 end
 

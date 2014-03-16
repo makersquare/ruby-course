@@ -2,11 +2,12 @@ require 'time' # you're gonna need it
 
 class Bar
   attr_reader :name
-  attr_accessor :menu_items, :happy_discount, :happy_hour
+  attr_accessor :menu_items, :happy_discount, :happy_hour, :items_purchased
   def initialize(name)
     @name = name
     @menu_items = []
     @happy_discount = 0
+    @items_purchased = []
   end
   def add_menu_item(name, price)
     @menu_items.push(Item.new(name, price))
@@ -53,7 +54,15 @@ class Bar
     else
       @happy_discount = 0.25
     end
-end
+  end
+
+  def item_bought(item)
+      @items_purchased.push(item.name)
+  end
+
+  def most_popular_item
+      @items_purchased.inject(Hash.new(0)){ |h,i| h[i] += 1; h }.max{ |a,b| a[1] <=> b[1] }.first
+  end
 end
 
 
