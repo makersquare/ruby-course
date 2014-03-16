@@ -82,22 +82,49 @@ describe Bar do
 # # # # # # # # # # # # # # # # # # # # # #
 
   describe '#happy_hour?' do
+
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
-      # TODO: CONTROL TIME
+      Time.stub(:now).and_return(Time.parse("3pm"))
       expect(@bar.happy_hour?).to eq(true)
     end
 
     it "is not happy hour otherwise" do
-      # TODO: CONTROL TIME
+      Time.stub(:now).and_return(Time.parse("4pm"))
       expect(@bar.happy_hour?).to eq(false)
     end
-  end
 
-  context "During normal hours" do
-    # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
-  end
 
-  context "During happy hours" do
-    # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
-  end
+    it "gives a normal price for item during normal hours" do
+        Time.stub(:now).and_return(Time.parse("4pm"))
+        bar = Bar.new("bar")
+        steak = Item.new("steak", 20)
+        blue_moon = Item.new("blue moon", 5)
+        expect(bar.get_price(steak)).to eq(20)
+        expect(bar.get_price(blue_moon)).to eq(5)
+      end
+
+  it "gives a discounted price for items during happy hour" do
+       Time.stub(:now).and_return(Time.parse("3pm"))
+        bar = Bar.new("bar")
+        steak = Item.new("steak", 20)
+        blue_moon = Item.new("blue moon", 5)
+        expect(bar.get_price(steak)).to eq(10)
+        expect(bar.get_price(blue_moon)).to eq(2.50)
+      end
+
 end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
