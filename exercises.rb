@@ -96,24 +96,122 @@ module Exercises
 end
 
 
+
 class RPS
-  # Rock, Paper, Scissors
-  # Make a 2-player game of rock paper scissors. It should have the following:
-  #
-  # It is initialized with two strings (player names).
-  # It has a `play` method that takes two strings:
-  #   - Each string reperesents a player's move (rock, paper, or scissors)
-  #   - The method returns the winner (player one or player two)
-  #   - If the game is over, it returns a string stating that the game is already over
-  # It ends after a player wins 2 of 3 games
-  #
-  # You will be using this class in the following class, which will let players play
-  # RPS through the terminal.
+  attr_accessor :playerOne, :playerTwo
+  attr_reader :playerOneScore, :playerTwoScore, :gameOver, :gameWinner, :gameLoser
+
+  def initialize(playerOne, playerTwo)
+    @playerOne = playerOne
+    @playerTwo = playerTwo
+    @playerOneScore = 0
+    @playerTwoScore = 0
+    @gameOver = false
+    @gameWinner = nil
+    @gameLoser = nil
+  end
+
+  def play(moveOne, moveTwo)
+
+    if @gameOver then return "Game is over dummy" end
+
+    if moveOne == moveTwo
+      return "Tie Try Again"
+    end
+
+    if (moveOne == "rock")
+      if (moveTwo == "scissors")
+        winner = 1
+      else #moveTwo == "paper"
+        winner = 2
+      end
+
+    elsif (moveOne == "paper")
+      if (moveTwo == "scissors")
+        winner = 2
+      else  # moveTwo == Rock
+        winner = 1
+      end
+
+    else #moveOne == "scissors"
+      if (moveTwo == "paper")
+        winner = 1
+      else  #moveTwo == "rock"
+        winner = 2
+      end
+    end
+
+
+
+
+
+    puts "Winner = #{winner}"
+    if winner == 1
+      @playerOneScore += 1
+      if @playerOneScore == 2
+        @gameOver = true
+        @gameWinner = "Player One"
+        @gameLoser = "Player Two"
+        return "#{playerOne} Wins the Game"
+      else
+        return "#{playerOne} Wins the Round"
+      end
+    else
+      @playerTwoScore += 1
+      if @playerTwoScore == 2
+        @gameOver = true
+        @gameWinner = "Player Two"
+        @gameLoser = "Player One"
+        return "#{playerTwo} Wins the Game"
+      else
+        return "#{playerTwo} Wins the Round"
+      end
+    end
+  end
+
 end
 
 
 require 'io/console'
 class RPSPlayer
+
+  def start
+
+    # Get names and stuff
+    print "Player One What is Your Name: "
+    playerOneName = gets.chomp
+    print "Player Two What is Your Name: "
+    playerTwoName = gets.chomp
+    game = RPS.new(playerOneName, playerTwoName)
+
+    # Intro
+    puts "\n\nThis is a rock-paper-scissors game to the death."
+    puts "\nThe loser will be stabbed with scissors,"
+    puts "bludgeoned with a rock,"
+    puts "or suffocated in paperwork.\n\nGood luck!\n\n"
+
+    # Loop until gameover
+    while(game.gameOver == false) do
+      puts "Player One what is your move? Choose carefully."
+      playerOneMove = STDIN.noecho(&:gets).chomp
+      puts "\nPlayer Two what is your move? Choose carefully."
+      playerTwoMove = STDIN.noecho(&:gets).chomp
+
+      puts "playerOneMove: #{playerOneMove}"
+      puts "playerTwoMove: #{playerTwoMove}"
+
+      # get result
+      result = game.play(playerOneMove, playerTwoMove)
+      puts result
+    end
+
+    puts "#{game.gameWinner} you get to live..."
+    puts "#{game.gameLoser}, however... you are sentenced to:"
+    puts "  CORRECTING CSS TYPOS UNTIL YOU ARE DEAD"
+    puts "but have a nice day.  Thanks for playing."
+  end
+
+
   # (No specs are required for RPSPlayer)
   #
   # Complete the `start` method so that it uses your RPS class to present
@@ -123,8 +221,7 @@ class RPSPlayer
   # a new instance of your RPS class. Then `puts` and `gets` in a loop that
   # lets both players play the game.
   #
-  # When the game ends, ask if the player wants to play again.
-  def start
+  # When the game ends, ask if the player wants to play again
 
     # TODO
 
@@ -133,7 +230,7 @@ class RPSPlayer
     #          what the player is typing! :D
     # This is also why we needed to require 'io/console'
     # move = STDIN.noecho(&:gets)
-  end
+
 end
 
 
@@ -152,3 +249,7 @@ module Extensions
     # TODO
   end
 end
+
+#PlayerInterface = RPSPlayer.new
+#PlayerInterface.start
+

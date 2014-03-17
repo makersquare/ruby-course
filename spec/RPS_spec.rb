@@ -11,8 +11,6 @@
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
 
-require './RPS.rb'
-
 describe 'RPS' do
   before(:each) do
     @newGame = RPS.new("Bob", "Tom")
@@ -62,3 +60,5 @@ describe 'RPS' do
   end
 
 end
+
+

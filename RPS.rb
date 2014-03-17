@@ -1,6 +1,6 @@
 class RPS
   attr_accessor :playerOne, :playerTwo
-  attr_reader :playerOneScore, :playerTwoScore, :gameOver, :gameWinner
+  attr_reader :playerOneScore, :playerTwoScore, :gameOver, :gameWinner, :gameLoser
 
   def initialize(playerOne, playerTwo)
     @playerOne = playerOne
@@ -9,45 +9,50 @@ class RPS
     @playerTwoScore = 0
     @gameOver = false
     @gameWinner = nil
+    @gameLoser = nil
   end
 
   def play(moveOne, moveTwo)
+
     if @gameOver then return "Game is over dummy" end
 
-    if moveOne == "rock"
-      if moveTwo == "rock"
-        return "Tie Try Again"
-      elsif moveTwo == "paper"
-        winner = playerTwo
-      elsif moveTwo == "scissors"
-        winner = playerOne
+    if moveOne == moveTwo
+      return "Tie Try Again"
+    end
+
+    if (moveOne == "rock")
+      if (moveTwo == "scissors")
+        winner = 1
+      else #moveTwo == "paper"
+        winner = 2
       end
 
-    elsif moveOne == "paper"
-      if moveTwo == "rock"
-        winner = playerOne
-      elsif moveTwo == "paper"
-        return "Tie Try Again"
-      elsif moveTwo == "scissors"
-        winner = playerTwo
+    elsif (moveOne == "paper")
+      if (moveTwo == "scissors")
+        winner = 2
+      else  # moveTwo == Rock
+        winner = 1
       end
 
     else #moveOne == "scissors"
-      if moveTwo == "rock"
-        winner = playerTwo
-      elsif moveTwo == "paper"
-        winner = playerOne
-      else #moveTwo == "scissors"
-        return "Tie Try Again"
+      if (moveTwo == "paper")
+        winner = 1
+      else  #moveTwo == "rock"
+        winner = 2
       end
     end
 
 
-    if winner = playerOne
+
+
+
+    puts "Winner = #{winner}"
+    if winner == 1
       @playerOneScore += 1
       if @playerOneScore == 2
         @gameOver = true
         @gameWinner = "Player One"
+        @gameLoser = "Player Two"
         return "#{playerOne} Wins the Game"
       else
         return "#{playerOne} Wins the Round"
@@ -57,6 +62,7 @@ class RPS
       if @playerTwoScore == 2
         @gameOver = true
         @gameWinner = "Player Two"
+        @gameLoser = "Player One"
         return "#{playerTwo} Wins the Game"
       else
         return "#{playerTwo} Wins the Round"
