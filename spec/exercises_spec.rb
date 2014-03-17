@@ -64,4 +64,11 @@ describe 'Exercise 6' do
 		result = Exercises.ex6(ary, str)
 		expect(result).to eq("panda")
 	end
+
+	it "updates the last item in the array to GODZILLA if the last item is already 'panda'" do
+		ary = [1,2,3,4,"panda"]
+		str = "panda"
+		result = Exercises.ex6(ary, str)
+		expect(result).to eq("GODZILLA")
+	end
 end
