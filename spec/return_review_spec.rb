@@ -89,14 +89,14 @@ describe "Puzzle Exercises" do
 
     it "outputs 'sea otter'" do
       # TODO: Uncomment and complete
-      # result = collection.???
+      result = collection.last
       expect(result).to eq 'sea otter'
     end
   end
 
-  describe "Puzzle #6", :pending => true do
+  describe "Puzzle #6" do
     def puzzle_5(x)
-      if x == true # TODO: Change this ONE LINE
+      if x # TODO: Change this ONE LINE
         "It's true!"
       end
     end
