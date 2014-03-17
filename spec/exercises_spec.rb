@@ -27,4 +27,11 @@ describe "Exercises" do
     expect(result).to eq(6)
   end
 
+  it "returns the max number of the gevin array" do
+    result=Exercises.ex4([1,2,3])
+    expect(result).to eq(3)
+  end
+
+  it "returns "
+
 end
