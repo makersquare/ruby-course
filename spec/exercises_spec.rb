@@ -38,9 +38,11 @@ describe Exercises do
 
   xit "Ex, 5Iterstes through an array and puts each element" do
     array = ["see","you","later"]
+
     STDOUT.should_receive(:puts).with('see')
-    STDOUT.should_receive(:puts).with('see')
-    STDOUT.should_receive(:puts).with('see')
+    STDOUT.should_receive(:puts).with('you')
+    STDOUT.should_receive(:puts).with('later')
+    # run method after:
     # expect(STDOUT).to_receive(:puts).and_return("see")
     # expect(STDOUT).to_receive(:puts).and_return("you")
     # expect(STDOUT).to_receive(:puts).and_return("later")
@@ -49,6 +51,10 @@ describe Exercises do
   it "Ex, 6 Updates the last item in the array to panda, if already panda update to godzilla" do
     array = [1,2,"hi","bye",4]
     panda_last = Exercises.ex6(array,"panda")
-    expect(panda_last).to eq [1,2,"hi","bye",4,"panda"]
+    expect(panda_last).to eq [1,2,"hi","bye","panda"]
+
+    array1 = [1,2,"hi","bye","panda"]
+    godzilla_array = Exercises.ex6(panda_last,"panda")
+    expect(godzilla_array).to eq [1,2,"hi","bye","GODZILLA"]
   end
 end

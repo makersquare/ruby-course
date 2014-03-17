@@ -57,7 +57,13 @@ module Exercises
   #    it to 'GODZILLA' instead
   def self.ex6(array, str)
     # TODO
-    array << str
+    if array[-1] == "panda"
+      array[-1] = "GODZILLA"
+      p array
+    else
+      array[-1] = str
+      p array
+    end
   end
 
   # Exercise 7
