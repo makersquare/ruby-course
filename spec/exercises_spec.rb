@@ -42,6 +42,15 @@ describe "exercises" do
 		expect(result2).to eq(["hello","panda","GODZILLA"])
 	end
 
-	
+	it "adds str to an array if str already exists" do
+		result = Exercises.ex7(["hi","bye"], "bye")
+		expect(result).to eq(["hi","bye","bye"])
+	end
 
+	it "iterates through array of hashes and prints out name and occupation" do
+		
+		STDOUT.should_receive(:puts).with("bob: waiter")
+		STDOUT.should_receive(:puts).with("chris: student")
+		result = Exercises.ex8([{:name => "bob", :occupation => "waiter"}, {:name=> "chris", :occupation => "student"}])
+	end
 end
