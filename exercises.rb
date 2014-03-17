@@ -1,4 +1,4 @@
-
+require 'time'
 module Exercises
   # Exercise 0
   #  - Triples a given string `str`
@@ -80,7 +80,11 @@ module Exercises
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
-    # TODO
+    if (time.year % 4 == 0)
+      return true
+    else
+      return false
+    end
   end
 end
 

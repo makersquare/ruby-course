@@ -1,6 +1,5 @@
 require './exercises.rb'
 
-
 describe 'self.ex0' do
   it 'Triples a given string str' do
     result = Exercises.ex0('ha')
@@ -98,6 +97,19 @@ describe 'self.ex8' do
     expect(STDOUT).to receive(:puts).with("#{ppl[1][:name]}, #{ppl[1][:occupation]}")
     expect(STDOUT).to receive(:puts).with("#{ppl[2][:name]}, #{ppl[2][:occupation]}")
     Exercises.ex8(ppl)
+
+  end
+end
+
+describe 'self.ex9' do
+  it 'returns true if the given time is in a leap year' do
+    time = Time.new(2014, 1, 1)
+    current_year = time.year
+    Time.stub(:now).and_return(time)
+
+    result = Exercises.ex9(time)
+
+    expect(result).to eq(false)
 
   end
 end
