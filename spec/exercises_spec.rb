@@ -149,6 +149,31 @@ describe 'RPS' do
 
 end
 
+describe 'Extensions' do
+  it "takes an array of strings, returns a hash with :most and :least" do
+    array = ['x','x','x','x','y','y','z']
+    answer = Extensions.extremes(array)
+    expect(answer[:most]).to eq('x')
+    expect(answer[:least]).to eq('z')
+  end
+
+  it "returns an array in the hash if there's a tie for :most" do
+    array = ['x','x','x','y','y','z','z','z']
+    answer = Extensions.extremes(array)
+    expect(answer[:most]).to eq(['x','z'])
+    expect(answer[:least]).to eq('y')
+  end
+
+  it "returns an array in the hash if there's a tie for least" do
+    array = ['a','a','a','b','b','z','z','z','c','c']
+    answer = Extensions.extremes(array)
+    expect(answer[:most]).to eq(['x','z'])
+    expect(answer[:least]).to eq('y')
+  end
+
+end
+
+
 
 
 

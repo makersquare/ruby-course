@@ -246,7 +246,26 @@ module Extensions
   #   expect(result).to eq({ :most => 'x', :least => ['y', 'z'] })
   #
   def self.extremes(array)
-    # TODO
+
+    counts = Hash.new(0)
+    array.each { |x| counts[x.to_sym] += 1 }
+    max_keys = counts.select { |k,v| v == counts.values.max }.keys
+    min_keys = counts.select { |k,v| v == counts.values.min }.keys
+
+    # convert em to arrays of strings
+    max_keys.map! { |x| x.to_s }
+    min_keys.map! { |x| x.to_s }
+
+    # convert to solely strings if only one
+    if (max_keys.length <= 1)
+      max_keys = max_keys[0]
+    end
+    if (min_keys.length <= 1)
+      min_keys = min_keys[0]
+    end
+
+    return { most: max_keys, least: min_keys }
+
   end
 end
 
