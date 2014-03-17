@@ -43,5 +43,10 @@ describe Exercises do
     result = Exercises.ex6(["donkey", "rat"], "panda")
     expect(result).to eq(["donkey", "rat", "panda"])
   end
+
+  it "updates last item of array to 'GDOZILLA' if last item is already 'panda'" do
+    result = Exercises.ex6(["donkey", "rat", "panda"], "panda")
+    expect(result).to eq(["donkey", "rat", "panda", "GODZILLA"])
+  end
 end
 
