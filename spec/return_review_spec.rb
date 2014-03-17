@@ -109,7 +109,7 @@ describe "Puzzle Exercises" do
     end
   end
 
-  describe "Puzzle #7", :pending => true do
+  describe "Puzzle #7" do
     def compare(x, y)
       x == y
     end
@@ -124,10 +124,10 @@ describe "Puzzle Exercises" do
 
     it "compares" do
       # TODO: Uncomment and complete
-      # message = ???
+      message = "Nope, these inputs don't evaluate to true"
       expect( check(2,3) ).to eq(message)
       # TODO: Uncomment and complete
-      # result = compare(???)
+      result = check(2,2)
       expect(result).to eq "Yep, these inputs evalute to true"
     end
   end
