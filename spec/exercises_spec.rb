@@ -51,3 +51,24 @@ describe 'Exercise 4' do
     expect(result).to eq(99999)
   end
 end
+
+describe 'Exercise 5' do
+  it 'Iterates through an array and puts each element' do
+    array = ['hey', 'whats', 'up']
+
+    expect(STDOUT).to receive(:puts).with("hey")
+    expect(STDOUT).to receive(:puts).with("whats")
+    expect(STDOUT).to receive(:puts).with("up")
+
+    result = Exercises.ex5(array)
+  end
+end
+
+describe 'Exercise 6' do
+  it 'updates the last item in the array to panda' do
+    array = ['tiger', 'shark', 'bear']
+    result = Exercises.ex6(array, 'panda')
+    expect(result).to eq('panda')
+  end
+end
+

@@ -38,6 +38,7 @@ module Exercises
   #  - Iterates through an array and `puts` each element
   def self.ex5(array)
     # TODO
+    array.each {|x| puts x}
   end
 
   # Exercise 6
@@ -46,6 +47,8 @@ module Exercises
   #    it to 'GODZILLA' instead
   def self.ex6(array, str)
     # TODO
+    #array.last = str
+
   end
 
   # Exercise 7
