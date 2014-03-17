@@ -133,6 +133,11 @@ end
 
 describe Extensions do
   it "returns a hash with two keys, :most and :least" do
-    result1 =
+    array = ['x', 'x', 'y', 'z']
+    array2 = [1,1,1,1,2,2,2,3]
+    result1 = Extensions.extremes(array)
+    expect(result1).to eq({ :most => 'x', :least => ['y', 'z'] })
+    result2 = Extensions.extremes(array2)
+    expect(result1).to eq({ :most => 1, :least => 3 })
   end
 end
