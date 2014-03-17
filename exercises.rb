@@ -78,7 +78,16 @@ module Exercises
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
-    # TODO
+    # Special case for 3/4 of century markers
+    if (time % 4 == 0) && (time % 100 == 0) && (time % 400 == 0)
+      return true
+    elsif (time % 4 == 0) && (time % 100 == 0)
+      return false
+    elsif (time % 4 == 0)
+      return true
+    else
+      return false
+    end
   end
 end
 
