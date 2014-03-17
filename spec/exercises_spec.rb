@@ -120,3 +120,9 @@ describe Exercises do
     end
   end
 end
+
+describe RPS do
+  it "is initialized with two strings (player names)" do
+    fungame = RPS.new("Brian","Jessie")
+  end
+end
