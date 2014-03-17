@@ -18,6 +18,8 @@ module Exercises
   #  - Returns the number of elements in the array
   def self.ex1(array)
     # TODO
+    number = array.length
+    number
   end
 
   # Exercise 2
