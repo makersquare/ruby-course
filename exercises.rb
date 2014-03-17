@@ -48,7 +48,9 @@ module Exercises
   def self.ex5(array)
     array.each do  |word|
       puts word
+
     end
+    # return array
   end
 
   # Exercise 6
@@ -85,6 +87,10 @@ module Exercises
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
     # TODO
+    people.each do |hash|
+      puts "#{hash[:name]}" + " is a " + "#{hash[:occupation]}"
+    end
+
   end
 
   # Exercise 9
@@ -121,6 +127,13 @@ end
 
 
 class RPS
+  attr_accessor :player1, :player2, :player1wincount, :player2wincount
+  def initialize(player1,player2)
+    @player1 = player1
+    @player2 = player2
+    @player1wincount = 0
+    @player2wincount = 0
+  end
   # Rock, Paper, Scissors
   # Make a 2-player game of rock paper scissors. It should have the following:
   #
@@ -133,6 +146,57 @@ class RPS
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
+
+  def play(choice1,choice2)
+    if player1wincount >= 2 || player2wincount >= 2
+      return "this game is over, start a new one sucka"
+    end
+    if choice1 == "rock" && choice2 == "scissors"
+      @player1wincount += 1
+      if @player1wincount == 2
+        return @player1 + " is the complete and utter victor"
+      end
+      return @player1 + " wins"
+    elsif choice1 == "rock" && choice2 == "paper"
+      @player2wincount += 1
+      if @player2wincount == 2
+        return @player2 + " is the complete and utter victor"
+      end
+      return @player2 + " wins"
+    elsif choice1 == "rock" && choice2 == "rock"
+      return "Tie game!"
+    elsif choice1 == "scissors" && choice2 == "paper"
+      @player1wincount += 1
+      if @player1wincount == 2
+        return @player1 + " is the complete and utter victor"
+      end
+      return @player1 + " wins"
+    elsif choice1 == "scissors" && choice2 == "rock"
+      @player2wincount += 1
+      if @player2wincount == 2
+        return @player2 + " is the complete and utter victor"
+      end
+      return @player2 + " wins"
+    elsif choice1 == "scissors" && choice2 == "scissors"
+      return "Tie game!"
+    elsif choice1 == "paper" && choice2 == "scissors"
+      @player2wincount += 1
+      if @player2wincount == 2
+        return @player2 + " is the complete and utter victor"
+      end
+      return @player2 + " wins"
+    elsif choice1 == "paper" && choice2 == "rock"
+      @player1wincount += 1
+      if @player1wincount == 2
+        return @player1 + " is the complete and utter victor"
+      end
+      return @player1  + " wins"
+    elsif choice1 == "paper" && choice2 == "paper"
+     return "Tie game!"
+    end
+
+  end
+
 end
 
 
@@ -148,7 +212,36 @@ class RPSPlayer
   # lets both players play the game.
   #
   # When the game ends, ask if the player wants to play again.
-  def start
+  attr_reader :player1, :player2
+  def initialize
+    puts "What is the first player's name"
+    @player1 = gets.chomp
+    puts "What is the second player's name"
+    @player2 = gets.chomp
+    newgame = RPS.new(@player1,@player2)
+
+    until (newgame.player1wincount == 2 || newgame.player2wincount == 2) do
+      puts "What is your move, player 1?"
+      @choice1 = gets.chomp
+      puts "What is your move, player 2?"
+      @choice2 = gets.chomp
+      puts newgame.play(@choice1,@choice2)
+      puts newgame.player1wincount
+
+      if (newgame.player1wincount == 2 || newgame.player2wincount == 2)
+        puts "Want to player another game? yes or no"
+        var = gets.chomp
+        if var == "yes"
+          newgame.player1wincount = 0
+          newgame.player2wincount = 0
+        end
+      end
+    end
+
+
+  end
+
+
 
     # TODO
 
@@ -157,7 +250,6 @@ class RPSPlayer
     #          what the player is typing! :D
     # This is also why we needed to require 'io/console'
     # move = STDIN.noecho(&:gets)
-  end
 end
 
 

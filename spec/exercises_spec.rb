@@ -38,13 +38,18 @@ describe Exercises do
 
   it "Ex 5, iterate through an array and puts each element" do
     array = ["see","you","later"]
+    # expect(STDOUT).to_receive(:puts).and_return("see");
+    $stdout.should_receive(:puts).with("see")
+    $stdout.should_receive(:puts).with("you")
+    $stdout.should_receive(:puts).with("later")
 
-    STDOUT.should_receive(:puts).with('see')
-    STDOUT.should_receive(:puts).with('you')
-    STDOUT.should_receive(:puts).with('later')
+    expect(Exercises.ex5(array)).to eq (array)
+    # STDOUT.should_receive(:puts).with('see')
+    # STDOUT.should_receive(:puts).with('you')
+    # STDOUT.should_receive(:puts).with('later')
     # run method after:
-    put_elements = Exercises.ex5(array)
-    expect(put_elements).to eq ["see", "you", "later"]
+    # put_elements = Exercises.ex5(array)
+    # expect(put_elements).to eq ["see", "you", "later"]
   end
 
   it "Ex, 6 Updates the last item in the array to panda, if already panda update to godzilla" do
@@ -66,8 +71,14 @@ describe Exercises do
     expect(check_not).to eq nil
   end
 
-  xit "Iterate through has and print out name and occupation" do
+  it "Iterate through has and print out name and occupation" do
     people = [{:name => 'Bob', :occupation => 'Builder' }, {:name => "joe",    :occupation => "cleaner"}, {:name => "john", :occupation => "chef"}]
+
+    $stdout.should_receive(:puts).with("Bob is a Builder")
+    $stdout.should_receive(:puts).with("joe is a cleaner")
+    $stdout.should_receive(:puts).with("john is a chef")
+
+    expect(Exercises.ex8(people)).to eq (people)
 
   end
 
@@ -84,5 +95,99 @@ describe Exercises do
     Leap_test_false = Exercises.ex9(time)
     expect(Leap_test_false).to eq false
   end
+
+end
+
+describe RPS do
+
+  it "Initialized with two strings(playernames)" do
+    newgame = RPS.new("Philip","Hubert")
+    # expect(newgame.player1).to eq ("Philip")
+  end
+
+
+
+    #takes two strings --> players moves
+    #returns winner
+    # if over, retunrs a string --> over
+    # ends after a player wins 2/3
+  it "That knowledge" do
+    newgame = RPS.new("Philip","Hubert")
+    expect(newgame.play("rock","scissors")).to eq ("Philip wins")
+  end
+
+  it "That knowledge" do
+    newgame = RPS.new("Philip","Hubert")
+    expect(newgame.play("rock","paper")). to eq ("Hubert wins")
+  end
+
+
+  it "That knowledge" do
+    newgame = RPS.new("Philip","Hubert")
+    expect(newgame.play("rock","rock")). to eq ("Tie game!")
+  end
+
+
+  it "That knowledge" do
+    newgame = RPS.new("Philip","Hubert")
+    expect(newgame.play("scissors","paper")). to eq ("Philip wins")
+  end
+
+
+  it "That knowledge" do
+    newgame = RPS.new("Philip","Hubert")
+    expect(newgame.play("scissors","rock")). to eq ("Hubert wins")
+  end
+
+
+  it "That knowledge" do
+    newgame = RPS.new("Philip","Hubert")
+    expect(newgame.play("scissors","scissors")). to eq ("Tie game!")
+  end
+
+
+  it "That knowledge" do
+    newgame = RPS.new("Philip","Hubert")
+    expect(newgame.play("paper","scissors")). to eq ("Hubert wins")
+  end
+
+
+  it "That knowledge" do
+    newgame = RPS.new("Philip","Hubert")
+    expect(newgame.play("paper","rock")). to eq ("Philip wins")
+  end
+
+
+  it "That knowledge" do
+    newgame = RPS.new("Philip","Hubert")
+    expect(newgame.play("paper","paper")). to eq ("Tie game!")
+
+  end
+
+  it "should end after winning 2 games" do
+
+    newgame = RPS.new("Philip","Hubert")
+    newgame.play("rock","scissors")
+    expect(newgame.play("rock","scissors")).to eq("Philip is the complete and utter victor")
+  end
+
+  it "should tell you to start a new game if you already won twice" do
+
+    newgame = RPS.new("Philip", "Hubert")
+    newgame.play("rock","scissors")
+    newgame.play("rock","scissors")
+    expect(newgame.play("rock", "scissors")).to eq("this game is over, start a new one sucka")
+  end
+
+
+end
+
+describe RPSPlayer do
+
+  it "Starts RPSPlayer" do
+    newgame = RPSPlayer.new
+
+  end
+
 
 end
