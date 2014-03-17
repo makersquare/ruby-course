@@ -99,12 +99,23 @@ class RPS
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
-  attr_accessor :player1, :player2, :player1_move, :player2_move,:count1, :count2
+  attr_accessor :player1, :player2, :player1_move, :player2_move,:count1, :count2, :winner
+  attr_reader :gameover
   def initialize(player1, player2)
     @player1=player1
     @player2=player2
     @count1=0
     @count2=0
+    @gameover=false
+    @winner=""
+  end
+
+  def winner
+      if @count1==2
+        @winner=@player1
+      elsif @count2==2
+        @winner=@player2
+      end
   end
 
   def play(player1_move, player2_move)
@@ -114,36 +125,34 @@ class RPS
 
     if @count1 >=2 || @count2 >=2
       puts "There's a winner already!"
-
-
+    elsif @player1_move==@player2_move
+      puts "Tie!"
     elsif @player1_move=="rock" && @player2_move=="paper"
-        puts "#{@player2}"
+        puts "#{@player2} wins!"
         @count2+=1
-
     elsif @player1_move=="rock" && @player2_move=="scissors"
-        puts "#{@player1}"
+        puts "#{@player1} wins!"
         @count1+=1
-
     elsif @player1_move=="paper" && @player2_move=="scissors"
-        puts "#{@player2}"
+        puts "#{@player2} wins!"
         @count2+=1
-
     elsif @player1_move=="paper" && @player2_move=="rock"
-        puts "#{@player1}"
+        puts "#{@player1} wins!"
         @count1+=1
-
     elsif @player1_move=="scissors" && @player2_move=="rock"
-        puts "#{@player2}"
+        puts "#{@player2} wins!"
         @count2+=1
-
     elsif @player1_move=="scissors" && @player2_move=="paper"
-        puts "#{@player1}"
+        puts "#{@player1} wins!"
         @count1+=1
+    else
+        puts "Invalid move, try again"
 
     end
 
     if @count1==2 || @count2 ==2
       puts "Game over!"
+      @gameover = true
 
   end
 end
@@ -162,6 +171,34 @@ class RPSPlayer
   #
   # When the game ends, ask if the player wants to play again.
   def start
+
+    puts "What is 1st player's name?"
+    player1 = STDIN.noecho(&:gets)
+    puts "What is 2nd player's name?"
+    player2 = STDIN.noecho(&:gets)
+
+    game=RPS.new(player1,player2)
+
+    while game.gameover==false
+    puts "What is 1st player's move?"
+    player1_move=STDIN.noecho(&:gets)
+    puts "What is 2nd player's move?"
+    player2_move=STDIN.noecho(&:gets)
+
+    game.play(player1_move,player2_move)
+    end
+
+    puts "Do you want to play again?"
+    answer=STDIN.noecho(&:gets)
+    if answer=="yes"
+        game=RPSPlayer.new
+        game.start
+    elsif answer=="no"
+        puts "Come play again!"
+    end
+
+
+
 
     # TODO
 

@@ -102,9 +102,5 @@ describe "RPS" do
 
     game.play("rock","scissors")
   end
-
-
-
-
 end
 
