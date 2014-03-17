@@ -44,5 +44,15 @@ describe Exercises do
 				expect(result).to eq(25)
 			end
 		end
+
+		describe "Exercise 5" do
+			it "iterates through an array and `puts` each element" do
+				result = Exercises.ex5(@animals)
+				expect(STDOUT).to receive(:puts).with('tiger')
+				expect(STDOUT).to receive(:puts).with('lion')
+				expect(STDOUT).to receive(:puts).with('crocodile')
+				expect(STDOUT).to receive(:puts).with('snake')
+			end
+		end
 	end
 end
