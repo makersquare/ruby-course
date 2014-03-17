@@ -40,4 +40,15 @@ describe Exercises do
     expect(result2).to eq 10
   end
 
+  it 'iterates through an array and puts each element' do
+        expect(STDOUT).to receive(:puts).with("brandon")
+        expect(STDOUT).to receive(:puts).with("beasley")
+        Exercises.ex5(["brandon", "beasley"])
+  end
+
+  it 'updates the last item in the array to panda' do
+    result = Exercises.ex6([1,2,3])
+    expect(result).to eq [1,2,"panda"]
+  end
+
 end
