@@ -70,16 +70,29 @@ module Exercises
   #    { :name => 'Bob', :occupation => 'Builder' }
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
-    # TODO
+    people.each { |person|
+      person.each { |key, value|
+        puts "#{value}"
+      }
+    }
   end
 
   # Exercise 9
-  #  - Returns `true` if the given time is in a leap year
+   # - Returns `true` if the given time is in a leap year
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
-    # TODO
+    if time % 400 == 0
+      return true
+    elsif time % 100 == 0
+      return false
+    elsif time % 4 == 0
+      return true
+    else
+      return false
+    end
   end
+
 end
 
 
