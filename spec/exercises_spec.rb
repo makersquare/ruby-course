@@ -26,3 +26,20 @@ describe 'Exercises 1' do
   end
 
 end
+
+describe 'Exercises 2' do
+  it 'Returns second element in array' do
+    array = [1,23,2453,32523,325]
+    result = Exercises.ex2(array)
+    expect(result).to eq(23)
+  end
+
+end
+
+describe 'Exercises 3' do
+  it 'Returns the sum of an array' do
+    array = [2,3,4,1]
+    result = Exercises.ex3(array)
+    expect(result).to eq(10)
+  end
+end
