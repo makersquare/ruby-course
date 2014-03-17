@@ -99,13 +99,29 @@ class RPS
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
-  attr_accessor :player1, :player2
+  attr_accessor :player1, :player2, :player1_move, :player2_move
   def initialize(player1, player2)
     @player1=player1
     @player2=player2
   end
 
   def play(player1_move, player2_move)
+    @player1_move=player1_move
+    @player2_move=player2_move
+
+    if @player1_move=="rock" && @player2_move=="paper"
+       @player2
+    elsif @player1_move=="rock" && @player2_move=="scissors"
+        @player1
+    elsif @player1_move=="paper" && @player2_move=="scissors"
+        @player2
+    elsif @player1_move=="paper" && @player2_move=="rock"
+        @player1
+    elsif @player1_move=="scissors" && @player2_move=="rock"
+      @player2
+    elsif @player1_move=="scissors" && @player2_move=="paper"
+      @player1
+    end
   end
 
 end

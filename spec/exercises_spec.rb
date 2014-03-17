@@ -83,5 +83,30 @@ describe "RPS" do
     expect(game.player2).to eq("andy")
   end
 
+  it "play method represents each player's move"do
+    game=RPS.new("wendy","andy")
+    game1=game.play("rock","paper")
+    expect(game1).to eq("andy")
+
+    game2=game.play("rock","scissors")
+    expect(game2).to eq("wendy")
+
+    game3=game.play("paper","scissors")
+    expect(game3).to eq("andy")
+
+    game4=game.play("paper","rock")
+    expect(game4).to eq("wendy")
+
+    game5=game.play("scissors","rock")
+    expect(game5).to eq("andy")
+
+    game6=game.play("scissors","paper")
+    expect(game6).to eq("wendy")
+
+
+
+
+
+  end
 end
 
