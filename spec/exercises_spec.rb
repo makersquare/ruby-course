@@ -40,4 +40,18 @@ describe Exercises do
       expect( Exercises.ex4( testarray ) ).to eq(9)
     end
   end
+
+  describe "Exercise 5" do
+    it "Iterates through an array and 'puts' each element" do
+      testarray = [1, 2, 3, 4, 5]
+      Exercises.ex5( testarray )
+      expect(STDOUT).to receive(:puts).with(%{
+        1
+        2
+        3
+        4
+        5
+        })
+    end
+  end
 end
