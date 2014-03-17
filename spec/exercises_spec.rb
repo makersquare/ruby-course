@@ -75,6 +75,20 @@ describe "RPS" do
 		expect(result.name2).to eq("sally")
 	end
 
-	it
+	it "checks whether 2 games have been won already" do
+		result = RPS.new("noel","sally")
+		result.play("rock","scissors")
+		result.play("rock","scissors")
+		STDOUT.should_receive(:puts).with("Game is now over!")
+		STDOUT.should_receive(:puts).with("Game already over!")
+		result.play("rock","scissors")
+				
+	end
+
+	it "shows which player wins" do
+		result = RPS.new("noel","sally")
+		STDOUT.should_receive(:puts).with("noel wins!")
+		result.play("rock","scissors")
+	end
 
 end

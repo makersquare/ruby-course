@@ -105,13 +105,25 @@ class RPS
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
-  attr_reader :count2, :count1, :name1, :name2
+  attr_reader :count2, :count1, :name1, :name2, :gameover, :winner
   def initialize (name1,name2)
     @name1 = name1
     @name2 = name2
     @count1 = 0
     @count2 = 0
+    @gameover = false
+    @winner = ""
   end
+
+  def winner
+    if @count1 == 2
+      @winner = @name1
+      puts "#{@winner} is the winner!"
+    elsif @count2 == 2
+      @winner = @name2
+      puts "#{@winner} is the winner!"
+    end
+    end
 
   def play (choice1,choice2)
     if @count2 >= 2 || @count1 >= 2
@@ -139,6 +151,7 @@ class RPS
 
         end
          if @count1 == 2 || @count2 == 2
+          @gameover = true
           puts "Game is now over!"
           end
   end
@@ -166,18 +179,28 @@ class RPSPlayer
     #          what the player is typing! :D
     # This is also why we needed to require 'io/console'
     # move = STDIN.noecho(&:gets)
-    puts "Would you like to play rock/paper/scissors?"
-    response = STDIN.noecho(&:gets)
-    puts "Enter 1st player's name"
-    name1 = STDIN.noecho(&:gets)
-    puts "Enter 2nd player's name"
-    name2 = STDIN.noecho(&:gets)
+   
 
+   puts "1st player's name?"
+   player1 = STDIN.noecho(&:gets)
+   puts "2nd player's name?"
+   player2 = STDIN.noecho(&:gets)
+
+   newgame = RPS.new(player1, player2)
+while newgame.gameover == false
     puts "1st player, whats your move?"
     move1 = STDIN.noecho(&:gets)
     puts "2nd player,s what's your move?"
     move2 = STDIN.noecho(&:gets)
+
+    newgame.play(move1, move2)
     
+    end
+
+    newgame.winner
+
+    
+
 
     
      
