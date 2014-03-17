@@ -73,5 +73,23 @@ describe 'Exercise 7' do
   end
 end
 
+describe 'Exercise 8' do
+  it "prints each element of the people hash with proper formatting" do
+    array = [{ name: "Bob",
+              occupation: "drug-dealer" },
+              { name: "Bill",
+                occupation: "drug-consumer" },
+                { name: "Billy",
+                  occupation: "lazy musician" }]
+
+    STDOUT.should_receive(:puts).with("Name: Bob")
+    STDOUT.should_receive(:puts).with("Occupation: drug-dealer")
+    STDOUT.should_receive(:puts).with("Name: Bill")
+    STDOUT.should_receive(:puts).with("Occupation: drug-consumer")
+    STDOUT.should_receive(:puts).with("Name: Billy")
+    STDOUT.should_receive(:puts).with("Occupation: lazy musician")
+    Exercises.ex8(array)
+  end
+end
 
 

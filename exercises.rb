@@ -60,8 +60,6 @@ module Exercises
     if array.include?(str)
       array << str
     end
-
-    # TODO
   end
 
   # Exercise 8
@@ -69,7 +67,10 @@ module Exercises
   #    { :name => 'Bob', :occupation => 'Builder' }
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
-    # TODO
+    people.each do |x|
+      puts "Name: #{x[:name]}"
+      puts "Occupation: #{x[:occupation]}"
+    end
   end
 
   # Exercise 9
