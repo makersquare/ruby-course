@@ -59,7 +59,9 @@ describe Exercises do
     it "Updates the last item in the array to panda" do
       testarray = ["kangaroo", "koala", "snake", "tiger"]
 
-      result = Exercises.ex6(testarray,"").last
+      Exercises.ex6(testarray,"")
+
+      result = testarray.last
 
       expect( result ).to eq("panda")
     end
@@ -67,9 +69,27 @@ describe Exercises do
     it "If the last item is already 'panda', update to 'Godzilla' instead" do
       testarray = ["kangaroo", "koala", "snake", "panda"]
 
-      result = Exercises.ex6(testarray,"").last
+      Exercises.ex6(testarray,"")
+
+      result = testarray.last
 
       expect( result ).to eq("GODZILLA")
+    end
+  end
+
+  describe "Exercise 7" do
+    xit "Does not insert string that is not already there" do
+      testarray = ["kangaroo", "koala", "snake", "tiger"]
+      result = Exercises.ex7(testarray,"lion")
+      expected = ["kangaroo", "koala", "snake", "tiger"]
+
+    end
+
+    xit "Does insert a string that is already there" do
+      testarray = ["kangaroo", "koala", "snake", "tiger"]
+      result = Exercises.ex7(testarray,"snake")
+      expected = ["kangaroo", "koala", "snake", "tiger","snake"]
+
     end
   end
 end

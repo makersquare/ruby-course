@@ -52,7 +52,6 @@ module Exercises
   def self.ex6(array, str)
     # TODO
     array.last == "panda" ? array[array.size] = "GODZILLA" : array[array.size] = "panda"
-    array
   end
 
   # Exercise 7
