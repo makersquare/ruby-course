@@ -165,8 +165,19 @@ describe RPS do
       name4 = @fungame.play("paper","rock")
       name5 = @fungame.play("paper","paper")
 
-
       expect(name5).to eq("Game over!")
     end
+  end
+end
+
+describe RPSPlayer do
+  before do
+    @RPSPlayer = RPSPlayer.new
+  end
+
+  it "gets two player names and creates RPS class" do
+    @RPSPlayer.start
+    expect( @RPSPlayer.RPS ).to be_a( RPS )
+    expect( @RPSPlayer.RPS.player2 ).to be_a( String )
   end
 end
