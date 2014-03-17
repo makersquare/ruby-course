@@ -194,18 +194,27 @@ while newgame.gameover == false
     move2 = STDIN.noecho(&:gets)
 
     newgame.play(move1, move2)
-    
+    newgame.winner
     end
 
+   
+
+    puts "Do you want to play again?"
+    response =STDIN.noecho(&:gets)
+    if response == "yes"
+      newgame2=RPS.new(player1, player2)
+  while newgame.gameover == false
+    puts "1st player, whats your move?"
+    move1 = STDIN.noecho(&:gets)
+    puts "2nd player,s what's your move?"
+    move2 = STDIN.noecho(&:gets)
+
+    newgame.play(move1, move2)
     newgame.winner
-
-    
-
-
-    
-     
-
-
+    end
+  else 
+    puts "Thanks for playing!"
+  end
 
   end
 end
