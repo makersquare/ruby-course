@@ -56,3 +56,12 @@ describe 'Exercise 5' do
 		result = Exercises.ex5(ary)
 	end
 end
+
+describe 'Exercise 6' do
+	it "updates the last item in the array to 'panda'" do
+		ary = [1,2,3,4,5]
+		str = "panda"
+		result = Exercises.ex6(ary, str)
+		expect(result).to eq("panda")
+	end
+end

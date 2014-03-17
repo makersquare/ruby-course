@@ -52,6 +52,8 @@ module Exercises
   #    it to 'GODZILLA' instead
   def self.ex6(array, str)
     # TODO
+    array[-1] = str
+
   end
 
   # Exercise 7
