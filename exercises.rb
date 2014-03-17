@@ -19,13 +19,13 @@ module Exercises
   def self.ex1(array)
     # TODO
     number = array.length
-    number
   end
 
   # Exercise 2
   #  - Returns the second element of an array
   def self.ex2(array)
     # TODO
+    second = array[1]
   end
 
   # Exercise 3

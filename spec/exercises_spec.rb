@@ -17,4 +17,10 @@ describe Exercises do
     expect(number_elements_array).to eq (5)
   end
 
+  it "Returns the second element of an array" do
+    array = [1,2,"hi","bye",4]
+    second_element_array = Exercises.ex2(array)
+    expect(second_element_array).to eq (2)
+  end
+
 end
