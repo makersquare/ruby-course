@@ -181,7 +181,7 @@ describe RPSPlayer do
     expect( @rpsplayer.rps.player2 ).to be_a( String )
   end
 
-  xit "Accepts input of each player's move and feeds them to the newly created RPS class" do
+  it "Accepts input of each player's move and feeds them to the newly created RPS class" do
     @rpsplayer.rps.should_receive( :play )
   end
 end
