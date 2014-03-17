@@ -41,7 +41,13 @@ describe 'Exercise 4' do
   end
 end
 
+describe 'Exercise 5' do
+  it "puts each element of a given array" do
+    array = ["dog", "cat", "gator"]
+    STDOUT.should_receive(:puts).with("dog")
+    STDOUT.should_receive(:puts).with("cat")
+    STDOUT.should_receive(:puts).with("gator")
+    Exercises.ex5(array)
+  end
 
-
-
-
+end
