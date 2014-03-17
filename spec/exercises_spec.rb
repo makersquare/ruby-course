@@ -49,11 +49,18 @@ describe "Exercises" do
   end
 
   it "adds str to end of the array if it exists in array" do
-
-
     result=Exercises.ex7(["hello","chocolate","pie"],"chocolate")
     expect(result).to eq(["hello","chocolate","pie","chocolate"])
   end
+
+  it "iterates through an array of hashes and prints out key and value"do
+    STDOUT.should_receive(:puts).with("Bob: Builder")
+    STDOUT.should_receive(:puts).with("Casper: Ghost")
+    result=Exercises.ex8([{:name=> "Bob", :occupation=>"Builder"},{:name =>"Casper", :occupation => "Ghost"}])
+  end
+
+  it "returns true if given time is in a leap year" do
+    result
 
 end
 

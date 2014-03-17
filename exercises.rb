@@ -72,7 +72,7 @@ module Exercises
   #    { :name => 'Bob', :occupation => 'Builder' }
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
-    # TODO
+    people.each{|x| puts "#{x[:name]}: #{x[:occupation]}"}
   end
 
   # Exercise 9
