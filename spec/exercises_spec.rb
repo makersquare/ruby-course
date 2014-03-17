@@ -64,6 +64,15 @@ describe 'Excercise 6' do
   end
 end
 
+describe 'Excercise 7' do
+  it 'if string exists in array, add it again to the end' do
+    the_array1 = ["hey","whats","up","man"]
+    the_word = "whats"
+    result = Exercises.ex7(the_array1, the_word)
+    expect(result).to eq ["hey","whats","up","man","whats"]
+  end
+end
+
 
 
 
