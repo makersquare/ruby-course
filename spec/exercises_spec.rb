@@ -32,5 +32,11 @@ describe Exercises do
     expect(result).to eq(9)
   end
 
+  it "iterates through an array and puts each element" do
+    expect(STDOUT).to receive(:puts).with("hello")
+    expect(STDOUT).to receive(:puts).with("hi")
+    expect(STDOUT).to receive(:puts).with("howdy")
+    Exercises.ex5(["hello", "hi", "howdy"])
+  end
 end
 
