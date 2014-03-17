@@ -31,7 +31,9 @@ describe 'self.ex2' do
 end
 
 describe 'self.ex3' do
-  it '' do
-
+  it 'returns the sum of the given array of elements' do
+    arr = [1, 2, 3, 4]
+    result = Exercises.ex3(arr)
+    expect(result).to eq 10
   end
 end
