@@ -163,8 +163,10 @@ describe RPS do
       name2 = @fungame.play("rock","paper")
       name3 = @fungame.play("rock","scissors")
       name4 = @fungame.play("paper","rock")
+      name5 = @fungame.play("paper","paper")
 
-      expect(name4).to eq("Game over!")
+
+      expect(name5).to eq("Game over!")
     end
   end
 end

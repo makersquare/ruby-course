@@ -111,7 +111,9 @@ class RPS
     player1_move.downcase!
     player2_move.downcase!
 
-    if player1_move == player2_move
+    if @player1_wins >= 2 || @player2_wins >= 2
+      return "Game over!"
+    elsif player1_move == player2_move
       return "tie"
     elsif player1_move == "rock"
       winner = player2_move == "paper" ? @player2  : @player1
