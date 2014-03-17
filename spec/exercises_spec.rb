@@ -17,5 +17,9 @@ describe "Exercises" do
     expect(result).to eq(3)
   end
 
-  it ""
+  it "returns the second element of the array" do
+    result=Exercises.ex2(["fighting","yell","shout"])
+    expect(result).to eq("yell")
+  end
+
 end
