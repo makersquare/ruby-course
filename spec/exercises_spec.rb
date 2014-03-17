@@ -53,4 +53,16 @@ describe "exercises" do
 		STDOUT.should_receive(:puts).with("chris: student")
 		result = Exercises.ex8([{:name => "bob", :occupation => "waiter"}, {:name=> "chris", :occupation => "student"}])
 	end
+
+	it "returns true if given time is in a leap year, else false" do
+
+		result = Exercises.ex9(DateTime.now)
+		expect(result).to eq(false)
+
+		current_date = DateTime.parse('2016-01-02')
+		DateTime.stub(:now).and_return(current_date)
+		result2 = Exercises.ex9(DateTime.now)
+		expect(result2).to eq(true)
+
+	end
 end

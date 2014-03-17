@@ -86,7 +86,9 @@ module Exercises
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
     # TODO
-  end
+    time = DateTime.now
+    Date.leap?(time.year)
+end
 end
 
 
@@ -127,6 +129,11 @@ class RPSPlayer
     #          what the player is typing! :D
     # This is also why we needed to require 'io/console'
     # move = STDIN.noecho(&:gets)
+    puts "Enter 1st player's name"
+    name1 = STDIN.noecho(&:gets)
+    puts "Enter 2nd player's name"
+    name2 = STDIN.noecho(&:gets)
+
   end
 end
 
