@@ -88,7 +88,7 @@ describe Exercises do
     it "Does insert a string that is already there" do
       testarray = ["kangaroo", "koala", "snake", "tiger"]
       Exercises.ex7(testarray,"snake")
-      expected = ["kangaroo", "koala", "snake", "tiger","snake"]
+      expected = ["kangaroo", "koala", "snake", "tiger", "snake"]
 
       expect( testarray ).to eq( expected )
     end

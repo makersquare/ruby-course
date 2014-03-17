@@ -59,6 +59,7 @@ module Exercises
   #    add `str` to the end of the array
   def self.ex7(array, str)
     # TODO
+    array.include?(str) ? array.push(str) : return
   end
 
   # Exercise 8
