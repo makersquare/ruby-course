@@ -96,6 +96,13 @@ describe RPS do
     expect(result3).to eq("tie")
   end
 
+  it "returns a game is over message is someone gets more than 1 win." do
+    @game.play("paper", "rock")
+    @game.play("paper", "rock")
+    result = @game.play("paper", "rock")
+    expect(result).to eq("game has ended")
+  end
+
 end
 
 

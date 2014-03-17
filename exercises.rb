@@ -106,15 +106,23 @@ class RPS
   def initialize(p1name, p2name)
     @p1name = p1name
     @p2name = p2name
+    @wins1 = 0
+    @wins2 = 0
   end
 
   def play(move1, move2)
-    if (move1 == "rock" && move2 =="scissors") || (move1 == "paper" && move2 == "rock") || (move1 == "scissors" && move2 == "paper")
-      return "player1"
-    elsif (move2 == "rock" && move1 =="scissors") || (move2 == "paper" && move1 == "rock") || (move2 == "scissors" && move1 == "paper")
-      return "player2"
+    if @wins1 == 2 || @wins2 == 2
+      return "game has ended"
     else
-      return "tie"
+      if (move1 == "rock" && move2 =="scissors") || (move1 == "paper" && move2 == "rock") || (move1 == "scissors" && move2 == "paper")
+        @wins1 += 1
+        return "player1"
+      elsif (move2 == "rock" && move1 =="scissors") || (move2 == "paper" && move1 == "rock") || (move2 == "scissors" && move1 == "paper")
+        @wins2 += 1
+        return "player2"
+      else
+        return "tie"
+      end
     end
   end
 end
