@@ -53,9 +53,12 @@ describe 'RPS' do
     expect(@newGame.gameOver).to eq(true)
   end
 
+  it "returns the correct winner" do
+    winner = @newGame.play("paper","rock")
+    winner = @newGame.play("paper","rock")
 
-
-
-
+    expect(winner).to eq("Bob Wins the Game")
+    expect(@newGame.gameWinner).to eq("Player One")
+  end
 
 end
