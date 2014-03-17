@@ -1,4 +1,5 @@
 require "./exercises.rb"
+require "time"
 
 describe "Exercises" do
 
@@ -60,7 +61,16 @@ describe "Exercises" do
   end
 
   it "returns true if given time is in a leap year" do
-    result
+    given_time=DateTime.parse("2014-03-02")
+    DateTime.stub(:now).and_return(given_time)
+    result=Exercises.ex9(DateTime.now)
+    expect(result).to eq(false)
+
+    given_time2=DateTime.parse("2016-02-04")
+    DateTime.stub(:now).and_return(given_time2)
+    result2 = Exercises.ex9(DateTime.now)
+    expect(result2).to eq(true)
+  end
 
 end
 

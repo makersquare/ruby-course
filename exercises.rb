@@ -80,7 +80,8 @@ module Exercises
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
-    # TODO
+    # time=Time.now
+    Date.leap?(time.year)
   end
 end
 
@@ -98,6 +99,10 @@ class RPS
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
+  def initialize(player1, player2)
+    @player1=player1
+  end
+
 end
 
 
