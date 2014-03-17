@@ -96,8 +96,8 @@ class RPS
   # It is initialized with two strings (player names).
   attr_reader :player_one, :player_two
   def initialize(p1, p2)
-    @player_one = p1
-    @player_two = p2
+    @player_one = {name: p1, wins: 0}
+    @player_two = {name: p2, wins: 0}
   end
   # It has a `play` method that takes two strings:
   #   - Each string reperesents a player's move (rock, paper, or scissors)
@@ -107,32 +107,107 @@ class RPS
 
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
+    def play(move_one, move_two)
+      if (@player_one[:wins] >= 2 || @player_two[:wins] >= 2)
+        return 'The game is already over! it\'s best 2 out of 3'
+      elsif (move_one == 'rock' && move_two == 'rock')
+        winner = 'tie'
+      elsif (move_one == 'rock' && move_two == 'paper')
+        winner = @player_two
+        @player_one[:wins] += 1
+      elsif (move_one == 'rock' && move_two == 'scissors')
+        winner = @player_one
+        @player_one[:wins] += 1
+      elsif (move_one == 'paper' && move_two == 'rock')
+        winner = @player_two
+        @player_two[:wins] += 1
+      elsif (move_one == 'paper' && move_two == 'paper')
+        winner = 'tie'
+      elsif (move_one == 'paper' && move_two == 'scissors')
+        winner = @player_two
+        @player_two[:wins] += 1
+      elsif (move_one == 'scissors' && move_two == 'rock')
+        winner = @player_two
+        @player_two[:wins] += 1
+      elsif (move_one == 'scissors' && move_two == 'paper')
+        winner = @player_one
+        @player_one[:wins] += 1
+      elsif (move_one == 'scissors' && move_two == 'scissors')
+        winner = 'tie'
+      end
+      winner
+  end
 end
 
 
 require 'io/console'
 class RPSPlayer
-  # (No specs are required for RPSPlayer)
-  #
-  # Complete the `start` method so that it uses your RPS class to present
-  # and play a game through the terminal.
-  #
-  # The first step is to read (gets) the two player names. Feed these into
-  # a new instance of your RPS class. Then `puts` and `gets` in a loop that
-  # lets both players play the game.
-  #
-  # When the game ends, ask if the player wants to play again.
+  def initialize
+  end
   def start
+    print 'enter player 1 name: '
+    p1_name = gets.chomp
+    print 'enter player 2 name: '
+    p2_name = gets.chomp
+    # puts "before game_count"
+    game_count = 0
+    # puts "before play_count"
+    play_game = "yes"
 
-    # TODO
+    # puts "before the hashes"
+    player_one = p1_name
+    player_two = p2_name
 
-    # PRO TIP: Instead of using plain `gets` for grabbing a player's
-    #          move, this line does the same thing but does NOT show
-    #          what the player is typing! :D
-    # This is also why we needed to require 'io/console'
-    # move = STDIN.noecho(&:gets)
+    #binding.pry
+    # puts "before instantiation"
+    game = RPS.new(player_one, player_two)
+    # puts "after instantiation"
+    while (play_game == 'yes')
+      while (game_count < 5)
+
+        print "#{p1_name} choose your weapon: "
+        move_one = gets.chomp
+        print "#{p2_name} choose your weapon: "
+        move_two = gets.chomp
+        outcome = game.play(move_one, move_two)
+
+        scoreboard.push(outcome[:name])
+
+        if (outcome != 'tie')
+          puts "AND THE WINNER IS... #{outcome[:name]}"
+        else
+          puts outcome
+        end
+
+        game_count += 1
+
+      end
+
+      print "do you want to play again?"
+      play_game = gets
+
+    end
   end
 end
+#   (No specs are required for RPSPlayer)
+
+#   Complete the `start` method so that it uses your RPS class to present
+#   and play a game through the terminal.
+
+#   The first step is to read (gets) the two player names. Feed these into
+#   a new instance of your RPS class. Then `puts` and `gets` in a loop that
+#   lets both players play the game.
+
+#   When the game ends, ask if the player wants to play again.
+
+
+#     TODO
+
+#     PRO TIP: Instead of using plain `gets` for grabbing a player's
+#              move, this line does the same thing but does NOT show
+#              what the player is typing! :D
+#     This is also why we needed to require 'io/console'
+#     move = STDIN.noecho(&:gets)
 
 
 module Extensions
@@ -147,6 +222,28 @@ module Extensions
   #   expect(result).to eq({ :most => 'x', :least => ['y', 'z'] })
   #
   def self.extremes(array)
-    # TODO
+    temp_array = []
+    temp_hash = Hash.new(0)
+    extremes_hash = Hash.new(0)
+
+    array.each do |elem|
+      temp_hash[elem] += 1
+    end
+
+   temp_keys = temp_hash.keys
+   temp_values = temp_hash.values
+   most_index = temp_values.find_index(temp_hash.values.max)
+
+   extremes_hash[:most] = temp_keys[most_index]
+
+    temp_hash.each do |k,v|
+      if k != temp_keys[most_index]
+        temp_array.push(k)
+      end
+    end
+
+    extremes_hash[:least] = temp_array
+
+    extremes_hash
   end
 end

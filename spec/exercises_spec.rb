@@ -114,12 +114,43 @@ describe 'self.ex9' do
   end
 end
 
-describe 'initialize' do
-  it 'initializes with two strings (player names)' do
-    game = RPS.new('joe', 'larry')
+describe RPS do
+  describe '.initialize' do
+    it 'initializes with two strings (player names)' do
+      game = RPS.new('joe', 'larry')
 
-    expect(game.player_one).to eq('joe')
-    expect(game.player_two). to eq('larry')
+      expect(game.player_one[:name]).to eq('joe')
+      expect(game.player_two[:name]). to eq('larry')
 
+    end
+  end
+
+  describe '#play' do
+    it 'takes 2 string arguments' do
+      game = RPS.new('joe', 'larry')
+      game.play('rock', 'scissors')
+    end
+    it 'returns the winner' do
+      game = RPS.new('joe', 'larry')
+      result = game.play('rock', 'scissors')
+      expect(result[:name]).to eq('joe')
+
+      result = game.play('rock', 'rock')
+      expect(result).to eq('tie')
+
+      result = game.play('scissors', 'rock')
+      expect(result[:name]).to eq('larry')
+
+    end
   end
 end
+
+
+describe 'self.extremes' do
+  it 'takes an array of strings and returns a hash' do
+    arr = ['hello', 'hi', 'hi', 'say']
+    result = Extensions.extremes(arr)
+    expect(result).to eq({:most =>'hi', :least => ['hello', 'say']})
+  end
+end
+
