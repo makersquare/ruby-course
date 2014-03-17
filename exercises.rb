@@ -99,33 +99,55 @@ class RPS
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
-  attr_accessor :player1, :player2, :player1_move, :player2_move
+  attr_accessor :player1, :player2, :player1_move, :player2_move,:count1, :count2
   def initialize(player1, player2)
     @player1=player1
     @player2=player2
+    @count1=0
+    @count2=0
   end
 
   def play(player1_move, player2_move)
+
     @player1_move=player1_move
     @player2_move=player2_move
 
-    if @player1_move=="rock" && @player2_move=="paper"
-       @player2
+    if @count1 >=2 || @count2 >=2
+      puts "There's a winner already!"
+
+
+    elsif @player1_move=="rock" && @player2_move=="paper"
+        puts "#{@player2}"
+        @count2+=1
+
     elsif @player1_move=="rock" && @player2_move=="scissors"
-        @player1
+        puts "#{@player1}"
+        @count1+=1
+
     elsif @player1_move=="paper" && @player2_move=="scissors"
-        @player2
+        puts "#{@player2}"
+        @count2+=1
+
     elsif @player1_move=="paper" && @player2_move=="rock"
-        @player1
+        puts "#{@player1}"
+        @count1+=1
+
     elsif @player1_move=="scissors" && @player2_move=="rock"
-      @player2
+        puts "#{@player2}"
+        @count2+=1
+
     elsif @player1_move=="scissors" && @player2_move=="paper"
-      @player1
+        puts "#{@player1}"
+        @count1+=1
+
     end
+
+    if @count1==2 || @count2 ==2
+      puts "Game over!"
+
   end
-
 end
-
+end
 
 require 'io/console'
 class RPSPlayer

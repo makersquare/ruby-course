@@ -11,7 +11,7 @@ describe "Exercises" do
   it "returns 'nope' if the stirng is 'wishes'" do
     result=Exercises.ex0("wishes")
     expect(result).to eq("nope")
-  end
+ end
 
   it "returns the number of elements in the array" do
     result=Exercises.ex1(["fighting", "yell","shout"])
@@ -85,28 +85,26 @@ describe "RPS" do
 
   it "play method represents each player's move"do
     game=RPS.new("wendy","andy")
+
+    STDOUT.should_receive(:puts).with("andy")
     game1=game.play("rock","paper")
-    expect(game1).to eq("andy")
-
+    STDOUT.should_receive(:puts).with("wendy")
     game2=game.play("rock","scissors")
-    expect(game2).to eq("wendy")
-
-    game3=game.play("paper","scissors")
-    expect(game3).to eq("andy")
-
-    game4=game.play("paper","rock")
-    expect(game4).to eq("wendy")
-
-    game5=game.play("scissors","rock")
-    expect(game5).to eq("andy")
-
-    game6=game.play("scissors","paper")
-    expect(game6).to eq("wendy")
-
-
-
-
 
   end
+
+  it "returns 'game over' when a player wins 2/3 games"do
+    game=RPS.new("wendy","andy")
+    game.play("rock","paper")
+    game.play("rock","paper")
+    STDOUT.should_receive(:puts).with("Game over!")
+    STDOUT.should_receive(:puts).with("There's a winner already!")
+
+    game.play("rock","scissors")
+  end
+
+
+
+
 end
 
