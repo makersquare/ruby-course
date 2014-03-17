@@ -27,5 +27,10 @@ describe Exercises do
     expect(result).to eq(6)
   end
 
+  it "returns the max number of given array" do
+    result = Exercises.ex4([1,5,2,9,3])
+    expect(result).to eq(9)
+  end
+
 end
 
