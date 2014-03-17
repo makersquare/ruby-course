@@ -66,3 +66,15 @@ describe "exercises" do
 
 	end
 end
+
+describe "RPS" do
+
+	it "initializes with 2 names in parameter" do
+		result = RPS.new("noel","sally")
+		expect(result.name1).to eq("noel")
+		expect(result.name2).to eq("sally")
+	end
+
+	it
+
+end
