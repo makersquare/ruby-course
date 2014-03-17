@@ -17,5 +17,10 @@ describe Exercises do
     expect(result).to eq(3)
   end
 
+  it "returns the second element of an array" do
+    result = Exercises.ex2(["Brady", "Bryan"])
+    expect(result).to eq("Bryan")
+  end
+
 end
 
