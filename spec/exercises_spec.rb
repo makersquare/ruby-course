@@ -34,5 +34,14 @@ describe "exercises" do
 	
 	end
 
+	it "updates last item in array to panda, if panda already, godzilla" do
+		result = Exercises.ex6(["hello","goodbye"])
+		expect(result).to eq(["hello","goodbye","panda"])
+
+		result2 = Exercises.ex6(["hello", "panda"])
+		expect(result2).to eq(["hello","panda","GODZILLA"])
+	end
+
+	
 
 end

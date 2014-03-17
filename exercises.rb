@@ -51,8 +51,14 @@ module Exercises
   #  - Updates the last item in the array to 'panda'
   #  - If the last item is already 'panda', update
   #    it to 'GODZILLA' instead
-  def self.ex6(array, str)
+  def self.ex6(array)
     # TODO
+    unless array.include?("panda")
+      array.push("panda")
+    else 
+      array.push("GODZILLA")
+    end
+    
   end
 
   # Exercise 7
