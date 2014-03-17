@@ -111,54 +111,54 @@ describe RPS do
     #returns winner
     # if over, retunrs a string --> over
     # ends after a player wins 2/3
-  it "That knowledge" do
+  it "rock vs scissors, player 1 wins" do
     newgame = RPS.new("Philip","Hubert")
     expect(newgame.play("rock","scissors")).to eq ("Philip wins")
   end
 
-  it "That knowledge" do
+  it "rock vs paper, player 2 wins" do
     newgame = RPS.new("Philip","Hubert")
     expect(newgame.play("rock","paper")). to eq ("Hubert wins")
   end
 
 
-  it "That knowledge" do
+  it "rock vs rock, tie" do
     newgame = RPS.new("Philip","Hubert")
     expect(newgame.play("rock","rock")). to eq ("Tie game!")
   end
 
 
-  it "That knowledge" do
+  it "scissors vs paper, player 1 wins" do
     newgame = RPS.new("Philip","Hubert")
     expect(newgame.play("scissors","paper")). to eq ("Philip wins")
   end
 
 
-  it "That knowledge" do
+  it "scissors vs rock, player 2 wins" do
     newgame = RPS.new("Philip","Hubert")
     expect(newgame.play("scissors","rock")). to eq ("Hubert wins")
   end
 
 
-  it "That knowledge" do
+  it "scissors vs scissors, tie" do
     newgame = RPS.new("Philip","Hubert")
     expect(newgame.play("scissors","scissors")). to eq ("Tie game!")
   end
 
 
-  it "That knowledge" do
+  it "paper vs scissors, player 2 wins" do
     newgame = RPS.new("Philip","Hubert")
     expect(newgame.play("paper","scissors")). to eq ("Hubert wins")
   end
 
 
-  it "That knowledge" do
+  it "paper vs rock, player 1 wins" do
     newgame = RPS.new("Philip","Hubert")
     expect(newgame.play("paper","rock")). to eq ("Philip wins")
   end
 
 
-  it "That knowledge" do
+  it "paper vs paper, tie" do
     newgame = RPS.new("Philip","Hubert")
     expect(newgame.play("paper","paper")). to eq ("Tie game!")
 
