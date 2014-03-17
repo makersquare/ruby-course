@@ -57,7 +57,12 @@ module Exercises
   #  - If the string `str` exists in the array,
   #    add `str` to the end of the array
   def self.ex7(array, str)
-    # TODO
+    if array.include?(str)
+      array << str
+      return array
+    else
+      return array
+    end
   end
 
   # Exercise 8
