@@ -37,4 +37,12 @@ describe 'Excercise 3' do
   end
 end
 
+describe 'Excercise 4' do
+  it 'returns the max number of the given array' do
+    the_array1 = [1,2,3,4,5]
+    result = Exercises.ex4(the_array1)
+    expect(result).to eq 5
+  end
+end
+
 
