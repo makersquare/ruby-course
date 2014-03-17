@@ -63,4 +63,9 @@ describe Exercises do
     expect(result2).to eq ['brandon', 'beasley']
   end
 
+  it "prints name and occupation of everyone in hash" do
+    result = Exercises.ex8([{ :name => 'brandon', :occupation => 'balla'}, { :name => 'aaron', :occupation => 'translator'}])
+    expect(result).to eq "brandon: balla aaron: translator"
+  end
+
 end
