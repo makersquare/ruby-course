@@ -55,9 +55,16 @@ describe Exercises do
   end
 
   it "iterates through array of hashes and prints name and ocupation" do
-    expect(STDOUT).to receive(:puts).with("Bob: Builder")
-    expect(STDOUT).to receive(:puts).with("Sponge Bob: Burger Chef")
-    Exercises.ex8([{"Bob" => "Builder"}, {"Sponge Bob" => "Burger Chef"}])
+    expect(STDOUT).to receive(:puts).with("Bob")
+    expect(STDOUT).to receive(:puts).with("Builder")
+    expect(STDOUT).to receive(:puts).with("Sponge Bob")
+    expect(STDOUT).to receive(:puts).with("Burger Chef")
+    Exercises.ex8([{name: "Bob", ocupation: "Builder"}, {name: "Sponge Bob", ocupation: "Burger Chef"}])
+  end
+
+  xit "returns true is the given time is in a leap year" do
+    result = Exercises.ex9("February 1988")
+    expect(result).to eq(true)
   end
 
 end

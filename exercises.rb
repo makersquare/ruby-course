@@ -1,4 +1,4 @@
-
+require 'time'
 module Exercises
   # Exercise 0
   #  - Triples a given string `str`
@@ -65,7 +65,7 @@ module Exercises
   def self.ex8(people)
     people.each do |hash|
       hash.each do |k, v|
-        puts "#{k}: #{v}"
+        puts "#{v}"
       end
     end
   end
@@ -75,7 +75,7 @@ module Exercises
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
-    # TODO
+    Time.parse(time)
   end
 end
 
