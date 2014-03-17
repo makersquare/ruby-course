@@ -99,8 +99,13 @@ class RPS
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
+  attr_accessor :player1, :player2
   def initialize(player1, player2)
     @player1=player1
+    @player2=player2
+  end
+
+  def play(player1_move, player2_move)
   end
 
 end

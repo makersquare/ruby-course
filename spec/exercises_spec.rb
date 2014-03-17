@@ -71,6 +71,17 @@ describe "Exercises" do
     result2 = Exercises.ex9(DateTime.now)
     expect(result2).to eq(true)
   end
+end
+
+
+
+describe "RPS" do
+
+  it "initilize with 2 players names" do
+    game=RPS.new("wendy","andy")
+    expect(game.player1).to eq("wendy")
+    expect(game.player2).to eq("andy")
+  end
 
 end
 
