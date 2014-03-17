@@ -129,7 +129,7 @@ class RPS
         @player_two[:wins] += 1
       end
 
-      return winner
+      winner
   end
 
 
@@ -164,6 +164,33 @@ class RPSPlayer
     #          what the player is typing! :D
     # This is also why we needed to require 'io/console'
     # move = STDIN.noecho(&:gets)
+    print "Who's Player 1?"
+    player_one = gets.chomp
+
+    print "Who's Player 2?"
+    player_two = gets.chomp
+
+    game = RPS.new(player_one,  player_two)
+    game_count = 0
+
+    while game_count < 3
+        puts "Your move #{player_one}"
+        move1 = STDIN.noecho(&:gets)
+
+        puts "Now your turn #{player_two}"
+        move2 = STDIN.noecho(&:gets)
+
+        winner = game.play(move1, move2)
+
+        game_count += 1
+    end
+    return winner
+
+
+
+
+
+
   end
 end
 
