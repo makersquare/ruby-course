@@ -34,8 +34,8 @@ describe Exercises do
   end
 
   it 'returns the max number of the given array' do
-    result = Exercises.ex3([1,2,3])
-    result2 = Exercises.ex3([10,9,8])
+    result = Exercises.ex4([1,2,3])
+    result2 = Exercises.ex4([10,9,8])
     expect(result).to eq 3
     expect(result2).to eq 10
   end
