@@ -114,4 +114,25 @@ describe RPS do
     expect(result4).to eq 'error: not a valid weapon. try again.'
   end
 
+  it "ends game when one has reached 2 wins" do
+    play1 = @game.play('rock', 'scissors')
+    play2 = @game.play('scissors', 'paper')
+    expect(play2).to eq 'brandon wins!'
+  end
+
+  # it "doesn't let you keep playing after someone wins" do
+  #   play1 = @game.play('rock', 'scissors')
+  #   play2 = @game.play('scissors', 'paper')
+  #   play2 = @game.play('paper', 'scissors')
+  #   expect(play2).to eq 'brandon already won'
+  # end
+  # no longer necessary, moved down to RPSPlayer class
+
+
+end
+
+describe Extensions do
+  it "returns a hash with two keys, :most and :least" do
+    result1 =
+  end
 end

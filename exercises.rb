@@ -97,25 +97,43 @@ end
 
 
 class RPS
-  attr_accessor :player1, :player2
+  attr_accessor :player1, :player2, :wins1, :wins2
 
   def initialize(player1, player2)
     @player1 = player1
     @player2 = player2
+    @wins1 = 0
+    @wins2 = 0
   end
 
   def play(move1, move2)
     move1.downcase!
     move2.downcase!
-    if move1 == move2
-      return 'tie: try again'
-    elsif move1 == 'rock' && move2 == 'scissors' || move1 == 'scissors' && move2 == 'paper' || move1 == 'paper' && move2 == 'rock'
-      return player1
-    elsif move1 == 'rock' && move2 == 'paper' || move1 == 'scissors' && move2 == 'rock' || move1 == 'paper' && move2 == 'scissors'
-      return player2
-    else
-      return 'error: not a valid weapon. try again.'
-    end
+      if move1 == move2
+        print 'tie: try again  '
+        return 'tie: try again  '
+      elsif move1 == 'rock' && move2 == 'scissors' || move1 == 'scissors' && move2 == 'paper' || move1 == 'paper' && move2 == 'rock'
+        @wins1 += 1
+        if @wins1 == 2
+          print "#{player1} wins!"
+          return "#{player1} wins!"
+        else
+          print @player1 + 'won that round  '
+          return @player1
+        end
+      elsif move1 == 'rock' && move2 == 'paper' || move1 == 'scissors' && move2 == 'rock' || move1 == 'paper' && move2 == 'scissors'
+        @wins2 += 1
+        if @wins2 == 2
+          print "#{player2} wins!"
+          return "#{player2} wins!"
+        else
+          print @player2 + 'won that round  '
+          return @player2
+        end
+      else
+        print 'error: not a valid weapon. try again.  '
+        return 'error: not a valid weapon. try again.  '
+      end
   end
 
   # Rock, Paper, Scissors
@@ -146,6 +164,25 @@ class RPSPlayer
   #
   # When the game ends, ask if the player wants to play again.
   def start
+      print "What is player one's name "
+      @play1 = gets
+      print "What is player two's name "
+      @play2 = gets
+
+      game = RPS.new(@play1, @play2)
+
+
+      while (game.wins1 <= 1) && (game.wins2 <= 1)
+        print "Move #{@play1}"
+        move1 = STDIN.noecho(&:gets).chomp
+        print "Move #{@play2}"
+        move2 = STDIN.noecho(&:gets).chomp
+        game.play(move1, move2)
+      end
+
+
+
+
 
     # TODO
 
