@@ -182,7 +182,7 @@ describe RPSPlayer do
   end
 
   it "Accepts input of each player's move and feeds them to the newly created RPS class" do
-    expect( @rpsplayer.player1_move ).to be_a( String )
-    @rpsplayer.rps.should_receive( :play )
+    # @rpsplayer.rps.should_receive( :play )
+    expect( @rpsplayer.rps.called_count ).to eq(1)
   end
 end

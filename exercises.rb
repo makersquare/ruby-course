@@ -98,18 +98,20 @@ class RPS
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
 
-  attr_reader :player1, :player2
+  attr_reader :player1, :player2, :called_count
 
   def initialize(player1, player2)
     @player1 = player1
     @player2 = player2
     @player1_wins = 0
     @player2_wins = 0
+    @called_count = 0
   end
 
   def play(player1_move, player2_move)
     player1_move.downcase!
     player2_move.downcase!
+    @called_count += 1
 
     if @player1_wins >= 2 || @player2_wins >= 2
       return "Game over!"
@@ -169,12 +171,14 @@ class RPSPlayer
 
     #Input player moves
     puts "#{@player1}'s move? (rock/paper/scissors)"
-    @player1_move = STDIN.noecho(&:gets)
+    @player1_move = STDIN.noecho(&:gets).chomp
+    puts @player1_move
     puts "#{@player2}'s move? (rock/paper/scissors)"
-    @player2_move = STDIN.noecho(&:gets)
+    @player2_move = STDIN.noecho(&:gets).chomp
+    puts @player2_move
 
     # Play the game
-    @rps.play(@player1_move, @player2_move)
+    puts @rps.play(@player1_move, @player2_move)
   end
 end
 
