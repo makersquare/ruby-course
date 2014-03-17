@@ -104,6 +104,20 @@ class RPS
     @player2 = player2
   end
 
+  def play(move1, move2)
+    move1.downcase!
+    move2.downcase!
+    if move1 == move2
+      return 'tie: try again'
+    elsif move1 == 'rock' && move2 == 'scissors' || move1 == 'scissors' && move2 == 'paper' || move1 == 'paper' && move2 == 'rock'
+      return player1
+    elsif move1 == 'rock' && move2 == 'paper' || move1 == 'scissors' && move2 == 'rock' || move1 == 'paper' && move2 == 'scissors'
+      return player2
+    else
+      return 'error: not a valid weapon. try again.'
+    end
+  end
+
   # Rock, Paper, Scissors
   # Make a 2-player game of rock paper scissors. It should have the following:
   #

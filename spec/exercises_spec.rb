@@ -96,4 +96,22 @@ describe RPS do
     expect(@game.player2).to eq 'brady'
   end
 
+  it "has a play method that takes two strings" do
+    expect {@game.play('rock', 'scissors')}.to_not raise_error
+  end
+
+  it "returns the winner of the game" do
+    result1 = @game.play('rock', 'scissors')
+    expect(result1).to eq 'brandon'
+
+    result2 = @game.play('Scissors', 'rock')
+    expect(result2).to eq 'brady'
+
+    result3 = @game.play('rock', 'rock')
+    expect(result3).to eq 'tie: try again'
+
+    result4 = @game.play('rock', 'knife')
+    expect(result4).to eq 'error: not a valid weapon. try again.'
+  end
+
 end
