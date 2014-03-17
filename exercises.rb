@@ -51,6 +51,8 @@ module Exercises
   #    it to 'GODZILLA' instead
   def self.ex6(array, str)
     # TODO
+    array[array.size] = "panda"
+    array
   end
 
   # Exercise 7
