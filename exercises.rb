@@ -173,23 +173,26 @@ class RPSPlayer
   def start
 
     puts "What is 1st player's name?"
-    player1 = STDIN.noecho(&:gets)
+    player1 = gets.chomp
     puts "What is 2nd player's name?"
-    player2 = STDIN.noecho(&:gets)
+    player2 = gets.chomp
 
     game=RPS.new(player1,player2)
 
     while game.gameover==false
     puts "What is 1st player's move?"
-    player1_move=STDIN.noecho(&:gets)
+    player1_move=STDIN.noecho(&:gets).chomp
     puts "What is 2nd player's move?"
-    player2_move=STDIN.noecho(&:gets)
+    player2_move=STDIN.noecho(&:gets).chomp
+
+    #puts player1_move.inspect
+    #puts player2_move.inspect
 
     game.play(player1_move,player2_move)
     end
 
     puts "Do you want to play again?"
-    answer=STDIN.noecho(&:gets)
+    answer=STDIN.noecho(&:gets).chomp
     if answer=="yes"
         game=RPSPlayer.new
         game.start
@@ -210,6 +213,7 @@ class RPSPlayer
   end
 end
 
+RPSPlayer.new.start
 
 module Extensions
   # Extension Exercise
