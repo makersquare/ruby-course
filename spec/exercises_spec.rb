@@ -84,3 +84,16 @@ describe Exercises do
   end
 
 end
+
+
+describe RPS do
+  before do
+    @game = RPS.new('brandon', 'brady')
+  end
+
+  it "is initalized with two strings" do
+    expect(@game.player1).to eq 'brandon'
+    expect(@game.player2).to eq 'brady'
+  end
+
+end
