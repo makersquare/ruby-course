@@ -8,26 +8,33 @@ module Exercises
     if str == 'wishes'
       'nope'
     else
-    str+str+str
-  end
+      str+str+str
+    end
   end
 
   # Exercise 1
   #  - Returns the number of elements in the array
   def self.ex1(array)
     # TODO
+    array.length
   end
 
   # Exercise 2
   #  - Returns the second element of an array
   def self.ex2(array)
     # TODO
+    array[1]
   end
 
   # Exercise 3
   #  - Returns the sum of the given array of numbers
   def self.ex3(array)
     # TODO
+    sum = 0
+    array.each do |x|
+      sum += x
+    end
+    return sum
   end
 
   # Exercise 4
