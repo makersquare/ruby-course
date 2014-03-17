@@ -19,3 +19,11 @@ describe 'Exercise 1' do
 		expect(array_count).to eq(5)
 	end
 end
+
+describe 'Exercise 2' do
+	it "returns the second element of an array" do
+		ary = [0,1,2,3,4]
+		item_2 = Exercises.ex2(ary)
+		expect(item_2).to eq(1)
+	end
+end
