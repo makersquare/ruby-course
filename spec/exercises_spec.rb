@@ -93,4 +93,16 @@ describe Exercises do
       expect( testarray ).to eq( expected )
     end
   end
+
+  describe "Exercise 8" do
+    it "Iterates through array of hashes and prints name and occupation" do
+      testarray = [{ :name => 'Bob', :occupation => 'Builder' }, { :name => 'Sam', :occupation => 'Teacher' }, { :name => 'Brian', :occupation => 'Job' }]
+
+      expect(STDOUT).to receive(:puts).with("Bob: Builder")
+      expect(STDOUT).to receive(:puts).with("Sam: Teacher")
+      expect(STDOUT).to receive(:puts).with("Brian: Job")
+
+      Exercises.ex8(testarray)
+    end
+  end
 end
