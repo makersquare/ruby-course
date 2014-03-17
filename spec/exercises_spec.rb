@@ -1,4 +1,5 @@
 require './exercises.rb'
+require 'pry-debugger'
 
 describe 'Exercise 0' do
 	it "triples the length of a string" do
@@ -41,5 +42,17 @@ describe 'Exercise 4' do
 		ary = [1,2,3,4,5,600,7]
 		result = Exercises.ex4(ary)
 		expect(result).to eq(600)
+	end
+end
+
+describe 'Exercise 5' do
+	it "iterates through an array and `puts` each element" do
+		ary = [1,2,3,4,5]
+		expect(STDOUT).to receive(:puts).with(1)
+		expect(STDOUT).to receive(:puts).with(2)
+		expect(STDOUT).to receive(:puts).with(3)
+		expect(STDOUT).to receive(:puts).with(4)
+		expect(STDOUT).to receive(:puts).with(5)
+		result = Exercises.ex5(ary)
 	end
 end
