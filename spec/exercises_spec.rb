@@ -38,5 +38,10 @@ describe Exercises do
     expect(STDOUT).to receive(:puts).with("howdy")
     Exercises.ex5(["hello", "hi", "howdy"])
   end
+
+  it "updates the last item in the array to 'panda'" do
+    result = Exercises.ex6(["donkey", "rat"], "panda")
+    expect(result).to eq(["donkey", "rat", "panda"])
+  end
 end
 
