@@ -51,4 +51,9 @@ describe Exercises do
     expect(result).to eq [1,2,"panda"]
   end
 
+  it 'puts GODZILLA instead of panda if panda is already last item' do
+    result = Exercises.ex6([1,2,"panda"])
+    expect(result).to eq [1,2,"GODZILLA"]
+  end
+
 end
