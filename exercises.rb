@@ -98,9 +98,13 @@ class RPS
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
 
+
+
   def initialize(player1, player2)
     @player1 = player1
     @player2 = player2
+    @player1_wins = 0
+    @player2_wins = 0
   end
 
   def play(player1_move, player2_move)
@@ -110,14 +114,22 @@ class RPS
     if player1_move == player2_move
       return "tie"
     elsif player1_move == "rock"
-      player2_move == "paper" ? @player2 : @player1
+      winner = player2_move == "paper" ? @player2  : @player1
     elsif player1_move == "paper"
-      player2_move == "scissors" ? @player2 : @player1
+      winner = player2_move == "scissors" ? @player2 : @player1
     elsif player1_move == "scissors"
-      player2_move == "rock" ? @player2 : @player1
+      winner = player2_move == "rock" ? @player2 : @player1
     else
       return "error"
     end
+
+    if winner == @player1
+      @player1_wins += 1
+    else
+      @player2_wins +=1
+    end
+
+    winner
   end
 end
 
