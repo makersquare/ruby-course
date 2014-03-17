@@ -83,6 +83,20 @@ describe RPS do
     expect(@game.p2name).to eq("b")
   end
 
+  it "has a play method that takes 2 strings" do
+    expect { @game.play("rock", "scissors")}.to_not raise_error
+  end
+
+  it "returns a winner each time play method is called" do
+    result=@game.play("paper", "rock")
+    expect(result).to eq("player1")
+    result2=@game.play("scissors", "rock")
+    expect(result2).to eq("player2")
+    result3=@game.play("rock","rock")
+    expect(result3).to eq("tie")
+  end
+
 end
+
 
 

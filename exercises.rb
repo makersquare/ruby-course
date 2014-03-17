@@ -107,6 +107,16 @@ class RPS
     @p1name = p1name
     @p2name = p2name
   end
+
+  def play(move1, move2)
+    if (move1 == "rock" && move2 =="scissors") || (move1 == "paper" && move2 == "rock") || (move1 == "scissors" && move2 == "paper")
+      return "player1"
+    elsif (move2 == "rock" && move1 =="scissors") || (move2 == "paper" && move1 == "rock") || (move2 == "scissors" && move1 == "paper")
+      return "player2"
+    else
+      return "tie"
+    end
+  end
 end
 
 
