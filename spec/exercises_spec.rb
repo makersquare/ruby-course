@@ -49,5 +49,21 @@ describe 'Exercise 5' do
     STDOUT.should_receive(:puts).with("gator")
     Exercises.ex5(array)
   end
+end
+
+describe 'Exercise 6' do
+  it "updates the last item in an array to 'Panda'" do
+    array = ["dog", "cat", "gator"]
+    Exercises.ex6(array, "Panda")
+    array[-1].should eq('Panda')
+  end
+
+  it "updates the last item to 'GODZILLA' if str is already there" do
+    array = ["dog", "cat", "Panda"]
+    Exercises.ex6(array, "Panda")
+    array[-1].should eq("GODZILLA")
+  end
 
 end
+
+
