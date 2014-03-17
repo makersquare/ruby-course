@@ -1,0 +1,31 @@
+
+[1mFrom:[0m /vagrant/backend/ruby/taxi-meter/taxi_meter.rb @ line 25 TaxiMeter#amount_due:
+
+    [1;34m24[0m:   [32mdef[0m [1;34mamount_due[0m
+ => [1;34m25[0m:   binding.pry
+    [1;34m26[0m:   dist = @miles_driven
+    [1;34m27[0m:   cost = [1;34m0[0m
+    [1;34m28[0m: 
+    [1;34m29[0m:   [1;30m# if stop_time>Time.now  	[0m
+    [1;34m30[0m:   [1;30m# 	puts "You cannot stop meter before you start it"[0m
+    [1;34m31[0m:   [1;30m# else[0m
+    [1;34m32[0m:   [1;30m# end[0m
+    [1;34m33[0m: 
+    [1;34m34[0m:   [32mif[0m @start_time
+    [1;34m35[0m:   	[32mif[0m @stop_time
+    [1;34m36[0m:   			wait_fee=[1;34m2900[0m/((@stop_time - @start_time) / [1;34m60[0m)
+    [1;34m37[0m: 	   		[32melsif[0m dist == [1;35m0.1[0m [1;30m#(1.0 / 6.0)[0m
+    [1;34m38[0m: 	  			[1;34m250[0m
+    [1;34m39[0m: 	  		[32melsif[0m dist >= ([1;35m1.0[0m / [1;35m6.0[0m) 	
+    [1;34m40[0m: 	  			((dist*[1;34m6[0m).ceil*[1;34m40[0m+[1;34m210[0m) 
+    [1;34m41[0m: 	  		
+    [1;34m42[0m: 	  		[32melsif[0m @airport==[1;36mtrue[0m && cost < [1;34m1310[0m
+    [1;34m43[0m: 	  			cost=[1;34m1310[0m	
+    [1;34m44[0m: 	  		[32melsif[0m wait_fee
+    [1;34m45[0m: 	  			[32mreturn[0m cost+wait_fee
+    [1;34m46[0m: 	  		[32melse[0m
+    [1;34m47[0m: 	  		[1;34m0[0m
+    [1;34m48[0m: 	  	[32mend[0m
+    [1;34m49[0m:   	 [32mend[0m
+    [1;34m50[0m: [32mend[0m
+
