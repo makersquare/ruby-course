@@ -63,5 +63,13 @@ describe Exercises do
 
       expect( result ).to eq("panda")
     end
+
+    it "If the last item is already 'panda', update to 'Godzilla' instead" do
+      testarray = ["kangaroo", "koala", "snake", "panda"]
+
+      result = Exercises.ex6(testarray,"").last
+
+      expect( result ).to eq("GODZILLA")
+    end
   end
 end
