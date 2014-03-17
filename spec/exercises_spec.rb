@@ -44,14 +44,24 @@ describe Exercises do
   describe "Exercise 5" do
     it "Iterates through an array and 'puts' each element" do
       testarray = [1, 2, 3, 4, 5]
+
+      expect(STDOUT).to receive(:puts).with(1)
+      expect(STDOUT).to receive(:puts).with(2)
+      expect(STDOUT).to receive(:puts).with(3)
+      expect(STDOUT).to receive(:puts).with(4)
+      expect(STDOUT).to receive(:puts).with(5)
+
       Exercises.ex5( testarray )
-      expect(STDOUT).to receive(:puts).with(%{
-        1
-        2
-        3
-        4
-        5
-        })
+    end
+  end
+
+  describe "Exercise 6" do
+    it "Updates the last item in the array to panda" do
+      testarray = ["kangaroo", "koala", "snake", "tiger"]
+
+      result = Exercises.ex6(testarray,"").last
+
+      expect( result ).to eq("panda")
     end
   end
 end
