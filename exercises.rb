@@ -138,6 +138,7 @@ end
 
 require 'io/console'
 class RPSPlayer
+  attr_reader :rps, :player1, :player2
   # (No specs are required for RPSPlayer)
   #
   # Complete the `start` method so that it uses your RPS class to present
@@ -149,7 +150,6 @@ class RPSPlayer
   #
   # When the game ends, ask if the player wants to play again.
   def start
-
     # TODO
 
     # PRO TIP: Instead of using plain `gets` for grabbing a player's
@@ -157,6 +157,11 @@ class RPSPlayer
     #          what the player is typing! :D
     # This is also why we needed to require 'io/console'
     # move = STDIN.noecho(&:gets)
+    puts "Input name of Player 1:"
+    @player1 = gets.chomp
+    puts "Input name of Player 2:"
+    @player2 = gets.chomp
+    @rps = RPS.new(player1,player2)
   end
 end
 
