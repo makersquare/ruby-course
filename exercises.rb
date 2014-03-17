@@ -102,6 +102,10 @@ class RPS
     @player1 = player1
     @player2 = player2
   end
+
+  def play(player1_move, player2_move)
+
+  end
 end
 
 
