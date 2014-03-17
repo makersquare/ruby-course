@@ -125,7 +125,7 @@ class RPS
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
-attr_accessor :player1, :player2, :player1choice, :player2choice
+attr_accessor :player1, :player2, :player1choice, :player2choice, :winner
 def initialize(player1,player2)
   @player1 ||= []
   @player2 ||= []
@@ -138,6 +138,7 @@ end
 def play(player1choice=nil, player2choice=nil)
   @player1choice = player1choice
   @player2choice = player2choice
+  @winner = nil
 
   if @player1choice == @player2choice
     puts "The game is a tie!"
@@ -164,9 +165,11 @@ def play(player1choice=nil, player2choice=nil)
   end
 
   if @player1[1] == 2
-    puts "Game over. #{@player1[1]} wins!"
+    puts "Game over. #{@player1[0]} wins!"
+    @winner = @player1[0]
   elsif @player2[1] == 2
-    puts "Game over. #{@player2[1]} wins!"
+    puts "Game over. #{@player2[0]} wins!"
+    @winner = @player2[0]
   else
   end
 end

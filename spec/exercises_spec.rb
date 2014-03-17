@@ -112,5 +112,20 @@ describe "RPS" do
     result1 = result.play(player1choice,player2choice)
     expect(result.player2).to eq (["Jose", 1])
   end
+
+  it "plays out the game and wins after 2 wins" do
+    player1 = "Drew"
+    player2 = "Jose"
+    result = RPS.new(player1, player2)
+    player1choice = "rock"
+    player2choice = "paper"
+    result1 = result.play(player1choice,player2choice)
+    player1choice = "rock"
+    player2choice = "paper"
+    result2 = result.play(player1choice,player2choice)
+    expect(result.winner).to eq ("Jose")
+  end
+
+
 end
 
