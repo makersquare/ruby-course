@@ -1,5 +1,4 @@
-require 'spec-helper'
-require 'exercises.rb'
+require './exercises.rb'
 
 describe 'Exercise 0' do
   it "triples a given string" do
