@@ -73,6 +73,25 @@ describe 'Excercise 7' do
   end
 end
 
+describe 'Excercise 8' do
+  it 'iterate through hash and print name and occupation' do
+    expect(STDOUT).to receive(:puts).with('Bob')
+    expect(STDOUT).to receive(:puts).with('Builder')
+    expect(STDOUT).to receive(:puts).with('Bob2')
+    expect(STDOUT).to receive(:puts).with('Builder2')
+    the_array = [{:name => 'Bob', :occupation => 'Builder'}, {:name => 'Bob2', :occupation => 'Builder2'}]
+    result = Exercises.ex8(the_array)
+  end
+end
+
+describe 'Excercise 9' do
+  xit 'returns true if given time is in a leap year' do
+    the_time = Time.new(2000)
+    result = Exercises.ex9(the_time)
+    expect(result).to eq true
+  end
+end
+
 
 
 

@@ -83,6 +83,13 @@ module Exercises
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
     # TODO
+
+    people.each do |x|
+      x.each do |hey, dude|
+        puts "#{dude}"
+      end
+    end
+
   end
 
   # Exercise 9
@@ -91,6 +98,11 @@ module Exercises
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
     # TODO
+    # if time % 4 == 0
+    #   true
+    # else
+    #   false
+    # end
   end
 end
 
