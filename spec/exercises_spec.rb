@@ -82,3 +82,16 @@ describe 'Exercise 7' do
 		expect(result).to eq(new_ary)
 	end
 end
+
+describe 'Exercise 8' do
+	it "iterates through an array of hashes and prints out their key / value pairs" do
+    	bob = { :name => 'Bob', :occupation => 'Builder' }
+    	antonio = { :name => 'Antonio', :occupation => 'Developer' }
+    	henry = { :name => 'Henry', :occupation => 'Farmer' }
+    	people = [bob, antonio, henry]
+    	expect(STDOUT).to receive(:puts).with("Bob", "Builder")
+    	expect(STDOUT).to receive(:puts).with("Antonio", "Developer")
+    	expect(STDOUT).to receive(:puts).with("Henry", "Farmer")
+    	result = Exercises.ex8(people)
+    end
+end
