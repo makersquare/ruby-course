@@ -208,6 +208,16 @@ module Extensions
   #   expect(result).to eq({ :most => 'x', :least => ['y', 'z'] })
   #
   def self.extremes(array)
-    {}
+    counts = Hash.new 0
+
+    array.each { |string| counts[string] += 1 }
+
+    max_num = counts.values.max
+    min_num = counts.values.min
+
+    most_array = array.select { |string| array.count(string) == max_num }.uniq
+    least_array = array.select { |string| array.count(string) == min_num }.uniq
+
+    return { :most => most_array, :least => least_array }
   end
 end
