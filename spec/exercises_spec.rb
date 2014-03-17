@@ -37,11 +37,16 @@ describe "Exercises" do
     STDOUT.should_receive(:puts).with("morning")
     STDOUT.should_receive(:puts).with("glory")
     result=Exercises.ex5(["hello","morning","glory"])
-
-
-
   end
 
+  it "updates last item in array to 'panda'"do
+    result=Exercises.ex6(["hello","morning","glory"],"panda")
+    expect(result).to eq(["hello","morning","glory","panda"])
+  end
+  it "updates to GODZILLA if last item is already 'panda" do
+    result=Exercises.ex6(["hello","morning","glory","panda"],"panda")
+    expect(result).to eq(["hello","morning","glory","panda","GODZILLA"])
+  end
 
 end
 
