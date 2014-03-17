@@ -18,7 +18,7 @@ describe 'Exercise 0' do
 
 end
 
-describe 'Exercises 1' do
+describe 'Exercise 1' do
   it 'Returns # of elements in a array' do
     array = [2,4,6,8]
     result = Exercises.ex1(array)
@@ -27,7 +27,7 @@ describe 'Exercises 1' do
 
 end
 
-describe 'Exercises 2' do
+describe 'Exercise 2' do
   it 'Returns second element in array' do
     array = [1,23,2453,32523,325]
     result = Exercises.ex2(array)
@@ -36,10 +36,18 @@ describe 'Exercises 2' do
 
 end
 
-describe 'Exercises 3' do
+describe 'Exercise 3' do
   it 'Returns the sum of an array' do
     array = [2,3,4,1]
     result = Exercises.ex3(array)
     expect(result).to eq(10)
+  end
+end
+
+describe 'Exercise 4' do
+  it 'Returns max number in a array' do
+    array = [1,23,23423,99999,12]
+    result = Exercises.ex4(array)
+    expect(result).to eq(99999)
   end
 end
