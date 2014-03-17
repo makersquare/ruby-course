@@ -33,4 +33,11 @@ describe Exercises do
       expect( Exercises.ex3( testarray ) ).to eq(15)
     end
   end
+
+  describe "Exercise 4" do
+    it "Returns the max number of the given array" do
+      testarray = [2, 4, 9, 1, 6]
+      expect( Exercises.ex4( testarray ) ).to eq(9)
+    end
+  end
 end
