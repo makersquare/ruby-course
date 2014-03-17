@@ -47,11 +47,24 @@ describe Exercises do
 
 		describe "Exercise 5" do
 			it "iterates through an array and `puts` each element" do
-				result = Exercises.ex5(@animals)
 				expect(STDOUT).to receive(:puts).with('tiger')
 				expect(STDOUT).to receive(:puts).with('lion')
 				expect(STDOUT).to receive(:puts).with('crocodile')
 				expect(STDOUT).to receive(:puts).with('snake')
+				result = Exercises.ex5(@animals)
+			end
+		end
+
+		describe "Exercise 6" do
+			it "updates the last item in the array to 'panda'" do
+				result = Exercises.ex6(@animals, 'panda')
+				expect(result).to eq 'panda'
+			end
+
+			it "updates it to 'GODZILLA' if the last item is 'panda'" do
+				animals1 = @animals << 'panda'
+				result = Exercises.ex6(animals1, 'panda')
+				expect(result).to eq 'GODZILLA'
 			end
 		end
 	end
