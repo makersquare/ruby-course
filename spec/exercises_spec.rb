@@ -37,3 +37,11 @@ describe 'self.ex3' do
     expect(result).to eq 10
   end
 end
+
+describe 'self.ex4' do
+  it 'returns the max number of the given array' do
+    arr = [1, 2, 3, 4]
+    result = Exercises.ex4(arr)
+    expect(result).to eq 4
+  end
+end
