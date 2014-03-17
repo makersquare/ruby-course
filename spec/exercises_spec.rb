@@ -135,5 +135,28 @@ describe RPS do
     it "takes two strings" do
       @fungame.play("rock","paper")
     end
+
+    it "returns string of winner's name, or tie. Test of all combos" do
+      name1 = @fungame.play("rock","rock")
+      name2 = @fungame.play("rock","paper")
+      name3 = @fungame.play("rock","scissors")
+      name4 = @fungame.play("paper","rock")
+      name5 = @fungame.play("paper","paper")
+      name6 = @fungame.play("paper","scissors")
+      name7 = @fungame.play("scissors","rock")
+      name8 = @fungame.play("scissors","paper")
+      name9 = @fungame.play("scissors","scissors")
+
+      expect(name1).to eq("tie")
+      expect(name2).to eq("Jessie")
+      expect(name3).to eq("Brian")
+      expect(name4).to eq("Brian")
+      expect(name5).to eq("tie")
+      expect(name6).to eq("Jessie")
+      expect(name7).to eq("Jessie")
+      expect(name8).to eq("Brian")
+      expect(name9).to eq("tie")
+
+    end
   end
 end
