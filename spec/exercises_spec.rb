@@ -56,3 +56,25 @@ describe 'self.ex5' do
     Exercises.ex5(arr)
   end
 end
+
+describe 'self.ex6' do
+  it 'updates the last item in the array to "panda"' do
+    arr = [1, 2, 3, 4]
+    str = "panda"
+    Exercises.ex6(arr, str)
+    result = arr[-1]
+    expect(result).to eq("panda")
+
+    arr2 = [1, 2, 3, "GODZILLA"]
+    str = "GODZILLA"
+    result = arr2[-1]
+    Exercises.ex6(arr2, str)
+    expect(result). to eq("GODZILLA")
+
+
+  end
+end
+
+describe 'self.ex7' do
+  it ''
+end
