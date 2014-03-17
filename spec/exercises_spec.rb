@@ -89,9 +89,9 @@ describe RPS do
 
   it "returns a winner each time play method is called" do
     result=@game.play("paper", "rock")
-    expect(result).to eq("player1")
+    expect(result).to eq("player1 wins a battle")
     result2=@game.play("scissors", "rock")
-    expect(result2).to eq("player2")
+    expect(result2).to eq("player2 wins a battle")
     result3=@game.play("rock","rock")
     expect(result3).to eq("tie")
   end

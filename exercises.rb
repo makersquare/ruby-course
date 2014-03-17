@@ -103,6 +103,7 @@ class RPS
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
   attr_reader :p1name, :p2name
+  attr_accessor :wins1, :wins2
   def initialize(p1name, p2name)
     @p1name = p1name
     @p2name = p2name
@@ -112,16 +113,16 @@ class RPS
 
   def play(move1, move2)
     if @wins1 == 2 || @wins2 == 2
-      return "game has ended"
+      puts "game has ended"
     else
       if (move1 == "rock" && move2 =="scissors") || (move1 == "paper" && move2 == "rock") || (move1 == "scissors" && move2 == "paper")
         @wins1 += 1
-        return "player1"
+        puts "player1 wins a battle"
       elsif (move2 == "rock" && move1 =="scissors") || (move2 == "paper" && move1 == "rock") || (move2 == "scissors" && move1 == "paper")
         @wins2 += 1
-        return "player2"
+        puts "player2 wins a battle"
       else
-        return "tie"
+        puts "tie"
       end
     end
   end
@@ -141,6 +142,31 @@ class RPSPlayer
   #
   # When the game ends, ask if the player wants to play again.
   def start
+    print "player1 name:"
+    player1 = gets.chomp
+
+    print "player2 name:"
+    player2 = gets.chomp
+
+    match = RPS.new(player1, player2)
+
+    while match.wins1 < 2 && match.wins2 < 2
+      print "p1 move:"
+      move1 = gets.chomp
+      print "p2 move:"
+      move2 = gets.chomp
+      match.play(move1, move2)
+    end
+
+    if match.wins1==2
+      puts "#{player1} wins"
+    else
+      puts "#{player2} wins"
+    end
+
+
+
+
 
     # TODO
 
