@@ -9,13 +9,13 @@ module Exercises
     else
       str*3
     end
-
   end
 
   # Exercise 1
   #  - Returns the number of elements in the array
   def self.ex1(array)
-    # TODO
+
+
   end
 
   # Exercise 2

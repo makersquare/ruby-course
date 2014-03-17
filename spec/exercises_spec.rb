@@ -12,4 +12,7 @@ describe "Exercises" do
     expect(result).to eq("nope")
   end
 
+  it "returns the number of elements in the array"do
+    result=Exercises.ex1(["fighting", "yell","shout"])
+    execpt(result).to eq("")
 end
