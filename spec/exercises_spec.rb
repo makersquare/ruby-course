@@ -95,3 +95,12 @@ describe 'Exercise 8' do
     	result = Exercises.ex8(people)
     end
 end
+
+describe 'Exercise 9' do
+	it "returns `true` if the given time is in a leap year" do
+		time = Time.new
+		Time.stub(:now).and_return(time)
+		result = Exercises.ex9(time)
+		expect(result).to eq(false)
+	end
+end
