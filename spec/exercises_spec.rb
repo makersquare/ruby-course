@@ -12,11 +12,11 @@ describe Exercises do
     expect(result).to eq 'nope'
   end
 
-  it 'returns the number of elements in the array'
+  it 'returns the number of elements in the array' do
     result = Exercises.ex1([1,2,3])
     result2 = Exercises.ex1(['a','b','c','d','e'])
     expect(result).to eq 3
-    expect(result1).to eq 5
+    expect(result2).to eq 5
   end
 
 
