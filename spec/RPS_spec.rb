@@ -14,9 +14,28 @@
 require './RPS.rb'
 
 describe 'RPS' do
-  it "initializes with 2 strings (player names)" do
-  newGame = RPS.new("Bob", "Tom")
-  expect(newGame.playerOne).to eq("Bob")
-  expect(newGame.playerTwo).to eq("Tom")
+  before(:each) do
+    @newGame = RPS.new("Bob", "Tom")
   end
+
+  it "initializes with 2 strings (player names)" do
+  expect(@newGame.playerOne).to eq("Bob")
+  expect(@newGame.playerTwo).to eq("Tom")
+  end
+
+  it "has a play method that takes 2 strings (players moves) and returns the winner" do
+    winner = @newGame.play("rock","scissors")
+    expect(winner).to eq("Bob Wins the Round")
+  end
+
+  xit "keeps score" do
+    winner = @newGame.play("rock","scissors")
+    expect(playerOneScore).to eq(1)
+    expect(playerTwoScore).to eq(0)
+  end
+
+
+  xit "returns 'Game is Over' if the game is over" do
+  end
+
 end
