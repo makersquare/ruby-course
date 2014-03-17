@@ -20,12 +20,27 @@ describe 'Exercise 1' do
   end
 end
 
-describe 'Exercise 1' do
+describe 'Exercise 2' do
   it "returns the 2nd element of an array" do
     array = [1,2,3]
     expect(Exercises.ex2(array)).to eq(2)
   end
 end
+
+describe 'Exercise 3' do
+  it "returns the sum of an array" do
+    array = [1,2,3]
+    expect(Exercises.ex3(array)).to eq(6)
+  end
+end
+
+describe 'Exercise 4' do
+  it "returns the 2nd element of an array" do
+    array = [1,2,3]
+    expect(Exercises.ex2(array)).to eq(2)
+  end
+end
+
 
 
 
