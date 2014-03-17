@@ -22,5 +22,10 @@ describe Exercises do
     expect(result).to eq("Bryan")
   end
 
+  it "returns the sub of the given array of numbers" do
+    result = Exercises.ex3([1,2,3])
+    expect(result).to eq(6)
+  end
+
 end
 
