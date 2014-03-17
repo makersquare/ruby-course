@@ -95,6 +95,22 @@ describe 'Excercise 9' do
   end
 end
 
+describe "RPS" do
+  it "allows player 1 and player 2 to be added to their own array in initialize" do
+    player1 = "Drew"
+    player2 = "Jose"
+    result = RPS.new(player1, player2)
+    expect(result.player1).to eq (["Drew",0])
+  end
 
-
+  it "plays out the game" do
+    player1 = "Drew"
+    player2 = "Jose"
+    result = RPS.new(player1, player2)
+    player1choice = "rock"
+    player2choice = "paper"
+    result1 = result.play(player1choice,player2choice)
+    expect(result.player2).to eq (["Jose", 1])
+  end
+end
 

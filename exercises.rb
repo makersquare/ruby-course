@@ -125,6 +125,54 @@ class RPS
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
+attr_accessor :player1, :player2, :player1choice, :player2choice
+def initialize(player1,player2)
+  @player1 ||= []
+  @player2 ||= []
+  @player1 << player1
+  @player2 << player2
+  @player1[1] = 0
+  @player2[1] = 0
+end
+
+def play(player1choice=nil, player2choice=nil)
+  @player1choice = player1choice
+  @player2choice = player2choice
+
+  if @player1choice == @player2choice
+    puts "The game is a tie!"
+  elsif @player1choice == "paper" && @player2choice == "rock"
+    puts "Paper beats rock! Player 1 wins!"
+    @player1[1] += 1
+  elsif @player1choice == "paper" && @player2choice == "scissors"
+    puts "Scissors beats paper! Player 2 wins!"
+    @player2[1] += 1
+  elsif @player1choice == "rock" && @player2choice == "scissors"
+    puts "Rock beats scissors! Player 1 wins!"
+    @player1[1] += 1
+  elsif @player1choice == "rock" && @player2choice == "paper"
+    puts "Paper beats rock! Player 2 wins!"
+    @player2[1] += 1
+  elsif @player1choice == "scissors" && @player2choice == "paper"
+    puts "Scissors beats paper! Player 1 wins!"
+    @player1[1] += 1
+  elsif @player1choice == "scissors" && @player2choice == "rock"
+    puts "Rock beats scissors! Player 2 wins"
+    @player2[1] += 1
+  else
+
+  end
+
+  if @player1[1] == 2
+    puts "Game over. #{@player1[1]} wins!"
+  elsif @player2[1] == 2
+    puts "Game over. #{@player2[1]} wins!"
+  else
+  end
+end
+
+
+
 end
 
 
