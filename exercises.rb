@@ -92,6 +92,17 @@ class RPS
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
+  attr_reader :player_one, :player_two
+  attr_accessor :move1, :move2
+
+  def initialize(player_one, player_two)
+    @player_one = player_one
+    @player_two = player_two
+  end
+
+  def play(move1, move2)
+
+  end
 end
 
 
@@ -107,6 +118,12 @@ class RPSPlayer
   # lets both players play the game.
   #
   # When the game ends, ask if the player wants to play again.
+
+
+
+
+
+
   def start
 
     # TODO
