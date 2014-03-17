@@ -36,16 +36,15 @@ describe Exercises do
 
   end
 
-  xit "Ex, 5Iterstes through an array and puts each element" do
+  it "Ex 5, iterate through an array and puts each element" do
     array = ["see","you","later"]
 
     STDOUT.should_receive(:puts).with('see')
     STDOUT.should_receive(:puts).with('you')
     STDOUT.should_receive(:puts).with('later')
     # run method after:
-    # expect(STDOUT).to_receive(:puts).and_return("see")
-    # expect(STDOUT).to_receive(:puts).and_return("you")
-    # expect(STDOUT).to_receive(:puts).and_return("later")
+    put_elements = Exercises.ex5(array)
+    expect(put_elements).to eq ["see", "you", "later"]
   end
 
   it "Ex, 6 Updates the last item in the array to panda, if already panda update to godzilla" do
@@ -56,5 +55,14 @@ describe Exercises do
     array1 = [1,2,"hi","bye","panda"]
     godzilla_array = Exercises.ex6(panda_last,"panda")
     expect(godzilla_array).to eq [1,2,"hi","bye","GODZILLA"]
+  end
+
+  it "If the string str exists in the array, add str to end" do
+    array = [1,2,"hi","bye",4,"easter",434,"yolo"]
+    check_has = Exercises.ex7(array,"easter")
+    expect(check_has).to eq [1,2,"hi","bye",4,"easter",434,"yolo","easter"]
+
+    check_not = Exercises.ex7(array,"taco")
+    expect(check_not).to eq nil
   end
 end

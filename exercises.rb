@@ -71,6 +71,14 @@ module Exercises
   #    add `str` to the end of the array
   def self.ex7(array, str)
     # TODO
+    array.each do |element|
+      if element == str
+        array << str
+
+      else
+        nil
+      end
+    end
   end
 
   # Exercise 8
