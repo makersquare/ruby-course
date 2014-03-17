@@ -94,12 +94,17 @@ class RPS
   # Make a 2-player game of rock paper scissors. It should have the following:
   #
   # It is initialized with two strings (player names).
+  attr_reader :player_one, :player_two
+  def initialize(p1, p2)
+    @player_one = p1
+    @player_two = p2
+  end
   # It has a `play` method that takes two strings:
   #   - Each string reperesents a player's move (rock, paper, or scissors)
   #   - The method returns the winner (player one or player two)
   #   - If the game is over, it returns a string stating that the game is already over
   # It ends after a player wins 2 of 3 games
-  #
+
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
 end

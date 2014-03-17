@@ -113,3 +113,13 @@ describe 'self.ex9' do
 
   end
 end
+
+describe 'initialize' do
+  it 'initializes with two strings (player names)' do
+    game = RPS.new('joe', 'larry')
+
+    expect(game.player_one).to eq('joe')
+    expect(game.player_two). to eq('larry')
+
+  end
+end
