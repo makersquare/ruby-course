@@ -26,4 +26,11 @@ describe Exercises do
       expect( Exercises.ex2( testarray ) ).to eq(2)
     end
   end
+
+  describe "Exercise 3" do
+    it "Returns the some of the given array of numbers" do
+      testarray = [1, 2, 3, 4, 5]
+      expect( Exercises.ex3( testarray ) ).to eq(15)
+    end
+  end
 end
