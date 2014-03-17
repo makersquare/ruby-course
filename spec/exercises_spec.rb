@@ -19,4 +19,11 @@ describe Exercises do
       expect( Exercises.ex1(testarray) ).to eq(3)
     end
   end
+
+  describe "Exercise 2" do
+    it "Returns the second element of an array" do
+      testarray = [1, 2, 3, 4, 5]
+      expect( Exercises.ex2( testarray ) ).to eq(2)
+    end
+  end
 end
