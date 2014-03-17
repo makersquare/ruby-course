@@ -72,3 +72,13 @@ describe 'Exercise 6' do
 		expect(result).to eq("GODZILLA")
 	end
 end
+
+describe 'Exercise 7' do
+	it "adds a string to an array if the string `str` exists in the array" do
+		ary = [1,2,3,4,"panda"]
+		str = "panda"
+		result = Exercises.ex7(ary, str)
+		new_ary = [1,2,3,4,"panda", "panda"]
+		expect(result).to eq(new_ary)
+	end
+end
