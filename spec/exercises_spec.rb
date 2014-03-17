@@ -27,9 +27,10 @@ describe "exercises" do
 	end
 
 	it "iterates through array and puts each element" do
+		
+		STDOUT.should_receive(:puts).with("hi")
+		STDOUT.should_receive(:puts).with("bye")
 		result = Exercises.ex5(["hi","bye"])
-		expect(STDOUT).to receive(:puts).with("hi")
-		expect(STDOUT).to receive(:puts).with("bye")
 	
 	end
 
