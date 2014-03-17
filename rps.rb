@@ -1,27 +1,56 @@
 class RPS
-  attr_reader :player1, :player2
-  
+  attr_reader :player1, :player2, :winner
+  attr_accessor :game_wins
+
   def initialize(player1, player2)
     @player1 = player1
     @player2 = player2
+    @game_wins = []
   end
-  # Rock, Paper, Scissors
-  # Make a 2-player game of rock paper scissors. It should have the following:
-  #
-  # It is initialized with two strings (player names).
-  # It has a `play` method that takes two strings:
-  #   - Each string reperesents a player's move (rock, paper, or scissors)
-  #   - The method returns the winner (player one or player two)
-  #   - If the game is over, it returns a string stating that the game is already over
-  # It ends after a player wins 2 of 3 games
-  #
-  # You will be using this class in the following class, which will let players play
-  # RPS through the terminal.
+
+  def play(choice1, choice2)
+    game_winner = @game_wins.detect { |winner| @game_wins.count(winner) > 1 }
+
+    if game_winner
+      @game_wins = 0
+      "Game over! #{game_winner} wins the game."
+    else
+      if choice1 == choice2
+        "This hand was a tie."
+      elsif choice1 == 'rock' && choice2 == 'paper'
+        @game_wins << @player2
+        "paper beats rock, #{@player2} wins the hand!"
+      elsif choice1 == 'rock' && choice2 == 'scissors'
+        @game_wins << @player1
+        "rock beats scissors, #{@player1} wins the hand!"
+      elsif choice1 == 'paper' && choice2 == 'rock'
+        @game_wins << @player1
+        "paper beats rock, #{@player1} wins the hand!"
+      elsif choice1 == 'paper' && choice2 == 'scissors'
+        @game_wins << @player2
+        "scissors beats paper, #{@player2} wins the hand!"
+      elsif choice1 == 'scissors' && choice2 == 'rock'
+        @game_wins << @player2
+        "rock beats scissors, #{@player2} wins the hand!"
+      elsif choice1 == 'scissors' && choice2 == 'paper'
+        @game_wins << @player1
+        "scissors beats paper, #{@player1} wins the hand!"
+      else
+        "Invalid choice. Enter 'rock', 'paper' or 'scissors'"
+      end
+    end
+  end
 end
 
 
 require 'io/console'
 class RPSPlayer
+
+  def self.start
+    player1 = gets.chomp("Player 1 enter your name.")
+    player2 = gets.chomp("Player 2 enter your name.")
+
+  end
   # (No specs are required for RPSPlayer)
   #
   # Complete the `start` method so that it uses your RPS class to present
