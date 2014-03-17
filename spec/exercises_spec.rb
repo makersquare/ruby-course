@@ -53,6 +53,13 @@ describe Exercises do
     result = Exercises.ex7(["John","Braden","Bryan"], "John")
     expect(result).to eq(["Braden", "Bryan", "John"])
   end
+
+  it "iterates through array of hashes and prints name and ocupation" do
+    expect(STDOUT).to receive(:puts).with("Bob: Builder")
+    expect(STDOUT).to receive(:puts).with("Sponge Bob: Burger Chef")
+    Exercises.ex8([{"Bob" => "Builder"}, {"Sponge Bob" => "Burger Chef"}])
+  end
+
 end
 
 
