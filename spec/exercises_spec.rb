@@ -65,4 +65,14 @@ describe Exercises do
     check_not = Exercises.ex7(array,"taco")
     expect(check_not).to eq nil
   end
+
+  xit "Iterate through has and print out name and occupation" do
+    people = [{:name => 'Bob', :occupation => 'Builder' }, {:name => "joe",    :occupation => "cleaner"}, {:name => "john", :occupation => "chef"}]
+
+  end
+
+  xit "Return true if given time is in a leap year" do
+
+  end
+
 end
