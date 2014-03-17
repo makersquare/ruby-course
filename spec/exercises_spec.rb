@@ -63,7 +63,15 @@ describe 'Exercise 6' do
     Exercises.ex6(array, "Panda")
     array[-1].should eq("GODZILLA")
   end
-
 end
+
+describe 'Exercise 7' do
+  it "adds a string to the end of an array if it is already present" do
+    array = ["dog", "cat", "gator"]
+    Exercises.ex7(array, "cat")
+    array.should eq(["dog", "cat", "gator", "cat"])
+  end
+end
+
 
 
