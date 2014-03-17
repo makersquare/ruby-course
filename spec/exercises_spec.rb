@@ -78,18 +78,19 @@ describe Exercises do
   end
 
   describe "Exercise 7" do
-    xit "Does not insert string that is not already there" do
+    it "Does not insert string that is not already there" do
       testarray = ["kangaroo", "koala", "snake", "tiger"]
-      result = Exercises.ex7(testarray,"lion")
-      expected = ["kangaroo", "koala", "snake", "tiger"]
+      Exercises.ex7(testarray,"lion")
 
+      expect( testarray.last ).to_not eq("lion")
     end
 
-    xit "Does insert a string that is already there" do
+    it "Does insert a string that is already there" do
       testarray = ["kangaroo", "koala", "snake", "tiger"]
-      result = Exercises.ex7(testarray,"snake")
+      Exercises.ex7(testarray,"snake")
       expected = ["kangaroo", "koala", "snake", "tiger","snake"]
 
+      expect( testarray ).to eq( expected )
     end
   end
 end
