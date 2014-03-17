@@ -138,7 +138,7 @@ end
 
 require 'io/console'
 class RPSPlayer
-  attr_reader :rps, :player1, :player2
+  attr_reader :rps, :player1, :player2, :player1_move, :player2_move
   # (No specs are required for RPSPlayer)
   #
   # Complete the `start` method so that it uses your RPS class to present
@@ -157,11 +157,24 @@ class RPSPlayer
     #          what the player is typing! :D
     # This is also why we needed to require 'io/console'
     # move = STDIN.noecho(&:gets)
+
+    # Input player names
     puts "Input name of Player 1:"
     @player1 = gets.chomp
     puts "Input name of Player 2:"
     @player2 = gets.chomp
+
+    #Create new RPS class with player names
     @rps = RPS.new(player1,player2)
+
+    #Input player moves
+    puts "#{@player1}'s move? (rock/paper/scissors)"
+    @player1_move = STDIN.noecho(&:gets)
+    puts "#{@player2}'s move? (rock/paper/scissors)"
+    @player2_move = STDIN.noecho(&:gets)
+
+    # Play the game
+    @rps.play(@player1_move, @player2_move)
   end
 end
 

@@ -176,12 +176,13 @@ describe RPSPlayer do
     @rpsplayer.start
   end
 
-  it "gets two player names and creates RPS class" do
+  xit "gets two player names and creates RPS class" do
     expect( @rpsplayer.rps ).to be_a( RPS )
     expect( @rpsplayer.rps.player2 ).to be_a( String )
   end
 
   it "Accepts input of each player's move and feeds them to the newly created RPS class" do
+    expect( @rpsplayer.player1_move ).to be_a( String )
     @rpsplayer.rps.should_receive( :play )
   end
 end
