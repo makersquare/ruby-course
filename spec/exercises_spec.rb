@@ -105,4 +105,18 @@ describe Exercises do
       Exercises.ex8(testarray)
     end
   end
+
+  describe "Exercise 9" do
+    it "Returns true if given time is in a leap year" do
+      Time.stub(:now).and_return(Time.new(2004))
+
+      expect( Exercises.ex9( Time.now ) ).to eq(true)
+    end
+
+    it "Returns false if given time is not in a leap year" do
+      Time.stub(:now).and_return(Time.new(2014))
+
+      expect( Exercises.ex9( Time.now ) ).to eq(true)
+    end
+  end
 end
