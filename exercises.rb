@@ -189,9 +189,9 @@ class RPSPlayer
    newgame = RPS.new(player1, player2)
 while newgame.gameover == false
     puts "1st player, whats your move?"
-    move1 = STDIN.noecho(&:gets)
+    move1 = STDIN.noecho(&:gets).chomp
     puts "2nd player,s what's your move?"
-    move2 = STDIN.noecho(&:gets)
+    move2 = STDIN.noecho(&:gets).chomp
 
     newgame.play(move1, move2)
     newgame.winner
@@ -202,15 +202,19 @@ while newgame.gameover == false
     puts "Do you want to play again?"
     response =STDIN.noecho(&:gets)
     if response == "yes"
+      puts "1st player's name?"
+      player1 = STDIN.noecho(&:gets).chomp
+      puts "2nd player's name?"
+      player2 = STDIN.noecho(&:gets).chomp
       newgame2=RPS.new(player1, player2)
-  while newgame.gameover == false
+  while newgame2.gameover == false
     puts "1st player, whats your move?"
-    move1 = STDIN.noecho(&:gets)
+    move1 = STDIN.noecho(&:gets).chomp
     puts "2nd player,s what's your move?"
-    move2 = STDIN.noecho(&:gets)
+    move2 = STDIN.noecho(&:gets).chomp
 
-    newgame.play(move1, move2)
-    newgame.winner
+    newgame2.play(move1, move2)
+    newgame2.winner
     end
   else 
     puts "Thanks for playing!"
@@ -218,6 +222,8 @@ while newgame.gameover == false
 
   end
 end
+
+RPSPlayer.new.start
 
 
 module Extensions
