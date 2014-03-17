@@ -23,9 +23,7 @@ module Exercises
   #  - Returns the sum of the given array of numbers
   def self.ex3(array)
     sum = 0
-    array.each do |item|
-      sum += item
-    end
+    array.each { |item| sum += item }
     sum
   end
 
