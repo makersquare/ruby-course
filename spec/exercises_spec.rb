@@ -74,5 +74,14 @@ describe Exercises do
 				expect(result).to eq(["tiger", "lion", "crocodile", "snake", "lion"])
 			end
 		end
+
+		describe "Exercise 8" do
+			it "iterate through `people` and print out their name and occupation." do
+				expect(STDOUT).to receive(:print).with('Bob')
+				expect(STDOUT).to receive(:print).with('Builder')
+				people = { :name => 'Bob', :occupation => 'Builder' }
+				result = Exercises.ex8(people)
+			end
+		end
 	end
 end
