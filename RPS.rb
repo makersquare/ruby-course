@@ -1,6 +1,6 @@
 class RPS
   attr_accessor :playerOne, :playerTwo
-  attr_reader :playerOneScore, :playerTwoScore
+  attr_reader :playerOneScore, :playerTwoScore, :gameOver
 
   def initialize(playerOne, playerTwo)
     @playerOne = playerOne

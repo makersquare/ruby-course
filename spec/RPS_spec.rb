@@ -45,11 +45,14 @@ describe 'RPS' do
     expect(winner).to eq("Tie Try Again")
   end
 
-  xit "ends after a player wins 2 of 3 rounds" do
+  it "ends after a player wins 2 of 3 rounds" do
     winner = @newGame.play("paper","rock")
     winner = @newGame.play("scissors","rock")
     winner = @newGame.play("rock","scissors")
+
+    expect(@newGame.gameOver).to eq(true)
   end
+
 
 
 
