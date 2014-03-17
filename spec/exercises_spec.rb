@@ -85,10 +85,13 @@ describe 'Excercise 8' do
 end
 
 describe 'Excercise 9' do
-  xit 'returns true if given time is in a leap year' do
-    the_time = Time.new(2000)
+  it 'returns true if given time is in a leap year' do
+    the_time = 2012
+    the_time2 = 2014
     result = Exercises.ex9(the_time)
+    result2 = Exercises.ex9(the_time2)
     expect(result).to eq true
+    expect(result2).to eq false
   end
 end
 

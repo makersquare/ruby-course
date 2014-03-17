@@ -98,11 +98,16 @@ module Exercises
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
     # TODO
-    # if time % 4 == 0
-    #   true
-    # else
-    #   false
-    # end
+    if time % 400 == 0 || time % 4 == 0
+      if time % 100 == 0
+        false
+      else
+        true
+      end
+    else
+      false
+    end
+
   end
 end
 
