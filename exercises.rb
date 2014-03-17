@@ -208,6 +208,6 @@ module Extensions
   #   expect(result).to eq({ :most => 'x', :least => ['y', 'z'] })
   #
   def self.extremes(array)
-    # TODO
+    {}
   end
 end

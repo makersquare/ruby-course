@@ -189,7 +189,7 @@ require "./exercises.rb"
 
 describe Extensions do
   it "Takes and array of strings and returns a hash" do
-    testhash = Extensions.extreme(['a','b','c','d','d'])
+    testhash = Extensions.extremes(['a','b','c','d','d'])
 
     expect(testhash).to be_a(Hash)
   end
