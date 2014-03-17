@@ -142,9 +142,7 @@ require 'io/console'
 class RPSPlayer
   attr_reader :rps, :player1, :player2, :player1_move, :player2_move
 
-  def rps
-    @rps
-  end
+
   # (No specs are required for RPSPlayer)
   #
   # Complete the `start` method so that it uses your RPS class to present
@@ -181,11 +179,11 @@ class RPSPlayer
     while play_again == 'y' do
       #Input player moves
       puts "#{@player1}'s move? (rock/paper/scissors)"
-      @player1_move = STDIN.noecho(&:gets).chomp
-      puts @player1_move
+      # @player1_move = STDIN.noecho(&:gets).chomp
+      @player1_move = gets.chomp
       puts "#{@player2}'s move? (rock/paper/scissors)"
-      @player2_move = STDIN.noecho(&:gets).chomp
-      puts @player2_move
+      # @player2_move = STDIN.noecho(&:gets).chomp
+      @player2_move = gets.chomp
 
       # Play the game
       puts @rps.play(@player1_move, @player2_move)
