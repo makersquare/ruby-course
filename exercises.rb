@@ -1,4 +1,6 @@
 
+require 'pry-debugger'
+
 module Exercises
   # Exercise 0
   #  - Triples a given string `str`
@@ -125,6 +127,7 @@ class RPS
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
+@@output = 0
 attr_accessor :player1, :player2, :player1choice, :player2choice, :winner
 def initialize(player1,player2)
   @player1 ||= []
@@ -141,46 +144,57 @@ def play(player1choice=nil, player2choice=nil)
   @winner = nil
 
   if @player1choice == @player2choice
-    puts "The game is a tie!"
+    puts = "The game is a tie!"
   elsif @player1choice == "paper" && @player2choice == "rock"
     puts "Paper beats rock! Player 1 wins!"
     @player1[1] += 1
+      if @player1[1] == 2
+      @winner = @player1[0]
+      puts "Game over. #{@@winner} wins!"
+      end
   elsif @player1choice == "paper" && @player2choice == "scissors"
     puts "Scissors beats paper! Player 2 wins!"
     @player2[1] += 1
+      if @player2[1] == 2
+      @winner = @player2[0]
+      puts "Game over. #{@winner} wins!"
+      end
   elsif @player1choice == "rock" && @player2choice == "scissors"
     puts "Rock beats scissors! Player 1 wins!"
     @player1[1] += 1
+      if @player1[1] == 2
+      @winner = @player1[0]
+      puts "Game over. #{@winner} wins!"
+      end
   elsif @player1choice == "rock" && @player2choice == "paper"
     puts "Paper beats rock! Player 2 wins!"
     @player2[1] += 1
+      if @player2[1] == 2
+      @winner = @player2[0]
+      puts "Game over. #{@winner} wins!"
+      end
   elsif @player1choice == "scissors" && @player2choice == "paper"
     puts "Scissors beats paper! Player 1 wins!"
     @player1[1] += 1
+      if @player1[1] == 2
+      @winner = @player1[0]
+      puts "Game over. #{@winner} wins!"
+      end
   elsif @player1choice == "scissors" && @player2choice == "rock"
     puts "Rock beats scissors! Player 2 wins"
     @player2[1] += 1
-  else
-
-  end
-
-  if @player1[1] == 2
-    puts "Game over. #{@player1[0]} wins!"
-    @winner = @player1[0]
-  elsif @player2[1] == 2
-    puts "Game over. #{@player2[0]} wins!"
-    @winner = @player2[0]
-  else
+      if @player2[1] == 2
+      @winner = @player2[0]
+      puts "Game over. #{@winner} wins!"
+    end
   end
 end
-
-
-
 end
 
 
 require 'io/console'
 class RPSPlayer
+  attr_accessor :winner
   # (No specs are required for RPSPlayer)
   #
   # Complete the `start` method so that it uses your RPS class to present
@@ -191,9 +205,22 @@ class RPSPlayer
   # lets both players play the game.
   #
   # When the game ends, ask if the player wants to play again.
-  def start
-
+  def self.start
+    print "Please enter a name for player 1:"
+    player1 = gets.chomp
+    print "Please enter a name for player 2:"
+    player2 = gets.chomp
     # TODO
+    game = RPS.new(player1, player2)
+
+  while game.winner == nil do
+    puts "Please enter a choice for player 1:"
+    player1choice = STDIN.noecho(&:gets).chomp
+    puts "Please enter a choice for player 2:"
+    player2choice = STDIN.noecho(&:gets).chomp
+
+    game.play(player1choice, player2choice)
+  end
 
     # PRO TIP: Instead of using plain `gets` for grabbing a player's
     #          move, this line does the same thing but does NOT show
