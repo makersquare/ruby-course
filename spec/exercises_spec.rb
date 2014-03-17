@@ -12,4 +12,11 @@ describe Exercises do
       expect(result).to eq('nope')
     end
   end
+
+  describe "Exercise 1" do
+    it "Returns the numer of elements in the array" do
+      testarray = [1, 2, 3]
+      expect( Exercises.ex1(testarray) ).to eq(3)
+    end
+  end
 end
