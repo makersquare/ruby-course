@@ -71,6 +71,17 @@ describe Exercises do
     result = Exercises.ex9("March 14th 1900")
     expect(result).to eq(false)
   end
+end
+
+describe RPS do
+  before do
+    @game = RPS.new("a", "b")
+  end
+
+  it "is initialized with two strings(player names)" do
+    expect(@game.p1name).to eq("a")
+    expect(@game.p2name).to eq("b")
+  end
 
 end
 
