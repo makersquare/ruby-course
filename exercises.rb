@@ -104,7 +104,20 @@ class RPS
   end
 
   def play(player1_move, player2_move)
+    player1_move.downcase!
+    player2_move.downcase!
 
+    if player1_move == player2_move
+      return "tie"
+    elsif player1_move == "rock"
+      player2_move == "paper" ? @player2 : @player1
+    elsif player1_move == "paper"
+      player2_move == "scissors" ? @player2 : @player1
+    elsif player1_move == "scissors"
+      player2_move == "rock" ? @player2 : @player1
+    else
+      return "error"
+    end
   end
 end
 
