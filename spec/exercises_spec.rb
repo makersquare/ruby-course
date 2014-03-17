@@ -56,4 +56,11 @@ describe Exercises do
     expect(result).to eq [1,2,"GODZILLA"]
   end
 
+  it "if str is in array add it to end of array" do
+    result = Exercises.ex7(['im', 'a', 'millionaire', 'a young', 'money'], 'millionaire')
+    result2 = Exercises.ex7(['brandon', 'beasley'], 'millionaire')
+    expect(result).to eq ['im', 'a', 'millionaire', 'a young', 'money', 'millionaire']
+    expect(result2).to eq ['brandon', 'beasley']
+  end
+
 end
