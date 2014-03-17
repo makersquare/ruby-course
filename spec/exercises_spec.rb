@@ -45,4 +45,31 @@ describe 'Excercise 4' do
   end
 end
 
+describe 'Excercise 5' do
+  it 'iterates through an array and puts each element' do
+    expect(STDOUT).to receive(:puts).with('hey')
+    expect(STDOUT).to receive(:puts).with('whats')
+    expect(STDOUT).to receive(:puts).with('up')
+    the_array1 = ["hey","whats","up"]
+    result = Exercises.ex5(the_array1)
+  end
+end
+
+describe 'Excercise 6' do
+  xit 'updates last item in the array to panda' do
+    the_array1 = ["hey","whats","up","man"]
+    the_word = "panda"
+    the_second_word = "GODZILLA"
+    if the_array1[-1] == the_word
+      result = Exercises.ex6(the_array1, the_word)
+      expect(result).to eq "hey whats up GODZILLA"
+    else
+    result = Exercises.ex6(the_array1, the_word)
+    expect(result).to eq "hey whats up panda"
+  end
+  end
+end
+
+
+
 
