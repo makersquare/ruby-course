@@ -104,3 +104,35 @@ describe 'Exercise 9' do
 		expect(result).to eq(false)
 	end
 end
+
+describe 'Rock Paper Scissors game' do
+	it "initializes with two strings" do
+		player1 = "Joe"
+		player2 = "Larry"
+
+		new_game = RPS.new(player1, player2)
+
+		expect(new_game.player1).to eq("Joe")
+		expect(new_game.player2).to eq("Larry")
+
+	end
+
+	it "plays a two-person game of RPS" do
+		player1 = "Joe"
+		player2 = "Larry"
+
+		new_game = RPS.new(player1, player2)
+		# binding.pry
+		result = new_game.play("rock", "paper")
+		expect(result).to eq("Larry")
+
+		result = new_game.play("scissors", "scissors")
+		expect(result).to eq("tie")
+
+		result = new_game.play("paper", "rock")
+		expect(result).to eq("Joe")
+	end
+
+
+
+end

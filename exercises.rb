@@ -109,6 +109,42 @@ class RPS
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
+  attr_reader :player1, :player2
+  def initialize(player1, player2)
+    @player1 = player1
+    @player2 = player2
+  end
+
+  def play(play1, play2)
+  # binding.pry
+  case play1 == "rock"
+    when play2 == "rock"
+      winner = "tie"
+    when play2 == "paper"
+      winner = @player2
+    when play2 == "scissors"
+      winner = @player1
+  end
+
+  case play1 == "paper"
+    when play2 == "rock"
+      winner = @player1
+    when play2 == "paper"
+      winner = "tie"
+    when play2 == "scissors"
+      winner = @player2
+  end
+
+  case play1 == "scissors"
+      when play2 == "rock"
+        winner = @player2
+      when play2 == "paper"
+        winner = @player1
+      when play2 == "scissors"
+        winner = "tie"
+  end
+end
+
 end
 
 
@@ -133,6 +169,8 @@ class RPSPlayer
     #          what the player is typing! :D
     # This is also why we needed to require 'io/console'
     # move = STDIN.noecho(&:gets)
+    # puts "Enter player 1 name: "
+    # player1 = gets.chomp
   end
 end
 
