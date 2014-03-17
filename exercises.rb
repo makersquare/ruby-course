@@ -93,7 +93,7 @@ class RPS
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
   attr_reader :player_one, :player_two
-  attr_accessor :move1, :move2
+  attr_accessor :move1, :move2, :results
 
   def initialize(player_one, player_two)
     @player_one = player_one
@@ -102,7 +102,26 @@ class RPS
 
   def play(move1, move2)
 
+    if move1 == move2
+      winner = "draw"
+    elsif move1 == 'rock' && move2 == 'scissors'
+      winner = @player_one
+    elsif move1 == 'rock' && move2 == 'paper'
+      winner = @player_two
+    elsif move1 == 'paper' && move2 == 'scissors'
+      winner = @player_two
+    elsif move1 == 'paper' && move2 == 'rock'
+      winner = @player_one
+    elsif move1 == 'scissors' && move2 == 'paper'
+      winner = @player_one
+    elsif move1 == 'scissors' && move2 == 'rock'
+      winner = @player_two
+    end
+
   end
+
+
+
 end
 
 

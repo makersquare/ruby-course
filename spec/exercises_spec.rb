@@ -100,7 +100,21 @@ describe 'RPS' do
       game = RPS.new('mike', 'jordan')
       game.play('rock', 'paper')
     end
+
+    it 'return the winner' do
+      game = RPS.new('mike', 'jordan')
+      winner =  game.play('rock', 'paper')
+      expect(winner).to eq('jordan')
+
+      game = RPS.new('mike', 'jordan')
+      winner =  game.play('rock', 'scissors')
+      expect(winner).to eq('mike')
+
+
+    end
+
   end
+
 
 
 
