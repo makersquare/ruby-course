@@ -45,3 +45,14 @@ describe 'self.ex4' do
     expect(result).to eq 4
   end
 end
+
+describe 'self.ex5' do
+  it 'iterates through an array and puts each element' do
+    arr = [1,2,3,4]
+    expect(STDOUT).to receive(:puts).with(1)
+    expect(STDOUT).to receive(:puts).with(2)
+    expect(STDOUT).to receive(:puts).with(3)
+    expect(STDOUT).to receive(:puts).with(4)
+    Exercises.ex5(arr)
+  end
+end
