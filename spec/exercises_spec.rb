@@ -91,8 +91,8 @@ describe 'RPS' do
     it 'initializes with two player names' do
       game = RPS.new('mike', 'jordan')
 
-      expect(game.player_one).to eq('mike')
-      expect(game.player_two).to eq('jordan')
+      expect(game.player_one[:name]).to eq('mike')
+      expect(game.player_two[:name]).to eq('jordan')
     end
   end
   describe '#play' do
@@ -110,17 +110,8 @@ describe 'RPS' do
       winner =  game.play('rock', 'scissors')
       expect(winner).to eq('mike')
 
-
     end
-
   end
-
-
-
-
-
-
-
 end
 
 

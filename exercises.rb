@@ -96,28 +96,40 @@ class RPS
   attr_accessor :move1, :move2, :results
 
   def initialize(player_one, player_two)
-    @player_one = player_one
-    @player_two = player_two
+    @player_one = {name: player_one, wins: 0}
+    @player_two = {name: player_two, wins: 0}
+
+
   end
 
   def play(move1, move2)
 
-    if move1 == move2
-      winner = "draw"
-    elsif move1 == 'rock' && move2 == 'scissors'
-      winner = @player_one
-    elsif move1 == 'rock' && move2 == 'paper'
-      winner = @player_two
-    elsif move1 == 'paper' && move2 == 'scissors'
-      winner = @player_two
-    elsif move1 == 'paper' && move2 == 'rock'
-      winner = @player_one
-    elsif move1 == 'scissors' && move2 == 'paper'
-      winner = @player_one
-    elsif move1 == 'scissors' && move2 == 'rock'
-      winner = @player_two
-    end
 
+      if( @player_one[:wins] >= 2 || @player_two[:wins] >= 2)
+        return "The game is over"
+      elsif move1 == move2
+        winner = "draw"
+      elsif move1 == 'rock' && move2 == 'scissors'
+        winner = @player_one[:name]
+        @player_one[:wins] += 1
+      elsif move1 == 'rock' && move2 == 'paper'
+        winner = @player_two[:name]
+        @player_two[:wins] += 1
+      elsif move1 == 'paper' && move2 == 'scissors'
+        winner = @player_two[:name]
+        @player_two[:wins] += 1
+      elsif move1 == 'paper' && move2 == 'rock'
+        winner = @player_one[:name]
+        @player_one[:wins] += 1
+      elsif move1 == 'scissors' && move2 == 'paper'
+        winner = @player_one[:name]
+        @player_one[:wins] += 1
+      elsif move1 == 'scissors' && move2 == 'rock'
+        winner = @player_two[:name]
+        @player_two[:wins] += 1
+      end
+
+      return winner
   end
 
 
