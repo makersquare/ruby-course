@@ -22,4 +22,9 @@ describe "Exercises" do
     expect(result).to eq("yell")
   end
 
+  it "returns the sum of the given array of numbers" do
+    result=Exercises.ex3([1,2,3])
+    expect(result).to eq(6)
+  end
+
 end

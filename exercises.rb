@@ -28,6 +28,7 @@ module Exercises
   # Exercise 3
   #  - Returns the sum of the given array of numbers
   def self.ex3(array)
+    array.inject{|sum,x| sum + x}
 
   end
 
