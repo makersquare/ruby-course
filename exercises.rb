@@ -30,7 +30,9 @@ module Exercises
   # Exercise 4
   #  - Returns the max number of the given array
   def self.ex4(array)
-    # TODO
+    max = array[0]
+    array.each { |x| if (x > max) then (max = x) end }
+    return max
   end
 
   # Exercise 5

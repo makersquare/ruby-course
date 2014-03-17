@@ -35,11 +35,12 @@ describe 'Exercise 3' do
 end
 
 describe 'Exercise 4' do
-  it "returns the 2nd element of an array" do
+  it "returns the max number in a given array" do
     array = [1,2,3]
-    expect(Exercises.ex2(array)).to eq(2)
+    expect(Exercises.ex4(array)).to eq(3)
   end
 end
+
 
 
 
