@@ -23,4 +23,10 @@ describe Exercises do
     expect(second_element_array).to eq (2)
   end
 
+  it "Returns the sum of the given array of numbers" do
+    array = [4,6,10,20,5]
+    total_sum = Exercises.ex3(array)
+    expect(total_sum).to eq (45)
+  end
+
 end

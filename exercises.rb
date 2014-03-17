@@ -32,12 +32,14 @@ module Exercises
   #  - Returns the sum of the given array of numbers
   def self.ex3(array)
     # TODO
+    array.inject{ |sum, n| sum + n }
   end
 
   # Exercise 4
   #  - Returns the max number of the given array
   def self.ex4(array)
     # TODO
+
   end
 
   # Exercise 5
