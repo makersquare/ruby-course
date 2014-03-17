@@ -79,11 +79,23 @@ describe 'Exercise 6' do
 end
 
 describe 'Exercise 7' do
-  it ' if the string str exist in the array, add it to the end of the array' do
-    array = ['whats','up', 'hey']
-    result = Exercises.ex7(array, 'whats')
-    expect(result).to eq('whats')
+  #it ' if the string str exist in the array, add it to the end of the array' do
+ #   array = ['whats','up', 'hey']
+ #   result = Exercises.ex7(array, 'whats')
+  #  expect(result).to eq('whats')
+  #end
+end
+
+describe 'RPS' do
+  it 'initializes with two player names' do
+    game = RPS.new('mike', 'jordan')
+
+    expect(game.player_one).to eq('mike')
+    expect(game.player_one).to eq('jordan')
   end
 end
+
+
+
 
 
