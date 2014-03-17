@@ -60,7 +60,9 @@ module Exercises
   #  - If the string `str` exists in the array,
   #    add `str` to the end of the array
   def self.ex7(array, str)
-    # TODO
+    if array.include? (str)
+      array.push(str)
+    end
   end
 
   # Exercise 8
@@ -68,7 +70,9 @@ module Exercises
   #    { :name => 'Bob', :occupation => 'Builder' }
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
-    # TODO
+    people.each do |person|
+      puts "#{person[:name]}, #{person[:occupation]}"
+    end
   end
 
   # Exercise 9

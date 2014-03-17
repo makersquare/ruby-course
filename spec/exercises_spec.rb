@@ -76,5 +76,28 @@ describe 'self.ex6' do
 end
 
 describe 'self.ex7' do
-  it ''
+  it 'adds str to the end of the array if str already exists' do
+    arr = ['a', 'b', 'c', 'd']
+    str = 'b'
+    result = Exercises.ex7(arr, str)
+
+    new_arr = ['a', 'b', 'c', 'd', 'b']
+    expect(result).to eq(new_arr)
+  end
+end
+
+describe 'self.ex8' do
+  it 'iterates through an array of hashes and prints key and value' do
+    p1 = { :name => 'Bob', :occupation => 'Builder' }
+    p2 = { :name => 'Titty', :occupation => 'Tank' }
+    p3 = { :name => 'Franklin', :occupation => 'Turtle' }
+
+    ppl = [p1, p2, p3]
+
+    expect(STDOUT).to receive(:puts).with("#{ppl[0][:name]}, #{ppl[0][:occupation]}")
+    expect(STDOUT).to receive(:puts).with("#{ppl[1][:name]}, #{ppl[1][:occupation]}")
+    expect(STDOUT).to receive(:puts).with("#{ppl[2][:name]}, #{ppl[2][:occupation]}")
+    Exercises.ex8(ppl)
+
+  end
 end
