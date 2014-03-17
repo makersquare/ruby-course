@@ -8,7 +8,7 @@ describe Exercises do
   end
 
   it 'returns "nope" if string is "wishes"' do
-    result = Excercises.ex0('wishes')
+    result = Exercises.ex0('wishes')
     expect(result).to eq 'nope'
   end
 
