@@ -30,5 +30,12 @@ describe Exercises do
 				expect(result).to eq 'lion'
 			end
 		end
+
+		describe "Exercise 3" do
+			it "returns the sum of the given array of numbers" do
+				result = Exercises.ex3(@numbers)
+				expect(result).to eq(75)
+			end
+		end
 	end
 end
