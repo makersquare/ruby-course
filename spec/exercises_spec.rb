@@ -48,5 +48,11 @@ describe Exercises do
     result = Exercises.ex6(["donkey", "rat", "panda"], "panda")
     expect(result).to eq(["donkey", "rat", "panda", "GODZILLA"])
   end
+
+  it "checks if 'str' is includeded in an array and if so puts it at the end of the array" do
+    result = Exercises.ex7(["John","Braden","Bryan"], "John")
+    expect(result).to eq(["Braden", "Bryan", "John"])
+  end
 end
+
 
