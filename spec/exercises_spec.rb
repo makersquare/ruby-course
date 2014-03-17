@@ -136,7 +136,7 @@ describe RPS do
       @fungame.play("rock","paper")
     end
 
-    it "returns string of winner's name, or tie. Test of all combos" do
+    xit "returns string of winner's name, or tie. Test of all combos" do
       name1 = @fungame.play("rock","rock")
       name2 = @fungame.play("rock","paper")
       name3 = @fungame.play("rock","scissors")
@@ -156,7 +156,15 @@ describe RPS do
       expect(name7).to eq("Jessie")
       expect(name8).to eq("Brian")
       expect(name9).to eq("tie")
+    end
 
+    it "Returns 'Game over!' after one player wins 2 games" do
+      name1 = @fungame.play("rock","rock")
+      name2 = @fungame.play("rock","paper")
+      name3 = @fungame.play("rock","scissors")
+      name4 = @fungame.play("paper","rock")
+
+      expect(name4).to eq("Game over!")
     end
   end
 end
