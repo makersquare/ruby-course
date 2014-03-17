@@ -93,7 +93,30 @@ module Exercises
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
     # TODO
+
+    if time % 400 == 0
+      true
+    elsif time % 100 == 0
+      false
+    elsif time%4 == 0
+      true
+    else
+      false
+    end
+
+# if year is divisible by 400 then leap year
+# else if year is divisible by 100 then common year
+# else if year is divisible by 4 then leap year
+# else common year
+  #   if time%400 == 0 && time%4== 0
+  #     true
+  #   else
+  #     false
+  #   end
+  # end
+
   end
+
 end
 
 

@@ -71,8 +71,18 @@ describe Exercises do
 
   end
 
-  xit "Return true if given time is in a leap year" do
+  it "Return true if given time is in a leap year" do
+    # okay you know you need to stub time. stub to to leap year then true
 
+    # leapyear = Time.now(2400)
+    # Time.stub(:now).and_return(leapyear)
+    time = 1816
+    Leap_test_true = Exercises.ex9(time)
+    expect(Leap_test_true).to eq true
+
+    time = 2013
+    Leap_test_false = Exercises.ex9(time)
+    expect(Leap_test_false).to eq false
   end
 
 end
