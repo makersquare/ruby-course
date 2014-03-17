@@ -64,8 +64,23 @@ describe Exercises do
   end
 
   it "prints name and occupation of everyone in hash" do
-    result = Exercises.ex8([{ :name => 'brandon', :occupation => 'balla'}, { :name => 'aaron', :occupation => 'translator'}])
-    expect(result).to eq "brandon: balla aaron: translator"
+    expect(STDOUT).to receive(:puts).with('brandon')
+    expect(STDOUT).to receive(:puts).with('programmer')
+    expect(STDOUT).to receive(:puts).with('aaron')
+    expect(STDOUT).to receive(:puts).with('translator')
+    Exercises.ex8([{ :name => 'brandon', :occupation => 'programmer'}, { :name => 'aaron', :occupation => 'translator'}])
+  end
+
+  it 'returns true if current time is leap year' do
+    result = Exercises.ex9(2000)
+    result2 = Exercises.ex9(2012)
+    result3 = Exercises.ex9(1900)
+    result4 = Exercises.ex9(2014)
+    expect(result).to eq true
+    expect(result2).to eq true
+    expect(result3).to eq false
+    expect(result4).to eq false
+
   end
 
 end
