@@ -75,7 +75,16 @@ module Exercises
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
-    Time.parse(time)
+    value = Time.parse(time)
+    if value.year%400 == 0
+      true
+    elsif value.year%100 == 0
+      false
+    elsif value.year%4 == 0
+      true
+    else
+      false
+    end
   end
 end
 

@@ -62,9 +62,14 @@ describe Exercises do
     Exercises.ex8([{name: "Bob", ocupation: "Builder"}, {name: "Sponge Bob", ocupation: "Burger Chef"}])
   end
 
-  xit "returns true is the given time is in a leap year" do
+  it "returns true if the given time is in a leap year" do
     result = Exercises.ex9("February 1988")
     expect(result).to eq(true)
+  end
+
+  it "returns false if the given time is NOT in a leap year" do
+    result = Exercises.ex9("March 14th 1900")
+    expect(result).to eq(false)
   end
 
 end
