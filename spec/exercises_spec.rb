@@ -70,5 +70,14 @@ describe 'Exercise 6' do
     result = Exercises.ex6(array, 'panda')
     expect(result).to eq('panda')
   end
+
+  it 'if the last item in the array is panda update it to GODZILLA' do
+    array = ['tiger', 'shark', 'panda']
+    result = Exercises.ex6(array, "GODZILLA")
+    expect(result).to eq("GODZILLA")
+  end
+
+
+
 end
 
