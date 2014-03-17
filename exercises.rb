@@ -1,3 +1,5 @@
+require 'time'
+
 
 module Exercises
   # Exercise 0
@@ -79,6 +81,7 @@ module Exercises
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
     # TODO
+    time.year % 4 == 0 ? true : false
   end
 end
 

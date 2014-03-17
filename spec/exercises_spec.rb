@@ -116,7 +116,7 @@ describe Exercises do
     it "Returns false if given time is not in a leap year" do
       Time.stub(:now).and_return(Time.new(2014))
 
-      expect( Exercises.ex9( Time.now ) ).to eq(true)
+      expect( Exercises.ex9( Time.now ) ).to eq(false)
     end
   end
 end
