@@ -67,5 +67,12 @@ describe Exercises do
 				expect(result).to eq 'GODZILLA'
 			end
 		end
+
+		describe "Exercise 7" do
+			it "add a string to the end of the array, if the string exists in array" do
+				result = Exercises.ex7(@animals, 'lion')
+				expect(result).to eq(["tiger", "lion", "crocodile", "snake", "lion"])
+			end
+		end
 	end
 end
