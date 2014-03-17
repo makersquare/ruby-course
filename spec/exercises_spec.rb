@@ -125,4 +125,15 @@ describe RPS do
   it "is initialized with two strings (player names)" do
     fungame = RPS.new("Brian","Jessie")
   end
+
+  describe "play method" do
+
+    before do
+      @fungame = RPS.new("Brian","Jessie")
+    end
+
+    it "takes two strings" do
+      @fungame.play("rock","paper")
+    end
+  end
 end
