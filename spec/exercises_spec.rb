@@ -87,15 +87,26 @@ describe 'Exercise 7' do
 end
 
 describe 'RPS' do
-  it 'initializes with two player names' do
-    game = RPS.new('mike', 'jordan')
+  describe 'initializes' do
+    it 'initializes with two player names' do
+      game = RPS.new('mike', 'jordan')
 
-    expect(game.player_one).to eq('mike')
-    expect(game.player_one).to eq('jordan')
+      expect(game.player_one).to eq('mike')
+      expect(game.player_two).to eq('jordan')
+    end
   end
+  describe '#play' do
+    it 'takes two strings representing player moves' do
+      game = RPS.new('mike', 'jordan')
+      game.play('rock', 'paper')
+    end
+  end
+
+
+
+
+
+
 end
-
-
-
 
 
