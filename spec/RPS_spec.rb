@@ -35,7 +35,24 @@ describe 'RPS' do
   end
 
 
-  xit "returns 'Game is Over' if the game is over" do
+  it "returns 'Game is Over' if the game is over" do
+    winner = @newGame.play("rock", "scissors")
+    winner = @newGame.play("scissors", "rock")
   end
+
+  it "returns 'Tie Try Again' if there's a tie" do
+    winner = @newGame.play("rock", "rock")
+    expect(winner).to eq("Tie Try Again")
+  end
+
+  xit "ends after a player wins 2 of 3 rounds" do
+    winner = @newGame.play("paper","rock")
+    winner = @newGame.play("scissors","rock")
+    winner = @newGame.play("rock","scissors")
+  end
+
+
+
+
 
 end

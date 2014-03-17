@@ -16,13 +16,32 @@ class RPS
 
     if moveOne == "rock"
       if moveTwo == "rock"
-        return "Tie try again"
+        return "Tie Try Again"
       elsif moveTwo == "paper"
         winner = playerTwo
       elsif moveTwo == "scissors"
         winner = playerOne
       end
+
+    elsif moveOne == "paper"
+      if moveTwo == "rock"
+        winner = playerOne
+      elsif moveTwo == "paper"
+        return "Tie Try Again"
+      elsif moveTwo == "scissors"
+        winner = playerTwo
+      end
+
+    else #moveOne == "scissors"
+      if moveTwo == "rock"
+        winner = playerTwo
+      elsif moveTwo == "paper"
+        winner = playerOne
+      else #moveTwo == "scissors"
+        return "Tie Try Again"
+      end
     end
+
 
     if winner = playerOne
       @playerOneScore += 1
