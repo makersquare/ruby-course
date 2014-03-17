@@ -188,9 +188,15 @@ require "./exercises.rb"
 # end
 
 describe Extensions do
-  it "Takes and array of strings and returns a hash" do
-    testhash = Extensions.extremes(['a','b','c','d','d'])
+  before do
+    @testhash = Extensions.extremes(['a','b','c','d','d','d'])
+  end
 
-    expect(testhash).to be_a(Hash)
+  it "Takes and array of strings and returns a hash" do
+    expect(@testhash).to be_a(Hash)
+  end
+
+  it "Returns hash with { :most => [], :least => [] }" do
+    expect(@testhash).to eq({ :most => 'd', :least => ['a', 'b', 'c'] })
   end
 end
