@@ -27,11 +27,21 @@ describe "Exercises" do
     expect(result).to eq(6)
   end
 
-  it "returns the max number of the gevin array" do
+  it "returns the max number of the given array" do
     result=Exercises.ex4([1,2,3])
     expect(result).to eq(3)
   end
 
-  it "returns "
+  it "iterates through array and 'puts' each element" do
+    STDOUT.should_receive(:puts).with("hello")
+    STDOUT.should_receive(:puts).with("morning")
+    STDOUT.should_receive(:puts).with("glory")
+    result=Exercises.ex5(["hello","morning","glory"])
+
+
+
+  end
+
 
 end
+
