@@ -37,5 +37,12 @@ describe Exercises do
 				expect(result).to eq(75)
 			end
 		end
+
+		describe "Exercise 4" do
+			it "returns the max number of the given array" do
+				result = Exercises.ex4(@numbers)
+				expect(result).to eq(25)
+			end
+		end
 	end
 end
