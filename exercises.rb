@@ -141,6 +141,10 @@ end
 require 'io/console'
 class RPSPlayer
   attr_reader :rps, :player1, :player2, :player1_move, :player2_move
+
+  def rps
+    @rps
+  end
   # (No specs are required for RPSPlayer)
   #
   # Complete the `start` method so that it uses your RPS class to present
@@ -160,6 +164,8 @@ class RPSPlayer
     # This is also why we needed to require 'io/console'
     # move = STDIN.noecho(&:gets)
 
+
+
     # Input player names
     puts "Input name of Player 1:"
     @player1 = gets.chomp
@@ -169,16 +175,25 @@ class RPSPlayer
     #Create new RPS class with player names
     @rps = RPS.new(player1,player2)
 
-    #Input player moves
-    puts "#{@player1}'s move? (rock/paper/scissors)"
-    @player1_move = STDIN.noecho(&:gets).chomp
-    puts @player1_move
-    puts "#{@player2}'s move? (rock/paper/scissors)"
-    @player2_move = STDIN.noecho(&:gets).chomp
-    puts @player2_move
+    # Default play_again for while loop
+    play_again = 'y'
 
-    # Play the game
-    puts @rps.play(@player1_move, @player2_move)
+    while play_again == 'y' do
+      #Input player moves
+      puts "#{@player1}'s move? (rock/paper/scissors)"
+      @player1_move = STDIN.noecho(&:gets).chomp
+      puts @player1_move
+      puts "#{@player2}'s move? (rock/paper/scissors)"
+      @player2_move = STDIN.noecho(&:gets).chomp
+      puts @player2_move
+
+      # Play the game
+      puts @rps.play(@player1_move, @player2_move)
+
+      #Ask to play again
+      puts "Play again? (y/n)"
+      play_again = gets.chomp.downcase
+    end
   end
 end
 
