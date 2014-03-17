@@ -28,10 +28,10 @@ describe 'RPS' do
     expect(winner).to eq("Bob Wins the Round")
   end
 
-  xit "keeps score" do
+  it "keeps score" do
     winner = @newGame.play("rock","scissors")
-    expect(playerOneScore).to eq(1)
-    expect(playerTwoScore).to eq(0)
+    expect(@newGame.playerOneScore).to eq(1)
+    expect(@newGame.playerTwoScore).to eq(0)
   end
 
 
