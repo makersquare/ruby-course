@@ -29,4 +29,11 @@ describe Exercises do
     expect(total_sum).to eq (45)
   end
 
+  it "Returns the max number of the given array" do
+    array = [1,32423,5,64235,235325,235,325,23523235,235,324,24323,23535,32]
+    max_num = Exercises.ex4(array)
+    expect(max_num).to eq (23523235)
+
+  end
+
 end
