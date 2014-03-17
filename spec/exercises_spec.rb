@@ -94,8 +94,8 @@ end
 
 describe 'Exercise 9' do
   it "determines if the given year is a leap year" do
-    expect(Exercises.ex9(1993)).to eq(false)
-    expect(Exercises.ex9(2000)).to eq(true)
+    expect(Exercises.ex9(Time.new(1993))).to eq(false)
+    expect(Exercises.ex9(Time.new(2000))).to eq(true)
   end
 end
 
