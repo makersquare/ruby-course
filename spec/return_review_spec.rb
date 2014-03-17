@@ -11,12 +11,12 @@ describe "Puzzle Exercises" do
     it "returns a color for 'washington'" do
       apples = { 'washington' => 'red' }
       # TODO: Uncomment and complete
-      # result = get_wash_color(???)???
+      result = get_wash_color(apples)['washington']
       expect(result).to eq 'red'
 
       apples = { 'washington' => 'not orange' }
       # TODO: Uncomment and complete
-      # result = get_wash_color(apples)???
+      result = get_wash_color(apples)['washington']
       expect(result).to eq 'not orange'
     end
 
@@ -25,9 +25,9 @@ describe "Puzzle Exercises" do
   describe "Puzzle #2" do
 
     # TODO: Uncomment and complete this method
-    # def get_fruit_color(???)
-    #   ???
-    # end
+    def get_fruit_color(fruits, type)
+      fruits[type]
+    end
 
     it "returns the correct color for a specified fruit" do
       apples = {
@@ -42,26 +42,30 @@ describe "Puzzle Exercises" do
 
   end
 
-  describe "Puzzle #3", :pending => true do
+  describe "Puzzle #3" do
     class ArtMuseum
       def initialize
         @collection  = ['The Last Supper', 'Mona Lisa']
       end
+
       def collection
         @collection
       end
+
     end
 
-    @museum = ArtMuseum.new
+    before do
+      @museum = ArtMuseum.new
+    end
 
     it "counts correctly" do
       # TODO:
-      # result = @museum.???
+      result = @museum.collection.size
       expect(result).to eq(2)
     end
   end
 
-  describe "Puzzle #4", :pending => true do
+  describe "Puzzle #4" do
     def greet(x)
       if x
         'Hello'
@@ -70,12 +74,12 @@ describe "Puzzle Exercises" do
 
     it "greets correctly" do
       # TODO: Uncomment and complete
-      # result = greet(???)
+      result = greet(true).concat('World')
       expect(result).to eq 'Hello there, World'
     end
   end
 
-  describe "Puzzle #5", :pending => true do
+  describe "Puzzle #5" do
     def collection
       array = ['cap', 'box']
       array.each do |item|
