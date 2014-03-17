@@ -19,5 +19,11 @@ describe Exercises do
     expect(result2).to eq 5
   end
 
+  it 'returns the second element of an array' do
+    result = Exercises.ex2([1,2,3])
+    result2 = Exercises.ex2(['a','b','c','d','e'])
+    expect(result).to eq 2
+    expect(result2).to eq 'b'
+  end
 
 end
