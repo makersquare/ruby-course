@@ -44,7 +44,8 @@ module Exercises
   #  - If the last item is already 'panda', update
   #    it to 'GODZILLA' instead
   def self.ex6(array, str)
-    # TODO
+    array[-1] == str ? array << 'GODZILLA' : array << str
+    array[-1]
   end
 
   # Exercise 7
