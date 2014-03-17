@@ -48,5 +48,12 @@ describe "Exercises" do
     expect(result).to eq(["hello","morning","glory","panda","GODZILLA"])
   end
 
+  it "adds str to end of the array if it exists in array" do
+
+
+    result=Exercises.ex7(["hello","chocolate","pie"],"chocolate")
+    expect(result).to eq(["hello","chocolate","pie","chocolate"])
+  end
+
 end
 
