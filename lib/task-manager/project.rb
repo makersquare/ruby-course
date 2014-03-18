@@ -1,4 +1,3 @@
-
 class TM::Project
 attr_accessor :name, :id, :tasks
 @@id_counter = 1
@@ -25,5 +24,13 @@ def complete_task(task_id)
     x.status = "complete"
   end
   end
+end
+
+def completed_tasks
+  @tasks.select {|x| x.status == "complete"}.sort_by { |x| x.creation_date }
+end
+
+def incomplete_tasks
+  @tasks.select {|x| x.status == "incomplete"}.sort_by {|x| [-x.priority_number, x.creation_date]}
 end
 end
