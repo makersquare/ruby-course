@@ -20,12 +20,16 @@ class TM::Task
     @complete
   end
 
-  def mark_complete
+  def mark_complete()
     @complete = "complete"
   end
 
-  def mark_incomplete
+  def mark_incomplete()
     @complete = "incomplete"
+  end
+
+  def id
+    @@id
   end
 
 end

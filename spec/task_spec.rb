@@ -16,6 +16,10 @@ describe 'Task' do
     expect(@my_task.priority).to eq(1)
   end
 
+  xit "limits priority to between 1 and 5" do
+
+  end
+
   it "initializes as an incomplete task" do
     expect(@my_task.complete).to eq ("incomplete")
   end

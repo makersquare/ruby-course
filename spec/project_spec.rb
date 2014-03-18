@@ -15,7 +15,8 @@ describe 'Project' do
       expect(@my_proj.id).to eq(0)
   end
 
-  it "can add new tasks to the project" do
-
+  it "can add new tasks to the project and return num tasks" do
+    result = @my_proj.add_task("buy milk", 5)
+    expect(result).to eq(1)
   end
 end
