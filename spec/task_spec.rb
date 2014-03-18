@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Task' do
 	before do
-		@task = TM::Task.new
+		@task = TM::Task.new("something cool")
 	end
 	it "exists" do
     	expect(TM::Task).to be_a(Class)
@@ -13,6 +13,6 @@ describe 'Task' do
 	end
 
 	it "is created with a description" do
-		expect(@task.description).should be
+		expect(@task.description).to eq("something cool")
 	end
 end
