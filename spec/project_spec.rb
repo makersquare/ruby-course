@@ -17,5 +17,11 @@ describe 'Project' do
     expect(project.id).to eq(3)
   end
 
-
+  it "can mark a project complete, specified by id" do
+    project = TM::Project.new("Name")
+    # task = TM::Task.new(10,"Description",1)
+    project.addtask(10,"Description",1)
+    project.markcomplete(10)
+    expect(project.tasks[10].complete).to eq(true)
+  end
 end
