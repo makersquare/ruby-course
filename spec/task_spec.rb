@@ -6,7 +6,7 @@ describe 'Task' do
   end
 
   before do
-    TM::Task.task_id = 1
+    TM::Task.current_id = 1
     @buy_gun = TM::Task.new(2, "Go buy a gun", 7)
   end
 
@@ -16,8 +16,18 @@ describe 'Task' do
     expect(@buy_gun.priority).to eq(7)
   end
 
-  it "can be marked as complete, specified by id"
 
+  it "keeps a master hash of all tasks created" do
+    old_length = TM::Task.all_tasks.size
+    load_gun = TM::Task.new(2, "Load the gun", 5)
+    expect(TM::Task.all_tasks.size).to eq(old_length + 1)
+    expect(TM::Task.all_tasks.has_key?(load_gun.task_id)).to eq(true)
+    expect(TM::Tasl.all_tasks.has_value?(load_gun)).to eq(true)
   end
+
+  xit "can be marked as complete, specified by id" do
+    buy_gun.complete(task_id)
+  end
+
 
 end

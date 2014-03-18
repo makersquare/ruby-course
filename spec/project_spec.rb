@@ -20,4 +20,16 @@ describe 'Project' do
     expect(@kill_sue.id).to eq(2)
   end
 
+  it "can add tasks to itself" do
+    @buy_gun = TM::Task.new(2, "Go buy a gun", 7)
+    @kill_bob.add_task(@buy_gun)
+    expect(@kill_bob.tasks[0]).to eq(@buy_gun)
+  end
+
+  it "can also add tasks by id" do
+    @buy_gun = TM::Task.new(2, "Go buy a gun", 7)
+    @kill_bob.add_task(@buy_gun.task_id)
+  end
+
+
 end
