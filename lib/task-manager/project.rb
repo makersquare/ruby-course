@@ -20,6 +20,10 @@ def create_new_task(description, priority_number)
 end
 
 def complete_task(task_id)
-
+  @tasks.each do |x|
+  if x.id == task_id
+    x.status = "complete"
+  end
+  end
 end
 end
