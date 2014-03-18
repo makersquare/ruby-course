@@ -26,4 +26,12 @@ class TM::Project
     completedarray.sort_by! { |task| task.timecreated }
     completedarray
   end
+
+  def incompletelist
+    incompletedhash = @tasks.select { |project_id, task| !task.complete }
+    incompletedarray = []
+    incompletedhash.each { |project_id, task| incompletedarray.push(task) }
+    incompletedarray.sort_by! { |task| task.priority }
+    incompletedarray
+  end
 end

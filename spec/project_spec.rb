@@ -39,4 +39,16 @@ describe 'Project' do
     expect(project.completedlist[2].description).to eq("tyrrty")
     expect(project.completedlist.length).to eq(3)
   end
+
+  it "can retrieve a list of all incomplete tasks, sorted by priority" do
+    project = TM::Project.new("Project")
+    project.addtask(1,"asdf",1)
+    project.addtask(2,"werwer",2)
+    project.addtask(3,"dfgdf",4)
+    project.addtask(4,"tyrrty",3)
+    project.markcomplete(1)
+    expect(project.incompletelist[0].description).to eq("werwer")
+    expect(project.incompletelist[1].description).to eq("tyrrty")
+    expect(project.incompletelist[2].description).to eq("dfgdf")
+  end
 end
