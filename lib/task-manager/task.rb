@@ -1,0 +1,3 @@
+
+class TM::Task
+end
