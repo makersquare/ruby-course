@@ -3,18 +3,13 @@ require './lib/task-manager/task.rb'
 
 describe 'Task' do
   before do
-    @new_task = TM::Task.new(1, "write awesome code")
+    @new_task = TM::Task.new(1, "write awesome code", 4)
   end
 
 
   it "exists" do
     expect(TM::Task).to be_a(Class)
   end
-
-  # it "initializes with a task name" do
-  #   result = @new_task.name
-  #   expect(result).to eq("New Task")
-  # end
 
   it "initializes with a counter generated 'task' id" do
     result = @new_task.task_id
@@ -29,6 +24,16 @@ describe 'Task' do
   it "is initialized with a project id" do
     result = @new_task
     expect(result.project_id).to eq(1)
+  end
+
+  it "is initialized with a priority" do
+    result = @new_task
+    expect(result.priority).to eq(4)
+  end
+
+  it "has a status variable that is automatically set to incomplete" do
+    result = @new_task
+    expect(result.status).to eq("incomplete")
   end
 
 end
