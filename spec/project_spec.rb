@@ -26,4 +26,14 @@ describe 'Project' do
 			expect(@project.tasks.count).to eq(1)
 		end
 	end
+
+	describe "#mark_task_complete" do
+		it "should change the status of a task to 'complete'" do
+			add_task = @project.add_task('wash clothes', 4)
+			task_id = @project.tasks.first.id
+			@project.mark_task_complete(task_id)
+
+			expect(@project.tasks.first.status).to eq 'complete'
+		end
+	end
 end
