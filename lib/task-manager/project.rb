@@ -1,7 +1,7 @@
 
 class TM::Project
   attr_reader :name, :id
-  # attr_reader :tasks
+  attr_reader :tasks
 
   @@counter = 0
 
@@ -13,18 +13,19 @@ class TM::Project
   def initialize(name)
     @name = name
     @id = TM::Project.gen_id
-    # @tasks = []
+    
+    @tasks = []
   end
 
-  # def add_task(desc, priority)
-  #   proj_id = @id
+  def add_task(desc, priority)
+    proj_id = @id
 
-  #   task = TM::Task.new(proj_id, desc, priority)
+    task = TM::Task.new(proj_id, desc, priority)
 
-  #   @tasks << task
+    @tasks << task
 
-  #   task
-  # end
+    task
+  end
 
   # def mark_as_complete(task_id)
   #   @tasks.find { |task| task.id = task_id }

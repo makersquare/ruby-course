@@ -7,7 +7,6 @@ describe 'Project' do
   # project = TM::Project.new("Bird Watching")
   #
   # the neat thing is this local variable can be used throughout this describe block
-  
   let(:project) { TM::Project.new("Bird Watching") }
 
 
@@ -27,13 +26,13 @@ describe 'Project' do
   end
 
 
-  # it "can add tasks to a tasks array" do
-  #   project.add_task("collect 20 hats", 2)
-  #   task = project.tasks.first
+  it "can add tasks to a tasks array" do
+    project.add_task("collect 20 hats", 2)
+    task = project.tasks.first
 
-  #   expect(project.tasks.count).to eq(1)
-  #   expect(task.description).to eq("collect 20 hats")
-  # end
+    expect(project.tasks.count).to eq(1)
+    expect(task.description).to eq("collect 20 hats")
+  end
 
   # xit "can mark a task as complete" do
   #   project.add_task("collect 20 hats", 2)
