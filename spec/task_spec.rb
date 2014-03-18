@@ -3,7 +3,7 @@ require './lib/task-manager/task.rb'
 
 describe 'Task' do
   before do
-    @new_task = TM::Task.new("New Task")
+    @new_task = TM::Task.new("New Task", "write awesome code")
   end
 
 
@@ -19,6 +19,11 @@ describe 'Task' do
   it "initializes with a 'task' id" do
     result = @new_task.task_id
     expect(result).to eq(3)
+  end
+
+  it "has a task description" do
+    result = @new_task.description
+    expect(result).to eq("write awesome code")
   end
 
 end
