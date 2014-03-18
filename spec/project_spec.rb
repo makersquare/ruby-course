@@ -13,4 +13,12 @@ describe 'Project' do
 	expect(TM::Project.id).not_to be_empty
 	end
 
+  it "can mark test as completed based on id" do
+  	newproject = TM::Project.new("cp")
+  	newtask = TM::Task.new("red",1,TM::Project.id)
+
+  	expect(newtask.task_completion).to eq([newtask.project_id, "no"])
+  	expect(newtask.complete).to eq([newtask.project_id, "yes"])
+  end
 end
+
