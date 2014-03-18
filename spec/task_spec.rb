@@ -13,7 +13,7 @@ describe 'Task' do
 
   it "initializes with a counter generated 'task' id" do
     result = @new_task.task_id
-    expect(result).to eq(2)
+    expect(result.class).to eq(Fixnum)
   end
 
   it "is initialized with a task description" do
