@@ -12,6 +12,10 @@ class TM::Task
 
   end
 
+  def self.tasklist
+    @@tasklist
+  end
+
   def self.add(task)
     @@tasklist << task
     return @tasklist

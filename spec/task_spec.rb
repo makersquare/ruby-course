@@ -17,9 +17,13 @@ describe 'Task' do
   it "Add task" do
      projectid = TM::Project.id
      newtask = TM::Task.new(projectid,"teach ruby", 3, 5)
-     secondtask = TM::Task.new(projectid,"learn javaScript", 4, 6)
      tasks = TM::Task.add(newtask)
-     # expect(tasks.tasklist.count).to eq (2)
+     expect(TM::Task.tasklist.count).to eq (1)
+
+     secondtask = TM::Task.new(projectid,"learn javaScript", 4, 6)
+     tasks_more = TM::Task.add(secondtask)
+     expect(TM::Task.tasklist.count).to eq (2)
+
   end
 
   xit "task can be marked as complete, specified by id"  do
