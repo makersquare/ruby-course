@@ -13,4 +13,9 @@ class TM::Project
 		@priority = priority
 		@tasks << TM::Task.new(@project_id, description, priority)
 	end
+
+	def complete_task(task_id)
+		selected = @tasks.select { |x| x.task_id == task_id}
+		selected[0].status = "complete"
+	end
 end

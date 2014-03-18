@@ -30,7 +30,10 @@ describe 'Project' do
 		expect(@project.tasks[0].priority).to eq(3)
 	end
 
-	xit "can can mark tasks as complete, specified by id" do
-		expect(@project.tasks[0]).to eq(true)
+	it "can can mark tasks as complete, specified by id" do
+		# expect(@project.tasks.find {|x| x.object_id == 1}).to eq(true)
+		expect(@project.tasks[0]).to receive(:task_id).and_return(1)
+		# binding.pry
+		expect(@project.complete_task(1)).to eq("complete")
 	end
 end
