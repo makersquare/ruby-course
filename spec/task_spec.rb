@@ -8,21 +8,16 @@ describe 'Task' do
   describe 'Is created with an id and with description and priority number' do
     before do
       @project = TM::Project.new("d")
-      @task = TM::Task.new("list")
+      @project.add_task('list')
     end
 
-    it 'created task with project id' do
-      expect(@task.id).to eq(@task.object_id)
+    it 'project id matches the project id in task' do
+
+      expect(@project.tasks[0].project_id).to eq(@project.project_id)
     end
 
-    it 'created task with a description' do
-
-      expect(@task.description).to eq("list")
-    end
-
-    it 'has a priority number' do
-
-      expect(@task.priority).to eq(3)
+    it 'created a task with a description' do
+      expect(@project.tasks[0].description).to eq('list')
     end
 
   end
