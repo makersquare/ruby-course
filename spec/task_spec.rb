@@ -4,26 +4,43 @@ require './lib/task-manager/task.rb'
 describe 'Task' do
 
   before do
-    @new_task = TM::Task.new("New Task Name", "task description goes here")
+    @new_task = TM::Task.new(1, "New task description", 5)
   end
 
   it "exists" do
     expect(TM::Task).to be_a(Class)
   end
 
-  it "initializes and has a task name" do
-    result = @new_task.name
-    expect(result).to eq("New Task Name")
+  it "initializes and has a project id" do
+    result = @new_task
+    expect(result.project_id).to eq(1)
+  end
+
+  it "initializes and has a task description" do
+    result = @new_task
+    expect(result.description).to eq("New task description")
   end
 
   it "initializes and has a task id" do
-    result = @new_task.task_id
-    expect(result).to eq(3)
+    expect(TM::Task).to receive(:gen_id).and_return(2)
+    result = TM::Task.new(1, "New task description", 5)
+    expect(result.id).to eq(2)
   end
 
-  it "initializes with a task description" do
-    result = @new_task.description
-    expect(result).to eq("task description goes here")
+  it "initializes with a priority number" do
+    result = @new_task
+    expect(result.priority_number).to eq(5)
   end
+
+  it "initializes with a status" do
+    result = @new_task
+    expect(result.status).to eq("incomplete")
+  end
+
+  # it "has a status_complete method that changes status" do
+  #   result = TM::Task.new(1, "Complete me!", 1, "incomplete")
+  #   result.task_completed(result.id)
+  #   expect(result.status).to eq("complete")
+  # end
 
 end
