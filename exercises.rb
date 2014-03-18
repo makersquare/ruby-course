@@ -221,8 +221,9 @@ class RPSPlayer
   def self.start
     print "Please enter the amount of players(1 or 2):"
     player_amount = gets.chomp
+    player_amount
 
-    if player_amount == 2
+    if player_amount.to_i == 2
     print "Please enter a name for player 1:"
     player1 = gets.chomp
     print "Please enter a name for player 2:"
@@ -251,6 +252,16 @@ class RPSPlayer
       game.play(player1choice, player2choice=nil)
     end
 
+    end
+
+    if game.winner
+    puts "Would you like to play another game?"
+    another_game = gets.chomp
+    if another_game == "y" || another_game == "yes"
+      RPSPlayer.start
+    else
+      puts "Goodbye!"
+    end
     end
 
     # PRO TIP: Instead of using plain `gets` for grabbing a player's
