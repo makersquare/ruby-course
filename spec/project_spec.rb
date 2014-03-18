@@ -17,7 +17,6 @@ describe 'Project' do
 
   it "initializes with an id number that is readable" do
     expect { @new_project.id}.to_not raise_error
-    puts @new_project.id
   end
 
 end
