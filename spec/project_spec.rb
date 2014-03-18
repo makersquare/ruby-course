@@ -15,4 +15,7 @@ describe 'Project' do
       expect(@my_proj.id).to eq(0)
   end
 
+  it "can add new tasks to the project" do
+
+  end
 end

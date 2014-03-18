@@ -14,8 +14,9 @@ class TM::Project
     @inc_tasks = []
   end
 
-  def add_task
-
+  def add_task(new_task)
+    @all_tasks << new_task
+    @inc_tasks << new_task
   end
 
 end
