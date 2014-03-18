@@ -4,4 +4,12 @@ describe 'Task' do
   it "exists" do
     expect(TM::Task).to be_a(Class)
   end
+
+  it "can be created with a project id, description, and priority number" do
+    test = TM::Project.new("Test")
+    test_task = TM::Task.new("TestTask", 3, TM::Project.id)
+
+    expect(test_task.project_id).to eq(TM::Project.id)
+
+  end
 end
