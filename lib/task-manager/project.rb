@@ -1,17 +1,19 @@
 
 class TM::Project
-@@id = 0
-attr_reader :name
-attr_accessor :tasklist
 
-  def initialize(name)
-    @@id += 1
+attr_reader :name
+attr_accessor :tasklist, :projectid
+
+  def initialize(name, projectid )
+    @projectid = projectid
     @name = name
     @tasklist = []
   end
 
-   def self.id
-    @@id
+
+  def add(task)
+    @tasklist << task
+
   end
 
 end

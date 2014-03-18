@@ -2,7 +2,7 @@
 class TM::Task
   attr_reader :description, :priority, :taskid
   attr_accessor :status, :tasklist
-  @@tasklist = []
+
   def initialize(projectid = TM::Project.id, description, priority,taskid)
     @projectid = projectid
     @description = description
@@ -12,14 +12,13 @@ class TM::Task
 
   end
 
+
+
   def self.tasklist
     @@tasklist
   end
 
-  def self.add(task)
-    @@tasklist << task
-    return @tasklist
-  end
+
 
 
 
