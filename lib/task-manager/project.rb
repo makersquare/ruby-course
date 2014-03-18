@@ -1,17 +1,32 @@
 
 class TM::Project
 
-  @@project_id = 0
+  @@counter = 0
 
-  attr_reader :project_name
+  attr_reader :project_name, :id
+  attr_accessor :tasks
+
+  def self.generate_id
+    @@counter +=1
+    @@counter
+  end
 
   def initialize(project_name)
     @project_name = project_name
-    @@project_id += 1
+    @id = TM::Project.generate_id
+    @tasks = []
 
   end
 
-  def project_id
-    @@project_id
+  def add_task(task)
+    task.project_id = @id
+    @tasks.push(task)
   end
+
+  def mark_task_complete(task_id)
+    completed_task = @tasks.find{|task| task.id == task_id}
+    completed_task.complete = true
+  end
+
+
 end
