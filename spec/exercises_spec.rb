@@ -158,7 +158,7 @@ describe RPS do
       expect(name9).to eq("tie")
     end
 
-    it "Returns 'Game over!' after one player wins 2 games" do
+    it "Returns 'Game over!' if RPS.play is called after one player wins 2 games" do
       name1 = @fungame.play("rock","rock")
       name2 = @fungame.play("rock","paper")
       name3 = @fungame.play("rock","scissors")

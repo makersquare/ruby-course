@@ -98,6 +98,8 @@ class RPS
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
 
+
+  # attr_readers only for testing purposes
   attr_reader :player1, :player2, :called_count
 
   def initialize(player1, player2)
@@ -105,6 +107,7 @@ class RPS
     @player2 = player2
     @player1_wins = 0
     @player2_wins = 0
+    # @called_count only exists for testing purposes
     @called_count = 0
   end
 
@@ -218,6 +221,6 @@ module Extensions
     most_array = array.select { |string| array.count(string) == max_num }.uniq
     least_array = array.select { |string| array.count(string) == min_num }.uniq
 
-    return { :most => most_array, :least => least_array }
+    { :most => most_array, :least => least_array }
   end
 end
