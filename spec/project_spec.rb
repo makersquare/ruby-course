@@ -25,18 +25,9 @@ describe 'Project' do
      @p = TM::Project.new("P")
      @p.add_task('cool task')
       expect(@p.tasks[0].project_id).to eq(@p.project_id)
-    end
-
-  xit 'created task with a description' do
-
-      expect(@task.description).to eq("list")
   end
 
-  xit 'has a priority number' do
-
-      expect(@task.priority).to eq(3)
-   end
-
+  it 'marks the task completed when done'
 
 end
 

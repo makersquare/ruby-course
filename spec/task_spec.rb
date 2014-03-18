@@ -20,6 +20,10 @@ describe 'Task' do
       expect(@project.tasks[0].description).to eq('list')
     end
 
+    it 'adds a priority number for the task' do
+      expect(@project.tasks[0].priority).to eq(3)
+    end
+
   end
 
 
