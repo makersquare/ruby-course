@@ -5,18 +5,20 @@ describe 'Task' do
     expect(TM::Task).to be_a(Class)
   end
 
-  describe 'Is created with project id with creation date and priority' do
+  describe 'Is created with an id and with description and priority number' do
     before do
       @project = TM::Project.new("d")
-      @task = TM::Task.new()
+      @task = TM::Task.new("list")
     end
-    it 'created with project id' do
+
+    it 'created task with project id' do
       expect(@task.id).to eq(@task.object_id)
-
     end
 
+    it 'created task with a description' do
 
-
+      expect(@task.description).to eq("list")
+    end
 
 
   end
