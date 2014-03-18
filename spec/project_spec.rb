@@ -1,11 +1,15 @@
 require 'spec_helper'
 
 describe 'Project' do
+
+  # the 'let' method creates a local variable:
+  #
+  # project = TM::Project.new("Bird Watching")
+  #
+  # the neat thing is this local variable can be used throughout this describe block
+  
   let(:project) { TM::Project.new("Bird Watching") }
 
-  # before do
-  #   project.add_task("collect 20 hats", 2)
-  # end
 
   it "exists" do
     expect(TM::Project).to be_a(Class)

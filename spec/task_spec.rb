@@ -1,6 +1,13 @@
 require 'spec_helper'
 
 describe 'Task' do
+
+  # the 'let' method creates a local variable:
+  #
+  # task = TM::Task.new(1, "eat 20 cheese wheels", 2)
+  #
+  # the neat thing is this local variable can be used throughout this describe block
+
   let(:task) { TM::Task.new(1, "eat 20 cheese wheels", 2) }
 
   it "exists" do
