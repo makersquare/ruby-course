@@ -51,4 +51,19 @@ describe 'Project' do
     expect(project.incompletelist[1].description).to eq("tyrrty")
     expect(project.incompletelist[2].description).to eq("dfgdf")
   end
+
+  it "prioritizes older tasks in incompletelist" do
+    project = TM::Project.new("Project")
+    project.addtask(1,"Proj 1",2)
+    project.addtask(2,"Proj 2",1)
+    project.addtask(3,"Proj 3",2)
+    project.addtask(4,"Proj 4",2)
+    project.addtask(5,"Proj 5",3)
+
+    expect(project.incompletelist[0].description).to eq("Proj 2")
+    expect(project.incompletelist[1].description).to eq("Proj 1")
+    expect(project.incompletelist[2].description).to eq("Proj 3")
+    expect(project.incompletelist[0].description).to eq("Proj 4")
+    expect(project.incompletelist[1].description).to eq("Proj 5")
+  end
 end
