@@ -78,7 +78,7 @@ describe "Puzzle Exercises" do
     end
   end
 
-  describe "Puzzle #5", :pending => true do
+  describe "Puzzle #5" do
     def collection
       array = ['cap', 'box']
       array.each do |item|
@@ -86,9 +86,9 @@ describe "Puzzle Exercises" do
       end.push('footrest', 'sea otter')
     end
 
-    xit "outputs 'sea otter'" do
+    it "outputs 'sea otter'" do
       # TODO: Uncomment and complete
-      # result = collection.???
+      result = collection.last
       expect(result).to eq 'sea otter'
     end
   end
