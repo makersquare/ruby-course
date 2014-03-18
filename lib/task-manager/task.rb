@@ -32,8 +32,4 @@ class TM::Task
     return finished
   end
 
-
-
-
-
 end

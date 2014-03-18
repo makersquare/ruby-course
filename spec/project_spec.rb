@@ -63,10 +63,4 @@ describe 'Project' do
     expect(@kill_bob.ongoing_tasks).to eq([evade_police, buy_gun, load_gun])
   end
 
-
-
-
-
-
-
 end
