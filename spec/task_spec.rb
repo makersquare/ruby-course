@@ -14,7 +14,7 @@ describe 'Task' do
      expect(newtask.taskid). to eq 5
   end
 
-  it "Add task" do
+  xit "Add task" do
      projectid = TM::Project.id
      newtask = TM::Task.new(projectid,"teach ruby", 3, 5)
      tasks = TM::Task.add(newtask)
@@ -29,8 +29,17 @@ describe 'Task' do
   xit "task can be marked as complete, specified by id"  do
      projectid = TM::Project.id
      newtask = TM::Task.new(projectid,"teach ruby", 3, 5)
-     taskdone = taskcompleted(5)
-     expect(taskdone.status).to eq "completed"
+     tasks = TM::Task.add(newtask)
+     expect(TM::Task.tasklist.count).to eq (1)
+
+     secondtask = TM::Task.new(projectid,"learn javaScript", 4, 6)
+     tasks_more = TM::Task.add(secondtask)
+     expect(TM::Task.tasklist.count).to eq (2)
+
+     task_finished = TM::Task.tasklist.add
+
+     # taskdone = taskcompleted(5)
+     # expect(taskdone.status).to eq "completed"
 
      # method called taskcomplete
 

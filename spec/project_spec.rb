@@ -6,10 +6,11 @@ describe 'Project' do
   end
 
 
-  it "A new project can be created with a name assign the new project a unique id" do
+  it "A new project can be created with a name assign the new project a unique id, also empty tasks" do
     newproject = TM::Project.new("MakerSquare")
     projectid = TM::Project.id
     expect(projectid).to eq (1)
+    expect(newproject.tasklist.count).to eq 0
   end
 
 
