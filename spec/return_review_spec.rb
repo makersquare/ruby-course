@@ -11,12 +11,14 @@ describe "Puzzle Exercises" do
     it "returns a color for 'washington'" do
       apples = { 'washington' => 'red' }
       # TODO: Uncomment and complete
-      # result = get_wash_color(???)???
+      result = get_wash_color(apples["washington"])
       expect(result).to eq 'red'
+    end
 
+    xit "returns not orange"  do
       apples = { 'washington' => 'not orange' }
       # TODO: Uncomment and complete
-      # result = get_wash_color(apples)???
+      #result = get_wash_color(apples)???
       expect(result).to eq 'not orange'
     end
 
@@ -29,7 +31,7 @@ describe "Puzzle Exercises" do
     #   ???
     # end
 
-    it "returns the correct color for a specified fruit" do
+    xit "returns the correct color for a specified fruit" do
       apples = {
         'granny smith' => 'green',
         'washington' => 'red',
@@ -54,7 +56,7 @@ describe "Puzzle Exercises" do
 
     @museum = ArtMuseum.new
 
-    it "counts correctly" do
+    xit "counts correctly" do
       # TODO:
       # result = @museum.???
       expect(result).to eq(2)
@@ -68,7 +70,7 @@ describe "Puzzle Exercises" do
       end.concat(' there, ')
     end
 
-    it "greets correctly" do
+    xit "greets correctly" do
       # TODO: Uncomment and complete
       # result = greet(???)
       expect(result).to eq 'Hello there, World'
@@ -83,7 +85,7 @@ describe "Puzzle Exercises" do
       end.push('footrest', 'sea otter')
     end
 
-    it "outputs 'sea otter'" do
+    xit "outputs 'sea otter'" do
       # TODO: Uncomment and complete
       # result = collection.???
       expect(result).to eq 'sea otter'
@@ -97,7 +99,7 @@ describe "Puzzle Exercises" do
       end
     end
 
-    it "uses truthy/falsey values correctly" do
+    xit "uses truthy/falsey values correctly" do
       expect( puzzle_5(nil) ).to be_nil
       expect( puzzle_5(false) ).to be_nil
       expect( puzzle_5('truthy') ).to eq "It's true!"
@@ -118,7 +120,7 @@ describe "Puzzle Exercises" do
       end
     end
 
-    it "compares" do
+    xit "compares" do
       # TODO: Uncomment and complete
       # message = ???
       expect( check(2,3) ).to eq(message)
