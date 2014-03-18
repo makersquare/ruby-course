@@ -15,10 +15,10 @@ describe "Puzzle Exercises" do
       expect(result).to eq 'red'
     end
 
-    xit "returns not orange"  do
+    it "returns not orange"  do
       apples = { 'washington' => 'not orange' }
       # TODO: Uncomment and complete
-      #result = get_wash_color(apples)???
+      result = get_wash_color(apples["washington"])
       expect(result).to eq 'not orange'
     end
 
