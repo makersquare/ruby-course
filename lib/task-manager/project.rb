@@ -1,14 +1,14 @@
 
 class TM::Project
-  @@id_counter = 0
+  @@project_id = 0
   attr_reader :name
-  attr_accessor :id_counter
+
   def initialize(name)
     @name = name
-    @@id_counter +=1
+    @@project_id +=1
   end
 
-  def id_counter
-    @@id_counter
+  def project_id
+    @@project_id
   end
 end
