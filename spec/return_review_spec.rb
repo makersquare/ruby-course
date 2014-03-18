@@ -64,16 +64,16 @@ describe "Puzzle Exercises" do
     end
   end
 
-  describe "Puzzle #4", :pending => true do
+  describe "Puzzle #4" do
     def greet(x)
       if x
         'Hello'
-      end.concat(' there, ')
+      end.concat(' there, '+ x)
     end
 
-    xit "greets correctly" do
+    it "greets correctly" do
       # TODO: Uncomment and complete
-      # result = greet(???)
+      result = greet('World')
       expect(result).to eq 'Hello there, World'
     end
   end
