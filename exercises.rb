@@ -109,68 +109,86 @@ class RPS
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
-  attr_reader :player1, :player2
+  attr_reader :player1, :player2, :players
+  attr_accessor :winner
   def initialize(player1, player2)
-    @player1 = player1
-    @player2 = player2
+    @player1 = {name: player1, wins: 0}
+    @player2 = {name: player2, wins: 0}
+    @players = [@player1, @player2]
   end
 
   def play(play1, play2)
-  # binding.pry
-  case play1 == "rock"
-    when play2 == "rock"
+    
+    if play1 == play2
       winner = "tie"
-    when play2 == "paper"
-      winner = @player2
-    when play2 == "scissors"
+    elsif play1 == "rock" && play2 == "scissors"
       winner = @player1
-  end
-
-  case play1 == "paper"
-    when play2 == "rock"
+      @player1[:wins] += 1
+    elsif play1 == "paper" && play2 == "rock"
       winner = @player1
-    when play2 == "paper"
-      winner = "tie"
-    when play2 == "scissors"
+      @player1[:wins] += 1
+    elsif play1 == "scissors" && play2 == "paper"
+      winner = @player1
+      @player1[:wins] += 1
+    else
       winner = @player2
+      @player2[:wins] += 1
+    end
+    return winner
   end
-
-  case play1 == "scissors"
-      when play2 == "rock"
-        winner = @player2
-      when play2 == "paper"
-        winner = @player1
-      when play2 == "scissors"
-        winner = "tie"
-  end
-end
 
 end
 
 
 require 'io/console'
 class RPSPlayer
-  # (No specs are required for RPSPlayer)
-  #
-  # Complete the `start` method so that it uses your RPS class to present
-  # and play a game through the terminal.
-  #
-  # The first step is to read (gets) the two player names. Feed these into
-  # a new instance of your RPS class. Then `puts` and `gets` in a loop that
-  # lets both players play the game.
-  #
-  # When the game ends, ask if the player wants to play again.
+  attr_accessor :winner
+  
   def start
-
-    # TODO
-
     # PRO TIP: Instead of using plain `gets` for grabbing a player's
     #          move, this line does the same thing but does NOT show
     #          what the player is typing! :D
     # This is also why we needed to require 'io/console'
     # move = STDIN.noecho(&:gets)
-    # puts "Enter player 1 name: "
-    # player1 = gets.chomp
+    
+    print "Enter player 1 name: "
+      name1 = gets
+    print "Enter player 2 name: "
+      name2 = gets
+    game = RPS.new(name1, name2)
+
+
+    game_count = 0
+    play_game = "yes"
+    while play_game == "yes"
+      while game_count < 3
+        puts "#{name1.chomp}: rock, paper, or scissors?"
+          # play1 = STDIN.noecho(&:gets)
+          play1 = gets.chomp
+        puts "#{name2.chomp}: rock, paper, or scissors?"
+          # play2 = STDIN.noecho(&:gets)
+          play2 = gets.chomp
+        @winner = game.play(play1, play2)
+        game_count += 1
+        puts "#{name1.chomp} played #{play1}. #{name2.chomp} played #{play2}."
+        if winner != "tie"
+          puts "The winner is #{winner[:name].chomp}."
+          puts "End of round #{game_count}."
+          binding.pry
+        else
+          puts "This round is tied. End of round #{game_count}."
+        end
+      end
+      if game.player1[:wins] == game.player2[:wins]
+        print "Tie game. Nobody wins!"
+      elsif game.player1[:wins] > game.player2[:wins]
+        print "The winner of the series is #{game.player1[:name].chomp}. "
+      else
+        print "The winner of the series is #{game.player2[:name].chomp}. "
+      end
+        puts "Do you want to play again?"
+        play_game = gets.chomp
+    end
   end
 end
 
