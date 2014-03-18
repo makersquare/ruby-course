@@ -42,7 +42,7 @@ describe 'Project' do
     it 'marks a task complete by id' do
       task = TM::Task.new("description")
       @new_project.add_task(task)
-      @new_project.complete(2)
+      @new_project.complete(3)
       result = task.complete
       expect(result).to eq true
     end
