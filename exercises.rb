@@ -1,40 +1,50 @@
+require 'time'
+
 
 module Exercises
   # Exercise 0
   #  - Triples a given string `str`
   #  - Returns "nope" if `str` is "wishes"
   def self.ex0(str)
-    # TODO
+    str == "wishes" ? 'nope' : str * 3
   end
 
   # Exercise 1
   #  - Returns the number of elements in the array
   def self.ex1(array)
     # TODO
+    array.size
   end
 
   # Exercise 2
   #  - Returns the second element of an array
   def self.ex2(array)
     # TODO
+      array[1]
   end
 
   # Exercise 3
   #  - Returns the sum of the given array of numbers
   def self.ex3(array)
     # TODO
+    # sum = 0
+    # array.each { |x| sum += x }
+    # sum
+    array.reduce(:+)
   end
 
   # Exercise 4
   #  - Returns the max number of the given array
   def self.ex4(array)
     # TODO
+    array.max
   end
 
   # Exercise 5
   #  - Iterates through an array and `puts` each element
   def self.ex5(array)
     # TODO
+    array.each { |x| puts x }
   end
 
   # Exercise 6
@@ -43,6 +53,7 @@ module Exercises
   #    it to 'GODZILLA' instead
   def self.ex6(array)
     # TODO
+    array.last == "panda" ? array[array.size] = "GODZILLA" : array[array.size] = "panda"
   end
 
   # Exercise 7
@@ -50,6 +61,7 @@ module Exercises
   #    add `str` to the end of the array
   def self.ex7(array, str)
     # TODO
+    array.include?(str) ? array.push(str) : return
   end
 
   # Exercise 8
@@ -58,6 +70,7 @@ module Exercises
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
     # TODO
+    people.each { |person| puts "#{person[:name]}: #{person[:occupation]}" }
   end
 
   # Exercise 9
@@ -66,6 +79,7 @@ module Exercises
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
     # TODO
+    time.year % 4 == 0 ? true : false
   end
 end
 
@@ -83,11 +97,55 @@ class RPS
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
+
+
+  # attr_readers only for testing purposes
+  attr_reader :player1, :player2, :called_count
+
+  def initialize(player1, player2)
+    @player1 = player1
+    @player2 = player2
+    @player1_wins = 0
+    @player2_wins = 0
+    # @called_count only exists for testing purposes
+    @called_count = 0
+  end
+
+  def play(player1_move, player2_move)
+    player1_move.downcase!
+    player2_move.downcase!
+    @called_count += 1
+
+    if @player1_wins >= 2 || @player2_wins >= 2
+      return "Game over!"
+    elsif player1_move == player2_move
+      return "tie"
+    elsif player1_move == "rock"
+      winner = player2_move == "paper" ? @player2  : @player1
+    elsif player1_move == "paper"
+      winner = player2_move == "scissors" ? @player2 : @player1
+    elsif player1_move == "scissors"
+      winner = player2_move == "rock" ? @player2 : @player1
+    else
+      return "error"
+    end
+
+    if winner == @player1
+      @player1_wins += 1
+    else
+      @player2_wins +=1
+    end
+
+    winner
+  end
 end
 
 
 require 'io/console'
 class RPSPlayer
+  attr_reader :rps, :player1, :player2, :player1_move, :player2_move
+
+
   # (No specs are required for RPSPlayer)
   #
   # Complete the `start` method so that it uses your RPS class to present
@@ -99,7 +157,6 @@ class RPSPlayer
   #
   # When the game ends, ask if the player wants to play again.
   def start
-
     # TODO
 
     # PRO TIP: Instead of using plain `gets` for grabbing a player's
@@ -107,6 +164,37 @@ class RPSPlayer
     #          what the player is typing! :D
     # This is also why we needed to require 'io/console'
     # move = STDIN.noecho(&:gets)
+
+
+
+    # Input player names
+    puts "Input name of Player 1:"
+    @player1 = gets.chomp
+    puts "Input name of Player 2:"
+    @player2 = gets.chomp
+
+    #Create new RPS class with player names
+    @rps = RPS.new(player1,player2)
+
+    # Default play_again for while loop
+    play_again = 'y'
+
+    while play_again == 'y' do
+      #Input player moves
+      puts "#{@player1}'s move? (rock/paper/scissors)"
+      # @player1_move = STDIN.noecho(&:gets).chomp
+      @player1_move = gets.chomp
+      puts "#{@player2}'s move? (rock/paper/scissors)"
+      # @player2_move = STDIN.noecho(&:gets).chomp
+      @player2_move = gets.chomp
+
+      # Play the game
+      puts @rps.play(@player1_move, @player2_move)
+
+      #Ask to play again
+      puts "Play again? (y/n)"
+      play_again = gets.chomp.downcase
+    end
   end
 end
 
@@ -123,6 +211,16 @@ module Extensions
   #   expect(result).to eq({ :most => 'x', :least => ['y', 'z'] })
   #
   def self.extremes(array)
-    # TODO
+    counts = Hash.new 0
+
+    array.each { |string| counts[string] += 1 }
+
+    max_num = counts.values.max
+    min_num = counts.values.min
+
+    most_array = array.select { |string| array.count(string) == max_num }.uniq
+    least_array = array.select { |string| array.count(string) == min_num }.uniq
+
+    { :most => most_array, :least => least_array }
   end
 end
