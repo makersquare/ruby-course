@@ -1,18 +1,23 @@
 
 class TM::Task
-  @@task_id = 0
-  attr_reader :project_id, :description
-  attr_accessor :priority
+  @@counter = 0
+  def self.generate_id
+    @@counter+=1
+    @@counter
+  end
 
-  def initialize(project_id, description, priority = nil)
+
+  attr_reader :description, :id
+  attr_accessor :priority, :project_id, :complete
+
+  def initialize(description, priority=nil, project_id=nil, complete=false)
     @project_id = project_id
     @description = description
     @priority = priority
-    @@task_id +=1
+    @complete = complete
+    @id = TM::Task.generate_id
   end
 
-  def task_id
-    @@task_id
-  end
+
 
 end
