@@ -4,37 +4,45 @@ module Exercises
   #  - Triples a given string `str`
   #  - Returns "nope" if `str` is "wishes"
   def self.ex0(str)
-    # TODO
+
+      if  str == 'wishes'
+        'nope'
+      else
+        str * 3
+      end
   end
 
   # Exercise 1
   #  - Returns the number of elements in the array
   def self.ex1(array)
-    # TODO
+     array.length
   end
+
 
   # Exercise 2
   #  - Returns the second element of an array
   def self.ex2(array)
-    # TODO
+    array[1]
   end
 
   # Exercise 3
   #  - Returns the sum of the given array of numbers
   def self.ex3(array)
-    # TODO
+    array.inject{|sum,x| sum + x }
   end
 
   # Exercise 4
   #  - Returns the max number of the given array
   def self.ex4(array)
-    # TODO
+    array.max
   end
 
   # Exercise 5
   #  - Iterates through an array and `puts` each element
   def self.ex5(array)
-    # TODO
+    array.each do |item|
+      puts item
+    end
   end
 
   # Exercise 6
@@ -42,14 +50,17 @@ module Exercises
   #  - If the last item is already 'panda', update
   #    it to 'GODZILLA' instead
   def self.ex6(array, str)
-    # TODO
+    array.last == "panda" ? array[array.size] = "GODZILLA" :array[array.size] = "panda"
   end
+
+
+
 
   # Exercise 7
   #  - If the string `str` exists in the array,
   #    add `str` to the end of the array
   def self.ex7(array, str)
-    # TODO
+    array.include? array.push(str)
   end
 
   # Exercise 8
@@ -57,7 +68,7 @@ module Exercises
   #    { :name => 'Bob', :occupation => 'Builder' }
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
-    # TODO
+    people.each { |person| puts "{person[:name]}: #{person[:occupation]}"}
   end
 
   # Exercise 9
@@ -65,7 +76,7 @@ module Exercises
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
-    # TODO
+    time.year % 4 == 0 ? true :false
   end
 end
 
@@ -83,7 +94,60 @@ class RPS
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
+  attr_reader :player_one_name, :player_two_name, :game_count
+  def initialize(player_one_name, player_two_name)
+     @player_one_name = player_one_name
+     @player_two_name = player_two_name
+     @player_one_name_wins = 0
+     @player_two_name_wins = 0
+     @game_count +=1
+  end
+
+  def play(move1, move2)
+    move1.downcase!
+    move2.downcase!
+    @game_count
+
+    if @move1 >= 2 || @move2 >=2
+      return "Game over!"
+    elsif move1 == move2
+      return "It's a tie!"
+    elsif move1 == "rock"
+      winner = move2 == "paper" ? @player_two_name : @player_one_name
+    elsif move1 == "paper"
+      winner = move2 == "scissors" ? player_two_name : @player_one_name
+    elsif move1 == "scissors"
+      winner = move2 == "rock" ? @player_two_name : @player_one_name
+    else
+      return "Please choose a valid selection."
+    end
+
+    if winner == @player_one_name
+      @move1 += 1
+    else
+      @move2 += 1
+
+      winner
+    end
+  end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 require 'io/console'
