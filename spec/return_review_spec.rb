@@ -27,11 +27,11 @@ describe "Puzzle Exercises" do
   describe "Puzzle #2" do
 
     # TODO: Uncomment and complete this method
-    # def get_fruit_color(???)
-    #   ???
-    # end
+    def get_fruit_color(fruit, type)
+       fruit[type]
+     end
 
-    xit "returns the correct color for a specified fruit" do
+    it "returns the correct color for a specified fruit" do
       apples = {
         'granny smith' => 'green',
         'washington' => 'red',
