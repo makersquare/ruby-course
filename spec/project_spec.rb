@@ -39,5 +39,21 @@ describe 'Project' do
     expect(@buy_gun.finished?).to eq(true)
   end
 
+  it "can retrieve a list of completed tasks sorted by creation date" do
+    buy_gun = TM::Task.new(2, "Go buy a gun", 8)
+    load_gun = TM::Task.new(2, "Load the gun", 8)
+    evade_police = TM::Task.new(2, "Get away!", 10)
+    @kill_bob.add_task(buy_gun)
+    @kill_bob.add_task(load_gun)
+    @kill_bob.add_task(evade_police)
+    buy_gun.finished = true
+    load_gun.finished = true
+    evade_police.finished = true
+    expect(@kill_bob.completed_tasks).to eq([evade_police, buy_gun, load_gun])
+  end
+
+
+
+
 
 end
