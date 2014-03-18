@@ -32,7 +32,12 @@ describe 'Project' do
     expect(@kill_bob.tasks.has_key?(@buy_gun.task_id)).to eq(true)
   end
 
-
+  it "can mark a task as complete by its id" do
+    @buy_gun = TM::Task.new(2, "Go buy a gun", 7)
+    @kill_bob.add_task(@buy_gun)
+    @kill_bob.mark_as_finished(@buy_gun.task_id)
+    expect(@buy_gun.finished?).to eq(true)
+  end
 
 
 end

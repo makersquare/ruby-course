@@ -27,5 +27,10 @@ class TM::Project
     end
   end
 
+  def mark_as_finished(task_id)
+    @tasks[task_id].finished = true
+  end
+
+
 
 end
