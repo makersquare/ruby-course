@@ -8,7 +8,7 @@ class TM::Project
     @name = name
     @@projectcount += 1
     @id = @@projectcount
-    @tasks = []
+    @tasks = {}
   end
 
   def addtask(project_id, description, priority)
@@ -17,5 +17,13 @@ class TM::Project
 
   def markcomplete(project_id)
     @tasks[project_id].complete = true
+  end
+
+  def completedlist
+    completedhash = @tasks.select { |project_id, task| task.complete }
+    completedarray = []
+    completedhash.each { |project_id, task| completedarray.push(task) }
+    completedarray.sort_by! { |task| task.timecreated }
+    completedarray
   end
 end
