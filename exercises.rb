@@ -126,6 +126,7 @@ end
 require 'io/console'
 class RPSPlayer
   def self.start
+  while (person_one.score < 2) || (person_two.score < 2)
     puts "What is your name, User 1?"
     name_one = gets.chomp
     puts "What is your name, User 2?"
@@ -158,6 +159,7 @@ class RPSPlayer
       puts "#{player_one.name}: #{player_one.score}.  #{player_two.name}: #{player_two.score}."
     end
   end
+end
 end
 
 class Person
