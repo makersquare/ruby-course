@@ -1,19 +1,20 @@
 class RPS
   attr_reader :player1, :player2, :winner
-  attr_accessor :game_wins
+  attr_accessor :game_wins, :game_winner
 
   def initialize(player1, player2)
     @player1 = player1
     @player2 = player2
     @game_wins = []
+    @game_winner = nil
   end
 
   def play(choice1, choice2)
-    game_winner = @game_wins.detect { |winner| @game_wins.count(winner) > 1 }
+    @game_winner = @game_wins.detect { |winner| @game_wins.count(winner) > 1 }
 
-    if game_winner
+    if @game_winner
       @game_wins = 0
-      "Game over! #{game_winner} wins the game."
+      "Game over! #{@game_winner} wins the game."
     else
       if choice1 == choice2
         "This hand was a tie."
@@ -47,9 +48,31 @@ require 'io/console'
 class RPSPlayer
 
   def self.start
-    player1 = gets.chomp("Player 1 enter your name.")
-    player2 = gets.chomp("Player 2 enter your name.")
+    print "Player 1 enter your name: "
+    player1 = gets.chomp.capitalize
+    print "Player 2 enter your name: "
+    player2 = gets.chomp.capitalize
 
+    game = RPS.new(player1, player2)
+
+    until game.game_winner
+      puts "Enter your choice #{player1}: "
+      choice1 = STDIN.noecho(&:gets).chomp
+      puts "Enter your choice #{player2}: "
+      choice2 = STDIN.noecho(&:gets).chomp
+      puts game.play(choice1, choice2)
+    end
+
+    if game.game_winner
+      print "Do you want to play again? "
+      answer = gets.chomp.downcase
+      if answer == 'yes' || answer == 'y'
+        puts "Great lets start again"
+        RPSPlayer.start
+      else
+        puts "Good bye!"
+      end
+    end
   end
   # (No specs are required for RPSPlayer)
   #
@@ -61,16 +84,12 @@ class RPSPlayer
   # lets both players play the game.
   #
   # When the game ends, ask if the player wants to play again.
-  def start
-
-    # TODO
 
     # PRO TIP: Instead of using plain `gets` for grabbing a player's
     #          move, this line does the same thing but does NOT show
     #          what the player is typing! :D
     # This is also why we needed to require 'io/console'
     # move = STDIN.noecho(&:gets)
-  end
 end
 
 
