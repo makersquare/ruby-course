@@ -11,4 +11,12 @@ describe 'Task' do
   	expect(task.description).to eq 'cook pasta'
   	expect(task.priority).to eq(3)
   end
+
+  it "can be marked as complete" do
+  	task = TM::Task.new(1, "cook pasta", 3)
+  	expect(task.status).to eq 'incomplete'
+
+  	task.mark_complete
+  	expect(task.status).to eq 'complete'
+  end
 end
