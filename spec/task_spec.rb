@@ -3,7 +3,7 @@ require './lib/task-manager/task.rb'
 
 describe 'Task' do
   before do
-    @new_task = TM::Task.new(1, "New Task", "write awesome code")
+    @new_task = TM::Task.new(1, "write awesome code")
   end
 
 
@@ -11,14 +11,14 @@ describe 'Task' do
     expect(TM::Task).to be_a(Class)
   end
 
-  it "initializes with a task name" do
-    result = @new_task.name
-    expect(result).to eq("New Task")
-  end
+  # it "initializes with a task name" do
+  #   result = @new_task.name
+  #   expect(result).to eq("New Task")
+  # end
 
-  it "initializes with a 'task' id" do
+  it "initializes with a counter generated 'task' id" do
     result = @new_task.task_id
-    expect(result).to eq(3)
+    expect(result).to eq(2)
   end
 
   it "is initialized with a task description" do
