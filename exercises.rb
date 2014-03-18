@@ -1,4 +1,6 @@
 
+require 'time'
+
 module Exercises
   # Exercise 0
   #  - Triples a given string `str`
@@ -20,24 +22,25 @@ module Exercises
   # Exercise 2
   #  - Returns the second element of an array
   def self.ex2(array)
-    # TODO
+    array[1]
   end
 
   # Exercise 3
   #  - Returns the sum of the given array of numbers
   def self.ex3(array)
-    # TODO
+    array.inject{|sum,x| sum + x }
   end
 
   # Exercise 4
   #  - Returns the max number of the given array
   def self.ex4(array)
-    # TODO
+    array.max {|a,b| a <=> b }
   end
 
   # Exercise 5
   #  - Iterates through an array and `puts` each element
   def self.ex5(array)
+    array.each {|x| puts "I say #{x}"}
     # TODO
   end
 
@@ -46,14 +49,21 @@ module Exercises
   #  - If the last item is already 'panda', update
   #    it to 'GODZILLA' instead
   def self.ex6(array, str)
-    # TODO
+    if array[-1] == str
+      array[-1] = 'GODZILLA'
+    else
+      array[-1] = str
+    end
   end
 
   # Exercise 7
   #  - If the string `str` exists in the array,
   #    add `str` to the end of the array
   def self.ex7(array, str)
-    # TODO
+   blue = array.select {|x| x == str}
+   if blue.count >= 1
+    blue.count.times{array.push(str)}
+  end
   end
 
   # Exercise 8
@@ -61,7 +71,10 @@ module Exercises
   #    { :name => 'Bob', :occupation => 'Builder' }
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
-    # TODO
+      people.each do |x|
+        puts x[:name] + ": " + x[:occupation]
+      end
+
   end
 
   # Exercise 9
@@ -69,49 +82,91 @@ module Exercises
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
-    # TODO
+    if time.year % 4 == 0
+      true
+    else
+      false
+    end
   end
 end
 
 
 class RPS
-  # Rock, Paper, Scissors
-  # Make a 2-player game of rock paper scissors. It should have the following:
-  #
-  # It is initialized with two strings (player names).
-  # It has a `play` method that takes two strings:
-  #   - Each string reperesents a player's move (rock, paper, or scissors)
-  #   - The method returns the winner (player one or player two)
-  #   - If the game is over, it returns a string stating that the game is already over
-  # It ends after a player wins 2 of 3 games
-  #
-  # You will be using this class in the following class, which will let players play
-  # RPS through the terminal.
-end
+  def self.play(person_one, person_two)
 
+    if person_one.choice == "rock"
+      if person_two.choice == "rock"
+        return "Tie"
+      elsif person_two.choice == "paper"
+        return "Congrats User 2!"
+
+      elsif person_two.choice == "scissors"
+        return "Congrats User 1!"
+      end
+       elsif person_one.choice == "paper"
+        if person_two.choice == "rock"
+         return "Congrats User 1!"
+       elsif person_two.choice == "paper"
+         return "Tie"
+       elsif person_two.choice == "scissors"
+         return "Congrats User 2!"
+       end
+    elsif person_one.choice == "scissors"
+        if person_two.choice == "rock"
+         return "Congrats User 2!"
+       elsif person_two.choice == "paper"
+         return "Congrats User 1!"
+       elsif person_two.choice == "scissors"
+         return "Tie."
+       end
+   end
+  end
+end
 
 require 'io/console'
 class RPSPlayer
-  # (No specs are required for RPSPlayer)
-  #
-  # Complete the `start` method so that it uses your RPS class to present
-  # and play a game through the terminal.
-  #
-  # The first step is to read (gets) the two player names. Feed these into
-  # a new instance of your RPS class. Then `puts` and `gets` in a loop that
-  # lets both players play the game.
-  #
-  # When the game ends, ask if the player wants to play again.
-  def start
+  def self.start
+    puts "What is your name, User 1?"
+    name_one = gets.chomp
+    puts "What is your name, User 2?"
+    name_two = gets.chomp
+    puts "What is your play, User 1?"
+    choice_one = gets.chomp
+    puts "What is your play, User 2?"
+    choice_two = gets.chomp
 
-    # TODO
+    player_one = Person.new(name_one)
+    player_one.choice = choice_one
+    player_two = Person.new(name_two)
+    player_two.choice = choice_two
+    RPS.play(player_one, player_two)
+    if  RPS.play(player_one, player_two) == "Congrats User 1!"
+      player_one.score += 1
+    elsif RPS.play(player_one, player_two) == "Congrats User 2!"
+      player_two.score += 1
+    end
 
-    # PRO TIP: Instead of using plain `gets` for grabbing a player's
-    #          move, this line does the same thing but does NOT show
-    #          what the player is typing! :D
-    # This is also why we needed to require 'io/console'
-    # move = STDIN.noecho(&:gets)
+    if player_one.score == 2
+      puts "Game Over. #{player_one.name} wins"
+      player_one.score = 0
+      player_two.score = 0
+    elsif player_two.score == 2
+       puts "Game Over. #{player_two.name} wins"
+        player_one.score = 0
+        player_two.score = 0
+    else
+      puts "#{player_one.name}: #{player_one.score}.  #{player_two.name}: #{player_two.score}."
+    end
   end
+end
+
+class Person
+attr_accessor :choice, :score, :name
+def initialize(name)
+@choice = nil
+@score = 0
+@name = name
+end
 end
 
 
