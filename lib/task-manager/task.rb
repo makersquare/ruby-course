@@ -2,16 +2,24 @@
 class TM::Task
 
   @@id = 0
-  # get rid of projID, description, priority, created, complete
+  # get rid of projID, description, priority, created
   # make pending related tests
-  attr_reader :projID, :description, :priority, :created, :complete
+  attr_reader :projID, :description, :priority, :created
 
   def initialize(projID, description, priority)
     @projID = projID
     @description = description
-    @@id +=1
+
     # set limits for priority number
-    @priority = priority
+    if priority > 5
+      @priority = 5
+    elsif priority < 1
+      @priority = 1
+    else
+      @priority = priority
+    end
+
+    @@id +=1
     @complete = "incomplete"
     @created = Time.now
   end
