@@ -60,10 +60,12 @@ describe 'Project' do
     project.addtask(4,"Proj 4",2)
     project.addtask(5,"Proj 5",3)
 
+    expect(project.incompletelist.size).to eq(5)
+
     expect(project.incompletelist[0].description).to eq("Proj 2")
     expect(project.incompletelist[1].description).to eq("Proj 1")
     expect(project.incompletelist[2].description).to eq("Proj 3")
-    expect(project.incompletelist[0].description).to eq("Proj 4")
-    expect(project.incompletelist[1].description).to eq("Proj 5")
+    expect(project.incompletelist[3].description).to eq("Proj 4")
+    expect(project.incompletelist[4].description).to eq("Proj 5")
   end
 end
