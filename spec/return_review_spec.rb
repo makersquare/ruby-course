@@ -44,7 +44,7 @@ describe "Puzzle Exercises" do
 
   end
 
-  describe "Puzzle #3", :pending => true do
+  describe "Puzzle #3" do
     class ArtMuseum
       def initialize
         @collection  = ['The Last Supper', 'Mona Lisa']
@@ -54,11 +54,12 @@ describe "Puzzle Exercises" do
       end
     end
 
-    @museum = ArtMuseum.new
 
-    xit "counts correctly" do
+
+    it "counts correctly" do
+      @museum = ArtMuseum.new
       # TODO:
-      # result = @museum.???
+      result = @museum.collection.count
       expect(result).to eq(2)
     end
   end
