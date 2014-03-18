@@ -14,5 +14,10 @@ class TM::Project
     @tasks.push(task)
   end
 
+  def complete(task_id)
+    target = @tasks.find{|task| task.task_id == task_id}
+    target.status = "completed"
+  end
+
 
 end

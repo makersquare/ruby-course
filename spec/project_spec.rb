@@ -25,5 +25,12 @@ describe 'Project' do
     @new_project.add_task(test_task)
     expect(@new_project.tasks.first).to eq(test_task)
   end
+
+  it "can change task status to complete" do
+    test_task = TM::Task.new(1, "add a task", 1)
+    @new_project.add_task(test_task)
+    @new_project.complete(2)
+    expect(@new_project.tasks.first.status).to eq("completed")
+  end
 end
 
