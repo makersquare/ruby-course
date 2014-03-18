@@ -174,11 +174,11 @@ class RPSPlayer
         if winner != "tie"
           puts "The winner is #{winner[:name].chomp}."
           puts "End of round #{game_count}."
-          binding.pry
         else
           puts "This round is tied. End of round #{game_count}."
         end
       end
+
       if game.player1[:wins] == game.player2[:wins]
         print "Tie game. Nobody wins!"
       elsif game.player1[:wins] > game.player2[:wins]
@@ -186,8 +186,8 @@ class RPSPlayer
       else
         print "The winner of the series is #{game.player2[:name].chomp}. "
       end
-        puts "Do you want to play again?"
-        play_game = gets.chomp
+      puts "Do you want to play again?"
+      play_game = gets.chomp
     end
   end
 end
