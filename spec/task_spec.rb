@@ -15,4 +15,8 @@ describe 'Task' do
 	it "is created with a description" do
 		expect(@task.description).to eq("something cool")
 	end
+
+	it "is created with a priority number" do
+		expect(@task.priority).to eq(3)
+	end
 end
