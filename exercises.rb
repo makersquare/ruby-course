@@ -77,11 +77,7 @@ module Exercises
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
-    if time % 4 == 0
-      return true
-    else
-      return false
-    end
+    time % 4 == 0 ? (return true) : (return false)
   end
 end
 
@@ -99,6 +95,108 @@ class RPS
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
+
+attr_reader :player1, :player2, :player1_move, :player2_move
+attr_accessor :p1_score,:p2_score
+
+  def initialize(player1="playa1", player2="playa2")
+    @player1 = player1
+    @player2 = player2
+    @p1_score = 0
+    @p2_score = 0
+  end
+
+  def p1_score
+    @p1_score
+  end
+
+  def p2_score
+    @p2_score
+  end
+
+  def play(p1_move, p2_move)
+
+    if @p1_score >= 2
+      return "#{player1} has already won the game with #{p1_score} wins"
+    elsif @p2_score >= 2
+      return "#{player2} has already won the game with #{p2_score} wins"
+    else
+
+      if p1_move == "rock"
+        if p2_move == "paper"
+          if @p2_score == 1
+            @p2_score += 1
+            return "#{player2} wins the game with #{p2_score} wins"
+          else
+            @p2_score += 1
+            return "#{@player2} wins the round"
+          end
+        elsif p2_move == "scissors"
+          if p1_score == 1
+            @p1_score += 1
+            return "#{player1} wins the game with #{p1_score} wins"
+          else
+            @p1_score += 1
+            return "#{@player1} wins the round"
+          end
+        else
+          return "It's a tie"
+        end
+
+      elsif p1_move == "paper"
+        if p2_move == "rock"
+          if @p1_score == 1
+            @p1_score += 1
+            return "#{player1} wins the game with #{p1_score} wins"
+          else
+            @p1_score += 1
+            return "#{@player1} wins the round"
+          end
+        elsif p2_move == "scissors"
+          if @p2_score == 1
+            @p2_score += 1
+            return "#{player2} wins the game with #{p2_score} wins"
+          else
+            @p2_score += 1
+            return "#{@player2} wins the round"
+          end
+        else
+          return "It's a tie"
+        end
+
+      elsif p1_move == "scissors"
+        if p2_move == "rock"
+          if p2_score == 1
+            @p2_score += 1
+            return "#{player2} wins with #{p2_score} wins"
+          else
+            @p2_score += 1
+            return "#{@player2} wins the round"
+          end
+        elsif p2_move == "paper"
+          if p1_score == 1
+            @p1_score += 1
+            return "#{player1} wins with #{p1_score} wins"
+          else
+            @p1_score += 1
+            return "#{@player1} wins the round"
+          end
+        else
+          return "It's a tie"
+        end
+      end
+
+    # else
+    #   if @p1_score > @p2_score
+    #     return "#{player1} has already won #{p1_score} times"
+    #   else
+    #     return "#{player2} has already won #{p2_score} times"
+    #   end
+
+    end
+
+  end
+
 end
 
 
@@ -114,7 +212,25 @@ class RPSPlayer
   # lets both players play the game.
   #
   # When the game ends, ask if the player wants to play again.
-  def start
+  def self.start
+    puts "Enter name of Player 1"
+    name1 = gets.chomp
+    puts "Enter name of Player 2"
+    name2 = gets.chomp
+
+    newgame = RPS.new(name1, name2)
+
+while newgame.p1_score < 2 || newgame.p2_score < 2
+
+    puts "What's your move #{name1}?"
+    move1_player1 = gets.chomp
+
+    puts "What's your move #{name2}?"
+    move1_player2 = gets.chomp
+
+    newgame.play(move1_player1, move1_player2)
+
+end
 
     # TODO
 
