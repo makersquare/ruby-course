@@ -11,7 +11,9 @@ class TM::Project
 	end
 
 	def add_task(description, priority)
-		@tasks << TM::Task.new(@id, description, priority)
+		task = TM::Task.new(@id, description, priority)
+		@tasks << task
+		task
 	end
 
 	def mark_task_complete(task_id)
@@ -20,5 +22,9 @@ class TM::Project
 				task.status = 'complete'
 			end
 		end
+	end
+
+	def incomplete_tasks
+		@tasks.select { |task| task.status == 'incomplete' }.sort_by { |task| [-task.priority, task.created_at] }
 	end
 end
