@@ -1,6 +1,7 @@
 
 class TM::Task
-  attr_reader :proj_id, :description, :priority, :id
+  attr_reader :proj_id, :description, :priority
+  # attr_reader :id
 
   # @@counter
 
