@@ -14,10 +14,10 @@ describe 'Task' do
       expect(task.priority).to eq(2)
     end
 
-  #   it 'generates a unique id for each task' do
-  #     expect(TM::Task).to receive(:gen_id).and_return(1)
-  #     expect(task.id).to eq(1)
-  #   end
+    it 'generates a unique id for each task' do
+      expect(TM::Task).to receive(:gen_id).and_return(1)
+      expect(task.id).to eq(1)
+    end
   end
 
 
