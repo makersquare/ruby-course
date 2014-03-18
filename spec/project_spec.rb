@@ -16,8 +16,7 @@ describe 'Project' do
   end
 
   it "initializes with an id" do
-    result = @new_project.id
+    result = @new_project.project_id
     expect(result).to eq(3)
   end
-
 end
