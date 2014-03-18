@@ -22,11 +22,12 @@ describe 'Task' do
     load_gun = TM::Task.new(2, "Load the gun", 5)
     expect(TM::Task.all_tasks.size).to eq(old_length + 1)
     expect(TM::Task.all_tasks.has_key?(load_gun.task_id)).to eq(true)
-    expect(TM::Tasl.all_tasks.has_value?(load_gun)).to eq(true)
+    expect(TM::Task.all_tasks.has_value?(load_gun)).to eq(true)
   end
 
-  xit "can be marked as complete, specified by id" do
-    buy_gun.complete(task_id)
+  it "can be marked as complete" do
+    @buy_gun.finished = true
+    expect(@buy_gun.finished?).to eq(true)
   end
 
 

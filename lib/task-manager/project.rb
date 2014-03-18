@@ -14,22 +14,18 @@ class TM::Project
     @name = name
     @id = @@current_id
     @@current_id = @@current_id + 1
-    @tasks = []
+    @tasks = {}
   end
 
-  def add_task(task)
 
-    # if it's a task, just add it
+  def add_task(task)  # takes a task id or a Task object and adds the task to the project hash
+    # if a task object has been passed, add it
     if task.is_a?(TM::Task)
-      @tasks << task
-      return true
+      @tasks[task.task_id] = task
+    else    # if it's a number, add it using the id
+      @tasks[task] = TM::Task.all_tasks[task]
     end
-
-    # if it's a number, add it using the id
-
-
   end
-
 
 
 end
