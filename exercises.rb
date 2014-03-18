@@ -139,8 +139,21 @@ def initialize(player1,player2)
 end
 
 def play(player1choice=nil, player2choice=nil)
+  if @player2[0] == "computer"
+    @player1choice = player1choice
+    random_play = rand(1..3)
+    if random_play == 1
+      @player2choice = "paper"
+    elsif random_play == 2
+      @player2choice = "rock"
+    elsif random_play == 3
+      @player2choice = "scissors"
+    end
+  else
   @player1choice = player1choice
   @player2choice = player2choice
+  end
+
   @winner = nil
 
   if @player1choice == @player2choice
@@ -206,6 +219,10 @@ class RPSPlayer
   #
   # When the game ends, ask if the player wants to play again.
   def self.start
+    print "Please enter the amount of players(1 or 2):"
+    player_amount = gets.chomp
+
+    if player_amount == 2
     print "Please enter a name for player 1:"
     player1 = gets.chomp
     print "Please enter a name for player 2:"
@@ -221,6 +238,20 @@ class RPSPlayer
 
     game.play(player1choice, player2choice)
   end
+
+    else
+      print "Please enter a name for player 1:"
+      player1 = gets.chomp
+      game = RPS.new(player1, "computer")
+
+    while game.winner == nil do
+      puts "Please enter rock, paper, or scissors:"
+      player1choice = gets.chomp
+
+      game.play(player1choice, player2choice=nil)
+    end
+
+    end
 
     # PRO TIP: Instead of using plain `gets` for grabbing a player's
     #          move, this line does the same thing but does NOT show
