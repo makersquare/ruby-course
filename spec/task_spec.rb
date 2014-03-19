@@ -33,11 +33,11 @@ describe 'Task' do
   end
 
   it "can mark tasks as complete" do
-    expect(@my_task.mark_complete).to eq ("complete")
+    expect(@my_task.mark_comp).to eq ("complete")
   end
 
   it "can mark tests as incomplete" do
-    expect(@my_task.mark_incomplete).to eq ("incomplete")
+    expect(@my_task.mark_inc).to eq ("incomplete")
   end
 
 

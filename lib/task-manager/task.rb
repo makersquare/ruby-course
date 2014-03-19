@@ -1,8 +1,8 @@
-
-class TM::Task
+module TM
+class Task
 
   @@id = 0
-  # get rid of projID, description, priority, created
+  # get rid of projID, description, priority
   # make pending related tests
   attr_reader :projID, :description, :priority, :created
 
@@ -28,16 +28,18 @@ class TM::Task
     @complete
   end
 
-  def mark_complete()
+  def mark_comp
     @complete = "complete"
   end
 
-  def mark_incomplete()
+  def mark_inc
     @complete = "incomplete"
   end
+
 
   def id
     @@id
   end
 
+end
 end
