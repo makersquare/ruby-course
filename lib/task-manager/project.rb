@@ -11,6 +11,7 @@ class TM::Project
   end
 
   def add_task(task)
+    task.project_id = @id
     @tasks.push(task)
   end
 
@@ -19,5 +20,9 @@ class TM::Project
     target.status = "completed"
   end
 
+  def retrieve_completed
+    array = @tasks.select{|task| task.status == "completed"}
+    array.sort_by!{|task| task.task_id}
+  end
 
 end
