@@ -29,4 +29,11 @@ class TM::Project
       completed_tasks = @tasks.select { |task| task.complete == true }
       completed_tasks.sort! { |x,y| y.date_created <=> x.date_created}
   end
+
+  def retrieve_incomplete_tasks
+      incompleted_tasks = @tasks.select { |task| task.complete == false }
+      incompleted_tasks.sort! { |x,y| x.priority <=> y.priority}
+  end
+
+
 end

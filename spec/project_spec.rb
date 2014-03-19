@@ -64,5 +64,18 @@ describe 'Project' do
     end
   end
 
-
+  describe 'retreive incomplete tasks, by priority' do
+    it 'retrieves a list of incomplete tasks by priority' do
+      task = TM::Task.new('bla', 2)
+      task2 = TM::Task.new('blablabla', 1)
+      task3 = TM::Task.new('noshow', 4)
+      @new_project.add_task(task)
+      @new_project.add_task(task2)
+      @new_project.add_task(task3)
+      @new_project.complete(task.id)
+      # binding.pry
+      result = @new_project.retrieve_incomplete_tasks
+      expect(result).to eq [task2, task3]
+    end
+  end
 end
