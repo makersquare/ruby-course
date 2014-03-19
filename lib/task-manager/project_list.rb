@@ -15,12 +15,12 @@ class TM::ProjectList
   end
 
   def get_remaining_tasks(project_id)
-    remaining_tasks = @project_list.select(|x| x.project_id = project_id)
+    remaining_tasks = @project_list.select{|x| x.project_id = project_id}
     return match[0].incomlete_tasks
   end
 
   def get_completed(project_id)
-    completed = @project_list.select(|x| x.project_id = project_id)
+    completed = @project_list.select{|x| x.project_id = project_id}
     return match[0].completed_tasks
   end
 
