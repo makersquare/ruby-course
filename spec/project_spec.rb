@@ -8,20 +8,28 @@ describe 'Project' do
   end
 
   it "A new project can be created with a name" do
-    TM::Project.new("Fitness")
-    expect(TM::Project.new("Fitness").name).to eq "Fitness"
+    proj = TM::Project.new("Fitness")
+    expect(proj.name).to eq "Fitness"
   end
 
   it "A project must automatically generate an unique id" do
-    expect(TM::Project.new("Fitness").id).to eq 3
+    expect(TM::Project.new("Fitness").id).to eq 2
   end
 
   it "A project can add tasks" do
-    expect(TM::Project.new("Fitness").task_list.count).to eq 0
-
-    expect(TM::Project.new("Fitness").add_task(1,"diet",1,1).count). to eq 1
+    proj = TM::Project.new("Fitness")
+    expect(proj.task_list.count).to eq 0
+    eating_better = TM::Task.new(1, "diet", 3, 2)
+    expect(proj.add_task(eating_better).count). to eq 1
   end
 
+  it "task can be marked as complete by its id" do
+    fitness_project = TM::Project.new("Fitness")
+    eating_better = TM::Task.new(1, "diet", 3, 2) #create a task with an id of 2
+    fitness_project.add_task(eating_better) #add this task to fitness project
+    fitness_project.mark_task_complete(2) #mark task with id 2 complete
+    expect(eating_better.complete).to eq true #expect task with id2 to have complete = true
+  end
 
 
 end
