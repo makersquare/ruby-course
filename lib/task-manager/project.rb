@@ -1,4 +1,3 @@
-
 class TM::Project
 
   @@counter = 0
@@ -28,5 +27,11 @@ class TM::Project
     completed_task.complete = true
   end
 
+  def retrieve_completed_tasks
+    completed_tasks = @tasks.select{|task| task.complete == true}
+    completed_tasks.sort! {|x,y| x.creation_date <=> y.creation_date }
+
+    completed_tasks
+  end
 
 end

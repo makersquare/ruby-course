@@ -4,7 +4,7 @@ require 'spec_helper'
 describe 'Task' do
 
   before do
-    expect(TM::Task).to receive(:generate_id).and_return(0)
+    expect(TM::Task).to receive(:generate_id).at_least(:once).  and_return(0)
     @new_task = TM::Task.new("take out the trash")
   end
 
@@ -33,6 +33,15 @@ describe 'Task' do
       expect(result).to eq(0)
     end
 
+    it 'is assigned a time created by default' do
+        time_stub = Time.parse("12:00 PM")
+        expect(Time).to receive(:now).and_return(time_stub)
+        @newest_task = TM::Task.new('hello')
+        result = @newest_task.creation_date
+        expect(result).to eq(time_stub)
+
     end
 
   end
+
+end

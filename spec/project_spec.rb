@@ -9,7 +9,6 @@ describe 'Project' do
   it "exists" do
     expect(TM::Project).to be_a(Class)
   end
-
   describe '.initialize' do
     it 'creates a new project with a name' do
       result = @new_project.project_name
@@ -47,6 +46,26 @@ describe 'Project' do
 
     end
 
+  end
+
+  describe '#retrieve_completed_tasks' do
+    it 'retrieves a list of completed tasks by creation date' do
+      task = TM::Task.new('pee on front lawn')
+      task_two = TM::Task.new('poo on front lawn')
+      task_three = TM::Task.new('clean the front lawn')
+
+      @new_project.add_task(task)
+      @new_project.add_task(task_two)
+      @new_project.add_task(task_three)
+
+      @new_project.mark_task_complete(task.id)
+      @new_project.mark_task_complete(task_two.id)
+
+      result = @new_project.retrieve_completed_tasks
+      expect(result[0]).to eq(task)
+
+
+    end
   end
 
 end

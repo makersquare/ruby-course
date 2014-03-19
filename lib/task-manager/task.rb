@@ -1,8 +1,7 @@
-
 class TM::Task
   @@counter = 0
 
-  attr_reader :project_id, :description, :id
+  attr_reader :project_id, :description, :id, :creation_date
   attr_accessor :priority, :project_id, :complete
 
 
@@ -17,6 +16,7 @@ class TM::Task
     @priority = priority
     @complete = complete
     @id = TM::Task.generate_id
+    @creation_date = Time.now
   end
 
 
