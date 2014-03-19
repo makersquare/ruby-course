@@ -87,7 +87,7 @@ describe 'Project' do
       expect(project.list_incomplete_tasks).to eq([task_2, task_1, task_3])
     end
 
-    context "if two or more tasks have same priority number", :pending => true do
+    context "if two or more tasks have same priority number" do
       it "the older task gets priority" do
         task_1 = project.add_task("put on cologne", 1)
         task_2 = project.add_task("smell some roses", 3)

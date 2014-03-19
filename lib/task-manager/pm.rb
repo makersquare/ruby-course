@@ -1,6 +1,7 @@
 require_relative '../task-manager.rb'
 
 class TM::ProjectManager
+  # definitely don't want to do this.. abstract later
   def initialize
     @projects = []
   end
@@ -8,7 +9,7 @@ class TM::ProjectManager
   def start
     # will remove this later - will want to instantiate projects and tasks in terminal instead of in this method
     #
-    # it's ok for now though for testing purposes - also lesson doesn't require more than this
+    # it's only here now for testing purposes
     project_1 = TM::Project.new("My Cool Project")
     @projects << project_1
 
