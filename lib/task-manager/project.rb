@@ -3,19 +3,21 @@ class TM::Project
 	attr_reader :name, :tasks
 	attr_accessor :project_id
 
-	@@project_id = 0
+	@@project_id = 1
 
 	def initialize(name)
 		@name = name
 		@tasks = Array.new(0)
-		@@project_id += 1
 		@project_id = @@project_id
+		@@project_id += 1
 	end
 
 	def self.project_id
 		@@project_id
 	end
-	
+
+
+
 	def add_task(description, priority=3)
 		@description = description
 		@priority = priority

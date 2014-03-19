@@ -6,7 +6,9 @@ class TM::ProjectList
 	end
 
 	def create_project(name)
-		@project_list << TM::Project.new(name)
+		proj =  TM::Project.new(name)
+		@project_list << proj
+		proj
 	end
 
 	def get_project(project_id)
