@@ -79,9 +79,43 @@ class TM::PM
     puts "stub of add_project"
   end
 
+
   def add_task
-    puts "stub of add_task"
+
+    # keep asking the user for input until they enter a valid id
+    project_id = nil
+    until TM::Project.all_projects.keys.include?(project_id)
+      print "Which project id would you like to add a task to? "
+      project_id = gets.chomp!.to_i
+    end
+
+    puts "Ok... Adding to #{TM::Project.all_projects[project_id].name}..."
+    print "Enter a task name: "
+    description = gets.chomp!
+
+    # abort add if they left it blank
+    if description.empty?
+      puts "Oh... cold feet, huh? Ok try again when you're feeling less timid."
+      puts "You over your stage-fright enough to press Enter and Continue?"
+      gets
+      return
+    end
+
+    priority = -1
+    until (priority > 0) && (priority <= 10)
+      print "Priority Level (1-10)? "
+      priority = gets.chomp!.to_i
+    end
+
+    #create task and add it to project
+    new_task = TM::Task.new(project_id, description, priority)
+    TM::Project.all_projects[project_id].add_task(new_task)
+
+    puts "\n\nYour task has been added."
+    puts "Press Enter to Continue"
+    gets
   end
+
 
   def list_projects
     puts "\n\nOk, here's a list of your current projects:\n\n"
@@ -93,9 +127,6 @@ class TM::PM
     gets
   end
 
-  def help
-    puts "stub of help"
-  end
 
   def load_me_up    # loads up a couple projects with tasks for testing
     @kill_bob = TM::Project.new("Kill Bob")
