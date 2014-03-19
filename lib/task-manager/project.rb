@@ -20,5 +20,11 @@ class TM::Project
     selected = @tasks.select {|x| x.task_id == task_id}
     selected[0].status = 'complete'
   end
+
+  def sort_by_date
+    completed = @tasks.select {|x| x.status == 'complete'}
+    completed.sort {|x ,y| y <=> x }
+  end
+
 end
 
