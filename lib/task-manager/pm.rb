@@ -39,6 +39,16 @@ class TM::PM
           else
             puts "Add what, dude?"
           end
+        else
+          if (  (choice_array.include?("shit"))  ||
+                (choice_array.include?("fuck"))  ||
+                (choice_array.include?("damn"))
+                (choice_array.include?("fucking")) ||
+                (choice_array.include?("asshole"))  )
+            puts "Hey, watch your mouth."
+            gets
+          end
+
         end
 
       else  #if it's just one word
@@ -53,6 +63,9 @@ class TM::PM
         when "quit"
           puts "\n\nok fine be that way.\n\n"
           exit = true
+        when "shit", "fuck", "fuck", "asshole", "damn"
+          puts "Hey, watch your mouth."
+          gets
         else
           puts "Try again, Fat Fingers.\n"
         end
