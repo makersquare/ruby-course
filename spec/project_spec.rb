@@ -69,4 +69,21 @@ describe 'Project' do
     expect(project.list_completed_tasks).to eq([task_3, task_2, task_1])
   end
 
+  describe 'retrieve list of incompleted tasks' do
+    it "retrieve a list of all incomplete tasks, sorted by priority" do
+
+      # The add_task method returns the task object.
+      #
+      # Thus we can set the returned task objects to variables:
+      # task_1, task_2, task_3
+      #
+      task_1 = project.add_task("collect 20 hats", 2)
+      task_2 = project.add_task("watch a funny video", 3)
+      task_3 = project.add_task("sell rolex watch", 1)
+
+      # the array in eq() starts from task_2 because
+      # we want it to be sorted starting from highest priority created
+      expect(project.list_incomplete_tasks).to eq([task_2, task_1, task_3])
+    end
+  end
 end

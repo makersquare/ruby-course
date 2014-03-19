@@ -36,8 +36,26 @@ class TM::Project
   def list_completed_tasks
     completed_tasks = @tasks.select { |task| task.completed == true }
 
-    tasks_sorted_by_most_recent = completed_tasks.sort do | x, y |
+    # x and y represent the the objects in the array.
+    #
+    # If y comes first in y <=> x, it means we want to sort by highest number of a value, going to lowest number of a value
+    #
+    # thus y.time_created <=> x.time_created means sort by most recent time to least recent time
+    tasks_sorted_by_most_recent = completed_tasks.sort do |x,y|
       y.time_created <=> x.time_created
+    end
+  end
+
+  def list_incomplete_tasks
+    incomplete_tasks = @tasks.select { |task| task.completed == false }
+
+    # x and y represent the the objects in the array.
+    #
+    # If y comes first in y <=> x, it means we want to sort by highest number of a value, going to lowest number of a value
+    #
+    # thus y.priority <=> x.priority means sort by highest numbered priority to lowest numbered priority
+    tasks_sorted_by_highest_priority = incomplete_tasks.sort do |x,y|
+      y.priority <=> x.priority
     end
   end
 end
