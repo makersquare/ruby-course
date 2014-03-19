@@ -62,4 +62,10 @@ class TM::Project
     incomplete_tasks.sort_by { |x| [-x.priority, x.time_created.to_f] }
 
   end
+
+  def include_task?(tid)
+    task = @tasks.find { |tsk| tsk.id == tid }
+
+    @tasks.include?(task)
+  end
 end

@@ -111,4 +111,13 @@ describe 'Project' do
     end
   end
 
+  it "can check to see if it includes a task given the task's id" do
+    TM::Task.class_variable_set :@@counter, 0
+    task_1 = project.add_task("put on cologne", 1)
+    task_2 = project.add_task("smell some roses", 3)
+
+    expect(project.tasks.first).to eq(task_1)
+    expect(project.include_task?(1)).to eq(true)
+  end
+
 end
