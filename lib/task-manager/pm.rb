@@ -11,6 +11,7 @@ class TM::PM
                           "Hey, watch your mouth."]
 
   def main_menu
+
     exit = false
 
     while !exit do
@@ -36,11 +37,11 @@ class TM::PM
         when "show"
           self.show(choice_array[1].to_i)
         when "history"
-          self.history(choice_array[1])
+          self.history(choice_array[1].to_i)
         when "load"
           self.load_me_up
         when "mark"
-          self.mark(choice_array[1])
+          self.mark(choice_array[1].to_i)
         when "add"
           if choice_array[1] == "project"
             self.add_project
@@ -54,7 +55,9 @@ class TM::PM
                 (choice_array.include?("fuck"))  ||
                 (choice_array.include?("damn"))  ||
                 (choice_array.include?("fucking")) ||
-                (choice_array.include?("asshole"))  )
+                (choice_array.include?("asshole"))  ||
+                (choice_array.include?("motherfucker")))
+
             puts self.smart_ass_remarker(@@cuss_words_lines)
             gets
           end
@@ -73,7 +76,7 @@ class TM::PM
         when "quit"
           puts "\n\nok fine be that way.\n\n"
           exit = true
-        when "shit", "fuck", "fuck", "asshole", "damn"
+        when "shit", "fuck", "fuck", "asshole", "damn", "motherfucker"
           puts self.smart_ass_remarker(@@cuss_words_lines)
           gets
         else
@@ -102,11 +105,28 @@ class TM::PM
 
 
   def history(project_id)
-    puts "stub of history(project_id)"
+    project = TM::Project.all_projects[project_id]
+    tasks_array = project.completed_tasks
+    puts "\n\nProject: #{project.name}\n"
+    puts "ID\tDescription\t\t\tPriority\n"
+    puts "------------------------------------------------"
+    tasks_array.each { | x | print("#{x.task_id}" + (' ' * (8 - x.task_id.to_s.length)) + # padding
+                  "#{x.description}" + (' ' * (33 - x.description.length) +
+                  "#{x.priority}\n")) }
+    puts "\n"
+    puts "Press Enter to Continue"
+    gets
+
   end
 
   def mark(task_id)
-    puts "stub of mark(task_id)"
+    TM::Task.all_tasks[task_id].finished = true
+    puts "#{TM::Task.all_tasks[task_id].description} marked as finished."
+    puts smart_ass_remarker(["You must be real proud of yourself",
+                            "Applause applause.",
+                            "What took you so long?"])
+    puts "\nPress Enter to Continue"
+    gets
   end
 
   def add_project
@@ -138,7 +158,7 @@ class TM::PM
                             "Need a little more time with the menu?",
                             "Description too short. Please replace user.",
                             "Cat got your tongue?"])
-      puts "Press Enter and Continue?"
+      puts "Shall we move on?"
       gets
       return
     end
@@ -183,6 +203,8 @@ class TM::PM
     @sharpen_chainsaw = TM::Task.new(3, "Sharpen the chainsaw", 3)
     @get_in_car = TM::Task.new(4, "Get in the car", 9)
     @drive_to_store = TM::Task.new(4, "Drive to the store", 10)
+    @talk_to_clerk = TM::Task.new(4, "Talk to clerk", 4)
+    @pay_for_milk = TM::Task.new(4, "Pay for milk", 2)
     @kill_bob.add_task(@buy_gun)
     @kill_bob.add_task(@load_gun)
     @kill_sue.add_task(@buy_knife)
@@ -191,6 +213,8 @@ class TM::PM
     @kill_ted.add_task(@sharpen_chainsaw)
     @buy_milk.add_task(@get_in_car)
     @buy_milk.add_task(@drive_to_store)
+    @buy_milk.add_task(@talk_to_clerk)
+    @buy_milk.add_task(@pay_for_milk)
   end
 
   def smart_ass_remarker(remarks)
