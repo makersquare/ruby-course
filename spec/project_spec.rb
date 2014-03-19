@@ -70,6 +70,7 @@ describe 'Project' do
   end
 
   describe 'retrieve list of incompleted tasks' do
+
     it "retrieve a list of all incomplete tasks, sorted by priority" do
 
       # The add_task method returns the task object.
@@ -85,5 +86,18 @@ describe 'Project' do
       # we want it to be sorted starting from highest priority created
       expect(project.list_incomplete_tasks).to eq([task_2, task_1, task_3])
     end
+
+    context "if two or more tasks have same priority number", :pending => true do
+      it "the older task gets priority" do
+        task_1 = project.add_task("put on cologne", 1)
+        task_2 = project.add_task("smell some roses", 3)
+        task_3 = project.add_task("draw stick figure", 1)
+        task_4 = project.add_task("chill out", 3)
+
+
+        expect(project.list_incomplete_tasks).to eq([task_2, task_4, task_1, task_3])
+      end
+    end
   end
+
 end
