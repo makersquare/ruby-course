@@ -1,3 +1,4 @@
+require 'time'
 
 class TM::Task
   @@counter = 0
@@ -8,7 +9,7 @@ class TM::Task
 
 
   attr_reader :description, :id
-  attr_accessor :priority, :project_id, :complete
+  attr_accessor :priority, :project_id, :complete, :date_created
 
   def initialize(description, priority=nil, project_id=nil, complete=false)
     @project_id = project_id
@@ -16,6 +17,7 @@ class TM::Task
     @priority = priority
     @complete = complete
     @id = TM::Task.generate_id
+    @date_created = Time.now
   end
 
 

@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe 'Task' do
   before do
-    expect(TM::Task).to receive(:generate_id).and_return(1)
-    @task = TM::Task.new("description", 2)
+    expect(TM::Task).to receive(:generate_id).at_least(:once).and_return(1)
+    @task = TM::Task.new("description")
   end
 
   it "exists" do
@@ -25,7 +25,17 @@ describe 'Task' do
 
     it "is assigned the priority" do
       result = @task.priority
-      expect(result).to eq 2
+      expect(result).to eq nil
+    end
+
+    it "is assigned a time created by default" do
+      time_stub = Time.parse("10 am")
+      Time.stub(:now).and_return(time_stub)
+
+      newest_task = TM::Task.new("bla")
+
+      result = newest_task.date_created
+      expect(result).to eq(time_stub)
     end
 
   end

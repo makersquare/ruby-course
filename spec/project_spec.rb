@@ -48,5 +48,22 @@ describe 'Project' do
     end
   end
 
+  describe 'retreive completed tasks, by date' do
+    it 'retrieves a list of completed tasks by date' do
+      task = TM::Task.new('bla')
+      task2 = TM::Task.new('blablabla')
+      task3 = TM::Task.new('noshow')
+      @new_project.add_task(task)
+      @new_project.add_task(task2)
+      @new_project.add_task(task3)
+      @new_project.complete(task.id)
+      @new_project.complete(task2.id)
+
+      @new_project.retrieve_completed_tasks
+      result = @new_project.completed_tasks
+      expect(result).to eq [task, task2]
+    end
+  end
+
 
 end

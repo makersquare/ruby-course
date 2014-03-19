@@ -24,4 +24,10 @@ class TM::Project
      completed_task = @tasks.find { |task| task.id == id }
      completed_task.complete = true
   end
+
+  # def retrieve_completed_tasks
+  #     completed_tasks = @tasks.select { |task| task.complete == true }
+  #     completed_tasks.sort! { |task| task.date_created }
+  #     return completed_tasks
+  # end
 end
