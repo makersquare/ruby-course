@@ -68,6 +68,22 @@ describe 'Project' do
     end
   end
 
+  describe '#retrieve_incomplete_tasks' do
+    it 'retrieves incomplete tasks by priority' do
+      task = TM::Task.new('pee on front lawn', 2)
+      task_two = TM::Task.new('poo on front lawn', 2)
+      task_three = TM::Task.new('clean the front lawn', 1)
+
+      @new_project.add_task(task)
+      @new_project.add_task(task_two)
+      @new_project.add_task(task_three)
+
+      result = @new_project.retrieve_incomplete_tasks
+      expect(result).to eq([task_three, task_two, task])
+
+    end
+  end
+
 end
 
 end

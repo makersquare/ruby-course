@@ -34,4 +34,13 @@ class TM::Project
     completed_tasks
   end
 
+  def retrieve_incomplete_tasks
+    incomplete_tasks = @tasks.select{|task| task.complete == false}
+    incomplete_tasks.sort! {|x,y| x.priority <=> y.priority}
+
+    incomplete_tasks
+
+
+  end
+
 end

@@ -10,7 +10,7 @@ class TM::Task
     @@counter
   end
 
-  def initialize(description, complete=false, priority=nil, project_id=nil)
+  def initialize(description, priority=nil, project_id=nil, complete=false)
     @project_id = project_id
     @description = description
     @priority = priority
