@@ -28,4 +28,11 @@ class TM::ProjectList
 		match = @project_list.select { |project| project.project_id == project_id}
 		match[0].add_task(description, priority=3)
 	end
+
+	def complete_task(project_id, task_id)
+		match = @project_list.select { |project| project.project_id == project_id}
+		match[0].complete_task(task_id)
+	end
+
+
 end
