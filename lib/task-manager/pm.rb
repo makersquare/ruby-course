@@ -34,7 +34,7 @@ class TM::PM
         choice_array = choice.split(' ')
         case choice_array[0]
         when "show"
-          self.show(choice_array[1])
+          self.show(choice_array[1].to_i)
         when "history"
           self.history(choice_array[1])
         when "load"
@@ -79,7 +79,6 @@ class TM::PM
         else
           puts "Try again, Fat Fingers.\n"
         end
-
       end  #end if
 
     end  #end while
@@ -87,8 +86,20 @@ class TM::PM
   end  #end main_menu
 
   def show(project_id)
-    puts "stub of show(project_id)"
+    project = TM::Project.all_projects[project_id]
+    tasks_array = project.ongoing_tasks
+    puts "\n\nProject: #{project.name}\n"
+    puts "ID\tDescription\t\t\tPriority\n"
+    puts "------------------------------------------------"
+    tasks_array.each { | x | print("#{x.task_id}" + (' ' * (8 - x.task_id.to_s.length)) + # padding
+                  "#{x.description}" + (' ' * (33 - x.description.length) +
+                  "#{x.priority}\n")) }
+    puts "\n"
+    puts "Press Enter to Continue"
+    gets
   end
+
+
 
   def history(project_id)
     puts "stub of history(project_id)"
@@ -145,7 +156,7 @@ class TM::PM
     puts "\n\nYour task has been added."
     puts "Press Enter to Continue"
     gets
-  end
+  end  # end add_task
 
 
   def list_projects
@@ -180,7 +191,6 @@ class TM::PM
     @kill_ted.add_task(@sharpen_chainsaw)
     @buy_milk.add_task(@get_in_car)
     @buy_milk.add_task(@drive_to_store)
-
   end
 
   def smart_ass_remarker(remarks)
