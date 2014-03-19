@@ -27,4 +27,8 @@ class TM::Project
 	def incomplete_tasks
 		@tasks.select { |task| task.status == 'incomplete' }.sort_by { |task| [-task.priority, task.created_at] }
 	end
+
+	def complete_tasks
+		@tasks.select { |task| task.status == 'complete' }.sort_by { |task| task.created_at }
+	end
 end

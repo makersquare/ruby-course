@@ -38,7 +38,7 @@ describe 'Project' do
 	end
 
 	describe ".incomplete_tasks" do
-		it "shows a list of incomplete tasks ordered by priority" do
+		it "returns a list of incomplete tasks ordered by priority" do
 			Time.stub(:now).and_return(Time.parse('12pm'))
 			eat = @project.add_task('eat', 3)
 			Time.stub(:now).and_return(Time.parse('8pm'))
@@ -48,6 +48,24 @@ describe 'Project' do
 
 			expect(@project.tasks.count).to eq(3)
 			expect(@project.incomplete_tasks).to eq([shower, sleep, eat])
+		end
+	end
+
+	describe ".complete_tasks" do
+		it "returns a list of complete tasks ordered by creation date" do
+			Time.stub(:now).and_return(Time.parse('12pm'))
+			eat = @project.add_task('eat', 3)							# id = 6
+			Time.stub(:now).and_return(Time.parse('8pm'))
+			sleep = @project.add_task('sleep', 5)					# id = 7
+			Time.stub(:now).and_return(Time.parse('6pm'))
+			shower = @project.add_task('shower', 5)				# id = 8
+
+			@project.mark_task_complete(6) # eat.id
+			@project.mark_task_complete(7) # sleep.id 
+			@project.mark_task_complete(8) # shower.id 
+
+			expect(@project.tasks.count).to eq(3)
+			expect(@project.complete_tasks).to eq([eat, shower, sleep])
 		end
 	end
 end
