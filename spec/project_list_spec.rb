@@ -14,4 +14,11 @@ describe "Project_list" do
     expect(result.first.class).to eq(TM::Project)
   end
 
+  it "can add a new task to a project" do
+    @pl.add_project("Project")
+    @pl.add_task(2, 3, "add task")
+    result = @pl.projects.first.tasks.first.description
+    expect(result).to eq("add task")
+  end
+
 end
