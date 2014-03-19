@@ -20,5 +20,18 @@ describe 'Project' do
 
   end
 
+  it "returns a list of all completed projects, by date" do
+  	current_time = Time.now
+  	Time.stub(:now).and_return(current_time)
+  	project = TM::Project.new('project')
+  	task = TM::Task.new('red',2,project.id)
+  	task.complete_task
+
+  	project.complete_task_list(task)
+  	expect(project.completed_tasks_list).to eq([task])
+
+
+  end
+
 end
 
