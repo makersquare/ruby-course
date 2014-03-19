@@ -10,8 +10,12 @@ module TM
       @@proj_ls << proj
     end
 
+    def ls_proj
+      @@proj_ls
+    end
+
     def get_project(project_id)
-      @@proj.each do |project|
+      @@proj_ls.each do |project|
         if project.id == project_id
           project
         else

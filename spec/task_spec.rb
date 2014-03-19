@@ -40,5 +40,4 @@ describe 'Task' do
     expect(@my_task.mark_inc).to eq ("incomplete")
   end
 
-
 end
