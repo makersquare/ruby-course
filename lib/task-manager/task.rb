@@ -3,6 +3,7 @@ class TM::Task
   attr_reader :proj_id, :description, :priority
   attr_reader :id
   attr_accessor :complete
+  attr_reader :time_created
 
   @@counter = 0
 
@@ -17,8 +18,10 @@ class TM::Task
     @priority = priority
     @id = TM::Task.gen_id
 
+    # task defaults as incomplete
     @complete = false
-  end
 
+    @time_created = Time.now
+  end
 
 end
