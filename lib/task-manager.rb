@@ -29,7 +29,7 @@ class TM::ProjectManager
         when 'help'
           tracker.help
         when 'list'
-          tracker.list_of_projects
+          tracker.get_projects
         when 'show'
             tracker.show_tasks(choice[1])
         when 'add'
@@ -42,6 +42,8 @@ class TM::ProjectManager
           @@exit = true
         when 'create'
           tracker.create_new_project(choice[1])
+        else
+          puts "Dude, follow instructions!"
         end
       end
     end
