@@ -1,21 +1,17 @@
-
 class TM::Task
-	attr_reader :project_id, :task_completion
-	attr_writer :task_completion
-	def initialize (description, priority_number = 0,project_id)
+	attr_reader :project_id, :description, :priority_number, :task_complete
+	def initialize (description,priority_number,project_id)
 		@description = description
 		@priority_number = priority_number
 		@project_id = project_id
-		@task_completion = [@project_id, "no", Time.now]
+		@task_complete = ""
 	end
 
-	def complete
-		@task_completion[1] = 'yes'
-		@task_completion
-	end
-
-
+	def complete_task
+		@task_complete = true
+		end
 
 end
+
 
 
