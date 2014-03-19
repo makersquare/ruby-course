@@ -47,6 +47,10 @@ describe 'Task' do
       expect(task.time_created).to eq(created_time_stub)
     end
 
+    it 'defaults the task as having a completion date of nil' do
+      expect(task.time_completed).to be_nil
+    end
+
   end
 
 

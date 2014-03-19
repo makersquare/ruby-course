@@ -4,6 +4,7 @@ class TM::Task
   attr_reader :id
   attr_accessor :completed
   attr_reader :time_created
+  attr_reader :time_completed
 
   @@counter = 0
 
@@ -22,6 +23,8 @@ class TM::Task
     @completed = false
 
     @time_created = Time.now
+
+    @time_completed = nil
   end
 
 end
