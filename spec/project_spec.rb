@@ -55,6 +55,28 @@ describe 'Project' do
     expect(result).to eq([test_task, test_task2, test_task3])
   end
 
+  it "has a #retrieve_incomplete that returns incomplete tasks sorted by priority" do
+    test_task = TM::Task.new(1, "add a task", 1000)
+    test_task2 = TM::Task.new(1, "add a new task", 239)
+    test_task3 = TM::Task.new(1, "add a task", 440)
+    @new_project.add_task(test_task)
+    @new_project.add_task(test_task2)
+    @new_project.add_task(test_task3)
+    result = @new_project.retrieve_incomplete
+    expect(result).to eq([test_task2, test_task3, test_task])
+  end
+
+  it "#retrieve_incomplete returns the older task first if priority numbers are equal" do
+    test_task = TM::Task.new(1, "add a task", 2)
+    test_task2 = TM::Task.new(1, "add a new task", 2)
+    test_task3 = TM::Task.new(1, "add a task", 1)
+    @new_project.add_task(test_task)
+    @new_project.add_task(test_task2)
+    @new_project.add_task(test_task3)
+    result = @new_project.retrieve_incomplete
+    expect(result).to eq([test_task3, test_task, test_task2])
+  end
+
 
 end
 

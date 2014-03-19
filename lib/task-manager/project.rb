@@ -25,4 +25,9 @@ class TM::Project
     array.sort_by!{|task| task.task_id}
   end
 
+  def retrieve_incomplete
+    array = @tasks.select{|task| task.status == "incomplete"}
+    array.sort_by!{|task| [task.priority, task.task_id]}
+  end
+
 end
