@@ -1,49 +1,16 @@
 
 class TM::Task
-  attr_reader :description, :priority, :taskid, :creationtime
-  attr_accessor :status, :tasklist, :projectid
 
-  def initialize(projectid = TM::Project.id, description, priority,taskid)
-    @projectid = projectid
+  attr_reader :project_id, :description, :priority, :task_id
+
+  def initialize(project_id,description,priority,task_id)
+    @project_id = project_id
     @description = description
     @priority = priority
-    @status = "incomplete"
-    @taskid = taskid
-    @creationtime = Time.now
+    @task_id = task_id
   end
 
-
-  def done(tasklist, task_completed)
-
-    tasklist.each do |task|
-      if task == task_completed
-        return task.status = "completed"
-      end
-    end
-
-  end
+end
 
 
-
-
-
-
-
-
-
-
-  # def taskcompleted(taskid)
-  #   if newtask.taskid == taskid
-  #      newtask.status = "completed"
-  #   else
-  #      return "task not found"
-  #   end
-  # end
-
- end
-
-
-# def initialize( toppingsArray = [ Topping.new("cheese") ] )
-#     @toppings = toppingsArray
-#   end
 
