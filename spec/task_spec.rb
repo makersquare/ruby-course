@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Task' do
 
-  # the 'let' method creates a local variable:
+  # the 'let' method creates a local variable like this:
   #
   # task = TM::Task.new(1, "eat 20 cheese wheels", 2)
   #

@@ -2,6 +2,7 @@
 class TM::Task
   attr_reader :proj_id, :description, :priority
   attr_reader :id
+  attr_accessor :complete
 
   @@counter = 0
 
@@ -15,6 +16,8 @@ class TM::Task
     @description = desc
     @priority = priority
     @id = TM::Task.gen_id
+
+    @complete = false
   end
 
 

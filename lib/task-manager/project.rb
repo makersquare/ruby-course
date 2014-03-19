@@ -13,7 +13,7 @@ class TM::Project
   def initialize(name)
     @name = name
     @id = TM::Project.gen_id
-    
+
     @tasks = []
   end
 
@@ -27,7 +27,9 @@ class TM::Project
     task
   end
 
-  # def mark_as_complete(task_id)
-  #   @tasks.find { |task| task.id = task_id }
-  # end
+  def mark_as_complete(task_id)
+    task = @tasks.find { |task| task.id == task_id }
+
+    task.complete = true
+  end
 end

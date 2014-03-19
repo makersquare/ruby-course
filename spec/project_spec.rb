@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Project' do
 
-  # the 'let' method creates a local variable:
+  # the 'let' method creates a local variable like this:
   #
   # project = TM::Project.new("Bird Watching")
   #
@@ -34,10 +34,19 @@ describe 'Project' do
     expect(task.description).to eq("collect 20 hats")
   end
 
-  # xit "can mark a task as complete" do
-  #   project.add_task("collect 20 hats", 2)
-  #   task_id = 1
-  #   project.mark_as_complete(task_id)
-  #   expect(project.tasks.count).to eq(0)
-  # end
+  it "can mark a task as complete" do
+    project.add_task("collect 20 hats", 2)
+    first_task = project.tasks.first
+    first_task_id = project.tasks.first.id
+    project.mark_as_complete(first_task_id)
+    expect(first_task.complete).to eq(true)
+
+    # ensure it works with another task added to tasy array
+    project.add_task("watch a funny video", 3)
+    last_task = project.tasks.last
+    last_task_id = project.tasks.last.id
+    project.mark_as_complete(last_task_id)
+    expect(last_task.complete).to eq(true)
+
+  end
 end
