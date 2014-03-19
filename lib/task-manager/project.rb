@@ -39,8 +39,6 @@ class TM::Project
     incomplete_tasks.sort! {|x,y| x.priority <=> y.priority}
 
     incomplete_tasks
-
-
   end
 
 end
