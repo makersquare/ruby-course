@@ -20,6 +20,12 @@ class TM::Project
 	end
 
 	def completed_tasks
-		completed = @tasks.select {|x| x.status == "complete" }
+		completed = @tasks.select {|task| task.status == "complete" }
+		completed.sort { |x, y| x.creation_date <=> y.creation_date}
+	end
+
+	def incomplete_tasks
+		incomplete = @tasks.select {|task| task.status == "incomplete" }
+		incomplete.sort {|x, y| x.priority <=> y.priority }
 	end
 end

@@ -4,6 +4,8 @@ describe 'Project' do
 	before do
 		@project = TM::Project.new("website")
 		@project.add_task("cool task")
+		@project.add_task("cooler task")
+		@project.add_task("coolest task")
 	end
 
 	it "exists" do
@@ -32,6 +34,7 @@ describe 'Project' do
 
 	it "can can mark tasks as complete, specified by id" do
 		expect(@project.tasks[0]).to receive(:task_id).and_return(1)
+		expect(@project.tasks[1]).to receive(:task_id).and_return(2)
 		expect(@project.complete_task(1)).to eq("complete")
 	end
 
@@ -40,6 +43,8 @@ describe 'Project' do
 	end
 
 	# it "returns completed tasks ordered by creation date" do
-	# 	expect(@project.)
+	# 	expect(@projects.completed_tasks).should_be_sorted_by
 	# end
+
+
 end
