@@ -6,15 +6,18 @@ describe 'Project' do
   end
 
   it "can create a new project with a name" do
-    project = TM::Project.new("Name")
-    expect(project.name).to eq("Name")
+    pl = TM::ProjectList.new
+    pl.addproject("Name")
+    expect(pl.projects[0].name).to eq("Name")
+    expect(pl.projects[0].id).to eq(0)
   end
 
   it "is assigned a unique id" do
-    project = TM::Project.new("Name")
-    expect(project.id).to eq(2)
-    project = TM::Project.new("Name")
-    expect(project.id).to eq(3)
+    expect(TM::Project).to receive(:gen_id).and_return(0)
+    pl = TM::ProjectList.new
+    pl.addproject("Name")
+    expect(pl.projects[0].name).to eq("Name")
+    expect(pl.projects[0].id).to eq(0)
   end
 
   it "can mark a project complete, specified by id" do

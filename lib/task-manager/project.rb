@@ -1,14 +1,18 @@
 
 class TM::Project
-  attr_reader :name, :id, :tasks
+  attr_reader :name, :id, :tasks, :projectlist
 
   @@projectcount = 0
 
   def initialize(name)
     @name = name
+    @id = TM::Project.gen_id
     @@projectcount += 1
-    @id = @@projectcount
     @tasks = {}
+  end
+
+  def self.gen_id
+    @@projectcount
   end
 
   def addtask(project_id, description, priority)
