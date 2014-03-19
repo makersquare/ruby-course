@@ -10,7 +10,7 @@ describe 'Task' do
     expect(TM::Task).to be_a(Class)
   end
 
-  xit "initializes with project ID, description, and priority" do
+  it "initializes with project ID, description, and priority" do
     expect(@my_task.projID).to eq(4)
     expect(@my_task.description).to eq("Tasks today")
     expect(@my_task.priority).to eq(1)

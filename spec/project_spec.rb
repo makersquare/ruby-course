@@ -75,8 +75,5 @@ describe 'Project' do
     expect(result[3][1].priority).to eq(5)
   end
 
-  xit "can return formatted lists of complete or incomplete tasks" do
-
-  end
 
 end
