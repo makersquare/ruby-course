@@ -1,6 +1,6 @@
 
 class TM::Project
-  attr_reader :name, :id, :tasks, :projectlist
+  attr_reader :name, :id, :tasks, :projectlist, :employees_on_project
 
   @@projectcount = 0
 
@@ -9,6 +9,7 @@ class TM::Project
     @id = TM::Project.gen_id
     @@projectcount += 1
     @tasks = {}
+    @employees_on_project = []
   end
 
   def self.gen_id
@@ -35,5 +36,13 @@ class TM::Project
     incompletedarray = []
     incompletedhash.each { |project_id, task| incompletedarray.push(task) }
     incompletedarray.sort_by! { |task| [task.priority, task.timecreated] }
+  end
+
+  def addemployee(employee)
+    @employees_on_project.push(employee)
+  end
+
+  def assigntask(task,employee)
+    employee.taketask(task) if @employees_on_project.include?(employee)
   end
 end

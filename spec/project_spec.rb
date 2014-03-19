@@ -8,8 +8,8 @@ describe 'Project' do
   it "can create a new project with a name" do
     pl = TM::ProjectList.new
     pl.addproject("Name")
-    expect(pl.projects[0].name).to eq("Name")
-    expect(pl.projects[0].id).to eq(0)
+    expect(pl.projects[1].name).to eq("Name")
+    expect(pl.projects[1].id).to eq(1)
   end
 
   it "is assigned a unique id" do
