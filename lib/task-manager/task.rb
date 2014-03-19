@@ -3,7 +3,7 @@ class TM::Task
   attr_reader :proj_id, :description, :priority
   attr_reader :id
   attr_accessor :completed
-  # attr_reader :time_created
+  attr_reader :time_created
 
   @@counter = 0
 
@@ -21,7 +21,7 @@ class TM::Task
     # task defaults as incomplete
     @completed = false
 
-    # @time_created = Time.now
+    @time_created = Time.now
   end
 
 end
