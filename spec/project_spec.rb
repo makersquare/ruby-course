@@ -39,14 +39,14 @@ describe 'Project' do
     first_task = project.tasks.first
     first_task_id = project.tasks.first.id
     project.mark_as_complete(first_task_id)
-    expect(first_task.complete).to eq(true)
+    expect(first_task.completed).to eq(true)
 
     # ensure it works with another task added to tasy array
     project.add_task("watch a funny video", 3)
     last_task = project.tasks.last
     last_task_id = project.tasks.last.id
     project.mark_as_complete(last_task_id)
-    expect(last_task.complete).to eq(true)
+    expect(last_task.completed).to eq(true)
 
   end
 end

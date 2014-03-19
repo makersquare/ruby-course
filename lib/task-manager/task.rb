@@ -2,8 +2,8 @@
 class TM::Task
   attr_reader :proj_id, :description, :priority
   attr_reader :id
-  attr_accessor :complete
-  attr_reader :time_created
+  attr_accessor :completed
+  # attr_reader :time_created
 
   @@counter = 0
 
@@ -19,9 +19,9 @@ class TM::Task
     @id = TM::Task.gen_id
 
     # task defaults as incomplete
-    @complete = false
+    @completed = false
 
-    @time_created = Time.now
+    # @time_created = Time.now
   end
 
 end

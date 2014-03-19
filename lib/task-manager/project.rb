@@ -30,6 +30,6 @@ class TM::Project
   def mark_as_complete(task_id)
     task = @tasks.find { |task| task.id == task_id }
 
-    task.complete = true
+    task.completed = true
   end
 end

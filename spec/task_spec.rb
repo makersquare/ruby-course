@@ -26,21 +26,26 @@ describe 'Task' do
       expect(task.id).to eq(1)
     end
 
-    it 'gives the task a creation date' do
-
-      # stub time so that Time.now stays consistent throughout test
-      #
-      # arbitratily chose Time.parse('2 pm')
-      #
-      Time.stub(:now).and_return(Time.parse('2 pm'))
-      created_time_stub = Time.now
-
-      # expect the time_created method to give time task was created at
-      #
-      # the task .initialize will have @time_created = Time.now
-      #
-      expect(task.time_created).to eq(created_time_stub)
+    it 'defaults the task as being incompleted' do
+      # expect the @completed variable in initialize method to start as false
+      expect(task.completed).to eq(false)
     end
+
+    # it 'gives the task a creation date' do
+
+    #   # stub time so that Time.now stays consistent throughout test
+    #   #
+    #   # arbitratily chose Time.parse('2 pm')
+    #   #
+    #   Time.stub(:now).and_return(Time.parse('2 pm'))
+    #   created_time_stub = Time.now
+
+    #   # expect the time_created method to give time task was created at
+    #   #
+    #   # the task .initialize will have @time_created = Time.now
+    #   #
+    #   expect(task.time_created).to eq(created_time_stub)
+    # end
   end
 
 
