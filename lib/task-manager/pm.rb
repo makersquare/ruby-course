@@ -13,7 +13,6 @@ class TM::PM
   def main_menu
 
     exit = false
-
     while !exit do
       # Show the menu and get the input
       puts "\n\n\nWelcome to Badass Manager Pro.  Whatya want??\n\n"
@@ -116,7 +115,6 @@ class TM::PM
     puts "\n"
     puts "Press Enter to Continue"
     gets
-
   end
 
   def mark(task_id)

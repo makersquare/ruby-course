@@ -4,7 +4,7 @@ class TM::Project
   @@current_id = 1
   @@all_projects = {}
 
-
+  # for testing
   def self.current_id=(current_id)
     @@current_id = current_id
   end
