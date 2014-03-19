@@ -32,4 +32,12 @@ class TM::Project
 
     task.completed = true
   end
+
+  def list_completed_tasks
+    completed_tasks = @tasks.select { |task| task.completed == true }
+
+    tasks_sorted_by_most_recent = completed_tasks.sort do | x, y |
+      y.time_created <=> x.time_created
+    end
+  end
 end
