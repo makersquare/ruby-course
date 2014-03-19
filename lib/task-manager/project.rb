@@ -1,5 +1,6 @@
 class TM::Project
-attr_accessor :name, :id, :tasks
+attr_reader :name, :id
+attr_accessor :tasks
 @@id_counter = 1
 def initialize(name)
   @name = name

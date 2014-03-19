@@ -1,7 +1,8 @@
 
 require 'time'
 class TM::Task
-  attr_accessor :project_id, :description, :priority_number, :id, :status, :id_counter, :creation_date
+  attr_accessor :status
+  attr_reader :project_id, :description, :priority_number, :id, :id_counter, :creation_date
   @@id_counter = 1
   def initialize(project_id, description, priority_number)
     @project_id = project_id

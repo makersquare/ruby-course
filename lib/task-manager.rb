@@ -7,6 +7,7 @@ end
 require_relative 'task-manager/task.rb'
 require_relative 'task-manager/project.rb'
 require_relative 'task-manager/tracker.rb'
+require_relative 'task-manager/employee.rb'
 
 class TM::ProjectManager
   def self.start
