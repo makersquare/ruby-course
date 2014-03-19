@@ -58,10 +58,9 @@ describe 'Project' do
       @new_project.add_task(task3)
       @new_project.complete(task.id)
       @new_project.complete(task2.id)
-
-      @new_project.retrieve_completed_tasks
-      result = @new_project.completed_tasks
-      expect(result).to eq [task, task2]
+      # binding.pry
+      result = @new_project.retrieve_completed_tasks
+      expect(result).to eq [task2, task]
     end
   end
 

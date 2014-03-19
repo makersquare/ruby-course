@@ -8,16 +8,16 @@ class TM::Task
   end
 
 
-  attr_reader :description, :id
-  attr_accessor :priority, :project_id, :complete, :date_created
+  attr_reader :description, :id, :date_created
+  attr_accessor :priority, :project_id, :complete
 
-  def initialize(description, priority=nil, project_id=nil, complete=false)
+  def initialize(description, date_created=Time.now, priority=nil, project_id=nil, complete=false)
     @project_id = project_id
     @description = description
     @priority = priority
     @complete = complete
     @id = TM::Task.generate_id
-    @date_created = Time.now
+    @date_created = date_created
   end
 
 
