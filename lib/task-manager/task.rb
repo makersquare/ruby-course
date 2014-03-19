@@ -8,6 +8,6 @@ class TM::Task
 		@priority = priority
 		@task_id = self.object_id
 		@status = "incomplete"
-		@creation_date = Date.today
+		@creation_date = Time.now
 	end
 end
