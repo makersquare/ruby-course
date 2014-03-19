@@ -20,18 +20,36 @@ describe 'Project' do
 
   end
 
-  it "returns a list of all completed projects, by date" do
+  it "returns a list of all completed tasks, by date" do
   	current_time = Time.now
   	Time.stub(:now).and_return(current_time)
   	project = TM::Project.new('project')
   	task = TM::Task.new('red',2,project.id)
   	task.complete_task
 
-  	project.complete_task_list(task)
-  	expect(project.completed_tasks_list).to eq([task])
+  	TM::Project.complete_task_list(task)
+  	expect(TM::Project.completed_tasks_list).to eq([task])
 
 
   end
 
+  it "returns a list of all incomplete tasks" do
+  	current_time = Time.now
+  	Time.stub(:now).and_return(current_time)
+  	project = TM::Project.new('project')
+  	task = TM::Task.new('red',2,project.id)
+
+  	TM::Project.incomplete_task_list(task)
+  	expect(TM::Project.incompleted_tasks_list).to eq([task])
+
+  	time = Time.parse('3pm')
+  	Time.stub(:now).and_return(time)
+  	project2 = TM::Project.new('project2')
+  	task2 = TM::Task.new('red',2,project.id)
+
+  	TM::Project.incomplete_task_list(task2)
+  	expect(TM::Project.incompleted_tasks_list).to eq([task,task2])
+
+   end
 end
 
