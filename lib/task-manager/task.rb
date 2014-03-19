@@ -1,6 +1,7 @@
 
 class TM::Task
-attr_reader :project_id, :description, :priority_number, :status, :id
+attr_reader :description, :priority_number, :id
+attr_accessor :status, :project_id
 
   @@task_counter = 0
 

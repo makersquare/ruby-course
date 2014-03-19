@@ -27,4 +27,39 @@ describe 'Project' do
     expect(@new_project.tasks.last).to eq(test_task)
   end
 
+  it "can change task status to completed" do
+    test_task = TM::Task.new(1, "new task", 1)
+    @new_project.add_task(test_task)
+    task = @new_project.task_completed(test_task.id)
+    expect(task.status).to eq("completed")
+  end
+
+  it "can retrieve a list of all completed tasks" do
+    task1 = TM::Task.new(1, "new task 1", 1, "completed")
+    task2 = TM::Task.new(2, "new task 1", 2, "completed")
+    task3 = TM::Task.new(3, "new task 2", 3)
+    @new_project.add_task(task1)
+    @new_project.add_task(task2)
+    @new_project.add_task(task3)
+    expect(@new_project.retrieve_completed).to eq([task1, task2])
+  end
+
+  it "can sort tasks by creation date" do
+    task1 = TM::Task.new(1, "new task 1", 1, "completed")
+    task2 = TM::Task.new(2, "new task 1", 2, "completed")
+    task3 = TM::Task.new(3, "new task 2", 3, "completed")
+    @new_project.add_task(task3)
+    @new_project.add_task(task2)
+    @new_project.add_task(task1)
+    expect(@new_project.retrieve_completed).to eq([task1, task2, task3])
+  end
+
+  # it "can sort by creation date" do
+  #   task1 = TM::Task.new(1, "task 1", 1)
+  #   task2 = TM::Task.new(2, "task 2", 2)
+  #   task3 = TM::Task.new(3, "task 3", 3)
+  #   @new_project.tasks.sort_by { |task| }
+
+  # end
+
 end

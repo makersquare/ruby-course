@@ -9,11 +9,23 @@ attr_accessor :tasks
     @name = name
     @@project_counter += 1
     @id = @@project_counter
-    @tasks = Array.new
+    @tasks = []
   end
 
-  def add_task(task_name)
-    @tasks << task_name
+  def add_task(task)
+    task.project_id = @id
+    @tasks.push(task)
+  end
+
+  def task_completed(task_id)
+    target = @tasks.find{ |task| task.id == task_id}
+    target.status = "completed"
+    target
+  end
+
+  def retrieve_completed
+    array = @tasks.select {|task| task.status == "completed"}
+    array.sort_by!{|task| task.id}
   end
 
 end

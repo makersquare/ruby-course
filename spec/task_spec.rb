@@ -37,10 +37,5 @@ describe 'Task' do
     expect(result.status).to eq("incomplete")
   end
 
-  # it "has a status_complete method that changes status" do
-  #   result = TM::Task.new(1, "Complete me!", 1, "incomplete")
-  #   result.task_completed(result.id)
-  #   expect(result.status).to eq("complete")
-  # end
 
 end
