@@ -30,7 +30,7 @@ class TM::Project
     selected[0].status = 'complete'
   end
 
-  def sort_by_date
+  def completed_tasks
     completed = @tasks.select {|x| x.status == 'complete'}
     completed.sort {|x ,y| x <=> y }
   end
