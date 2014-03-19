@@ -17,7 +17,7 @@ describe 'Project' do
 	end
 
 	it "initializes with a unique ID" do
-		expect(@project.project_id).to eq(@project.object_id)
+		expect(@project.project_id).to eq(TM::Project.project_id)
 	end
 
 	it "creates a task with a project id" do

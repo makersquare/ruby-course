@@ -8,4 +8,14 @@ class TM::ProjectList
 	def create_project(name)
 		@project_list << TM::Project.new(name)
 	end
+
+	def get_project(project_id)
+		match = @project_list.select { |project| project.project_id == project_id}
+		return match[0]
+	end
+
+	def remaining_tasks(project_id)
+		match = @project_list.select { |project| project.project_id == project_id}
+		return match[0].tasks
+	end
 end
