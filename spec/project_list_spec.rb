@@ -3,6 +3,7 @@ require 'spec_helper'
 describe 'Project List' do
   before do
     @pl = TM::ProjectList.new
+    @new_project = @pl.create_project('nato')
   end
 
   it "exists" do
@@ -10,10 +11,16 @@ describe 'Project List' do
   end
 
   it 'can create a project' do
-    new_project = @pl.create_project('nato')
 
-    expect(new_project).to eq(@pl.project_list)
+    expect(@new_project).to eq(@pl.project_list)
 
   end
+
+  it 'can get a project' do
+    expect(@pl.get_project(1)).to eq(@new_project[0])
+
+  end
+
+
 
 end

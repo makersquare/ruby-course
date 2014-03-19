@@ -11,7 +11,7 @@ class TM::ProjectList
 
   def get_project(project_id)
     match = @project_list.select {|x| x.project_id = project_id}
-    return match[0]
+    match[0]
   end
 
   def get_remaining_tasks(project_id)
