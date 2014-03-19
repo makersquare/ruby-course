@@ -1,4 +1,3 @@
-
 class TM::Project
   attr_reader :name, :id, :tasks
 
