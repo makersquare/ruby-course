@@ -41,7 +41,7 @@ class TM::Project
          incomplete_tasks << task if !task.complete
       end
 
-      incomplete_tasks.sort_by { |task| task.creation_date }
+      incomplete_tasks.sort_by { |task| task.priority_num }
   end
 
 end

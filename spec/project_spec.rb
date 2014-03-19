@@ -33,14 +33,16 @@ describe 'Project' do
 
   it " can list complete_tasks" do
     fitness_project = TM::Project.new("Fitness")
+    Time.stub(:now).and_return(Time.parse("2pm"))
     eating_better = TM::Task.new(1, "diet", 3, 2)
+    Time.stub(:now).and_return(Time.parse("3pm"))
     sleep_8hours = TM::Task.new(1, "sleep", 2, 3)
 
     fitness_project.add_task(sleep_8hours) #adding in task sleep to array
     fitness_project.add_task(eating_better) #adding in task eat to array
     fitness_project.mark_task_complete(2) # taskid 2(eat) to complete=true
-
-    expect(fitness_project.retrieve_complete_tasks).to eq ([eating_better])
+    fitness_project.mark_task_complete(3)
+    expect(fitness_project.retrieve_complete_tasks).to eq ([eating_better,sleep_8hours])
   end
 
   it "can list incomplete tasks"  do
@@ -56,13 +58,15 @@ describe 'Project' do
 
 
 
+
+
+
 end
 
 
-# A new project can be created with a name
-# This must automatically generate and assign the new project a unique id (you can use a class variable for this)
-# A new task can be created with a project id, description, and priority number
-# A task can be marked as complete, specified by id
+
+
+
 # A project can retrieve a list of all complete tasks, sorted by creation date
 # A project can retrieve a list of all incomplete tasks, sorted by priority
 # If two tasks have the same priority number, the older task gets priority
