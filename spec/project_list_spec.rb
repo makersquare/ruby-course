@@ -9,14 +9,15 @@ describe "ProjectList" do
   end
 
   it "can create a new project with add_project" do
-    result = @pl.create_project("New Project 1")
+    result = @pl.add_project("New Project 1")
     expect(result.first.class).to eq(TM::Project)
   end
 
-  # it "can list projects" do
-  #   @pl.create_project("New Project 2")
-  #   expect(@projects.last).to eq(newproject)
-  # end
-
+  it "can add a new task to a project" do
+    @pl.add_project("New Project 2")
+    @pl.add_task(2, "Chemistry HW", 3)
+    result = @pl.projects.last.tasks.last.description
+    expect(result).to eq("Chemistry HW")
+  end
 
 end

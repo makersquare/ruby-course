@@ -1,12 +1,60 @@
 require_relative 'task-manager.rb'
 require 'io/console'
 
-help = "Welcome to Project Manager Pro. What would you like to do? Please enter a valid command\nAvailable Commands:\n   help - Show these commands again\n   list - List all projects\n   create NAME - Create a new project with name=NAME\n   history PID = show completed tasks for a project with id=PID\n   add PID PRIORITY DESC - Add a new task to project with id=PID\n   mark TID - Mark task with id=TID as complete"
+@client_list = TM::ProjectList.new
+
+welcome = "Welcome to Project Manager Pro."
+help = "Please enter a valid command\nAvailable Commands:\n   help - Show these commands again\n   list - List all projects\n   create NAME - Create a new project with name=NAME\n   add PID PRIORITY DESC - Add a new task to project with id=PID\n   history PID - show completed tasks for a project with id=PID\n   mark TID - Mark task with id=TID as complete"
+
+puts welcome
+puts "Press enter to view valid commands"
+doNothing = gets.chomp
 puts help
 answer = gets.chomp
 
-if answer == "help"
-  puts help
-  answer = gets.chomp
+while answer != "quit" do
+  if answer == "help"
+    puts help
+    answer = gets.chomp
+  end
+
+  if answer == "list"
+    puts "\nPROJECTS:"
+    @client_list.projects.each do |project|
+      puts "Project Name: #{project.name}, Project ID: #{project.id}"
+    end
+
+    puts "\nWhat would you like to do next?"
+    answer = gets.chomp
+  end
+
+  if answer.split.first == "create"
+    newarray = answer.split[1..-1]
+    this_is_it = newarray.join(' ')
+    @client_list.add_project(this_is_it)
+    puts "#{@client_list.projects.last.name} was successfully created"
+    puts "\nWhat would you like to do next?"
+    answer = gets.chomp
+  end
+
+  # # if answer.split.first == "show"
+  # # end
+
+
+
+  # end
+
 end
 
+# if answer == "help"
+#   puts help
+#   answer = gets.chomp
+# end
+
+# when answer == "list"
+#   then
+# when answer == "show PID"
+#   then
+# when answer == "history PID"
+#   then
+# when
