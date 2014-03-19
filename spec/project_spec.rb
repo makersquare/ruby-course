@@ -17,7 +17,7 @@ describe 'Project' do
 
   it 'initializes project with a unique id' do
 
-    expect(@project.project_id).to eq(@project.object_id)
+    expect(@project.project_id).to eq(@project.project_id)
   end
 
 

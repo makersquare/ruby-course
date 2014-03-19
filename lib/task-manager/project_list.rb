@@ -7,10 +7,10 @@ class TM::ProjectList
 
   def create_project(name)
     @project_list << TM::Project.new(name)
+  end
 
-
+  def get_project
   end
 
 end
 
-TM::ProjectList.new("project")
