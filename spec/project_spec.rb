@@ -31,6 +31,30 @@ describe 'Project' do
     expect(eating_better.complete).to eq true #expect task with id2 to have complete = true
   end
 
+  it " can list complete_tasks" do
+    fitness_project = TM::Project.new("Fitness")
+    eating_better = TM::Task.new(1, "diet", 3, 2)
+    sleep_8hours = TM::Task.new(1, "sleep", 2, 3)
+
+    fitness_project.add_task(sleep_8hours) #adding in task sleep to array
+    fitness_project.add_task(eating_better) #adding in task eat to array
+    fitness_project.mark_task_complete(2) # taskid 2(eat) to complete=true
+
+    expect(fitness_project.retrieve_complete_tasks).to eq ([eating_better])
+  end
+
+  it "can list incomplete tasks"  do
+    fitness_project = TM::Project.new("Fitness")
+    eating_better = TM::Task.new(1, "diet", 3, 2)
+    sleep_8hours = TM::Task.new(1, "sleep", 2, 3)
+
+    fitness_project.add_task(eating_better)
+    fitness_project.add_task(sleep_8hours)
+    fitness_project.mark_task_complete(2) # completes eating better so, sleep stil incomplete
+    expect(fitness_project.retrieve_incomplete_tasks).to eq ([sleep_8hours])
+  end
+
+
 
 end
 
