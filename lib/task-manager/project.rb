@@ -9,6 +9,7 @@ class TM::Project
     @name = name
     @project_id = self.object_id
     @tasks = Array.new(0)
+    @projects
   end
 
   def add_task(description, priority=3)
