@@ -16,6 +16,11 @@ class TM::ProjectList
 
 	def remaining_tasks(project_id)
 		match = @project_list.select { |project| project.project_id == project_id}
-		return match[0].tasks
+		return match[0].incomplete_tasks
+	end
+
+	def completed_tasks(project_id)
+		match = @project_list.select { |project| project.project_id == project_id}
+		return match[0].completed_tasks
 	end
 end
