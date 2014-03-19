@@ -3,6 +3,7 @@ require 'spec_helper'
 describe 'Project' do
   before do
     @project = TM::Project.new("New Project")
+    @project.add_task('ballout')
   end
 
 
@@ -27,7 +28,13 @@ describe 'Project' do
       expect(@p.tasks[0].project_id).to eq(@p.project_id)
   end
 
-  it 'marks the task completed when done'
+  it 'marks the task completed when done' do
+
+    expect(@project.tasks[0]).to receive(:task_id).and_return(1)
+
+    expect(@project.complete_task(1)).to eq('complete')
+
+  end
 
 end
 
