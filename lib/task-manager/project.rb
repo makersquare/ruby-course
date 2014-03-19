@@ -28,5 +28,9 @@ attr_accessor :tasks
     array.sort_by!{|task| task.id}
   end
 
-end
+  def retrieve_incomplete
+    array = @tasks.select {|task| task.status == "incomplete"}
+    array.sort_by! {|task| [task.priority_number, task.id]}
+  end
 
+end

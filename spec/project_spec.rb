@@ -18,7 +18,7 @@ describe 'Project' do
 
   it "initializes with an id" do
     result = @new_project.id
-    expect(result).to eq(3)
+    expect(result.class).to eq(Fixnum)
   end
 
   it "can add tasks to a project" do
@@ -44,7 +44,7 @@ describe 'Project' do
     expect(@new_project.retrieve_completed).to eq([task1, task2])
   end
 
-  it "can sort tasks by creation date" do
+  it "can sort completed tasks by creation date" do
     task1 = TM::Task.new(1, "new task 1", 1, "completed")
     task2 = TM::Task.new(2, "new task 1", 2, "completed")
     task3 = TM::Task.new(3, "new task 2", 3, "completed")
@@ -54,12 +54,26 @@ describe 'Project' do
     expect(@new_project.retrieve_completed).to eq([task1, task2, task3])
   end
 
-  # it "can sort by creation date" do
-  #   task1 = TM::Task.new(1, "task 1", 1)
-  #   task2 = TM::Task.new(2, "task 2", 2)
-  #   task3 = TM::Task.new(3, "task 3", 3)
-  #   @new_project.tasks.sort_by { |task| }
+  it "can sort incomplete tasks by priority" do
+    task1 = TM::Task.new(1, "new task 1", 1)
+    task2 = TM::Task.new(2, "new task 1", 2)
+    task3 = TM::Task.new(3, "new task 2", 3)
+    @new_project.add_task(task1)
+    @new_project.add_task(task2)
+    @new_project.add_task(task3)
+    expect(@new_project.retrieve_incomplete).to eq([task1, task2, task3])
+  end
 
-  # end
+  it "can sort incomplete tasks by creation date if priority is same" do
+    task1 = TM::Task.new(1, "new task 1", 1)
+    task2 = TM::Task.new(2, "new task 2", 2)
+    task3 = TM::Task.new(3, "new task 3", 2)
+    task4 = TM::Task.new(3, "new task 4", 1)
+    @new_project.add_task(task1)
+    @new_project.add_task(task2)
+    @new_project.add_task(task3)
+    @new_project.add_task(task4)
+    expect(@new_project.retrieve_incomplete).to eq([task1, task4, task2, task3])
+  end
 
 end
