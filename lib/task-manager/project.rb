@@ -25,9 +25,7 @@ class TM::Project
   end
 
   def completedlist
-    completedhash = @tasks.select { |project_id, task| task.complete }
-    completedarray = []
-    completedhash.each { |project_id, task| completedarray.push(task) }
+    completedarray = @tasks.select { |project_id, task| task.complete }.values
     completedarray.sort_by! { |task| task.timecreated }
   end
 
