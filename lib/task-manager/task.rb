@@ -1,7 +1,7 @@
 
 class TM::Task
 	attr_accessor :description, :priority, :status
-	attr_reader :project_id, :id
+	attr_reader :project_id, :id, :created_at
 
 	@@id_counter = 0
 
@@ -11,11 +11,6 @@ class TM::Task
 		@priority = priority
 		@id = @@id_counter += 1
 		@status = 'incomplete'
-	end
-
-	def mark_complete
-		if @status == 'incomplete'
-			@status = 'complete'
-		end
+		@created_at = Time.now
 	end
 end
