@@ -18,4 +18,8 @@ class TM::Project
 		selected = @tasks.select { |x| x.task_id == task_id}
 		selected[0].status = "complete"
 	end
+
+	def completed_tasks
+		completed = @tasks.select {|x| x.status == "complete" }
+	end
 end

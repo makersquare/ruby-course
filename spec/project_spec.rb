@@ -31,9 +31,15 @@ describe 'Project' do
 	end
 
 	it "can can mark tasks as complete, specified by id" do
-		# expect(@project.tasks.find {|x| x.object_id == 1}).to eq(true)
 		expect(@project.tasks[0]).to receive(:task_id).and_return(1)
-		# binding.pry
 		expect(@project.complete_task(1)).to eq("complete")
 	end
+
+	it "can retrieve a list of all complete tasks" do
+		expect(@project.completed_tasks).to be_an(Array)
+	end
+
+	# it "returns completed tasks ordered by creation date" do
+	# 	expect(@project.)
+	# end
 end
