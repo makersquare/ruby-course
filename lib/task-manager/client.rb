@@ -1,4 +1,4 @@
-class TM::PM
+class TM::Client
 
   @@cuss_words_lines = [  "Keep it classy, fucker.",
                           "A little angry aren't we?",
@@ -11,6 +11,7 @@ class TM::PM
                           "Hey, watch your mouth."]
 
   def main_menu
+
 
     exit = false
     while !exit do
@@ -223,5 +224,5 @@ class TM::PM
 end
 
 
-manager = TM::PM.new
-manager.main_menu
+#manager = TM::Client.new
+#manager.main_menu
