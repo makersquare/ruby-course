@@ -2,16 +2,16 @@ class TM::Project
   attr_reader :name, :id, :tasks
 
   @@current_id = 1
-  @@all_projects = {}
+ # @@all_projects = {}              # switched to database
 
   # for testing
   def self.current_id=(current_id)
     @@current_id = current_id
   end
 
-  def self.all_projects
-    @@all_projects
-  end
+  # def self.all_projects           # switched to database
+  #   @@all_projects
+  # end
 
 
   def initialize(name)
@@ -19,7 +19,8 @@ class TM::Project
     @id = @@current_id
     @@current_id = @@current_id + 1
     @tasks = {}
-    @@all_projects[@id] = self
+    # @@all_projects[@id] = self   # switched to database
+    TM::DB.instance.all_projects[@id] = self
   end
 
 

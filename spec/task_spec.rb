@@ -18,11 +18,11 @@ describe 'Task' do
 
 
   it "keeps a master hash of all tasks created" do
-    old_length = TM::Task.all_tasks.size
+    old_length = TM::DB.instance.all_tasks.size
     load_gun = TM::Task.new(2, "Load the gun", 5)
-    expect(TM::Task.all_tasks.size).to eq(old_length + 1)
-    expect(TM::Task.all_tasks.has_key?(load_gun.task_id)).to eq(true)
-    expect(TM::Task.all_tasks.has_value?(load_gun)).to eq(true)
+    expect(TM::DB.instance.all_tasks.size).to eq(old_length + 1)
+    expect(TM::DB.instance.all_tasks.has_key?(load_gun.task_id)).to eq(true)
+    expect(TM::DB.instance.all_tasks.has_value?(load_gun)).to eq(true)
   end
 
   it "can be marked as complete" do

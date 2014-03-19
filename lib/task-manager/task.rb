@@ -19,7 +19,8 @@ class TM::Task
     @priority = priority
     @task_id = @@current_id
     @@current_id = @@current_id + 1
-    @@all_tasks[@task_id] = self
+    # @@all_tasks[@task_id] = self            # switching to database
+    TM::DB.instance.all_tasks[@task_id] = self
     @finished = false
     @creation_date = Time.now
   end
