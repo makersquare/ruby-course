@@ -28,13 +28,26 @@ describe 'Project' do
       expect(@p.tasks[0].project_id).to eq(@p.project_id)
   end
 
-  it 'marks the task completed when done' do
+  it 'marks the task completed when done by id' do
 
     expect(@project.tasks[0]).to receive(:task_id).and_return(1)
 
     expect(@project.complete_task(1)).to eq('complete')
 
   end
+
+  xit 'retrieve list of all completed tasks by creation date' do
+    @p = TM::Project.new("P")
+    @p.add_task('cool task')
+    @p.add_task('task2')
+    @p.add_task('task3')
+
+
+
+
+
+  end
+
 
 end
 

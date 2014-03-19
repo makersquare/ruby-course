@@ -4,6 +4,7 @@ class TM::Project
   attr_reader :name
 
 
+
   def initialize(name)
     @name = name
     @project_id = self.object_id
@@ -23,8 +24,15 @@ class TM::Project
 
   def sort_by_date
     completed = @tasks.select {|x| x.status == 'complete'}
-    completed.sort {|x ,y| y <=> x }
+    completed.sort {|x ,y| x <=> y }
   end
+
+  def incomplete_tasks
+    incomplete = @tasks.select {|x| x.status == 'incomplete'}
+    incomplete.sort {|x, y| x<=> y}
+  end
+
+
 
 end
 
