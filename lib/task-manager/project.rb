@@ -11,9 +11,17 @@ attr_accessor :tasklist, :projectid
   end
 
 
-  def add(task)
-    @tasklist << task
+  def add_task_to_project(theTaskToAdd)
+    @tasklist << theTaskToAdd
+    theTaskToAdd
 
   end
 
+
+
 end
+
+
+# array = [task1, task2, task3]
+
+# array.sort_by {|x| -x.priority}

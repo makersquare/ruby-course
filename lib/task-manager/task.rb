@@ -1,7 +1,7 @@
 
 class TM::Task
-  attr_reader :description, :priority, :taskid
-  attr_accessor :status, :tasklist
+  attr_reader :description, :priority, :taskid, :creationtime
+  attr_accessor :status, :tasklist, :projectid
 
   def initialize(projectid = TM::Project.id, description, priority,taskid)
     @projectid = projectid
@@ -9,14 +9,22 @@ class TM::Task
     @priority = priority
     @status = "incomplete"
     @taskid = taskid
+    @creationtime = Time.now
+  end
+
+
+  def done(tasklist, task_completed)
+
+    tasklist.each do |task|
+      if task == task_completed
+        return task.status = "completed"
+      end
+    end
 
   end
 
 
 
-  def self.tasklist
-    @@tasklist
-  end
 
 
 
