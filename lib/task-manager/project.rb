@@ -31,6 +31,7 @@ class TM::Project
     task = @tasks.find { |task| task.id == task_id }
 
     task.completed = true
+    task.time_completed = Time.now
   end
 
   def list_completed_tasks

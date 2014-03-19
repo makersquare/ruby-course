@@ -4,7 +4,7 @@ class TM::Task
   attr_reader :id
   attr_accessor :completed
   attr_reader :time_created
-  attr_reader :time_completed
+  attr_accessor :time_completed
 
   @@counter = 0
 

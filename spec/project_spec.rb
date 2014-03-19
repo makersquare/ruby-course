@@ -34,19 +34,30 @@ describe 'Project' do
     expect(task.description).to eq("collect 20 hats")
   end
 
-  it "can mark a task as complete" do
-    project.add_task("collect 20 hats", 2)
-    first_task = project.tasks.first
-    first_task_id = project.tasks.first.id
-    project.mark_as_complete(first_task_id)
-    expect(first_task.completed).to eq(true)
+  describe 'can mark a task as completed' do
+    it "by changing a task's completed attribute to true" do
+      project.add_task("collect 20 hats", 2)
+      first_task = project.tasks.first
+      first_task_id = project.tasks.first.id
+      project.mark_as_complete(first_task_id)
+      expect(first_task.completed).to eq(true)
 
-    # ensure it works with another task added to tasy array
-    project.add_task("watch a funny video", 3)
-    last_task = project.tasks.last
-    last_task_id = project.tasks.last.id
-    project.mark_as_complete(last_task_id)
-    expect(last_task.completed).to eq(true)
+      # ensure it works with another task added to tasy array
+      project.add_task("watch a funny video", 3)
+      last_task = project.tasks.last
+      last_task_id = project.tasks.last.id
+      project.mark_as_complete(last_task_id)
+      expect(last_task.completed).to eq(true)
+    end
+
+    it "by giving a task a completion date" do
+      Time.stub(:now).and_return(Time.parse('2 pm'))
+      time_completed_stub = Time.now
+      task = project.add_task("collect 20 hats", 2)
+      project.mark_as_complete(task.id)
+
+      expect(task.time_completed).to eq(time_completed_stub)
+    end
   end
 
   it "can retrieve a list of all completed tasks, sorted by creation date" do
