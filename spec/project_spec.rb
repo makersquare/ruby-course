@@ -63,4 +63,11 @@ describe 'Project' do
     expect(@kill_bob.ongoing_tasks).to eq([evade_police, buy_gun, load_gun])
   end
 
+  it "can retrieve a hash of all current projects and their ids" do
+    expect(TM::Project.all_projects.length).to eq(2)
+    expect(TM::Project.all_projects[1]).to eq(@kill_bob)
+    expect(TM::Project.all_projects[2]).to eq(@kill_sue)
+  end
+
+
 end

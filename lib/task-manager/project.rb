@@ -3,10 +3,15 @@ class TM::Project
   attr_reader :name, :id, :tasks
 
   @@current_id = 1
+  @@all_projects = {}
 
 
   def self.current_id=(current_id)
     @@current_id = current_id
+  end
+
+  def self.all_projects
+    @@all_projects
   end
 
 
@@ -15,6 +20,7 @@ class TM::Project
     @id = @@current_id
     @@current_id = @@current_id + 1
     @tasks = {}
+    @@all_projects[@id] = self
   end
 
 
@@ -44,5 +50,6 @@ class TM::Project
     ongoing_tasks.sort! { |a,b| (a.priority <=> b.priority) == 0 ? (a.creation_date <=> b.creation_date) : (b.priority <=> a.priority) }
     return ongoing_tasks
   end
+
 
 end

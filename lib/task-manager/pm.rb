@@ -44,10 +44,6 @@ class PM
         when "help"
           puts "\nOk listen up, then, I hate repeating myself....\n"
         when "add project"
-          self.add_project
-        when "add task"
-          self.add_task
-        when "add project"
           self.help
         when "list"
           self.list_projects
@@ -85,7 +81,9 @@ class PM
   end
 
   def list_projects
-    puts "stub of list_projects"
+    puts "\n\nOk, here's a list of your current projects:\n\n"
+
+      printf("%-10s %10s", )
   end
 
   def help
