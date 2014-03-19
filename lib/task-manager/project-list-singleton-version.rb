@@ -24,8 +24,8 @@ class TM::ProjectList
     proj
   end
 
-  def add_task_to_proj(PID, desc, priority)
-    proj = @projects.find { |project| project.id == proj_id }
+  def add_task_to_proj(pid, desc, priority)
+    proj = @projects.find { |project| project.id == pid }
 
     proj.add_task(desc, priority)
 
@@ -37,11 +37,11 @@ class TM::ProjectList
   #   @projects
   # end
 
-  # def show_proj_tasks_remaining(PID)
-  #   proj = @projects.find { |project| project.id == proj_id }
+  def show_proj_tasks_remaining(pid)
+    proj = @projects.find { |project| project.id == pid }
 
-  #   proj
-  # end
+    proj.list_incomplete_tasks
+  end
 
   private_class_method :new
 end

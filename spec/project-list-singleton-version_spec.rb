@@ -40,7 +40,12 @@ describe 'ProjectList' do
     expect(@pl.instance)
   end
 
-  xit "can show remaining tasks for a project given PID" do
+  it "can show remaining tasks for a project given PID" do
+    proj_1 = @pl.instance.create_project("The Best Project")
+    @pl.instance.add_task_to_proj(proj_1.id, "Eat Tacos", 3)
 
+    tasks_remaining = @pl.instance.show_proj_tasks_remaining(proj_1.id)
+
+    expect(tasks_remaining).to eq(proj_1.list_incomplete_tasks)
   end
 end
