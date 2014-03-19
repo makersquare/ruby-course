@@ -1,5 +1,15 @@
 class TM::PM
 
+  @@cuss_words_lines = [  "Keep it classy, fucker.",
+                          "A little angry aren't we?",
+                          "Come on, I'm sure there are ladies present.",
+                          "Real real clever, asshole.",
+                          "You kiss your imaginary girlfriend with that mouth?",
+                          "Yeah, yeah you're real intimidating. Now let's get on with it.",
+                          "I don't have to take this shit. I'm going back to my GUI.",
+                          "Why don't you take your clumsy fingers somewhere else?",
+                          "Hey, watch your mouth."]
+
   def main_menu
     exit = false
 
@@ -42,10 +52,10 @@ class TM::PM
         else
           if (  (choice_array.include?("shit"))  ||
                 (choice_array.include?("fuck"))  ||
-                (choice_array.include?("damn"))
+                (choice_array.include?("damn"))  ||
                 (choice_array.include?("fucking")) ||
                 (choice_array.include?("asshole"))  )
-            puts "Hey, watch your mouth."
+            puts self.smart_ass_remarker(@@cuss_words_lines)
             gets
           end
 
@@ -64,7 +74,7 @@ class TM::PM
           puts "\n\nok fine be that way.\n\n"
           exit = true
         when "shit", "fuck", "fuck", "asshole", "damn"
-          puts "Hey, watch your mouth."
+          puts self.smart_ass_remarker(@@cuss_words_lines)
           gets
         else
           puts "Try again, Fat Fingers.\n"
@@ -112,8 +122,12 @@ class TM::PM
 
     # abort add if they left it blank
     if description.empty?
-      puts "Oh... cold feet, huh? Ok try again when you're feeling less timid."
-      puts "You over your stage-fright enough to press Enter and Continue?"
+      puts smart_ass_remarker(["Oh... cold feet, huh? Ok try again when you're feeling less timid.",
+                            "Why don't you make up your mind and come back later.",
+                            "Need a little more time with the menu?",
+                            "Description too short. Please replace user.",
+                            "Cat got your tongue?"])
+      puts "Press Enter and Continue?"
       gets
       return
     end
@@ -167,6 +181,11 @@ class TM::PM
     @buy_milk.add_task(@get_in_car)
     @buy_milk.add_task(@drive_to_store)
 
+  end
+
+  def smart_ass_remarker(remarks)
+    random = rand(remarks.length)
+    return remarks[random]
   end
 
 end
