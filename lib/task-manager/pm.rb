@@ -52,8 +52,11 @@ class TM::ProjectManager
     if @projectlist.projects[@input.split.last.to_i].completedlist.count == 0
       puts "There are no completed tasks for this project."
     else
+      puts "Complete Tasks:"
+      puts ""
+      puts "Priority   ID  Description"
       @projectlist.projects[@input.split.last.to_i].completedlist.each do |task|
-        puts task.description
+        puts "       #{task.priority}    #{task.project_id}  #{task.description}"
       end
     end
     puts "What now?"
@@ -64,8 +67,11 @@ class TM::ProjectManager
     if @projectlist.projects[@input.split.last.to_i].incompletelist.count == 0
       puts "There are no incomplete tasks for this project."
     else
+      puts "Incomplete Tasks:"
+      puts ""
+      puts "Priority   ID  Description"
       @projectlist.projects[@input.split.last.to_i].incompletelist.each do |task|
-        puts task.description
+        puts "       #{task.priority}    #{task.project_id}  #{task.description}"
       end
     end
     puts "What now?"
@@ -85,6 +91,9 @@ class TM::ProjectManager
   end
 
   def mark
+    control = @input.split
+    @projectlist.projects[control[1].to_i].markcomplete(control[2].to_i)
+    puts "Marked Task #{control[2]} from Project #{control[1]} complete."
     puts "What now?"
     @input = gets.chomp
   end
