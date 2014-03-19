@@ -89,7 +89,11 @@ class TM::PM
   end
 
   def add_project
-    puts "stub of add_project"
+    puts "And what are we going to call this new project? "
+    name = gets.chomp!
+    TM::Project.new(name)
+    print "Project Created... Press Enter to Continue"
+    gets
   end
 
 
