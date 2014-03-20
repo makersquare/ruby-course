@@ -2,11 +2,6 @@ require 'time'
 
 class TM::Task
   @@counter = 0
-  def self.generate_id
-    @@counter+=1
-    @@counter
-  end
-
 
   attr_reader :description, :id, :date_created
   attr_accessor :priority, :project_id, :complete
@@ -16,7 +11,8 @@ class TM::Task
     @description = description
     @priority = priority
     @complete = complete
-    @id = TM::Task.generate_id
+    @@counter += 1
+    @id = @@counter
     @date_created = Time.now
   end
 

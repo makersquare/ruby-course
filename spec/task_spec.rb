@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Task' do
   before do
-    expect(TM::Task).to receive(:generate_id).at_least(:once).and_return(1)
+    TM::Task.class_variable_set :@@counter, 0
     @task = TM::Task.new("description")
   end
 

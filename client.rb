@@ -3,7 +3,7 @@ require 'colorize'
 
 class PManager
   def self.start
-    puts "Welcome to Project Manager Pro®. What can I do for you today?"
+    puts "Welcome to Project Manager Pro®. What can I do for you today?".colorize(:color => :white, :background => :green)
     def self.main_menu
       puts "Available Commands:".colorize(:green)
       puts "  help - Show these commands again"
@@ -13,28 +13,26 @@ class PManager
       puts "  history PID - Show completed tasks for project with id=PID"
       puts "  add PID PRIORITY DESC - Add a new task to project with id=PID"
       puts "  mark TID - Mark task with id=TID as complete"
-      print "what do you want to do?  "
-      @@user_command = gets.chomp
     end
     @@user_command = ""
     project_list = TM::ProjectList.new
-
+    PManager.main_menu
     while (@@user_command != 'quit')
-      PManager.main_menu
-
+      print "what do you want to do?  "
+      @@user_command = gets.chomp
       if (@@user_command == 'help')
         PManager.main_menu
 
       elsif (@@user_command == 'list')
-        project_list.list_projects
-        puts; puts; puts;
+        project_list.project_list.each { |project| puts "id: #{project.id} and name: #{project.name}".colorize(:yellow) }
+        puts;
 
       elsif (@@user_command.include?'create')
         length = @@user_command.length
         name = @@user_command.slice(7..length)
         project_list.add_project(name)
-        puts; puts; puts "Project #{name} was created".colorize(:yellow)
-        puts; puts; puts;
+        puts; puts "Project #{name} was created".colorize(:yellow)
+        puts;
 
 
       elsif (@@user_command.include?'show')
@@ -51,9 +49,14 @@ class PManager
 
       elsif (@@user_command.include?'add')
         length = @@user_command.length
-        name = @@user_command.slice(4..length)
-        print name
-        puts
+        full = @@user_command.slice(4..length)
+        id = @@user_command.slice(4)
+        priority = @@user_command.slice(@@user_command.length-1)
+        description = @@user_command.slice(6..@@user_command.length-2)
+        project_list.add_task_to_project(description, priority, id)
+        project_list.
+        puts; puts "Task was added to project id #{id}".colorize(:yellow)
+        puts;
 
        elsif (@@user_command.include?'mark')
         length = @@user_command.length
