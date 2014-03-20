@@ -8,3 +8,6 @@ require_relative 'task-manager/project.rb'
 require_relative 'task-manager/client.rb'
 require_relative 'task-manager/db.rb'
 require_relative 'task-manager/employee.rb'
+
+x = TM::Client.new
+x.main_menu
