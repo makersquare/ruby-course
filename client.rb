@@ -37,9 +37,10 @@ class PManager
 
       elsif (@@user_command.include?'show')
         length = @@user_command.length
-        name = @@user_command.slice(5..length)
-        print name
-        puts
+        pid = @@user_command.slice(5..length).to_i
+        remaining_tasks = project_list.show_remaining_tasks(pid)
+        remaining_tasks.each { |task| puts task.description }
+
 
       elsif (@@user_command.include?'history')
         length = @@user_command.length
@@ -60,6 +61,7 @@ class PManager
         project = project_list.project_list.find { |project| project.id == pid }
         puts; puts "Task was added to project id #{project.name}".colorize(:green)
         puts;
+
 
        elsif (@@user_command.include?'mark')
         length = @@user_command.length

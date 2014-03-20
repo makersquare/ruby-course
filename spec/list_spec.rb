@@ -47,6 +47,7 @@ describe "project_list" do
 
       result = @new_project_list.show_remaining_tasks(pid)
       expect(result).to eq(expected_project.tasks)
+
     end
    end
 end
