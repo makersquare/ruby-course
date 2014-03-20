@@ -1,8 +1,10 @@
 require './lib/task-manager.rb'
 require 'io/console'
+require 'pry-debugger'
 
 class TerminalClient 
 	def initialize
+		@projects = TM::ProjectList.new
 		help
 
 		while true
@@ -18,8 +20,22 @@ class TerminalClient
 			end
 
 			if input.include?("create")
-				@name = input.gsub(/create/, "")
+				@name = input.gsub(/create /, "")
 				create
+			end
+
+			if input.include?("show")
+				@id = input.gsub(/show /,"")
+				show
+			end
+
+			if input.include?("add")
+				@task = input.gsub(/add /,"")
+				@task.split(" ")
+				@proj_id = @task[0]
+				@priority = @task[1]
+				@description = @task[2]
+				add_task
 			end
 		end
 	end
@@ -39,12 +55,27 @@ class TerminalClient
 		puts "	exit: finish"
 	end
 	def create 
-		TM::Project_list.add_project(TM::Project.new(@name))
+		@projects.add_project(TM::Project.new(@name))
+		puts "Your project has been created as: #{@name}"
 	end
 
 	def list
-		TM::Project_list.project_list
+		puts "Project List"
+		puts "ID 		Project Name"
+		@projects.project_list.each{|x| puts "#{x.id}		#{x.name}"}
 
+	end
+
+	def show
+		@projects.project_list_with_id(@id)
+	end
+
+	def history
+
+	end
+
+	def add_task
+		TM::Task.new(@description, @priority, @proj_id)
 	end
 
 	end
