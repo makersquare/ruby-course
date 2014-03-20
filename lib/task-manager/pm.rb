@@ -23,6 +23,7 @@ class TM::ProjectManager
     puts "project create NAME - Create a new project"
     puts "project show PID - Show remaining tasks for project PID"
     puts "project history PID - Show completed tasks for project PID"
+    puts "project addemployee PID EID - Add an employee EID to project PID"
     puts "project employees PID - Show employees participating in this project"
     puts "task create PID TID PRIORITY DESC - Add a new task TID to project PID"
     puts "task assign PID TID EID - Assign task TID from project PID to employee EID"
@@ -33,6 +34,7 @@ class TM::ProjectManager
     puts "emp details EID - Show all remaining tasks assigned to employee EID,"
     puts "                  along with the project name next to each task"
     puts "emp history EID - Show completed tasks for employee with id=EID"
+    puts "quit - Exit program"
     input
 
     while @control[0] != "quit" do
@@ -44,7 +46,8 @@ class TM::ProjectManager
             when "create" then create_project
             when "show" then show
             when "history" then history
-            when "employees" then list_employees
+            when "employees" then list_employees_on_project
+            when "addemployee" then add_employee_to_project
             else input
           end
         when "task"
@@ -56,18 +59,13 @@ class TM::ProjectManager
           end
         when "emp"
           case @control[1]
+            when "list" then list_all_employees
             when "create" then create_employee
             when "show" then show_employee
             when "details" then employee_remaining_tasks
             when "history" then employee_history
             else input
           end
-        # when "list" then list
-        # when "create" then create
-        # when "show" then show
-        # when "history" then history
-        # when "add" then add
-        # when "mark" then mark
         else input
       end
     end
@@ -121,6 +119,20 @@ class TM::ProjectManager
     input
   end
 
+  def list_employees_on_project
+    puts "Employee   ID"
+    @projectlist.projects[@control[2].to_i].employees_on_project.each do |employee|
+      puts "#{employee.name} #{employee.id}"
+    end
+    input
+  end
+
+  def add_employee_to_project
+    @projectlist.projects[@control[2].to_i].addemployee(@projectlist.employees[@control[3].to_i])
+    puts "Added #{@projectlist.employees[@control[3].to_i].name} to Project #{@control[2]}"
+    input
+  end
+
   def create_task
     description = @control[4..-1]
     @projectlist.projects[@control[1].to_i].addtask(@control[2].to_i,@control[3].to_i,description.join(" "))
@@ -137,7 +149,11 @@ class TM::ProjectManager
     input
   end
 
-  def list_employees
+  def list_all_employees
+    puts "Name       ID"
+    @projectlist.employees.each do |employee|
+      puts "#{employee.name} #{employee.id}"
+    end
     input
   end
 
@@ -146,10 +162,18 @@ class TM::ProjectManager
   end
 
   def create_employee
+    @projectlist.addemployee(@control[2..-1].join(" "))
+    puts "Created new employee #{@control[2..-1].join(" ")}"
     input
   end
 
   def show_employee
+    puts "Employee #{@projectlist.employees[@control[2].to_i].name} is on the following projects:"
+    @projectlist.projects.each do |projects|
+      if projects.employees_on_project.include?(@projectlist.employees[@control[2].to_i])
+        puts "#{projects.id}: #{projects.name}"
+      end
+    end
     input
   end
 

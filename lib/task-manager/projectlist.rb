@@ -1,5 +1,5 @@
 class TM::ProjectList
-  attr_reader :projects
+  attr_reader :projects, :employees
 
   def initialize
     @projects = []

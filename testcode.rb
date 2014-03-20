@@ -20,6 +20,13 @@ pl.projects[2].markcomplete(7)
 pl.projects[2].markcomplete(9)
 pl.projects[2].markcomplete(10)
 
+pl.addemployee("Devon")
+pl.addemployee("Brian")
+pl.addemployee("Other guy")
+
+pl.projects[0].addemployee(pl.employees[0])
+pl.projects[0].addemployee(pl.employees[1])
+
 projectmanager = TM::ProjectManager.new(pl)
 
 projectmanager.menu
