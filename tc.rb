@@ -5,6 +5,7 @@ class TM::TerminalClient
   def initialize
     @pl = TM::Projectlist.new
   end
+#$ bundle exec ruby tc.rb type this in console.
 
   def start
     puts "Welcome to Project Manager Pro®. What can I do for you today?"
@@ -12,9 +13,11 @@ class TM::TerminalClient
     puts "Available Commands:"
     puts "help - Show these commands again\n
       list - List all projects\n
+      create NAME - Create a new project with name=NAME\n
       show PID - Show remaining tasks for project with id=PID\n
       history PID - Show completed tasks for project with id=PID\n
       mark TID - Mark task with id=TID as complete\n
+      add PID PRIORITY DESC - Add a new task to project with id=PID\n
       Please type in the above commands\n"
 
     user_input = gets.chomp  #user_input = show 1
