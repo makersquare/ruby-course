@@ -7,29 +7,17 @@ class TM::ProjectTracker
     @employees = []
   end
 
-
-  def help
-    puts "The system is pretty straightforward. Figure it out!"
-    return "The system is pretty straightforward. Figure it out!"
-  end
-
   def get_projects
     if @projects == []
-      puts "Dude, create a project first!"
-      return "Dude, create a project first!"
+      return nil
     else
-    puts "List of Projects"
-    puts "ID: NAME"
-      @projects.each do |x|
-      puts "#{x.id}: #{x.name}"
-      end
+      return @projects
     end
   end
 
   def create_new_project(name)
     project = TM::Project.new(name)
     @projects.push(project)
-    puts "#{project.name} project created"
     return project
   end
 
@@ -47,12 +35,9 @@ class TM::ProjectTracker
   end
   def add_task(project_id, description, priority_number)
      if @projects == []
-      puts "Dude, create a project to house your tasks first!"
-      return "Dude, create a project to house your tasks first!"
     else
-   project = @projects.select{|x| x.id == project_id.to_i}
-   task = project.first.create_new_task(description, priority_number.to_i)
-   puts "#{task.description} task created"
+   project = @projects.find{|x| x.id == project_id.to_i}
+   task = project.create_new_task(description, priority_number.to_i)
    @tasks.push(task)
     task
   end
@@ -72,10 +57,11 @@ end
   end
    def complete_task(task_id)
     if @tasks == [] || @projects == []
-      puts "Dude, create projects and tasks first!"
+      return nil
     else
-      red = @tasks.select{|x| x.id == task_id.to_i}
-      red.first.status = "complete"
+      task = @tasks.find{|x| x.id == task_id.to_i}
+      task.status = "complete"
+      return task
    end
   end
   def add_new_employee(name)
@@ -85,31 +71,46 @@ end
   end
 
   def assign_task(task_id, employee_id)
-    blue = @tasks.find {|x| x.id == task_id.to_i}
-    red = @employees.find {|x| x.id == employee_id.to_i}
-    # green = @projects.find {|x| x.tasks}
-    blue.employee = red
+    task = @tasks.find {|x| x.id == task_id.to_i}
+    employee = @employees.find {|x| x.id == employee_id.to_i}
+    if task == nil || employee == nil
+      return nil
+    else
+    task.employee = employee
+    employee.tasks.push(task)
+    task
+    end
   end
 
   def emplist
-    puts "Employee ID: Employee Name"
-    @employees.each do |x|
-      puts "#{x.id}: #{x.name}"
-      return "#{x.id}: #{x.name}"
+    if @employees == []
+      return nil
+    else
+      return @employees
     end
   end
   def assign_to_project(project_id, employee_id)
-    blue = @projects.find {|x| project_id.to_i == x.id}
-    red = @employees.find {|x| employee_id.to_i == x.id}
-    blue.employees.push(red)
+    if (@projects.find {|x| project_id.to_i == x.id}) == nil || (@employees.find {|x| employee_id.to_i == x.id}) == nil
+      nil
+    else
+      project = @projects.find {|x| project_id.to_i == x.id}
+      employee = @employees.find {|x| employee_id.to_i == x.id}
+      project.employees.push(employee)
+      employee.projects.push(project)
+      employee
+    end
   end
-  def employees_in_project(project_id)
-    blue = @projects.find {|x| project_id.to_i == x.id}
-    puts "#{blue.name} project"
-    puts "Employee ID: Employee Name"
-    blue.employees.each do |x|
-      puts "#{x.id}: #{x.name}"
-      return "#{x.id}: #{x.name}"
+  def get_project(id)
+    project = @projects.find {|x| id.to_i == x.id}
+    project
+  end
+
+  def projects_of_employee(employee_id)
+    employee = @employees.find {|x| x.id == employee_id.to_i}
+    if employee == nil || employee.projects == []
+      return nil
+    else
+      return employee.projects
     end
   end
 end
