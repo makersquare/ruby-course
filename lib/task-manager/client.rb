@@ -221,6 +221,15 @@ class TM::Client
     @buy_milk.add_task(@drive_to_store)
     @buy_milk.add_task(@talk_to_clerk)
     @buy_milk.add_task(@pay_for_milk)
+    @employee1 = TM::Employee.new("Bill")
+    @employee2 = TM::Employee.new("Rhonda")
+    @employee3 = TM::Employee.new("Phil")
+    @employee4 = TM::Employee.new("Martha")
+    @employee1.add_project(@kill_bob)
+    @employee2.add_project(@kill_bob)
+    @employee3.add_project(@kill_bob)
+    @employee4.add_project(@kill_sue)
+
   end
 
   def create_task(project_id, description, priority)
@@ -238,10 +247,21 @@ class TM::Client
   def show_assigned_employees(project_id)
 
     # get the project
-    project = TM::DB.all_projects[project_id]
+    project = TM::DB.instance.all_projects[project_id]
 
     # get the list
     employee_list = TM::Middleman.get_assigned_employees(project_id)
+
+    #display it beautifully :)
+    puts "\n\n"
+    puts "ID\tEmployee\n"
+    puts "------------------------------------------------"
+    employee_list.each { | x | print("#{x.employee_id}" + (' ' * (8 - x.employee_id.to_s.length)) + # padding
+                  "#{x.name}" + "\n") }
+    puts "\n"
+    puts "Press Enter to Continue"
+    gets
+
   end
 
 
@@ -250,6 +270,8 @@ class TM::Client
     random = rand(remarks.length)
     return remarks[random]
   end
+
+
 
 end
 
