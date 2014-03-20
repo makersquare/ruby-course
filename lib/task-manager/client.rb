@@ -1,6 +1,40 @@
 class TM::Client
 
-  @@cuss_words_lines = [  "Keep it classy, fucker.",
+  def main_menu
+
+    exit = false
+    while !exit do
+      # Show the menu and get the input
+      puts "\n\n\nWelcome to Badass Manager Pro.  Whatya want??\n\n"
+      puts"You can:"
+      puts"\thelp -- show this screen again\n"
+      puts"\tproject list -- list all projects\n"
+      puts"\tproject create NAME - Create a project\n"
+      puts"\tproject show PID - Show project with ongoing tasks\n"
+      puts"\tproject history PID - Show completed tasks for a project PID\n"
+      puts"\tproject employees PID - Show employees participating in a project PID\n"
+      puts"\ttask create PID PRIORITY DESC - Create a task\n"
+      puts"\ttask assign TID EID - Create a task\n"
+      puts"\ttask mark TID - Create a task\n"
+      puts"\temp list - List all employees\n"
+      puts"\temp create NAME - Create employee\n"
+      puts"\temp show EID - Show employee EID and all participating projects\n"
+      puts"\temp details EID - Show all remaining tasks assigned to employee id,\n"
+      puts"\t                  along with the project name next to each task."
+      puts"\temp history EID - Show completed tasks for employee EID\n"
+      puts"\tload me up -- Make a bunch of fake projects so you look busy.\n"
+      puts"\tquit -- quit this program\n\n"
+      print"> "
+      choice_array = gets.chomp.downcase.split
+
+      # if the user cusses, talk some shit back
+      if (  (choice_array.include?("shit"))  ||
+              (choice_array.include?("fuck"))  ||
+              (choice_array.include?("damn"))  ||
+              (choice_array.include?("fucking")) ||
+              (choice_array.include?("asshole"))  ||
+              (choice_array.include?("motherfucker")))
+          puts self.smart_ass_remarker(["Keep it classy, fucker.",
                           "A little angry aren't we?",
                           "Come on, I'm sure there are ladies present.",
                           "Real real clever, asshole.",
@@ -8,80 +42,54 @@ class TM::Client
                           "Yeah, yeah you're real intimidating. Now let's get on with it.",
                           "I don't have to take this shit. I'm going back to my GUI.",
                           "Why don't you take your clumsy fingers somewhere else?",
-                          "Hey, watch your mouth."]
+                          "Hey, watch your mouth."])
+          puts"\nPress Enter, Dummy."
+          gets
 
-  def main_menu
-
-
-    exit = false
-    while !exit do
-      # Show the menu and get the input
-      puts "\n\n\nWelcome to Badass Manager Pro.  Whatya want??\n\n"
-      puts"You can:"
-      puts"\tadd project -- add a project\n"
-      puts"\tadd task -- take a wild guess, dude.\n"
-      puts"\thelp -- show this screen again\n"
-      puts"\tlist -- list all projects\n"
-      puts"\tshow PID - Show remaining tasks for project with id=PID\n"
-      puts"\thistory PID - Show completed tasks for project with id=PID\n"
-      puts"\tmark TID - Mark task with id=TID as complete\n"
-      puts"\tload me up -- Make a bunch of fake projects so you look busy.\n"
-      puts"\tquit -- quit this program\n\n"
-      print"> "
-      choice = gets.chomp.downcase
-
-      # take care of those pesky 2 word ones.
-      if choice.split(' ').size > 1
-        choice_array = choice.split(' ')
+      else   # if the user behaves themselves
         case choice_array[0]
-        when "show"
-          self.show(choice_array[1].to_i)
-        when "history"
-          self.history(choice_array[1].to_i)
-        when "load"
-          self.load_me_up
-        when "mark"
-          self.mark(choice_array[1].to_i)
-        when "add"
-          if choice_array[1] == "project"
-            self.add_project
-          elsif choice_array[1] == "task"
-            self.add_task
-          else
-            puts "Add what, dude?"
-          end
-        else
-          if (  (choice_array.include?("shit"))  ||
-                (choice_array.include?("fuck"))  ||
-                (choice_array.include?("damn"))  ||
-                (choice_array.include?("fucking")) ||
-                (choice_array.include?("asshole"))  ||
-                (choice_array.include?("motherfucker")))
-
-            puts self.smart_ass_remarker(@@cuss_words_lines)
-            gets
-          end
-
-        end
-
-      else  #if it's just one word
-
-        case choice
         when "help"
           puts "\nOk listen up, then, I hate repeating myself....\n"
-        when "add project"
-          self.help
-        when "list"
-          self.list_projects
-        when "quit"
-          puts "\n\nok fine be that way.\n\n"
-          exit = true
-        when "shit", "fuck", "fuck", "asshole", "damn", "motherfucker"
-          puts self.smart_ass_remarker(@@cuss_words_lines)
+          puts "\nPress Enter to See the Main Menu AGAIN...\n"
           gets
-        else
-          puts "Try again, Fat Fingers.\n"
+        when "project"
+          case choice_array[1]
+          when "list"
+            self.list_projects
+          when "create"
+            self.add_project(choice_array[2..-1].join(' '))
+          when "show"
+            self.show(choice_array[2].to_i)
+          when "history"
+            self.history(choice_array[2].to_i)
+          when "employees"
+            self.show_assigned_employees(choice_array[2].to_i)
+          end
+
+        when "task"
+          case choice_array[1]
+          when "create"
+          when "assign"
+          when "mark"
+            self.mark(choice_array[2].to_i)
+          end
+
+        when "emp"
+          case choice_array[1]
+          when "list"
+          when "create"
+          when "show"
+          when "ongoing"
+          when "history"
+          end
+
+        when "load"
+          self.load_me_up
+
+        when "quit"
+          exit = true
         end
+
       end  #end if
 
     end  #end while
@@ -89,7 +97,7 @@ class TM::Client
   end  #end main_menu
 
   def show(project_id)
-    project = TM::Project.all_projects[project_id]
+    project = TM::DB.instance.all_projects[project_id]
     tasks_array = project.ongoing_tasks
     puts "\n\nProject: #{project.name}\n"
     puts "ID\tDescription\t\t\tPriority\n"
@@ -105,7 +113,7 @@ class TM::Client
 
 
   def history(project_id)
-    project = TM::Project.all_projects[project_id]
+    project = TM::DB.instance.all_projects[project_id]
     tasks_array = project.completed_tasks
     puts "\n\nProject: #{project.name}\n"
     puts "ID\tDescription\t\t\tPriority\n"
@@ -128,9 +136,7 @@ class TM::Client
     gets
   end
 
-  def add_project
-    puts "And what are we going to call this new project? "
-    name = gets.chomp!
+  def add_project(name)
     TM::Project.new(name)
     print "Project Created... Press Enter to Continue"
     gets
@@ -183,7 +189,7 @@ class TM::Client
     puts"ID:\tTask:"
     puts"--------------------------"
      # (8 - k.to_s.length) is to pad the string with spaces
-     TM::Project.all_projects.each { |k,v| print("#{k}" + (' ' * (8 - k.to_s.length))+ "#{v.name}\n") }
+     TM::DB.instance.all_projects.each { |k,v| print("#{k}" + (' ' * (8 - k.to_s.length))+ "#{v.name}\n") }
     puts "\n\nPress Enter to Continue"
     gets
   end
