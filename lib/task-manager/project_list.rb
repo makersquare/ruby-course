@@ -20,7 +20,9 @@ class TM::ProjectList
   def add_task_to_project(description, priority, pid)
     new_task = TM::Task.new(description, priority, pid)
 
-    project = @projects.find{|project| project.id == pid.to_i}
+    priority = priority.to_i
+    pid = pid.to_i
+    project = @projects.find{|project| project.id == pid}
     if (!project)
       return "Project Doesn't exist"
     else
@@ -35,8 +37,6 @@ class TM::ProjectList
     selected_project = @projects.find {|project| project.id == pid}
 
     remaining_tasks = selected_project.tasks.select {|task| task.complete == false}
-
-    remaining_tasks
 
   end
 

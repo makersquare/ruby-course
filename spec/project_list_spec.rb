@@ -74,7 +74,6 @@ describe 'ProjectList' do
       # result = selected_project.tasks.select {|task| task.complete == false}
 
       result = @project_list.show_remaining_tasks(pid)
-
       expect(result).to eq (selected_project.tasks)
 
     end

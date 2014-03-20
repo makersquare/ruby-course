@@ -54,14 +54,21 @@ def self.start
       pid = @@user_command.slice(4).to_i
       priority = @@user_command.slice(@@user_command.length - 1).to_i
       description = @@user_command.slice(6..@@user_command.length - 2)
-      puts "#{pid}  #{priority} #{description}"
-
+      @@project_list.add_task_to_project(description, priority, pid)
       chosen_project =  @@project_list.projects.find{|project| project.id == pid}
+
       puts
       puts "task was added to the #{chosen_project.project_name} project".colorize(:yellow)
       puts
 
-  elsif
+  elsif (@@user_command.include? 'show')
+      length = @@user_command.length
+      pid = @@user_command.slice(5..length - 1).to_i
+      # puts "#{pid}".colorize(:red)
+      remaining_tasks = @@project_list.show_remaining_tasks(pid)
+
+      remaining_tasks.each {|task| puts task.description}
+      puts
   end
 
   end
