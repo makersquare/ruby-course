@@ -69,6 +69,8 @@ class TM::Client
         when "task"
           case choice_array[1]
           when "create"
+            self.create_task(choice_array[2].to_i, choice_array[3].to_i, choice_array[4..-1])
+
           when "assign"
           when "mark"
             self.mark(choice_array[2].to_i)
@@ -221,6 +223,19 @@ class TM::Client
     @buy_milk.add_task(@talk_to_clerk)
     @buy_milk.add_task(@pay_for_milk)
   end
+
+  def create_task(project_id, description, priority)
+    new_task = TM::Middleman.create_task(project_id, description, priority)
+    if new_task.is_a?(TM::Task)
+      puts "\nNew task created!\n\n"
+    else
+      puts "You typed something wrong, there, fat fingers.\n\n"
+    end
+
+    puts "Press Enter to Continue"
+    gets
+  end
+
 
   def smart_ass_remarker(remarks)
     random = rand(remarks.length)

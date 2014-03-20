@@ -20,7 +20,8 @@ class TM::Task
     @task_id = @@current_id
     @@current_id = @@current_id + 1
     # @@all_tasks[@task_id] = self            # switching to database
-    TM::DB.instance.all_tasks[@task_id] = self
+    TM::DB.instance.all_tasks[@task_id] = self  #add itself to list of all tasks
+    TM::DB.instance.all_projects[project_id].tasks[@task_id] = self
     @finished = false
     @creation_date = Time.now
   end
