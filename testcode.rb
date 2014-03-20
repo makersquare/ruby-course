@@ -30,3 +30,5 @@ pl.projects[0].addemployee(pl.employees[1])
 projectmanager = TM::ProjectManager.new(pl)
 
 projectmanager.menu
+
+# "emp history EID - Show completed tasks for employee with id=EID"

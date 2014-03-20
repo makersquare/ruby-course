@@ -10,14 +10,6 @@ class TM::ProjectManager
     puts "Welcome to Project Manager Pro®. What can I do for you today?"
     puts ""
     puts "Available Commands:"
-    # puts "  help - Show these commands again"
-    # puts "  list - List all projects"
-    # puts "  create NAME - Create a new project with name=NAME"
-    # puts "  show PID - Show remaining tasks for project with id=PID"
-    # puts "  history PID - Show completed tasks for project with id=PID"
-    # puts "  add PID TID PRIORITY DESC - Add a new task with id=TID to project with id=PID"
-    # puts "  mark PID TID - Mark task with PID[TID] as complete"
-    # puts "  quit - Exit program"
     puts "help - Show these commands again"
     puts "project list - List all projects"
     puts "project create NAME - Create a new project"
@@ -158,6 +150,8 @@ class TM::ProjectManager
   end
 
   def assign
+    @projectlist.employees[@control[4].to_i].taketask(@projectlist.projects[@control[2].to_i].tasks[@control[3].to_i])
+    puts "Assigned task #{@projectlist.projects[@control[2].to_i].tasks[@control[3].to_i].description} to #{@projectlist.employees[@control[4].to_i].name}"
     input
   end
 
@@ -178,10 +172,26 @@ class TM::ProjectManager
   end
 
   def employee_remaining_tasks
+    puts "Employee still needs to complete the following tasks"
+    @projectlist.employees[@control[2].to_i].tasks.each do |task|
+      if !task.complete
+        project_for_task = 0
+        @projectlist.projects.each do |project|
+          if project.tasks.values.include?(task)
+            project_for_task = project
+          end
+        end
+        puts "#{task.description} for Project #{project_for_task.name}"
+      end
+    end
     input
   end
 
   def employee_history
+    puts "Employee has completed the following tasks"
+    @projectlist.employees[@control[2].to_i].tasks.each do |task|
+      puts "TID: #{task.project_id} Description: #{task.description}" if task.complete
+    end
     input
   end
 end
