@@ -7,14 +7,6 @@ class TM::ProjectTracker
     @employees = []
   end
 
-  def get_projects
-    if @projects == []
-      return nil
-    else
-      return @projects
-    end
-  end
-
   def create_new_project(name)
     project = TM::Project.new(name)
     @projects.push(project)
@@ -23,14 +15,9 @@ class TM::ProjectTracker
 
   def show_tasks(project_id)
     if @tasks == [] || @projects == []
-      puts "Dude, create projects and tasks first!"
+      return nil
     else
-    blue = @projects.select{|x| x.id == project_id.to_i}
-    puts "#{blue.first.name}"
-    puts "Task ID: Priority, Description"
-      blue.first.incomplete_tasks.each do |x|
-      puts "#{x.id}: #{x.priority_number}, #{x.description}"
-      end
+    project = @projects.find{|x| x.id == project_id.to_i}
     end
   end
   def add_task(project_id, description, priority_number)
@@ -43,18 +30,6 @@ class TM::ProjectTracker
   end
 end
 
-  def history_tasks(project_id)
-    if @tasks == [] || @projects == []
-      puts "Dude, create projects and tasks first!"
-    else
-    blue = @projects.select{|x| x.id == project_id.to_i}
-    puts "#{blue.first.name}"
-    puts "Task ID: Priority, Description"
-      blue.first.completed_tasks.each do |x|
-      puts "#{x.id}: #{x.priority_number}, #{x.description}"
-      end
-    end
-  end
    def complete_task(task_id)
     if @tasks == [] || @projects == []
       return nil
@@ -82,13 +57,6 @@ end
     end
   end
 
-  def emplist
-    if @employees == []
-      return nil
-    else
-      return @employees
-    end
-  end
   def assign_to_project(project_id, employee_id)
     if (@projects.find {|x| project_id.to_i == x.id}) == nil || (@employees.find {|x| employee_id.to_i == x.id}) == nil
       nil
@@ -112,6 +80,16 @@ end
     else
       return employee.projects
     end
+  end
+  def remaining_employee_tasks(employee_id)
+      employee = @employees.find {|x| x.id == employee_id.to_i}
+      incomplete_tasks = employee.tasks.select{|x| x.status == "incomplete"}
+      return incomplete_tasks
+  end
+  def completed_employee_tasks(employee_id)
+      employee = @employees.find {|x| x.id == employee_id.to_i}
+      complete_tasks = employee.tasks.select{|x| x.status == "complete"}
+      return complete_tasks
   end
 end
 

@@ -30,9 +30,6 @@ class TM::ProjectManager
           #{}"documentation"  #MAN command#
    string = gets.chomp
     choice = string.downcase.split
- #  emp details EID - Show all remaining tasks assigned to employee EID,
- #                    along with the project name next to each task
- #  emp history EID - Show completed tasks for employee with id=EID
       case choice[0]
         #DOING THINGS#
         when 'create'
@@ -68,12 +65,12 @@ class TM::ProjectManager
             if task == nil
               puts "Dude, create projects and tasks first..."
             else
-              puts "#{task.name} now has a status of #{task.status}"
+              puts "#{task.description} now has a status of #{task.status}"
             end
         #ACCESSING THINGS#
         when 'list'
-          projects = tracker.get_projects
-          if projects == nil
+          projects = tracker.projects
+          if projects == []
             puts "You got no projects sucker"
           else
             puts "List of Projects"
@@ -82,12 +79,12 @@ class TM::ProjectManager
             puts "#{x.id}: #{x.name}"
             end
           end
-
          when 'emplist'
-            employees = tracker.emplist
-            if employees == nil
+            employees = tracker.employees
+            if employees == []
               puts "You don't have any employees...Try craigslist!"
             else
+              puts "List of employees"
               puts "Employee ID: Employee Name"
                employees.each do |x|
                puts "#{x.id}: #{x.name}"
@@ -98,7 +95,7 @@ class TM::ProjectManager
             if project == nil
               puts "Dude, create that project first."
             else
-            puts "#{project.name} project"
+            puts "#{project.name} project's employees"
             puts "Employee ID: Employee Name"
             project.employees.each do |x|
             puts "#{x.id}: #{x.name}"
@@ -106,29 +103,56 @@ class TM::ProjectManager
           end
         when 'show'
             projects = tracker.projects_of_employee(choice[1])
-            if employee == nil
+            employee = tracker.employees.find {|x| x.id == choice[1].to_i}
+            if projects == nil
               puts "Dude, either that employee does not exist or he is slacking with no projects"
             else
-              puts "Employee #{employee.name} projects"
+              puts "Employee {employee.name}'s projects"
               puts "Project ID: Project Name"
               projects.each do |x|
                 puts "#{x.id}: #{x.name}"
               end
             end
         when 'see'
-            tracker.show_tasks(choice[1])
+          project = tracker.show_tasks(choice[1])
+          if project == nil
+          puts "Dude, create projects and tasks first!"
+          else
+            puts "#{project.name} project's incomplete tasks"
+            puts "Task ID: Priority, Description"
+              project.incomplete_tasks.each do |x|
+              puts "#{x.id}: #{x.priority_number}, #{x.description}"
+              end
+          end
+
          when 'history'
-            tracker.history_tasks(choice[1])
+            project = tracker.show_tasks(choice[1])
+          if project == nil
+          puts "Dude, create projects and tasks first!"
+          else
+            puts "#{project.name} project's completed tasks"
+            puts "Task ID: Priority, Description"
+              project.completed_tasks.each do |x|
+              puts "#{x.id}: #{x.priority_number}, #{x.description}"
+              end
+          end
+        when 'remaining'
+            tasks = tracker.remaining_employee_tasks(choice[1])
+            puts "Remaining Tasks of employee with id #{choice[1]}"
+            puts "Task id: Description, Priority"
+              tasks.each do |x|
+                puts "#{x.id}: #{x.description}, #{x.priority_number}"
+              end
+        when 'completed'
+            tasks = tracker.completed_employee_tasks(choice[1])
+              puts "Completed Tasks of employee with id #{choice[1]}"
+              puts "Task id: Description, Priority"
+              tasks.each do |x|
+                puts "#{x.id}: #{x.description}, #{x.priority_number}"
+              end
         #GENERAL#
         when 'help'
           puts "The system is pretty straightforward. Figure it out!"
-        when 'list'
-          projects = tracker.get_projects
-            puts "List of Projects"
-            puts "ID: NAME"
-            projects.each do |x|
-            puts "#{x.id}: #{x.name}"
-            end
         when 'exit'
           @@exit = true
         else

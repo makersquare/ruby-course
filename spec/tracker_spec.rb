@@ -9,7 +9,7 @@ describe 'Tracker' do
 
   it "allows you to add a project and that project is stored in the projects array" do
     tracker = TM::ProjectTracker.new
-    expect(tracker.get_projects).to eq(nil)
+    expect(tracker.projects).to eq([])
     tracker.create_new_project("blue")
     tracker.create_new_project("red")
     expect(tracker.projects.count).to eq(2)
@@ -54,11 +54,11 @@ end
 it "should print the id and names of all employees" do
   TM::Employee.id_counter = 1
   tracker = TM::ProjectTracker.new
-  expect(tracker.emplist).to eq(nil)
+  expect(tracker.employees).to eq([])
   employee = tracker.add_new_employee("Parth")
-  expect(tracker.emplist.count).to eq(1)
+  expect(tracker.employees.count).to eq(1)
   employee = tracker.add_new_employee("Parth")
-  expect(tracker.emplist.count).to eq(2)
+  expect(tracker.employees.count).to eq(2)
 end
 
 it "assigns a task to an employee" do
@@ -98,8 +98,40 @@ it "can assign employees to a project" do
   expect(employee_two.projects.first).to eq(blue)
   expect(employee_one.projects[1]).to eq(red)
 end
-end
 
+  it "returns incomplete tasks of employee" do
+  TM::Employee.id_counter = 1
+  TM::Task.id_counter = 1
+  TM::Project.id_counter = 1
+  tracker = TM::ProjectTracker.new
+  project = tracker.create_new_project("project")
+  employee_one = tracker.add_new_employee("Parth")
+  task_one = tracker.add_task("1", "yellow", "7")
+  task_two = tracker.add_task("1", "blue", "5")
+  tracker.assign_task(1, 1)
+  tracker.assign_task(2, 1)
+  expect(tracker.remaining_employee_tasks(1).count).to eq(2)
+  end
+
+  it "returns complete tasks of employee" do
+  TM::Employee.id_counter = 1
+  TM::Task.id_counter = 1
+  TM::Project.id_counter = 1
+  tracker = TM::ProjectTracker.new
+  project = tracker.create_new_project("project")
+  employee_one = tracker.add_new_employee("Parth")
+  task_one = tracker.add_task("1", "yellow", "7")
+  task_two = tracker.add_task("1", "blue", "5")
+  tracker.assign_task(1, 1)
+  tracker.assign_task(2, 1)
+  expect(tracker.remaining_employee_tasks(1).count).to eq(2)
+  tracker.complete_task(1)
+  expect(tracker.remaining_employee_tasks(1).count).to eq(1)
+  expect(tracker.completed_employee_tasks(1).count).to eq(1)
+  tracker.complete_task(2)
+  expect(tracker.completed_employee_tasks(1).count).to eq(2)
+  end
+end
 
 
 
