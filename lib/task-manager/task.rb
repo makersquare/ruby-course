@@ -24,6 +24,7 @@ class TM::Task
 
     @time_created = Time.now
 
+    # task has no completed time when first created
     @time_completed = nil
   end
 
