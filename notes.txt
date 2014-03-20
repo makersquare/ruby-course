@@ -1,0 +1,2 @@
+create case for input that is not understood
+take control array out of individual methods
