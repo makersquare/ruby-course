@@ -15,7 +15,7 @@ describe "ProjectList" do
 
   it "can add a new task to a project" do
     @pl.add_project("New Project 2")
-    @pl.add_task("Chemistry HW", 2, 3)
+    @pl.add_new_task("Chemistry HW", 2, 3)
     result = @pl.projects.last.tasks.last.description
     expect(result).to eq("Chemistry HW")
   end

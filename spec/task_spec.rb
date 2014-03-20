@@ -4,7 +4,7 @@ require './lib/task-manager/task.rb'
 describe 'Task' do
 
   before do
-    @new_task = TM::Task.new(1, "New task description", 5)
+    @new_task = TM::Task.new("New task description", 1, 5)
   end
 
   it "exists" do

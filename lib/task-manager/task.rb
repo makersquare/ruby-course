@@ -10,7 +10,7 @@ attr_accessor :status, :project_id
     @@task_counter
   end
 
-  def initialize(project_id, description, priority_number, status="incomplete")
+  def initialize(description, project_id, priority_number, status="incomplete")
     @project_id = project_id
     @description = description
     @priority_number = priority_number
