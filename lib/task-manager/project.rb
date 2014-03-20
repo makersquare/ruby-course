@@ -1,3 +1,4 @@
+require_relative '../task-manager.rb'
 
 class TM::Project
 	attr_reader :name, :id, :tasks
@@ -10,8 +11,8 @@ class TM::Project
 		@tasks = []
 	end
 
-	def add_task(description, priority)
-		task = TM::Task.new(@id, description, priority)
+	def add_task(priority, description)
+		task = TM::Task.new(@id, priority, description)
 		@tasks << task
 		task
 	end
@@ -30,5 +31,15 @@ class TM::Project
 
 	def complete_tasks
 		@tasks.select { |task| task.status == 'complete' }.sort_by { |task| task.created_at }
+	end
+
+	def include_task?(tid)
+		@tasks.select do |task|
+			if task.id == tid
+				return true
+			else
+				return false
+			end	
+		end
 	end
 end
