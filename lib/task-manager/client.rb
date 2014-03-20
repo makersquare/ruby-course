@@ -71,7 +71,7 @@ class TM::Client
           when "create"
             self.create_task(choice_array[2].to_i, choice_array[3].to_i, choice_array[4..-1])
           when "assign"
-            self.assign_task()
+            self.assign_task(choice_array[2].to_i, choice_array[3].to_i)
           when "mark"
             self.mark(choice_array[2].to_i)
           end
@@ -245,9 +245,12 @@ class TM::Client
   end
 
   def assign_task(task_id, employee_id)
-    TI::Middleman.assign_task_to_employee(task_id, employee_id)
-
-
+    binding.pry
+    TM::Middleman.assign_task_to_employee(task_id, employee_id)
+    puts "\n\nTask #{TM::DB.instance.all_tasks[task_id].description} to #{TM::DB.instance.all_employees[employee_id]}."
+    puts "\n"
+    puts "Press Enter to Continue"
+    gets
   end
 
   def show_assigned_employees(project_id)
