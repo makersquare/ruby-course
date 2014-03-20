@@ -1,64 +1,83 @@
 require_relative 'task-manager.rb'
 require 'io/console'
+require 'colorize'
 
-@cpl = TM::Project_list.new
+@cpl = TM::Projectlist.new
 
 
-puts "\nWelcome to ProjectManager Pro!"
-puts "\nPlease press enter to view available commands."
+puts "\nWelcome to ProjectManager Pro!".yellow
+puts "\nPlease press enter to view available commands.".yellow
 variable = gets.chomp
-puts "AVAILABLE COMMANDS"
-puts "  help - Shows all these commands again"
-puts "  list - Lists all projects"
-puts "  create NAME - Create a new project with name=NAME"
-puts "  show PID - Show remaining tasks for project with id=PID"
-puts "  history PID - Show completed tasks for project with id=PID"
-puts "  PID PRIORITY DESC - Adds a new task to the project with id=PID"
-puts "  mark TID - Marks task with id=TID as complete"
+puts "AVAILABLE COMMANDS".blue
+print"  help".red
+puts " - Shows all these commands again"
+print"  list".red
+puts " - Lists all projects"
+print"  create NAME".red
+puts " - Create a new project with name=NAME"
+print"  show PID".red
+puts " - Show remaining tasks for project with id=PID"
+print"  history PID".red
+puts " - Show completed tasks for project with id=PID"
+print"  add PID PRIORITY DESC".red
+puts " - Adds a new task to the project with id=PID"
+print"  mark TID".red
+puts " - Marks task with id=TID as complete"
+print"  quit".red
+puts " - Exits the program"
 answer = gets.chomp
 
 while answer != "quit" do
   if answer == "help"
-    puts "\nAVAILABLE COMMANDS"
-    puts "  help - Shows all these commands again"
-    puts "  list - Lists all projects"
-    puts "  create NAME - Create a new project with name=NAME"
-    puts "  show PID - Show remaining tasks for project with id=PID"
-    puts "  history PID - Show completed tasks for project with id=PID"
-    puts "  PID PRIORITY DESC - Adds a new task to the project with id=PID"
-    puts "  mark TID - Marks task with id=TID as complete"
+    puts "\nAVAILABLE COMMANDS".blue
+    print"  help".red
+    puts " - Shows all these commands again"
+    print"  list".red
+    puts " - Lists all projects"
+    print"  create NAME".red
+    puts " - Create a new project with name=NAME"
+    print"  show PID".red
+    puts " - Show remaining tasks for project with id=PID"
+    print"  history PID".red
+    puts " - Show completed tasks for project with id=PID"
+    print"  add PID PRIORITY DESC".red
+    puts " - Adds a new task to the project with id=PID"
+    print"  mark TID".red
+    puts " - Marks task with id=TID as complete"
+    print"  quit".red
+    puts " - Exits the program"
     answer = gets.chomp
-  end
+  # end
 # <----------creates a new project----------->
-  if answer.split(" ").first == "create"
+  elsif answer.split(" ").first == "create"
     array = answer.split[1..-1]
     proj_name = array.join(' ')
     @cpl.add_project(proj_name)
     puts "\n#{@cpl.projects.last.name} was added"
     puts "\nWhat next?"
     answer = gets.chomp
-  end
+  # end
 
 # <------------lists projects--------------->
 
-  if answer =="list"
+  elsif answer =="list"
     puts"\nPROJECTS:"
     @cpl.projects.each {|project| puts "#{project.name} ID:#{project.id}"}
     answer = gets.chomp
-  end
+  # end
 # <-----------------shows incomplete tasks-------------->
-  if answer.split(" ").first =="show"
+  elsif answer.split(" ").first =="show"
     project_id = answer.split[1].to_i
     project = @cpl.projects.find{|project| project.id == project_id}
-    puts "\n #{project.name}: Incomplete Tasks."
+    puts "\n#{project.name}: Incomplete Tasks."
     project.retrieve_incomplete.each{|task| puts "Task ID: #{task.task_id}. Task Description: #{task.description}. Priority:#{task.priority}"}
     puts "\nWhat next?"
     answer = gets.chomp
-  end
+  # end
 
   # <---------changes task status to complete------------->
 
-  if answer.split(" ").first =="mark"
+  elsif answer.split(" ").first =="mark"
     task_id = answer.split[1].to_i
     project = @cpl.projects.find do |project|
       project.tasks.find{|task| task.task_id==task_id}
@@ -68,31 +87,37 @@ while answer != "quit" do
     puts "\nYou set the status of: '#{task.description}' to completed."
     puts "\n What next?"
     answer = gets.chomp
-  end
+  # end
 
   # <------------gives history of completed tasks------------>
 
-  if answer.split(" ").first =="history"
+  elsif answer.split(" ").first =="history"
     project_id = answer.split[1].to_i
     project = @cpl.projects.find{|project| project.id == project_id}
     puts "#{project.name} completed tasks:"
     project.retrieve_completed.each{|task| puts "Task Description: #{task.description}."}
     puts "\nWhat next?"
     answer = gets.chomp
-  end
+  # end
 # <-------adds a new task------------->
-  if answer.split(" ").first.to_i >= 1
+  elsif answer.split(" ").first == "add"
     array = answer.split(" ")
-    project_id = array[0].to_i
-    priority = array[1].to_i
-    description = array[2..-1].join(' ')
+    project_id = array[1].to_i
+    priority = array[2].to_i
+    description = array[3..-1].join(' ')
     puts description
     @cpl.add_task(project_id, priority, description)
     project = @cpl.projects.find{|project| project.id ==project_id}
     puts "\nYou added '#{description}' to Project: #{project.name}."
     puts "\nWhat would you like to do next?"
     answer = gets.chomp
-  end
+  # end
+  else
+  puts "\nYou entered an invalid command."
+  puts "Enter help to get a list of valid commands"
+  answer = gets.chomp
+end
+
 end
 
 

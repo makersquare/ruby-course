@@ -1,4 +1,4 @@
-class TM::Project_list
+class TM::Projectlist
   attr_accessor :projects
 
   def initialize
