@@ -3,6 +3,7 @@ require 'io/console'
 require 'pry-debugger'
 
 class TerminalClient 
+	attr_reader :project, :id
 	def initialize
 		@projects = TM::ProjectList.new
 		help
@@ -10,32 +11,31 @@ class TerminalClient
 		while true
 			input = gets.chomp
 			break if input == 'exit'
-
 			if input == "help"
 				help
-			end
-
-			if input == "list"
+			elsif input == "list"
 				list
-			end
-
-			if input.include?("create")
-				@name = input.gsub(/create /, "")
+			elsif input.include?("create")
+				@name = input.gsub(/create /, "").chomp
 				create
-			end
-
-			if input.include?("show")
-				@id = input.gsub(/show /,"")
+			elsif input.include?("show")
+				@id = input.gsub(/show /,"").chomp
 				show
-			end
-
-			if input.include?("add")
+			elsif input.include?("add")
 				@task = input.gsub(/add /,"")
-				@task.split(" ")
-				@proj_id = @task[0]
-				@priority = @task[1]
-				@description = @task[2]
+				@input_array = @task.split(" ")
+				@proj_id = @input_array[0]
+				@priority = @input_array[1]
+				@description = @input_array[2]
 				add_task
+			elsif input.include?("history")
+				@id = input.gsub(/history /,"").chomp
+				history
+			elsif input.include?('mark')
+				@marked = input.gsub(/mark /,"").chomp
+				mark
+			else
+				puts "That's not a command"
 			end
 		end
 	end
@@ -55,7 +55,8 @@ class TerminalClient
 		puts "	exit: finish"
 	end
 	def create 
-		@projects.add_project(TM::Project.new(@name))
+		@project = TM::Project.new(@name)
+		@projects.add_project(project)
 		puts "Your project has been created as: #{@name}"
 	end
 
@@ -67,17 +68,55 @@ class TerminalClient
 	end
 
 	def show
-		@projects.project_list_with_id(@id)
+		# puts 'show'
+		 @projects.tasks_for_project(@id)
+		 if @projects.narrowed_again.empty?
+		 	puts "There was no incomplete task found."
+		 else
+		@projects.narrowed_again.each do |x| 
+			puts "Project_ID: #{x.project_id}, Priority Number: #{x.priority_number}, Description: #{x.description}"
+		end
+	end
 	end
 
 	def history
+		@projects.tasks_for_project_complete(@id)
+		if @projects.narrowed_again1.empty?
+			puts "There was no complete task found."
+		else
+			@projects.narrowed_again1.each{|x| puts "Project_ID: #{x.project_id}, Priority Number: #{x.priority_number}, Description: #{x.description}"}
+		end
+	end
+
+
+	def add_task
+		@tasksomething = TM::Task.new(@description, @priority, @proj_id)
+		@project.add_task(@tasksomething)
+		puts "Your task with project_id: #{@proj_id} has been added with task id: #{@tasksomething.tid}!"
 
 	end
 
-	def add_task
-		TM::Task.new(@description, @priority, @proj_id)
+	def mark 
+
+    result = @projects.mark_task_complete(@marked)
+    if result
+      puts "Your task with ID: #{@marked} has been marked as complete"
+    else
+      puts "Task not found"
+    end
+
+		# @project.incompleted_tasks_list.each do |x|
+		# if x.tid == @marked.to_i
+		# #@tasksomething.complete_task
+		# @project.complete_task_list(@tasksomething)
+		# puts "Your task with ID: #{@tasksomething.tid} has been marked complete."
+		# else
+		# puts "That ID was not found"
+		# end
+		# end
 	end
 
 	end
 
 	TerminalClient.new
+

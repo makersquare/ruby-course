@@ -13,10 +13,10 @@ describe 'Project' do
 
   it "upon initialization, it can generate a unique id" do   
   	project = TM::Project.new("project")
-  	expect(project.id).to eq(1)
+  	expect(project.id).to eq(3)
 
   	project2 = TM::Project.new('project2')
-  	expect(project2.id).to eq(2)
+  	expect(project2.id).to eq(4)
 
   end
 
@@ -24,20 +24,21 @@ describe 'Project' do
   	current_time = Time.now
   	project = TM::Project.new('project')
   	
+  	Time.stub(:now).and_return(current_time - 60)
+  	task2 = TM::Task.new('red', 2, project.id)
+  	task2.complete_task
+  	project.complete_task_list(task2)
+
   	Time.stub(:now).and_return(current_time)
   	task = TM::Task.new('red', 2, project.id)
   	task.complete_task
+  	project.complete_task_list(task)
 
-  	Time.stub(:now).and_return(current_time + 60)
-  	task2 = TM::Task.new('red', 2, project.id)
-  	task2.complete_task
+  	
 
   	expect(project.completed_tasks_list).to eq([task2, task])
 
-  	# TM::Project.complete_task_list(task)
-  	# expect(TM::Project.completed_tasks_list).to eq([task])
-
-
+ 
   end
 
   it "returns a list of all incomplete tasks" do
@@ -46,16 +47,15 @@ describe 'Project' do
   	project = TM::Project.new('project')
   	task = TM::Task.new('red',2,project.id)
 
-  	project.incomplete_task_list(task)
+  	project.add_task(task)
   	expect(project.incompleted_tasks_list).to eq([task])
 
   	time = Time.parse('3pm')
   	Time.stub(:now).and_return(time)
-  	project2 = TM::Project.new('project2')
   	task2 = TM::Task.new('red',2,project.id)
 
-  	project2.incomplete_task_list(task2)
-  	expect(project2.incompleted_tasks_list).to eq([task,task2])
+  	project.add_task(task2)
+  	expect(project.incompleted_tasks_list).to eq([task,task2])
 
    end
 end
