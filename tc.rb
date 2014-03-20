@@ -19,7 +19,7 @@ class TM::TerminalClient
     puts "show PID - Show remaining tasks for project with id=PID"
     puts "history PID - Show completed tasks for project with id=PID"
     puts  "mark TID - Mark task with id=TID as complete"
-    puts "add PID PRIORITY DESC - Add a new task to project with id=PID"
+    puts "add PID - Add a new task to project with id=PID"
     puts "--------"
     puts  "Please type in the above commands"
 
@@ -47,7 +47,7 @@ class TM::TerminalClient
        if @pl.project_list.empty? == false #if there are projects
         @pl.project_list.each do |project|
           puts "\n"      # display project name
-          puts "SHOWING PROJECTS   ---> #{project.name} with PID of #{project.id}"
+          puts "SHOWING PROJECT   ---> #{project.name} with PID of #{project.id}"
           if project.task_list.empty? # if a project has not task
             puts "\n"                 # this will display
             puts "PROJECT #{project.name} HAS NO TASKS"
@@ -149,11 +149,22 @@ class TM::TerminalClient
 
    if user_input[0] == "add"
     projid = user_input[1].to_i
-    eating_better = TM::Task.new(1,"diet",1,2)
-    @pl.add_task_project(projid,eating_better)
+    puts "WILL ADD A TASK TO PROJECT ID: #{projid}"
+    puts "\n"
+    puts "A TASK HAS A UNIQUE TASK ID, AND A PROJECT ID THAT LINKS IT TO A PROJECT VIA THE PROJECT ID\n"
+    puts "TYPE IN PROJECT ID FOR TASK(MAKE SURE ITS SAME ID AS THE PROJECT YOU WANT TO ADD TO)"
+    proj_id = gets.chomp.to_i
+    puts "TYPE IN DESCRIPTION FOR TASK"
+    descr = gets.chomp
+    puts "TYPE IN PRIORITY_NUM"
+    priority_num = gets.chomp.to_i
+    puts "TYPE IN TASK ID"
+    task_id = gets.chomp.to_i
+    @pl.add_task_project(projid,proj_id, descr, priority_num, task_id)
     puts "\n"
     puts "ADDED SUCCESSFULLY"
     puts "\n"
+    puts
    end
 
    return user_input.join(" ")
