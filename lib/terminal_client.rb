@@ -1,5 +1,6 @@
 require_relative 'task-manager.rb'
 require 'io/console'
+require 'colorize'
 
 @client_list = TM::ProjectList.new
 
@@ -9,7 +10,7 @@ help = "Please enter a valid command\nAvailable Commands:\n   help - Show these 
 puts welcome
 puts "Press enter to view valid commands"
 doNothing = gets.chomp
-puts help
+puts help.red
 answer = gets.chomp
 
 user_input_arr = answer.split
