@@ -3,14 +3,15 @@ class TM::Project
 @@id = 0
 attr_reader :name, :id, :task_list
 
-class TM::Project
   @@id = 0
   def initialize(name)
     @name = name
     @@id += 1
     @id = @@id
     @task_list = []
+
   end
+
 
   def add_task(task)
     @task_list << task
@@ -45,4 +46,6 @@ class TM::Project
   end
 
 end
-end
+
+
+
