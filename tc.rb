@@ -35,24 +35,45 @@ class TM::TerminalClient
     end
 
     if user_input[0] == "list"
-       p @pl.project_list
-
+       if @pl.project_list.empty?
+         puts "\n"
+         puts "NO PROJECTS AT THE MOMENT"
+         puts "\n"
+       end
+       if @pl.project_list.empty? == false
+        @pl.project_list.each do |project|
+        puts "\n"
+        puts "SHOWING PROJECTS   ---> #{project.name}"
+          if project.task_list == empty? # if no projects
+            puts "\n"
+          end
+        puts "#{project.name} TASKS"
+        puts "\n"
+        puts ""
+        puts "\n"
+        end
+       end
        start
     end
 
     if user_input[0] == "create"
-      puts "write project name"
+      puts "\n"
+      puts "WRITE PROJECT NAME"
       projectname = gets.chomp
       @pl.create(projectname)
       @pl.add_projects(projectname)
-      puts "New project created"
+      puts "\n"
+      puts "NEW PROJECT CREATED"
+      puts "\n"
       start
     end
 
     if user_input[0] == "show"
        proj_id = user_input[1].to_i
        if @pl.list_task_remain(proj_id).empty?
-         puts "no remaining task at the moment"
+         puts "\n"
+         puts "NO REMAINING TASK AT THE MOMENT"
+         puts "\n"
        else
          p @pl.list_task_remain(proj_id)
        end
@@ -64,7 +85,9 @@ class TM::TerminalClient
    if user_input[0] == "history"
         projid = user_input[1].to_i
       if @pl.list_task_complete(projid).empty?
-        puts "no completed tasks at the moment"
+        puts "\n"
+        puts "NO COMPLETED TASK AT THE MOMENT"
+        puts "\n"
       else
         p @pl.list_task_complete(projid)
       end
@@ -78,6 +101,9 @@ class TM::TerminalClient
           project.task_list.each do |task|
              if task.task_id == task_id
                  return task.complete = true
+                 puts "\n"
+                 puts "task is now completed"
+                 puts "\n"
              end
           end
         end
@@ -90,7 +116,9 @@ class TM::TerminalClient
     projid = user_input[1].to_i
     eating_better = TM::Task.new(1,"diet",1,2)
     @pl.add_task_project(projid,eating_better)
-    puts "added successfully"
+    puts "\n"
+    puts "ADDED SUCCESSFULLY"
+    puts "\n"
    end
 
   return user_input.join(" ")
