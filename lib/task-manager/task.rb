@@ -1,3 +1,4 @@
+require_relative '../task-manager.rb'
 
 class TM::Task
 	attr_accessor :description, :priority, :status
@@ -5,11 +6,12 @@ class TM::Task
 
 	@@id_counter = 0
 
-	def initialize(project_id, description, priority)
+	def initialize(project_id, priority, description)
 		@project_id = project_id
 		@description = description
 		@priority = priority
-		@id = @@id_counter += 1
+		@@id_counter += 1
+		@id = @@id_counter
 		@status = 'incomplete'
 		@created_at = Time.now
 	end
