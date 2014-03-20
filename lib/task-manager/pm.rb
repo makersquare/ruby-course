@@ -64,15 +64,18 @@ class TM::ProjectManager
   end
 
   def input
+    puts ""
     puts "Input your choice:"
     @input = gets.chomp
     @control = @input.split
+    puts ""
   end
 
   def list
     templist = @projectlist.projects.compact
+    puts "PID: Name:"
     templist.each do |project|
-      puts project.name
+      puts "#{project.id}:   #{project.name}"
     end
     input
   end
@@ -112,9 +115,9 @@ class TM::ProjectManager
   end
 
   def list_employees_on_project
-    puts "Employee   ID"
+    puts "Employee:\tID:"
     @projectlist.projects[@control[2].to_i].employees_on_project.each do |employee|
-      puts "#{employee.name} #{employee.id}"
+      puts "#{employee.name}\t\t#{employee.id}"
     end
     input
   end
@@ -142,9 +145,9 @@ class TM::ProjectManager
   end
 
   def list_all_employees
-    puts "Name       ID"
+    puts "Name\t\tEID"
     @projectlist.employees.each do |employee|
-      puts "#{employee.name} #{employee.id}"
+      puts "#{employee.name}\t\t#{employee.id}"
     end
     input
   end
