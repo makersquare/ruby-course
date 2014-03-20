@@ -18,37 +18,34 @@ class TM::Projectlist
 
   end
 
-  def add_task_project(project,task)
+  def add_task_project(projectid, task)
     @project_list.each do |project_instance|
-      if project_instance == project
+      if project_instance.id == projectid
         project_instance.task_list << task
         return project_instance.task_list
       end
     end
+end
 
+ def list_task_remain(id)
+     @project_list.each do |project|
+       if project.id == id
+         return project.retrieve_incomplete_tasks
+       end
+     end
   end
 
-  def list_task_remain
-   @project_list.each { |project|
-      return project.task_list
-   }
 
+  def list_task_complete(id)
+    @project_list.each do |project|
+      if project.id == id
+        return project.retrieve_complete_tasks
+      end
+   end
   end
 
-  def list_task_complete
-    @project_list.each { |project|
-      return project.task_list
-   }
-  end
 
-  def mark_task_complete
-    tasks = @project_list[0].task_list
-    tasks.each {|task|
-      task.complete = true
-      return task.complete
-    }
 
-  end
 
 
   # def list_task_remain(id)

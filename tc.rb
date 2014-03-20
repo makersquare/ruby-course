@@ -8,6 +8,8 @@ class TM::TerminalClient
 #$ bundle exec ruby tc.rb type this in console.
 
   def start
+
+
     puts "Welcome to Project Manager Pro®. What can I do for you today?"
 
     puts "Available Commands:"
@@ -33,7 +35,7 @@ class TM::TerminalClient
     end
 
     if user_input[0] == "list"
-       puts @pl.project_list
+       p @pl.project_list
 
        start
     end
@@ -48,68 +50,71 @@ class TM::TerminalClient
     end
 
     if user_input[0] == "show"
-       @pl.add_projects("Fitness")
-       @pl.add_projects("Work")
-       if @pl.list_task_remain == []
+       proj_id = user_input[1].to_i
+       if @pl.list_task_remain(proj_id).empty?
          puts "no remaining task at the moment"
        else
-         @pl.list_task_remain
+         p @pl.list_task_remain(proj_id)
        end
 
 
     end
 
-    if user_input[0] == "history"
-      @pl.add_projects("Fitness")
-      @pl.add_projects("Work")
-      if @pl.list_task_complete == []
-         puts "no completed task at the moment"
+
+   if user_input[0] == "history"
+        projid = user_input[1].to_i
+      if @pl.list_task_complete(projid).empty?
+        puts "no completed tasks at the moment"
       else
-        @pl.list_task_complete
+        p @pl.list_task_complete(projid)
       end
     end
 
-    if user_input[0] == "mark"
-      @pl.add_projects("Fitness")
-      @pl.add_projects("Work")
-      p @pl.mark_task_complete
+      if user_input[0] == "mark"
+      task_id = user_input[1].to_i
+      @pl.project_list.each do |project|
+        if project.has_task?(task_id)
+
+          project.task_list.each do |task|
+             if task.task_id == task_id
+                 return task.complete = true
+             end
+          end
+        end
+
+      end
+
     end
 
-user_input = gets.chomp
+   if user_input[0] == "add"
+    projid = user_input[1].to_i
+    eating_better = TM::Task.new(1,"diet",1,2)
+    @pl.add_task_project(projid,eating_better)
+    puts "added successfully"
+   end
 
-
- # it "list task" do
- #    pl = TM::Projectlist.new
- #    pl.add_projects("fitness")
- #    expect(pl.list_task).to eq []
- #  end
-
-
-
-    # if user_input == "list"
-
-
-    # end
-
-    # if user_input_arr.first == "show"
-    #     # find the project that matches the proj id given by user_input
-    #     project_found = nil
-    #     projects_arr.each do |proj|
-    #         project_found = proj if proj.id == user_input_arr.last.to_i # "1" => 1
-    #     end
-
-    #    puts "Showing Project #{project_found.name}"
-    #     puts "Priority    ID  Description"
-    #     project_found.task_list.each do |task|
-    #         puts "#{task.priority_num} #{task.task_id} #{task.descr}"
-    #     end
-
-
-  end
+  return user_input.join(" ")
 end
 
-tc = TM::TerminalClient.new
-tc.start
+
+
+
+
+
+end
+
+# while true
+#   user_input = tc.start
+#   break if user_input == "quit"
+# end
+
+while true
+  tc = TM::TerminalClient.new
+  tc.start
+
+  user_input = tc.start
+  break if user_input == "quit"
+end
 
 
 
