@@ -32,7 +32,20 @@ while answer != "quit" do
     newarray = answer.split[1..-1]
     this_is_it = newarray.join(' ')
     @client_list.add_project(this_is_it)
-    puts "#{@client_list.projects.last.name} was successfully created"
+    puts "\n#{@client_list.projects.last.name} was successfully created"
+
+    puts "\nWhat would you like to do next?"
+    answer = gets.chomp
+  end
+
+  if answer.split.first == "add"
+    newarray = answer.split[1..-1]
+    priority = newarray[-1]
+    p_id = newarray[-2]
+    desc = newarray[0..-3].join(" ")
+    @client_list.add_task(desc, p_id, priority)
+    puts "\n#{@client_list.projects.last.task.description} was successfully added to the #{@client_list.projects.last.name} project"
+
     puts "\nWhat would you like to do next?"
     answer = gets.chomp
   end
