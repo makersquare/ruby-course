@@ -13,14 +13,15 @@ class TM::TerminalClient
     puts "Welcome to Project Manager Pro®. What can I do for you today?"
 
     puts "Available Commands:"
-    puts "help - Show these commands again\n
-      list - List all projects\n
-      create NAME - Create a new project with name=NAME\n
-      show PID - Show remaining tasks for project with id=PID\n
-      history PID - Show completed tasks for project with id=PID\n
-      mark TID - Mark task with id=TID as complete\n
-      add PID PRIORITY DESC - Add a new task to project with id=PID\n
-      Please type in the above commands\n"
+    puts "help - Show these commands again"
+    puts "list - List all projects"
+    puts "create NAME - Create a new project with name=NAME"
+    puts "show PID - Show remaining tasks for project with id=PID"
+    puts "history PID - Show completed tasks for project with id=PID"
+    puts  "mark TID - Mark task with id=TID as complete"
+    puts "add PID PRIORITY DESC - Add a new task to project with id=PID"
+    puts "--------"
+    puts  "Please type in the above commands"
 
     user_input = gets.chomp  #user_input = show 1
 
@@ -28,10 +29,11 @@ class TM::TerminalClient
 
 
     if user_input[0] == "help"
-      puts "list - List all projects\n
+      puts "list - List all projects
       show PID - Show remaining tasks for project with id=PID\n
       history PID - Show completed tasks for project with id=PID\n
       mark TID - Mark task with id=TID as complete\n"
+      start
     end
 
     if user_input[0] == "list" # user input list run block
@@ -40,22 +42,35 @@ class TM::TerminalClient
          puts "NO PROJECTS AT THE MOMENT"
          puts "\n"
        end
+
+
        if @pl.project_list.empty? == false #if there are projects
         @pl.project_list.each do |project|
-        puts "\n"      # display project name
-        puts "SHOWING PROJECTS   ---> #{project.name}"
+          puts "\n"      # display project name
+          puts "SHOWING PROJECTS   ---> #{project.name} with PID of #{project.id}"
           if project.task_list.empty? # if a project has not task
             puts "\n"                 # this will display
-            puts "#{project.name} HAS NO TASKS"
+            puts "PROJECT #{project.name} HAS NO TASKS"
+            puts "\n"
+          else
+            puts "\n"
+            puts "PROJECT #{project.name} LIST OF TASKS" #below you want to iterate
+            puts "--------"#through a projct's task_list and puts attr all tasks
+            project.task_list.each do |task|
+              puts "task ID: #{task.task_id}"
+              puts "task is about #{task.descr}"
+              puts "task PRIORITY: #{task.priority_num}"
+              puts "task completion status: #{task.complete}"
+              puts "--------"
+
+
+            end
             puts "\n"
           end
-        puts "#{project.name} TASKS"
-        puts "\n"
-        puts ""
-        puts "\n"
+
         end
        end
-       start
+
     end
 
     if user_input[0] == "create"
@@ -74,10 +89,19 @@ class TM::TerminalClient
        proj_id = user_input[1].to_i
        if @pl.list_task_remain(proj_id).empty?
          puts "\n"
-         puts "NO REMAINING TASK AT THE MOMENT"
+         puts "NO REMAINING TASK AT THE MOMENT FOR PROJECT ID: #{proj_id}"
          puts "\n"
        else
-         p @pl.list_task_remain(proj_id)
+          @pl.list_task_remain(proj_id).each do |task|
+            puts "\n"
+            puts "uncompleted task for project id of #{proj_id}"
+            puts "--------"
+            puts "task ID: #{task.task_id}"
+            puts "task is about #{task.descr}"
+            puts "task PRIORITY: #{task.priority_num}"
+            puts "task completion status: #{task.complete}"
+            puts "--------"
+          end
        end
 
 
@@ -88,10 +112,19 @@ class TM::TerminalClient
         projid = user_input[1].to_i
       if @pl.list_task_complete(projid).empty?
         puts "\n"
-        puts "NO COMPLETED TASK AT THE MOMENT"
+        puts "NO COMPLETED TASK AT THE MOMENT FOR PROJECT ID: #{projid}"
         puts "\n"
       else
-        p @pl.list_task_complete(projid)
+        @pl.list_task_complete(projid).each do |task|
+        puts "\n"
+        puts "completed task for project id of #{projid}"
+        puts "--------"
+            puts "task ID: #{task.task_id}"
+            puts "task is about #{task.descr}"
+            puts "task PRIORITY: #{task.priority_num}"
+            puts "task completion status: #{task.complete}"
+            puts "--------"
+        end
       end
     end
 
@@ -102,10 +135,10 @@ class TM::TerminalClient
 
           project.task_list.each do |task|
              if task.task_id == task_id
-                 return task.complete = true
                  puts "\n"
                  puts "task is now completed"
                  puts "\n"
+                 return task.complete = true
              end
           end
         end
@@ -123,8 +156,9 @@ class TM::TerminalClient
     puts "\n"
    end
 
-  return user_input.join(" ")
-end
+   return user_input.join(" ")
+
+  end
 
 
 
@@ -137,9 +171,9 @@ end
 #   user_input = tc.start
 #   break if user_input == "quit"
 # end
-
+tc = TM::TerminalClient.new
 while true
-  tc = TM::TerminalClient.new
+
   tc.start
 
   user_input = tc.start

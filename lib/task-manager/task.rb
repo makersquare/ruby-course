@@ -1,6 +1,6 @@
 class TM::Task
   attr_reader :task_id, :creation_date, :priority_num
-  attr_accessor :complete
+  attr_accessor :complete, :descr
   def initialize(proj_id, descr, priority_num, task_id)
      @proj_id = proj_id
      @descr = descr

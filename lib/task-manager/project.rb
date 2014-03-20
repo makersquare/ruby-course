@@ -3,7 +3,7 @@ class TM::Project
 @@id = 0
 attr_reader :name, :id, :task_list
 
-  @@id = 0
+
   def initialize(name)
     @name = name
     @@id += 1
@@ -11,6 +11,14 @@ attr_reader :name, :id, :task_list
     @task_list = []
 
   end
+
+  def has_task?(task_id)
+     @task_list.each do |task|
+       return true if task.task_id == task_id
+     end
+     return false
+   end
+
 
 
   def add_task(task)
