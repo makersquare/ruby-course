@@ -5,9 +5,11 @@ class TM::ProjectList
     @project_list = []
   end
 
-  def create_project(name)
-    @project_list << TM::Project.new(name)
+  def add_project(name)
+    proj = TM::Project.new(name)
+    @project_list << proj
   end
+
 
   def get_project(project_id)
     match = @project_list.select {|x| x.project_id = project_id}
