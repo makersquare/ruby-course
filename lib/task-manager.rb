@@ -10,5 +10,5 @@ require_relative 'task-manager/db.rb'
 require_relative 'task-manager/employee.rb'
 require_relative 'task-manager/middleman.rb'
 
-x = TM::Client.new
-x.main_menu
+# x = TM::Client.new
+# x.main_menu

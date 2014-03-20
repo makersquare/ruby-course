@@ -15,7 +15,7 @@ class TM::Client
       puts"\tproject employees PID - Show employees participating in a project PID\n"
       puts"\ttask create PID PRIORITY DESC - Create a task\n"
       puts"\ttask assign TID EID - Create a task\n"
-      puts"\ttask mark TID - Create a task\n"
+      puts"\ttask mark TID - Mark a task as finished\n"
       puts"\temp list - List all employees\n"
       puts"\temp create NAME - Create employee\n"
       puts"\temp show EID - Show employee EID and all participating projects\n"
@@ -71,6 +71,7 @@ class TM::Client
           when "create"
             self.create_task(choice_array[2].to_i, choice_array[3].to_i, choice_array[4..-1])
           when "assign"
+            self.assign_task()
           when "mark"
             self.mark(choice_array[2].to_i)
           end
@@ -145,7 +146,6 @@ class TM::Client
 
 
   def add_task
-
     # keep asking the user for input until they enter a valid id
     project_id = nil
     until TM::Project.all_projects.keys.include?(project_id)
@@ -242,6 +242,12 @@ class TM::Client
 
     puts "Press Enter to Continue"
     gets
+  end
+
+  def assign_task(task_id, employee_id)
+    TI::Middleman.assign_task_to_employee(task_id, employee_id)
+
+
   end
 
   def show_assigned_employees(project_id)
