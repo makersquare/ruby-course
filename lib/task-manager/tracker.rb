@@ -30,6 +30,7 @@ class TM::ProjectTracker
     project = TM::Project.new(name)
     @projects.push(project)
     puts "#{project.name} project created"
+    return project
   end
 
   def show_tasks(project_id)
@@ -82,6 +83,42 @@ end
     @employees.push(employee)
     employee
   end
+
+  def assign_task(task_id, employee_id)
+    blue = @tasks.find {|x| x.id == task_id.to_i}
+    red = @employees.find {|x| x.id == employee_id.to_i}
+    # green = @projects.find {|x| x.tasks}
+    blue.employee = red
+  end
+
+  def emplist
+    puts "Employee ID: Employee Name"
+    @employees.each do |x|
+      puts "#{x.id}: #{x.name}"
+      return "#{x.id}: #{x.name}"
+    end
+  end
+  def assign_to_project(project_id, employee_id)
+    blue = @projects.find {|x| project_id.to_i == x.id}
+    red = @employees.find {|x| employee_id.to_i == x.id}
+    blue.employees.push(red)
+  end
+  def employees_in_project(project_id)
+    blue = @projects.find {|x| project_id.to_i == x.id}
+    puts "#{blue.name} project"
+    puts "Employee ID: Employee Name"
+    blue.employees.each do |x|
+      puts "#{x.id}: #{x.name}"
+      return "#{x.id}: #{x.name}"
+    end
+  end
 end
+
+
+
+
+
+
+
 
 
