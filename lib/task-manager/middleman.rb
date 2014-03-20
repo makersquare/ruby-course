@@ -17,7 +17,4 @@ class TM::Middleman
     TM::DB.instance.all_employees[employee_id].tasks[task_id] = TM::DB.instance.all_tasks[task_id]
   end
 
-
-
-
 end

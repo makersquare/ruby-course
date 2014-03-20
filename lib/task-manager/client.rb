@@ -245,7 +245,6 @@ class TM::Client
   end
 
   def assign_task(task_id, employee_id)
-    binding.pry
     TM::Middleman.assign_task_to_employee(task_id, employee_id)
     puts "\n\nTask #{TM::DB.instance.all_tasks[task_id].description} to #{TM::DB.instance.all_employees[employee_id]}."
     puts "\n"
