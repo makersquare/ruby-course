@@ -79,6 +79,7 @@ class TM::Client
         when "emp"
           case choice_array[1]
           when "list"
+            self.list_employees
           when "create"
           when "show"
           when "ongoing"
@@ -253,7 +254,6 @@ class TM::Client
   end
 
   def show_assigned_employees(project_id)
-
     # get the project
     project = TM::DB.instance.all_projects[project_id]
 
@@ -269,7 +269,21 @@ class TM::Client
     puts "\n"
     puts "Press Enter to Continue"
     gets
+  end
 
+  def list_employees
+    #get list
+    employee_list = TM::DB.instance.all_employees.values.sort { |a,b| a.employee_id <=> b.employee_id }
+
+    #display it beautifully :)
+    puts "\nALL EMPLOYEES:\n\n"
+    puts "ID\tEmployee\n"
+    puts "------------------------------------------------"
+    employee_list.each { | x | print("#{x.employee_id}" + (' ' * (8 - x.employee_id.to_s.length)) + # padding
+                  "#{x.name}" + "\n") }
+    puts "\n"
+    puts "Press Enter to Continue"
+    gets
   end
 
 
