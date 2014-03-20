@@ -70,7 +70,6 @@ class TM::Client
           case choice_array[1]
           when "create"
             self.create_task(choice_array[2].to_i, choice_array[3].to_i, choice_array[4..-1])
-
           when "assign"
           when "mark"
             self.mark(choice_array[2].to_i)
@@ -129,8 +128,8 @@ class TM::Client
   end
 
   def mark(task_id)
-    TM::Task.all_tasks[task_id].finished = true
-    puts "#{TM::Task.all_tasks[task_id].description} marked as finished."
+    success = TM::Middleman.mark_task(task_id)
+    puts "#{TM::DB.instance.all_tasks[task_id].description} marked as finished."
     puts smart_ass_remarker(["You must be real proud of yourself",
                             "Applause applause.",
                             "What took you so long?"])
@@ -235,6 +234,16 @@ class TM::Client
     puts "Press Enter to Continue"
     gets
   end
+
+  def show_assigned_employees(project_id)
+
+    # get the project
+    project = TM::DB.all_projects[project_id]
+
+    # get the list
+    employee_list = TM::Middleman.get_assigned_employees(project_id)
+  end
+
 
 
   def smart_ass_remarker(remarks)
