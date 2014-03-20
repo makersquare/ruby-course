@@ -24,6 +24,11 @@ describe "TM::ProjectList" do
 	end
 
 	it "can add tasks based on a project ID" do
-		expect(@new_project.tasks[0]).to eq(@new_project.tasks)
+		expect(@pl.project_list[0].tasks).to eq(@new_project.tasks)
+	end
+
+	it "can mark a task as complete based on a project" do
+		TM::Task.class_variable_set :@@task_id, 0
+		expect(@pl.project_list[0].complete_task(14)).to eq("complete")
 	end
 end
