@@ -26,7 +26,7 @@ class TM::ProjectList
     return match[0].completed_tasks
   end
 
-  def add_tasks(project_list, description, priority)
+  def add_tasks(project_id, description, priority)
     match = @project_list.select {|project| project.project_id = project_id}
     return match[0].add_task(description, priority)
   end

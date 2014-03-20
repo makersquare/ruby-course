@@ -5,7 +5,7 @@ describe 'Project List' do
     @pl = TM::ProjectList.new
     @project = TM::Project.new("New Project")
     @new_project = @pl.add_project('nato')
-    #@new_project.add_tasks(1, "Stop", 1)
+    @new_task = @pl.add_tasks(1, "Stop", 1)
    # @new_project.add_tasks(1, "drop", 2)
    # @new_project.add_tasks(1, "roll", 4)
    # @new_project.mark_complete(1, 2)
@@ -28,9 +28,9 @@ describe 'Project List' do
   end
 
 
-  #it 'can add a task' do
-  #  expect(@pl)
-  #end
+  it 'can add a task' do
+    expect(@pl.project_list[0].tasks).to eq(@new_task)
+  end
 
 
 
