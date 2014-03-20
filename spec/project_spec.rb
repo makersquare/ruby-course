@@ -20,8 +20,10 @@ describe 'Project' do
     end
 
     it "generates and assigns an id" do
-      expect(TM::Project).to receive(:gen_id).and_return(1)
-      expect(project.id).to eq(1)
+      TM::Project.class_variable_set :@@counter, 0
+      expect(TM::Project.new('title').id).to eq(1)
+      expect(TM::Project.new('title').id).to eq(2)
+      expect(TM::Project.new('title').id).to eq(3)
     end
   end
 

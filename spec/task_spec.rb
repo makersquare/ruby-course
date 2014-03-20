@@ -22,8 +22,10 @@ describe 'Task' do
     end
 
     it 'generates a unique id for each task' do
-      expect(TM::Task).to receive(:gen_id).and_return(1)
-      expect(task.id).to eq(1)
+      TM::Task.class_variable_set :@@counter, 0
+      expect(TM::Task.new(1, 'desc', 1).id).to eq(1)
+      expect(TM::Task.new(1, 'desc', 1).id).to eq(2)
+      expect(TM::Task.new(1, 'desc', 1).id).to eq(3)
     end
 
     it 'defaults the task as being incompleted' do
