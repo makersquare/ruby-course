@@ -47,10 +47,10 @@ while answer != "quit" do
   end
 
   if answer.split(" ").first =="show"
-    project_id = answer.split[1]
+    project_id = answer.split[1].to_i
     project = @cpl.projects.find{|project| project.id == project_id}
-    puts "\n#{project.retrieve_completed}"
-    puts "What next?"
+    project.retrieve_incomplete.each{|task| puts "Task Description: #{task.description}. Priority:#{task.priority}"}
+    puts "\nWhat next?"
     answer = gets.chomp
   end
 
