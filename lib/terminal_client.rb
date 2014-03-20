@@ -46,7 +46,27 @@ while answer != "quit" do
     answer = gets.chomp
   end
 
+  if answer.split(" ").first =="show"
+    project_id = answer.split[1]
+    project = @cpl.projects.find{|project| project.id == project_id}
+    puts "\n#{project.retrieve_completed}"
+    puts "What next?"
+    answer = gets.chomp
+  end
 
+# <-------adds a new task------------->
+  if answer.split(" ").first.to_i >= 1
+    array = answer.split(" ")
+    project_id = array[0].to_i
+    priority = array[1].to_i
+    description = array[2..-1].join(' ')
+    puts description
+    @cpl.add_task(project_id, priority, description)
+    project = @cpl.projects.find{|project| project.id ==project_id}
+    puts "\nYou added '#{description}' to Project: #{project.name}."
+    puts "\nWhat would you like to do next?"
+    answer = gets.chomp
+  end
 end
 
 
