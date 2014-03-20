@@ -141,18 +141,30 @@ class TM::ProjectManager
   end
 
   def create_task
-    description = @control[4..-1]
-    @projectlist.projects[@control[1].to_i].addtask(@control[2].to_i,@control[3].to_i,description.join(" "))
-    puts "Added new task to project #{@control[1]}."
-    puts "Task number: #{@control[2]}"
-    puts "Priority: #{@control[3]}"
-    puts "Description: #{description.join(" ")}"
+    if @projectlist.projects[@control[2].to_i].nil?
+      puts "Project with that PID does not exist."
+    elsif @projectlist.projects[@control[2].to_i].tasks[@control[3].to_i]
+      puts "Task with that TID already exists in this project."
+    else
+      description = @control[4..-1]
+      @projectlist.projects[@control[1].to_i].addtask(@control[2].to_i,@control[3].to_i,description.join(" "))
+      puts "Added new task to project #{@control[1]}."
+      puts "Task number: #{@control[2]}"
+      puts "Priority: #{@control[3]}"
+      puts "Description: #{description.join(" ")}"
+    end
     input
   end
 
   def mark
-    @projectlist.projects[@control[1].to_i].markcomplete(@control[2].to_i)
-    puts "Marked Task #{@control[2]} from Project #{@control[1]} complete."
+    if @projectlist.projects[@control[2].to_i].nil?
+      puts "Project with that PID does not exist."
+    elsif @projectlist.projects[@control[2].to_i].tasks[@control[3].to_i].nil?
+      puts "Task with that TID does not exist in this project."
+    else
+      @projectlist.projects[@control[1].to_i].markcomplete(@control[2].to_i)
+      puts "Marked Task #{@control[2]} from Project #{@control[1]} complete."
+    end
     input
   end
 
@@ -165,8 +177,16 @@ class TM::ProjectManager
   end
 
   def assign
-    @projectlist.employees[@control[4].to_i].taketask(@projectlist.projects[@control[2].to_i].tasks[@control[3].to_i])
-    puts "Assigned task #{@projectlist.projects[@control[2].to_i].tasks[@control[3].to_i].description} to #{@projectlist.employees[@control[4].to_i].name}"
+    if @projectlist.projects[@control[2].to_i].nil?
+      puts "Project with that PID does not exist."
+    elsif @projectlist.projects[@control[2].to_i].tasks[@control[3].to_i].nil?
+      puts "Task with that TID does not exist in this project."
+    elsif @projectlist.employees[@control[4].to_i].nil?
+      puts "Employee with that EID does not exist."
+    else
+      @projectlist.employees[@control[4].to_i].taketask(@projectlist.projects[@control[2].to_i].tasks[@control[3].to_i])
+      puts "Assigned task #{@projectlist.projects[@control[2].to_i].tasks[@control[3].to_i].description} to #{@projectlist.employees[@control[4].to_i].name}"
+    end
     input
   end
 
@@ -177,35 +197,47 @@ class TM::ProjectManager
   end
 
   def show_employee
-    puts "Employee #{@projectlist.employees[@control[2].to_i].name} is on the following projects:"
-    @projectlist.projects.each do |projects|
-      if projects.employees_on_project.include?(@projectlist.employees[@control[2].to_i])
-        puts "#{projects.id}: #{projects.name}"
+    if @projectlist.employees[@control[2].to_i].nil?
+      puts "Employee with that EID does not exist."
+    else
+      puts "Employee #{@projectlist.employees[@control[2].to_i].name} is on the following projects:"
+      @projectlist.projects.each do |projects|
+        if projects.employees_on_project.include?(@projectlist.employees[@control[2].to_i])
+          puts "#{projects.id}: #{projects.name}"
+        end
       end
     end
     input
   end
 
   def employee_remaining_tasks
-    puts "Employee still needs to complete the following tasks"
-    @projectlist.employees[@control[2].to_i].tasks.each do |task|
-      if !task.complete
-        project_for_task = 0
-        @projectlist.projects.each do |project|
-          if project.tasks.values.include?(task)
-            project_for_task = project
+    if @projectlist.employees[@control[2].to_i].nil?
+      puts "Employee with that EID does not exist."
+    else
+      puts "Employee still needs to complete the following tasks"
+      @projectlist.employees[@control[2].to_i].tasks.each do |task|
+        if !task.complete
+          project_for_task = 0
+          @projectlist.projects.each do |project|
+            if project.tasks.values.include?(task)
+              project_for_task = project
+            end
           end
+          puts "#{task.description} for Project #{project_for_task.name}"
         end
-        puts "#{task.description} for Project #{project_for_task.name}"
       end
     end
     input
   end
 
   def employee_history
-    puts "Employee has completed the following tasks"
-    @projectlist.employees[@control[2].to_i].tasks.each do |task|
-      puts "TID: #{task.project_id} Description: #{task.description}" if task.complete
+    if @projectlist.employees[@control[2].to_i].nil?
+      puts "Employee with that EID does not exist."
+    else
+      puts "Employee has completed the following tasks"
+      @projectlist.employees[@control[2].to_i].tasks.each do |task|
+        puts "TID: #{task.project_id} Description: #{task.description}" if task.complete
+      end
     end
     input
   end
