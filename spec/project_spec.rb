@@ -69,5 +69,11 @@ describe 'Project' do
     expect(TM::DB.instance.all_projects[2]).to eq(@kill_sue)
   end
 
+  it "keeps a list of enrolled employees" do
+    employee1 = TM::Employee.new("Bob")
+    @kill_bob.assign_employee(employee1)
+    expect(@kill_bob.assigned_employees[employee1.employee_id]).to eq(employee1)
+  end
+
 
 end

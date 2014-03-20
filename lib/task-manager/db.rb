@@ -1,4 +1,4 @@
-require 'Singleton'
+require 'singleton'
 
 class TM::DB
 
