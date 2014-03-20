@@ -7,4 +7,7 @@ class TM::Employee
     @@id_counter += 1
   end
 
+  def self.id_counter=(value)
+    @@id_counter = value
+  end
 end
