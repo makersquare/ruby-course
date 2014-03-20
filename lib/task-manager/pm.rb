@@ -15,7 +15,7 @@ class TM::ProjectManager
     puts "  create NAME - Create a new project with name=NAME"
     puts "  show PID - Show remaining tasks for project with id=PID"
     puts "  history PID - Show completed tasks for project with id=PID"
-    puts "  add PID TID PRIORITY DESC - Add a new task to project with id=PID"
+    puts "  add PID TID PRIORITY DESC - Add a new task with id=TID to project with id=PID"
     puts "  mark PID TID - Mark task with PID[TID] as complete"
     puts "  quit - Exit program"
 
