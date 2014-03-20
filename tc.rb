@@ -34,17 +34,19 @@ class TM::TerminalClient
       mark TID - Mark task with id=TID as complete\n"
     end
 
-    if user_input[0] == "list"
-       if @pl.project_list.empty?
-         puts "\n"
+    if user_input[0] == "list" # user input list run block
+       if @pl.project_list.empty? #if no projects in array
+         puts "\n"               #run this, others block not run
          puts "NO PROJECTS AT THE MOMENT"
          puts "\n"
        end
-       if @pl.project_list.empty? == false
+       if @pl.project_list.empty? == false #if there are projects
         @pl.project_list.each do |project|
-        puts "\n"
+        puts "\n"      # display project name
         puts "SHOWING PROJECTS   ---> #{project.name}"
-          if project.task_list == empty? # if no projects
+          if project.task_list.empty? # if a project has not task
+            puts "\n"                 # this will display
+            puts "#{project.name} HAS NO TASKS"
             puts "\n"
           end
         puts "#{project.name} TASKS"
