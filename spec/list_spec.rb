@@ -30,7 +30,23 @@ describe "project_list" do
       expect(result[0].description).to eq("Holla back, gurl")
       expect(result[0].priority).to eq(2)
       expect(result[0].id).to eq(1)
-    end
-  end
+     end
+   end
 
+   describe "show_remaining_tasks" do
+    it "shows uncompleted tasks in a given project_id" do
+      @new_project_list.add_project(@new_project.name)
+
+      pid = @new_project.id + 1
+      @new_project_list.add_task_to_project("Holla back, gurl", 2, pid)
+      @new_project_list.add_task_to_project("I ain't", 2, pid)
+      @new_project_list.add_task_to_project("no holla back, gurl", 2, pid)
+      # binding.pry
+
+      expected_project = @new_project_list.project_list[0]
+
+      result = @new_project_list.show_remaining_tasks(pid)
+      expect(result).to eq(expected_project.tasks)
+    end
+   end
 end

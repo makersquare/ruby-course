@@ -23,5 +23,11 @@ class TM::ProjectList
     end
   end
 
+  def show_remaining_tasks(pid)
+    selected_project = @project_list.find { |project| project.id == pid }
+    remaining_tasks = selected_project.tasks.select { |task| task.complete == false }
+    return remaining_tasks
+  end
+
 end
 
