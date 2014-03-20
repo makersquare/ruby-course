@@ -31,4 +31,3 @@ projectmanager = TM::ProjectManager.new(pl)
 
 projectmanager.menu
 
-# "emp history EID - Show completed tasks for employee with id=EID"

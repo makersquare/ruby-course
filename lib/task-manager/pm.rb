@@ -87,7 +87,9 @@ class TM::ProjectManager
   end
 
   def history
-    if @projectlist.projects[@control.last.to_i].completedlist.count == 0
+    if @projectlist.projects[@control.last.to_i].nil?
+      puts "Project with that PID does not exist."
+    elsif @projectlist.projects[@control.last.to_i].completedlist.count == 0
       puts "There are no completed tasks for this project."
     else
       puts "Complete Tasks:"
@@ -101,13 +103,15 @@ class TM::ProjectManager
   end
 
   def show
-    if @projectlist.projects[@control.last.to_i].incompletelist.count == 0
+    if @projectlist.projects[@control[2].to_i].nil?
+      puts "Project with that PID does not exist."
+    elsif @projectlist.projects[@control.last.to_i].incompletelist.count == 0
       puts "There are no incomplete tasks for this project."
     else
       puts "Incomplete Tasks:"
       puts ""
       puts "Priority   ID  Description"
-      @projectlist.projects[@control.last.to_i].incompletelist.each do |task|
+      @projectlist.projects[@control[2].to_i].incompletelist.each do |task|
         puts "       #{task.priority}    #{task.project_id}  #{task.description}"
       end
     end
@@ -115,16 +119,24 @@ class TM::ProjectManager
   end
 
   def list_employees_on_project
-    puts "Employee:\tID:"
-    @projectlist.projects[@control[2].to_i].employees_on_project.each do |employee|
-      puts "#{employee.name}\t\t#{employee.id}"
+    if @projectlist.projects[@control[2].to_i].nil?
+      puts "Project with that PID does not exist."
+    else
+      puts "Employee:\tID:"
+      @projectlist.projects[@control[2].to_i].employees_on_project.each do |employee|
+        puts "#{employee.name}\t\t#{employee.id}"
+      end
     end
     input
   end
 
   def add_employee_to_project
-    @projectlist.projects[@control[2].to_i].addemployee(@projectlist.employees[@control[3].to_i])
-    puts "Added #{@projectlist.employees[@control[3].to_i].name} to Project #{@control[2]}"
+    if @projectlist.projects[@control[2].to_i].nil?
+      puts "Project with that PID does not exist."
+    else
+      @projectlist.projects[@control[2].to_i].addemployee(@projectlist.employees[@control[3].to_i])
+      puts "Added #{@projectlist.employees[@control[3].to_i].name} to Project #{@control[2]}"
+    end
     input
   end
 
