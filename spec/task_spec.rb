@@ -4,7 +4,8 @@ require 'spec_helper'
 describe 'Task' do
 
   before do
-    expect(TM::Task).to receive(:generate_id).at_least(:once).  and_return(0)
+    TM::Task.class_variable_set :@@counter, 0
+    # expect(TM::Task).to receive(:generate_id).at_least(:once).  and_return(0)
     @new_task = TM::Task.new("take out the trash")
   end
 
@@ -30,7 +31,7 @@ describe 'Task' do
 
     it 'has a unique id' do
       result = @new_task.id
-      expect(result).to eq(0)
+      expect(result).to eq(1)
     end
 
     it 'is assigned a time created by default' do

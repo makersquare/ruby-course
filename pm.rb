@@ -11,24 +11,25 @@ def self.first_menu
     puts "list - List all projects`"
     puts "show PID - Show remaining tasks for project with id=PID"
     puts "history PID - Show completed tasks for project with id`=PID"
-    puts "add  PID PRIORITY DESC - Add a new task to project with id=PID"
+    puts "add  DESC PRIORITY PID - Add a new task to project with id=PID"
     puts "mark TID - Mark task with id=TID as complete"
     puts
-    print "What would you like to do? ".colorize(:green)
 
-    @@user_command = gets.chomp
   end
 
 def self.start
   @@user_command = ''
   @@project_list = TM::ProjectList.new
-  puts "Welcome to Project Manager Pro®. What can I do for you today?"
-  while (@@user_command != 'quit')
-    PM.first_menu
+  puts
+  puts "Welcome to Project Manager Pro®. What can I do for you today?".colorize(:color => :light_blue, :background => :white)
+  PM.first_menu
 
+  while (@@user_command != 'quit')
+    print "What would you like to do? ".colorize(:green)
+    @@user_command = gets.chomp
 
     if (@@user_command == 'help')
-
+        PM.first_menu
     elsif (@@user_command.include? 'create')
       length = @@user_command.length
       project_name = @@user_command.slice(7..length)
@@ -37,12 +38,31 @@ def self.start
       puts
       puts
       puts "Project #{project_name} added!".colorize(:yellow)
+      puts
 
 
     elsif(@@user_command == 'list')
-      @@project_list.list_projects
+      puts "Project List"
+      puts
+      @@project_list.projects.each {|project| puts "#{project.id} #{project.project_name}"}
+      # @@project_list.list_projects
+      puts
 
-    end
+  elsif (@@user_command.include? 'add')
+      #add 2 take out the trash 1
+      puts "#{@@user_command}".colorize(:yellow)
+      pid = @@user_command.slice(4).to_i
+      priority = @@user_command.slice(@@user_command.length - 1).to_i
+      description = @@user_command.slice(6..@@user_command.length - 2)
+      puts "#{pid}  #{priority} #{description}"
+
+      chosen_project =  @@project_list.projects.find{|project| project.id == pid}
+      puts
+      puts "task was added to the #{chosen_project.project_name} project".colorize(:yellow)
+      puts
+
+  elsif
+  end
 
   end
 end

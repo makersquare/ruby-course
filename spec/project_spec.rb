@@ -2,8 +2,13 @@ require 'spec_helper'
 
 describe 'Project' do
   before do
-    expect(TM::Project).to receive(:generate_id).and_return(0)
+    TM::Project.class_variable_set :@@counter, 0
+    # expect(TM::Project).to receive(:generate_id).at_least(:once).and_return(0)
     @new_project = TM::Project.new('project name')
+
+    TM::Task.class_variable_set :@@counter, 0
+    # expect(TM::Task).to receive(:generate_id).at_least(:once).and_return(0)
+    @new_task = TM::Task.new('take out the trash')
   end
 
   it "exists" do
@@ -16,31 +21,31 @@ describe 'Project' do
     end
     it 'assigns each project a unique_id' do
       result = @new_project.id
-      expect(result).to eq(0)
+      expect(result).to eq(1)
     end
   end
 
   describe '#add_task' do
     it 'adds a task to the project' do
-      task = TM::Task.new("take out the trash")
-      @new_project.add_task(task)
+      # task = TM::Task.new("take out the trash")
+      @new_project.add_task(@new_task)
       result = @new_project.tasks[0]
-      expect(result).to eq(task)
+      expect(result).to eq(@new_task)
     end
     it 'assigns the respective project id to project_id' do
-      task = TM::Task.new("take out the trash")
-      @new_project.add_task(task)
-      result = task.project_id
-      expect(result).to eq(0)
+      # task = TM::Task.new("take out the trash")
+      @new_project.add_task(@new_task)
+      result = @new_task.project_id
+      expect(result).to eq(1)
     end
 
   describe '#mark_task_complete' do
     it 'marks a task identified by its id as complete' do
-      task = TM::Task.new("take out the trash")
+      # task = TM::Task.new("take out the trash")
 
-      @new_project.add_task(task)
-      @new_project.mark_task_complete(3)
-      result = task.complete
+      @new_project.add_task(@new_task)
+      @new_project.mark_task_complete(@new_task.id)
+      result = @new_task.complete
 
       expect(result).to eq(true)
 
@@ -60,9 +65,11 @@ describe 'Project' do
 
       @new_project.mark_task_complete(task.id)
       @new_project.mark_task_complete(task_two.id)
-
+      # binding.pry
       result = @new_project.retrieve_completed_tasks
-      expect(result[0]).to eq(task)
+      expect(result).to eq([task, task_two])
+      # expect(result[1]).to eq(task_two)
+
 
 
     end
