@@ -196,6 +196,7 @@ class TM::Client
     @employee1.add_project(@kill_sue)
     @employee1.add_task(@buy_gun)
     @employee1.add_task(@load_gun)
+    @buy_gun.finished = true
   end
 
   def create_task(project_id, description, priority)
@@ -280,6 +281,9 @@ class TM::Client
   end
 
   def show_employee_history(employee_id)
+    # get employee
+    employee = TM::DB.instance.all_employees[employee_id]
+
     puts "ID\tDescription\t\t\tPriority\n"
     puts "------------------------------------------------"
     employee.completed_tasks.each { | x | print("#{x.task_id}" + (' ' * (8 - x.task_id.to_s.length)) + # padding
