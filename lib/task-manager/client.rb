@@ -85,6 +85,7 @@ class TM::Client
           when "show"
             self.show_employee(choice_array[2].to_i)
           when "ongoing"
+            self.show_employee_ongoing(choice_array[2].to_i)
           when "history"
           end
 
@@ -260,6 +261,12 @@ class TM::Client
     gets
   end
 
+  def show_employee_ongoing(employee_id)
+    # get employee
+    employee = TM::DB.instance.all_employees[employee_id]
+
+    # display ongoing tasks
+    employee.
 
 
   def smart_ass_remarker(remarks)
