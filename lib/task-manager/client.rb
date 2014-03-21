@@ -287,6 +287,7 @@ class TM::Client
                   "#{x.priority}\n")) }
     puts"\n\nPress Enter to Continue"
     gets
+  end
 
   def smart_ass_remarker(remarks)
     random = rand(remarks.length)

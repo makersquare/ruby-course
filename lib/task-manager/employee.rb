@@ -39,7 +39,6 @@ class TM::Employee
     else
       return false
     end
-
   end
 
   def ongoing_tasks  #returns ongoing_tasks in the proper order
@@ -47,6 +46,12 @@ class TM::Employee
     ongoing_tasks.sort! { |a,b| (a.priority <=> b.priority) == 0 ? (a.creation_date <=> b.creation_date) : (b.priority <=> a.priority) }
     return ongoing_tasks
   end
+
+  def completed_tasks  #returns completed_tasks in the proper order
+    completed_tasks = @tasks.select { |k,v| v.finished? == true }.values
+    return completed_tasks.sort { |a,b| a.creation_date <=> b.creation_date }
+  end
+
 
 
 end
