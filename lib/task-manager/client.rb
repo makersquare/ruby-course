@@ -81,7 +81,9 @@ class TM::Client
           when "list"
             self.list_employees
           when "create"
+            self.create_employee(choice_array[2].to_i)
           when "show"
+            self.show_employee(choice_array[2].to_i)
           when "ongoing"
           when "history"
           end
@@ -145,47 +147,6 @@ class TM::Client
     gets
   end
 
-
-  def add_task
-    # keep asking the user for input until they enter a valid id
-    project_id = nil
-    until TM::Project.all_projects.keys.include?(project_id)
-      print "Which project id would you like to add a task to? "
-      project_id = gets.chomp!.to_i
-    end
-
-    puts "Ok... Adding to #{TM::Project.all_projects[project_id].name}..."
-    print "Enter a task name: "
-    description = gets.chomp!
-
-    # abort add if they left it blank
-    if description.empty?
-      puts smart_ass_remarker(["Oh... cold feet, huh? Ok try again when you're feeling less timid.",
-                            "Why don't you make up your mind and come back later.",
-                            "Need a little more time with the menu?",
-                            "Description too short. Please replace user.",
-                            "Cat got your tongue?"])
-      puts "Shall we move on?"
-      gets
-      return
-    end
-
-    priority = -1
-    until (priority > 0) && (priority <= 10)
-      print "Priority Level (1-10)? "
-      priority = gets.chomp!.to_i
-    end
-
-    #create task and add it to project
-    new_task = TM::Task.new(project_id, description, priority)
-    TM::Project.all_projects[project_id].add_task(new_task)
-
-    puts "\n\nYour task has been added."
-    puts "Press Enter to Continue"
-    gets
-  end  # end add_task
-
-
   def list_projects
     puts "\n\nOk, here's a list of your current projects:\n\n"
     puts"ID:\tTask:"
@@ -230,7 +191,7 @@ class TM::Client
     @employee2.add_project(@kill_bob)
     @employee3.add_project(@kill_bob)
     @employee4.add_project(@kill_sue)
-
+    @employee1.add_project(@kill_sue)
   end
 
   def create_task(project_id, description, priority)
@@ -247,7 +208,7 @@ class TM::Client
 
   def assign_task(task_id, employee_id)
     TM::Middleman.assign_task_to_employee(task_id, employee_id)
-    puts "\n\nTask #{TM::DB.instance.all_tasks[task_id].description} to #{TM::DB.instance.all_employees[employee_id]}."
+    puts "\n\nTask: #{TM::DB.instance.all_tasks[task_id].description}\nto: #{TM::DB.instance.all_employees[employee_id].name}."
     puts "\n"
     puts "Press Enter to Continue"
     gets
@@ -283,6 +244,19 @@ class TM::Client
                   "#{x.name}" + "\n") }
     puts "\n"
     puts "Press Enter to Continue"
+    gets
+  end
+
+  def show_employee(employee_id)
+    # get employee
+    employee = TM::DB.instance.all_employees[employee_id]
+
+    # display employee info
+    puts "\n\nEmployee:  #{employee.name}   ID:  #{employee.employee_id}\n\n"
+    puts "    Projects:\n"
+    puts "---------------------"
+    employee.projects.each { |k, v| puts "#{v.id}"  + (' ' * (5 - v.id.to_s.length)) +  "#{v.name}\n" }
+    puts "\nPress Enter to Continue"
     gets
   end
 
