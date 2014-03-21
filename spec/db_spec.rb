@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe 'Project' do
 
-
   it "initiates with blank employees(hash), participating(array), projects(hash), tasks(array)" do
     expect(TM::DB.instance.all_employees).to be_a(Hash)
     expect(TM::DB.instance.all_tasks).to be_a(Hash)
