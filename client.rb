@@ -3,28 +3,14 @@ require_relative 'lib/task-manager.rb'
 class TM::Client
 
   def main_menu
+
+    # show the menu
+    self.help
+
+    #loop input getting
     exit = false
     while !exit do
-      # Show the menu and get the input
-      puts"\n\n\nWelcome to Badass Manager Pro.  Whatya want??\n\n"
-      puts"You can:"
-      puts"\thelp -- show this screen again\n"
-      puts"\tproject list -- list all projects\n"
-      puts"\tproject create NAME - Create a project\n"
-      puts"\tproject show PID - Show project with ongoing tasks\n"
-      puts"\tproject history PID - Show completed tasks for a project PID\n"
-      puts"\tproject employees PID - Show employees participating in a project PID\n"
-      puts"\ttask create PID PRIORITY DESC - Create a task\n"
-      puts"\ttask assign TID EID - Create a task\n"
-      puts"\ttask mark TID - Mark a task as finished\n"
-      puts"\temp list - List all employees\n"
-      puts"\temp create NAME - Create employee\n"
-      puts"\temp show EID - Show employee EID and all participating projects\n"
-      puts"\temp ongoing EID - Show all remaining tasks assigned to employee id,\n"
-      puts"\t                  along with the project name next to each task."
-      puts"\temp history EID - Show completed tasks for employee EID\n"
-      puts"\tload me up -- Make a bunch of fake projects so you look busy.\n"
-      puts"\tquit -- quit this program\n\n"
+      # get the input
       print"> "
       choice_array = gets.chomp.downcase.split   #store the input in an array
 
@@ -44,15 +30,13 @@ class TM::Client
                           "I don't have to take this shit. I'm going back to my GUI.",
                           "Why don't you take your clumsy fingers somewhere else?",
                           "Hey, watch your mouth."])
-          puts"\nPress Enter, Dummy."
-          gets
 
       else   # if the user behaves themselves
         case choice_array[0]
         when "help"
           puts "\nOk listen up, then, I hate repeating myself....\n"
           puts "\nPress Enter to See the Main Menu AGAIN...\n"
-          gets
+          self.help
         when "project"
           case choice_array[1]
           when "list"
@@ -103,6 +87,30 @@ class TM::Client
     end  #end while
 
   end  #end main_menu
+
+  def help
+    # Show the menu and get the input
+    puts"\n\n\nWelcome to Badass Manager Pro.  Whatya want??\n\n"
+    puts"You can:"
+    puts"\thelp -- show this screen again\n"
+    puts"\tproject list -- list all projects\n"
+    puts"\tproject create NAME - Create a project\n"
+    puts"\tproject show PID - Show project with ongoing tasks\n"
+    puts"\tproject history PID - Show completed tasks for a project PID\n"
+    puts"\tproject employees PID - Show employees participating in a project PID\n"
+    puts"\ttask create PID PRIORITY DESC - Create a task\n"
+    puts"\ttask assign TID EID - Create a task\n"
+    puts"\ttask mark TID - Mark a task as finished\n"
+    puts"\temp list - List all employees\n"
+    puts"\temp create NAME - Create employee\n"
+    puts"\temp show EID - Show employee EID and all participating projects\n"
+    puts"\temp ongoing EID - Show all remaining tasks assigned to employee id,\n"
+    puts"\t                  along with the project name next to each task."
+    puts"\temp history EID - Show completed tasks for employee EID\n"
+    puts"\tload me up -- Make a bunch of fake projects so you look busy.\n"
+    puts"\tquit -- quit this program\n\n"
+  end
+
 
   def show(project_id)
     project = TM::DB.instance.all_projects[project_id]
