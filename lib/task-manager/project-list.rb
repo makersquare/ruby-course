@@ -24,16 +24,8 @@ class TM::ProjectList
     proj
   end
 
-
-
-  # if don't add more to this,
-  # will be unnecessary to test since it's simple
-  # def list_projects
-  #   @projects
-  # end
-
   def show_proj_tasks_remaining(pid)
-    # ensure id is an integer
+    # sanitization - should also add this as expectation to test
     pid = pid.to_i
 
     proj = @projects.find { |project| project.id == pid }
@@ -42,7 +34,7 @@ class TM::ProjectList
   end
 
   def show_proj_tasks_complete(pid)
-    # ensure id is an integer
+    # sanitization - should also add this as expectation to test
     pid = pid.to_i
 
     proj = @projects.find { |project| project.id == pid }
@@ -51,7 +43,7 @@ class TM::ProjectList
   end
 
   def add_task_to_proj(pid, desc, priority)
-    # ensure id and priority are integers
+    # sanitization - should also add this as expectation to test
     pid = pid.to_i
     priority = priority.to_i
 
@@ -61,7 +53,7 @@ class TM::ProjectList
   end
 
   def mark_task_as_complete(tid)
-    # ensure id is an integer
+    # sanitization - should also add this as expectation to test
     tid = tid.to_i
 
     project = nil

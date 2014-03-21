@@ -1,0 +1,2 @@
+class TM::Employee
+end
