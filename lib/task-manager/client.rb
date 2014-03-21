@@ -87,6 +87,7 @@ class TM::Client
           when "ongoing"
             self.show_employee_ongoing(choice_array[2].to_i)
           when "history"
+            self.show_employee_history(choice_array[2].to_i)
           end
 
         when "load"
@@ -277,6 +278,15 @@ class TM::Client
     puts"\n\nPress Enter to Continue"
     gets
   end
+
+  def show_employee_history(employee_id)
+    puts "ID\tDescription\t\t\tPriority\n"
+    puts "------------------------------------------------"
+    employee.completed_tasks.each { | x | print("#{x.task_id}" + (' ' * (8 - x.task_id.to_s.length)) + # padding
+                  "#{x.description}" + (' ' * (33 - x.description.length) +
+                  "#{x.priority}\n")) }
+    puts"\n\nPress Enter to Continue"
+    gets
 
   def smart_ass_remarker(remarks)
     random = rand(remarks.length)
