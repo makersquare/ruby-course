@@ -19,7 +19,7 @@ class TM::Client
       puts"\temp list - List all employees\n"
       puts"\temp create NAME - Create employee\n"
       puts"\temp show EID - Show employee EID and all participating projects\n"
-      puts"\temp details EID - Show all remaining tasks assigned to employee id,\n"
+      puts"\temp ongoing EID - Show all remaining tasks assigned to employee id,\n"
       puts"\t                  along with the project name next to each task."
       puts"\temp history EID - Show completed tasks for employee EID\n"
       puts"\tload me up -- Make a bunch of fake projects so you look busy.\n"
@@ -193,6 +193,8 @@ class TM::Client
     @employee3.add_project(@kill_bob)
     @employee4.add_project(@kill_sue)
     @employee1.add_project(@kill_sue)
+    @employee1.add_task(@buy_gun)
+    @employee1.add_task(@load_gun)
   end
 
   def create_task(project_id, description, priority)
@@ -266,8 +268,15 @@ class TM::Client
     employee = TM::DB.instance.all_employees[employee_id]
 
     # display ongoing tasks
-    employee.
-
+    puts "\n\n"
+    puts "ID\tDescription\t\t\tPriority\n"
+    puts "------------------------------------------------"
+    employee.ongoing_tasks.each { | x | print("#{x.task_id}" + (' ' * (8 - x.task_id.to_s.length)) + # padding
+                  "#{x.description}" + (' ' * (33 - x.description.length) +
+                  "#{x.priority}\n")) }
+    puts"\n\nPress Enter to Continue"
+    gets
+  end
 
   def smart_ass_remarker(remarks)
     random = rand(remarks.length)
