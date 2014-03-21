@@ -83,9 +83,7 @@ class TM::Client
         end
 
       end  #end if
-
     end  #end while
-
   end  #end main_menu
 
   def help

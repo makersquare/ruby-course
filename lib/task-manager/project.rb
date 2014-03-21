@@ -2,17 +2,11 @@ class TM::Project
   attr_reader :name, :id, :tasks, :assigned_employees
 
   @@current_id = 1
- # @@all_projects = {}              # switched to database
 
   # for testing
   def self.current_id=(current_id)
     @@current_id = current_id
   end
-
-  # def self.all_projects           # switched to database
-  #   @@all_projects
-  # end
-
 
   def initialize(name)
     @name = name
@@ -23,7 +17,6 @@ class TM::Project
     # @@all_projects[@id] = self   # switched to database
     TM::DB.instance.all_projects[@id] = self
   end
-
 
   def add_task(task)  # takes a task id or a Task object and adds the task to the project hash
     # set task object depending on what has been passed
@@ -61,7 +54,6 @@ class TM::Project
     end
 
     @assigned_employees[employee_object.employee_id] = employee_object
-
   end
 
 
