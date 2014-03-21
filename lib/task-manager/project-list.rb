@@ -1,7 +1,6 @@
 require 'singleton'
 
 # made a singleton verion of ProjectList
-# a singleton
 
 class TM::ProjectList
   attr_reader :projects
@@ -25,7 +24,7 @@ class TM::ProjectList
   end
 
   def show_proj_tasks_remaining(pid)
-    # sanitization - should also add this as expectation to test
+    # ensure id is an integer
     pid = pid.to_i
 
     proj = @projects.find { |project| project.id == pid }
@@ -34,7 +33,7 @@ class TM::ProjectList
   end
 
   def show_proj_tasks_complete(pid)
-    # sanitization - should also add this as expectation to test
+    # ensure id is an integer
     pid = pid.to_i
 
     proj = @projects.find { |project| project.id == pid }
@@ -43,7 +42,7 @@ class TM::ProjectList
   end
 
   def add_task_to_proj(pid, desc, priority)
-    # sanitization - should also add this as expectation to test
+    # ensure id and priority are integers
     pid = pid.to_i
     priority = priority.to_i
 
@@ -53,7 +52,7 @@ class TM::ProjectList
   end
 
   def mark_task_as_complete(tid)
-    # sanitization - should also add this as expectation to test
+    # ensure id is an integer
     tid = tid.to_i
 
     project = nil
