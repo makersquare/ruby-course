@@ -16,7 +16,7 @@ eos
 class TM::TerminalClient
   # definitely don't want to do this.. abstract later
   def initialize
-    @pl = TM::ProjectList.instance
+    @pl = TM::DB.instance
   end
 
   def start

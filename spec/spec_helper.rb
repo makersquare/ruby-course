@@ -7,6 +7,6 @@ require 'time'
 RSpec.configure do |config|
   # Reset singleton instance before every test
   config.before(:each) do
-    Singleton.__init__(TM::ProjectList)
+    Singleton.__init__(TM::DB)
   end
 end

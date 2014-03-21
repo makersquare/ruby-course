@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Employee' do
-  
+
   before do
     @emp = TM::Employee.new('Pim')
   end
@@ -22,4 +22,5 @@ describe 'Employee' do
       expect(TM::Employee.new('Estevan').id).to eq(3)
     end
   end
+
 end

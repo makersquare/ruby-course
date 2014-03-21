@@ -4,11 +4,18 @@ module TM
 end
 
 
-
 # Require all of our project files
 require_relative 'task-manager/task.rb'
 require_relative 'task-manager/project.rb'
-require_relative 'task-manager/project-list.rb'
+require_relative 'task-manager/database.rb'
 require_relative 'task-manager/employee.rb'
+
+
+# this looks nicer but doesn't work
+# Dir["task-manager/use_cases/*"].each {|file| require file }
+
+# adds all files in task-manager/use_cases
+Dir["#{File.dirname(__FILE__)}/task-manager/use_cases/*.rb"].each { |f| require(f) }
+
 require 'pry-debugger'
 
