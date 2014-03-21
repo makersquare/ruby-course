@@ -74,7 +74,52 @@ describe 'ProjectList' do
       # result = selected_project.tasks.select {|task| task.complete == false}
 
       result = @project_list.show_remaining_tasks(pid)
+      expect(result).to eq (selected_project.retrieve_incomplete_tasks)
+
+    end
+  end
+
+  describe '#show_completed_tasks' do
+    it 'Show completed tasks for project with id=PID' do
+      project_name = 'house chores'
+      @project_list.add_project(project_name)
+
+      pid = 4
+
+      @project_list.add_task_to_project('take out trash', 2, pid)
+      @project_list.add_task_to_project('vacuum', 1, pid)
+      @project_list.add_task_to_project('mop', 3, pid)
+
+      selected_project = @project_list.projects.find{|project| project.id == pid}
+
+      selected_project.tasks.each {|task| task.complete = true}
+
+      result = @project_list.show_completed_tasks(pid)
       expect(result).to eq (selected_project.tasks)
+    end
+  end
+
+  describe '#mark_task_complete' do
+    it 'Mark task with id=TID as complete' do
+      project_name = 'house chores'
+      @project_list.add_project(project_name)
+
+      pid = 5
+
+      @project_list.add_task_to_project('take out trash', 2, pid)
+      @project_list.add_task_to_project('vacuum', 1, pid)
+      @project_list.add_task_to_project('mop', 3, pid)
+
+      selected_project = @project_list.projects.find{|project| project.id == pid}
+
+      selected_task = selected_project.tasks.find{|task| task.description == 'take out trash'}
+      selected_task.complete = true
+
+      selected_task_id = selected_task.id
+
+      @project_list.mark_task_complete(selected_task_id)
+
+      expect(selected_task.complete).to eq(true)
 
     end
   end

@@ -36,7 +36,31 @@ class TM::ProjectList
   def show_remaining_tasks(pid)
     selected_project = @projects.find {|project| project.id == pid}
 
-    remaining_tasks = selected_project.tasks.select {|task| task.complete == false}
+    # remaining_tasks = selected_project.tasks.select {|task| task.complete == false}
+
+    remaining_tasks = selected_project.retrieve_incomplete_tasks
+
+    remaining_tasks
+
+  end
+
+    def show_completed_tasks(pid)
+    selected_project = @projects.find {|project| project.id == pid}
+
+    remaining_tasks = selected_project.tasks.select {|task| task.complete == true}
+
+  end
+
+    def mark_task_complete(tid)
+    tid = tid.to_i
+
+    project_with_task = @projects.find { |project| project.tasks.find {|task| task.id == tid} }
+
+    selected_task = project_with_task.tasks.find {|task| task.id == tid}
+
+    selected_task.complete = true
+
+    selected_task
 
   end
 

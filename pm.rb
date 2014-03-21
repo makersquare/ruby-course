@@ -11,7 +11,7 @@ def self.first_menu
     puts "list - List all projects`"
     puts "show PID - Show remaining tasks for project with id=PID"
     puts "history PID - Show completed tasks for project with id`=PID"
-    puts "add  DESC PRIORITY PID - Add a new task to project with id=PID"
+    puts "add  PID DESC PRIORITY - Add a new task to project with id=PID"
     puts "mark TID - Mark task with id=TID as complete"
     puts
 
@@ -21,7 +21,7 @@ def self.start
   @@user_command = ''
   @@project_list = TM::ProjectList.new
   puts
-  puts "Welcome to Project Manager Pro®. What can I do for you today?".colorize(:color => :light_blue, :background => :white)
+  puts "Welcome to Project Manager Pro®. What can I do for you today?".colorize(:color => :magenta, :background => :yellow, :mode => :underline)
   PM.first_menu
 
   while (@@user_command != 'quit')
@@ -30,6 +30,7 @@ def self.start
 
     if (@@user_command == 'help')
         PM.first_menu
+
     elsif (@@user_command.include? 'create')
       length = @@user_command.length
       project_name = @@user_command.slice(7..length)
@@ -37,14 +38,15 @@ def self.start
       @@project_list.add_project(project_name)
       puts
       puts
-      puts "Project #{project_name} added!".colorize(:yellow)
+      print "Project: ".colorize(:yellow); print "#{project_name}".colorize(:red); print " added!".colorize(:yellow)
       puts
-
+      puts
 
     elsif(@@user_command == 'list')
-      puts "Project List"
       puts
-      @@project_list.projects.each {|project| puts "#{project.id} #{project.project_name}"}
+      puts
+      puts " PID      Project Name".colorize(:mode => :underline)
+      @@project_list.projects.each {|project| puts "  #{project.id}       #{project.project_name}"}
       # @@project_list.list_projects
       puts
 
@@ -64,11 +66,29 @@ def self.start
   elsif (@@user_command.include? 'show')
       length = @@user_command.length
       pid = @@user_command.slice(5..length - 1).to_i
-      # puts "#{pid}".colorize(:red)
+      # puts "Showing project: \"#{} "
       remaining_tasks = @@project_list.show_remaining_tasks(pid)
+
+
+      puts "Priority    ID    Description"
+      remaining_tasks.each {|task| puts "      #{task.priority}      #{task.id}        #{task.description}"}
+      puts
+
+  elsif (@@user_command.include? 'history')
+      length = @@user_command.length
+      pid = @@user_command.slice(8..length - 1).to_i
+      # puts "#{pid}".colorize(:red)
+      remaining_tasks = @@project_list.show_completed_tasks(pid)
 
       remaining_tasks.each {|task| puts task.description}
       puts
+  elsif (@@user_command.include? 'mark')
+    length = @@user_command.length
+    tid = @@user_command.slice(5..length - 1).to_i
+    selected_task = @@project_list.mark_task_complete(tid)
+    puts
+    puts "you marked task: #{selected_task.description} as complete!"
+    puts
   end
 
   end
