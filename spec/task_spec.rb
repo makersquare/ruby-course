@@ -19,10 +19,12 @@ describe 'Task' do
   it "limits priority to between 1 and 5" do
     new_task = TM::Task.new(4, "errands", 10)
     expect(new_task.priority).to eq(5)
+    another_task = TM::Task.new(3, "stuff", 0)
+    expect(another_task.priority).to eq(1)
   end
 
   it "initializes as an incomplete task" do
-    expect(@my_task.complete?).to eq ("incomplete")
+    expect(@my_task.complete).to eq ("incomplete")
   end
 
   it "initializes tasks with a creation date" do
