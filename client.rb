@@ -1,11 +1,12 @@
+require_relative 'lib/task-manager.rb'
+
 class TM::Client
 
   def main_menu
-
     exit = false
     while !exit do
       # Show the menu and get the input
-      puts "\n\n\nWelcome to Badass Manager Pro.  Whatya want??\n\n"
+      puts"\n\n\nWelcome to Badass Manager Pro.  Whatya want??\n\n"
       puts"You can:"
       puts"\thelp -- show this screen again\n"
       puts"\tproject list -- list all projects\n"
@@ -25,7 +26,7 @@ class TM::Client
       puts"\tload me up -- Make a bunch of fake projects so you look busy.\n"
       puts"\tquit -- quit this program\n\n"
       print"> "
-      choice_array = gets.chomp.downcase.split
+      choice_array = gets.chomp.downcase.split   #store the input in an array
 
       # if the user cusses, talk some shit back
       if (  (choice_array.include?("shit"))  ||
@@ -69,7 +70,7 @@ class TM::Client
         when "task"
           case choice_array[1]
           when "create"
-            self.create_task(choice_array[2].to_i, choice_array[3].to_i, choice_array[4..-1])
+            self.create_task(choice_array[2].to_i, choice_array[4..-1].join(' '), choice_array[3].to_i)
           when "assign"
             self.assign_task(choice_array[2].to_i, choice_array[3].to_i)
           when "mark"
@@ -117,8 +118,6 @@ class TM::Client
     gets
   end
 
-
-
   def history(project_id)
     project = TM::DB.instance.all_projects[project_id]
     tasks_array = project.completed_tasks
@@ -153,7 +152,6 @@ class TM::Client
     puts "\n\nOk, here's a list of your current projects:\n\n"
     puts"ID:\tTask:"
     puts"--------------------------"
-     # (8 - k.to_s.length) is to pad the string with spaces
      TM::DB.instance.all_projects.each { |k,v| print("#{k}" + (' ' * (8 - k.to_s.length))+ "#{v.name}\n") }
     puts "\n\nPress Enter to Continue"
     gets
@@ -206,7 +204,6 @@ class TM::Client
     else
       puts "You typed something wrong, there, fat fingers.\n\n"
     end
-
     puts "Press Enter to Continue"
     gets
   end
@@ -303,5 +300,5 @@ class TM::Client
 end
 
 
-#manager = TM::Client.new
-#manager.main_menu
+manager = TM::Client.new
+manager.main_menu

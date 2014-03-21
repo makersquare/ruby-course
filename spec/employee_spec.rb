@@ -60,6 +60,35 @@ describe 'employee' do
     expect(employee1.tasks).to have_key(task1.task_id)
   end
 
+  it "can return an array of ongoing tasks" do
+    employee1 = TM::Employee.new("Bobby")
+    project1 = TM::Project.new("Kill Bob")
+    project2 = TM::Project.new("Kill Sam")
+    task1 = TM::Task.new(project1.id, "Buy gun", 3)
+    task2 = TM::Task.new(project1.id, "Load gun", 4)
+    task3 = TM::Task.new(project1.id, "Aim gun", 5)
+    employee1.add_project(project1)
+    employee1.add_task(task1)
+    employee1.add_task(task2)
+    employee1.add_task(task3)
+    expect(employee1.ongoing_tasks.length).to eq(3)
+  end
+
+  it "can return an array of finished tasks" do
+        employee1 = TM::Employee.new("Bobby")
+    project1 = TM::Project.new("Kill Bob")
+    project2 = TM::Project.new("Kill Sam")
+    task1 = TM::Task.new(project1.id, "Buy gun", 3)
+    task2 = TM::Task.new(project1.id, "Load gun", 4)
+    task3 = TM::Task.new(project1.id, "Aim gun", 5)
+    employee1.add_project(project1)
+    employee1.add_task(task1)
+    employee1.add_task(task2)
+    employee1.add_task(task3)
+    task1.finished = true
+    task2.finished = true
+    expect(employee1.completed_tasks.length).to eq(2)
+  end
 
 
 
