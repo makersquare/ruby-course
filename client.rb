@@ -3,9 +3,10 @@ require 'colorize'
 
 class PManager
   def self.start
-    puts "Welcome to Project Manager Pro®. What can I do for you today?".colorize(:color => :white, :background => :green)
+    puts "Welcome to Project Manager Pro®. ".colorize(:yellow)
     def self.main_menu
-      puts "Available Commands:".colorize(:blue)
+      puts;
+      puts "Available Commands:".colorize(:yellow)
       puts "  help - Show these commands again".colorize(:light_blue)
       puts "  list - List all projects".colorize(:blue)
       puts "  create NAME - Create a new project with name=NAME".colorize(:light_blue)
@@ -13,12 +14,13 @@ class PManager
       puts "  history PID - Show completed tasks for project with id=PID".colorize(:light_blue)
       puts "  add PID PRIORITY DESC - Add a new task to project with id=PID".colorize(:blue)
       puts "  mark TID - Mark task with id=TID as complete".colorize(:light_blue)
+      puts;
     end
     @@user_command = ""
     project_list = TM::ProjectList.new
     PManager.main_menu
     while (@@user_command != 'quit')
-      print "what do you want to do?  "
+      print "What would you like to do?  ".colorize(:yellow)
       @@user_command = gets.chomp
       if (@@user_command == 'help')
         PManager.main_menu
@@ -39,14 +41,19 @@ class PManager
         length = @@user_command.length
         pid = @@user_command.slice(5..length).to_i
         remaining_tasks = project_list.show_remaining_tasks(pid)
-        remaining_tasks.each { |task| puts task.description }
+        puts;
+        remaining_tasks.each { |task| puts "description: #{task.description} id = #{task.id}".colorize(:green) }
+
+        puts;
 
 
       elsif (@@user_command.include?'history')
         length = @@user_command.length
         name = @@user_command.slice(8..length)
-        print name
-        puts
+        remaining_tasks = project_list.show_completed_tasks(pid)
+        remaining_tasks.each { |task| puts "description: #{task.description} id = #{task.id}".colorize(:green) }
+        puts;
+
 
       elsif (@@user_command.include?'add')
         length = @@user_command.length
@@ -65,9 +72,11 @@ class PManager
 
        elsif (@@user_command.include?'mark')
         length = @@user_command.length
-        name = @@user_command.slice(5..length)
-        print name
-        puts
+        tid = @@user_command.slice(5..length)
+        project_list.mark_complete(tid)
+        puts; puts "Task #{tid} was marked complete"
+        puts;
+
 
 
 
