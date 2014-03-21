@@ -14,5 +14,12 @@ describe 'Employee' do
     it "gives a name" do
       expect(@emp.name).to eq("Pim")
     end
+
+    it "generates and assigns a unique id" do
+      TM::Employee.class_variable_set :@@counter, 0
+      expect(TM::Employee.new('Estevan').id).to eq(1)
+      expect(TM::Employee.new('Estevan').id).to eq(2)
+      expect(TM::Employee.new('Estevan').id).to eq(3)
+    end
   end
 end
