@@ -14,15 +14,21 @@ class TM::ProjectList
 
 	def tasks_for_project (id)
 		narrowed_down = @project_list.find{|x| x.id == id.to_i}
+    if narrowed_down
 		@narrowed_again = narrowed_down.incompleted_tasks_list
-		 
-		
 	end
+end
 
 	def tasks_for_project_complete(id)
 		narrowed_down = @project_list.find{|x| x.id == id.to_i}
 		@narrowed_again1 = narrowed_down.completed_tasks_list
 	end
+
+  def search_to_add (description, priority, proj)
+    @tasksomething = TM::Task.new(description, priority, proj)
+    narrowed_down = @project_list.find{|x| x.id == proj.to_i}
+    narrowed_down.add_task(@tasksomething)
+  end
 
   def mark_task_complete (id)
     @project_list.each do |proj|

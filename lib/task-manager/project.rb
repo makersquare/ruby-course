@@ -46,9 +46,9 @@ class TM::Project
     
   end
 
-  def includes_task?(task_id)
-  	 @incompleted_tasks_list.find{|x| x.tid == task_id.to_i}
-  end
+  # def includes_task?(task_id)
+  # 	 @incompleted_tasks_list.find{|x| x.tid == task_id.to_i}
+  # end
 
 
 

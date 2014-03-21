@@ -90,9 +90,9 @@ class TerminalClient
 
 
 	def add_task
-		@tasksomething = TM::Task.new(@description, @priority, @proj_id)
-		@project.add_task(@tasksomething)
-		puts "Your task with project_id: #{@proj_id} has been added with task id: #{@tasksomething.tid}!"
+		#@tasksomething = TM::Task.new(@description, @priority, @proj_id)
+		@projects.search_to_add(@description, @priority, @proj_id)
+		puts "Your task with project_id: #{@proj_id} has been added!"
 
 	end
 
