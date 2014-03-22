@@ -18,10 +18,7 @@ class TM::Employee
     if project.is_a?(Fixnum) then (project = TM::DB.instance.all_projects[project]) end
     # add it to the projects hash
     @projects[project.id] = project
-    TM::DB.instance.project_assignments << { employee_id: @employee_id,
-                                              project_id: project.id,
-                                              employee: self,
-                                              project: project }
+    TM::DB.instance.assign_employee(project, self)
   end
 
   def add_task(task)

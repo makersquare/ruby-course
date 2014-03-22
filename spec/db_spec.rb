@@ -13,15 +13,33 @@ describe 'Project' do
     expect(TM::DB.instance.all_employees[:bob]).to eq(5)
   end
 
-  it "can check to see if an employee is assigned to a project" do
-    bob = TM::Employee.new("Bob")
-    project = TM::Project.new("Kill Bill")
-    task = TM::Task.new(project.id, "Buy gun", 8)
-    TM::DB.instance.project_assignments << { employee_id: bob.employee_id,
-                                              project_id: project.id,
-                                              employee: bob,
-                                              project: project }
-    expect(TM::DB.instance.project_assigned?(project, bob)).to eq(true)
-
+  before do
+    @bob = TM::Employee.new("Bob")
+    @sue = TM::Employee.new("Sue")
+    @project = TM::Project.new("Kill Bill")
+    @task = TM::Task.new(@project.id, "Buy gun", 8)
   end
+
+  it "can assign projects to an employee" do
+    TM::DB.instance.assign_project(@project, @bob)
+    expect(TM::DB.instance.project_assigned?(@project, @bob)).to eq(true)
+    expect(TM::DB.instance.project_assigned?(@project, @sue)).to eq(false)
+  end
+
+  it "can check to see if an employee is assigned to a project" do
+    TM::DB.instance.project_assignments << { employee_id: @bob.employee_id,
+                                              project_id: @project.id,
+                                              employee: @bob,
+                                              project: @project }
+    expect(TM::DB.instance.project_assigned?(@project, @bob)).to eq(true)
+    expect(TM::DB.instance.project_assigned?(@project, @sue)).to eq(false)
+  end
+
+  it "can assign a task to an employee & then check that assignment" do
+    TM::DB.instance.assign_project(@project, @bob)
+    TM::DB.instance.assign_task(@task, @bob)
+    expect(TM::DB.instance.task_assigned?(@task, @bob)).to eq(true)
+    expect(TM::DB.instance.task_assigned?(@task, @sue)).to eq(false)
+  end
+
 end
