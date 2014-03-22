@@ -6,11 +6,22 @@ describe 'Project' do
     expect(TM::DB.instance.all_employees).to be_a(Hash)
     expect(TM::DB.instance.all_tasks).to be_a(Hash)
     expect(TM::DB.instance.all_projects).to be_a(Hash)
-    expect(TM::DB.instance.participating).to be_a(Array)
   end
 
   it "can allow access to its hashes and arrays" do
     TM::DB.instance.all_employees[:bob] = 5
     expect(TM::DB.instance.all_employees[:bob]).to eq(5)
+  end
+
+  it "can check to see if an employee is assigned to a project" do
+    bob = TM::Employee.new("Bob")
+    project = TM::Project.new("Kill Bill")
+    task = TM::Task.new(project.id, "Buy gun", 8)
+    TM::DB.instance.project_assignments << { employee_id: bob.employee_id,
+                                              project_id: project.id,
+                                              employee: bob,
+                                              project: project }
+    expect(TM::DB.instance.project_assigned?(project, bob)).to eq(true)
+
   end
 end

@@ -14,28 +14,24 @@ class TM::Employee
   end
 
   def add_project(project)
-    # adjust for type of input
-    if project.is_a?(TM::Project)
-      project_object = project
-    else
-      project_object = TM::DB.instance.all_projects[project]
-    end
-
+    # if 'project' is the id, make it the object
+    if project.is_a?(Fixnum) then (project = TM::DB.instance.all_projects[project]) end
     # add it to the projects hash
-    @projects[project_object.id] = project_object
+    @projects[project.id] = project
+    TM::DB.instance.project_assignments << { employee_id: @employee_id,
+                                              project_id: project.id,
+                                              employee: self,
+                                              project: project }
   end
 
   def add_task(task)
-    # adjust for type of input
-    if task.is_a?(TM::Task)
-      task_object = task
-    else
-      task_object = TM::DB.instance.all_tasks[task]
-    end
+    # if 'task' is an id, make it the object
+    if task.is_a?(Fixnum) then task = TM::DB.instance.all_tasks[task] end
 
     # if the employee belongs to the project
-    if @projects.has_key?(task_object.project_id)
-      tasks[task_object.task_id] = task_object
+    # if @projects.has_key?(task.project_id)
+    if TM::DB.instance.project_assigned?(task.project_id, self)
+      tasks[task.task_id] = task
     else
       return false
     end
