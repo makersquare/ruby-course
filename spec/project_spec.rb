@@ -23,17 +23,19 @@ describe 'Project' do
   it "can mark a project complete, specified by id" do
     project = TM::Project.new("Name")
     # task = TM::Task.new(10,"Description",1)
-    project.addtask(10,"Description",1)
+    expect(TM::Task).to receive(:gen_id).and_return(10)
+    project.addtask("Description",1)
     project.markcomplete(10)
     expect(project.tasks[10].complete).to eq(true)
   end
 
   it "can retrieve a list of all complete tasks, sorted by creation date" do
     project = TM::Project.new("Project")
-    project.addtask(1,"asdf",1)
-    project.addtask(2,"werwer",2)
-    project.addtask(3,"dfgdf",4)
-    project.addtask(4,"tyrrty",3)
+    TM::Task.class_variable_set :@@task_count, 0
+    project.addtask("asdf",1)
+    project.addtask("werwer",2)
+    project.addtask("dfgdf",4)
+    project.addtask("tyrrty",3)
     project.markcomplete(1)
     project.markcomplete(3)
     project.markcomplete(4)
@@ -45,10 +47,11 @@ describe 'Project' do
 
   it "can retrieve a list of all incomplete tasks, sorted by priority" do
     project = TM::Project.new("Project")
-    project.addtask(1,"asdf",1)
-    project.addtask(2,"werwer",2)
-    project.addtask(3,"dfgdf",4)
-    project.addtask(4,"tyrrty",3)
+    TM::Task.class_variable_set :@@task_count, 0
+    project.addtask("asdf",1)
+    project.addtask("werwer",2)
+    project.addtask("dfgdf",4)
+    project.addtask("tyrrty",3)
     project.markcomplete(1)
     expect(project.incompletelist[0].description).to eq("werwer")
     expect(project.incompletelist[1].description).to eq("tyrrty")
@@ -57,11 +60,11 @@ describe 'Project' do
 
   it "prioritizes older tasks in incompletelist" do
     project = TM::Project.new("Project")
-    project.addtask(1,"Proj 1",2)
-    project.addtask(2,"Proj 2",1)
-    project.addtask(3,"Proj 3",2)
-    project.addtask(4,"Proj 4",2)
-    project.addtask(5,"Proj 5",3)
+    project.addtask("Proj 1",2)
+    project.addtask("Proj 2",1)
+    project.addtask("Proj 3",2)
+    project.addtask("Proj 4",2)
+    project.addtask("Proj 5",3)
 
     expect(project.incompletelist.size).to eq(5)
 

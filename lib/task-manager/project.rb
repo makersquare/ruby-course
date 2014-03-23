@@ -16,8 +16,9 @@ class TM::Project
     @@projectcount
   end
 
-  def addtask(task_id, description, priority)
-    @tasks[task_id] = TM::Task.new(task_id, description, priority)
+  def addtask(description, priority)
+    temp_task = TM::Task.new(description, priority)
+    @tasks[temp_task.task_id] = temp_task
   end
 
   def markcomplete(task_id)

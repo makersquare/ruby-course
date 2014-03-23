@@ -21,8 +21,8 @@ describe "Employee" do
     project = TM::Project.new("Project")
     newguy = TM::Employee.new("Name")
     project.addemployee(newguy)
-    project.addtask(0,"Task",1)
-    project.assigntask(project.tasks[0], newguy)
+    project.addtask("Task",1)
+    project.assigntask(project.tasks[1], newguy)
     expect(newguy.tasks.first).to be_a(TM::Task)
   end
 end
