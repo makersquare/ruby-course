@@ -42,4 +42,18 @@ describe 'Project' do
     expect(TM::DB.instance.task_assigned?(@task, @sue)).to eq(false)
   end
 
+  it "can return an array of tasks assigned to an employee" do
+    employee1 = TM::Employee.new("Bobby")
+    project1 = TM::Project.new("Kill Bob")
+    task1 = TM::Task.new(project1.id, "Buy gun", 3)
+    task2 = TM::Task.new(project1.id, "Load gun", 4)
+    task3 = TM::Task.new(project1.id, "Aim gun", 5)
+    TM::DB.instance.assign_project(project1, employee1)
+    TM::DB.instance.assign_task(task1, employee1)
+    TM::DB.instance.assign_task(task2, employee1)
+    TM::DB.instance.assign_task(task3, employee1)
+    expect(TM::DB.instance.employee_tasks(employee1).length).to eq(3)
+  end
+
+
 end

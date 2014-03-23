@@ -76,7 +76,7 @@ describe 'employee' do
   end
 
   it "can return an array of finished tasks" do
-        employee1 = TM::Employee.new("Bobby")
+    employee1 = TM::Employee.new("Bobby")
     project1 = TM::Project.new("Kill Bob")
     project2 = TM::Project.new("Kill Sam")
     task1 = TM::Task.new(project1.id, "Buy gun", 3)

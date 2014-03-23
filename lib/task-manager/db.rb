@@ -56,4 +56,25 @@ class TM::DB
     return false
   end
 
+  def employee_tasks(employee)
+    if employee.is_a?(Fixnum) then task = TM::DB.instance.all_employees[employee] end
+
+    employee_tasks = @task_assignments.select { |x| x[:employee] == employee }
+    return employee_tasks.map { |x| x[:task] }
+  end
+
+  def ongoing_tasks(employee)
+    tasks = TM::DB.instance.employee_tasks(employee)
+    tasks = tasks.select { |x| x.finished? == false }
+    tasks.sort! { |a,b| (a.priority <=> b.priority) == 0 ? (a.creation_date <=> b.creation_date) : (b.priority <=> a.priority) }
+    return tasks
+  end
+
+  def completed_tasks(employee)
+    tasks = TM::DB.instance.employee_tasks(employee)
+    tasks.select! { |x| x.finished? == true }
+    return tasks.sort { |a,b| a.creation_date <=> b.creation_date }
+  end
+
+
 end
