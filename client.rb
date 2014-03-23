@@ -193,13 +193,13 @@ class TM::Client
     @employee2 = TM::Employee.new("Rhonda")
     @employee3 = TM::Employee.new("Phil")
     @employee4 = TM::Employee.new("Martha")
-    @employee1.add_project(@kill_bob)
-    @employee2.add_project(@kill_bob)
-    @employee3.add_project(@kill_bob)
-    @employee4.add_project(@kill_sue)
-    @employee1.add_project(@kill_sue)
-    @employee1.add_task(@buy_gun)
-    @employee1.add_task(@load_gun)
+    TM::DB.instance.assign_project(@kill_bob, @employee1)
+    TM::DB.instance.assign_project(@kill_bob, @employee2)
+    TM::DB.instance.assign_project(@kill_bob, @employee3)
+    TM::DB.instance.assign_project(@kill_sue, @employee4)
+    TM::DB.instance.assign_project(@kill_sue, @employee1)
+    TM::DB.instance.assign_task(@buy_gun, @employee1)
+    TM::DB.instance.assign_task(@load_gun, @employee1)
     @buy_gun.finished = true
   end
 

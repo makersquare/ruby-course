@@ -20,18 +20,6 @@ describe 'Project' do
     expect(@kill_sue.id).to eq(2)
   end
 
-  it "can add tasks to itself" do
-    @buy_gun = TM::Task.new(2, "Go buy a gun", 7)
-    @kill_bob.add_task(@buy_gun)
-    expect(@kill_bob.tasks.has_value?(@buy_gun)).to eq(true)
-  end
-
-  it "can also add tasks by id" do
-    @buy_gun = TM::Task.new(2, "Go buy a gun", 7)
-    @kill_bob.add_task(@buy_gun.task_id)
-    expect(@kill_bob.tasks.has_key?(@buy_gun.task_id)).to eq(true)
-  end
-
   it "can mark a task as complete by its id" do
     @buy_gun = TM::Task.new(2, "Go buy a gun", 7)
     @kill_bob.add_task(@buy_gun)
@@ -69,11 +57,6 @@ describe 'Project' do
     expect(TM::DB.instance.all_projects[2]).to eq(@kill_sue)
   end
 
-  it "keeps a list of enrolled employees" do
-    employee1 = TM::Employee.new("Bob")
-    @kill_bob.assign_employee(employee1)
-    expect(@kill_bob.assigned_employees[employee1.employee_id]).to eq(employee1)
-  end
 
 
 end

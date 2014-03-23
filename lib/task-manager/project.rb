@@ -14,7 +14,6 @@ class TM::Project
     @@current_id = @@current_id + 1
     @tasks = {}
     @assigned_employees = {}
-    # @@all_projects[@id] = self   # switched to database
     TM::DB.instance.all_projects[@id] = self
   end
 

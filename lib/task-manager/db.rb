@@ -11,6 +11,8 @@ class TM::DB
     @all_tasks = {}
     @task_assignments = []
     @project_assignments = []
+    @project_task_part = []
+
   end
 
   def project_assigned?(project, employee)
