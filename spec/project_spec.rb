@@ -9,7 +9,7 @@ describe 'Project' do
     pl = TM::ProjectList.new
     pl.addproject("Name")
     expect(pl.projects[2].name).to eq("Name")
-    expect(pl.projects[2].id).to eq(2)
+    expect(pl.projects[2].project_id).to eq(2)
   end
 
   it "is assigned a unique id" do
@@ -17,7 +17,7 @@ describe 'Project' do
     pl = TM::ProjectList.new
     pl.addproject("Name")
     expect(pl.projects[0].name).to eq("Name")
-    expect(pl.projects[0].id).to eq(0)
+    expect(pl.projects[0].project_id).to eq(0)
   end
 
   it "can mark a project complete, specified by id" do

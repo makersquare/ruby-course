@@ -1,12 +1,12 @@
 
 class TM::Project
-  attr_reader :name, :id, :tasks, :projectlist, :employees_on_project
+  attr_reader :name, :project_id, :tasks, :projectlist, :employees_on_project
 
   @@projectcount = 0
 
   def initialize(name)
     @name = name
-    @id = TM::Project.gen_id
+    @project_id = TM::Project.gen_id
     @@projectcount += 1
     @tasks = {}
     @employees_on_project = []
@@ -25,14 +25,14 @@ class TM::Project
   end
 
   def completedlist
-    completedarray = @tasks.select { |project_id, task| task.complete }.values
+    completedarray = @tasks.select { |task_id, task| task.complete }.values
     completedarray.sort_by! { |task| task.timecreated }
   end
 
   def incompletelist
-    incompletedhash = @tasks.select { |project_id, task| !task.complete }
+    incompletedhash = @tasks.select { |task_id, task| !task.complete }
     incompletedarray = []
-    incompletedhash.each { |project_id, task| incompletedarray.push(task) }
+    incompletedhash.each { |task_id, task| incompletedarray.push(task) }
     incompletedarray.sort_by! { |task| [task.priority, task.timecreated] }
   end
 

@@ -8,7 +8,7 @@ class TM::ProjectList
 
   def addproject(name)
     project = TM::Project.new(name)
-    @projects[project.id] = project
+    @projects[project.project_id] = project
   end
 
   def addemployee(name)
