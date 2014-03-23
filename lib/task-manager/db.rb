@@ -37,7 +37,10 @@ class TM::DB
   end
 
   def assign_task(task, employee)
-    if self.project_assigned?(task.project_id, employee)
+    # if ids were passed, make them the objects
+    if task.is_a?(Fixnum) then task = TM::DB.instance.all_tasks[task] end
+    if employee.is_a?(Fixnum) then employee = TM::DB.instance.all_employees[employee] end
+    if TM::DB.instance.project_assigned?(task.project_id, employee)
       TM::DB.instance.task_assignments << { employee_id: employee.employee_id,
                                             task_id: task.task_id,
                                             employee: employee,
@@ -49,7 +52,7 @@ class TM::DB
 
   def task_assigned?(task, employee)
     # if ids were passed, make them the objects
-    if task.is_a?(Fixnum) then task = TM::DB.instance.all_projects[task] end
+    if task.is_a?(Fixnum) then task = TM::DB.instance.all_tasks[task] end
     if employee.is_a?(Fixnum) then employee = TM::DB.instance.all_employees[employee] end
 
     includes_employee = @task_assignments.select { |x| (x[:employee_id] == employee.employee_id) }

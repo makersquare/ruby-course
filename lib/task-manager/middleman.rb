@@ -10,7 +10,7 @@ class TM::Middleman
   end
 
   def self.assign_task_to_employee(task_id, employee_id)
-    TM::DB.instance.all_employees[employee_id].tasks[task_id] = TM::DB.instance.all_tasks[task_id]
+    TM::DB.instance.assign_task(task_id, employee_id)
   end
 
   def self.create_employee(name)
