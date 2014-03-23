@@ -11,7 +11,7 @@ class TM::DB
     @all_tasks = {}
     @task_assignments = []
     @project_assignments = []
-    @project_task_part = []
+    @project_task_participation = []
 
   end
 
@@ -83,6 +83,13 @@ class TM::DB
 
     employees = project_assignments.select { |x| x[:project] == project }
     return employees.map { |x| x[:employee] }
+  end
+
+  def employee_projects(employee)
+    if employee.is_a?(Fixnum) then task = TM::DB.instance.all_employees[employee] end
+
+    employee_projects = @project_assignments.select { |x| x[:employee] == employee }
+   return employee_projects.map { |x| x[:project] }
   end
 
 end

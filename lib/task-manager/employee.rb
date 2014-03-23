@@ -8,8 +8,6 @@ class TM::Employee
     @employee_id = @@current_id
     @@current_id = @@current_id + 1
     TM::DB.instance.all_employees[@employee_id] = self
-    @projects = {}
-    @tasks = {}
 
   end
 end

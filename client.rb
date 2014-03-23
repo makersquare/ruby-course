@@ -66,7 +66,7 @@ class TM::Client
           when "list"
             self.list_employees
           when "create"
-            self.create_employee(choice_array[2].to_i)
+            TM::Middleman.create_employee(choice_array[2..-1].join(' '))
           when "show"
             self.show_employee(choice_array[2].to_i)
           when "ongoing"
@@ -246,7 +246,10 @@ class TM::Client
     puts "\n\nEmployee:  #{employee.name}   ID:  #{employee.employee_id}\n\n"
     puts "    Projects:\n"
     puts "---------------------"
-    employee.projects.each { |k, v| puts "#{v.id}"  + (' ' * (5 - v.id.to_s.length)) +  "#{v.name}\n" }
+    if TM::DB.instance.employee.projects != nil
+      employee.projects.each { |k, v| puts "#{v.id}"  + (' ' * (5 - v.id.to_s.length)) +  "#{v.name}\n" }
+    end
+    puts "\n"
   end
 
   def show_employee_ongoing(employee_id)
@@ -257,9 +260,10 @@ class TM::Client
     puts "\n\n"
     puts "ID\tDescription\t\t\tPriority\n"
     puts "------------------------------------------------"
-    employee.ongoing_tasks.each { | x | print("#{x.task_id}" + (' ' * (8 - x.task_id.to_s.length)) + # padding
+    TM::DB.instance.ongoing_tasks(employee).each { | x | print("#{x.task_id}" + (' ' * (8 - x.task_id.to_s.length)) + # padding
                   "#{x.description}" + (' ' * (33 - x.description.length) +
                   "#{x.priority}\n")) }
+    puts "\n"
   end
 
   def show_employee_history(employee_id)
