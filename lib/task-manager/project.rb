@@ -16,12 +16,12 @@ class TM::Project
     @@projectcount
   end
 
-  def addtask(project_id, description, priority)
-    @tasks[project_id] = TM::Task.new(project_id, description, priority)
+  def addtask(task_id, description, priority)
+    @tasks[task_id] = TM::Task.new(task_id, description, priority)
   end
 
-  def markcomplete(project_id)
-    @tasks[project_id].complete = true
+  def markcomplete(task_id)
+    @tasks[task_id].complete = true
   end
 
   def completedlist

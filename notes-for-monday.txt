@@ -1,0 +1,4 @@
+Convert arrays to hashes
+Make Task generate own ID / Tasks all have unique IDs, move tasks hash to projectlist.rb
+Implement join arrays in ProjectList: Remove Employee.tasks, Project.employees_on_project
+Covert ProjectList to singleton?

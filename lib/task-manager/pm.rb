@@ -72,7 +72,7 @@ class TM::ProjectManager
   end
 
   def list
-    templist = @projectlist.projects.compact
+    templist = @projectlist.projects#.compact
     puts "PID: Name:"
     templist.each do |project|
       puts "#{project.id}:   #{project.name}"

@@ -2,8 +2,8 @@ class TM::ProjectList
   attr_reader :projects, :employees
 
   def initialize
-    @projects = []
-    @employees = []
+    @projects = {}
+    @employees = {}
   end
 
   def addproject(name)
