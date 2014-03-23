@@ -13,13 +13,13 @@ class TM::Employee
 
   end
 
-  def add_project(project)
-    # if 'project' is the id, make it the object
-    if project.is_a?(Fixnum) then (project = TM::DB.instance.all_projects[project]) end
-    # add it to the projects hash
-    @projects[project.id] = project
-    TM::DB.instance.assign_employee(project, self)
-  end
+  # def add_project(project)
+  #   # if 'project' is the id, make it the object
+  #   if project.is_a?(Fixnum) then (project = TM::DB.instance.all_projects[project]) end
+  #   # add it to the projects hash
+  #   @projects[project.id] = project
+  #   TM::DB.instance.assign_employee(project, self)
+  # end
 
   def add_task(task)
     # if 'task' is an id, make it the object
