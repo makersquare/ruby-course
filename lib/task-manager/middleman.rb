@@ -10,7 +10,7 @@ class TM::Middleman
   end
 
   def self.get_assigned_employees(project_id)
-    return TM::DB.instance.all_employees.select { |k, v| v.projects.has_key?(project_id) }.values
+    return TM::DB.instance.project_employees(project_id)
   end
 
   def self.assign_task_to_employee(task_id, employee_id)

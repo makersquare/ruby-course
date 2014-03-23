@@ -38,10 +38,6 @@ class TM::Employee
     return TM::DB.instance.ongoing_tasks(self)
   end
 
-  def completed_tasks  #returns completed_tasks in the proper order
-    return TM::DB.instance.completed_tasks(self)
-  end
-
 
 
 end

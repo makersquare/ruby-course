@@ -76,5 +76,11 @@ class TM::DB
     return tasks.sort { |a,b| a.creation_date <=> b.creation_date }
   end
 
+  def project_employees(project)
+    if project.is_a?(Fixnum) then project = TM::DB.instance.all_projects[project] end
+
+    employees = project_assignments.select { |x| x[:project] == project }
+    return employees.map { |x| x[:employee] }
+  end
 
 end

@@ -25,11 +25,11 @@ describe 'Middleman' do
     new_employee3 = TM::Employee.new("Jim")
     new_employee4 = TM::Employee.new("Bobby")
 
-    new_employee1.add_project(@project1)
-    new_employee2.add_project(project2)
-    new_employee3.add_project(@project1)
-    new_employee4.add_project(@project1)
-    new_employee4.add_project(project2)
+    TM::DB.instance.assign_project(@project1, new_employee1)
+    TM::DB.instance.assign_project(project2, new_employee2)
+    TM::DB.instance.assign_project(@project1, new_employee3)
+    TM::DB.instance.assign_project(@project1, new_employee4)
+    TM::DB.instance.assign_project(project2, new_employee4)
 
     employee_list1 = TM::Middleman.get_assigned_employees(@project1.id)
     employee_list2 = TM::Middleman.get_assigned_employees(project2.id)
@@ -48,7 +48,7 @@ describe 'Middleman' do
   it "can assign a task to an employee" do
     project2 = TM::Project.new("Kill Jamie")
     new_employee1 = TM::Employee.new("Bill")
-    new_employee1.add_project(@project1)
+    TM::DB.instance.assign_project(@project1, new_employee1)
     TM::Middleman.assign_task_to_employee(@task1.task_id, new_employee1.employee_id)
     expect(new_employee1.tasks[@task1.task_id]).to eq(@task1)
   end
