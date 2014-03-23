@@ -7,7 +7,7 @@ describe "Employee" do
 
   it "Automatically generates and assigns a unique id" do
     newguy = TM::Employee.new("Name")
-    expect(newguy.id).to be_a(Integer)
+    expect(newguy.employee_id).to be_a(Integer)
   end
 
   it "Employee can be added to project" do

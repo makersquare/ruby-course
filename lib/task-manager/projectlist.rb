@@ -13,6 +13,6 @@ class TM::ProjectList
 
   def addemployee(name)
     employee = TM::Employee.new(name)
-    @employees[employee.id] = employee
+    @employees[employee.employee_id] = employee
   end
 end

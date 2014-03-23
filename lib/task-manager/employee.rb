@@ -1,11 +1,11 @@
 class TM::Employee
-  attr_reader :name, :id, :tasks
+  attr_reader :name, :employee_id, :tasks
 
   @@employeecount = 0
 
   def initialize(name)
     @name = name
-    @id = TM::Employee.gen_id
+    @employee_id = TM::Employee.gen_id
     @@employeecount += 1
     @tasks = []
   end
