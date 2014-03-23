@@ -1,3 +1,5 @@
+require 'pry-debugger'
+
 class TM::ProjectManager
 
   def initialize(projectlist)
@@ -72,17 +74,17 @@ class TM::ProjectManager
   end
 
   def list
-    templist = @projectlist.projects#.compact
+    # templist = @projectlist.projects.compact
     puts "PID: Name:"
-    templist.each do |project|
-      puts "#{project.id}:   #{project.name}"
+    @projectlist.projects.each do |project_id, project|
+      puts "#{project_id}:   #{project.name}"
     end
     input
   end
 
   def create_project
-    @projectlist.addproject(@control[1..-1])
-    puts "Project with name '#{@control[1..-1]}' created!"
+    @projectlist.addproject(@control[2..-1])
+    puts "Project with name '#{@control[2..-1].join(" ")}' created!"
     input
   end
 
@@ -96,7 +98,7 @@ class TM::ProjectManager
       puts ""
       puts "Priority   ID  Description"
       @projectlist.projects[@control.last.to_i].completedlist.each do |task|
-        puts "       #{task.priority}    #{task.project_id}  #{task.description}"
+        puts "       #{task.priority}    #{task.task_id}  #{task.description}"
       end
     end
     input
@@ -112,7 +114,7 @@ class TM::ProjectManager
       puts ""
       puts "Priority   ID  Description"
       @projectlist.projects[@control[2].to_i].incompletelist.each do |task|
-        puts "       #{task.priority}    #{task.project_id}  #{task.description}"
+        puts "       #{task.priority}    #{task.task_id}  #{task.description}"
       end
     end
     input
@@ -124,7 +126,7 @@ class TM::ProjectManager
     else
       puts "Employee:\tID:"
       @projectlist.projects[@control[2].to_i].employees_on_project.each do |employee|
-        puts "#{employee.name}\t\t#{employee.id}"
+        puts "#{employee.name}\t\t#{employee.employee_id}"
       end
     end
     input
@@ -146,7 +148,7 @@ class TM::ProjectManager
     elsif @projectlist.projects[@control[2].to_i].tasks[@control[3].to_i]
       puts "Task with that TID already exists in this project."
     else
-      description = @control[4..-1]
+      description = @control[5..-1]
       @projectlist.projects[@control[1].to_i].addtask(@control[2].to_i,@control[3].to_i,description.join(" "))
       puts "Added new task to project #{@control[1]}."
       puts "Task number: #{@control[2]}"
@@ -170,8 +172,8 @@ class TM::ProjectManager
 
   def list_all_employees
     puts "Name\t\tEID"
-    @projectlist.employees.each do |employee|
-      puts "#{employee.name}\t\t#{employee.id}"
+    @projectlist.employees.each do |employee_id, employee|
+      puts "#{employee.name}\t\t#{employee_id}"
     end
     input
   end
@@ -201,9 +203,9 @@ class TM::ProjectManager
       puts "Employee with that EID does not exist."
     else
       puts "Employee #{@projectlist.employees[@control[2].to_i].name} is on the following projects:"
-      @projectlist.projects.each do |projects|
-        if projects.employees_on_project.include?(@projectlist.employees[@control[2].to_i])
-          puts "#{projects.id}: #{projects.name}"
+      @projectlist.projects.each do |project_id, project|
+        if project.employees_on_project.include?(@projectlist.employees[@control[2].to_i])
+          puts "#{project.project_id}: #{project.name}"
         end
       end
     end
@@ -218,7 +220,7 @@ class TM::ProjectManager
       @projectlist.employees[@control[2].to_i].tasks.each do |task|
         if !task.complete
           project_for_task = 0
-          @projectlist.projects.each do |project|
+          @projectlist.projects.each do |project_id, project|
             if project.tasks.values.include?(task)
               project_for_task = project
             end
@@ -236,7 +238,7 @@ class TM::ProjectManager
     else
       puts "Employee has completed the following tasks"
       @projectlist.employees[@control[2].to_i].tasks.each do |task|
-        puts "TID: #{task.project_id} Description: #{task.description}" if task.complete
+        puts "TID: #{task.task_id} Description: #{task.description}" if task.complete
       end
     end
     input
