@@ -120,8 +120,6 @@ class TM::Client
                   "#{x.description}" + (' ' * (33 - x.description.length) +
                   "#{x.priority}\n")) }
     puts "\n"
-    puts "Press Enter to Continue"
-    gets
   end
 
   def history(project_id)
@@ -134,8 +132,6 @@ class TM::Client
                   "#{x.description}" + (' ' * (33 - x.description.length) +
                   "#{x.priority}\n")) }
     puts "\n"
-    puts "Press Enter to Continue"
-    gets
   end
 
   def mark(task_id)
@@ -144,14 +140,11 @@ class TM::Client
     puts smart_ass_remarker(["You must be real proud of yourself",
                             "Applause applause.",
                             "What took you so long?"])
-    puts "\nPress Enter to Continue"
-    gets
   end
 
   def add_project(name)
     TM::Project.new(name)
-    print "Project Created... Press Enter to Continue"
-    gets
+    puts "Project Created..."
   end
 
   def list_projects
@@ -159,8 +152,6 @@ class TM::Client
     puts"ID:\tTask:"
     puts"--------------------------"
      TM::DB.instance.all_projects.each { |k,v| print("#{k}" + (' ' * (8 - k.to_s.length))+ "#{v.name}\n") }
-    puts "\n\nPress Enter to Continue"
-    gets
   end
 
 
@@ -210,16 +201,12 @@ class TM::Client
     else
       puts "You typed something wrong, there, fat fingers.\n\n"
     end
-    puts "Press Enter to Continue"
-    gets
   end
 
   def assign_task(task_id, employee_id)
     TM::Middleman.assign_task_to_employee(task_id, employee_id)
     puts "\n\nTask: #{TM::DB.instance.all_tasks[task_id].description}\nto: #{TM::DB.instance.all_employees[employee_id].name}."
     puts "\n"
-    puts "Press Enter to Continue"
-    gets
   end
 
   def show_assigned_employees(project_id)
@@ -236,8 +223,6 @@ class TM::Client
     employee_list.each { | x | print("#{x.employee_id}" + (' ' * (8 - x.employee_id.to_s.length)) + # padding
                   "#{x.name}" + "\n") }
     puts "\n"
-    puts "Press Enter to Continue"
-    gets
   end
 
   def list_employees
@@ -251,8 +236,6 @@ class TM::Client
     employee_list.each { | x | print("#{x.employee_id}" + (' ' * (8 - x.employee_id.to_s.length)) + # padding
                   "#{x.name}" + "\n") }
     puts "\n"
-    puts "Press Enter to Continue"
-    gets
   end
 
   def show_employee(employee_id)
@@ -264,8 +247,6 @@ class TM::Client
     puts "    Projects:\n"
     puts "---------------------"
     employee.projects.each { |k, v| puts "#{v.id}"  + (' ' * (5 - v.id.to_s.length)) +  "#{v.name}\n" }
-    puts "\nPress Enter to Continue"
-    gets
   end
 
   def show_employee_ongoing(employee_id)
@@ -279,8 +260,6 @@ class TM::Client
     employee.ongoing_tasks.each { | x | print("#{x.task_id}" + (' ' * (8 - x.task_id.to_s.length)) + # padding
                   "#{x.description}" + (' ' * (33 - x.description.length) +
                   "#{x.priority}\n")) }
-    puts"\n\nPress Enter to Continue"
-    gets
   end
 
   def show_employee_history(employee_id)
@@ -292,8 +271,6 @@ class TM::Client
     employee.completed_tasks.each { | x | print("#{x.task_id}" + (' ' * (8 - x.task_id.to_s.length)) + # padding
                   "#{x.description}" + (' ' * (33 - x.description.length) +
                   "#{x.priority}\n")) }
-    puts"\n\nPress Enter to Continue"
-    gets
   end
 
   def smart_ass_remarker(remarks)
