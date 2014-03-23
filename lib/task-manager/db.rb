@@ -80,7 +80,6 @@ class TM::DB
 
   def project_employees(project)
     if project.is_a?(Fixnum) then project = TM::DB.instance.all_projects[project] end
-
     employees = project_assignments.select { |x| x[:project] == project }
     return employees.map { |x| x[:employee] }
   end

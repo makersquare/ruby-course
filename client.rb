@@ -246,8 +246,12 @@ class TM::Client
     puts "\n\nEmployee:  #{employee.name}   ID:  #{employee.employee_id}\n\n"
     puts "    Projects:\n"
     puts "---------------------"
-    if TM::DB.instance.employee.projects != nil
-      employee.projects.each { |k, v| puts "#{v.id}"  + (' ' * (5 - v.id.to_s.length)) +  "#{v.name}\n" }
+
+    # get projects array
+    projects = TM::DB.instance.employee_projects(employee)
+
+    if projects != nil
+      projects.each { |x| puts "#{x.id}"  + (' ' * (5 - x.id.to_s.length)) +  "#{x.name}\n" }
     end
     puts "\n"
   end

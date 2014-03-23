@@ -94,7 +94,4 @@ describe 'Project' do
     expect(TM::DB.instance.employee_projects(employee1).length).to eq(2)
   end
 
-
-
-
 end
