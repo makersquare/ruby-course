@@ -276,9 +276,10 @@ class TM::Client
 
     puts "ID\tDescription\t\t\tPriority\n"
     puts "------------------------------------------------"
-    employee.completed_tasks.each { | x | print("#{x.task_id}" + (' ' * (8 - x.task_id.to_s.length)) + # padding
+    TM::DB.instance.completed_tasks(employee).each { | x | print("#{x.task_id}" + (' ' * (8 - x.task_id.to_s.length)) + # padding
                   "#{x.description}" + (' ' * (33 - x.description.length) +
                   "#{x.priority}\n")) }
+    puts "\n"
   end
 
   def smart_ass_remarker(remarks)
