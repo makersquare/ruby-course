@@ -214,7 +214,7 @@ class TM::Client
     project = TM::DB.instance.all_projects[project_id]
 
     # get the list
-    employee_list = TM::Middleman.get_assigned_employees(project_id)
+    employee_list = TM::DB.instance.project_employees(project_id)
 
     #display it beautifully :)
     puts "\n\n"

@@ -9,10 +9,6 @@ class TM::Middleman
     TM::DB.instance.all_tasks[task_id].finished = true
   end
 
-  def self.get_assigned_employees(project_id)
-    return TM::DB.instance.project_employees(project_id)
-  end
-
   def self.assign_task_to_employee(task_id, employee_id)
     TM::DB.instance.all_employees[employee_id].tasks[task_id] = TM::DB.instance.all_tasks[task_id]
   end
