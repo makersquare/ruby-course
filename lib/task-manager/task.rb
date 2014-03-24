@@ -1,8 +1,8 @@
 
 class TM::Task
-  attr_reader :proj_id, :description, :priority
+  attr_reader :proj_id
   attr_reader :id
-  attr_accessor :completed
+  attr_accessor :completed, :description, :priority
   attr_reader :time_created
   attr_accessor :time_completed
 

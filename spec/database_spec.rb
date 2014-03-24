@@ -25,11 +25,7 @@ describe 'DB' do
   end
 
   it "can add a task to a project given project id, task priority, and task description" do
-    # will uncomment this if want proj id to definitely equal 1
-    # expect(TM::Project).to receive(:gen_id).and_return(1)
-
     project_1 = @db.create_project("The Best Project")
-    # binding.pry
     added_task = @db.add_task_to_proj(project_1.id, "Eat Tacos", 3)
     # project_1 = @db.projects.first
     # puts project_1.id
@@ -40,6 +36,7 @@ describe 'DB' do
     # expect(project_1_tasks.size).to eq(1)
     # expect(project_1_task_1.description).to eq("Eat Tacos")
 
+    expect(@db.tasks.length).to eq(1)
     expect(@db.tasks[1]).to eq(added_task)
     expect(@db.tasks[1].description).to eq("Eat Tacos")
 
@@ -89,5 +86,106 @@ describe 'DB' do
 
     expect(completed_task).to be_a(TM::Task)
     expect(completed_task.completed).to eq(true)
+  end
+
+  #############################
+  ## other Task CRUD Methods ##
+  #############################
+
+  describe "other Task CRUD Methods" do
+
+    xit "can create a task" do
+      ## already covered by add_task_to_proj method
+    end
+    # get/read
+    it "can get a task" do
+      proj = @db.create_project("The Best Proj")
+      added_task = @db.add_task_to_proj(proj.id, "Eat Tacos", 3)
+      gotten_task = @db.get_task(added_task.id)
+
+      expect(gotten_task.description).to eq("Eat Tacos")
+    end
+
+    it "can update a task" do
+      proj = @db.create_project("The Best Proj")
+      added_task = @db.add_task_to_proj(proj.id, "Eat Tacos", 3)
+
+      @db.update_task(added_task.id, "Make Smores", 1)
+      expect(added_task.description).to eq("Make Smores")
+      expect(added_task.priority).to eq(1)
+    end
+
+    context "if update parameters are nil or empty" do
+      it "will not change these parameters" do
+        proj = @db.create_project("The Best Proj")
+        added_task = @db.add_task_to_proj(proj.id, "Eat Tacos", 3)
+
+        @db.update_task(added_task.id)
+        expect(added_task.description).to eq("Eat Tacos")
+        expect(added_task.priority).to eq(3)
+      end
+    end
+
+    it "can delete a task" do
+      proj = @db.create_project("The Best Proj")
+      added_task = @db.add_task_to_proj(proj.id, "Eat Tacos", 3)
+
+      expect(@db.tasks.length).to eq(1)
+
+      @db.delete(added_task.id)
+      expect(@db.tasks[added_task.id]).to be_nil
+      expect(@db.tasks.length).to eq(0)
+    end
+  end
+
+  ################################
+  ## other Project CRUD Methods ##
+  ################################
+
+  describe "other project CRUD methods" do
+
+    let(:proj) { @db.create_project("The Best Proj") }
+
+    xit "can create a project" do
+      ## already covered by create_proj method
+    end
+
+    it "can get a project" do
+      # proj = @db.create_project("The Best Proj")
+
+      gotten_proj = @db.get_proj(proj.id)
+
+      expect(gotten_proj).to be_a(TM::Project)
+      expect(gotten_proj.name).to eq("The Best Proj")
+    end
+
+    it "can update a project" do
+      # proj = @db.create_project("The Best Proj")
+
+      @db.update_proj(proj.id, "Taking Over The World")
+      expect(proj.name).to eq("Taking Over The World")
+      expect(@db.projects[1].name).to eq("Taking Over The World")
+    end
+
+    context "if update parameters are nil or empty" do
+      it "will not change these parameters" do
+        # proj = @db.create_project("The Best Proj")
+
+        @db.update_proj(proj.id, "Taking Over The World")
+        expect(proj.name).to eq("Taking Over The World")
+        expect(@db.projects[1].name).to eq("Taking Over The World")
+      end
+    end
+
+    it "can delete a project" do
+      # proj = @db.create_project("The Best Proj")
+
+      expect(@db.projects.length).to eq(1)
+      expect(@db.projects[proj.id]).to_not be_nil
+      @db.delete_proj(proj.id)
+
+      expect(@db.projects.length).to eq(0)
+      expect(@db.projects[proj.id]).to be_nil
+    end
   end
 end
