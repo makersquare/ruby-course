@@ -17,7 +17,7 @@ describe TM::Projectlist do
     pl = TM::Projectlist.new
     pl_added = pl.add_projects("fitness")
     eating_better = TM::Task.new(1,"diet",1)
-    pl_added_task = pl.add_task_project("fitness",1,"diet",1,2)
+    pl_added_task = pl.add_task_project("fitness",1,"diet",1,)
     expect(pl_added_task).to eq nil
     # expect(p1_added_task).to eq
 

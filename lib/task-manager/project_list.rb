@@ -4,7 +4,7 @@ class TM::Projectlist
   attr_accessor :project_list
 
   def initialize
-    @project_list = []
+    @project_list = [ ]
     # consider @project_list = [ { eid: 1, pid: 1}, { eid: 1, pid: 2 } ]
   end
 
