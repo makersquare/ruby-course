@@ -1,6 +1,6 @@
 require_relative 'lib/task-manager.rb'
 
-pl = TM::ProjectList.new
+pl = TM::DB.new
 pl.addproject("First Project")
 pl.addproject("Second Project")
 pl.addproject("Third Project")
