@@ -109,5 +109,16 @@ class TM::DB
 
   # create already covered by create_proj
 
-  
+  def get_proj(pid)
+    @projects[pid]
+  end
+
+  def update_proj(pid, new_name = nil)
+    proj = @projects[pid]
+    proj.name = new_name || proj.name
+  end
+
+  def delete_proj(pid)
+    @projects.delete(pid)
+  end
 end

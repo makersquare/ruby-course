@@ -151,8 +151,6 @@ describe 'DB' do
     end
 
     it "can get a project" do
-      # proj = @db.create_project("The Best Proj")
-
       gotten_proj = @db.get_proj(proj.id)
 
       expect(gotten_proj).to be_a(TM::Project)
@@ -160,28 +158,26 @@ describe 'DB' do
     end
 
     it "can update a project" do
-      # proj = @db.create_project("The Best Proj")
-
       @db.update_proj(proj.id, "Taking Over The World")
+      # binding.pry
       expect(proj.name).to eq("Taking Over The World")
-      expect(@db.projects[1].name).to eq("Taking Over The World")
+      expect(@db.projects[proj.id].name).to eq("Taking Over The World")
     end
 
     context "if update parameters are nil or empty" do
       it "will not change these parameters" do
-        # proj = @db.create_project("The Best Proj")
-
         @db.update_proj(proj.id, "Taking Over The World")
         expect(proj.name).to eq("Taking Over The World")
-        expect(@db.projects[1].name).to eq("Taking Over The World")
+        expect(@db.projects[proj.id].name).to eq("Taking Over The World")
       end
     end
 
     it "can delete a project" do
-      # proj = @db.create_project("The Best Proj")
-
+      # calls the let statement, otherwise it never gets executed so @db.projects is an empty hash
+      proj
       expect(@db.projects.length).to eq(1)
       expect(@db.projects[proj.id]).to_not be_nil
+      
       @db.delete_proj(proj.id)
 
       expect(@db.projects.length).to eq(0)
