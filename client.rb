@@ -70,6 +70,8 @@ class TM::TerminalClient
     elsif command == "add"
       pid = input[1]
       priority = input[2]
+
+      # ***THIS IS NOT RIGHT*** - will only work for one-word descriptions
       desc = input[3]
 
       add_task(pid, desc, priority)
