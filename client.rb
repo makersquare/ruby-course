@@ -30,12 +30,21 @@ class TM::TerminalClient
 
   def start
     run_terminal_prompt
-
-    user_input = gets.chomp
-    parse_input(user_input)
-
-    start
+    input = gets.chomp
+    # Example input: task create 1 3 description of task
+    split = input.split(' ')
+    model = split.shift # e.g. project, task, emp
+    action = split.shift # e.g. list, create, show, history, etc
+    args = split # The rest of the arguments, since .split modifies the array
   end
+  # def start
+  #   run_terminal_prompt
+
+  #   user_input = gets.chomp
+  #   parse_input(user_input)
+
+  #   start
+  # end
 
   def parse_input(input)
     input = input.split(' ')

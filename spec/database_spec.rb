@@ -94,9 +94,8 @@ describe 'DB' do
 
   describe "other Task CRUD Methods" do
 
-    xit "can create a task" do
-      ## already covered by add_task_to_proj method
-    end
+    ## create already covered by add_task_to_proj method
+
     # get/read
     it "can get a task" do
       proj = @db.create_project("The Best Proj")
@@ -146,9 +145,7 @@ describe 'DB' do
 
     let(:proj) { @db.create_project("The Best Proj") }
 
-    xit "can create a project" do
-      ## already covered by create_proj method
-    end
+    ## create already covered by create_proj method
 
     it "can get a project" do
       gotten_proj = @db.get_proj(proj.id)
@@ -177,11 +174,71 @@ describe 'DB' do
       proj
       expect(@db.projects.length).to eq(1)
       expect(@db.projects[proj.id]).to_not be_nil
-      
+
       @db.delete_proj(proj.id)
 
       expect(@db.projects.length).to eq(0)
       expect(@db.projects[proj.id]).to be_nil
     end
   end
+
+  ###########################
+  ## Employee CRUD Methods ##
+  ###########################
+
+
+  describe "Employee CRUD Methods" do
+
+    let(:emp) { @db.create_emp("Jack") }
+
+    it 'can create an employee' do
+      emp = @db.create_emp("Jack")
+
+      expect(emp).to be_a(TM::Employee)
+      expect(emp.name).to eq("Jack")
+      expect(@db.employees.size).to eq(1)
+      expect(@db.employees[emp.id].name).to eq("Jack")
+    end
+
+    it 'can get an employee' do
+      gotten_emp = @db.get_emp(emp.id)
+
+      expect(gotten_emp).to be_a(TM::Employee)
+      expect(gotten_emp.name).to eq("Jack")
+    end
+
+    it "can update an employee" do
+      updated_emp = @db.update_emp(emp.id, "Bill")
+
+      expect(updated_emp).to be_a(TM::Employee)
+      expect(updated_emp.name).to eq("Bill")
+      expect(emp.name).to eq("Bill")
+    end
+
+    it "can delete an employee" do
+      expect(@db.employees[emp.id]).to_not be_nil
+      expect(@db.employees.size).to eq(1)
+
+      @db.delete_emp(emp.id)
+      expect(@db.employees[emp.id]).to be_nil
+      expect(@db.employees.size).to eq(0)
+    end
+  end
+
+  ######################################
+  ## Associate Employee, Projs, Tasks ##
+  ######################################
+
+  describe "associate employees and tasks" do
+    
+    let(:emp) { @db.create_emp("Jack") }
+
+    it "can allow an employee to participate in projects" do
+      emp = @db.add_emp_to_proj(pid, eid)
+
+      expect(@db.memberships.length).to eq(1)
+      expect(@db.memberships[1][eid]).to eq
+    end
+  end
+
 end

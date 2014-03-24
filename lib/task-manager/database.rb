@@ -5,7 +5,7 @@ require 'singleton'
 class TM::DB
   include Singleton
 
-  attr_reader :projects, :tasks
+  attr_reader :projects, :tasks, :employees
 
   # examples
   # proj_employees = @memberships.select do |memb|
@@ -21,7 +21,7 @@ class TM::DB
     @projects = {}
     @tasks = {}
 
-    # @employees = {}
+    @employees = {}
   end
 
   def create_project(title)
@@ -107,6 +107,7 @@ class TM::DB
   ## other Project CRUD Methods ##
   ################################
 
+
   # create already covered by create_proj
 
   def get_proj(pid)
@@ -120,5 +121,29 @@ class TM::DB
 
   def delete_proj(pid)
     @projects.delete(pid)
+  end
+
+  ###########################
+  ## Employee CRUD Methods ##
+  ###########################
+
+  def create_emp(name)
+    emp = TM::Employee.new(name)
+    @employees[emp.id] = emp
+    emp
+  end
+
+  def get_emp(eid)
+    @employees[eid]
+  end
+
+  def update_emp(eid, new_name)
+    emp = @employees[eid]
+    emp.name = new_name
+    emp
+  end
+
+  def delete_emp(eid)
+    @employees.delete(eid)
   end
 end
