@@ -1,20 +1,20 @@
 require_relative 'lib/task-manager.rb'
 
 pl = TM::ProjectList.new
-pl.addproject("First")
-pl.addproject("Second")
-pl.addproject("Third")
+pl.addproject("First Project")
+pl.addproject("Second Project")
+pl.addproject("Third Project")
 
-pl.projects[0].addtask(1,"Fun task",1)
-pl.projects[0].addtask(2,"Fun task",2)
-pl.projects[0].addtask(3,"Fun task",2)
-pl.projects[1].addtask(4,"Fun task",2)
-pl.projects[1].addtask(5,"Fun task",3)
-pl.projects[1].addtask(6,"Fun task",3)
-pl.projects[2].addtask(7,"Fun task",1)
-pl.projects[2].addtask(8,"Fun task",4)
-pl.projects[2].addtask(9,"Fun task",4)
-pl.projects[2].addtask(10,"Fun task",5)
+pl.projects[0].addtask("Task 1",1)
+pl.projects[0].addtask("Task 2",2)
+pl.projects[0].addtask("Task 3",2)
+pl.projects[1].addtask("Task 4",2)
+pl.projects[1].addtask("Task 5",3)
+pl.projects[1].addtask("Task 6",3)
+pl.projects[2].addtask("Task 7",1)
+pl.projects[2].addtask("Task 8",4)
+pl.projects[2].addtask("Task 9",4)
+pl.projects[2].addtask("Task 10",5)
 
 pl.projects[2].markcomplete(7)
 pl.projects[2].markcomplete(9)

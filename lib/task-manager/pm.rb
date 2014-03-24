@@ -74,7 +74,6 @@ class TM::ProjectManager
   end
 
   def list
-    # templist = @projectlist.projects.compact
     puts "PID: Name:"
     @projectlist.projects.each do |project_id, project|
       puts "#{project_id}:   #{project.name}"
