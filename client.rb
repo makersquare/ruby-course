@@ -25,7 +25,7 @@ eos
 class TM::TerminalClient
   # definitely don't want to do this.. abstract later
   def initialize
-    @pl = TM::DB.instance
+    @db = TM::DB.instance
   end
 
   def start
@@ -44,25 +44,25 @@ class TM::TerminalClient
     if command == "help"
       help
     elsif command == "list"
-      @pl.projects.each do |proj|
+      @db.projects.each do |proj|
         puts proj.name
       end
     elsif command == "create"
       title = input[1]
-      created_proj = @pl.create_project(title)
+      created_proj = @db.create_project(title)
       puts "Created a new project: "
       puts "PID  Name"
       puts "  #{created_proj.id}   #{created_proj.name}"
     elsif command == "show"
       pid = input[1]
-      remaining_tasks = @pl.show_proj_tasks_remaining(pid)
+      remaining_tasks = @db.show_proj_tasks_remaining(pid)
       puts "Priority    TID  Description"
       remaining_tasks.each do |task|
         puts "       #{task.priority}      #{task.id}  #{task.description}"
       end
     elsif command == "history"
       pid = input[1]
-      completed_tasks = @pl.show_proj_tasks_complete(pid)
+      completed_tasks = @db.show_proj_tasks_complete(pid)
       puts "Priority    TID  Description"
       completed_tasks.each do |task|
         puts "       #{task.priority}      #{task.id}  #{task.description}"
@@ -76,7 +76,7 @@ class TM::TerminalClient
 
     elsif command == "mark"
       tid = input[1]
-      completed_task = @pl.mark_task_as_complete(tid)
+      completed_task = @db.mark_task_as_complete(tid)
       puts "Marked task as complete: "
       puts "Priority    TID  Description"
       puts "       #{completed_task.priority}      #{completed_task.id}  #{completed_task.description}"
@@ -100,7 +100,7 @@ private
 
   def add_task(pid, desc, priority)
 
-    added_task = @pl.add_task_to_proj(pid, desc, priority)
+    added_task = @db.add_task_to_proj(pid, desc, priority)
 
     puts "Priority    TID  Description"
     puts "       #{added_task.priority}      #{added_task.id}  #{added_task.description}"
