@@ -23,17 +23,19 @@ class TM::Project
     @description = description
     @priority = priority
     @tasks << TM::Task.new(@project_id, description, priority)
+    @tasks.last
   end
 
   def complete_task(task_id)
     selected = @tasks.select {|x| x.task_id == task_id}
-    selected[0].status = 'complete'
+    # binding.pry
+    selected[0].status = "complete"
   end
 
   def completed_tasks
     completed = @tasks.select {|x| x.status == 'complete'}
-    completed.sort {|x ,y| x <=> y }
-  end
+    completed.sort { |x, y| x.creation_date <=> y.creation_date}
+    end
 
   def incomplete_tasks
     incomplete = @tasks.select {|x| x.status == 'incomplete'}

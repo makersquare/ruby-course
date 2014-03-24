@@ -2,8 +2,10 @@ require 'spec_helper'
 
 describe 'Project' do
   before do
+    TM::Project.class_variable_set :@@project_id, 15
     @project = TM::Project.new("New Project")
     @project.add_task('ballout')
+
   end
 
 
@@ -17,7 +19,7 @@ describe 'Project' do
 
   it 'initializes project with a unique id' do
 
-    expect(@project.project_id).to eq(@project.project_id)
+    expect(@project.project_id).to eq(16)
   end
 
 

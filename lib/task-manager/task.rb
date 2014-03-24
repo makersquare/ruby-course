@@ -15,4 +15,8 @@ class TM::Task
     @creation_date = Time.now
   end
 
+  def self.task_id
+    @@task_id
+  end
+
 end
