@@ -10,19 +10,53 @@ class TM::DB
     @join_tasks_employees = []
   end
 
-  def addproject(name)
+  def create_project(name)
     project = TM::Project.new(name)
     @projects[project.project_id] = project
   end
 
-  def addemployee(name)
+  def get_project()
+
+  end
+
+  def update_project()
+
+  end
+
+  def delete_project()
+
+  end
+
+  def create_employee(name)
     employee = TM::Employee.new(name)
     @employees[employee.employee_id] = employee
   end
 
-  def addtask()
+  def get_employee()
 
   end
 
+  def update_employee()
 
+  end
+
+  def delete_employee()
+
+  end
+
+  def create_task()
+
+  end
+
+  def get_task()
+
+  end
+
+  def update_task()
+
+  end
+
+  def delete_task()
+
+  end
 end

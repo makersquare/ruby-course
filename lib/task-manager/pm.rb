@@ -82,7 +82,7 @@ class TM::ProjectManager
   end
 
   def create_project
-    @projectlist.addproject(@control[2..-1])
+    @projectlist.create_project(@control[2..-1])
     puts "Project with name '#{@control[2..-1].join(" ")}' created!"
     input
   end
@@ -135,7 +135,7 @@ class TM::ProjectManager
     if @projectlist.projects[@control[2].to_i].nil?
       puts "Project with that PID does not exist."
     else
-      @projectlist.projects[@control[2].to_i].addemployee(@projectlist.employees[@control[3].to_i])
+      @projectlist.projects[@control[2].to_i].create_employee(@projectlist.employees[@control[3].to_i])
       puts "Added #{@projectlist.employees[@control[3].to_i].name} to Project #{@control[2]}"
     end
     input
@@ -192,7 +192,7 @@ class TM::ProjectManager
   end
 
   def create_employee
-    @projectlist.addemployee(@control[2..-1].join(" "))
+    @projectlist.create_employee(@control[2..-1].join(" "))
     puts "Created new employee #{@control[2..-1].join(" ")}"
     input
   end
