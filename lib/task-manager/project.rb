@@ -5,14 +5,11 @@ class TM::Project
 
   @@counter = 0
 
-  def self.gen_id
-    @@counter += 1
-    @@counter
-  end
-
   def initialize(name)
     @name = name
-    @id = TM::Project.gen_id
+    
+    @@counter += 1
+    @id = @@counter
 
     @tasks = []
   end

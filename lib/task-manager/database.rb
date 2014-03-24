@@ -5,16 +5,18 @@ require 'singleton'
 class TM::DB
   attr_reader :projects
 
+  # examples
   # proj_employees = @memberships.select do |memb|
   #   memb[:pid] == 1
   # end.map do |memb|
   #   @employees[memb[:eid]]
   # end
 
+  # @employees = { 5 => Emp}
+  # @memberships = [{ :eid => 5, :pid => 7 }, { :eid => 5, :pid => 9 }]
+
   def initialize
     @projects = []
-    # @employees = { 5 => Emp}
-    # @memberships = [{ :eid => 5, :pid => 7 }, { :eid => 5, :pid => 9 }]
     @employees = {}
   end
 

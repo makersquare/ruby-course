@@ -9,6 +9,10 @@ describe 'Project' do
   # the neat thing is this local variable can be used throughout this describe block
   let(:project) { TM::Project.new("Bird Watching") }
 
+  # before do
+  #   @project = TM::Project.new("Bird Watching")
+  # end
+
 
   it "exists" do
     expect(TM::Project).to be_a(Class)
@@ -19,7 +23,7 @@ describe 'Project' do
       expect(project.name).to eq("Bird Watching")
     end
 
-    it "generates and assigns an id" do
+    it "generates and assigns a unique id" do
       TM::Project.class_variable_set :@@counter, 0
       expect(TM::Project.new('title').id).to eq(1)
       expect(TM::Project.new('title').id).to eq(2)

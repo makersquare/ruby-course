@@ -1,22 +1,23 @@
 require 'spec_helper'
 
-# this spec uses the singleton version of the ProjectList
+# class DB now replaces ProjectList
+# this spec uses the singleton version of DB
 
-describe 'ProjectList' do
+describe 'DB' do
   before do
-    @db = TM::DB.instance
+    @pl = TM::DB.instance
   end
 
   describe '.initialize' do
     it "defaults the Project List with an empty projects array" do
-      expect(@db.projects).to eq([])
+      expect(@pl.projects).to eq([])
     end
   end
 
   it "can create a project and add it to the projects array" do
 
-    result = @db.create_project("The Best Project")
-    projects_array = @db.projects
+    result = @pl.create_project("The Best Project")
+    projects_array = @pl.projects
 
     expect(projects_array.first).to be_a(TM::Project)
     # expect the return value to be the created project
@@ -27,9 +28,9 @@ describe 'ProjectList' do
     # will uncomment this if want proj id to definitely equal 1
     # expect(TM::Project).to receive(:gen_id).and_return(1)
 
-    project_1 = @db.create_project("The Best Project")
-    added_task = @db.add_task_to_proj(project_1.id, "Eat Tacos", 3)
-    # project_1 = @db.projects.first
+    project_1 = @pl.create_project("The Best Project")
+    added_task = @pl.add_task_to_proj(project_1.id, "Eat Tacos", 3)
+    # project_1 = @pl.projects.first
     # puts project_1.id
     project_1_tasks = project_1.tasks
     project_1_task_1 = project_1.tasks.first
@@ -43,28 +44,28 @@ describe 'ProjectList' do
   end
 
   it "can show remaining tasks for a project given PID" do
-    proj_1 = @db.create_project("The Best Project")
-    @db.add_task_to_proj(proj_1.id, "Eat Tacos", 3)
+    proj_1 = @pl.create_project("The Best Project")
+    @pl.add_task_to_proj(proj_1.id, "Eat Tacos", 3)
 
-    tasks_remaining = @db.show_proj_tasks_remaining(proj_1.id)
+    tasks_remaining = @pl.show_proj_tasks_remaining(proj_1.id)
 
     expect(tasks_remaining).to eq(proj_1.list_incomplete_tasks)
   end
 
   it "can show completed tasks for a project given PID" do
-    proj_1 = @db.create_project("The Best Project")
-    @db.add_task_to_proj(proj_1.id, "Eat Tacos", 3)
+    proj_1 = @pl.create_project("The Best Project")
+    @pl.add_task_to_proj(proj_1.id, "Eat Tacos", 3)
 
-    tasks_complete = @db.show_proj_tasks_complete(proj_1.id)
+    tasks_complete = @pl.show_proj_tasks_complete(proj_1.id)
 
     expect(tasks_complete).to eq(proj_1.list_completed_tasks)
   end
 
   it "can mark a task as completed based on its id" do
-    proj_1 = @db.create_project("The Best Project")
-    @db.add_task_to_proj(proj_1.id, "Eat Tacos", 3)
+    proj_1 = @pl.create_project("The Best Project")
+    @pl.add_task_to_proj(proj_1.id, "Eat Tacos", 3)
     task_id = proj_1.tasks.first.id
-    completed_task = @db.mark_task_as_complete(task_id)
+    completed_task = @pl.mark_task_as_complete(task_id)
 
     expect(completed_task).to be_a(TM::Task)
     expect(completed_task.completed).to eq(true)
