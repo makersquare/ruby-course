@@ -56,7 +56,7 @@ class TM::TerminalClient
             puts "PROJECT #{project.name} LIST OF TASKS" #below you want to iterate
             puts "--------"#through a projct's task_list and puts attr all tasks
             project.task_list.each do |task|
-              puts "task ID: #{task.task_id}"
+              puts "task ID: #{task.id}"
               puts "task is about #{task.descr}"
               puts "task PRIORITY: #{task.priority_num}"
               puts "task completion status: #{task.complete}"
@@ -95,7 +95,7 @@ class TM::TerminalClient
             puts "\n"
             puts "uncompleted task for project id of #{proj_id}"
             puts "--------"
-            puts "task ID: #{task.task_id}"
+            puts "task ID: #{task.id}"
             puts "task is about #{task.descr}"
             puts "task PRIORITY: #{task.priority_num}"
             puts "task completion status: #{task.complete}"
@@ -118,7 +118,7 @@ class TM::TerminalClient
         puts "\n"
         puts "completed task for project id of #{projid}"
         puts "--------"
-            puts "task ID: #{task.task_id}"
+            puts "task ID: #{task.id}"
             puts "task is about #{task.descr}"
             puts "task PRIORITY: #{task.priority_num}"
             puts "task completion status: #{task.complete}"
@@ -133,7 +133,7 @@ class TM::TerminalClient
         if project.has_task?(task_id)
 
           project.task_list.each do |task|
-             if task.task_id == task_id
+             if task.id == task_id
                  puts "\n"
                  puts "task is now completed"
                  puts "\n"
@@ -157,9 +157,7 @@ class TM::TerminalClient
     descr = gets.chomp
     puts "TYPE IN PRIORITY_NUM"
     priority_num = gets.chomp.to_i
-    puts "TYPE IN TASK ID"
-    task_id = gets.chomp.to_i
-    @pl.add_task_project(projid,proj_id, descr, priority_num, task_id)
+    @pl.add_task_project(projid,proj_id, descr, priority_num)
     puts "\n"
     puts "ADDED SUCCESSFULLY"
     puts "\n"

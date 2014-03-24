@@ -10,7 +10,6 @@ class TM::Task
      @priority_num = priority_num
      @complete = false
      @creation_date = Time.now    #stub time in rspec.
-     @task_id = task_id
   end
 
 end

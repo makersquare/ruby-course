@@ -5,7 +5,7 @@ class TM::Projectlist
 
   def initialize
     @project_list = []
-
+    # consider @project_list = [ { eid: 1, pid: 1}, { eid: 1, pid: 2 } ]
   end
 
 
@@ -20,10 +20,10 @@ class TM::Projectlist
 
   end
 
-  def add_task_project(projectid, proj_id, descr, priority_num, task_id)
+  def add_task_project(projectid, proj_id, descr, priority_num)
     @project_list.each do |project_instance|
       if project_instance.id == projectid
-        project_instance.task_list << TM::Task.new(proj_id, descr, priority_num, task_id)
+        project_instance.task_list << TM::Task.new(proj_id, descr, priority_num)
         return project_instance.task_list
       else
         return nil
