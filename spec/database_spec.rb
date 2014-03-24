@@ -9,17 +9,17 @@ describe 'DB' do
   end
 
   describe '.initialize' do
-    it "defaults the Project List with an empty projects array" do
-      expect(@db.projects).to eq([])
+    it "defaults the Project List with an empty projects hash" do
+      expect(@db.projects).to eq({})
     end
   end
 
-  it "can create a project and add it to the projects array" do
+  it "can create a project and add it to the projects hash" do
 
     result = @db.create_project("The Best Project")
-    projects_array = @db.projects
+    projects_hash = @db.projects
 
-    expect(projects_array.first).to be_a(TM::Project)
+    expect(projects_hash[1]).to be_a(TM::Project)
     # expect the return value to be the created project
     expect(result).to be_a(TM::Project)
   end
@@ -29,6 +29,7 @@ describe 'DB' do
     # expect(TM::Project).to receive(:gen_id).and_return(1)
 
     project_1 = @db.create_project("The Best Project")
+    # binding.pry
     added_task = @db.add_task_to_proj(project_1.id, "Eat Tacos", 3)
     # project_1 = @db.projects.first
     # puts project_1.id

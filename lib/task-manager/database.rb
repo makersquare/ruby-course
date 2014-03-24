@@ -16,7 +16,7 @@ class TM::DB
   # @memberships = [{ :eid => 5, :pid => 7 }, { :eid => 5, :pid => 9 }]
 
   def initialize
-    @projects = []
+    @projects = {}
     @employees = {}
   end
 
@@ -29,7 +29,8 @@ class TM::DB
   def create_project(title)
     proj = TM::Project.new(title)
 
-    @projects << proj
+    proj_id = proj.id
+    @projects[proj_id] = proj
 
     proj
   end
@@ -38,7 +39,7 @@ class TM::DB
     # ensure id is an integer
     pid = pid.to_i
 
-    proj = @projects.find { |project| project.id == pid }
+    proj = @projects[pid]
 
     proj.list_incomplete_tasks
   end
@@ -47,7 +48,7 @@ class TM::DB
     # ensure id is an integer
     pid = pid.to_i
 
-    proj = @projects.find { |project| project.id == pid }
+    proj = @projects[pid]
 
     proj.list_completed_tasks
   end
@@ -57,7 +58,7 @@ class TM::DB
     pid = pid.to_i
     priority = priority.to_i
 
-    proj = @projects.find { |project| project.id == pid }
+    proj = @projects[pid]
 
     added_task = proj.add_task(desc, priority)
   end
@@ -68,7 +69,7 @@ class TM::DB
 
     project = nil
 
-    @projects.each do |proj|
+    @projects.each do |pid, proj|
       if proj.include_task?(tid)
         proj.mark_as_complete(tid)
 
