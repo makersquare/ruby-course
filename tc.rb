@@ -1,5 +1,4 @@
 require_relative 'lib/task-manager.rb'
-require 'pry-debugger'
 class TM::TerminalClient
 
   def initialize
@@ -77,7 +76,7 @@ class TM::TerminalClient
       puts "\n"
       puts "WRITE PROJECT NAME"
       projectname = gets.chomp
-      @pl.create(projectname)
+      # @pl.create(projectname)
       @pl.add_projects(projectname)
       puts "\n"
       puts "NEW PROJECT CREATED"

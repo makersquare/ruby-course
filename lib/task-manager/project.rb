@@ -27,7 +27,7 @@ attr_reader :name, :id, :task_list
 
   def mark_task_complete(id)
     @task_list.each do |task|
-       if task.task_id  == id
+       if task.id  == id
            task.complete = true
        end
     end

@@ -10,13 +10,13 @@ class TM::Projectlist
 
 
 
-  def create(name)
-    project = TM::Project.new(name)
-    return project
-  end
+  # def create(name)
+  #   project = TM::Project.new(name)
+  #   return project
+  # end
 
-  def add_projects(project)
-    @project_list << TM::Project.new(project)
+  def add_projects(name)
+    @project_list << TM::Project.new(name)
 
   end
 
@@ -25,14 +25,19 @@ class TM::Projectlist
       if project_instance.id == projectid
         project_instance.task_list << TM::Task.new(proj_id, descr, priority_num, task_id)
         return project_instance.task_list
+      else
+        return nil
       end
     end
-end
+  end
 
- def list_task_remain(id)
+  def list_task_remain(id)
      @project_list.each do |project|
        if project.id == id
          return project.retrieve_incomplete_tasks
+
+       else
+         return nil
        end
      end
   end

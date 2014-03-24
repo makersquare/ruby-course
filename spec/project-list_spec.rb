@@ -13,12 +13,12 @@ describe TM::Projectlist do
     expect(pl_added.count).to eq 1
   end
 
-  xit "can add task to a project" do
+  it "can add task to a project" do
     pl = TM::Projectlist.new
     pl_added = pl.add_projects("fitness")
-    eating_better = TM::Task.new(1,"diet",1,2)
-    pl_added_task = pl.add_task_project("fitness",eating_better)
-    expect(pl_added_task).to eq []
+    eating_better = TM::Task.new(1,"diet",1)
+    pl_added_task = pl.add_task_project("fitness",1,"diet",1,2)
+    expect(pl_added_task).to eq nil
     # expect(p1_added_task).to eq
 
   end
@@ -26,8 +26,10 @@ describe TM::Projectlist do
   it "list task" do
     pl = TM::Projectlist.new
     pl.add_projects("fitness")
-    expect(pl.list_task_remain).to eq []
+    expect(pl.list_task_remain(1)).to eq nil
   end
+
+
 
 end
 
