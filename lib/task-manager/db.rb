@@ -15,8 +15,8 @@ class TM::DB
     @projects[project.project_id] = project
   end
 
-  def get_project()
-
+  def get_project(project_id)
+    @projects[project_id]
   end
 
   def update_project()
@@ -27,29 +27,12 @@ class TM::DB
 
   end
 
-  def create_employee(name)
-    employee = TM::Employee.new(name)
-    @employees[employee.employee_id] = employee
-  end
-
-  def get_employee()
-
-  end
-
-  def update_employee()
-
-  end
-
-  def delete_employee()
-
-  end
-
   def create_task()
 
   end
 
-  def get_task()
-
+  def get_task(task_id)
+    @tasks[task_id]
   end
 
   def update_task()
@@ -57,6 +40,23 @@ class TM::DB
   end
 
   def delete_task()
+
+  end
+
+  def create_employee(name)
+    employee = TM::Employee.new(name)
+    @employees[employee.employee_id] = employee
+  end
+
+  def get_employee(employee_id)
+    @employees[employee_id]
+  end
+
+  def update_employee()
+
+  end
+
+  def delete_employee()
 
   end
 end
