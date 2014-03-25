@@ -55,5 +55,12 @@ describe 'Task' do
 
   end
 
+  it "can mark a task as complete, giving it a completion date" do
+    Time.stub(:now).and_return(Time.parse('3 pm'))
+    completion_time = Time.now
+    task.completed = true
+
+    expect(task.time_completed).to eq(completion_time)
+  end
 
 end
