@@ -25,17 +25,17 @@ class TM::Project
   #   @tasks[task_id].complete = true
   # end
 
-  def completedlist
-    completedarray = @tasks.select { |task_id, task| task.complete }.values
-    completedarray.sort_by! { |task| task.timecreated }
-  end
+  # def completedlist
+  #   completedarray = @tasks.select { |task_id, task| task.complete }.values
+  #   completedarray.sort_by! { |task| task.timecreated }
+  # end
 
-  def incompletelist
-    incompletedhash = @tasks.select { |task_id, task| !task.complete }
-    incompletedarray = []
-    incompletedhash.each { |task_id, task| incompletedarray.push(task) }
-    incompletedarray.sort_by! { |task| [task.priority, task.timecreated] }
-  end
+  # def incompletelist
+  #   incompletedhash = @tasks.select { |task_id, task| !task.complete }
+  #   incompletedarray = []
+  #   incompletedhash.each { |task_id, task| incompletedarray.push(task) }
+  #   incompletedarray.sort_by! { |task| [task.priority, task.timecreated] }
+  # end
 
   def addemployee(employee)
     @employees_on_project.push(employee)

@@ -4,8 +4,13 @@ describe "DB" do
 
   before do
     @db = TM::DB.new
+    TM::Task.class_variable_set(:@@task_count, 0)
+    TM::Project.class_variable_set(:@@projectcount, 0)
+    TM::Employee.class_variable_set(:@@employeecount, 0)
+
     @project = @db.create_project("Project Name")
     @employee = @db.create_employee("Employee Name")
+
   end
 
   it "contains a hash of projects accessible by index with get_project added by create_project" do
@@ -36,7 +41,7 @@ describe "DB" do
     puts @db.create_task("task 4",2,@project.project_id).task_id
     puts @db.create_task("task 5",1,@project.project_id).task_id
 
-    @db.mark_task_complete(6)
+    @db.mark_task_complete(1)
     @db.mark_task_complete(3)
     @db.mark_task_complete(5)
 
@@ -44,7 +49,7 @@ describe "DB" do
 
     expect(completed_projects[0].description).to eq("task 1")
     expect(completed_projects[1].description).to eq("task 3")
-    expect(completed_projects[2].description).to eq("task 4")
+    expect(completed_projects[2].description).to eq("task 5")
     expect(completed_projects.length).to eq(3)
   end
 
@@ -60,10 +65,10 @@ describe "DB" do
 
     incomplete_projects = db.incomplete_task_list(project.project_id)
     expect(incomplete_projects[0].description).to eq("task 3")
-    expect(incomplete_projects[0].description).to eq("task 4")
-    expect(incomplete_projects[0].description).to eq("task 2")
-    expect(incomplete_projects[0].description).to eq("task 5")
-    expect(incomplete_projects[0].description).to eq("task 1")
+    expect(incomplete_projects[1].description).to eq("task 4")
+    expect(incomplete_projects[2].description).to eq("task 2")
+    expect(incomplete_projects[3].description).to eq("task 5")
+    expect(incomplete_projects[4].description).to eq("task 1")
 
   end
 end
