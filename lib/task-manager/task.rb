@@ -11,8 +11,7 @@ class TM::Task
     @description = description
     @priority = priority
     @complete = complete
-    @@counter += 1
-    @id = @@counter
+    @id = @@counter += 1
     @date_created = Time.now
   end
 
