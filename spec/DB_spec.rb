@@ -6,15 +6,23 @@ describe 'DB' do
   end
 
   before do
-    @db = TM::DB.new
+    @__db = TM::DB.new
   end
 
-describe 'initialize' do
-  it 'has 4 hashes initialized for project, task, id, members' do
-    expect(@db.projects).to eq ({})
-    expect(@db.tasks).to eq ({})
-    expect(@db.employees).to eq ({})
-    expect(@db.memberships).to eq ({})
+  describe 'initialize' do
+    it 'has 4 hashes initialized for project, task, id, members' do
+      expect(@__db.projects).to eq ({})
+      expect(@__db.tasks).to eq ({})
+      expect(@__db.employees).to eq ({})
+      expect(@__db.memberships).to eq ({})
+    end
   end
-end
+
+  describe 'creates a new project and stores in the database' do
+    it 'creates a new project' do
+      @__db.create_project('project_name')
+      expect(@__db.projects[1].name).to eq('project_name')
+    end
+  end
+
 end

@@ -5,16 +5,28 @@ class PManager
   def self.start
     puts "Welcome to Project Manager Pro®. ".colorize(:yellow)
     def self.main_menu
-      puts;
-      puts "Available Commands:".colorize(:yellow)
-      puts "  help - Show these commands again".colorize(:light_blue)
-      puts "  list - List all projects".colorize(:blue)
-      puts "  create NAME - Create a new project with name=NAME".colorize(:light_blue)
-      puts "  show PID - Show remaining tasks for project with id=PID".colorize(:blue)
-      puts "  history PID - Show completed tasks for project with id=PID".colorize(:light_blue)
-      puts "  add PID PRIORITY DESC - Add a new task to project with id=PID".colorize(:blue)
-      puts "  mark TID - Mark task with id=TID as complete".colorize(:light_blue)
-      puts;
+      puts "What would you like to do?"
+    puts "-- DOING THINGS"
+    puts "-- Type 'create NAME' - Create a new project with name=NAME"
+    puts "-- Type 'add PID DESC Priority' - Add a new task to project with id=PID"
+    puts "-- Type 'emp create NAME' to create a new employee with name=employee name"
+    puts "-- Type 'delegate EID PID' - Assign an employee to a project"
+    puts "-- Type 'task assign TID EID' - Assign task TID to employee EID"
+    puts "-- Type 'mark TID' to mark task with id=TID as complete"
+    puts "--"
+    puts "-- ACCESSING THINGS"
+    puts "-- Type 'list' to list all the projects"
+    puts "-- Type 'emplist' - List all employees"
+    puts "-- Type 'employees PID' - Show employees participating in this project with PID=Project ID"
+    puts "-- Type 'show EID projects' - Show employee EID and all participating projects"
+    puts "-- Type 'see PID tasks' to show remaining tasks for project with id=PID"
+    puts "-- Type 'history PID' to show completed tasks for project with id=PID"
+    puts "-- Type 'remaining EID tasks' to show remaining tasks of employee with id=EID"
+    puts "-- Type 'completed EID tasks' to show completed tasks of employee with id=EID"
+    puts "--"
+    puts "-- GENERAL"
+    puts "-- Type 'help' to show these commands again"
+    puts "-- Exit-- Type 'exit' to quit this program"
     end
     @@user_command = ""
     project_list = TM::ProjectList.new
