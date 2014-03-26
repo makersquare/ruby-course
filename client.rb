@@ -62,10 +62,10 @@ projlist = TM::ProjectList.new
 
       when (command =~ /show/i)
 
-# show PID - Show remaining tasks for project with id=PID
-# 1. parse out ID number
-# 2. use get project to fetch project, show_inc to show incompletes
-# 3. return project's info in proper format (project name and other info)
+        # show PID - Show remaining tasks for project with id=PID
+        # 1. parse out ID number
+        # 2. use get project to fetch project, show_inc to show incompletes
+        # 3. return project's info in proper format (project name and other info)
         match_ind = command =~ /\s\d/
         project_id = command[match_ind+1..-1]
 

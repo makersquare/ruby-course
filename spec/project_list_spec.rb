@@ -56,7 +56,7 @@ it "can add a new task to a specific project" do
   expect(task1.projID).to eq(result.id)
   expect(task2.priority).to eq(1)
   expect(task3.description).to eq("buy the pie from a bakery")
-  expect(task3.complete).to eq("incomplete")
+  expect(task3.complete?).to eq(false)
   a_proj = @proj_list.show_all
   expect(a_proj[-1].name).to eq("Bake a sweet potato pie")
 end

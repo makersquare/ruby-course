@@ -24,7 +24,7 @@ describe 'Task' do
   end
 
   it "initializes as an incomplete task" do
-    expect(@my_task.complete).to eq ("incomplete")
+    expect(@my_task.complete?).to eq (false)
   end
 
   it "initializes tasks with a creation date" do
@@ -35,11 +35,11 @@ describe 'Task' do
   end
 
   it "can mark tasks as complete" do
-    expect(@my_task.mark_comp).to eq ("complete")
+    expect(@my_task.mark_comp).to eq (true)
   end
 
   it "can mark tests as incomplete" do
-    expect(@my_task.mark_inc).to eq ("incomplete")
+    expect(@my_task.mark_inc).to eq (false)
   end
 
 end

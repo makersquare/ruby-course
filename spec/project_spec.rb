@@ -16,17 +16,17 @@ describe 'Project' do
     a_proj = TM::Project.new "Weekend Errands"
     result = a_proj.add_task("buy milk", 4)
     expect(a_proj.all_tasks).to be_a(Hash)
-    expect(a_proj.all_tasks[result.id].complete).to eq("incomplete")
+    expect(a_proj.all_tasks[result.id].complete?).to eq(false)
     expect(a_proj.all_tasks[result.id].description).to eq("buy milk")
   end
 
   it "can mark tasks as complete or incomplete" do
     new_proj = TM::Project.new "Errands"
     new_task = new_proj.add_task("shower", 5)  #
-    result = new_proj.mark_complete(new_task.id).complete
-    expect(result).to eq("complete")
-    result = new_proj.mark_incomplete(new_task.id).complete
-    expect(result).to eq("incomplete")
+    result = new_proj.mark_complete(new_task.id).complete?
+    expect(result).to eq(true)
+    result = new_proj.mark_incomplete(new_task.id).complete?
+    expect(result).to eq(false)
   end
 
   it "can return an array of all complete tasks by creation date" do
