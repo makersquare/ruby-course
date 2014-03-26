@@ -69,7 +69,7 @@ describe 'Project' do
   end
 
   describe 'retreive incomplete tasks, by priority' do
-    it 'retrieves a list of incomplete tasks by priority' do
+    xit 'retrieves a list of incomplete tasks by priority' do
       task = TM::Task.new('bla', 2)
       task2 = TM::Task.new('blablabla', 1)
       task3 = TM::Task.new('noshow', 4)
