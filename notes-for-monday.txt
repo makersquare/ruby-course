@@ -3,21 +3,23 @@ move tasks hash and methods to projectlist.rb
 Implement join arrays in ProjectList: Remove Employee.tasks, Project.employees_on_project
 Redo pm.rb
 
+
+
 Available Commands:
   help - Show these commands again
   project list - List all projects
   project create NAME - Create a new project
-project show PID - Show remaining tasks for project PID
-project history PID - Show completed tasks for project PID
-project addemployee PID EID - Add an employee EID to project PID
-project employees PID - Show employees participating in this project
-task create PID TID PRIORITY DESC - Add a new task TID to project PID
-task assign PID TID EID - Assign task TID from project PID to employee EID
-task mark PID TID - Mark task PID[TID] as complete
+GET project show PID - Show remaining tasks for project PID
+GET project history PID - Show completed tasks for project PID
+UPDATE project addemployee PID EID - Add an employee EID to project PID
+GET project employees PID - Show employees participating in this project
+CREATE/UPDATE? task create PID TID PRIORITY DESC - Add a new task TID to project PID
+UPDATE task assign PID TID EID - Assign task TID from project PID to employee EID
+UPDATE task mark PID TID - Mark task PID[TID] as complete
   emp list - List all employees
   emp create NAME - Create a new employee
-emp show EID - Show employee EID and all participating projects
-emp details EID - Show all remaining tasks assigned to employee EID,
+GET emp show EID - Show employee EID and all participating projects
+GET emp details EID - Show all remaining tasks assigned to employee EID,
                   along with the project name next to each task
-emp history EID - Show completed tasks for employee with id=EID
+GET emp history EID - Show completed tasks for employee with id=EID
 quit - Exit program

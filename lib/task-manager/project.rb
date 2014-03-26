@@ -17,7 +17,7 @@ class TM::Project
   end
 
   def addtask(description, priority)
-    temp_task = TM::Task.new(description, priority)
+    temp_task = TM::Task.new(description, priority, @project_id)
     @tasks[temp_task.task_id] = temp_task
   end
 
