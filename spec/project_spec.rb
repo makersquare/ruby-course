@@ -29,6 +29,7 @@ describe 'Project' do
     it 'adds a task to the project' do
       # task = TM::Task.new("take out the trash")
       @new_project.add_task(@new_task)
+
       result = @new_project.tasks[0]
       expect(result).to eq(@new_task)
     end
