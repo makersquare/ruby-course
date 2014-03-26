@@ -6,8 +6,6 @@ def initialize(name)
   @name = name
   @id = @@id_counter
   @@id_counter += 1
-  @tasks = []
-  @employees = []
 end
 
 def self.id_counter=(value)

@@ -2,7 +2,7 @@ require_relative 'lib/task-manager.rb'
 
 class TM::ProjectManager
   def self.start
-    tracker = TM::ProjectTracker.new
+    tracker = TM::Database.new
     @@exit = false
     while @@exit == false
     puts "What would you like to do?"
@@ -33,7 +33,7 @@ class TM::ProjectManager
       case choice[0]
         #DOING THINGS#
         when 'create'
-          project = tracker.create_new_project(choice[1])
+          project = tracker.create_new_project(choice[1..-1])
           puts "#{project.name} project created"
         when 'add'
           if tracker.projects == []
