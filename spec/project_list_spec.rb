@@ -63,13 +63,12 @@ end
 
 
 it "can mark a task with TID (task ID) as complete" do
-  result = @proj_list.create_project("Make pasta") #PROJ 7
+  result = @proj_list.create_project("Make pasta")
   task1 = @proj_list.add_new_task(result.id, "go to the market", 4)
   task2 = @proj_list.add_new_task(result.id, "buy tomatoes", 10)
   task3 = @proj_list.add_new_task(result.id, "go to restaurant", 12)
-  # binding.pry
   comp_task = @proj_list.mark_task_c(task2.id)
-  # expect(comp_task.complete).to eq("complete")
+  expect(comp_task.complete?).to eq(true)
 end
 
 

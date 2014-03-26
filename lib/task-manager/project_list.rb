@@ -52,8 +52,7 @@ module TM
       # inc_hash = {}
       @@proj_ls.each do |project|
         inc_arr = project.sort_inc
-        if inc_arr.length != 0
-          puts inc_arr
+        if inc_arr.class != String
           inc_hash = Hash[inc_arr]
             if inc_hash[task_id]
               task_c = project.mark_complete(task_id)

@@ -54,6 +54,7 @@ class Project
   end
 
   def sort_inc # return array of incomplete tasks sorted by priority then create date
+
      if @inc_tasks.length != 0
         @inc_tasks.to_a.sort{|task1, task2|
         if task1[1].priority == task2[1].priority
