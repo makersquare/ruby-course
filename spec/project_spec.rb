@@ -30,21 +30,21 @@ describe 'Project' do
   #   expect(project.tasks[10].complete).to eq(true)
   # end
 
-  it "can retrieve a list of all complete tasks, sorted by creation date" do
-    project = TM::Project.new("Project")
-    TM::Task.class_variable_set :@@task_count, 0
-    project.addtask("asdf",1)
-    project.addtask("werwer",2)
-    project.addtask("dfgdf",4)
-    project.addtask("tyrrty",3)
-    project.markcomplete(1)
-    project.markcomplete(3)
-    project.markcomplete(4)
-    expect(project.completedlist[0].description).to eq("asdf")
-    expect(project.completedlist[1].description).to eq("dfgdf")
-    expect(project.completedlist[2].description).to eq("tyrrty")
-    expect(project.completedlist.length).to eq(3)
-  end
+  # it "can retrieve a list of all complete tasks, sorted by creation date" do
+  #   project = TM::Project.new("Project")
+  #   TM::Task.class_variable_set :@@task_count, 0
+  #   project.addtask("asdf",1)
+  #   project.addtask("werwer",2)
+  #   project.addtask("dfgdf",4)
+  #   project.addtask("tyrrty",3)
+  #   project.markcomplete(1)
+  #   project.markcomplete(3)
+  #   project.markcomplete(4)
+  #   expect(project.completedlist[0].description).to eq("asdf")
+  #   expect(project.completedlist[1].description).to eq("dfgdf")
+  #   expect(project.completedlist[2].description).to eq("tyrrty")
+  #   expect(project.completedlist.length).to eq(3)
+  # end
 
   it "can retrieve a list of all incomplete tasks, sorted by priority" do
     project = TM::Project.new("Project")

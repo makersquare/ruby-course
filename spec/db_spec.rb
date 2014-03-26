@@ -47,4 +47,23 @@ describe "DB" do
     expect(completed_projects[2].description).to eq("task 4")
     expect(completed_projects.length).to eq(3)
   end
+
+  it "can create a list of all incomplete tasks, sorted by creation date and priority" do
+    db = TM::DB.new
+    project = db.create_project("new test project")
+
+    puts db.create_task("task 1",4,project.project_id).task_id
+    puts db.create_task("task 2",3,project.project_id).task_id
+    puts db.create_task("task 3",1,project.project_id).task_id
+    puts db.create_task("task 4",1,project.project_id).task_id
+    puts db.create_task("task 5",3,project.project_id).task_id
+
+    incomplete_projects = db.incomplete_task_list(project.project_id)
+    expect(incomplete_projects[0].description).to eq("task 3")
+    expect(incomplete_projects[0].description).to eq("task 4")
+    expect(incomplete_projects[0].description).to eq("task 2")
+    expect(incomplete_projects[0].description).to eq("task 5")
+    expect(incomplete_projects[0].description).to eq("task 1")
+
+  end
 end
