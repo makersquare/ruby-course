@@ -1,3 +1,3 @@
-Class TM::Employee
+class TM::Employee
 
 end
