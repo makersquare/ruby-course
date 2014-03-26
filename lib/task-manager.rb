@@ -7,6 +7,7 @@ end
 require_relative 'task-manager/task.rb'
 require_relative 'task-manager/project.rb'
 require_relative 'task-manager/project_list.rb'
+require_relative 'task-manager/employee.rb'
 
 
 #require 'pry-debugger'

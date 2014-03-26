@@ -3,6 +3,8 @@ class TM::ProjectList
 
   def initialize
     @project_list = []
+    @employees
+
   end
 
   def add_project(name)
