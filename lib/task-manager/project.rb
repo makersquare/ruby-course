@@ -8,7 +8,7 @@ class TM::Project
 
   def initialize(name)
     @name = name
-    
+
     @@counter += 1
     @id = @@counter
 
@@ -29,7 +29,6 @@ class TM::Project
     task = @tasks.find { |task| task.id == task_id }
 
     task.completed = true
-    task.time_completed = Time.now
   end
 
   def list_completed_tasks

@@ -229,7 +229,7 @@ describe 'DB' do
   ## Associate Employee, Projs, Tasks ##
   ######################################
 
-  describe "associate employees and tasks" do
+  describe "associate employees and tasks", :pending => true do
     
     let(:emp) { @db.create_emp("Jack") }
 

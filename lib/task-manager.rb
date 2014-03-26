@@ -9,7 +9,7 @@ require_relative 'task-manager/task.rb'
 require_relative 'task-manager/project.rb'
 require_relative 'task-manager/database.rb'
 require_relative 'task-manager/employee.rb'
-
+require_relative 'use_case.rb'
 
 # this looks nicer but doesn't work
 # Dir["task-manager/use_cases/*"].each {|file| require file }
