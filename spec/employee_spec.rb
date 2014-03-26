@@ -19,7 +19,7 @@ describe 'Employee' do
 
       result = @new_employee.id
 
-      expect(result).to eq(2)
+      expect(result).to eq(3)
 
     end
   end
