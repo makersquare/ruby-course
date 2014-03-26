@@ -1,37 +1,6 @@
 require 'ostruct'
 
-module MyApp
-
-  class UseCase
-    # Convenience method that lets us call `.run` directly on the class
-    def self.run(inputs)
-      self.new.run(inputs)
-    end
-
-    def failure(error_sym, data={})
-      UseCaseFailure.new(data.merge :error => error_sym)
-    end
-
-    def success(data={})
-      UseCaseSuccess.new(data)
-    end
-  end
-
-  class UseCaseFailure < OpenStruct
-    def success?
-      false
-    end
-    def error?
-      true
-    end
-  end
-
-  class UseCaseSuccess < OpenStruct
-    def success?
-      true
-    end
-    def error?
-      false
-    end
+class TM::AddTaskToProject < TM::UseCase
+  def run(inputs)
   end
 end

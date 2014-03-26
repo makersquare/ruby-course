@@ -25,4 +25,12 @@ describe 'DB' do
     end
   end
 
+  describe 'get Project by pid' do
+    it 'returns a project object based on the pid' do
+      new_project = @__db.create_project('project_name')
+      result = @__db.get_project(1)
+      expect(result).to eq new_project
+    end
+  end
+
 end
