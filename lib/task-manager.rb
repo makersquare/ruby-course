@@ -31,6 +31,12 @@ module TM
 
     end
 
+    # Project use case methods
+
+    def get_project_tasks(project_id)
+      @tasks.select { |task_id, task| task.project_id == project_id }
+    end
+
     # Task CRUD methods
 
     def create_task(description, priority, project_id)
@@ -51,10 +57,15 @@ module TM
 
     end
 
-    # Task User case methods
+    # Task Use case methods
 
     def mark_task_complete(task_id)
       @tasks[task_id].complete = true
+    end
+
+    def complete_task_list(project_id)
+      completedarray = get_project_tasks(project_id).select { |task_id, task| task.complete }.values
+      completedarray.sort_by! { |task| task.timecreated }
     end
 
     # Employee CRUD methods

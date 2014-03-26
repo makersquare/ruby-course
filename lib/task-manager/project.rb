@@ -21,9 +21,9 @@ class TM::Project
   #   @tasks[temp_task.task_id] = temp_task
   # end
 
-  def markcomplete(task_id)
-    @tasks[task_id].complete = true
-  end
+  # def markcomplete(task_id)
+  #   @tasks[task_id].complete = true
+  # end
 
   def completedlist
     completedarray = @tasks.select { |task_id, task| task.complete }.values

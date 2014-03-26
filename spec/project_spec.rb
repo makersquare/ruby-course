@@ -21,14 +21,14 @@ describe 'Project' do
     expect(pl.projects[0].project_id).to eq(0)
   end
 
-  it "can mark a project complete, specified by id" do
-    project = TM::Project.new("Name")
-    # task = TM::Task.new(10,"Description",1)
-    expect(TM::Task).to receive(:gen_id).and_return(10)
-    project.addtask("Description",1)
-    project.markcomplete(10)
-    expect(project.tasks[10].complete).to eq(true)
-  end
+  # it "can mark a project complete, specified by id" do
+  #   project = TM::Project.new("Name")
+  #   # task = TM::Task.new(10,"Description",1)
+  #   expect(TM::Task).to receive(:gen_id).and_return(10)
+  #   project.addtask("Description",1)
+  #   project.markcomplete(10)
+  #   expect(project.tasks[10].complete).to eq(true)
+  # end
 
   it "can retrieve a list of all complete tasks, sorted by creation date" do
     project = TM::Project.new("Project")
