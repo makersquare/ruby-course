@@ -2,7 +2,7 @@
 # Create our module. This is so other files can start using it immediately
 module TM
   class DB
-    attr_reader :projects, :employees
+    attr_reader :projects, :employees, :tasks
 
     def initialize
       @projects = {}
@@ -11,9 +11,12 @@ module TM
       @join_projects_employees = []
     end
 
+    # Project CRUD methods
+
     def create_project(name)
       project = TM::Project.new(name)
       @projects[project.project_id] = project
+      project
     end
 
     def get_project(project_id)
@@ -28,8 +31,12 @@ module TM
 
     end
 
-    def create_task()
-      #task needs to be associated wiht a project
+    # Task CRUD methods
+
+    def create_task(description, priority, project_id)
+      new_task = TM::Task.new(description, priority, project_id)
+      @tasks[new_task.task_id] = new_task
+      new_task
     end
 
     def get_task(task_id)
@@ -43,6 +50,14 @@ module TM
     def delete_task()
 
     end
+
+    # Task User case methods
+
+    def mark_task_complete(task_id)
+      @tasks[task_id].complete = true
+    end
+
+    # Employee CRUD methods
 
     def create_employee(name)
       employee = TM::Employee.new(name)

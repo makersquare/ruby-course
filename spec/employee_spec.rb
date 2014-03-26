@@ -17,12 +17,12 @@ describe "Employee" do
     expect(project.employees_on_project.first).to be_a(TM::Employee)
   end
 
-  it "Tasks can be assigned to employee if he is on the project" do
-    project = TM::Project.new("Project")
-    newguy = TM::Employee.new("Name")
-    project.addemployee(newguy)
-    project.addtask("Task",1)
-    project.assigntask(project.tasks[1], newguy)
-    expect(newguy.tasks.first).to be_a(TM::Task)
-  end
+  # it "Tasks can be assigned to employee if he is on the project" do
+  #   project = TM::Project.new("Project")
+  #   newguy = TM::Employee.new("Name")
+  #   project.addemployee(newguy)
+  #   project.addtask("Task",1)
+  #   project.assigntask(project.tasks[1], newguy)
+  #   expect(newguy.tasks.first).to be_a(TM::Task)
+  # end
 end
