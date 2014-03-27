@@ -1,8 +1,8 @@
 
 class TM::Project
 @@id = 0
-attr_reader :name, :id, :task_list
-
+attr_reader :id, :task_list
+attr_accessor :name
 
   def initialize(name)
     @name = name

@@ -13,7 +13,7 @@ describe 'Project' do
   end
 
   it "A project must automatically generate an unique id" do
-    expect(TM::Project.new("Fitness").id).to eq 3
+    expect(TM::Project.new("Fitness").id).to eq 9
   end
 
   it "A project can add tasks" do
