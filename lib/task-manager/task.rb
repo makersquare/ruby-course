@@ -4,7 +4,7 @@ class TM::Task
   attr_accessor :status, :employee
   attr_reader :project_id, :description, :priority_number, :id, :id_counter, :creation_date, :employee
   @@id_counter = 1
-  def initialize(project_id, description, priority_number)
+  def initialize(project_id, priority_number, description)
     @project_id = project_id
     @description = description
     @priority_number = priority_number
