@@ -4,10 +4,11 @@ class TM::Task
   @@counter = 0
 
   attr_reader :description, :id, :date_created
-  attr_accessor :priority, :project_id, :complete
+  attr_accessor :priority, :pid, :complete, :eid
 
-  def initialize(description, priority=nil, project_id=nil, complete=false)
-    @project_id = project_id
+  def initialize(description, priority=nil, pid=nil, eid=nil, complete=false)
+    @pid = pid
+    @eid = eid
     @description = description
     @priority = priority
     @complete = complete

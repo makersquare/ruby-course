@@ -13,7 +13,7 @@ describe 'Task' do
   describe "initialize" do
     it "is assigned the task id" do
       result = @task.id
-      result2 = @task.project_id
+      result2 = @task.pid
       expect(result).to eq 1
       expect(result2).to eq nil
     end
