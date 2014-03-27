@@ -10,12 +10,12 @@ describe "Employee" do
     expect(newguy.employee_id).to be_a(Integer)
   end
 
-  it "Employee can be added to project" do
-    newguy = TM::Employee.new("Name")
-    project = TM::Project.new("Project")
-    project.addemployee(newguy)
-    expect(project.employees_on_project.first).to be_a(TM::Employee)
-  end
+  # it "Employee can be added to project" do
+  #   newguy = TM::Employee.new("Name")
+  #   project = TM::Project.new("Project")
+  #   project.addemployee(newguy)
+  #   expect(project.employees_on_project.first).to be_a(TM::Employee)
+  # end
 
   # it "Tasks can be assigned to employee if he is on the project" do
   #   project = TM::Project.new("Project")

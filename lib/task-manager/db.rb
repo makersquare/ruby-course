@@ -1,62 +1,109 @@
-# class TM::DB
-#   attr_reader :projects, :employees
+module TM
+  class DB
+    attr_reader :projects, :employees, :tasks, :join_employees_projects
 
-#   def initialize
-#     @projects = {}
-#     @tasks = {}
-#     @employees = {}
-#     @join_projects_tasks = []
-#     @join_projects_employees = []
-#     @join_tasks_employees = []
-#   end
+    def initialize
+      @projects = {}
+      @tasks = {}
+      @employees = {}
+      @join_employees_projects = []
+    end
 
-#   def create_project(name)
-#     project = TM::Project.new(name)
-#     @projects[project.project_id] = project
-#   end
+    # Project CRUD methods
 
-#   def get_project(project_id)
-#     @projects[project_id]
-#   end
+    def create_project(name)
+      project = TM::Project.new(name)
+      @projects[project.project_id] = project
+      project
+    end
 
-#   def update_project()
+    def get_project(project_id)
+      @projects[project_id]
+    end
 
-#   end
+    def update_project()
 
-#   def delete_project()
+    end
 
-#   end
+    def delete_project()
 
-#   def create_task()
-#     #task needs to be associated wiht a project
-#   end
+    end
 
-#   def get_task(task_id)
-#     @tasks[task_id]
-#   end
+    # Project use case methods
 
-#   def update_task()
+    def get_project_tasks(project_id)
+      @tasks.select { |task_id, task| task.project_id == project_id }
+    end
 
-#   end
+    # Task CRUD methods
 
-#   def delete_task()
+    def create_task(description, priority, project_id)
+      new_task = TM::Task.new(description, priority, project_id)
+      @tasks[new_task.task_id] = new_task
+      new_task
+    end
 
-#   end
+    def get_task(task_id)
+      @tasks[task_id]
+    end
 
-#   def create_employee(name)
-#     employee = TM::Employee.new(name)
-#     @employees[employee.employee_id] = employee
-#   end
+    def update_task()
 
-#   def get_employee(employee_id)
-#     @employees[employee_id]
-#   end
+    end
 
-#   def update_employee()
+    def delete_task()
 
-#   end
+    end
 
-#   def delete_employee()
+    # Task Use case methods
 
-#   end
-# end
+    def mark_task_complete(task_id)
+      @tasks[task_id].complete = true
+    end
+
+    def complete_task_list(project_id)
+      completedarray = get_project_tasks(project_id).select { |task_id, task| task.complete }.values
+      completedarray.sort_by! { |task| task.timecreated }
+    end
+
+    def incomplete_task_list(project_id)
+      incompletedhash = get_project_tasks(project_id).select { |task_id, task| !task.complete }
+      incompletedarray = []
+      incompletedhash.each { |task_id, task| incompletedarray.push(task) }
+      incompletedarray.sort_by! { |task| [task.priority, task.timecreated] }
+    end
+
+    # Employee CRUD methods
+
+    def create_employee(name)
+      employee = TM::Employee.new(name)
+      @employees[employee.employee_id] = employee
+    end
+
+    def get_employee(employee_id)
+      @employees[employee_id]
+    end
+
+    def update_employee()
+
+    end
+
+    def delete_employee()
+
+    end
+
+    # Employee use case methods
+
+    def add_employee_to_project(employee_id, project_id)
+      @join_employees_projects.push({employee_id: employee_id, project_id: project_id})
+    end
+
+    def assign_task_to_employee(employee_id, task_id)
+      tasks[task_id].employee_id = employee_id
+    end
+  end
+
+  def self.db
+    @db ||= DB.new
+  end
+end

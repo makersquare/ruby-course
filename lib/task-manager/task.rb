@@ -1,7 +1,7 @@
 
 class TM::Task
 attr_reader :task_id, :description, :priority, :timecreated, :project_id, :employee_id
-attr_accessor :complete
+attr_accessor :complete, :employee_id
 
   @@task_count = 0
 

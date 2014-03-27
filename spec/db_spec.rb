@@ -57,11 +57,11 @@ describe "DB" do
     db = TM::DB.new
     project = db.create_project("new test project")
 
-    puts db.create_task("task 1",4,project.project_id).task_id
-    puts db.create_task("task 2",3,project.project_id).task_id
-    puts db.create_task("task 3",1,project.project_id).task_id
-    puts db.create_task("task 4",1,project.project_id).task_id
-    puts db.create_task("task 5",3,project.project_id).task_id
+    db.create_task("task 1",4,project.project_id)
+    db.create_task("task 2",3,project.project_id)
+    db.create_task("task 3",1,project.project_id)
+    db.create_task("task 4",1,project.project_id)
+    db.create_task("task 5",3,project.project_id)
 
     incomplete_projects = db.incomplete_task_list(project.project_id)
     expect(incomplete_projects[0].description).to eq("task 3")
@@ -69,6 +69,26 @@ describe "DB" do
     expect(incomplete_projects[2].description).to eq("task 2")
     expect(incomplete_projects[3].description).to eq("task 5")
     expect(incomplete_projects[4].description).to eq("task 1")
+  end
 
+  it "Can add employees to projects by pushing hash to join_projects_employees array" do
+    db = TM::DB.new
+    project = db.create_project("new test project")
+    employee = db.create_employee("Employee Name")
+
+    db.add_employee_to_project(employee.employee_id, project.project_id)
+
+    expect(db.join_employees_projects[0]).to eq({employee_id: employee.employee_id, project_id: project.project_id})
+  end
+
+  it "Can add employee to task" do
+    db = TM::DB.new
+    project = db.create_project("new test project")
+    employee = db.create_employee("Employee Name")
+    task = db.create_task("task 1",4,project.project_id)
+
+    db.assign_task_to_employee(employee.employee_id, task.task_id)
+
+    expect(task.employee_id).to eq(employee.employee_id)
   end
 end

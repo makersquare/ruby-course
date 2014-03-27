@@ -37,11 +37,11 @@ class TM::Project
   #   incompletedarray.sort_by! { |task| [task.priority, task.timecreated] }
   # end
 
-  def addemployee(employee)
-    @employees_on_project.push(employee)
-  end
+  # def addemployee(employee)
+  #   @employees_on_project.push(employee)
+  # end
 
-  def assigntask(task,employee)
-    employee.taketask(task) if @employees_on_project.include?(employee)
-  end
+  # def assigntask(task,employee)
+  #   employee.taketask(task) if @employees_on_project.include?(employee)
+  # end
 end

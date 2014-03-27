@@ -46,33 +46,33 @@ describe 'Project' do
   #   expect(project.completedlist.length).to eq(3)
   # end
 
-  it "can retrieve a list of all incomplete tasks, sorted by priority" do
-    project = TM::Project.new("Project")
-    TM::Task.class_variable_set :@@task_count, 0
-    project.addtask("asdf",1)
-    project.addtask("werwer",2)
-    project.addtask("dfgdf",4)
-    project.addtask("tyrrty",3)
-    project.markcomplete(1)
-    expect(project.incompletelist[0].description).to eq("werwer")
-    expect(project.incompletelist[1].description).to eq("tyrrty")
-    expect(project.incompletelist[2].description).to eq("dfgdf")
-  end
+  # it "can retrieve a list of all incomplete tasks, sorted by priority" do
+  #   project = TM::Project.new("Project")
+  #   TM::Task.class_variable_set :@@task_count, 0
+  #   project.addtask("asdf",1)
+  #   project.addtask("werwer",2)
+  #   project.addtask("dfgdf",4)
+  #   project.addtask("tyrrty",3)
+  #   project.markcomplete(1)
+  #   expect(project.incompletelist[0].description).to eq("werwer")
+  #   expect(project.incompletelist[1].description).to eq("tyrrty")
+  #   expect(project.incompletelist[2].description).to eq("dfgdf")
+  # end
 
-  it "prioritizes older tasks in incompletelist" do
-    project = TM::Project.new("Project")
-    project.addtask("Proj 1",2)
-    project.addtask("Proj 2",1)
-    project.addtask("Proj 3",2)
-    project.addtask("Proj 4",2)
-    project.addtask("Proj 5",3)
+  # it "prioritizes older tasks in incompletelist" do
+  #   project = TM::Project.new("Project")
+  #   project.addtask("Proj 1",2)
+  #   project.addtask("Proj 2",1)
+  #   project.addtask("Proj 3",2)
+  #   project.addtask("Proj 4",2)
+  #   project.addtask("Proj 5",3)
 
-    expect(project.incompletelist.size).to eq(5)
+  #   expect(project.incompletelist.size).to eq(5)
 
-    expect(project.incompletelist[0].description).to eq("Proj 2")
-    expect(project.incompletelist[1].description).to eq("Proj 1")
-    expect(project.incompletelist[2].description).to eq("Proj 3")
-    expect(project.incompletelist[3].description).to eq("Proj 4")
-    expect(project.incompletelist[4].description).to eq("Proj 5")
-  end
+  #   expect(project.incompletelist[0].description).to eq("Proj 2")
+  #   expect(project.incompletelist[1].description).to eq("Proj 1")
+  #   expect(project.incompletelist[2].description).to eq("Proj 3")
+  #   expect(project.incompletelist[3].description).to eq("Proj 4")
+  #   expect(project.incompletelist[4].description).to eq("Proj 5")
+  # end
 end
