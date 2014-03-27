@@ -5,8 +5,8 @@ require 'time'
 
 # this configures rspec so that each test gets a newly created singleton instance
 RSpec.configure do |config|
-  # Reset singleton instance before every test
+  # Configure each test to always use a new singleton instance
   config.before(:each) do
-    Singleton.__init__(TM::ProjectList)
+    TM.instance_variable_set(:@__db_instance, nil)
   end
 end

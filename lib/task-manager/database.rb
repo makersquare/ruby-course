@@ -1,4 +1,9 @@
 module TM
+
+  def self.db
+    @__db_instance ||= Database.new
+  end
+
   class Database
     def initialize
       @projects = {}
@@ -23,6 +28,10 @@ module TM
 
     def get_task(tid)
       @tasks[tid]
+    end
+
+    def get_project(pid)
+      @projects[pid]
     end
 
     def show_proj_tasks_remaining(pid)
