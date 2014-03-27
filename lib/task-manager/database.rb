@@ -11,29 +11,29 @@ module TM
 
     def initialize
       @projects = {
-        # name => proj obj
+        # id => proj obj
       }
 
       @tasks = {
         # id => task obj
       }
+
+      @employees = {
+        #id => emp obj
+      }
     end
 
-    def add_project(name)
+    def create_project(name)
       newproject = TM::Project.new(name)
-      @projects[name] = newproject
+      @projects[newproject.id] = newproject
     end
 
-    def add_task(task)
-      task.project_id = @id
-      @tasks[task.id] = task
-    end
-
-    def add_new_task(description, project_id, priority)
+    def add_project_task(description, project_id, priority)
       project_id = project_id.to_i
       priority = priority.to_i
-      proj = @projects.select{ |k,v| v.id == project_id}
-      proj.add_task(TM::Task.new(description, project_id, priority))
+      task = TM::Task.new(description, project_id, priority)
+      @tasks[task.id] = task
+      task
     end
 
     def task_completed(task_id)
