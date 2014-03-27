@@ -2,7 +2,7 @@ require_relative 'task-manager.rb'
 require 'io/console'
 require 'colorize'
 
-@client_list = TM::ProjectList.new
+@client_list = TM::Database.new
 
 welcome = "Welcome to Project Manager Pro."
 help = "Please enter a valid command\nAvailable Commands:\n   help - Show these commands again\n   list - List all projects\n   create NAME - Create a new project with name=NAME\n   add DESC PID PRIORITY - Add a new task to project with id=PID\n   show PID - Show remaining tasks for project with id=PID\n   mark TID - Mark task with id=TID as complete\n   history PID - show completed tasks for a project with id=PID\n"

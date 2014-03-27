@@ -34,7 +34,7 @@ describe 'Task' do
 
   it "initializes with a status" do
     result = @new_task
-    expect(result.status).to eq("incomplete")
+    expect(result.status).to eq(false)
   end
 
 

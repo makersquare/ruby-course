@@ -1,4 +1,3 @@
-
 class TM::Project
 attr_reader :name, :id
 attr_accessor :tasks
@@ -9,28 +8,28 @@ attr_accessor :tasks
     @name = name
     @@project_counter += 1
     @id = @@project_counter
-    @tasks = []
+    @tasks = {}
   end
 
   def add_task(task)
     task.project_id = @id
-    @tasks.push(task)
+    @tasks[task.id] = task
   end
 
   def task_completed(task_id)
-    target = @tasks.find{ |task| task.id == task_id}
-    target.status = "completed"
-    target
+    task = @tasks.values.find { |task| task.id == task_id }
+    task.status = true
+    task
   end
 
   def retrieve_completed
-    array = @tasks.select {|task| task.status == "completed"}
-    array.sort_by!{|task| task.id}
+    tasks_complete = @tasks.values.select { |task| task.status == true }
+    tasks_complete.sort_by!{|task| task.id}
   end
 
   def retrieve_incomplete
-    array = @tasks.select {|task| task.status == "incomplete"}
-    array.sort_by! {|task| [task.priority_number, task.id]}
+    tasks_incomplete = @tasks.values.select { |task| task.status == false }
+    tasks_incomplete.sort_by! {|task| [task.priority_number, task.id]}
   end
 
 end
