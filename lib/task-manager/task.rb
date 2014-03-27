@@ -1,7 +1,7 @@
 require_relative '../task-manager.rb'
 
 class TM::Task
-	attr_accessor :description, :priority, :status
+	attr_accessor :complete, :description, :priority
 	attr_reader :project_id, :id, :created_at
 
 	@@id_counter = 0
@@ -12,7 +12,7 @@ class TM::Task
 		@priority = priority
 		@@id_counter += 1
 		@id = @@id_counter
-		@status = 'incomplete'
+		@complete = false
 		@created_at = Time.now
 	end
 end
