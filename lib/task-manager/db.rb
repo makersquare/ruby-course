@@ -21,6 +21,10 @@ module TM
       @projects[project_id]
     end
 
+    def get_all_projects()
+      @projects.values
+    end
+
     def update_project()
 
     end
@@ -47,6 +51,10 @@ module TM
       @tasks[task_id]
     end
 
+    def get_all_tasks()
+      @tasks.values
+    end
+
     def update_task()
 
     end
@@ -62,7 +70,7 @@ module TM
     end
 
     def complete_task_list(project_id)
-      completedarray = get_project_tasks(project_id).select { |task_id, task| task.complete }.values
+      completedarray = get_project_tasks(project_id).values.select { |task| task.complete }
       completedarray.sort_by! { |task| task.timecreated }
     end
 
@@ -82,6 +90,10 @@ module TM
 
     def get_employee(employee_id)
       @employees[employee_id]
+    end
+
+    def get_all_employees()
+      @employees.values
     end
 
     def update_employee()
