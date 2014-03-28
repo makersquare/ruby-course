@@ -5,7 +5,7 @@ describe TM::GetAllProjects do
   end
 
   it "returns an error if no projects exist" do
-    result = subject.run("input")
+    result = subject.run({})
     expect(result.error?).to eq(true)
     expect(result.error).to eq(:no_projects_exist)
   end
@@ -15,7 +15,7 @@ describe TM::GetAllProjects do
     project2 = @db.create_project("hi")
     project3 = @db.create_project("how are you")
 
-    result = subject.run("input")
+    result = subject.run({})
     expect(result.success?).to eq(true)
     expect(result.projects[2].name).to eq("how are you")
 

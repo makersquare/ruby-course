@@ -74,8 +74,13 @@ module TM
     end
 
     def list
-      puts "PID:\tName:"
-      @db.get_all_projects.each { |project| puts "#{project.project_id}\t#{project.name}" }
+      result = TM::GetAllProjects.run({})
+      if result.success?
+        puts "PID:\tName:"
+        result.projects.each { |project| puts "#{project.project_id}\t#{project.name}" }
+      else
+        puts "Error: #{result.error}"
+      end
       input
     end
 
@@ -90,18 +95,6 @@ module TM
     end
 
     def history
-      # if @projectlist.projects[@control.last.to_i].nil?
-      #   puts "Project with that PID does not exist."
-      # elsif @projectlist.projects[@control.last.to_i].completedlist.count == 0
-      #   puts "There are no completed tasks for this project."
-      # else
-      #   puts "Complete Tasks:"
-      #   puts ""
-      #   puts "Priority   ID  Description"
-      #   @projectlist.projects[@control.last.to_i].completedlist.each do |task|
-      #     puts "       #{task.priority}    #{task.task_id}  #{task.description}"
-      #   end
-      # end
       result = TM::CompleteTaskList.run({ :project_id => @control[2].to_i })
       if result.success?
         puts "Complete Tasks:"
@@ -110,23 +103,25 @@ module TM
         result.tasks.each do |task|
           puts "       #{task.priority}    #{task.task_id}  #{task.description}"
         end
+      else
+        puts "Error: #{result.error}"
       end
       input
     end
 
     def show
-      # if @projectlist.projects[@control[2].to_i].nil?
-      #   puts "Project with that PID does not exist."
-      # elsif @projectlist.projects[@control.last.to_i].incompletelist.count == 0
-      #   puts "There are no incomplete tasks for this project."
-      # else
-      #   puts "Incomplete Tasks:"
-      #   puts ""
-      #   puts "Priority   ID  Description"
-      #   @projectlist.projects[@control[2].to_i].incompletelist.each do |task|
-      #     puts "       #{task.priority}    #{task.task_id}  #{task.description}"
-      #   end
-      # end
+      result = TM::GetProjectTasks.run({ :project_id => @control[2].to_i })
+
+      if result.success?
+        puts "Incomplete Tasks:"
+        puts ""
+        puts "Priority   ID  Description"
+        result.tasks.each do |task|
+          puts "       #{task.priority}    #{task.task_id}  #{task.description}" if task.complete
+        end
+      else
+        puts "Error: #{result.error}"
+      end
       input
     end
 

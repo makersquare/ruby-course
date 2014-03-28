@@ -91,4 +91,21 @@ describe "DB" do
 
     expect(task.employee_id).to eq(employee.employee_id)
   end
+
+  it "can get array of all employees on a project" do
+    db = TM.db
+
+    project = db.create_project("new test project")
+    employee1 = db.create_employee("Employee One")
+    employee2 = db.create_employee("Employee Two")
+    employee3 = db.create_employee("Employee Three")
+
+    db.add_employee_to_project(employee1.employee_id, project.project_id)
+    db.add_employee_to_project(employee1.employee_id, project.project_id)
+    db.add_employee_to_project(employee1.employee_id, project.project_id)
+
+    employees = get_employees_on_project(project.project_id)
+
+    expect(employees[2].name).to eq("Employee Three")
+  end
 end
