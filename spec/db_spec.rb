@@ -128,4 +128,21 @@ describe "database"  do
     expect(@db.memberships.length).to eq 2
   end
 
+  it "should take employee id and show all particpating projects" do
+    emp = @db.create_employee("Bob")
+    emp1 = @db.create_employee("Sarah")
+    emp2 = @db.create_employee("Kelly")
+
+    proj1 = @db.create_project("Fitness")
+    proj2 = @db.create_project("coding")
+    proj3 = @db.create_project("social")
+
+    expect(@db.memberships.length).to eq 0
+
+    expect(@db.add_membership(emp.id,proj1.id)).to eq [{:eid=>emp.id,:pid=>proj1.id}]
+    expect(@db.add_membership(emp.id,proj2.id)).to eq [{:eid=>emp.id,:pid=>proj1.id},{:eid=>emp.id,:pid=>proj2.id}]
+    expect(@db.add_membership(emp2.id,proj2.id)).to eq [{:eid=>emp.id,:pid=>proj1.id},{:eid=>emp.id,:pid=>proj2.id},{:eid=>emp2.id,:pid=>proj2.id}]
+    expect(@db.show_emp_projects(emp.id)).to eq [proj1,proj2]
+  end
+
 end
