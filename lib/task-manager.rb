@@ -51,4 +51,7 @@ require_relative 'usecase/listprojects.rb'
 require_relative 'usecase/createemployee.rb'
 require_relative 'usecase/delegateemployeetoproject.rb'
 require_relative 'usecase/assigntasktoemployee.rb'
-
+require_relative 'usecase/marktaskascomplete.rb'
+require_relative 'usecase/listemployees.rb'
+require_relative 'usecase/employeesinproject.rb'
+require_relative 'usecase/projectsofemployee.rb'

@@ -43,15 +43,6 @@ describe TM::AssignTaskToEmployee do
     expect(result.success?).to eq(true)
   end
 
-  it "works for sure" do
-      result = TM::CreateProject.run(:name => "Project")
-      result_two = TM::AddTaskToProject.run(:project_id => result.project.id, :priority => 5, :description => "cool task")
-      result_three = TM::CreateEmployee.run(:name => "Parth")
-      result_four = TM::DelegateEmployeeToProject.run(:employee_id => result_three.employee.id, :project_id => result.project.id)
-      result_five = TM::AssignTaskToEmployee.run(:task_id => result_two.task.id, :employee_id => result_three.employee.id)
-      expect(result_five.task).to eq(result_two.task)
-      expect(result_five.success?).to eq(true)
-  end
 end
 
 

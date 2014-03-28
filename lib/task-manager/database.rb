@@ -42,6 +42,10 @@ class TM::Database
       @projects
   end
 
+  def get_all_employees
+      @employees
+  end
+
   def get_employee(id)
     employee = @employees[id]
     employee
@@ -52,7 +56,10 @@ class TM::Database
     task
   end
   def delegate_employee_to_project(employee_id, project_id)
-    @membership.push({:employee_number => employee_id, :project_number => project_id})
+    @membership.push({:employee_number => employee_id.to_i, :project_number => project_id.to_i})
+  end
+  def mark_task_as_complete(task)
+    task.status = "complete"
   end
 end
 

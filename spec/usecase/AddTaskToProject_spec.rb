@@ -6,7 +6,7 @@ describe TM::AddTaskToProject do
   it "adds a task to a project" do
     # Set up our data
     project = @database.create_new_project("project")
-    result = subject.run({ :project_id => "#{project.id}", :priority => 3, :description => "yellow task" })
+    result = subject.run({ :project_id => project.id, :priority => 3, :description => "yellow task" })
     expect(result.success?).to eq true
     expect(result.task.project_id).to eq(project.id)
   end

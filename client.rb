@@ -27,7 +27,6 @@ class ProjectManager
     puts "-- GENERAL"
     puts "-- Type 'help' to show these commands again"
     puts "-- Exit-- Type 'exit' to quit this program"
-          #{}"documentation"  #MAN command#
    string = gets.chomp
     choice = string.downcase.split
       case choice[0]
@@ -38,11 +37,10 @@ class ProjectManager
               project= result.project
               puts "You project with name #{project.name} and id #{project.id} has been created!"
             else
-
-            if result.error == :project_name_not_given
+              if result.error == :project_name_not_given
               puts "Dude, you gotta give me a name to create this project!"
-          end
-        end
+              end
+            end
         when 'add'
           result = TM::AddTaskToProject.run(:project_id => choice[1], :priority => choice[2], :description => choice[3..-1].join(' '))
             if result.success?
@@ -50,7 +48,6 @@ class ProjectManager
               task = result.task
               puts "You successfully added #{task.description} to the #{project.name} project!"
             else
-
               if result.error == :project_not_found
                 puts "Dude, that project does not exist!"
               end
@@ -96,7 +93,17 @@ class ProjectManager
               end
             end
         when 'mark'
-
+          result = TM::MarkTaskAsComplete.run(:task_id => choice[1])
+            if result.success?
+              task = result.task
+              puts "You successfully gave #{task.description} a status of #{task.status}!"
+            else
+              if result.error == :task_not_found
+                puts "Dude, I can't find that task!"
+              elsif result.error == :task_already_completed
+                puts "Dude, that task is already completed"
+              end
+            end
         #ACCESSING THINGS#
         when 'list'
           result = TM::ListProjects.run
@@ -104,22 +111,56 @@ class ProjectManager
             puts "Project ID: Project Name"
             result.projects.values.each do |x|
               puts "#{x.id}: #{x.name}"
-            end
+              end
           else
             if result.error == :no_projects_found
               puts "Dude, how can i list projects when there are none"
             end
           end
          when 'emplist'
-
-         when 'employees'
-
+          result = TM::ListEmployees.run
+            if result.success?
+              puts "Employee ID: Employee Name"
+                result.employees.values.each do |x|
+                puts "#{x.id}: #{x.name}"
+                end
+            else
+              if result.error == :no_employees_found
+              puts "Dude, how can i list employees when there are none"
+              end
+            end
+        when 'employees'
+          result = TM::EmployeesInProject.run(:project_id => choice[1])
+          if result.success?
+              puts "Project: #{result.project.name}"
+              puts "Employee ID: Employee Name"
+                result.employees.each do |x|
+                puts "#{x.id}: #{x.name}"
+                end
+          else
+            if result.error == :project_not_found
+              puts "Dude, how can i list employees when that project does not exist"
+            elsif result.error == :no_employees_in_project
+              puts "Dude, that project has no assigned employees"
+            end
+          end
         when 'show'
+        result = TM::ProjectsOfEmployee.run(:employee_id => choice[1])
+          if result.success?
+              puts "Employee: #{result.employee.name}"
+              puts "Project ID: Project Name"
+                result.projects.each do |x|
+                puts "#{x.id}: #{x.name}"
+                end
+          else
+            if result.error == :employee_not_found
+              puts "Dude, how can i list projects when that employee does not exist"
+            elsif result.error == :no_projects_of_employee
+              puts "Dude, that lazy employee has no assigned projects"
+            end
+          end
 
-        when 'see'
-
-
-         when 'history'
+        when 'history'
 
         when 'remaining'
 

@@ -8,7 +8,7 @@ module TM
       project = @database.get_project(inputs[:project_id].to_i)
       return failure(:project_not_found) if project.nil?
 
-      @database.delegate_employee_to_project(inputs[:employee_id], inputs[:project_id])
+      @database.delegate_employee_to_project(inputs[:employee_id].to_i, inputs[:project_id].to_i)
       # Return a success with relevant data
       success :employee => employee, :project => project
     end
