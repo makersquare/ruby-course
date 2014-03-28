@@ -6,6 +6,7 @@ module TM
 
       return failure(:task_does_not_exist) if task.nil?
       return failure(:employee_does_not_exist) if employee.nil?
+      return failure(:task_already_has_employee) if task.employee_id
 
       TM.db.assign_task_to_employee(employee.employee_id, task.task_id)
 

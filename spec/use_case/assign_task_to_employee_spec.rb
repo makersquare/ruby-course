@@ -24,4 +24,13 @@ describe TM::AssignTaskToEmployee do
     expect(result.error?).to eq(true)
     expect(result.error).to eq :employee_does_not_exist
   end
+
+  it "returns an error if task already has an employee" do
+    subject.run({ :employee_id => @employee.employee_id, :task_id => @task.task_id })
+    another_employee = @db.create_employee("Another Employee")
+
+    result = subject.run({ :employee_id => another_employee.employee_id, :task_id => @task.task_id })
+    expect(result.error?).to eq(true)
+    expect(result.error).to eq :task_already_has_employee
+  end
 end

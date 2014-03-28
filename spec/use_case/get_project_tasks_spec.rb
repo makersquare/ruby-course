@@ -14,9 +14,6 @@ describe TM::GetProjectTasks do
     result = subject.run({ :project_id => @project.project_id })
     expect(result.success?).to eq(true)
     expect(result.tasks.size).to eq(5)
-    puts result.tasks.size
-    puts result.tasks
-    puts result.tasks.class
     expect(result.tasks[4].task_id).to eq(@task5.task_id)
   end
 
