@@ -16,7 +16,7 @@ describe 'Task' do
 
    it 'gives the task a creation date' do
     Time.stub(:now).and_return(Time.parse("2pm"))
-    eating_better = TM::Task.new(1,"diet",1)
+    eating_better = TM::Task.new(1,2,"diet",1)
     created_time_stub = Time.now
 
     expect(eating_better.creation_date).to eq(created_time_stub)

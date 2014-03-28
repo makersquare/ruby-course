@@ -25,7 +25,7 @@ describe 'Project' do
 
   it "task can be marked as complete by its id" do
     fitness_project = TM::Project.new("Fitness")
-    eating_better = TM::Task.new(1, "diet", 3)
+    eating_better = TM::Task.new(1,2, "diet", 3)
     expect(eating_better.id).to eq 12 #create a task with an id of 2
     fitness_project.add_task(eating_better) #add this task to fitness project
     fitness_project.mark_task_complete(12) #mark task with id 2 complete
@@ -35,9 +35,9 @@ describe 'Project' do
   it " can list complete_tasks" do
     fitness_project = TM::Project.new("Fitness")
     Time.stub(:now).and_return(Time.parse("2pm"))
-    eating_better = TM::Task.new(1, "diet", 3)
+    eating_better = TM::Task.new(1,2, "diet", 3)
     Time.stub(:now).and_return(Time.parse("3pm"))
-    sleep_8hours = TM::Task.new(1, "sleep", 2)
+    sleep_8hours = TM::Task.new(1,3, "sleep", 2)
     expect(eating_better.id).to eq 13
     expect(sleep_8hours.id).to eq 14
     fitness_project.add_task(sleep_8hours) #adding in task sleep to array
@@ -49,8 +49,8 @@ describe 'Project' do
 
   it "can list incomplete tasks"  do
     fitness_project = TM::Project.new("Fitness")
-    eating_better = TM::Task.new(1, "diet", 3)
-    sleep_8hours = TM::Task.new(1, "sleep", 2)
+    eating_better = TM::Task.new(1,3, "diet", 3)
+    sleep_8hours = TM::Task.new(1,4, "sleep", 2)
 
     fitness_project.add_task(eating_better)
     fitness_project.add_task(sleep_8hours)
