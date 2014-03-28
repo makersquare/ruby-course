@@ -23,6 +23,10 @@ describe 'Task' do
       expect(TM::Task.new(1, 1, "laundry").id).to eq(3)
     end
 
+    it "should be initialized with an employee id of 'nil'" do
+      expect(@task.employee_id).to be(nil)
+    end
+
     it "should be initialized with a 'complete' status of 'false'" do
       expect(@task.complete).to be_false
     end
