@@ -5,12 +5,13 @@ module TM
 	end
 
 	class Database
-		attr_reader :projects, :tasks, :employees
+		attr_reader :projects, :tasks, :employees, :memberships
 
 		def initialize
 			@projects = {}
 			@tasks = {}
-			# @employees = {}
+			@employees = {}
+			@memberships = []
 		end
 
 		def create_project(name)
@@ -19,10 +20,22 @@ module TM
 			project
 		end
 
-		def add_task(pid, priority, description)
+		def create_employee(name)
+			employee = TM::Employee.new(name)
+			@employees[employee.id] = employee
+			employee
+		end
+
+		def create_task(pid, priority, description)
 			task = TM::Task.new(pid, priority, description)
 			@tasks[task.id] = task
 			task
+		end
+
+		def recruit(pid, eid)
+			membership = {project_id: pid, employee_id: eid}
+			@memberships << membership
+			membership
 		end
 
 		def mark_task_complete(tid)
@@ -30,11 +43,11 @@ module TM
 			task.complete = true
 		end
 
-		def show_incomplete(pid)
+		def project_incomplete(pid)
 			@tasks.values.select { |task| task.project_id == pid && task.complete == false }.sort_by { |task| [task.priority, task.created_at] }
 		end
 
-		def show_complete(pid)
+		def project_complete(pid)
 			@tasks.values.select { |task| task.project_id == pid && task.complete == true }.sort_by { |task| task.created_at }
 		end
 
@@ -44,6 +57,18 @@ module TM
 
 		def all_tasks
 			@tasks.values
+		end
+
+		def all_employees
+			@employees.values
+		end
+
+		def get_project(pid)
+			@projects[pid]
+		end
+
+		def get_employee(eid)
+			@employees[eid]
 		end
 
 		def get_task(tid)
