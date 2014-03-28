@@ -120,13 +120,14 @@ module TM
 
     def show_emp_projects(employee_id)
       emp_id_with_proj = @memberships.select do |hash|
-         hash[:eid] = employee_id
+         hash[:eid] == employee_id
           #iterate through array, get hash
           # check if the value of the has is employee_id
           # we use map to return array
       end
-      emp_id_with_proj.map do
-
+      #emp_id_with_proj.map do |key,value|
+      emp_id_with_proj.map do |memb|
+        @project_list[memb[:pid]]
       end
     end
 
