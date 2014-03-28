@@ -19,5 +19,6 @@ require_relative 'usecases/incomplete_task_list.rb'
 require_relative 'usecases/create_employee.rb'
 require_relative 'usecases/add_employee_to_project.rb'
 require_relative 'usecases/assign_task_to_employee.rb'
+require_relative 'usecases/get_all_projects.rb'
 
 require 'ostruct'

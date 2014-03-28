@@ -82,7 +82,7 @@ module TM
     def create_project
       result = TM::CreateProject.run({ :name => @control[2..-1].join(" ") })
       if result.success?
-        puts "Project with name '#{result.project.name}' created!"
+        puts "Project with name '#{result.project.name}' and PID #{result.project.project_id} created!"
       else
         puts "Error: #{result.error}"
       end

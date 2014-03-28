@@ -6,15 +6,19 @@ describe TM::CompleteTaskList do
   end
 
   it "Lists all complete projects" do
-    10.times { @db.create_task("A fun task", 5, @project.project_id) }
+    task1 = @db.create_task("A fun task", 5, @project.project_id)
+    task2 = @db.create_task("A fun task", 5, @project.project_id)
+    task3 = @db.create_task("A fun task", 5, @project.project_id)
+    task4 = @db.create_task("A fun task", 5, @project.project_id)
+    task5 = @db.create_task("A fun task", 5, @project.project_id)
 
-    @db.mark_task_complete(5)
-    @db.mark_task_complete(7)
-    @db.mark_task_complete(10)
+    @db.mark_task_complete(task1.task_id)
+    @db.mark_task_complete(task3.task_id)
+    @db.mark_task_complete(task5.task_id)
 
     result = subject.run({ :project_id => @project.project_id })
     expect(result.success?).to eq(true)
-    expect(result.tasks.last.task_id).to eq(10)
+    expect(result.tasks.last.task_id).to eq(task5.task_id)
   end
 
   it "returns error if project does not exist" do
