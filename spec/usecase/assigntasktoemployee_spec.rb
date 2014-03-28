@@ -34,14 +34,13 @@ describe TM::AssignTaskToEmployee do
     expect(result.error).to eq(:task_already_assigned)
   end
 
-  it "works" do
+ it "works" do
     employee = @database.add_new_employee("project")
     project = @database.create_new_project("project")
     task = @database.add_task(project.id, 5, "yellow task")
     @database.delegate_employee_to_project(employee.id, project.id)
     result = subject.run({:employee_id => employee.id, :task_id => task.id})
     expect(result.success?).to eq(true)
-    expect(@database.membership.select {|project| project[:project_id] == task.project_id && project[:employee_id] == employee.id}.count).to eq(1)
   end
 
   it "works for sure" do

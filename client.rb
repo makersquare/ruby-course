@@ -91,8 +91,8 @@ class ProjectManager
                 puts "Dude, I can't find that task!"
               elsif result.error == :task_already_assigned
                 puts "Dude, that task is already assigned"
-              # elsif result.error == :employee_not_assigned_to_project
-              #   puts "Dude, that employee has to be a part of the project team first"
+              elsif result.error == :employee_not_assigned_to_project
+                puts "Dude, that employee has to be a part of the project team first"
               end
             end
         when 'mark'

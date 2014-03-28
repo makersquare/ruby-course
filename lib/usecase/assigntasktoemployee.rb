@@ -9,8 +9,9 @@ module TM
       return failure(:task_not_found) if task.nil?
       return failure(:task_already_assigned) if task.employee_id != nil
 
-      selection = @database.membership.select {|project| project[:project_id] == task.project_id && project[:employee_id] == employee.id}
-      return failure(:employee_not_assigned_to_project) if selection.count == 0
+      selection = @database.membership.select {|project| project[:project_number] == task.project_id}
+      selection_two = selection.find {|project| project[:employee_number] == employee.id}
+      return failure(:employee_not_assigned_to_project) if selection_two == nil
 
       task.employee_id = employee.id
       # Return a success with relevant data
@@ -18,3 +19,8 @@ module TM
     end
   end
 end
+
+
+
+
+

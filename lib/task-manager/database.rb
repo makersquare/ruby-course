@@ -52,7 +52,7 @@ class TM::Database
     task
   end
   def delegate_employee_to_project(employee_id, project_id)
-    @membership.push({:employee_id => employee_id, :project_id => project_id})
+    @membership.push({:employee_number => employee_id, :project_number => project_id})
   end
 end
 
