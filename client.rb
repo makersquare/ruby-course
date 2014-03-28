@@ -79,7 +79,22 @@ class ProjectManager
               end
             end
         when 'task'
-
+          result = TM::AssignTaskToEmployee.run(:task_id => choice[2], :employee_id => choice[3])
+            if result.success?
+              employee = result.employee
+              task = result.task
+              puts "You successfully delegated #{task.description} to the employee #{employee.name}!"
+            else
+              if result.error == :employee_not_found
+                puts "Dude, I can't find that employee!"
+              elsif result.error == :task_not_found
+                puts "Dude, I can't find that task!"
+              elsif result.error == :task_already_assigned
+                puts "Dude, that task is already assigned"
+              # elsif result.error == :employee_not_assigned_to_project
+              #   puts "Dude, that employee has to be a part of the project team first"
+              end
+            end
         when 'mark'
 
         #ACCESSING THINGS#

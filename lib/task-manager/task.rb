@@ -1,8 +1,8 @@
 
 require 'time'
 class TM::Task
-  attr_accessor :status, :employee
-  attr_reader :project_id, :description, :priority_number, :id, :id_counter, :creation_date, :employee
+  attr_accessor :status, :employee_id
+  attr_reader :project_id, :description, :priority_number, :id, :id_counter, :creation_date
   @@id_counter = 1
   def initialize(project_id, priority_number, description)
     @project_id = project_id
@@ -12,7 +12,7 @@ class TM::Task
     @@id_counter += 1
     @status = "incomplete"
     @creation_date = Time.now
-    @employee = nil
+    @employee_id = nil
   end
 
   def self.id_counter
