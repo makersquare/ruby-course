@@ -78,6 +78,8 @@ module TM
     ## Employee CRUD Methods ##
     ###########################
 
+
+
     def create_project(name)
       proj = Project.new(name)
       @project_list[proj.id] = proj
@@ -150,10 +152,11 @@ module TM
     end
 
     def get_task_for_emp(employee_id)
-      @tasks.values.select do |task|
-        task.emp_id == employee_id
-      end # this is a hash with taskid--> task objects
-    end
+      @tasks.values.select do |task| # values gets the keys as an array
+        task.emp_id == employee_id # array is task objects
+      end # task.emp_id is accessing the task employee id, if equal to parameter
+    end   # will select it, and add it to an array, which is returned
+
 
     def testing
       @db

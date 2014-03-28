@@ -182,6 +182,15 @@ describe "database"  do
 
   end
 
+  it "should get employee that is working on a task, based on tid" do
+
+    emp = @db.create_employee("Bob")
+    emp1 = @db.create_employee("Sarah")
+    emp2 = @db.create_employee("Kelly")
+
+    expect(emp.id).to eq 17
+  end
+
 
 
 
