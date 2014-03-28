@@ -24,7 +24,7 @@ describe 'Task' do
   it "initializes and has a task id" do
     expect(TM::Task).to receive(:gen_id).and_return(2)
     result = TM::Task.new(1, "New task description", 5)
-    expect(result.id).to eq(2)
+    expect(result.tid).to eq(2)
   end
 
   it "initializes with a priority number" do

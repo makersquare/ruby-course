@@ -1,6 +1,6 @@
 class TM::Task
-attr_reader :description, :priority_number, :id
-attr_accessor :status, :project_id
+attr_reader :description, :priority_number, :tid
+attr_accessor :status, :project_id, :employee_id
 
   @@task_counter = 0
 
@@ -10,11 +10,12 @@ attr_accessor :status, :project_id
   end
 
   def initialize(description, project_id, priority_number)
+    @tid = TM::Task.gen_id
     @description = description
     @project_id = project_id
     @priority_number = priority_number
     @status = false
-    @id = TM::Task.gen_id
+    @employee_id = nil
   end
 
 

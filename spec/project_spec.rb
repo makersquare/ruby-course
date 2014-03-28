@@ -1,6 +1,4 @@
 require 'spec_helper'
-require './lib/task-manager/project.rb'
-require './lib/task-manager/task.rb'
 
 describe 'Project' do
   before do
@@ -17,7 +15,7 @@ describe 'Project' do
   end
 
   it "initializes with an id" do
-    result = @new_project.id
+    result = @new_project.pid
     expect(result.class).to eq(Fixnum)
   end
 
