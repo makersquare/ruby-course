@@ -67,14 +67,37 @@ describe "database"  do
   end
 
   it "creates and adds a task to the Database" do
-
+    proj = @db.create_project("Fitness")
+    expect(proj.id).to eq 8
+    task = @db.create_task(8,"fishing",3)
+    expect(@db.tasks.length).to eq 1
   end
 
   it "should get a task based on id" do
+    task = @db.create_task(8,"fishing",3)
+    task1 = @db.create_task(8,"hunting",4)
+
+    expect(task.id).to eq 2
+    expect(@db.tasks.length).to eq (2)
+    expect(@db.get_task(2)).to eq task
 
   end
 
+  it "should delete a task, based on id" do
+    task = @db.create_task(8,"fishing",3)
+    task1 = @db.create_task(8,"hunting",4)
 
+
+    expect(task1.id).to eq 5
+    expect(@db.tasks.length).to eq 2
+    expect(@db.delete_task(5).length).to eq 1
+  end
+
+  it "should update a task, based on id" do
+    task = @db.create_task(8,"fishing",3)
+    task1 = @db.create_task(8,"hunting",4)
+    expect(task.id).to eq 6
+  end
 
 
 

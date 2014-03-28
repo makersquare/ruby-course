@@ -17,7 +17,7 @@ module TM
   end
 
   class DB
-    attr_accessor :project_list, :memberships, :task_project, :employees
+    attr_accessor :project_list, :memberships, :task_project, :employees, :tasks
 
 
 
@@ -25,6 +25,7 @@ module TM
       @project_list = {}
       @memberships = []
       @task_project = {}
+      @tasks = {}
       @employees = {}
       # consider @project_list = [ { eid: 1, pid: 1}, { eid: 1, pid: 2 } ]
     end
@@ -43,6 +44,13 @@ module TM
       proj
     end
 
+    def create_task(pid,descr,priority_num)
+      task = Task.new(pid,descr,priority_num)
+      #@task_project[]
+      @tasks[task.id] = task
+      task
+    end
+
     def get_project(pid)
       @project_list[pid]
     end
@@ -57,9 +65,25 @@ module TM
       @project_list
     end
 
-    def delete_employee(pid)
-      @employees.delete(pid)
+    def delete_employee(eid)
+      @employees.delete(eid)
       @employees
+    end
+
+    def get_task(tid)
+      @tasks[tid]
+    end
+
+    def delete_task(tid)
+      @tasks.delete(tid)
+      @tasks
+    end
+
+    def update_tasks(tid, pid, descr, priority_num)
+      task = @tasks[tid]
+      task.descr = descr
+      task.proj_id = proj_id
+      task
     end
 
     def testing
