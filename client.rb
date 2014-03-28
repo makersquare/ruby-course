@@ -66,7 +66,18 @@ class ProjectManager
               end
             end
         when 'delegate'
-
+          result = TM::DelegateEmployeeToProject.run(:employee_id => choice[1], :project_id => choice[2])
+            if result.success?
+              employee = result.employee
+              project = result.project
+              puts "You successfully added #{employee.name} to the #{project.name} project!"
+            else
+              if result.error == :employee_not_found
+                puts "Dude, I can't find that employee!"
+              elsif result.error == :project_not_found
+                puts "Dude, I can't find that project!"
+              end
+            end
         when 'task'
 
         when 'mark'

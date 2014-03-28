@@ -7,7 +7,7 @@ class TM::Database
     @projects = {}
     @tasks = {}
     @employees = {}
-    @membership = {}
+    @membership = []
   end
 
 # Create Methods #
@@ -50,6 +50,9 @@ class TM::Database
   def get_task(id)
     task = @tasks[id]
     task
+  end
+  def delegate_employee_to_project(employee_id, project_id)
+    @membership.push({:employee_id => employee_id, :project_id => project_id})
   end
 end
 

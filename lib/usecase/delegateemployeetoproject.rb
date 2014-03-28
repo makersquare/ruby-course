@@ -2,11 +2,15 @@ module TM
   class DelegateEmployeeToProject < UseCase
     def run(inputs)
       @database = TM.database
-      employee = @database.get_employee()
-      return failure(:employee_not_given_name) if inputs[:name] == ''
-      employee = @database.add_new_employee(inputs[:name])
+      employee = @database.get_employee(inputs[:employee_id].to_i)
+      return failure(:employee_not_found) if employee.nil?
+
+      project = @database.get_project(inputs[:project_id].to_i)
+      return failure(:project_not_found) if project.nil?
+
+      @database.delegate_employee_to_project(inputs[:employee_id], inputs[:project_id])
       # Return a success with relevant data
-      success :employee => employee
+      success :employee => employee, :project => project
     end
   end
 end

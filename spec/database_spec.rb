@@ -11,7 +11,7 @@ describe 'Tracker' do
    expect(@tracker.projects).to be_a(Hash)
    expect(@tracker.tasks).to be_a(Hash)
    expect(@tracker.employees).to be_a(Hash)
-   expect(@tracker.membership).to be_a(Hash)
+   expect(@tracker.membership).to be_a(Array)
   end
 
   it "allows you to add a project and you can get the projects" do
