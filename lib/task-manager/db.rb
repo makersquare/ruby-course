@@ -36,7 +36,7 @@ module TM
     # Project use case methods
 
     def get_project_tasks(project_id)
-      @tasks.select { |task_id, task| task.project_id == project_id }
+      @tasks.select { |task_id, task| task.project_id == project_id }.values
     end
 
     # Task CRUD methods
@@ -70,15 +70,19 @@ module TM
     end
 
     def complete_task_list(project_id)
-      completedarray = get_project_tasks(project_id).values.select { |task| task.complete }
+      completedarray = get_project_tasks(project_id).select { |task| task.complete }
       completedarray.sort_by! { |task| task.timecreated }
     end
 
     def incomplete_task_list(project_id)
-      incompletedhash = get_project_tasks(project_id).select { |task_id, task| !task.complete }
-      incompletedarray = []
-      incompletedhash.each { |task_id, task| incompletedarray.push(task) }
+      # incompletedhash = get_project_tasks(project_id).select { |task_id, task| !task.complete }
+      # incompletedarray = []
+      # incompletedhash.each { |task_id, task| incompletedarray.push(task) }
+      # incompletedarray.sort_by! { |task| [task.priority, task.timecreated] }
+
+      incompletedarray = get_project_tasks(project_id).select { |task| !task.complete }
       incompletedarray.sort_by! { |task| [task.priority, task.timecreated] }
+
     end
 
     # Employee CRUD methods
