@@ -6,8 +6,8 @@ class TM::Project
 
   def initialize(name)
     @name = name
-    @project_id = TM::Project.gen_id
     @@projectcount += 1
+    @project_id = TM::Project.gen_id
     @tasks = {}
     @employees_on_project = []
   end

@@ -19,9 +19,9 @@ module TM
       puts "project history PID - Show completed tasks for project PID"
       puts "project addemployee PID EID - Add an employee EID to project PID"
       puts "project employees PID - Show employees participating in this project"
-      puts "task create PID TID PRIORITY DESC - Add a new task TID to project PID"
-      puts "task assign PID TID EID - Assign task TID from project PID to employee EID"
-      puts "task mark PID TID - Mark task PID[TID] as complete"
+      puts "task create PID PRIORITY DESC - Add a new task TID to project PID"
+      puts "task assign TID EID - Assign task TID from project PID to employee EID"
+      puts "task mark TID - Mark task TID complete"
       puts "emp list - List all employees"
       puts "emp create NAME - Create a new employee"
       puts "emp show EID - Show employee EID and all participating projects"
@@ -117,7 +117,7 @@ module TM
         puts ""
         puts "Priority   ID  Description"
         result.tasks.each do |task|
-          puts "       #{task.priority}    #{task.task_id}  #{task.description}" if task.complete
+          puts "       #{task.priority}    #{task.task_id}  #{task.description}" if !task.complete
         end
       else
         puts "Error: #{result.error}"
@@ -126,40 +126,38 @@ module TM
     end
 
     def list_employees_on_project
-      # if @projectlist.projects[@control[2].to_i].nil?
-      #   puts "Project with that PID does not exist."
-      # else
-      #   puts "Employee:\tID:"
-      #   @projectlist.projects[@control[2].to_i].employees_on_project.each do |employee|
-      #     puts "#{employee.name}\t\t#{employee.employee_id}"
-      #   end
-      # end
+      result = TM::GetEmployeesOnProject.run({ :project_id => @control[2].to_i })
+      if result.success?
+        puts "Employee\tID:"
+        result.employees.each do |employee|
+          puts "#{employee.name}\t\t#{employee.employee_id}"
+        end
+      else
+        puts "Error: #{result.error}"
+      end
       input
     end
 
     def add_employee_to_project
-      # if @projectlist.projects[@control[2].to_i].nil?
-      #   puts "Project with that PID does not exist."
-      # else
-      #   @projectlist.projects[@control[2].to_i].create_employee(@projectlist.employees[@control[3].to_i])
-      #   puts "Added #{@projectlist.employees[@control[3].to_i].name} to Project #{@control[2]}"
-      # end
+      result = TM::AddEmployeeToProject.run({ :project_id => @control[2].to_i, :employee_id => @control[3].to_i })
+      if result.success?
+        puts "Added #{result.employee.name} to Project #{result.project.name}"
+      else
+        puts "Error: #{result.error}"
+      end
       input
     end
 
     def create_task
-      # if @projectlist.projects[@control[2].to_i].nil?
-      #   puts "Project with that PID does not exist."
-      # elsif @projectlist.projects[@control[2].to_i].tasks[@control[3].to_i]
-      #   puts "Task with that TID already exists in this project."
-      # else
-      #   description = @control[5..-1]
-      #   @projectlist.projects[@control[1].to_i].addtask(@control[2].to_i,@control[3].to_i,description.join(" "))
-      #   puts "Added new task to project #{@control[1]}."
-      #   puts "Task number: #{@control[2]}"
-      #   puts "Priority: #{@control[3]}"
-      #   puts "Description: #{description.join(" ")}"
-      # end
+      result = TM::CreateTask.run({ :description => @control[4..-1].join(" "), :priority => @control[3].to_i, :project_id => @control[2].to_i })
+      if result.success?
+        puts "Added new task to project PID: #{result.task.project_id}"
+        puts "Task ID: #{result.task.task_id}"
+        puts "Priority: #{result.task.priority}"
+        puts "Description: #{result.task.description}"
+      else
+        puts "Error: #{result.error}"
+      end
       input
     end
 

@@ -14,9 +14,9 @@ describe "DB" do
   end
 
   it "contains a hash of projects accessible by index with get_project added by create_project" do
-    expect(@db.get_project(0)).to be_a(TM::Project)
-    @db.create_project("Second")
     expect(@db.get_project(1)).to be_a(TM::Project)
+    @db.create_project("Second")
+    expect(@db.get_project(2)).to be_a(TM::Project)
   end
 
   it "can create a task and add it to a project, and add it to tasks hash" do
