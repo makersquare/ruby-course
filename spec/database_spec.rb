@@ -26,11 +26,10 @@ describe 'Database' do
 
   it "can update tasks" do
     new_task = @db.create_task(2, "Organize file system", 3)
-    stuff = {complete: true, description:"Update file system", priority: 5, eid:22}
+    stuff = {complete: true, description:"Update file system", priority: 5}
     updates = @db.update_task(new_task.id, stuff)
     expect(new_task.complete).to eq(true)
     expect(updates.description).to eq("Update file system")
-    expect(new_task.eid).to eq(22)
     expect(updates.priority).to eq(5)
   end
 
@@ -143,26 +142,23 @@ describe 'Database' do
     expect(proj_emps[new_emp.id]).to eq(true)
   end
 
-  xit "can assign a task to an employee" do
-    new_proj = @db.create_project("Save the world")
-    new_emp = @db.create_emp("Clark Kent")
-    task1 = create_task(new_proj.id, "Purchase cape", 3)
-    task2 = create_task(new_proj.id, "Map local phone booths", 5)
-    updates = {eid: new_emp.id}
-    task_assigned = @db.update_task(task1.id, updates)
+  it "will only assign tasks to employees participating in project" do
+    new_proj = @db.create_project("Build a bicycle")
+    emp1 = @db.create_emp("Lee Rhoads")
+    emp2 = @db.create_emp("Alex Pedal")
 
-  end
+    proj_updates = {eid: emp2.id}
+    @db.update_project(new_proj.id, proj_updates)
 
-  xit "can add an employee to a project" do
+    task1 = @db.create_task(new_proj.id, "Purchase wrench", 1)
+    task2 = @db.create_task(new_proj.id, "Buy wheels", 4)
 
-  end
+    task_updates = {eid: emp2.id}
+    task_assigned = @db.update_task(task1.id, task_updates)
+    expect(task_assigned.eid).to eq(emp2.id)
 
-  xit "allows employees to be to assigned multiple projects" do
-
-  end
-
-  xit "can give employee tasks within said project" do
-
+    not_assigned = @db.update_task(task2.id, {eid:emp1.id})
+    expect(not_assigned).to eq(nil)
   end
 
 end

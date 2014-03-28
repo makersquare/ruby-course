@@ -4,8 +4,11 @@ module TM
     attr_reader :all_tasks, :all_proj
 
     def initialize
+      # {task_id => task_obj}
       @all_tasks = {}
+      # {proj_id => proj_obj}
       @all_proj = {}
+      # {emp_id => emp_obj}
       @all_emp = {}
     end
 
@@ -20,6 +23,9 @@ module TM
       @all_tasks[tid]
     end
 
+# Returns nil if you attempt to assign an employee
+# to a task belonging to a project to which they
+# are not assigned
     def update_task(tid, data_hash)
       if @all_tasks[tid]
         if data_hash[:complete]
@@ -32,7 +38,12 @@ module TM
           @all_tasks[tid].priority = data_hash[:priority]
         end
         if data_hash[:eid]
-          @all_tasks[tid].eid = data_hash[:eid]
+          proj = @all_proj[@all_tasks[tid].projID]
+          if proj.emp_ids[data_hash[:eid]]
+            @all_tasks[tid].eid = data_hash[:eid]
+          else
+            return nil
+          end
         end
       end
       @all_tasks[tid]

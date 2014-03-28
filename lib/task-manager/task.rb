@@ -2,8 +2,8 @@ module TM
 class Task
 
   @@num_tasks = 0 # Class variable tracking total # of tasks
-  attr_reader :created, :id
-  attr_accessor :projID, :complete, :description, :priority, :eid
+  attr_reader :created, :id, :projID
+  attr_accessor :complete, :description, :priority, :eid
 
   def initialize(projID, description, priority)
     @projID = projID
