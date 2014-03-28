@@ -149,6 +149,11 @@ module TM
       end
     end
 
+    def get_task_for_emp(employee_id)
+      @tasks.values.select do |task|
+        task.emp_id == employee_id
+      end # this is a hash with taskid--> task objects
+    end
 
     def testing
       @db

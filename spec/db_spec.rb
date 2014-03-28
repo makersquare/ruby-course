@@ -163,7 +163,7 @@ describe "database"  do
 
   end
 
-  it "should assign a task to an employee  " do
+  it "should get all tasks an employee is working on, based on eid " do
     #same startegey as more, use the databases that you have
     # you have a hash with employees, you have a hash with tasks, each with ids
     emp = @db.create_employee("Bob")
@@ -172,16 +172,18 @@ describe "database"  do
     # search through task hash, to find the employeeid on it
     expect(emp.id).to eq 14
     expect(emp1.id).to eq 15
-    task = @db.create_task(8,2,"fishing",3)
-    task1 = @db.create_task(9,3,"running",4)
-    task2 = @db.create_task(9,2,"hunting",5)
+    expect(emp2.id).to eq 16
 
-    expect(task.id).to eq 8
-    #
+    task = @db.create_task(8,14,"fishing",3)
+    task1 = @db.create_task(9,14,"running",4)
+    task2 = @db.create_task(9,16,"hunting",5)
 
-
+    expect(@db.get_task_for_emp(14)).to eq [task,task1]
 
   end
+
+
+
 
 
 end
