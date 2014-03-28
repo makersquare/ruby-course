@@ -163,4 +163,19 @@ describe "database"  do
 
   end
 
+  it "should add a task to an employee id " do
+    #same startegey as more, use the databases that you have
+    # you have a hash with employees, you have a hash with tasks, each with ids
+    emp = @db.create_employee("Bob")
+    emp1 = @db.create_employee("Sarah")
+    emp2 = @db.create_employee("Kelly")
+
+    task = @db.create_task(8,"fishing",3)
+    task1 = @db.create_task(9,"running",4)
+    task2 = @db.create_task(9,"hunting",5)
+
+
+  end
+
+
 end
