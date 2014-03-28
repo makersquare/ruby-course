@@ -39,7 +39,13 @@ module TM
       @tasks.select { |task_id, task| task.project_id == project_id }.values
     end
 
-
+    def get_employees_on_project(project_id)
+      @join_employees_projects.select do |hash|
+        hash[:project_id] == project_id
+      end.map do |hash|
+        get_employee(hash[:employee_id])
+      end
+    end
     # Task CRUD methods
 
     def create_task(description, priority, project_id)

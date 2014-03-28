@@ -101,10 +101,10 @@ describe "DB" do
     employee3 = db.create_employee("Employee Three")
 
     db.add_employee_to_project(employee1.employee_id, project.project_id)
-    db.add_employee_to_project(employee1.employee_id, project.project_id)
-    db.add_employee_to_project(employee1.employee_id, project.project_id)
+    db.add_employee_to_project(employee2.employee_id, project.project_id)
+    db.add_employee_to_project(employee3.employee_id, project.project_id)
 
-    employees = get_employees_on_project(project.project_id)
+    employees = db.get_employees_on_project(project.project_id)
 
     expect(employees[2].name).to eq("Employee Three")
   end
