@@ -123,13 +123,24 @@ module TM
          hash[:eid] == employee_id
           #iterate through array, get hash
           # check if the value of the has is employee_id
-          # we use map to return array
-      end
-      #emp_id_with_proj.map do |key,value|
+          # emp_id_with_proj should return an array with the hashes
+      end # with the key :eid pointing to the employee id
       emp_id_with_proj.map do |memb|
-        @project_list[memb[:pid]]
+        @project_list[memb[:pid]] # map returns array
+      end # go through project_list hash, with the project id key, getting all projects with same id
+    end
+
+
+    def show_proj_employees(project_id)
+      proj_id_with_emp = @memberships.select  do |memb|
+        memb[:pid] == project_id # will return array
+                                 # with hashes with correct pid
+      end
+      proj_id_with_emp.map do |memb|
+        @employees[memb[:eid]]
       end
     end
+
 
     def testing
       @db
