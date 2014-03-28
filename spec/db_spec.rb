@@ -95,10 +95,37 @@ describe "database"  do
 
   it "should update a task, based on id" do
     task = @db.create_task(8,"fishing",3)
+    expect(@db.get_task(6).descr).to eq "fishing"
+    expect(@db.get_task(6).priority_num).to eq 3
     task1 = @db.create_task(8,"hunting",4)
     expect(task.id).to eq 6
+
+    expect(@db.update_tasks(6,2,"rowing",4))
+    expect(@db.get_task(6).descr).to eq "rowing"
+    expect(@db.get_task(6).priority_num).to eq 4
   end
 
+  it "should update an employee, based on their id" do
+    emp = @db.create_employee('Bob')
+    expect(emp.id).to eq 4
+    expect(emp.name).to eq ("Bob")
+    expect(@db.update_employee(4,"John").name).to eq "John"
+  end
 
+  it "should add an employee who is working on a project to membership" do
+    emp = @db.create_employee("Bob")
+    emp1 = @db.create_employee("Sarah")
+    emp2 = @db.create_employee("Kelly")
+
+    proj1 = @db.create_project("Fitness")
+    proj2 = @db.create_project("coding")
+    proj3 = @db.create_project("social")
+
+    expect(@db.memberships.length).to eq 0
+
+    expect(@db.add_membership(emp.id,proj1.id)).to eq [{:eid=>emp.id,:pid=>proj1.id}]
+    expect(@db.add_membership(emp1.id,proj2.id)).to eq [{:eid=>emp.id,:pid=>proj1.id},{:eid=>emp1.id,:pid=>proj2.id}]
+    expect(@db.memberships.length).to eq 2
+  end
 
 end
