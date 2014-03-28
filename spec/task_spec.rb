@@ -9,7 +9,7 @@ describe 'Task' do
 
   it "creates a new task with a default complete value to false" do
     # TM::Task.new(project_id,description,priority,task_id)
-    eating_better = TM::Task.new(1,"diet",1)
+    eating_better = TM::Task.new(1,2,"diet",1)
     expect(eating_better.priority_num).to eq 1
     expect(eating_better.complete).to eq false
   end

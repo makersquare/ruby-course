@@ -19,7 +19,7 @@ describe 'Project' do
   it "A project can add tasks" do
     proj = TM::Project.new("Fitness")
     expect(proj.task_list.count).to eq 0
-    eating_better = TM::Task.new(1, "diet", 3)
+    eating_better = TM::Task.new(1,2, "diet", 3)
     expect(proj.add_task(eating_better).count). to eq 1
   end
 

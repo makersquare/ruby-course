@@ -52,6 +52,10 @@ module TM
 
    # @memberships.select { |memb| memb[:eid] == 1 }
 
+    ###########################
+    ## Employee CRUD Methods ##
+    ###########################
+
     # creates/adds employee to database
     def create_employee(name)
       emp = Employee.new(name) #instante employee object
@@ -59,6 +63,20 @@ module TM
       emp  #this method will also return the emp if you want
     end    # r
 
+    def update_employee(eid, name)
+      emp = @employees[eid]
+      emp.name = name
+      emp
+    end
+
+    def delete_employee(eid)
+      @employees.delete(eid)
+      @employees
+    end
+
+    ###########################
+    ## Employee CRUD Methods ##
+    ###########################
 
     def create_project(name)
       proj = Project.new(name)
@@ -66,8 +84,8 @@ module TM
       proj
     end
 
-    def create_task(pid,descr,priority_num)
-      task = Task.new(pid,descr,priority_num)
+    def create_task(pid,eid,descr,priority_num)
+      task = Task.new(pid,eid,descr,priority_num)
       #@task_project[]
       @tasks[task.id] = task
       task
@@ -87,11 +105,6 @@ module TM
       @project_list
     end
 
-    def delete_employee(eid)
-      @employees.delete(eid)
-      @employees
-    end
-
     def get_task(tid)
       @tasks[tid]
     end
@@ -101,17 +114,12 @@ module TM
       @tasks
     end
 
-    def update_tasks(tid, pid, descr, priority_num)
+    def update_tasks(tid, pid,eid, descr, priority_num)
       task = @tasks[tid]
       task.descr = descr
       task.proj_id = pid
+      task.emp_id = eid
       task.priority_num = priority_num
-    end
-
-    def update_employee(eid, name)
-      emp = @employees[eid]
-      emp.name = name
-      emp
     end
 
     def add_membership(employee_id,project_id)
