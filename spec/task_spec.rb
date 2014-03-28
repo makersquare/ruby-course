@@ -34,12 +34,5 @@ describe 'Task' do
     expect(new_task.created).to eq(present)
   end
 
-  it "can mark tasks as complete" do
-    expect(@my_task.mark_comp).to eq (true)
-  end
-
-  it "can mark tests as incomplete" do
-    expect(@my_task.mark_inc).to eq (false)
-  end
 
 end

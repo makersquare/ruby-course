@@ -18,10 +18,13 @@ projlist = TM::ProjectList.new
       puts "history PID - Show completed tasks for project with id=PID"
       puts "add PID PRIORITY DESC - Add a new task to project with id=PID"
       puts "mark TID - Mark task with id=TID as complete"
-      # puts "empp PID - List employees associated with a project"
-      # puts "addemp PID - Add an employee to a project"
-      # puts "rememp PID - Remove an employee from a project"
-      # above requires an employee class
+
+      puts "emp list - List all employees"
+      puts "emp create NAME - Create a new employee"
+      puts "emp show EID - Show employee EID and all participating projects"
+      puts "emp details EID - Show all remaining tasks assigned to employee EID,
+                    along with the project name next to each task"
+      puts "emp history EID - Show completed tasks for employee with id=EID"
     end
 
     command = gets.chomp
