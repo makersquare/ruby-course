@@ -249,7 +249,7 @@ describe "database"  do
     expect(allcurrentproj).to eq ({proj1.id =>proj1, proj2.id=>proj2, proj3.id=>proj3})
   end
 
-  it "should show remaining task for project pid" do
+  it "should get task for a project, based on  pid" do
     proj1 = @db.create_project("Fitness")
     proj2 = @db.create_project("coding")
     proj3 = @db.create_project("social")
@@ -272,6 +272,16 @@ describe "database"  do
     # so, if you iterate through the task hash, you can use the
     # select method to find all the task, that have a matching pid
     expect(@db.get_task_for_proj(24)).to eq [task,task1]
+
+  end
+
+  it "should mark as task as complete, based on it's id " do
+    task = @db.create_task(24,14,"fishing",3)
+    task1 = @db.create_task(24,14,"running",4)
+    task2 = @db.create_task(26,16,"hunting",5)
+
+    expect(task.id).to eq 20
+    expect(task1.id).to eq 21
 
   end
 
