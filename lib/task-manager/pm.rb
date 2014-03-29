@@ -162,14 +162,12 @@ module TM
     end
 
     def mark
-      # if @projectlist.projects[@control[2].to_i].nil?
-      #   puts "Project with that PID does not exist."
-      # elsif @projectlist.projects[@control[2].to_i].tasks[@control[3].to_i].nil?
-      #   puts "Task with that TID does not exist in this project."
-      # else
-      #   @projectlist.projects[@control[1].to_i].markcomplete(@control[2].to_i)
-      #   puts "Marked Task #{@control[2]} from Project #{@control[1]} complete."
-      # end
+      result = TM::MarkTaskComplete.run({ :task_id => @control[2].to_i })
+      if result.success?
+        puts "Task with TID #{result.task.task_id} marked complete."
+      else
+        puts "Error: #{result.error}"
+      end
       input
     end
 

@@ -21,5 +21,6 @@ require_relative 'usecases/add_employee_to_project.rb'
 require_relative 'usecases/assign_task_to_employee.rb'
 require_relative 'usecases/get_all_projects.rb'
 require_relative 'usecases/get_employees_on_project.rb'
+require_relative 'usecases/get_all_employees.rb'
 
 require 'ostruct'

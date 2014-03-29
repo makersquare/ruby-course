@@ -82,14 +82,8 @@ module TM
     end
 
     def incomplete_task_list(project_id)
-      # incompletedhash = get_project_tasks(project_id).select { |task_id, task| !task.complete }
-      # incompletedarray = []
-      # incompletedhash.each { |task_id, task| incompletedarray.push(task) }
-      # incompletedarray.sort_by! { |task| [task.priority, task.timecreated] }
-
       incompletedarray = get_project_tasks(project_id).select { |task| !task.complete }
       incompletedarray.sort_by! { |task| [task.priority, task.timecreated] }
-
     end
 
     # Employee CRUD methods
