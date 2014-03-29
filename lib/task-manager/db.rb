@@ -198,12 +198,17 @@ module TM
       end
     end
 
+    def remaining_task_proj(project_id)
+      @tasks.values.select do |task|
+        task.proj_id == project_id && task.complete == false
+      end
+    end
 
     def testing
       @db
     end
 
-
+##########################################################
     def create_projects(name)
       @project_list << TM::Project.new(name)
 

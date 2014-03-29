@@ -335,5 +335,16 @@ describe "database"  do
     expect(@db.remaining_task_emp(23)).to eq [task2]
   end
 
+  it "should show all tasks that are remaining for a project" do
+    task = @db.create_task(27,23,"fishing",3)
+    task1 = @db.create_task(27,23,"running",4)
+    task2 = @db.create_task(27,23,"hunting",5)
 
+    proj1 = @db.create_project("Fitness")
+    proj2 = @db.create_project("coding")
+    proj3 = @db.create_project("social")
+
+    expect(proj1.id).to eq 27
+    expect(@db.remaining_task_proj(27)).to eq [task,task1,task2]
+  end
 end
