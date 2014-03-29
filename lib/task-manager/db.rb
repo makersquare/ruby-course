@@ -40,7 +40,7 @@ module TM
   #=> emps_of_proj_with_pid_1 = ["emp_obj_1", "emp_obj_2"]
 
 
-
+[{},{}]
     def initialize
       @project_list = {}
       @memberships = []
@@ -206,6 +206,14 @@ module TM
 
     def testing
       @db
+    end
+
+    def get_emp_for_task(task_id)
+      gettask = @tasks.values.find do |task|
+        task.id == task_id
+      end
+
+      @employees[gettask.emp_id]
     end
 
 ##########################################################

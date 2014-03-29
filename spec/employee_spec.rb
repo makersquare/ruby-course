@@ -9,7 +9,7 @@ describe "Employee" do
 
   it "creates an employee with a unique ID" do
     bob = TM::Employee.new("bob")
-    expect(bob.id).to eq 26
+    expect(bob.id).to eq 29
   end
 
   it "creates an employee with a name" do

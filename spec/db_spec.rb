@@ -183,18 +183,7 @@ describe "database"  do
 
   end
 
-  xit "should get employee that is working on a task, based on tid" do
 
-    emp = @db.create_employee("Bob")
-    emp1 = @db.create_employee("Sarah")
-    emp2 = @db.create_employee("Kelly")
-
-    expect(emp.id).to eq 17
-    expect(@db.get_emp_for_task(17))
-    # based on task_id, I need to get employee, so @employees, doesn't
-    # have a task_id points to a task, so if
-
-  end
 
   it "should assign a task to an employee" do
     emp = @db.create_employee("Bob")
@@ -313,7 +302,7 @@ describe "database"  do
     expect(@db.remaining_task_emp(20)).to eq [task,task2]
   end
 
-  it "should show all tasks that are completed, that belonds to an employee, based on eid " do
+  it "should show all tasks that are completed, that belongs to an employee, based on eid " do
     puts @db
     task = @db.create_task(24,23,"fishing",3)
     task1 = @db.create_task(24,23,"running",4)
@@ -344,7 +333,33 @@ describe "database"  do
     proj2 = @db.create_project("coding")
     proj3 = @db.create_project("social")
 
+    expect(task.id).to eq 29
     expect(proj1.id).to eq 27
     expect(@db.remaining_task_proj(27)).to eq [task,task1,task2]
+
+    @db.mark_task_complete(30)
+    expect(@db.remaining_task_proj(27)).to eq [task,task2]
   end
+
+  it "should get employee that is working on a task, based on tid" do
+    # a task an a employee id
+    # tid,   ---> employee object
+    # tid  --> task --> employee id task.employee_id  --. employee id,
+    # @employees
+    emp = @db.create_employee("Bob")
+    emp1 = @db.create_employee("Sarah")
+    emp2 = @db.create_employee("Kelly")
+
+    task = @db.create_task(27,23,"fishing",3)
+    task1 = @db.create_task(27,26,"running",4)
+
+    expect(emp.id).to eq 26
+
+    expect(task.id).to eq 32
+    expect(@db.get_emp_for_task(33)).to eq emp
+    # based on task_id, I need to get employee, so @employees, doesn't
+    # have a task_id points to a task, so if
+
+  end
+
 end

@@ -26,9 +26,9 @@ describe 'Project' do
   it "task can be marked as complete by its id" do
     fitness_project = TM::Project.new("Fitness")
     eating_better = TM::Task.new(1,2, "diet", 3)
-    expect(eating_better.id).to eq 33 #create a task with an id of 2
+    expect(eating_better.id).to eq 35 #create a task with an id of 2
     fitness_project.add_task(eating_better) #add this task to fitness project
-    fitness_project.mark_task_complete(33) #mark task with id 2 complete
+    fitness_project.mark_task_complete(35) #mark task with id 2 complete
     expect(eating_better.complete).to eq true #expect task with id2 to have complete = true
   end
 
@@ -38,12 +38,12 @@ describe 'Project' do
     eating_better = TM::Task.new(1,2, "diet", 3)
     Time.stub(:now).and_return(Time.parse("3pm"))
     sleep_8hours = TM::Task.new(1,3, "sleep", 2)
-    expect(eating_better.id).to eq 34
-    expect(sleep_8hours.id).to eq 35
+    expect(eating_better.id).to eq 36
+    expect(sleep_8hours.id).to eq 37
     fitness_project.add_task(sleep_8hours) #adding in task sleep to array
     fitness_project.add_task(eating_better) #adding in task eat to array
-    fitness_project.mark_task_complete(34) # taskid 2(eat) to complete=true
-    fitness_project.mark_task_complete(35)
+    fitness_project.mark_task_complete(36) # taskid 2(eat) to complete=true
+    fitness_project.mark_task_complete(37)
     expect(fitness_project.retrieve_complete_tasks).to eq ([eating_better,sleep_8hours])
   end
 
