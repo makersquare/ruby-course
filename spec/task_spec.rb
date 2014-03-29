@@ -25,5 +25,12 @@ module TM
       expect(task2.id).to eq(task1.id + 1)
     end
 
+    it "can be marked as finished" do
+      task1 = Task.new({project_id: @project1.id, description: "Buy a gun", priority: 7})
+      expect(task1.finished?).to eq(false)
+      task1.finished = true
+      expect(task1.finished?).to eq(true)
+    end
+
   end
 end

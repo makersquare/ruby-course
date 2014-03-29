@@ -13,7 +13,17 @@ module TM
       @priority = data[:priority]
       @id = @@current_id
       @@current_id += 1
+      @finished = false
     end
+
+    def finished?
+      @finished
+    end
+
+    def finished=(value)
+      @finished = value
+    end
+
 
   end
 end
