@@ -140,7 +140,7 @@ module TM
       @memberships << {:eid => employee_id, :pid =>project_id}
     end
 
-    def show_emp_projects(employee_id)
+    def show_projects_for_emp(employee_id)
       emp_id_with_proj = @memberships.select do |hash|
          hash[:eid] == employee_id
           #iterate through array, get hash
@@ -153,7 +153,7 @@ module TM
     end
 
 
-    def show_proj_employees(project_id)
+    def show_employees_for_proj(project_id)
       proj_id_with_emp = @memberships.select  do |memb|
         memb[:pid] == project_id # will return array
                                  # with hashes with correct pid

@@ -143,7 +143,7 @@ describe "database"  do
     expect(@db.add_membership(emp.id,proj1.id)).to eq [{:eid=>emp.id,:pid=>proj1.id}]
     expect(@db.add_membership(emp.id,proj2.id)).to eq [{:eid=>emp.id,:pid=>proj1.id},{:eid=>emp.id,:pid=>proj2.id}]
     expect(@db.add_membership(emp2.id,proj2.id)).to eq [{:eid=>emp.id,:pid=>proj1.id},{:eid=>emp.id,:pid=>proj2.id},{:eid=>emp2.id,:pid=>proj2.id}]
-    expect(@db.show_emp_projects(emp.id)).to eq [proj1,proj2]
+    expect(@db.show_projects_for_emp(emp.id)).to eq [proj1,proj2]
   end
 
   it "should take project id and show all employees on that project" do
@@ -160,7 +160,7 @@ describe "database"  do
     expect(@db.add_membership(emp.id,proj1.id)).to eq [{:eid=>emp.id,:pid=>proj1.id}]
     expect(@db.add_membership(emp.id,proj2.id)).to eq [{:eid=>emp.id,:pid=>proj1.id},{:eid=>emp.id,:pid=>proj2.id}]
     expect(@db.add_membership(emp2.id,proj2.id)).to eq [{:eid=>emp.id,:pid=>proj1.id},{:eid=>emp.id,:pid=>proj2.id},{:eid=>emp2.id,:pid=>proj2.id}]
-    expect(@db.show_proj_employees(proj2.id)).to eq [emp,emp2]
+    expect(@db.show_employees_for_proj(proj2.id)).to eq [emp,emp2]
 
   end
 
