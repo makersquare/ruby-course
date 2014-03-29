@@ -1,5 +1,5 @@
 class TM::Employee
-  attr_reader :name, :employee_id, :tasks
+  attr_reader :name, :employee_id
 
   @@employeecount = 0
 

@@ -172,10 +172,13 @@ module TM
     end
 
     def list_all_employees
-      # puts "Name\t\tEID"
-      # @projectlist.employees.each do |employee_id, employee|
-      #   puts "#{employee.name}\t\t#{employee_id}"
-      # end
+      result = TM::GetAllEmployees.run({})
+      if result.success?
+        puts "EID:\tName:"
+        result.employees.each { |employee| puts "#{employee.employee_id}\t#{employee.name}" }
+      else
+        puts "Error: #{result.error}"
+      end
       input
     end
 
@@ -194,8 +197,12 @@ module TM
     end
 
     def create_employee
-      # @projectlist.create_employee(@control[2..-1].join(" "))
-      # puts "Created new employee #{@control[2..-1].join(" ")}"
+      result = TM::CreateEmployee.run({ :name => @control[2..-1].join(" ") })
+      if result.success?
+        puts "Created employee #{result.employee.name} with EID #{result.employee.employee_id}"
+      else
+        puts "Error: #{result.error}"
+      end
       input
     end
 
