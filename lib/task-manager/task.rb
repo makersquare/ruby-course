@@ -3,7 +3,7 @@
 module TM
   class TM::Task
 
-    attr_reader :project_id, :description, :priority, :id
+    attr_reader :project_id, :description, :priority, :id, :creation_date
 
     @@current_id = 1
 
@@ -14,6 +14,7 @@ module TM
       @id = @@current_id
       @@current_id += 1
       @finished = false
+      @creation_date = Time.now
     end
 
     def finished?
