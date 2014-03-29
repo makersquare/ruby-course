@@ -283,6 +283,13 @@ describe "database"  do
     expect(task.id).to eq 20
     expect(task1.id).to eq 21
 
+    expect(task.complete).to eq false
+    @db.mark_task_complete(20)
+    expect(task.complete).to eq true
+
+    expect(task1.complete).to eq false
+    @db.mark_task_complete(21)
+    expect(task1.complete).to eq true
   end
 
 

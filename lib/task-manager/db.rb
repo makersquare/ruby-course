@@ -176,6 +176,13 @@ module TM
       end
     end
 
+    def mark_task_complete(task_id)
+      thetask = @tasks.values.find { |task|
+        task.id == task_id
+      }
+      thetask.complete = true
+    end
+
 
     def testing
       @db
