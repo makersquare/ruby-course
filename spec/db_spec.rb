@@ -222,7 +222,9 @@ describe "database"  do
     task = @db.create_task(8,14,"fishing",3)
     task1 = @db.create_task(9,14,"running",4)
     task2 = @db.create_task(9,16,"hunting",5)
-
+    # not necessary, because when you create a
+    # task, you assign it a pid, which gives it to a
+    #project
     proj1 = @db.create_project("Fitness")
     proj2 = @db.create_project("coding")
     proj3 = @db.create_project("social")
@@ -247,8 +249,21 @@ describe "database"  do
     expect(allcurrentproj).to eq ({proj1.id =>proj1, proj2.id=>proj2, proj3.id=>proj3})
   end
 
+  it "should show remaining task for project pid" do
+    proj1 = @db.create_project("Fitness")
+    proj2 = @db.create_project("coding")
+    proj3 = @db.create_project("social")
+
+    expect(proj1.id).to eq 24
+    expect(proj2.id).to eq 25
+    expect(proj3.id).to eq 26
+
+    task = @db.create_task(8,14,"fishing",3)
+    task1 = @db.create_task(9,14,"running",4)
+    task2 = @db.create_task(9,16,"hunting",5)
 
 
+  end
 
 
 end
