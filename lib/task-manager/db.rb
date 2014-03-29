@@ -74,6 +74,9 @@ module TM
       @employees
     end
 
+    def list_emp
+      @employees
+    end
 
     ###########################
     ## Employee CRUD Methods ##
@@ -183,6 +186,12 @@ module TM
       thetask.complete = true
     end
 
+    def remaining_task_emp(employee_id)
+      task_for_emp = @tasks.values.select do  |task|
+        task.emp_id == employee_id && task.complete == false
+      end
+
+    end
 
     def testing
       @db

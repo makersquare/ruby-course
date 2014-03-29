@@ -292,5 +292,24 @@ describe "database"  do
     expect(task1.complete).to eq true
   end
 
+# Show all remaining tasks assigned to employee EID,
+#                     along with the project name next to each task
+  it "should show all tasks that are uncompleted, that belongs to an employee" do
+    task = @db.create_task(24,20,"fishing",3)
+    task1 = @db.create_task(24,21,"running",4)
+    task2 = @db.create_task(26,20,"hunting",5)
+
+    expect(task.id).to eq 23
+    expect(task1.id).to eq 24
+
+    emp = @db.create_employee("Bob")
+    emp1 = @db.create_employee("Sarah")
+    emp2 = @db.create_employee("Kelly")
+
+    expect(emp.id).to eq 20
+    expect(emp1.id).to eq 21
+
+    expect(@db.remaining_task_emp(20)).to eq [task,task2]
+  end
 
 end
