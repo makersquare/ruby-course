@@ -193,7 +193,9 @@ module TM
     end
 
     def completed_task_emp(employee_id)
-
+      @tasks.values.select do |task|
+        task.emp_id == employee_id
+      end
     end
 
 
