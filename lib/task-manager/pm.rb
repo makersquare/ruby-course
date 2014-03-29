@@ -19,8 +19,8 @@ module TM
       puts "project history PID - Show completed tasks for project PID"
       puts "project addemployee PID EID - Add an employee EID to project PID"
       puts "project employees PID - Show employees participating in this project"
-      puts "task create PID PRIORITY DESC - Add a new task TID to project PID"
-      puts "task assign TID EID - Assign task TID from project PID to employee EID"
+      puts "task create PID PRIORITY DESC - Create a new task for project PID"
+      puts "task assign TID EID - Assign task TID to employee EID"
       puts "task mark TID - Mark task TID complete"
       puts "emp list - List all employees"
       puts "emp create NAME - Create a new employee"
@@ -183,16 +183,12 @@ module TM
     end
 
     def assign
-      # if @projectlist.projects[@control[2].to_i].nil?
-      #   puts "Project with that PID does not exist."
-      # elsif @projectlist.projects[@control[2].to_i].tasks[@control[3].to_i].nil?
-      #   puts "Task with that TID does not exist in this project."
-      # elsif @projectlist.employees[@control[4].to_i].nil?
-      #   puts "Employee with that EID does not exist."
-      # else
-      #   @projectlist.employees[@control[4].to_i].taketask(@projectlist.projects[@control[2].to_i].tasks[@control[3].to_i])
-      #   puts "Assigned task #{@projectlist.projects[@control[2].to_i].tasks[@control[3].to_i].description} to #{@projectlist.employees[@control[4].to_i].name}"
-      # end
+      result = TM::AssignTaskToEmployee.run({ :employee_id => @control[3].to_i, :task_id => @control[2].to_i })
+      if result.success?
+        puts "Assigned task #{result.task.task_id} to employee #{result.employee.employee_id}"
+      else
+        puts "Error: #{result.error}"
+      end
       input
     end
 
@@ -207,16 +203,15 @@ module TM
     end
 
     def show_employee
-      # if @projectlist.employees[@control[2].to_i].nil?
-      #   puts "Employee with that EID does not exist."
-      # else
-      #   puts "Employee #{@projectlist.employees[@control[2].to_i].name} is on the following projects:"
-      #   @projectlist.projects.each do |project_id, project|
-      #     if project.employees_on_project.include?(@projectlist.employees[@control[2].to_i])
-      #       puts "#{project.project_id}: #{project.name}"
-      #     end
-      #   end
-      # end
+      result = TM::GetProjectsForEmployee.run({ :employee_id => @control[2].to_i })
+      if result.success?
+        puts "Projects for Employee #{result.employee.employee_id}: #{result.employee.name}"
+        result.projects.each do |project|
+          puts "#{project.project_id}: #{project.name}"
+        end
+      else
+        puts "Error: #{result.error}"
+      end
       input
     end
 

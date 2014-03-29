@@ -5,8 +5,8 @@ class TM::Employee
 
   def initialize(name)
     @name = name
-    @employee_id = TM::Employee.gen_id
     @@employeecount += 1
+    @employee_id = TM::Employee.gen_id
   end
 
   def self.gen_id
