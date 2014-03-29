@@ -123,8 +123,19 @@ describe "database"  do
 
     expect(@db.memberships.length).to eq 0
 
-    expect(@db.add_membership(emp.id,proj1.id)).to eq [{:eid=>emp.id,:pid=>proj1.id}]
-    expect(@db.add_membership(emp1.id,proj2.id)).to eq [{:eid=>emp.id,:pid=>proj1.id},{:eid=>emp1.id,:pid=>proj2.id}]
+    @db.add_membership(emp.id,proj1.id)
+    @db.add_membership(emp1.id,proj2.id)
+    @db.add_membership(emp1.id,proj3.id)
+
+    projects = @db.get_projects_for_employee(eid)
+    expect(projects.count)
+    expect(projects.first.name)
+
+    emps = @db.get_employees_for_project(pid)
+    expect(emp.count)
+    expect(emp.first.name)
+
+
     expect(@db.memberships.length).to eq 2
   end
 
@@ -178,7 +189,7 @@ describe "database"  do
     task1 = @db.create_task(9,14,"running",4)
     task2 = @db.create_task(9,16,"hunting",5)
 
-    expect(@db.get_task_for_emp(14)).to eq [task,task1]
+    expect(@db.get_tasks_for_emp(14)).to eq [task,task1]
 
   end
 
@@ -189,6 +200,10 @@ describe "database"  do
     emp2 = @db.create_employee("Kelly")
 
     expect(emp.id).to eq 17
+    task = @db.create_task(8,14,"fishing",3)
+    task1 = @db.create_task(9,14,"running",4)
+    task2 = @db.create_task(9,16,"hunting",5)
+    expect(@db.get_emp_for_task)
   end
 
 

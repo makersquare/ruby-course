@@ -151,7 +151,7 @@ module TM
       end
     end
 
-    def get_task_for_emp(employee_id)
+    def get_tasks_for_emp(employee_id)
       @tasks.values.select do |task| # values gets the keys as an array
         task.emp_id == employee_id # array is task objects
       end # task.emp_id is accessing the task employee id, if equal to parameter

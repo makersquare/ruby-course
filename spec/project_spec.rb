@@ -26,7 +26,7 @@ describe 'Project' do
   it "task can be marked as complete by its id" do
     fitness_project = TM::Project.new("Fitness")
     eating_better = TM::Task.new(1,2, "diet", 3)
-    expect(eating_better.id).to eq 12 #create a task with an id of 2
+    expect(eating_better.id).to eq 15 #create a task with an id of 2
     fitness_project.add_task(eating_better) #add this task to fitness project
     fitness_project.mark_task_complete(12) #mark task with id 2 complete
     expect(eating_better.complete).to eq true #expect task with id2 to have complete = true
