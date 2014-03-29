@@ -88,6 +88,7 @@ module TM
     end
 
     def create_task(pid,eid,descr,priority_num)
+      # will assign a task, to project, based on pid
       task = Task.new(pid,eid,descr,priority_num)
       #@task_project[]
       @tasks[task.id] = task
@@ -105,6 +106,10 @@ module TM
 
     def delete_project(pid)
       @project_list.delete(pid)
+      @project_list
+    end
+
+    def list_all_proj
       @project_list
     end
 

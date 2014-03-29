@@ -28,6 +28,7 @@ describe "database"  do
     expect(@db.employees[emp.id]).to eq(emp)
   end
 
+
   it "creates and adds a project to the Database" do
     proj = @db.create_project("Fitness")
     expect(@db.project_list[proj.id]).to eq (proj)
@@ -215,6 +216,35 @@ describe "database"  do
     @db.assign_task_emp(11,17)
     expect(task.emp_id).to eq 17
 
+  end
+
+  it "add new task to project, based on projectid" do
+    task = @db.create_task(8,14,"fishing",3)
+    task1 = @db.create_task(9,14,"running",4)
+    task2 = @db.create_task(9,16,"hunting",5)
+
+    proj1 = @db.create_project("Fitness")
+    proj2 = @db.create_project("coding")
+    proj3 = @db.create_project("social")
+
+    expect(proj1.id).to eq 18
+    expect(proj2.id).to eq 19
+    expect(proj3.id).to eq 20
+
+
+  end
+
+  it "should list all projects" do
+    proj1 = @db.create_project("Fitness")
+    proj2 = @db.create_project("coding")
+    proj3 = @db.create_project("social")
+
+    expect(proj1.id).to eq 21
+    expect(proj2.id).to eq 22
+    expect(proj3.id).to eq 23
+
+    allcurrentproj = @db.list_all_proj
+    expect(allcurrentproj).to eq ({proj1.id =>proj1, proj2.id=>proj2, proj3.id=>proj3})
   end
 
 
