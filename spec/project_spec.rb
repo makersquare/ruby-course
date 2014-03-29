@@ -11,6 +11,13 @@ module TM
       expect(project1.name).to eq("Maim Bob")
     end
 
+    it "is created with a unique id" do
+      project1 = Project.new("Maim Bob")
+      project2 = Project.new("Maim Sue")
+      expect(project2.id).to eq(project1.id + 1)
+    end
+
+
 
   end
 end

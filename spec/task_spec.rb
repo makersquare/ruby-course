@@ -14,5 +14,6 @@ module TM
       expect(task1.project_id).to eq(project1.id)
       expect(task1.description).to eq("Buy a gun")
       expect(task1.priority).to eq(7)
+    end
   end
 end
