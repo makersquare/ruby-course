@@ -74,6 +74,7 @@ module TM
       @employees
     end
 
+
     ###########################
     ## Employee CRUD Methods ##
     ###########################
@@ -122,6 +123,12 @@ module TM
       task.proj_id = pid
       task.emp_id = eid
       task.priority_num = priority_num
+    end
+
+    def assign_task_emp(task_id,employee_id)
+      updating_task = @tasks[task_id]
+      updating_task.emp_id = employee_id
+      updating_task.emp_id
     end
 
     def add_membership(employee_id,project_id)

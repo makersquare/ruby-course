@@ -204,6 +204,15 @@ describe "database"  do
     task1 = @db.create_task(9,14,"running",4)
     task2 = @db.create_task(9,16,"hunting",5)
 
+    expect(emp.id).to eq 17
+    expect(emp1.id).to eq 18
+
+    expect(task.id).to eq 11
+    expect(task1.id).to eq 12
+    expect(task2.id).to eq 13
+
+    expect(task.emp_id).to eq 14
+    expect(@db.assign_task_emp(11,17)).to eq (17) #
 
   end
 
