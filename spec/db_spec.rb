@@ -123,19 +123,8 @@ describe "database"  do
 
     expect(@db.memberships.length).to eq 0
 
-    @db.add_membership(emp.id,proj1.id)
-    @db.add_membership(emp1.id,proj2.id)
-    @db.add_membership(emp1.id,proj3.id)
-
-    projects = @db.get_projects_for_employee(eid)
-    expect(projects.count)
-    expect(projects.first.name)
-
-    emps = @db.get_employees_for_project(pid)
-    expect(emp.count)
-    expect(emp.first.name)
-
-
+    expect(@db.add_membership(emp.id,proj1.id)).to eq [{:eid=>emp.id,:pid=>proj1.id}]
+    expect(@db.add_membership(emp1.id,proj2.id)).to eq [{:eid=>emp.id,:pid=>proj1.id},{:eid=>emp1.id,:pid=>proj2.id}]
     expect(@db.memberships.length).to eq 2
   end
 
@@ -193,17 +182,29 @@ describe "database"  do
 
   end
 
-  it "should get employee that is working on a task, based on tid" do
+  xit "should get employee that is working on a task, based on tid" do
 
     emp = @db.create_employee("Bob")
     emp1 = @db.create_employee("Sarah")
     emp2 = @db.create_employee("Kelly")
 
     expect(emp.id).to eq 17
+    expect(@db.get_emp_for_task(17))
+    # based on task_id, I need to get employee, so @employees, doesn't
+    # have a task_id points to a task, so if
+
+  end
+
+  it "should assign a task to an employee" do
+    emp = @db.create_employee("Bob")
+    emp1 = @db.create_employee("Sarah")
+    emp2 = @db.create_employee("Kelly")
+
     task = @db.create_task(8,14,"fishing",3)
     task1 = @db.create_task(9,14,"running",4)
     task2 = @db.create_task(9,16,"hunting",5)
-    expect(@db.get_emp_for_task)
+
+
   end
 
 
