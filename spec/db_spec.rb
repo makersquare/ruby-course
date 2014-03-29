@@ -258,10 +258,20 @@ describe "database"  do
     expect(proj2.id).to eq 25
     expect(proj3.id).to eq 26
 
-    task = @db.create_task(8,14,"fishing",3)
-    task1 = @db.create_task(9,14,"running",4)
-    task2 = @db.create_task(9,16,"hunting",5)
+    task = @db.create_task(24,14,"fishing",3)
+    task1 = @db.create_task(24,14,"running",4)
+    task2 = @db.create_task(26,16,"hunting",5)
 
+    expect(task.id).to eq 17
+    expect(task1.id).to eq 18
+
+    # you have a project pid, from this
+    # you need to have that project's task
+    # you have hash of projects
+    # you have hash task, ---> a task has a pid,
+    # so, if you iterate through the task hash, you can use the
+    # select method to find all the task, that have a matching pid
+    expect(@db.get_task_for_proj(24)).to eq [task,task1]
 
   end
 

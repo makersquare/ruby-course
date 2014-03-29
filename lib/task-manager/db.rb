@@ -169,6 +169,12 @@ module TM
       end # task.emp_id is accessing the task employee id, if equal to parameter
     end   # will select it, and add it to an array, which is returned
 
+    def get_task_for_proj(project_id)
+      #@task is a hash, you want to search through it's value(task object)
+      @tasks.values.select do |task| # selct on task array
+        task.proj_id == project_id  #if attribute project id of task is === to paramter select it
+      end
+    end
 
 
     def testing
