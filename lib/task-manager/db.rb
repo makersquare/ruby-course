@@ -190,8 +190,12 @@ module TM
       task_for_emp = @tasks.values.select do  |task|
         task.emp_id == employee_id && task.complete == false
       end
+    end
+
+    def completed_task_emp(employee_id)
 
     end
+
 
     def testing
       @db
