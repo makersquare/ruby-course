@@ -212,7 +212,8 @@ describe "database"  do
     expect(task2.id).to eq 13
 
     expect(task.emp_id).to eq 14
-    expect(@db.assign_task_emp(11,17)).to eq (17) #
+    @db.assign_task_emp(11,17)
+    expect(task.emp_id).to eq 17
 
   end
 

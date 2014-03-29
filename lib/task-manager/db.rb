@@ -128,7 +128,7 @@ module TM
     def assign_task_emp(task_id,employee_id)
       updating_task = @tasks[task_id]
       updating_task.emp_id = employee_id
-      updating_task.emp_id
+      updating_task
     end
 
     def add_membership(employee_id,project_id)
