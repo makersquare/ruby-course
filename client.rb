@@ -159,13 +159,66 @@ class ProjectManager
               puts "Dude, that lazy employee has no assigned projects"
             end
           end
-
+        when 'see'
+          result = TM::RemainingOfProject.run(:project_id => choice[1])
+          if result.success?
+              puts "#{result.project.name} Remaining Tasks"
+              puts "Task ID: Task Name"
+                result.tasks.each do |x|
+                puts "#{x.id}: #{x.description}"
+                end
+          else
+            if result.error == :project_not_found
+              puts "Dude, how can i list tasks when that project does not exist"
+            elsif result.error == :no_remaining_tasks_found
+              puts "Dude, that project has no remaining tasks"
+            end
+          end
         when 'history'
-
+          result = TM::HistoryOfProject.run(:project_id => choice[1])
+          if result.success?
+              puts "#{result.project.name} Completed Tasks"
+              puts "Task ID: Task Name"
+                result.tasks.each do |x|
+                puts "#{x.id}: #{x.description}"
+                end
+          else
+            if result.error == :project_not_found
+              puts "Dude, how can i list tasks when that project does not exist"
+            elsif result.error == :no_completed_tasks_found
+              puts "Dude, that project has no completed tasks"
+            end
+          end
         when 'remaining'
-
+          result = TM::RemainingOfEmployee.run(:employee_id => choice[1])
+          if result.success?
+              puts "#{result.employee.name} Remaining Tasks"
+              puts "Task ID: Task Name"
+                result.tasks.each do |x|
+                puts "#{x.id}: #{x.description}"
+                end
+          else
+            if result.error == :employee_not_found
+              puts "Dude, how can i list tasks when that employee does not exist"
+            elsif result.error == :no_remaining_tasks_found
+              puts "Dude, that employee has no remaining tasks"
+            end
+          end
         when 'completed'
-
+          result = TM::HistoryOfEmployee.run(:employee_id => choice[1])
+          if result.success?
+              puts "#{result.employee.name} Completed Tasks"
+              puts "Task ID: Task Name"
+                result.tasks.each do |x|
+                puts "#{x.id}: #{x.description}"
+                end
+          else
+            if result.error == :employee_not_found
+              puts "Dude, how can i list tasks when that employee does not exist"
+            elsif result.error == :no_completed_tasks_found
+              puts "Dude, that lazy employee has no completed tasks"
+            end
+          end
         #GENERAL#
         when 'help'
           puts "The system is pretty straightforward. Figure it out!"

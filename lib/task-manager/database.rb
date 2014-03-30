@@ -55,17 +55,34 @@ class TM::Database
     task = @tasks[id]
     task
   end
+
+  def get_project_history(project_id)
+      @tasks.values.select{|x| (x.project_id == project_id) && (x.status == "complete")}
+  end
+
+  def get_project_remaining(project_id)
+      @tasks.values.select{|x| (x.project_id == project_id) && (x.status == "incomplete")}
+  end
+
+  def get_employee_history(employee_id)
+    @tasks.values.select{|x| (x.employee_id == employee_id) && (x.status == "complete")}
+  end
+
+  def get_employee_remaining(employee_id)
+    @tasks.values.select{|x| (x.employee_id == employeed_id) && (x.status == "incomplete")}
+  end
+# Update Methods
   def delegate_employee_to_project(employee_id, project_id)
     @membership.push({:employee_number => employee_id.to_i, :project_number => project_id.to_i})
   end
   def mark_task_as_complete(task)
     task.status = "complete"
   end
+  # Destroy Methods
 end
 
-# Update Methods
 
-# Destroy Methods
+
 
 
 
