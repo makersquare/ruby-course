@@ -14,11 +14,9 @@ describe TM::IncompleteTaskList do
     task6 = @db.create_task("A fun task", 5, @project.project_id)
     task7 = @db.create_task("A fun task", 5, @project.project_id)
 
-
-
-    @db.mark_task_complete(task1.task_id)
-    @db.mark_task_complete(task4.task_id)
-    @db.mark_task_complete(task7.task_id)
+    task1.complete = true
+    task4.complete = true
+    task7.complete = true
 
     result = subject.run({ :project_id => @project.project_id })
     expect(result.success?).to eq(true)

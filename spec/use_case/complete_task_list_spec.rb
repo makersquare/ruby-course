@@ -12,9 +12,9 @@ describe TM::CompleteTaskList do
     task4 = @db.create_task("A fun task", 5, @project.project_id)
     task5 = @db.create_task("A fun task", 5, @project.project_id)
 
-    @db.mark_task_complete(task1.task_id)
-    @db.mark_task_complete(task3.task_id)
-    @db.mark_task_complete(task5.task_id)
+    task1.complete = true
+    task3.complete = true
+    task5.complete = true
 
     result = subject.run({ :project_id => @project.project_id })
     expect(result.success?).to eq(true)
