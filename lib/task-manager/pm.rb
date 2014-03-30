@@ -216,8 +216,8 @@ module TM
 
     def employee_remaining_tasks
       result = TM::GetTasksForEmployee.run({ :employee_id => @control[2].to_i })
-      tasks = result.tasks.select! { |task| !task.complete }
       if result.success?
+        tasks = result.tasks.select! { |task| !task.complete }
         puts "Incomplete tasks for Employee #{result.employee.employee_id} #{result.employee.name}:"
         tasks.each { |task| puts "#{task.task_id}: #{task.description}" }
       else
@@ -228,8 +228,8 @@ module TM
 
     def employee_history
       result = TM::GetTasksForEmployee.run({ :employee_id => @control[2].to_i })
-      tasks = result.tasks.select! { |task| task.complete }
       if result.success?
+        tasks = result.tasks.select! { |task| task.complete }
         puts "Complete tasks for Employee #{result.employee.employee_id} #{result.employee.name}:"
         tasks.each { |task| puts "#{task.task_id}: #{task.description}" }
       else

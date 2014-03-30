@@ -20,8 +20,8 @@ describe TM::GetProjectsForEmployee do
   it "returns an array of employee projects" do
     project1 = @db.create_project("Project 1")
     project2 = @db.create_project("Project 2")
-    @db.add_employee_to_project(@employee.employee_id, project1.project_id)
-    @db.add_employee_to_project(@employee.employee_id, project2.project_id)
+    TM::AddEmployeeToProject.run({ :employee_id => @employee.employee_id, :project_id => project1.project_id})
+    TM::AddEmployeeToProject.run({ :employee_id => @employee.employee_id, :project_id => project2.project_id})
 
     result = subject.run({ :employee_id => @employee.employee_id })
     expect(result.success?).to eq(true)

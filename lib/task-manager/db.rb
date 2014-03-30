@@ -33,15 +33,6 @@ module TM
 
     end
 
-    # Project use case methods
-
-    # def get_employees_on_project(project_id)
-    #   @join_employees_projects.select do |hash|
-    #     hash[:project_id] == project_id
-    #   end.map do |hash|
-    #     get_employee(hash[:employee_id])
-    #   end
-    # end
     # Task CRUD methods
 
     def create_task(description, priority, project_id)
@@ -66,22 +57,6 @@ module TM
 
     end
 
-    # Task Use case methods
-
-    # def mark_task_complete(task_id)
-    #   @tasks[task_id].complete = true
-    # end
-
-    # def complete_task_list(project_id)
-    #   completedarray = get_project_tasks(project_id).select { |task| task.complete }
-    #   completedarray.sort_by! { |task| task.timecreated }
-    # end
-
-    # def incomplete_task_list(project_id)
-    #   incompletedarray = get_project_tasks(project_id).select { |task| !task.complete }
-    #   incompletedarray.sort_by! { |task| [task.priority, task.timecreated] }
-    # end
-
     # Employee CRUD methods
 
     def create_employee(name)
@@ -103,16 +78,6 @@ module TM
 
     def delete_employee()
 
-    end
-
-    # Employee use case methods
-
-    def add_employee_to_project(employee_id, project_id)
-      @join_employees_projects.push({employee_id: employee_id, project_id: project_id})
-    end
-
-    def assign_task_to_employee(employee_id, task_id)
-      tasks[task_id].employee_id = employee_id
     end
   end
 

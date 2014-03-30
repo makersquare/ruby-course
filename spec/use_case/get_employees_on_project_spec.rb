@@ -22,9 +22,9 @@ describe TM::GetEmployeesOnProject do
     employee2 = @db.create_employee("Employee 2")
     employee3 = @db.create_employee("Employee 3")
 
-    @db.add_employee_to_project(employee1.employee_id, @project.project_id)
-    @db.add_employee_to_project(employee2.employee_id, @project.project_id)
-    @db.add_employee_to_project(employee3.employee_id, @project.project_id)
+    TM::AddEmployeeToProject.run({ :employee_id => employee1.employee_id, :project_id => @project.project_id })
+    TM::AddEmployeeToProject.run({ :employee_id => employee2.employee_id, :project_id => @project.project_id })
+    TM::AddEmployeeToProject.run({ :employee_id => employee3.employee_id, :project_id => @project.project_id })
 
     result = subject.run({ :project_id => @project.project_id})
 
