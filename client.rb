@@ -3,17 +3,22 @@ require 'colorize'
 
 class   PM
 def self.first_menu
-    puts
-    puts "Available Commands:".colorize(:light_blue)
-    puts
-    puts "help - Show these `commands again"
-    puts "create NAME - Create a new project with name=NAME"
-    puts "list - List all projects`"
-    puts "show PID - Show remaining tasks for project with id=PID"
-    puts "history PID - Show completed tasks for project with id`=PID"
-    puts "add  PID DESC PRIORITY - Add a new task to project with id=PID"
-    puts "mark TID - Mark task with id=TID as complete"
-    puts
+    Available Commands:
+puts  "help - Show these commands again"
+puts  "project list - List all projects"
+puts  "project create NAME - Create a new project"
+puts  "project show PID - Show remaining tasks for project PID"
+puts  "project history PID - Show completed tasks for project PID"
+puts  "project employees PID - Show employees participating in this project"
+puts  "project recruit PID EID - Adds employee EID to participate in project PID"
+puts  "task create PID PRIORITY DESC - Add a new task to project PID"
+puts  "task assign TID EID - Assign task TID to employee EID"
+puts  "task mark TID - Mark task TID as complete"
+puts  "emp list - List all employees"
+puts  "emp create NAME - Create a new employee"
+puts  "emp show EID - Show employee EID and all participating projects"
+puts  "emp details EID - Show all remaining tasks assigned to employee EID, along with the project name next to each task"
+puts  "emp history EID - Show completed tasks for employee with id=EID"
 
   end
 
