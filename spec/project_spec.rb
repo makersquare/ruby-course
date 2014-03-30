@@ -53,13 +53,13 @@ describe 'Project' do
 
   it "can list incomplete tasks"  do
     fitness_project = TM::Project.new("Fitness")
-    eating_better = TM::Task.new(1,3, "diet", 3)
-    sleep_8hours = TM::Task.new(1,4, "sleep", 2)
+    eating_better = TM::Task.new(1,{:descr=>"diet",:priority_num =>3})
+    sleep_8hours = TM::Task.new(1,{:descr=>"rest",:priority_num =>5})
 
     fitness_project.add_task(eating_better)
     fitness_project.add_task(sleep_8hours)
      # completes eating better so, sleep stil incomplete
-    expect(fitness_project.retrieve_incomplete_tasks).to eq ([sleep_8hours,eating_better,])
+    expect(fitness_project.retrieve_incomplete_tasks).to eq ([eating_better,sleep_8hours])
   end
 
 
