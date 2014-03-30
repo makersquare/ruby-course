@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe 'Employee' do
   before do
+    TM::Employee.class_variable_set :@@counter, 0
     @new_employee = TM::Employee.new('moe')
+
   end
   it 'exists' do
     expect(TM::Employee).to be_a(Class)
@@ -19,7 +21,7 @@ describe 'Employee' do
 
       result = @new_employee.id
 
-      expect(result).to eq(3)
+      expect(result).to eq(1)
 
     end
   end

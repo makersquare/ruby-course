@@ -19,7 +19,7 @@ def self.first_menu
 
 def self.start
   @@user_command = ''
-  @@project_list = TM::ProjectList.new
+  # @@db = TM.
   puts
   puts "Welcome to Project Manager Pro®. What can I do for you today?".colorize(:color => :magenta, :background => :yellow, :mode => :underline)
   PM.first_menu
@@ -35,12 +35,18 @@ def self.start
       length = @@user_command.length
       project_name = @@user_command.slice(7..length)
 
-      @@project_list.add_project(project_name)
-      puts
-      puts
-      print "Project: ".colorize(:yellow); print "#{project_name}".colorize(:red); print " added!".colorize(:yellow)
-      puts
-      puts
+      # @@project_list.add_project(project_name)
+      result = TM::CreateProject.run(:project_name => project_name)
+
+      if result.success?
+        puts
+        puts
+        print "Project: ".colorize(:yellow); print "#{project_name}".colorize(:red); print " added!".colorize(:yellow)
+        puts
+        puts
+      else
+        print "#{result.error}".colorize(:red)
+      end
 
     elsif(@@user_command == 'list')
       puts
