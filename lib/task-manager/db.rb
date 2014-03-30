@@ -9,8 +9,6 @@ module TM
       @tasks_employees = []
     end
 
-
-
     def create_project(name)
       project = Project.new(name)
       @all_projects[project.id] = project
@@ -55,7 +53,6 @@ module TM
 
     def assign(data)
       case
-
       # employee_id and project_id
       when (data[:employee_id] != nil) && (data[:project_id] != nil)
         @projects_employees << data
@@ -71,34 +68,21 @@ module TM
           return true
         else
           return false
-        end
-
-
-
-      end
-    end
+        end   #endIf
+      end   #endCase
+    end    #end def
 
     def assigned?(data)
-
       case
-
       # employee_id & project_id have been passed
       when (data[:employee_id] != nil) && (data[:project_id] != nil)
         @projects_employees.include?(data) ? (return true) : (return false)
-
 
       # employee_id & task_id have been passed
       when (data[:employee_id] != nil) && (data[:task_id] != nil)
         @tasks_employees.include?(data) ? (return true) : (return false)
       end
-
-
     end
-
-    def assign_task_to_emp(data)
-    end
-
-
   end
 
 

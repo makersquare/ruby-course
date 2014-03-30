@@ -79,7 +79,5 @@ module TM
       expect(TM::db.assigned?({ task_id: @task2.id, employee_id: @emp2.id })).to eq(false)
     end
 
-
-
   end
 end

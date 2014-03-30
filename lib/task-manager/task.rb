@@ -1,5 +1,3 @@
-
-
 module TM
   class TM::Task
 
