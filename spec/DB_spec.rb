@@ -170,6 +170,18 @@ describe 'DB' do
       expect(remaining_tasks.last).to eq(['project_name', 'project2_name'])
     end
   end
+
+  describe 'shows remaining tasks' do
+    it 'returns an array of remaining task objects given pid' do
+      project = @__db.create_project('project_name')
+      task = @__db.add_task_to_project('description', 1, project.id)
+      task2 = @__db.add_task_to_project('description2', 2, project.id)
+      completed_task = @__db.task_complete(task.id)
+      remaining_tasks = @__db.show_remaining_tasks(project.id)
+      expect(remaining_tasks.count).to eq 1
+      expect(remaining_tasks.first.priority).to eq 2
+    end
+  end
 end
 
 # end

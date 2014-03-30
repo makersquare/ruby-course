@@ -11,4 +11,12 @@ require_relative 'task-manager/project.rb'
 require_relative 'task-manager/project_list.rb'
 require_relative 'task-manager/employee.rb'
 require_relative 'task-manager/DB.rb'
-require_relative 'task-manager/middle_man.rb'
+require_relative 'use_case.rb'
+require_relative 'use-cases/create_project.rb'
+require_relative 'use-cases/list_projects.rb'
+require_relative 'use-cases/show_remaining_tasks.rb'
+require_relative 'use-cases/show_completed_tasks.rb'
+require_relative 'use-cases/add_task_to_project.rb'
+require 'pry-debugger'
+# Dir[File.dirname(__FILE__) + '../lib/task-manager/*.rb'].each {|file| require file }
+# Dir[File.dirname(__FILE__) + '../lib/use-cases/*.rb'].each {|file| require file }

@@ -8,11 +8,11 @@ class PManager
       puts "What would you like to do?"
     puts "-- DOING THINGS"
     # puts "-- Type 'create NAME' - Create a new project with name=NAME"
-    # puts "-- Type 'add PID DESC Priority' - Add a new task to project with id=PID"
-    # puts "-- Type 'emp create NAME' to create a new employee with name=employee name"
-    # puts "-- Type 'delegate EID PID' - Assign an employee to a project"
-    # puts "-- Type 'task assign TID EID' - Assign task TID to employee EID"
-    # puts "-- Type 'mark TID' to mark task with id=TID as complete"
+    puts "-- Type 'add PID DESC Priority' - Add a new task to project with id=PID"
+    puts "-- Type 'emp create NAME' to create a new employee with name=employee name"
+    puts "-- Type 'delegate EID PID' - Assign an employee to a project"
+    puts "-- Type 'task assign TID EID' - Assign task TID to employee EID"
+    puts "-- Type 'mark TID' to mark task with id=TID as complete"
     puts "--"
     puts "-- ACCESSING THINGS"
     puts "-- Type 'list' to list all the projects"
@@ -44,14 +44,21 @@ class PManager
       elsif (@@user_command.include?'create')
         length = @@user_command.length
         name = @@user_command.slice(7..length)
-        project_list.add_project(name)
-        puts; puts "Project #{name} was created".colorize(:green)
-        puts;
-
+        # project_list.add_project(name)
+        result = TM::CreateProjects.run(:project_name => name)
+        if result.success?
+                puts; puts "Project #{name} was created".colorize(:green)
+                puts;
+        else
+                puts; puts "Put in a mother fucking project name. Seriously. How am I supposed to know what you're talking about?".colorize(:red)
+                puts;
+        end
 
       elsif (@@user_command.include?'show')
         length = @@user_command.length
         pid = @@user_command.slice(5..length).to_i
+        result = TM::ShowRemainingTasks.run(:pid => pid)
+
         remaining_tasks = project_list.show_remaining_tasks(pid)
         puts;
         remaining_tasks.each { |task| puts "description: #{task.description} id = #{task.id}".colorize(:green) }
@@ -62,8 +69,10 @@ class PManager
       elsif (@@user_command.include?'history')
         length = @@user_command.length
         name = @@user_command.slice(8..length)
-        remaining_tasks = project_list.show_completed_tasks(pid)
-        remaining_tasks.each { |task| puts "description: #{task.description} id = #{task.id}".colorize(:green) }
+        result = TM::ShowRemainingTasks.run(:pid => pid)
+
+        completed_tasks = project_list.show_completed_tasks(pid)
+        completed_tasks.each { |task| puts "description: #{task.description} id = #{task.id}".colorize(:green) }
         puts;
 
 

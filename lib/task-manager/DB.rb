@@ -2,6 +2,7 @@ module TM
   def self.DB
     @__db  ||= DB.new
   end
+
   class DB
   attr_accessor :projects, :tasks, :employees, :memberships
 
@@ -54,12 +55,18 @@ module TM
     return project
   end
 
+  def create_task(description)
+    task = Task.new(description)
+    @tasks[task.id] = task
+    return task
+  end
+
   def create_employee(name)
     emp = Employee.new(name)
     @employees[emp.id] = emp
   end
 
-  def add_task_to_project(description, priority, pid)
+  def add_task_to_project(description, priority=nil, pid)
     task = Task.new(description, priority, pid)
     @tasks[task.id] = task
   end
@@ -85,6 +92,11 @@ module TM
   def show_completed_tasks(pid)
     completed_tasks = @tasks.values.select { |task|
       task.pid == pid && task.complete == true }
+  end
+
+  def show_remaining_tasks(pid)
+    remaining_tasks = @tasks.values.select { |task|
+      task.pid == pid && task.complete == false }
   end
 
   def get_employee_project(eid)
