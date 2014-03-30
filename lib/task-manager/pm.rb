@@ -2,9 +2,8 @@ require 'pry-debugger'
 module TM
   class ProjectManager
 
-    def initialize(db)
+    def initialize()
       @input = ""
-      @db = db
       @control = []
     end
 
@@ -216,34 +215,26 @@ module TM
     end
 
     def employee_remaining_tasks
-      # if @projectlist.employees[@control[2].to_i].nil?
-      #   puts "Employee with that EID does not exist."
-      # else
-      #   puts "Employee still needs to complete the following tasks"
-      #   @projectlist.employees[@control[2].to_i].tasks.each do |task|
-      #     if !task.complete
-      #       project_for_task = 0
-      #       @projectlist.projects.each do |project_id, project|
-      #         if project.tasks.values.include?(task)
-      #           project_for_task = project
-      #         end
-      #       end
-      #       puts "#{task.description} for Project #{project_for_task.name}"
-      #     end
-      #   end
-      # end
+      result = TM::GetTasksForEmployee.run({ :employee_id => @control[2].to_i })
+      tasks = result.tasks.select! { |task| !task.complete }
+      if result.success?
+        puts "Incomplete tasks for Employee #{result.employee.employee_id} #{result.employee.name}:"
+        tasks.each { |task| puts "#{task.task_id}: #{task.description}" }
+      else
+        puts "Error: #{result.error}"
+      end
       input
     end
 
     def employee_history
-      # if @projectlist.employees[@control[2].to_i].nil?
-      #   puts "Employee with that EID does not exist."
-      # else
-      #   puts "Employee has completed the following tasks"
-      #   @projectlist.employees[@control[2].to_i].tasks.each do |task|
-      #     puts "TID: #{task.task_id} Description: #{task.description}" if task.complete
-      #   end
-      # end
+      result = TM::GetTasksForEmployee.run({ :employee_id => @control[2].to_i })
+      tasks = result.tasks.select! { |task| task.complete }
+      if result.success?
+        puts "Complete tasks for Employee #{result.employee.employee_id} #{result.employee.name}:"
+        tasks.each { |task| puts "#{task.task_id}: #{task.description}" }
+      else
+        puts "Error: #{result.error}"
+      end
       input
     end
   end

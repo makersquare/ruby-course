@@ -1,33 +1,28 @@
 require_relative 'lib/task-manager.rb'
 
-pl = TM::DB.new
-# pl.addproject("First Project")
-# pl.addproject("Second Project")
-# pl.addproject("Third Project")
+# pl = TM::DB.new
 
-# pl.projects[0].addtask("Task 1",1)
-# pl.projects[0].addtask("Task 2",2)
-# pl.projects[0].addtask("Task 3",2)
-# pl.projects[1].addtask("Task 4",2)
-# pl.projects[1].addtask("Task 5",3)
-# pl.projects[1].addtask("Task 6",3)
-# pl.projects[2].addtask("Task 7",1)
-# pl.projects[2].addtask("Task 8",4)
-# pl.projects[2].addtask("Task 9",4)
-# pl.projects[2].addtask("Task 10",5)
 
-# pl.projects[2].markcomplete(7)
-# pl.projects[2].markcomplete(9)
-# pl.projects[2].markcomplete(10)
+TM::CreateProject.run({ :name => "Cool Project" })
+TM::CreateProject.run({ :name => "Big Project" })
+TM::CreateProject.run({ :name => "Small Project" })
 
-# pl.addemployee("Devon")
-# pl.addemployee("Brian")
-# pl.addemployee("Other guy")
+TM::CreateTask.run({ :description => "A fun task", :priority => 7, :project_id => 1 })
+TM::CreateTask.run({ :description => "A fun task", :priority => 9, :project_id => 1 })
+TM::CreateTask.run({ :description => "A fun task", :priority => 6, :project_id => 1 })
+TM::CreateTask.run({ :description => "A fun task", :priority => 3, :project_id => 1 })
+TM::CreateTask.run({ :description => "A fun task", :priority => 2, :project_id => 1 })
+TM::CreateTask.run({ :description => "A fun task", :priority => 4, :project_id => 1 })
+TM::CreateTask.run({ :description => "A fun task", :priority => 6, :project_id => 1 })
+TM::CreateTask.run({ :description => "A fun task", :priority => 6, :project_id => 2 })
+TM::CreateTask.run({ :description => "A fun task", :priority => 8, :project_id => 2 })
+TM::CreateTask.run({ :description => "A fun task", :priority => 2, :project_id => 3 })
+TM::CreateTask.run({ :description => "A fun task", :priority => 6, :project_id => 3 })
 
-# pl.projects[0].addemployee(pl.employees[0])
-# pl.projects[0].addemployee(pl.employees[1])
+TM::CreateEmployee.run({ :name => "Bob Johnson" })
+TM::CreateEmployee.run({ :name => "Cody Thomas"})
 
-projectmanager = TM::ProjectManager.new(pl)
+pm = TM::ProjectManager.new
+pm.menu
 
-projectmanager.menu
 

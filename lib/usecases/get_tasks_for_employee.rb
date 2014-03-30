@@ -11,7 +11,7 @@ module TM
 
       return failure(:employee_has_no_tasks) if tasks.size == 0
 
-      success :tasks => tasks
+      success :tasks => tasks, :employee => employee
     end
   end
 end
