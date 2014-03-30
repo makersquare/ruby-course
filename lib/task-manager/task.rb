@@ -10,7 +10,7 @@ class TM::Task
      @priority_num = data[:priority_num]
      @complete = false
      @creation_date = Time.now    #stub time in rspec.
-     @emp_id = nil # add this in to make relationship
+     @emp_id = data[:emp_id]# add this in to make relationship
   end
 
 end

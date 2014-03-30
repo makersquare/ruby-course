@@ -176,10 +176,15 @@ describe "database"  do
     expect(emp1.id).to eq 15
     expect(emp2.id).to eq 16
 
-    task = @db.create_task(8,14,"fishing",3)
-    task1 = @db.create_task(9,14,"running",4)
-    task2 = @db.create_task(9,16,"hunting",5)
+    # task = @db.create_task(8,14,"fishing",3)
+    # task1 = @db.create_task(9,14,"running",4)
+    # task2 = @db.create_task(9,16,"hunting",5)
 
+
+    task = @db.create_task(8,{:descr=>"fishing",:priority_num =>4,:emp_id =>14})
+    task1 = @db.create_task(8,{:descr=>"hunting",:priority_num =>4,:emp_id =>14})
+    task2 = @db.create_task(9,{:descr=>"rowing",:priority_num =>6,:emp_id =>16})
+    expect(task.emp_id).to eq 14
     expect(@db.get_tasks_for_emp(14)).to eq [task,task1]
 
   end
