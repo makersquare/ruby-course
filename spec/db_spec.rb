@@ -47,6 +47,16 @@ module TM
       expect(ongoing[2].id).to eq(@task1.id)
     end
 
+    it "can create an employee and store it in the master list" do
+      emp1 = TM.db.create_employee("Bob")
+      expect(TM.db.get_employee(emp1.id).id).to eq(emp1.id)
+    end
+
+
+    xit "can assign multiple employees to a single project" do
+    end
+
+
 
   end
 end

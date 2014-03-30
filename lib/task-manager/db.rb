@@ -4,6 +4,7 @@ module TM
     def initialize
       @all_projects = {}
       @all_tasks = {}
+      @all_employees = {}
     end
 
 
@@ -38,6 +39,16 @@ module TM
       ongoing_tasks = @all_tasks.select { |k,v| (v.project_id == project_id) &&
                                                  (v.finished? == false) }.values
       return ongoing_tasks.sort { |a,b| b.priority <=> a.priority }
+    end
+
+    def create_employee(name)
+      employee = Employee.new(name)
+      @all_employees[employee.id] = employee
+      return employee
+    end
+
+    def get_employee(employee_id)
+      return @all_employees[employee_id]
     end
 
   end
