@@ -59,7 +59,9 @@ module TM
               when "history" then employee_history
               else input
             end
-          else input
+          else
+            puts "Did not understand command."
+            input
         end
       end
     end

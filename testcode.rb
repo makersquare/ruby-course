@@ -1,8 +1,5 @@
 require_relative 'lib/task-manager.rb'
 
-# pl = TM::DB.new
-
-
 TM::CreateProject.run({ :name => "Cool Project" })
 TM::CreateProject.run({ :name => "Big Project" })
 TM::CreateProject.run({ :name => "Small Project" })
