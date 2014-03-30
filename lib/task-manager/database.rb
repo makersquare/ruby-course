@@ -69,7 +69,7 @@ class TM::Database
   end
 
   def get_employee_remaining(employee_id)
-    @tasks.values.select{|x| (x.employee_id == employeed_id) && (x.status == "incomplete")}
+    @tasks.values.select{|x| (x.employee_id == employee_id) && (x.status == "incomplete")}
   end
 # Update Methods
   def delegate_employee_to_project(employee_id, project_id)
