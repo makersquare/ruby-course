@@ -1,4 +1,6 @@
 require_relative 'lib/task-manager.rb'
+require 'rubygems'
+require 'twilio-ruby'
 module TM
 class ProjectManager
   def self.start
@@ -25,6 +27,7 @@ class ProjectManager
     puts "-- Type 'completed EID tasks' to show completed tasks of employee with id=EID"
     puts "--"
     puts "-- GENERAL"
+    puts "-- Type 'text' followed by a phone number and then a message to receive the text"
     puts "-- Type 'help' to show these commands again"
     puts "-- Exit-- Type 'exit' to quit this program"
    string = gets.chomp
@@ -83,6 +86,10 @@ class ProjectManager
                 puts "Dude, I can't find that employee!"
               elsif result.error == :project_not_found
                 puts "Dude, I can't find that project!"
+              elsif result.error == :employee_not_number
+                puts "Dude, the employee id has to be a number"
+              elsif result.error == :project_not_number
+                puts "Dude, the project id has to be a number"
               end
             end
         when 'task'
@@ -229,6 +236,15 @@ class ProjectManager
               puts "Dude, that lazy employee has no completed tasks"
             end
           end
+        when 'text'
+          account_sid = 'AC79afc966ef3d304699eadbd31e7b066d'
+          auth_token = '5de6b5fb8c98a947042ca99d0050c5c8'
+          @client = Twilio::REST::Client.new account_sid, auth_token
+
+          message = @client.account.sms.messages.create(:body => choice[2..-1].join(' '),
+          :to => choice[1],     # Replace with your phone number
+          :from => "+15122706595")   # Replace with your Twilio number
+          puts message.sid
         #GENERAL#
         when 'help'
           puts "The system is pretty straightforward. Figure it out!"

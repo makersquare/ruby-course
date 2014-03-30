@@ -2,6 +2,8 @@ module TM
   class DelegateEmployeeToProject < UseCase
     def run(inputs)
       @database = TM.database
+      return failure(:employee_not_number) if inputs[:employee_id].to_i == 0
+      return failure(:project_not_number) if inputs[:project_id].to_i == 0
       employee = @database.get_employee(inputs[:employee_id].to_i)
       return failure(:employee_not_found) if employee.nil?
 
