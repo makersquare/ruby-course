@@ -5,8 +5,12 @@ module TM
 
   class UseCase
     # Convenience method that lets us call `.run` directly on the class
-    def self.run(inputs)
-      self.new.run(inputs)
+    def self.run(inputs=nil)
+      if inputs == nil
+        self.new.run
+      else
+        self.new.run(inputs)
+      end
     end
 
     def failure(error_sym, data={})

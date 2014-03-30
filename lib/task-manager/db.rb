@@ -19,6 +19,11 @@ module TM
       return @all_projects[project_id]
     end
 
+    def list_projects
+      return @all_projects.sort_by { |k,v| v.id }
+    end
+
+
     def create_task(data)
       task = Task.new(data)
       @all_tasks[task.id] = task

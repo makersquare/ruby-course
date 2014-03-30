@@ -22,10 +22,10 @@ module TM
                 (choice_array.include?("fucking")) ||
                 (choice_array.include?("asshole"))  ||
                 (choice_array.include?("motherfucker")))
-            puts self.smart_ass_remarker(["Keep it classy, fucker.",
-                            "A little angry aren't we?",
+            puts self.smart_ass_remarker(["Keep it classy, now.",
+                            "Angry aren't we?",
                             "Come on, I'm sure there are ladies present.",
-                            "Real real clever, asshole.",
+                            "Real real clever, douchebag.",
                             "You kiss your imaginary girlfriend with that mouth?",
                             "Yeah, yeah you're real intimidating. Now let's get on with it.",
                             "I don't have to take this shit. I'm going back to my GUI.",
@@ -150,15 +150,19 @@ module TM
       elsif result.error == :name_field_empty
         puts "Come on, man. You gotta include a name. Go back and try again.\n"
       end
+    end
 
-    # end
-
-    # def list_projects
-    #   puts "\n\nOk, here's a list of your current projects:\n\n"
-    #   puts"ID:\tTask:"
-    #   puts"--------------------------"
-    #    TM::DB.instance.all_projects.each { |k,v| print("#{k}" + (' ' * (8 - k.to_s.length))+ "#{v.name}\n") }
-    # end
+    def list_projects
+      result = ListProjects.run
+      if result.success? == true
+        puts "\n\nOk, here's a list of your current projects:\n\n"
+        puts"ID:\tTask:"
+        puts"--------------------------"
+        result[:projects_list].each { |k,v| print("#{k}" + (' ' * (8 - k.to_s.length))+ "#{v.name}\n") }
+      elsif result.error == :no_projects_found
+        puts "Gotta add some projects first...\n\n"
+      end
+    end
 
 
     # def load_me_up    # loads up a couple projects with tasks for testing
