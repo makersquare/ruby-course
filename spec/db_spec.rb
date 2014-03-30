@@ -304,9 +304,6 @@ describe "database"  do
     task1 = @db.create_task(26,{:descr=>"hunting",:priority_num =>4,:emp_id=>21})
     task2 = @db.create_task(24,{:descr=>"rowing",:priority_num =>6,:emp_id=>20})
 
-    # task = @db.create_task(24,20,"fishing",3)
-    # task1 = @db.create_task(24,21,"running",4)
-    # task2 = @db.create_task(26,20,"hunting",5)
 
     expect(task.id).to eq 23
     expect(task1.id).to eq 24
@@ -324,9 +321,12 @@ describe "database"  do
 
   it "should show all tasks that are completed, that belongs to an employee, based on eid " do
     puts @db
-    task = @db.create_task(24,23,"fishing",3)
-    task1 = @db.create_task(24,23,"running",4)
-    task2 = @db.create_task(26,23,"hunting",5)
+
+    task = @db.create_task(24,{:descr=>"fishing",:priority_num =>4,:emp_id=>23})
+    task1 = @db.create_task(26,{:descr=>"hunting",:priority_num =>4,:emp_id=>23})
+    task2 = @db.create_task(24,{:descr=>"rowing",:priority_num =>6,:emp_id=>23})
+
+
 
     expect(task.id).to eq 26
 
@@ -345,9 +345,13 @@ describe "database"  do
   end
 
   it "should show all tasks that are remaining for a project" do
-    task = @db.create_task(27,23,"fishing",3)
-    task1 = @db.create_task(27,23,"running",4)
-    task2 = @db.create_task(27,23,"hunting",5)
+    task = @db.create_task(27,{:descr=>"fishing",:priority_num =>4})
+    task1 = @db.create_task(27,{:descr=>"hunting",:priority_num =>4})
+    task2 = @db.create_task(27,{:descr=>"rowing",:priority_num =>6})
+
+    # task = @db.create_task(27,23,"fishing",3)
+    # task1 = @db.create_task(27,23,"running",4)
+    # task2 = @db.create_task(27,23,"hunting",5)
 
     proj1 = @db.create_project("Fitness")
     proj2 = @db.create_project("coding")
@@ -359,6 +363,8 @@ describe "database"  do
 
     @db.mark_task_complete(30)
     expect(@db.remaining_task_proj(27)).to eq [task,task2]
+    @db.mark_task_complete(31)
+    expect(@db.remaining_task_proj(27)).to eq [task]
   end
 
   it "should get employee that is working on a task, based on tid" do
