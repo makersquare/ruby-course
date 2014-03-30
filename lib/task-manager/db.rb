@@ -5,6 +5,8 @@ module TM
       @all_projects = {}
       @all_tasks = {}
       @all_employees = {}
+      @projects_employees = []
+      @tasks_employees = []
     end
 
 
@@ -50,6 +52,52 @@ module TM
     def get_employee(employee_id)
       return @all_employees[employee_id]
     end
+
+    def assign(data)
+      case
+
+      # employee_id and project_id
+      when (data[:employee_id] != nil) && (data[:project_id] != nil)
+        @projects_employees << data
+        return true
+
+      # employee_id and task_id
+      when (data[:employee_id] != nil) && (data[:task_id] != nil)
+
+        # if the project is not assigned, return nil, else assign it
+        task = get_task(data[:task_id])
+        if self.assigned?({ project_id: task.project_id, employee_id: data[:employee_id] })
+          @tasks_employees << data
+          return true
+        else
+          return false
+        end
+
+
+
+      end
+    end
+
+    def assigned?(data)
+
+      case
+
+      # employee_id & project_id have been passed
+      when (data[:employee_id] != nil) && (data[:project_id] != nil)
+        @projects_employees.include?(data) ? (return true) : (return false)
+
+
+      # employee_id & task_id have been passed
+      when (data[:employee_id] != nil) && (data[:task_id] != nil)
+        @tasks_employees.include?(data) ? (return true) : (return false)
+      end
+
+
+    end
+
+    def assign_task_to_emp(data)
+    end
+
 
   end
 

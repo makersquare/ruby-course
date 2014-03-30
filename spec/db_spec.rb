@@ -47,13 +47,36 @@ module TM
       expect(ongoing[2].id).to eq(@task1.id)
     end
 
-    it "can create an employee and store it in the master list" do
-      emp1 = TM.db.create_employee("Bob")
-      expect(TM.db.get_employee(emp1.id).id).to eq(emp1.id)
+    before do
+      @emp1 = TM.db.create_employee("Bob")
+      @emp2 = TM.db.create_employee("Sue")
+      @emp3 = TM.db.create_employee("Billy")
     end
 
+    it "can create an employee and store it in the master list" do
+      #emp1 = TM.db.create_employee("Bob")
+      expect(TM.db.get_employee(@emp1.id).id).to eq(@emp1.id)
+    end
 
-    xit "can assign multiple employees to a single project" do
+    it "can assign multiple employees to a single project" do
+      #emp1 = TM.db.create_employee("Bob")
+      #emp2 = TM.db.create_employee("Sue")
+      #emp3 = TM.db.create_employee("Billy")
+      TM.db.assign({ employee_id: @emp1.id, project_id: @project1.id })
+      TM.db.assign({ employee_id: @emp3.id, project_id: @project1.id })
+      expect(TM.db.assigned?({ project_id: @project1.id, employee_id: @emp1.id })).to eq(true)
+      expect(TM.db.assigned?({ project_id: @project1.id, employee_id: @emp3.id })).to eq(true)
+      expect(TM.db.assigned?({ project_id: @project1.id, employee_id: @emp2.id })).to eq(false)
+    end
+
+    it "can assign a task to an employee only if the emp is assigned to the tasks project" do
+      TM.db.assign({employee_id: @emp1.id, project_id: @project1.id})
+      assign1 = TM.db.assign({ task_id: @task1.id, employee_id: @emp1.id })
+      assign2 = TM.db.assign({ task_id: @task2.id, employee_id: @emp2.id })
+      expect(assign1).to eq(true)
+      expect(assign2).to eq(false)
+      expect(TM::db.assigned?({ task_id: @task1.id, employee_id: @emp1.id })).to eq(true)
+      expect(TM::db.assigned?({ task_id: @task2.id, employee_id: @emp2.id })).to eq(false)
     end
 
 
