@@ -70,13 +70,14 @@ describe "database"  do
   it "creates and adds a task to the Database" do
     proj = @db.create_project("Fitness")
     expect(proj.id).to eq 8
-    task = @db.create_task(8,2,"fishing",3)
+    #task = @db.create_task(8,2,"fishing",3)
+    task = @db.create_task(8,{:descr=>"fishing",:priority_num=>3})
     expect(@db.tasks.length).to eq 1
   end
 
   it "should get a task based on id" do
-    task = @db.create_task(8,2,"fishing",3)
-    task1 = @db.create_task(8,2,"hunting",4)
+    task = @db.create_task(8,{:descr=>"fishing",:priority_num=>3})
+    task1 = @db.create_task(8,{:descr=>"hunting",:priority_num=>4})
 
     expect(task.id).to eq 2
     expect(@db.tasks.length).to eq (2)
@@ -85,8 +86,8 @@ describe "database"  do
   end
 
   it "should delete a task, based on id" do
-    task = @db.create_task(8,2,"fishing",3)
-    task1 = @db.create_task(8,2,"hunting",4)
+    task = @db.create_task(8,{:descr=>"fishing",:priority_num=>4})
+    task1 = @db.create_task(8,{:descr=>"hunting",:priority_num=>4})
 
 
     expect(task1.id).to eq 5
@@ -95,13 +96,13 @@ describe "database"  do
   end
 
   it "should update a task, based on id" do
-    task = @db.create_task(8,2,"fishing",3)
+    task = @db.create_task(8,{:descr=>"fishing",:priority_num=>5})
     expect(@db.get_task(6).descr).to eq "fishing"
-    expect(@db.get_task(6).priority_num).to eq 3
-    task1 = @db.create_task(8,2,"hunting",4)
+    expect(@db.get_task(6).priority_num).to eq 5
+    task1 = @db.create_task(8,{:descr=>"hunting",:priority_num=>4})
     expect(task.id).to eq 6
-
     expect(@db.update_tasks(6,2,3,"rowing",4))
+    #expect(@db.update_tasks(6,{:descr=>"rowing",:project_id=>2,:eid=>3,:priority_num=>4})
     expect(@db.get_task(6).descr).to eq "rowing"
     expect(@db.get_task(6).priority_num).to eq 4
   end
