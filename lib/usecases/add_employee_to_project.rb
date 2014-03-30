@@ -4,7 +4,6 @@ module TM
       employee = TM.db.get_employee(inputs[:employee_id])
       project = TM.db.get_project(inputs[:project_id])
 
-
       return failure(:project_does_not_exist) if project.nil?
       return failure(:employee_does_not_exist) if employee.nil?
 

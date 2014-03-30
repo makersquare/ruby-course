@@ -12,6 +12,4 @@ describe 'Task' do
     expect(task.description).to eq("Description")
     expect(task.priority).to eq(1)
   end
-
-
 end
