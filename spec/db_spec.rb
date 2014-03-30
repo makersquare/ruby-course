@@ -274,9 +274,14 @@ describe "database"  do
   end
 
   it "should mark as task as complete, based on it's id " do
-    task = @db.create_task(24,14,"fishing",3)
-    task1 = @db.create_task(24,14,"running",4)
-    task2 = @db.create_task(26,16,"hunting",5)
+
+    task = @db.create_task(24,{:descr=>"fishing",:priority_num =>4})
+    task1 = @db.create_task(26,{:descr=>"hunting",:priority_num =>4})
+    task2 = @db.create_task(24,{:descr=>"rowing",:priority_num =>6})
+
+    # task = @db.create_task(24,14,"fishing",3)
+    # task1 = @db.create_task(24,14,"running",4)
+    # task2 = @db.create_task(26,16,"hunting",5)
 
     expect(task.id).to eq 20
     expect(task1.id).to eq 21
@@ -294,9 +299,14 @@ describe "database"  do
 #                     along with the project name next to each task
   it "should show all tasks that are uncompleted, that belongs to an employee, based on eid" do
     puts @db
-    task = @db.create_task(24,20,"fishing",3)
-    task1 = @db.create_task(24,21,"running",4)
-    task2 = @db.create_task(26,20,"hunting",5)
+
+    task = @db.create_task(24,{:descr=>"fishing",:priority_num =>4,:emp_id=>20})
+    task1 = @db.create_task(26,{:descr=>"hunting",:priority_num =>4,:emp_id=>21})
+    task2 = @db.create_task(24,{:descr=>"rowing",:priority_num =>6,:emp_id=>20})
+
+    # task = @db.create_task(24,20,"fishing",3)
+    # task1 = @db.create_task(24,21,"running",4)
+    # task2 = @db.create_task(26,20,"hunting",5)
 
     expect(task.id).to eq 23
     expect(task1.id).to eq 24
@@ -308,6 +318,7 @@ describe "database"  do
     expect(emp.id).to eq 20
     expect(emp1.id).to eq 21
 
+    expect(@db.remaining_task_emp(21)).to eq [task1]
     expect(@db.remaining_task_emp(20)).to eq [task,task2]
   end
 
