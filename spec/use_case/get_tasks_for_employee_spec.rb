@@ -28,6 +28,6 @@ describe TM::GetTasksForEmployee do
 
     expect(result.success?).to eq(true)
     expect(result.tasks.size).to eq(2)
-    expect(reulst.tasks[1].description).to eq("other task")
+    expect(result.tasks[1].description).to eq("other task")
   end
 end
