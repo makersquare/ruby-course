@@ -1,5 +1,5 @@
 class TM::Database
-  attr_accessor :projects, :tasks, :employees, :membership
+  attr_reader :projects, :tasks, :employees, :membership
 
 # Initialize Database Method #
 

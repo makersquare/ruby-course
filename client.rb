@@ -38,11 +38,11 @@ class ProjectManager
               puts "You project with name #{project.name} and id #{project.id} has been created!"
             else
               if result.error == :project_name_not_given
-              puts "Dude, you gotta give me a name to create this project!"
+                puts "Dude, you gotta give me a name to create this project!"
               end
             end
         when 'add'
-          result = TM::AddTaskToProject.run(:project_id => choice[1], :priority => choice[2], :description => choice[3..-1].join(' '))
+          result = TM::AddTaskToProject.run(:project_id => choice[1], :priority => choice[2], :description => choice[3..-1])
             if result.success?
               project= result.project
               task = result.task
@@ -50,6 +50,16 @@ class ProjectManager
             else
               if result.error == :project_not_found
                 puts "Dude, that project does not exist!"
+              elsif result.error == :no_project_id_given
+                puts "Dude, give me a project id to search for the project"
+              elsif result.error == :no_priority_given
+                puts "Dude, I cannot create a task without a priority"
+              elsif result.error == :no_description_given
+                puts "Dude, I cannot create a task without a description"
+              elsif result.error == :project_id_not_number
+                puts "Dude, project id has to be a number"
+              elsif result.error == :priority_not_number
+                puts "Dude task priority has to be a number"
               end
             end
         when 'emp'
