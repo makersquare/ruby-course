@@ -376,13 +376,19 @@ describe "database"  do
     emp1 = @db.create_employee("Sarah")
     emp2 = @db.create_employee("Kelly")
 
-    task = @db.create_task(27,23,"fishing",3)
-    task1 = @db.create_task(27,26,"running",4)
+    task = @db.create_task(27,{:descr=>"fishing",:priority_num =>4,:emp_id=>27})
+    task1 = @db.create_task(27,{:descr=>"hunting",:priority_num =>4,:emp_id=>26})
+
+    # task = @db.create_task(27,23,"fishing",3)
+    # task1 = @db.create_task(27,26,"running",4)
 
     expect(emp.id).to eq 26
-
+    expect(emp1.id).to eq 27
     expect(task.id).to eq 32
+
+    expect(task1.id).to eq 33
     expect(@db.get_emp_for_task(33)).to eq emp
+    expect(@db.get_emp_for_task(32)).to eq emp1
     # based on task_id, I need to get employee, so @employees, doesn't
     # have a task_id points to a task, so if
 
