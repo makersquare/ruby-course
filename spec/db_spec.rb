@@ -66,8 +66,8 @@ module TM
       task2 = @db.create_task(@proj.project_id, 'just do it2')
       task3 = @db.create_task(@proj.project_id, 'just do it3')
 
-      @db.mark_complete(@proj.project_id, task1.task_id )
-      @db.mark_complete(@proj.project_id, task2.task_id )
+      @db.mark_complete( task1.task_id )
+      @db.mark_complete(  task2.task_id )
 
       incomplete = @db.get_incompleted(@proj.project_id)
       incompleted_ids = incomplete.map {|t| t.task_id}
@@ -77,11 +77,15 @@ module TM
     end
 
     it 'can add a employee' do
-      emp = @db.add_employee('bob')
+
+      task1 = @db.create_task(@proj.project_id, 'just do it')
+      task2 = @db.create_task(@proj.project_id, 'just do it2')
+
+      emp = @db.add_employee('bob', task1.task_id)
       eid = emp.employee_id
 
-      expect(@db.employees[eid].name).to eq('bob')
-
+      expect(@db.get_employee(eid).name).to eq('bob')
+      expect(task1.employee).to eq(1)
     end
 
     it 'can assign a employee to a project' do

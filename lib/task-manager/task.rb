@@ -1,7 +1,7 @@
 
 class TM::Task
   attr_reader :task_id, :description, :priority, :project_id, :creation_date
-  attr_accessor :status
+  attr_accessor :status, :employee
 
   @@task_id = 0
 
@@ -13,6 +13,7 @@ class TM::Task
     @project_id = project_id
     @status = "incomplete"
     @creation_date = Time.now
+    @employee = nil
   end
 
   def self.task_id

@@ -8,12 +8,13 @@ module TM
   # Our singleton class
   class Database
       # Database stuff
-    attr_reader :projects, :tasks
+    attr_reader :projects, :tasks, :employees
 
     def initialize
       @projects = {}
       @tasks = {}
       @employees = {}
+      @membership = {}
     end
 
     def add_project(name)
@@ -22,18 +23,30 @@ module TM
       proj
     end
 
-    def get_project(id)
-     @projects[id]
-    end
-
     def create_task(pid, description, priority = 3)
       task = TM::Task.new(pid, description, priority)
       @tasks[task.task_id] = task
       task
     end
 
+    def add_employee(name, tid)
+      emp = TM::Employee.new(name)
+      @employees[emp.employee_id] = emp
+      task = @tasks[tid]
+      task.employee = emp.employee_id
+      emp
+    end
+
+    def get_project(id)
+     @projects[id]
+    end
+
     def get_task(id)
       @tasks[id]
+    end
+
+    def get_employee(id)
+      @employees[id]
     end
 
     def mark_complete(tid)
