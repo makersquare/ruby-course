@@ -41,6 +41,10 @@ module TM
       employees = @employees.values
     end
 
+    def list_projects
+      projects = @projects.values
+    end
+
     def get_project_membership(pid)
 
       project_employees = []
@@ -120,7 +124,7 @@ module TM
     end
 
     def show_completed_employee_tasks(eid)
-      completed_employee_tasks = @tasks.values.select {|task| task.eid == eid && task.complete == true}
+      completed_employee_tasks = @tasks.values.select {|task| task.eid == eid && task.complete == true  }
     end
 
   end
