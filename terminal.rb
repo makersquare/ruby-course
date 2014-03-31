@@ -151,6 +151,15 @@ class TM::Terminal
     puts "\n"
   end
 
+  def emp_show(eid)
+    projects = TM.db.show_projects_for_emp(eid)
+    puts "All projects that employee with id #{eid} is working on"
+    puts "ID NAME"
+    projects.each do |project|
+      puts "#{project.id}     #{project.name}"
+    end
+  end
+
 end
 
 tc = TM::Terminal.new

@@ -110,7 +110,7 @@ module TM
 
     def show_projects_for_emp(employee_id)
       emp_id_with_proj = @memberships.select do |hash|
-         hash[:eid] == employee_id
+         hash[:eid] == employee_id.to_i
           #iterate through array, get hash
           # check if the value of the has is employee_id
           # emp_id_with_proj should return an array with the hashes
