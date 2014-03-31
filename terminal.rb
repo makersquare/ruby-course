@@ -172,9 +172,9 @@ class TM::Terminal
   def emp_details(eid)
     taskarray = TM.db.remaining_task_emp(eid)
     puts "Showing all completed task for employee with id #{eid}"
-    puts "TID PRIORITY-NUM  COMPLETE DESCRIPTION"
+    puts "TID PRIORITY-NUM  COMPLETE DESCRIPTION PROJECTNAME"
     taskarray.each do |task|
-      puts "#{task.id}     #{task.priority_num}           #{task.complete}    #{task.descr}"
+      puts "#{task.id}     #{task.priority_num}           #{task.complete}    #{task.descr}    #{TM.db.get_project(task.proj_id.to_i).name}"
     end
   end
 
