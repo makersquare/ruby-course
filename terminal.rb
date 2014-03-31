@@ -160,6 +160,21 @@ class TM::Terminal
     end
   end
 
+  def emp_history(eid)
+    taskarray = TM.db.completed_task_emp(eid)
+    puts "Showing all completed task for employee with id #{eid}"
+    puts "TID PRIORITY-NUM  COMPLETE DESCRIPTION"
+    taskarray.each do |task|
+      puts "#{task.id}     #{task.priority_num}           #{task.complete}    #{task.descr}"
+    end
+  end
+
+  def emp_details(eid)
+
+  end
+
+
+
 end
 
 tc = TM::Terminal.new
