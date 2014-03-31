@@ -64,7 +64,7 @@ module TM
 
     it "can return a list of all ongoing tasks sorted by priority, then creation date" do
       @task3.finished = true
-      ongoing = @db1.ongoing_tasks(@project1.id)
+      ongoing = @db1.ongoing_tasks({ project_id: @project1.id })
       expect(ongoing.size).to eq(3)
       expect(ongoing[0].id).to eq(@task4.id)
       expect(ongoing[1].id).to eq(@task2.id)
@@ -91,16 +91,6 @@ module TM
       expect(@db1.assigned?({ project_id: @project1.id, employee_id: @emp1.id })).to eq(true)
       expect(@db1.assigned?({ project_id: @project1.id, employee_id: @emp3.id })).to eq(true)
       expect(@db1.assigned?({ project_id: @project1.id, employee_id: @emp2.id })).to eq(false)
-    end
-
-    it "can assign a task to an employee only if the emp is assigned to the tasks project" do
-      @db1.assign({employee_id: @emp1.id, project_id: @project1.id})
-      assign1 = @db1.assign({ task_id: @task1.id, employee_id: @emp1.id })
-      assign2 = @db1.assign({ task_id: @task2.id, employee_id: @emp2.id })
-      expect(assign1).to eq(true)
-      expect(assign2).to eq(false)
-      expect(@db1.assigned?({ task_id: @task1.id, employee_id: @emp1.id })).to eq(true)
-      expect(@db1.assigned?({ task_id: @task2.id, employee_id: @emp2.id })).to eq(false)
     end
 
     it "can return a list of projects in order by id" do

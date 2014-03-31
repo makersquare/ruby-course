@@ -47,10 +47,16 @@ module TM
       end
     end
 
-    def ongoing_tasks(project_id)
-      ongoing_tasks = @all_tasks.select { |k,v| (v.project_id == project_id) &&
+    def ongoing_tasks(data)
+      if data[:project_id] != nil
+        ongoing_tasks = @all_tasks.select { |k,v| (v.project_id == data[:project_id]) &&
                                                  (v.finished? == false) }.values
-      return ongoing_tasks.sort { |a,b| b.priority <=> a.priority }
+        return ongoing_tasks.sort { |a,b| b.priority <=> a.priority }
+      elsif data[:employee_id] != nil
+        ongoing_tasks = @all_tasks.select { |k,v| (TM::db.assigned?({ employee_id: data[:employee_id], task_id: v.id })) &&
+                                                 (v.finished? == false) }.values
+        return ongoing_tasks.sort { |a,b| b.priority <=> a.priority }
+      end
     end
 
     def create_employee(name)
@@ -72,15 +78,7 @@ module TM
 
       # employee_id and task_id
       when (data[:employee_id] != nil) && (data[:task_id] != nil)
-
-        # if the project is not assigned, return nil, else assign it
-        task = get_task(data[:task_id])
-        if self.assigned?({ project_id: task.project_id, employee_id: data[:employee_id] })
-          @tasks_employees << data
-          return true
-        else
-          return false
-        end   #endIf
+        @tasks_employees << data
       end   #endCase
     end    #end def
 
@@ -96,8 +94,6 @@ module TM
       end
     end
   end
-
-
 
   def self.db
     @__db_instance ||= DB.new

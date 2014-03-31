@@ -115,34 +115,40 @@ module TM
     end
 
 
-    # def show(project_id)
-    #   result = GetProject(project_id)
-    #   if result.success? == false
-    #     if result.error == :no_project_found
-    #       puts "Project not found..."
-    #     end
-    #   else
-    #     project = result[:project]
-    #   end
+    def show(project_id)
 
-    #   tasks_array = project.ongoing_tasks
-    #   puts "\n\nProject: #{project.name}\n"
-    #   puts "ID\tDescription\t\t\tPriority\n"
-    #   puts "------------------------------------------------"
-    #   tasks_array.each { | x | print("#{x.task_id}" + (' ' * (8 - x.task_id.to_s.length)) + # padding
-    #                 "#{x.description}" + (' ' * (33 - x.description.length) +
-    #                 "#{x.priority}\n")) }
-    #   puts "\n"
-    # end
+      result = TM::GetOngoingTasks.run({ project_id: project_id} )
+      if result.success?
+        ongoing_tasks = result[:ongoing_tasks]
+        get_project_result = TM::GetProject.run(project_id)
+        project = get_project_result[:project]
+        if ongoing_tasks.size == 0
+          puts "\nNo tasks assigned to this project yet.\n"
+          return
+        end
+
+        puts "\n\nProject: #{project.name}\n"
+        puts "ID\tDescription\t\t\tPriority\n"
+        puts "------------------------------------------------"
+        ongoing_tasks.each { | x | print("#{x.id}" + (' ' * (8 - x.id.to_s.length)) + # padding
+                      "#{x.description}" + (' ' * (33 - x.description.length) +
+                      "#{x.priority}\n")) }
+        puts "\n"
+
+      elsif result[:error]
+        puts "\nProject not found.\n"
+      end
+
+    end
 
     def history(project_id)
 
       project = TM::DB.instance.all_projects[project_id]
-      tasks_array = project.completed_tasks
+      ongoing_tasks = project.completed_tasks
       puts "\n\nProject: #{project.name}\n"
       puts "ID\tDescription\t\t\tPriority\n"
       puts "------------------------------------------------"
-      tasks_array.each { | x | print("#{x.task_id}" + (' ' * (8 - x.task_id.to_s.length)) + # padding
+      ongoing_tasks.each { | x | print("#{x.task_id}" + (' ' * (8 - x.task_id.to_s.length)) + # padding
                     "#{x.description}" + (' ' * (33 - x.description.length) +
                     "#{x.priority}\n")) }
       puts "\n"
@@ -186,7 +192,7 @@ module TM
       result = ListProjects.run
       if result.success? == true
         puts "\n\nOk, here's a list of your current projects:\n\n"
-        puts"ID:\tTask:"
+        puts"ID:\tProject:"
         puts"--------------------------"
         result[:projects_list].each { |k,v| print("#{k}" + (' ' * (8 - k.to_s.length))+ "#{v.name}\n") }
       elsif result.error == :no_projects_found
@@ -295,23 +301,23 @@ module TM
     #   puts "\n"
     # end
 
-    # def show_employee(employee_id)
-    #   # get employee
-    #   employee = TM::DB.instance.all_employees[employee_id]
+    def show_employee(employee_id)
+      # get employee
+      employee = TM::DB.instance.all_employees[employee_id]
 
-    #   # display employee info
-    #   puts "\n\nEmployee:  #{employee.name}   ID:  #{employee.employee_id}\n\n"
-    #   puts "    Projects:\n"
-    #   puts "---------------------"
+      # display employee info
+      puts "\n\nEmployee:  #{employee.name}   ID:  #{employee.employee_id}\n\n"
+      puts "    Projects:\n"
+      puts "---------------------"
 
-    #   # get projects array
-    #   projects = TM::DB.instance.employee_projects(employee)
+      # get projects array
+      projects = TM::DB.instance.employee_projects(employee)
 
-    #   if projects != nil
-    #     projects.each { |x| puts "#{x.id}"  + (' ' * (5 - x.id.to_s.length)) +  "#{x.name}\n" }
-    #   end
-    #   puts "\n"
-    # end
+      if projects != nil
+        projects.each { |x| puts "#{x.id}"  + (' ' * (5 - x.id.to_s.length)) +  "#{x.name}\n" }
+      end
+      puts "\n"
+    end
 
     # def show_employee_ongoing(employee_id)
     #   # get employee
@@ -329,15 +335,26 @@ module TM
 
     def show_employee_history(employee_id)
       # get employee
-      result = TM::GetEmployee(employee_id)
+      result = GetCompletedTasks.run({ employee_id: employee_id })
+
       if result.success?
+        completed_tasks = result[:completed_tasks]
+        binding.pry
+        if completed_tasks.size == 0
+          puts "No tasks for this employee\n"
+          return
+        end
+
         puts "ID\tDescription\t\t\tPriority\n"
         puts "------------------------------------------------"
-        TM::DB.instance.completed_tasks(employee).each { | x | print("#{x.task_id}" + (' ' * (8 - x.task_id.to_s.length)) + # padding
+        completed_tasks.each { | x | print("#{x.task_id}" + (' ' * (8 - x.task_id.to_s.length)) + # padding
                       "#{x.description}" + (' ' * (33 - x.description.length) +
                       "#{x.priority}\n")) }
         puts "\n"
+      elsif result.error == :employee_not_found
+        puts "\nThat employee is not found.\n"
       end
+    end
 
     def smart_ass_remarker(remarks)
       random = rand(remarks.length)
