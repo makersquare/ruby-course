@@ -8,13 +8,13 @@ module TM
   # Our singleton class
   class Database
       # Database stuff
-    attr_reader :projects, :tasks, :employees
+    attr_reader :projects, :tasks, :employees, :membership
 
     def initialize
       @projects = {}
       @tasks = {}
       @employees = {}
-      @membership = {}
+      @membership = []
     end
 
     def add_project(name)
@@ -35,6 +35,14 @@ module TM
       task = @tasks[tid]
       task.employee = emp.employee_id
       emp
+    end
+
+    def assign_membership(emp_id, proj_id)
+      @membership.push({'eid' => emp_id, 'pid' => proj_id})
+    end
+
+    def get_emp_by_project(pid)
+
     end
 
     def get_project(id)

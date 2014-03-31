@@ -90,6 +90,14 @@ module TM
 
     it 'can assign a employee to a project' do
 
+      task1 = @db.create_task(@proj.project_id, 'just do it')
+      emp = @db.add_employee('bob', task1.task_id)
+      eid = emp.employee_id
+
+      mem = @db.assign_membership(eid, @proj.project_id)
+
+      expect(@db.membership.length).to be(1)
+
 
     end
 
