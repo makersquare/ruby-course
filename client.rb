@@ -112,7 +112,15 @@ module TM
 
 
     # def show(project_id)
-    #   project = TM::DB.instance.all_projects[project_id]
+    #   result = GetProject(project_id)
+    #   if result.success? == false
+    #     if result.error == :no_project_found
+    #       puts "Project not found..."
+    #     end
+    #   else
+    #     project = result[:project]
+    #   end
+
     #   tasks_array = project.ongoing_tasks
     #   puts "\n\nProject: #{project.name}\n"
     #   puts "ID\tDescription\t\t\tPriority\n"
