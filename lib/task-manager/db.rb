@@ -184,7 +184,7 @@ module TM
 
     def mark_task_complete(task_id)
       thetask = @tasks.values.find { |task|
-        task.id == task_id
+        task.id == task_id.to_i
       }
       thetask.complete = true
     end

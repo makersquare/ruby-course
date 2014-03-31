@@ -125,6 +125,12 @@ class TM::Terminal
     end
   end
 
+  def task_mark(tid)
+    TM.db.mark_task_complete(tid)
+    puts "Task with id #{tid} is marked compelete"
+    puts "\n"
+  end
+
 end
 
 tc = TM::Terminal.new
