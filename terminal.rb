@@ -85,9 +85,9 @@ class TM::Terminal
   def project_show(pid)
     taskarray = TM.db.remaining_task_proj(pid.to_i)
     puts "list of remaining task for project with id #{pid}"
-    puts "PID TID PRIORITY-NUM COMPLETE DESCRIPTION"
+    puts "TID PRIORITY-NUM  COMPLETE DESCRIPTION"
     taskarray.each do |task|
-      puts "#{task.id}     #{task.priority_num}         #{task.complete}     #{task.descr}"
+      puts "#{task.id}     #{task.priority_num}           #{task.complete}    #{task.descr}"
     end
   end
 
