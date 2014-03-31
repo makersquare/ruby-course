@@ -115,6 +115,16 @@ class TM::Terminal
     puts "#{employee.id}   #{employee.name}"
   end
 
+  def emp_list
+    employee_list = TM.db.list_emp
+    puts "\n"
+    puts "List of employees"
+    puts "EID Name"
+    employee_list.each do|eid,emp|
+      puts eid.to_s + "   " + emp.name
+    end
+  end
+
 end
 
 tc = TM::Terminal.new
