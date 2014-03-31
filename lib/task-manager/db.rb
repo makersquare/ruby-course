@@ -58,7 +58,7 @@ module TM
 
     def show_employees_for_proj(project_id)
       proj_id_with_emp = @memberships.select  do |memb|
-        memb[:pid] == project_id # will return array
+        memb[:pid] == project_id.to_i # will return array
                                  # with hashes with correct pid
       end
       proj_id_with_emp.map do |memb|

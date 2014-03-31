@@ -106,8 +106,14 @@ class TM::Terminal
     puts member
   end
 
-  def
-
+  def project_employees(pid)
+    employees = TM.db.show_employees_for_proj(pid)
+    puts "Showing employees for project with #{pid}"
+    puts "EID NAME"
+    employees.each do |employee|
+      puts "#{employee.id}   #{employee.name}"
+    end
+  end
 
   def task_create(pid, priority_num, description)
     # binding.pry
