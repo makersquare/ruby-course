@@ -91,6 +91,15 @@ class TM::Terminal
     end
   end
 
+  def project_history(pid)
+    taskarray = TM.db.completed_task_proj(pid.to_i)
+    puts "list of completed task for project with id #{pid}"
+    puts "TID PRIORITY-NUM  COMPLETE DESCRIPTION"
+    taskarray.each do |task|
+      puts "#{task.id}     #{task.priority_num}           #{task.complete}    #{task.descr}"
+    end
+  end
+
 
   def task_create(pid, priority_num, description)
     # binding.pry

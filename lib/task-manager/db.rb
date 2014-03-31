@@ -211,7 +211,13 @@ module TM
 
     def remaining_task_proj(project_id)
       @tasks.values.select do |task|
-        task.proj_id == project_id && task.complete == false
+        task.proj_id == project_id.to_i && task.complete == false
+      end
+    end
+
+    def completed_task_proj(project_id)
+      @tasks.values.select do |task|
+        task.proj_id == project_id.to_i && task.complete == true
       end
     end
 
