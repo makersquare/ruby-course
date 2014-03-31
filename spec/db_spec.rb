@@ -28,15 +28,38 @@ module TM
       expect(@db1.get_task(@task1.id)).to eq(@task1)
     end
 
-    it "can return a list of all completed tasks sorted by creation_date" do
+    it "can return a list of all completed tasks on a project sorted by creation_date" do
       @task1.finished = true
       @task4.finished = true
       @task3.finished = true
-      completed_tasks = @db1.completed_tasks(@project1.id)
+      completed_tasks = @db1.completed_tasks({ project_id: @project1.id })
       expect(completed_tasks.size).to eq(3)
       expect(completed_tasks[0].id).to eq(@task1.id)
       expect(completed_tasks[1].id).to eq(@task3.id)
       expect(completed_tasks[2].id).to eq(@task4.id)
+    end
+
+    it "can return a list of all completed tasks for an employee" do
+      @task1.finished = true
+      @task4.finished = true
+      @task3.finished = true
+      proj2 = @db1.create_project("Maim Sue")
+      task5 = @db1.create_task({ priority: 1, description: "buy knife", project_id: proj2.id })
+      emp1 = @db1.create_employee("Billy")
+      task5.finished = true
+      @db1.assign({ project_id: @project1.id, employee_id: emp1.id })
+      @db1.assign({ project_id: proj2.id, employee_id: emp1.id })
+      @db1.assign({ task_id: @task1.id, employee_id: emp1.id })
+      @db1.assign({ task_id: @task3.id, employee_id: emp1.id })
+      @db1.assign({ task_id: @task4.id, employee_id: emp1.id })
+      @db1.assign({ task_id: task5.id, employee_id: emp1.id })
+      completed_tasks = @db1.completed_tasks({ employee_id: emp1.id })
+
+      expect(completed_tasks.size).to eq(4)
+      expect(completed_tasks[0].id).to eq(@task1.id)
+      expect(completed_tasks[1].id).to eq(@task3.id)
+      expect(completed_tasks[2].id).to eq(@task4.id)
+      expect(completed_tasks[3].id).to eq(task5.id)
     end
 
     it "can return a list of all ongoing tasks sorted by priority, then creation date" do

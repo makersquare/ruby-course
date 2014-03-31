@@ -34,10 +34,17 @@ module TM
       return @all_tasks[task_id]
     end
 
-    def completed_tasks(project_id)
-      completed_tasks = @all_tasks.select { |k,v| (v.project_id == project_id) &&
-                                                  (v.finished? == true)    }.values
-      return completed_tasks.sort { |a,b| a.creation_date <=> b.creation_date }
+    def completed_tasks(data)
+      case
+      when data[:project_id] != nil
+        completed_tasks = @all_tasks.select { |k,v| (v.project_id == data[:project_id]) &&
+                                                    (v.finished? == true)    }.values
+        return completed_tasks.sort { |a,b| a.creation_date <=> b.creation_date }
+      when data[:employee_id] != nil
+        completed_tasks = @all_tasks.select { |k,v| (self.assigned?({ employee_id: data[:employee_id], task_id: v.id })) &&
+                                              (v.finished? == true)    }.values
+        return completed_tasks.sort { |a,b| a.creation_date <=> b.creation_date }
+      end
     end
 
     def ongoing_tasks(project_id)

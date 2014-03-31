@@ -1,4 +1,5 @@
 require_relative 'lib/task-manager.rb'
+require 'pry-debugger'
 
 module TM
   class Client
@@ -50,6 +51,8 @@ module TM
               self.history(choice_array[2].to_i)
             when "employees"
               self.show_assigned_employees(choice_array[2].to_i)
+            when "assign"
+              self.assign_employee_to_project(choice_array[2].to_i, choice_array[3].to_i)
             end
 
           when "task"
@@ -67,7 +70,7 @@ module TM
             when "list"
               self.list_employees
             when "create"
-              TM::Middleman.create_employee(choice_array[2..-1].join(' '))
+              self.create_employee(choice_array[2..-1])
             when "show"
               self.show_employee(choice_array[2].to_i)
             when "ongoing"
@@ -97,6 +100,7 @@ module TM
       puts"\tproject show PID - Show project with ongoing tasks\n"
       puts"\tproject history PID - Show completed tasks for a project PID\n"
       puts"\tproject employees PID - Show employees participating in a project PID\n"
+      puts"\tproject assign EID PID - Assign employee to project\n"
       puts"\ttask create PID PRIORITY DESC - Create a task\n"
       puts"\ttask assign TID EID - Create a task\n"
       puts"\ttask mark TID - Mark a task as finished\n"
@@ -143,13 +147,30 @@ module TM
     #   puts "\n"
     # end
 
-    # def mark(task_id)
-    #   success = TM::Middleman.mark_task(task_id)
-    #   puts "#{TM::DB.instance.all_tasks[task_id].description} marked as finished."
-    #   puts smart_ass_remarker(["You must be real proud of yourself",
-    #                           "Applause applause.",
-    #                           "What took you so long?"])
-    # end
+    def assign_employee_to_project(employee_id, project_id)
+      result = TM::Assign.run({employee_id: employee_id, project_id: project_id })
+      if result.success?
+        puts "\nEmployee #{employee_id} assigned to project: #{project_id}"
+      elsif result.error == :employee_not_found
+        puts "\nEmployee not found... try again"
+      elsif result.error == :project_not_found
+        puts "\nProject not found... try again"
+      end
+    end
+
+    def mark(task_id)
+      result = TM::MarkTask.run(task_id)
+      if result.success?
+        puts ("#{TM::GetTask.run(task_id).description} marked as completed.\n\n")
+      elsif result.error == :task_not_found
+        puts ("Task not found...\n\n")
+      elsif result.error == :task_already_completed
+        puts ("You have already completed that task... dummy.\n\n")
+        puts smart_ass_remarker(["You must be real proud of yourself",
+                                "Applause applause.",
+                                "What took you so long?"])
+      end
+    end
 
     def add_project(name)
       result = CreateProject.run(name)
@@ -173,44 +194,44 @@ module TM
     end
 
 
-    # def load_me_up    # loads up a couple projects with tasks for testing
-    #   @kill_bob = TM::Project.new("Kill Bob")
-    #   @kill_sue = TM::Project.new("Kill Sue")
-    #   @kill_ted = TM::Project.new("Kill Ted")
-    #   @buy_milk = TM::Project.new("Buy Milk")
-    #   @buy_gun = TM::Task.new(1, "Go buy a gun", 3)
-    #   @load_gun = TM::Task.new(1, "Load the gun", 4)
-    #   @buy_knife = TM::Task.new(2, "Buy a knife", 5)
-    #   @sharpen_knife = TM::Task.new(2, "Sharpen the knife", 2)
-    #   @buy_chainsaw = TM::Task.new(3, "Buy a chainsaw", 2)
-    #   @sharpen_chainsaw = TM::Task.new(3, "Sharpen the chainsaw", 3)
-    #   @get_in_car = TM::Task.new(4, "Get in the car", 9)
-    #   @drive_to_store = TM::Task.new(4, "Drive to the store", 10)
-    #   @talk_to_clerk = TM::Task.new(4, "Talk to clerk", 4)
-    #   @pay_for_milk = TM::Task.new(4, "Pay for milk", 2)
-    #   @kill_bob.add_task(@buy_gun)
-    #   @kill_bob.add_task(@load_gun)
-    #   @kill_sue.add_task(@buy_knife)
-    #   @kill_sue.add_task(@sharpen_knife)
-    #   @kill_ted.add_task(@buy_chainsaw)
-    #   @kill_ted.add_task(@sharpen_chainsaw)
-    #   @buy_milk.add_task(@get_in_car)
-    #   @buy_milk.add_task(@drive_to_store)
-    #   @buy_milk.add_task(@talk_to_clerk)
-    #   @buy_milk.add_task(@pay_for_milk)
-    #   @employee1 = TM::Employee.new("Bill")
-    #   @employee2 = TM::Employee.new("Rhonda")
-    #   @employee3 = TM::Employee.new("Phil")
-    #   @employee4 = TM::Employee.new("Martha")
-    #   TM::DB.instance.assign_project(@kill_bob, @employee1)
-    #   TM::DB.instance.assign_project(@kill_bob, @employee2)
-    #   TM::DB.instance.assign_project(@kill_bob, @employee3)
-    #   TM::DB.instance.assign_project(@kill_sue, @employee4)
-    #   TM::DB.instance.assign_project(@kill_sue, @employee1)
-    #   TM::DB.instance.assign_task(@buy_gun, @employee1)
-    #   TM::DB.instance.assign_task(@load_gun, @employee1)
-    #   @buy_gun.finished = true
-    # end
+    def load_me_up    # loads up a couple projects with tasks for testing
+      @kill_bob = TM::db.create_project("Kill Bob")
+      @kill_sue = TM::db.create_project("Kill Sue")
+      @kill_ted = TM::db.create_project("Kill Ted")
+      @buy_milk = TM::db.create_project("Buy Milk")
+      @buy_gun = TM::db.create_task({ project_id: 1, description: "Go buy a gun", priority: 3 })
+      @load_gun = TM::db.create_task({ project_id: 1, description: "Load the gun", priority: 4 })
+      @buy_knife = TM::db.create_task({ project_id: 2, description: "Buy a knife", priority: 5 })
+      @sharpen_knife = TM::db.create_task({ project_id: 2, description: "Sharpen the knife", priority: 2 })
+      @buy_chainsaw = TM::db.create_task({ project_id: 3, description: "Buy a chainsaw", priority: 2 })
+      @sharpen_chainsaw = TM::db.create_task({ project_id: 3, description: "Sharpen the chainsaw", priority: 3 })
+      @get_in_car = TM::db.create_task({ project_id: 4, description: "Get in the car", priority: 9 })
+      @drive_to_store = TM::db.create_task({ project_id: 4, description: "Drive to the store", priority: 10 })
+      @talk_to_clerk = TM::db.create_task({ project_id: 4, description: "Talk to clerk", priority: 4 })
+      @pay_for_milk = TM::db.create_task({ project_id: 4, description: "Pay for milk", priority: 2 })
+      TM::db.assign({ project_id: @kill_bob.id, task_id: @buy_gun.id })
+      TM::db.assign({ project_id: @kill_bob.id, task_id: @load_gun.id })
+      TM::db.assign({ project_id: @kill_sue.id, task_id: @buy_knife.id })
+      TM::db.assign({ project_id: @kill_sue.id, task_id: @sharpen_knife.id })
+      TM::db.assign({ project_id: @kill_ted.id, task_id: @buy_chainsaw.id })
+      TM::db.assign({ project_id: @kill_ted.id, task_id: @sharpen_chainsaw.id })
+      TM::db.assign({ project_id: @buy_milk.id, task_id: @get_in_car.id })
+      TM::db.assign({ project_id: @buy_milk.id, task_id: @drive_to_store.id })
+      TM::db.assign({ project_id: @buy_milk.id, task_id: @talk_to_clerk.id })
+      TM::db.assign({ project_id: @buy_milk.id, task_id: @pay_for_milk.id })
+      @employee1 = TM::db.create_employee("Bill")
+      @employee2 = TM::db.create_employee("Rhonda")
+      @employee3 = TM::db.create_employee("Phil")
+      @employee4 = TM::db.create_employee("Martha")
+      TM::db.assign({ project_id: @kill_bob, employee_id: @employee1 })
+      TM::db.assign({ project_id: @kill_bob, employee_id: @employee2 })
+      TM::db.assign({ project_id: @kill_bob, employee_id: @employee3 })
+      TM::db.assign({ project_id: @kill_sue, employee_id: @employee4 })
+      TM::db.assign({ project_id: @kill_sue, employee_id: @employee1 })
+      TM::db.assign({ task_id: @buy_gun.id, employee_id: @employee1 })
+      TM::db.assign({ task_id: @load_gun.id, employee_id: @employee1 })
+      @buy_gun.finished = true
+    end
 
     def create_task(project_id, description, priority)
       result = CreateTask.run({ project_id: project_id, description: description, priority: priority })
@@ -225,11 +246,24 @@ module TM
       end
     end
 
-    # def assign_task(task_id, employee_id)
-    #   TM::Middleman.assign_task_to_employee(task_id, employee_id)
-    #   puts "\n\nTask: #{TM::DB.instance.all_tasks[task_id].description}\nto: #{TM::DB.instance.all_employees[employee_id].name}."
-    #   puts "\n"
-    # end
+    def assign_task(task_id, employee_id)
+      result = TM::Assign.run({task_id: task_id, employee_id: employee_id })
+      if result.success? == true
+        puts "\nTask Assigned.\n"
+      elsif result.error == :task_not_found
+        puts "\nTask not found... Try again.\n"
+      elsif result.error == :employee_not_found
+        puts "\nEmployee not found... Try again.\n"
+      elsif result.error == :employee_not_assigned_to_project
+        puts "\nYou must assign that employee to the project first.\n\n"
+      end
+    end
+
+    def create_employee(name)
+      TM::CreateEmployee.run(name)
+      puts "\nEmployee Created\n"
+    end
+
 
     # def show_assigned_employees(project_id)
     #   # get the project
@@ -292,17 +326,17 @@ module TM
     #   puts "\n"
     # end
 
-    # def show_employee_history(employee_id)
-    #   # get employee
-    #   employee = TM::DB.instance.all_employees[employee_id]
-
-    #   puts "ID\tDescription\t\t\tPriority\n"
-    #   puts "------------------------------------------------"
-    #   TM::DB.instance.completed_tasks(employee).each { | x | print("#{x.task_id}" + (' ' * (8 - x.task_id.to_s.length)) + # padding
-    #                 "#{x.description}" + (' ' * (33 - x.description.length) +
-    #                 "#{x.priority}\n")) }
-    #   puts "\n"
-    # end
+    def show_employee_history(employee_id)
+      # get employee
+      result = TM::GetEmployee(employee_id)
+      if result.success?
+        puts "ID\tDescription\t\t\tPriority\n"
+        puts "------------------------------------------------"
+        TM::DB.instance.completed_tasks(employee).each { | x | print("#{x.task_id}" + (' ' * (8 - x.task_id.to_s.length)) + # padding
+                      "#{x.description}" + (' ' * (33 - x.description.length) +
+                      "#{x.priority}\n")) }
+        puts "\n"
+      end
 
     def smart_ass_remarker(remarks)
       random = rand(remarks.length)

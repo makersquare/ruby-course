@@ -5,8 +5,12 @@ module TM
       if task == nil
         return failure(:task_not_found)
       else
-        task.finished = true
-        return success(:task => task)
+        if task.finished? == true
+          return failure(:task_already_completed)
+        else
+          task.finished = true
+          return success(:task => task)
+        end
       end
     end
   end
