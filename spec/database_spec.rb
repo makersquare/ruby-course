@@ -92,7 +92,7 @@ describe 'Database' do
     expect(comp_arr[1].description).to eq("Get haircut")
   end
 
-  it "can return a list of all incomplete tasks sorted by priority and creation date" do
+  it "can return a list of a project's incomplete tasks sorted by priority and creation date" do
     new_proj = @db.create_project("Build a spaceship")
     task1 = @db.create_task(new_proj.id, "Get abducted by aliens", 1)
     task2 = @db.create_task(new_proj.id, "Give them expensive gifts", 3)
@@ -104,6 +104,7 @@ describe 'Database' do
     result = @db.sort_inc_tasks(new_proj.id)
     expect(result).to be_a(Array)
     expect(result.count).to eq(4)
+
     expect(result[1].description).to eq("Build spaceship")
     expect(result[2].description).to eq("Ask them how to build a spaceship")
   end
@@ -161,4 +162,88 @@ describe 'Database' do
     expect(not_assigned).to eq(nil)
   end
 
+  it "can get all remaining tasks for an employee" do
+    new_proj = @db.create_project("Go nuts")
+    task1 = @db.create_task(new_proj.id, "w00t", 1)
+    task2 = @db.create_task(new_proj.id, "oh yeah!", 4)
+    task3 = @db.create_task(new_proj.id, "sweeeeet", 3)
+    emp = @db.create_emp("Who O'What")
+
+    proj_updates = {eid: emp.id}
+    @db.update_project(new_proj.id, proj_updates)
+
+    task_updates = {eid: emp.id}
+    @db.update_task(task1.id, task_updates)
+    @db.update_task(task2.id, task_updates)
+    @db.update_task(task3.id, task_updates)
+
+    result = @db.get_inc_emp_tasks(emp.id)
+    expect(result[task2.id][0].description).to eq("oh yeah!")
+    expect(result[task3.id][1].name).to eq("Go nuts")
+  end
+
+  it "can get all complete tasks for an employee" do
+    new_proj = @db.create_project("Beat Kobayashi in an Eating Contest")
+    task1 = @db.create_task(new_proj.id, "EAT!", 1)
+    task2 = @db.create_task(new_proj.id, "Eat MOAR", 4)
+    task3 = @db.create_task(new_proj.id, "FEWD!", 3)
+    emp = @db.create_emp("Cardiac O'Rest")
+
+    proj_updates = {eid: emp.id}
+    @db.update_project(new_proj.id, proj_updates)
+
+    @db.update_task(task1.id, {eid: emp.id, complete: true})
+    @db.update_task(task2.id, {eid: emp.id})
+    @db.update_task(task3.id, {eid: emp.id, complete:true})
+
+    result = @db.get_comp_emp_tasks(emp.id)
+    expect(result.length).to eq(2)
+    expect(result[task1.id][0].description).to eq("EAT!")
+    expect(result[task3.id][1].name).to eq("Beat Kobayashi in an Eating Contest")
+  end
+
+  it "can return a list of all projects" do
+    proj1 = @db.create_project("Go hard")
+    proj2 = @db.create_project("Be baller")
+    proj3 = @db.create_project("Get mad stacks")
+
+    result = @db.get_all_proj
+    expect(result).to be_a(Array)
+    expect(result.length).to eq(3)
+  end
+
+  it "can return all of the employees participating in a project" do
+    proj1 = @db.create_project("Make giant battle robots")
+
+    emp1 = @db.create_emp("Anne Droid")
+    emp2 = @db.create_emp("Hal Hummin")
+    emp3 = @db.create_emp("Lil Asimov")
+
+    @db.update_project(proj1.id, {eid:emp1.id})
+    @db.update_project(proj1.id, {eid:emp2.id})
+    @db.update_project(proj1.id, {eid:emp3.id})
+
+    result = @db.get_proj_emps(proj1.id)
+    expect(result).to be_a(Array)
+    expect(result.length).to eq(3)
+    expect(result[0].name).to eq("Anne Droid" || "Hal Hummin" || "Lil Asimov")
+  end
+
+  it "can return a list of all the projects in which one employee is participating" do
+    emp = @db.create_emp("Jane Employment")
+
+    proj1 = @db.create_project("Work")
+    proj2 = @db.create_project("Ping pong")
+    proj3 = @db.create_project("Not doing this")
+
+    proj_updates = {eid: emp.id}
+    @db.update_project(proj1.id, proj_updates)
+    @db.update_project(proj2.id, proj_updates)
+
+    result = @db.get_emp_proj(emp.id)
+
+    expect(result).to be_a(Array)
+    expect(result.length).to eq(2)
+    expect(result[0].name).to eq("Work" || "Ping pong")
+  end
 end

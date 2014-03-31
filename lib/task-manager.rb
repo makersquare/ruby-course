@@ -9,6 +9,5 @@ require_relative 'task-manager/project.rb'
 require_relative 'task-manager/project_list.rb'
 require_relative 'task-manager/employee.rb'
 require_relative 'task-manager/database.rb'
-# create a client.rb file in the lib; client.rb is what actually
-# asks the user for information. project_list.rb contains
-# the class that interacts with the business logic
+require_relative 'use_case.rb'
+Dir[File.dirname(__FILE__) + '/use_cases/*.rb'].each {|file| require file }

@@ -1,7 +1,7 @@
 module TM
   class DB
 
-    attr_reader :all_tasks, :all_proj
+    attr_reader :all_tasks, :all_proj, :all_emp
 
     def initialize
       # {task_id => task_obj}
@@ -21,6 +21,44 @@ module TM
 
     def get_task(tid)
       @all_tasks[tid]
+    end
+
+    def get_inc_emp_tasks(eid)
+      task_arr = []
+      task_hash = {}
+      @all_tasks.each do |tid, task|
+        if (task.eid == eid && !task.complete)
+          task_arr << task
+        end
+      end
+
+      task_arr.each do |task|
+          if @all_proj[task.projID]
+            # task_hash = {task_id => [task, project]}
+            task_hash[task.id] = [task, @all_proj[task.projID]]
+          end
+      end
+
+      task_hash
+    end
+
+    def get_comp_emp_tasks(eid)
+      task_arr = []
+      task_hash = {}
+        @all_tasks.each do |tid, task|
+          if (task.eid == eid && task.complete)
+            task_arr << task
+          end
+        end
+
+        task_arr.each do |task|
+          if @all_proj[task.projID]
+            # task_hash = {task_id => [task, project]}
+            task_hash[task.id] = [task, @all_proj[task.projID]]
+          end
+        end
+
+      task_hash
     end
 
 # Returns nil if you attempt to assign an employee
@@ -96,8 +134,20 @@ module TM
     def get_all_proj
       proj_arr = []
       @all_proj.each do |pid, proj|
-        proj_arr << [proj.id, proj.name]
+        proj_arr << proj
       end
+      proj_arr
+    end
+
+    def get_proj_emps(pid)
+      proj = self.get_project(pid)
+      emp_hash = proj.emp_ids
+      ret_arr = []
+
+      emp_hash.each do |k, v|
+        ret_arr << @all_emp[k]
+      end
+      ret_arr
     end
 
     def sort_comp_tasks(pid) #Returns an array of completed tasks sorted by creation date
@@ -114,7 +164,7 @@ module TM
       if comp_tasks.length != 0
         comp_tasks.sort{|task1, task2| task1.created <=> task2.created}
       else
-        nil # "There are no completed tasks in this project."
+        [] # "There are no completed tasks in this project."
       end
     end
 
@@ -138,7 +188,7 @@ module TM
         end
         }
       else
-        nil # There are no incomplete tasks in this project.
+        [] # There are no incomplete tasks in this project.
       end
     end
 
@@ -171,6 +221,16 @@ module TM
       @all_emp[eid]
     end
 
+    def get_emp_proj(eid)
+      proj_arr = []
+      @all_proj.each do |pid, proj|
+        if proj.emp_ids[eid]
+          proj_arr << proj
+        end
+      end
+      proj_arr
+    end
+
     def update_emp(eid, name)
       if @all_emp[eid]
           @all_emp[eid].name = name
@@ -183,7 +243,6 @@ module TM
     end
 
   end # END OF DB CLASS
-
 
 
   def self.db
