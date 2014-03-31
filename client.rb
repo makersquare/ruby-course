@@ -44,13 +44,16 @@ class PManager
                         result = TM::CreateProjects.run(:project_name => description)
                                 if result.success?
                                         project = result.project
-                                        puts; puts "Project #{project.name} with ID #{project.id} was created"
+                                        puts; puts "Project ID #{project.id} with name: #{project.name} was created"
                                         puts;
                                 else
                                         puts; puts "Put in a mother fucking project name. Seriously. How am I supposed to know what you're talking about?".colorize(:red)
                                         puts;
                                 end
                     when 'list'
+                        puts "Project ID   Project Name"
+                        result = TM.DB.projects
+                        result.values.each { |project| puts "      #{project.id}         #{project.name}" }
 
                     when 'show'
                         result = TM::ShowRemainingTasks.run(:pid => pid)
@@ -118,6 +121,10 @@ class PManager
             when 'task'
                 case action
                     when 'create'
+                        inputs = description.split(' ')
+                        pid = inputs[0].to_i
+                        priority = inputs[1].to_i
+                        description = inputs.drop(2).join(' ')
                         result = TM::CreateTask.run(:pid => pid, :priority => priority, :description=> description)
                                 if result.success?
                                         task = result.task
@@ -149,7 +156,17 @@ class PManager
                         end
 
                     when 'mark'
-
+                        inputs = description.split(' ')
+                        tid = inputs[0].to_i
+                        result = TM::MarkComplete.run(:tid => tid)
+                                if result.success?
+                                        task = result.tasks
+                                        puts; puts "Task #{task.description} was marked complete"
+                                        puts;
+                                else
+                                        puts; puts "You didn't tell me which ID to mark complete. You are worthless".colorize(:red)
+                                        puts;
+                                end
                 end
             when 'emp'
                 case action
