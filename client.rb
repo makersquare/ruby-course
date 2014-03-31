@@ -46,20 +46,7 @@ end
             when 'list'
               PM.list_projects
             when 'show'
-              pid = description.to_i
-              result = TM::ShowRemainingTasks.run(pid: pid)
-              if (result.success?)
-                remaining_tasks = result.remaining_tasks
-                remaining_tasks.each do |task|
-                  puts " #{task.id} #{task.description}"
-                end
-              else
-                if (result.error == :project_doesnt_exist)
-                  puts "project doesn't exist"
-                elsif (result.error == :enter_a_project_id)
-                  puts "please enter a project id"
-                end
-              end
+              PM.show_tasks(description)
             when 'history'
               PM.history(description)
             when 'employees'
@@ -97,17 +84,39 @@ end
 
     if (result.success?)
       project = result.project
-      puts "#{project.project_name} successfully created!"
+      puts
+      puts "#{project.project_name} successfully created!".colorize(:yellow)
+      puts
     else
       if result.error == :please_provide_a_project_name
         puts 'please provide a project name'
+        puts
       end
     end
   end
   def self.list_projects
     result = TM::ListProjects.run(nil)
+    puts "project id   project name".colorize(mode: :underline)
     result.projects.each do |project|
-      puts "#{project.id} #{project.project_name}"
+      puts "#{project.id}            #{project.project_name}"
+    end
+  end
+
+  def self.show_tasks(description)
+    pid = description.to_i
+    result = TM::ShowRemainingTasks.run(pid: pid)
+    if (result.success?)
+    puts "task id   task description".colorize(mode: :underline)
+      remaining_tasks = result.remaining_tasks
+      remaining_tasks.each do |task|
+        puts " #{task.id}         #{task.description}"
+      end
+    else
+      if (result.error == :project_doesnt_exist)
+        puts "a project with that id doesn't exist!".colorize(:red)
+      elsif (result.error == :enter_a_project_id)
+        puts "please enter a project id"
+      end
     end
   end
 
@@ -155,6 +164,12 @@ end
       project = result.project
       employee = result.employee
       puts "#{employee.name} has been assigned to #{project.project_name}!"
+    else
+      if (result.error == :project_does_not_exist)
+        puts "a project with that id doesn't exist!".colorize(:red)
+      elsif (result.error == :employee_does_not_exist)
+        puts "an employee with that id doesn't exist!".colorize(:red)
+      end
     end
 
   end
@@ -171,7 +186,13 @@ end
     if (result.success?)
       added_task = result.added_task
       project = result.project
-      puts "#{added_task.description} added to #{project.project_name}!"
+      puts
+      puts "#{added_task.description} added to #{project.project_name}!".colorize(:yellow)
+      puts
+    else
+      if (result.error == :project_does_not_exist)
+        puts "a project with that id doesn't exist!".colorize(:red)
+      end
     end
 
   end
@@ -188,6 +209,12 @@ end
       employee = result.employee
 
       puts "#{assigned_task.description} assigned to #{employee.name}"
+    else
+      if (result.error == :task_does_not_exist)
+        puts "a task with that id does not exist!".colorize(:red)
+      elsif (result.error == :employee_does_not_exist)
+        puts "a employee with that id does not exist!".colorize(:red)
+      end
     end
 
 
@@ -236,6 +263,10 @@ end
      employee_projects.each do |project|
       puts "#{employee.id} #{project.project_name}"
      end
+    else
+      if (result.error == :employee_does_not_exist)
+        puts "an employee with that id does not exist!".colorize(:red)
+      end
     end
 
   end
@@ -252,7 +283,10 @@ end
       remaining_tasks.each do |task|
         puts "#{task.id} #{task.description} | #{associated_projects.find{|p| p.id == task.pid}.project_name} "
       end
-
+    else
+      if (result.error == :employee_does_not_exist)
+        puts "an employee with that id does not exist!".colorize(:red)
+      end
     end
   end
 
@@ -266,82 +300,13 @@ end
       completed_tasks.each do |task|
         puts "#{task.eid} #{task.description}"
       end
-
+    else
+      if (result.error == :employee_does_not_exist)
+        puts "an employee with that id does not exist!".colorize(:red)
+      end
     end
 
   end
 
 end
-    # if (@@user_command == 'help')
-    #     PM.first_menu
-
-  #   elsif (@@user_command.include? 'create')
-  #     length = @@user_command.length
-  #     project_name = @@user_command.slice(7..length)
-
-  #     # @@project_list.add_project(project_name)
-  #     result = TM::CreateProject.run(:project_name => project_name)
-
-  #     if result.success?
-  #       puts
-  #       puts
-  #       print "Project: ".colorize(:yellow); print "#{project_name}".colorize(:red); print " added!".colorize(:yellow)
-  #       puts
-  #       puts
-  #     else
-  #       print "#{result.error}".colorize(:red)
-  #     end
-
-  #   elsif(@@user_command == 'list')
-  #     puts
-  #     puts
-  #     puts " PID      Project Name".colorize(:mode => :underline)
-  #     @@project_list.projects.each {|project| puts "  #{project.id}       #{project.project_name}"}
-  #     # @@project_list.list_projects
-  #     puts
-
-  # elsif (@@user_command.include? 'add')
-  #     #add 2 take out the trash 1
-  #     puts "#{@@user_command}".colorize(:yellow)
-  #     pid = @@user_command.slice(4).to_i
-  #     priority = @@user_command.slice(@@user_command.length - 1).to_i
-  #     description = @@user_command.slice(6..@@user_command.length - 2)
-  #     @@project_list.add_task_to_project(description, priority, pid)
-  #     chosen_project =  @@project_list.projects.find{|project| project.id == pid}
-
-  #     puts
-  #     puts "task was added to the #{chosen_project.project_name} project".colorize(:yellow)
-  #     puts
-
-  # elsif (@@user_command.include? 'show')
-  #     length = @@user_command.length
-  #     pid = @@user_command.slice(5..length - 1).to_i
-  #     # puts "Showing project: \"#{} "
-  #     remaining_tasks = @@project_list.show_remaining_tasks(pid)
-
-
-  #     puts "Priority    ID    Description"
-  #     remaining_tasks.each {|task| puts "      #{task.priority}      #{task.id}        #{task.description}"}
-  #     puts
-
-  # elsif (@@user_command.include? 'history')
-  #     length = @@user_command.length
-  #     pid = @@user_command.slice(8..length - 1).to_i
-  #     # puts "#{pid}".colorize(:red)
-  #     remaining_tasks = @@project_list.show_completed_tasks(pid)
-
-  #     remaining_tasks.each {|task| puts task.description}
-  #     puts
-  # elsif (@@user_command.include? 'mark')
-  #   length = @@user_command.length
-  #   tid = @@user_command.slice(5..length - 1).to_i
-  #   selected_task = @@project_list.mark_task_complete(tid)
-  #   puts
-  #   puts "you marked task: #{selected_task.description} as complete!"
-  #   puts
-  # end
-
-  # end
-
-
 PM.start
