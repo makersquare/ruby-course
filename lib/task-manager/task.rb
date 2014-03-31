@@ -19,4 +19,8 @@ class TM::Task
     @@task_id
   end
 
+  # def ==(other_task)
+  #   self.id == other_task.id
+  # end
+
 end

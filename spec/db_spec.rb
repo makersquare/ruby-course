@@ -22,13 +22,19 @@ module TM
     end
 
     it 'can get a project' do
+      proj_id = @proj.project_id
 
-      expect(@db.get_project[new_proj.id].name).to eq(@proj.name)
+      expect(@db.get_project(proj_id).name).to eq(@proj.name)
     end
 
     it 'can add a task' do
       task = @db.create_task(@proj.project_id, 'just do it')
-      expect(@db.tasks(1).task_id).to eq(task.task_id)
+      task2 = @db.create_task(@proj.project_id, 'do it')
+
+
+      # expect(@db.tasks[1].task_id).to eq(task.task_id)
+      expect(@db.get_task(1).description).to eq('just do it')
+      expect(@db.tasks[2] .task_id).to eq(task2.task_id)
     end
 
     it 'can mark a task completed' do
@@ -36,8 +42,8 @@ module TM
       task2 = @db.create_task(@proj.project_id, 'just do it2')
       task3 = @db.create_task(@proj.project_id, 'just do it3')
 
-      @db.mark_complete(@proj.project_id, task1.task_id )
-      expect(@db.tasks(1).status).to eq('complete')
+      @db.mark_complete(task1.task_id)
+      expect(task1.status).to eq('complete')
     end
 
     it 'can get completed tasks' do
@@ -45,10 +51,14 @@ module TM
       task2 = @db.create_task(@proj.project_id, 'just do it2')
       task3 = @db.create_task(@proj.project_id, 'just do it3')
 
-      @db.mark_complete(@proj.project_id, task1.task_id )
-      @db.mark_complete(@proj.project_id, task2.task_id )
+      @db.mark_complete(task1.task_id )
+      @db.mark_complete(task2.task_id )
 
-      expect(@db.get_completed(@proj.project_id)).to include(task1)
+      completed = @db.get_completed(@proj.project_id)
+      completed_ids = completed.map {|t| t.task_id}
+      # completed_ids = completed.map(&:id)
+      expect(completed_ids).to include(task1.task_id)
+      expect(completed_ids).to_not include(task3.task_id)
     end
 
     it 'it can get incomplete task' do
@@ -59,7 +69,11 @@ module TM
       @db.mark_complete(@proj.project_id, task1.task_id )
       @db.mark_complete(@proj.project_id, task2.task_id )
 
-      expect(@db.get_incompleted(@proj.project_id)).to include(task3)
+      incomplete = @db.get_incompleted(@proj.project_id)
+      incompleted_ids = incomplete.map {|t| t.task_id}
+
+      expect(incompleted_ids).to include(task3.task_id)
+      expect(incompleted_ids).to_not include(task2.task_id)
     end
 
     it 'can add a employee' do

@@ -1,9 +1,11 @@
-class TM::ProjectList
-  attr_reader :project_list
+class TM::Pro
+  attr_reader :project_list, :employee
 
   def initialize
     @project_list = []
-    @employees
+    @employees = {}
+    @membership = []
+    @projects
 
   end
 
@@ -13,6 +15,18 @@ class TM::ProjectList
     proj
   end
 
+  def add_employee(name)
+      emp = TM::Employee.new(name)
+      @employees[emp.employee_id] = emp
+
+  end
+
+  def assign_membership(emp_id, proj_id)
+
+
+  end
+
+
 
   def get_project(project_id)
     match = @project_list.select {|x| x.project_id == project_id}
@@ -21,7 +35,7 @@ class TM::ProjectList
 
   def get_remaining_tasks(project_id)
     remaining_tasks = @project_list.select{|x| x.project_id == project_id}
-    return match[0].incomlete_tasks
+    return match[0].incomplete_tasks
   end
 
   def get_completed(project_id)
