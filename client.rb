@@ -116,7 +116,6 @@ module TM
 
 
     def show(project_id)
-
       result = TM::GetOngoingTasks.run({ project_id: project_id} )
       if result.success?
         ongoing_tasks = result[:ongoing_tasks]
@@ -136,22 +135,30 @@ module TM
         puts "\n"
 
       elsif result[:error]
-        puts "\nProject not found.\n"
+        puts "Project not found.\n"
       end
-
     end
 
     def history(project_id)
-
-      project = TM::DB.instance.all_projects[project_id]
-      ongoing_tasks = project.completed_tasks
-      puts "\n\nProject: #{project.name}\n"
-      puts "ID\tDescription\t\t\tPriority\n"
-      puts "------------------------------------------------"
-      ongoing_tasks.each { | x | print("#{x.task_id}" + (' ' * (8 - x.task_id.to_s.length)) + # padding
-                    "#{x.description}" + (' ' * (33 - x.description.length) +
-                    "#{x.priority}\n")) }
-      puts "\n"
+      result = TM::GetCompletedTasks.run({ project_id: project_id })
+      if result.success?
+        completed_tasks = result[:completed_tasks]
+        project = TM::GetProject.run(project_id)
+        if completed_tasks.size == 0
+          puts "No complete tasks for this project found.\n"
+          return
+        else
+          puts "\n\nProject: #{project.name}\n"
+          puts "ID\tDescription\t\t\tPriority\n"
+          puts "------------------------------------------------"
+          completed_tasks.each { | x | print("#{x.id}" + (' ' * (8 - x.id.to_s.length)) + # padding
+                      "#{x.description}" + (' ' * (33 - x.description.length) +
+                      "#{x.priority}\n")) }
+          puts "\n"
+        end
+      elsif result.error = :project_not_found
+        puts "Project not found.\n"
+      end
     end
 
     def assign_employee_to_project(employee_id, project_id)
