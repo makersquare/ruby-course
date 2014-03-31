@@ -106,6 +106,15 @@ class TM::Terminal
 
   end
 
+  def emp_create(name)
+    employee = TM.db.create_employee(name)
+    puts "\n"
+    puts "employee created"
+    puts "\n"
+    puts "EID NAME"
+    puts "#{employee.id}   #{employee.name}"
+  end
+
 end
 
 tc = TM::Terminal.new
