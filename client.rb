@@ -204,14 +204,18 @@ module TM
     #   @buy_gun.finished = true
     # end
 
-    # def create_task(project_id, description, priority)
-    #   new_task = TM::Middleman.create_task(project_id, description, priority)
-    #   if new_task.is_a?(TM::Task)
-    #     puts "\nNew task created!\n\n"
-    #   else
-    #     puts "You typed something wrong, there, fat fingers.\n\n"
-    #   end
-    # end
+    def create_task(project_id, description, priority)
+      result = CreateTask.run({ project_id: project_id, description: description, priority: priority })
+      if result.success? == true
+        puts "\nNew task created!\n\n"
+      elsif result.error = :no_project_found
+        puts "No project with that id found... \n\n"
+      elsif result.error == :no_description_provided
+        puts "Give me a description, man.\n\n"
+      elsif result.error == :no_priority_provided
+        puts "Give me a priority level, please.\n\n"
+      end
+    end
 
     # def assign_task(task_id, employee_id)
     #   TM::Middleman.assign_task_to_employee(task_id, employee_id)
