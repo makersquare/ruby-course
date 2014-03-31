@@ -46,23 +46,13 @@ class TM::Terminal
     end
 
 
-    # if model == "project" && action == "list"
-    #   list_project
-    # end
-    # if model == "project" && action == "create"
-    #   project_create(args)
-    # end
+
 
   end
 
   def project_list
 
-    # @db = TM.db
-    # @db.list_all_proj.each do |projectid, project|
-    #   puts "List of projects"
-    #   puts "PID Name"
-    #   puts projectid.to_s + " " + project.name
-    # end
+
       puts "\n"
       puts "List of projects"
       puts "PID Name"
@@ -126,6 +116,13 @@ class TM::Terminal
     puts "\n"
     puts "PID TID PRIORITY-NUM COMPLETE DESCRIPTION"
     puts "#{task.proj_id}    #{task.id}     #{task.priority_num}         #{task.complete}     #{task.descr}"
+
+  end
+
+  def task_assign(tid,eid)
+    task = TM.db.assign_task_emp(tid,eid)
+    puts "Assigned task with id #{tid} to employee with id #{eid}"
+    puts "\n"
 
   end
 
