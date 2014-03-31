@@ -38,11 +38,17 @@ module TM
     end
 
     def assign_membership(emp_id, proj_id)
-      @membership.push({'eid' => emp_id, 'pid' => proj_id})
+      @membership.push({:eid => emp_id, :pid => proj_id})
     end
 
     def get_emp_by_project(pid)
+      projects_array = @membership.select {|hash| hash[:pid] == pid}
+      employees = projects_array.map {|proj| @employees[proj[:eid]]}
+    end
 
+    def get_projects_by_emp(eid)
+      emp_array = @membership.select {|hash| hash[:eid] == eid}
+      projects = emp_array.map {|emp| @projects[emp[:pid]]}
     end
 
     def get_project(id)

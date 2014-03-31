@@ -93,12 +93,27 @@ module TM
       task1 = @db.create_task(@proj.project_id, 'just do it')
       emp = @db.add_employee('bob', task1.task_id)
       eid = emp.employee_id
-
       mem = @db.assign_membership(eid, @proj.project_id)
 
       expect(@db.membership.length).to be(1)
+    end
 
+    it 'can get employee by the project id' do
+      proj2 = @db.add_project('project 2')
 
+      task1 = @db.create_task(@proj.project_id, 'just do it')
+      task2 = @db.create_task(@proj.project_id, ' do it')
+
+      emp1 = @db.add_employee('bob', task1.task_id)
+      eid1 = emp1.employee_id
+      emp2 = @db.add_employee('bill', task2.task_id)
+      eid2 = emp2.employee_id
+
+      mem = @db.assign_membership(eid1, @proj.project_id)
+      #binding.pry
+      emp_array = @db.get_emp_by_project(@proj.project_id)
+
+      expect(emp_array).to include(emp1)
     end
 
 

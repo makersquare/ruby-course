@@ -11,5 +11,5 @@ require_relative 'task-manager/employee.rb'
 require_relative 'task-manager/database.rb'
 
 
-#require 'pry-debugger'
+require 'pry-debugger'
 
