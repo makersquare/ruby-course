@@ -226,7 +226,7 @@ module TM
     ###########################
 
     def add_membership(employee_id,project_id)
-      @memberships << {:eid => employee_id, :pid =>project_id}
+      @memberships << {:eid => employee_id.to_i, :pid =>project_id.to_i}
     end
 
 

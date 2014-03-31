@@ -100,6 +100,14 @@ class TM::Terminal
     end
   end
 
+  def project_recruit(pid,eid)
+    member = TM.db.add_membership(eid,pid)
+    puts "Adding employee with id #{eid} to project with id #{pid}"
+    puts member
+  end
+
+  def
+
 
   def task_create(pid, priority_num, description)
     # binding.pry
