@@ -83,14 +83,14 @@ class TM::Terminal
   end
 
   def project_show(pid)
-    args.to_i
-    pid.to_i
-    puts "Project with id of #{pid}"
+    taskarray = TM.db.remaining_task_proj(pid.to_i)
+    puts "list of remaining task for project with id #{pid}"
+    puts "PID TID PRIORITY-NUM COMPLETE DESCRIPTION"
+    taskarray.each do |task|
+      puts "#{task.id}     #{task.priority_num}         #{task.complete}     #{task.descr}"
+    end
   end
-  # # task_create(pid, data)
-  # task create 1 1 run
 
-  # task_create(1, {:priority_num => 1, :description => 2});
 
   def task_create(pid, priority_num, description)
     # binding.pry

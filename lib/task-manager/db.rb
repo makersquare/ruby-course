@@ -132,7 +132,8 @@ module TM
 
     def create_task(pid,data)
       # will assign a task, to project, based on pid
-      task = Task.new(pid,data)
+      # create task takes in an id. that was a string
+      task = Task.new(pid.to_i,data)
       #@task_project[]
       @tasks[task.id] = task
       task
@@ -140,16 +141,16 @@ module TM
 
 
     def get_task(tid)
-      @tasks[tid]
+      @tasks[tid.to_i]
     end
 
     def delete_task(tid)
-      @tasks.delete(tid)
+      @tasks.delete(tid.to_i)
       @tasks
     end
 
      def update_tasks(tid, pid, eid, descr, priority_num)
-      task = @tasks[tid]
+      task = @tasks[tid.to_i]
       task.descr = descr
       task.proj_id = pid
       task.emp_id = eid
@@ -170,14 +171,14 @@ module TM
     # end
 
     def assign_task_emp(task_id,employee_id)
-      updating_task = @tasks[task_id]
-      updating_task.emp_id = employee_id
+      updating_task = @tasks[task_id.to_i]
+      updating_task.emp_id = employee_id.to_i
       updating_task
     end
 
     def get_tasks_for_emp(employee_id)
       @tasks.values.select do |task| # values gets the keys as an array
-        task.emp_id == employee_id # array is task objects
+        task.emp_id == employee_id.to_i # array is task objects
       end # task.emp_id is accessing the task employee id, if equal to parameter
     end   # will select it, and add it to an array, which is returned
 
