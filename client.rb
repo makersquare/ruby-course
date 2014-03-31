@@ -135,17 +135,18 @@ module TM
     #   puts "\n"
     # end
 
-    # def history(project_id)
-    #   project = TM::DB.instance.all_projects[project_id]
-    #   tasks_array = project.completed_tasks
-    #   puts "\n\nProject: #{project.name}\n"
-    #   puts "ID\tDescription\t\t\tPriority\n"
-    #   puts "------------------------------------------------"
-    #   tasks_array.each { | x | print("#{x.task_id}" + (' ' * (8 - x.task_id.to_s.length)) + # padding
-    #                 "#{x.description}" + (' ' * (33 - x.description.length) +
-    #                 "#{x.priority}\n")) }
-    #   puts "\n"
-    # end
+    def history(project_id)
+
+      project = TM::DB.instance.all_projects[project_id]
+      tasks_array = project.completed_tasks
+      puts "\n\nProject: #{project.name}\n"
+      puts "ID\tDescription\t\t\tPriority\n"
+      puts "------------------------------------------------"
+      tasks_array.each { | x | print("#{x.task_id}" + (' ' * (8 - x.task_id.to_s.length)) + # padding
+                    "#{x.description}" + (' ' * (33 - x.description.length) +
+                    "#{x.priority}\n")) }
+      puts "\n"
+    end
 
     def assign_employee_to_project(employee_id, project_id)
       result = TM::Assign.run({employee_id: employee_id, project_id: project_id })
