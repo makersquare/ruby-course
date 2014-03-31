@@ -109,8 +109,6 @@ module TM
     remaining_tasks = @tasks.values.select { |task| task.eid == eid && task.complete == false}
     remaining_projects = remaining_tasks.map { |task| task.pid }
     projects = remaining_projects.map { |pid| @projects[pid].name}
-    remaining_tasks_then_projects << remaining_projects
-    remaining_tasks_then_projects << projects
   end
 
   end

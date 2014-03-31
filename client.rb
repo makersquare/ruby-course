@@ -171,7 +171,9 @@ class PManager
             when 'emp'
                 case action
                     when 'list'
-
+                        puts "Employee ID   Employee Name"
+                        result = TM.DB.employees
+                        result.values.each { |emp| puts "      #{emp.id}         #{emp.name}" }
                     when 'create'
                         result = TM::CreateEmployee.run(:employee => description)
                                 if result.success?
@@ -184,6 +186,15 @@ class PManager
                                 end
 
                     when 'show'
+                        result = TM::ShowProjects.run(:eid => description.to_i)
+                                if result.success?
+                                        projects = result.projects
+                                        puts projects
+                                        puts;
+                                else
+                                        puts; puts "Put in an ID, homie.".colorize(:red)
+                                        puts;
+                                end
 
                     when 'details'
 
