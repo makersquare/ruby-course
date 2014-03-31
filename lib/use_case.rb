@@ -3,7 +3,7 @@
 # This is needed for OpenStruct. Google "ruby openstruct" for more info
 require 'ostruct'
 
-module MyApp
+module TM
 
   class UseCase
     # Convenience method that lets us call `.run` directly on the class

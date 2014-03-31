@@ -9,5 +9,6 @@ require_relative 'task-manager/project.rb'
 require_relative "task-manager/project_list.rb"
 require_relative "task-manager/employee.rb"
 require_relative "task-manager/db.rb"
-require_relative "task-manager/use_case.rb"
+require_relative "use_case.rb"
+require_relative "task-manager/use_case/project_show.rb"
 require 'pry-debugger'

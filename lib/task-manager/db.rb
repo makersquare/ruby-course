@@ -199,7 +199,7 @@ module TM
 
     def remaining_task_emp(employee_id)
       task_for_emp = @tasks.values.select do  |task|
-        task.emp_id == employee_id && task.complete == false
+        task.emp_id == employee_id.to_i && task.complete == false
       end
     end
 
