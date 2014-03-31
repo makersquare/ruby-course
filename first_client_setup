@@ -1,0 +1,99 @@
+while (@@user_command != 'quit')
+      print "What would you like to do?  ".colorize(:yellow)
+      @@user_command = gets.chomp
+      if (@@user_command == 'help')
+        PManager.main_menu
+
+      elsif (@@user_command == 'list')
+        project_list.project_list.each { |project| puts "id: #{project.id} and name: #{project.name}".colorize(:green) }
+        puts;
+
+      elsif (@@user_command.include?'create')
+        length = @@user_command.length
+        name = @@user_command.slice(7..length)
+        # project_list.add_project(name)
+        result = TM::CreateProjects.run(:project_name => name)
+        if result.success?
+                project = result.project
+                puts; puts "Project #{project.name} was created".colorize(:green)
+                puts;
+        else
+                puts; puts "Put in a mother fucking project name. Seriously. How am I supposed to know what you're talking about?".colorize(:red)
+                puts;
+        end
+
+    elsif (@@user_command.include?'create emp')
+        length = @@user_command.length
+        name = @@user_command.slice(11..length)
+        # project_list.add_project(name)
+        result = TM::CreateProjects.run(:project_name => name)
+        if result.success?
+                project = result.project
+                puts; puts "Project #{project.name} was created".colorize(:green)
+                puts;
+        else
+                puts; puts "Put in a mother fucking project name. Seriously. How am I supposed to know what you're talking about?".colorize(:red)
+                puts;
+        end
+
+      elsif (@@user_command.include?'show')
+        length = @@user_command.length
+        pid = @@user_command.slice(5..length).to_i
+
+
+
+      elsif (@@user_command.include?'history')
+        length = @@user_command.length
+        name = @@user_command.slice(8..length)
+        result = TM::ShowRemainingTasks.run(:pid => pid)
+
+        if result.success?
+            tasks = result.tasks
+                puts; tasks.each { |task| put "Description: #{task.description}, Task ID: #{task.id} Priority: #{task.priority}".colorize(:green)}
+        elsif result.error == :provide_a_project_id
+                puts; puts "Put in a project id. Come on.".colorize(:red)
+                puts;
+        else
+                puts; puts "That project doesn't exist. Get yo shit together.".colorize(:red)
+                puts;
+        end
+
+
+      elsif (@@user_command.include?'add')
+        length = @@user_command.length
+        full = @@user_command.slice(4..length)
+        id = @@user_command.slice(4)
+        pid = id.to_i
+        priority_string = @@user_command.slice(@@user_command.length-1)
+        priority = priority_string.to_i
+        description = @@user_command.slice(6..@@user_command.length-2)
+
+        result = TM::AddTaskToProject.run(:description => description, :pid => pid, :priority => priority)
+
+        if result.success?
+                tasks = result.tasks
+                puts; puts "Task with id #{tasks.id} was added to project id #{pid}".colorize(:green)
+        elsif result.error == :provide_a_project_id
+                puts; puts "Put in a project id. Come on.".colorize(:red)
+                puts;
+        elsif result.error == :provide_a_task_description
+                puts; puts "You need to reoncsider your life. Give me a task description, already.".colorize(:red)
+                puts;
+        else
+                puts; puts "That project doesn't exist. Get yo shit together.".colorize(:red)
+                puts;
+        end
+
+
+    elsif (@@user_command.include?'mark')
+        length = @@user_command.length
+        tid = @@user_command.slice(5..length)
+        project_list.mark_complete(tid)
+        puts; puts "Task #{tid} was marked complete"
+        puts;
+
+
+
+
+      end
+    end

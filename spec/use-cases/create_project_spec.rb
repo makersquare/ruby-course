@@ -12,8 +12,11 @@ describe TM::CreateProjects do
   end
 
   it 'fails if no name is provided' do
-    result = subject.run({:project_name => nil})
+    result = subject.run({:project_name => ""})
     expect(result.error?).to eq true
     expect(result.error).to eq :provide_a_project_name
   end
 end
+
+
+
