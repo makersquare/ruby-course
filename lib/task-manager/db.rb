@@ -56,6 +56,11 @@ module TM
       @employees
     end
 
+    def get_employee(emp_id)
+      @employees[emp_id]
+    end
+
+
     def show_employees_for_proj(project_id)
       proj_id_with_emp = @memberships.select  do |memb|
         memb[:pid] == project_id.to_i # will return array

@@ -73,12 +73,22 @@ class TM::Terminal
   end
 
   def project_show(pid)
-    taskarray = TM.db.remaining_task_proj(pid.to_i)
-    puts "list of remaining task for project with id #{pid}"
-    puts "TID PRIORITY-NUM  COMPLETE DESCRIPTION"
-    taskarray.each do |task|
-      puts "#{task.id}     #{task.priority_num}           #{task.complete}    #{task.descr}"
+    pid = pid.to_i
+
+    result = TM::ProjectShow.run({:pid=>pid})
+    if result.success?
+      taskarray = result.remaining_tasks
+      puts "list of remaining task for project with id #{pid}"
+      puts "TID PRIORITY-NUM  COMPLETE DESCRIPTION"
+      taskarray.each do |task|
+        puts "#{task.id}     #{task.priority_num}           #{task.complete}    #{task.descr}"
+      end
+    else
+      if result.error == :project_does_not_exist
+        puts "That project cannot be found"
+      end
     end
+
   end
 
   def project_history(pid)

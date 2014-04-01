@@ -76,6 +76,7 @@ describe "database"  do
   end
 
   it "should get a task based on id" do
+    # proj = @db.create_project("proj name")
     task = @db.create_task(8,{:descr=>"fishing",:priority_num=>3})
     task1 = @db.create_task(8,{:descr=>"hunting",:priority_num=>4})
 
