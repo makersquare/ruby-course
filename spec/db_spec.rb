@@ -120,6 +120,26 @@ module TM
       expect(assigned_tasks.size).to eq(4)
     end
 
+    it "can return a list of employees assigned to a project or task" do
+      proj2 = @db1.create_project("Maim Sue")
+      emp1 = @db1.create_employee("Billy")
+      emp2 = @db1.create_employee("Jimmy")
+      task5 = @db1.create_task({priority: 1, project_id: proj2.id, description: "Damn" })
+      @db1.assign({ project_id: @project1.id, employee_id: emp1.id })
+      @db1.assign({ project_id: proj2.id, employee_id: emp1.id })
+      @db1.assign({ project_id: proj2.id, employee_id: emp2.id })
+      @db1.assign({ task_id: @task1.id, employee_id: emp1.id })
+      @db1.assign({ task_id: @task3.id, employee_id: emp1.id })
+      @db1.assign({ task_id: @task4.id, employee_id: emp1.id })
+      @db1.assign({ task_id: task5.id, employee_id: emp1.id })
+      @db1.assign({ task_id: @task1.id, employee_id: emp2.id })
+
+      expect(@db1.get_assigned_employees({ project_id: @project1.id }).size).to eq(1)
+      expect(@db1.get_assigned_employees({ task_id: @task1.id }).size).to eq(2)
+      expect(@db1.get_assigned_employees({ project_id: proj2.id }).size).to eq(2)
+    end
+
+
 
   end
 end
