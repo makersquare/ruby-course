@@ -1,5 +1,3 @@
-require 'pry-debugger'
-
 module TM
   class GetAssignedEmployees < UseCase
     def run(data)
@@ -7,7 +5,6 @@ module TM
         if TM::db.get_project(data[:project_id]) == nil
           return failure(:project_not_found)
         else
-          binding.pry
           assigned_employees = TM::db.get_assigned_employees(data)
           return success :assigned_employees => assigned_employees
         end

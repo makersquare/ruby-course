@@ -15,23 +15,32 @@ module TM
       return project
     end
 
-    def get_project(project_id)
-      return @all_projects[project_id]
-    end
-
-    def list_projects
-      return @all_projects.sort_by { |k,v| v.id }
-    end
-
-
     def create_task(data)
       task = Task.new(data)
       @all_tasks[task.id] = task
       return task
     end
 
+    def create_employee(name)
+      employee = Employee.new(name)
+      @all_employees[employee.id] = employee
+      return employee
+    end
+
+    def get_project(project_id)
+      return @all_projects[project_id]
+    end
+
     def get_task(task_id)
       return @all_tasks[task_id]
+    end
+
+    def get_employee(employee_id)
+      return @all_employees[employee_id]
+    end
+
+    def list_projects
+      return @all_projects.sort_by { |k,v| v.id }
     end
 
     def completed_tasks(data)
@@ -59,17 +68,27 @@ module TM
       end
     end
 
-    def create_employee(name)
-      employee = Employee.new(name)
-      @all_employees[employee.id] = employee
-      return employee
+    def get_assigned_tasks(employee_id)
+        return @all_tasks.select { |k,v| self.assigned?({ employee_id: employee_id, task_id: v.id }) }.values
     end
 
-    def get_employee(employee_id)
-      return @all_employees[employee_id]
+    def get_assigned_projects(employee_id)
+      return @all_projects.select { |k,v| self.assigned?({ employee_id: employee_id, project_id: v.id }) }.values
     end
 
-    def assign(data)
+    def get_assigned_employees(data)
+      if data[:project_id] != nil
+        return @all_employees.select { |k,v| self.assigned?({ employee_id: v.id, project_id: data[:project_id] }) }.values
+      elsif data[:task_id] != nil
+        return @all_employees.select { |k,v| self.assigned?({ task_id: data[:task_id], employee_id: v.id }) }.values
+      end
+    end
+
+    def employees_list
+      return @all_employees.values.sort_by { |v| v.id }
+    end
+
+    def assign(data)   # handles all assignments for db
       case
       # employee_id and project_id
       when (data[:employee_id] != nil) && (data[:project_id] != nil)
@@ -93,27 +112,6 @@ module TM
         @tasks_employees.include?(data) ? (return true) : (return false)
       end
     end
-
-    def get_assigned_tasks(employee_id)
-        return @all_tasks.select { |k,v| self.assigned?({ employee_id: employee_id, task_id: v.id }) }.values
-    end
-
-    def get_assigned_projects(employee_id)
-      return @all_projects.select { |k,v| self.assigned?({ employee_id: employee_id, project_id: v.id }) }.values
-    end
-
-    def get_assigned_employees(data)
-      if data[:project_id] != nil
-        return @all_employees.select { |k,v| self.assigned?({ employee_id: v.id, project_id: data[:project_id] }) }.values
-      elsif data[:task_id] != nil
-        return @all_employees.select { |k,v| self.assigned?({ task_id: data[:task_id], employee_id: v.id }) }.values
-      end
-    end
-
-    def employees_list
-      return @all_employees.values.sort_by { |v| v.id }
-    end
-
   end
 
   def self.db
