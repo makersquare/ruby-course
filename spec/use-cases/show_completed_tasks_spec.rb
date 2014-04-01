@@ -10,7 +10,6 @@ describe TM::ShowCompletedTasks do
     completed_task = @db.task_complete(task.id)
 
     result = subject.run(:pid => project.id)
-
     expect(result.success?).to eq true
     expect(result.tasks.first.description).to eq task.description
   end

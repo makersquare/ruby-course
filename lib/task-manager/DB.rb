@@ -94,6 +94,11 @@ module TM
       task.pid == pid && task.complete == true }
   end
 
+  def show_completed_tasks_eid(eid)
+    completed_tasks = @tasks.values.select { |task|
+      task.eid == eid && task.complete == true }
+  end
+
   def show_remaining_tasks(pid)
     remaining_tasks = @tasks.values.select { |task|
       task.pid == pid && task.complete == false }
@@ -107,8 +112,6 @@ module TM
   def remaining_employee_tasks(eid)
     remaining_tasks_then_projects = []
     remaining_tasks = @tasks.values.select { |task| task.eid == eid && task.complete == false}
-    remaining_projects = remaining_tasks.map { |task| task.pid }
-    projects = remaining_projects.map { |pid| @projects[pid].name}
   end
 
   end

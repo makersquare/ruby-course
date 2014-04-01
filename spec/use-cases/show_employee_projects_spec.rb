@@ -12,7 +12,6 @@ describe TM::ShowProjects do
     assign2 = @db.assign_emp_to_project(emp.id, proj2.id)
 
     result = subject.run(:eid => emp.id)
-    binding.pry
     expect(result.success?).to eq true
     expect(result.projects.count).to eq 2
   end

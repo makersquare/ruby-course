@@ -1,16 +1,12 @@
 module TM
-  class AddTaskToProject < UseCase
+  class AddTaskToEmployee < UseCase
     def run(inputs)
-      proj_id = inputs[:pid]
-      description = inputs[:description]
-      priority = inputs[:priority]
-      added_tasks = TM.DB.add_task_to_project(description, priority, proj_id)
-      project = TM.DB.get_project(proj_id)
-      return failure(:provide_a_project_id) if proj_id.nil?
-      return failure(:provide_a_task_description) if description.nil?
-      return failure(:project_doesnt_exist) if project.nil?
-
-      success :tasks => added_tasks
+      tid = inputs[:tid]
+      eid = inputs[:eid]
+      task = TM.DB.get_task(tid)
+      emp = TM.DB.get_employee(eid)
+      tasks = TM.DB.assign_task(tid, eid)
+      success :tasks => tasks
     end
   end
 end

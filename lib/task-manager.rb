@@ -23,6 +23,8 @@ require_relative 'use-cases/recruit_employee.rb'
 require_relative 'use-cases/create_task.rb'
 require_relative 'use-cases/mark_task_complete.rb'
 require_relative 'use-cases/show_employee_projects.rb'
+require_relative 'use-cases/show_completed_tasks_eid.rb'
+require_relative 'use-cases/emp_details.rb'
 
 require 'pry-debugger'
 # Dir[File.dirname(__FILE__) + '../lib/task-manager/*.rb'].each {|file| require file }

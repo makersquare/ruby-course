@@ -33,6 +33,9 @@ class PManager
     while (@@user_command != 'quit')
       print "What would you like to do?  ".colorize(:yellow)
       @@user_command = gets.chomp
+      # if @@user_command == help
+      #   PManager.main_menu
+      # end
         object = @@user_command.split(' ')[0]
         action = @@user_command.split(' ')[1]
         description = @@user_command.split(' ').drop(2).join(' ')
@@ -136,14 +139,14 @@ class PManager
                                 end
                     when 'assign'
                         inputs = description.split(' ')
-                        pid = inputs[0].to_i
-                        priority = inputs[1].to_i
-                        description = inputs.drop(2).join(' ')
-                        result = TM::AddTaskToProject.run(:description => description, :pid => pid, :priority => priority)
+                        tid = inputs[0].to_i
+                        eid = inputs[1].to_i
+
+                        result = TM::AddTaskToEmployee.run(:tid => tid, :eid => eid)
 
                         if result.success?
                                 tasks = result.tasks
-                                puts; puts "Task with id #{tasks.id} was added to project id #{pid}".colorize(:green)
+                                puts; puts "Task with id #{tasks.id} was added to employee #{eid}".colorize(:green)
                         elsif result.error == :provide_a_project_id
                                 puts; puts "Put in a project id. Come on.".colorize(:red)
                                 puts;
@@ -197,8 +200,24 @@ class PManager
                                 end
 
                     when 'details'
+                        result = TM::EmployeeDetails.run(:eid => description.to_i)
+                                if result.success?
+                                        tasks = result.remaining_tasks
+                                        puts tasks.each { |task| put s"Remaining task #{task.description} with project id #{task.pid }"}
+                                        puts;
+                                else
+                                        puts; puts "Put in an ID, homie.".colorize(:red)
+                                        puts;
+                                end
 
                     when 'history'
+                        result = TM::ShowCompletedTasksEID.run(:eid => description.to_i)
+
+                        if result.success?
+                            tasks = result.tasks
+                                puts; tasks.each { |task| puts "Description: #{task.description}, Task ID: #{task.id} Priority: #{task.priority}".colorize(:green)}
+                                puts;
+                        end
                 end
         end
     end

@@ -151,7 +151,7 @@ describe 'DB' do
   end
 
   describe 'remaining tasks by eid' do
-    it 'lists all remaining tasks by eid and the project name ' do
+    xit 'lists all remaining tasks by eid and the project name ' do
       project = @__db.create_project('project_name')
       project2 = @__db.create_project('project2_name')
       task = @__db.add_task_to_project('description', 1, project.id)
