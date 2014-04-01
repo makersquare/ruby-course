@@ -279,21 +279,21 @@ module TM
     end
 
 
-    # def show_assigned_employees(project_id)
-    #   # get the project
-    #   project = TM::DB.instance.all_projects[project_id]
+    def show_assigned_employees(project_id)
+      # get the project
+      project = TM::DB.instance.all_projects[project_id]
 
-    #   # get the list
-    #   employee_list = TM::DB.instance.project_employees(project_id)
+      # get the list
+      employee_list = TM::DB.instance.project_employees(project_id)
 
-    #   #display it beautifully :)
-    #   puts "\n\n"
-    #   puts "ID\tEmployee\n"
-    #   puts "------------------------------------------------"
-    #   employee_list.each { | x | print("#{x.employee_id}" + (' ' * (8 - x.employee_id.to_s.length)) + # padding
-    #                 "#{x.name}" + "\n") }
-    #   puts "\n"
-    # end
+      #display it beautifully :)
+      puts "\n\n"
+      puts "ID\tEmployee\n"
+      puts "------------------------------------------------"
+      employee_list.each { | x | print("#{x.employee_id}" + (' ' * (8 - x.employee_id.to_s.length)) + # padding
+                    "#{x.name}" + "\n") }
+      puts "\n"
+    end
 
     # def list_employees
     #   #get list

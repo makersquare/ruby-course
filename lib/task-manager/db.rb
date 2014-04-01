@@ -93,6 +93,11 @@ module TM
         @tasks_employees.include?(data) ? (return true) : (return false)
       end
     end
+
+    def get_assigned_tasks(employee_id)
+        return @all_tasks.select { |k,v| self.assigned?({ employee_id: employee_id, task_id: v.id }) }.values
+    end
+
   end
 
   def self.db
