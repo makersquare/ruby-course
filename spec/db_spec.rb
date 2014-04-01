@@ -139,7 +139,9 @@ module TM
       expect(@db1.get_assigned_employees({ project_id: proj2.id }).size).to eq(2)
     end
 
-
+    it "can return a list of all employees" do
+      expect(@db1.employees_list.size).to eq(3)
+    end
 
   end
 end

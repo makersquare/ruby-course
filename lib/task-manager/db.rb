@@ -106,6 +106,10 @@ module TM
       end
     end
 
+    def employees_list
+      return @all_employees.values.sort_by { |v| v.id }
+    end
+
   end
 
   def self.db

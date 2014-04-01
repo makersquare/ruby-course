@@ -162,7 +162,7 @@ module TM
     end
 
     def assign_employee_to_project(employee_id, project_id)
-      result = TM::Assign.run({employee_id: employee_id, project_id: project_id })
+      result = TM::Assign.run({ employee_id: employee_id, project_id: project_id })
       if result.success?
         puts "\nEmployee #{employee_id} assigned to project: #{project_id}"
       elsif result.error == :employee_not_found
@@ -237,13 +237,13 @@ module TM
       @employee2 = TM::db.create_employee("Rhonda")
       @employee3 = TM::db.create_employee("Phil")
       @employee4 = TM::db.create_employee("Martha")
-      TM::db.assign({ project_id: @kill_bob, employee_id: @employee1 })
-      TM::db.assign({ project_id: @kill_bob, employee_id: @employee2 })
-      TM::db.assign({ project_id: @kill_bob, employee_id: @employee3 })
-      TM::db.assign({ project_id: @kill_sue, employee_id: @employee4 })
-      TM::db.assign({ project_id: @kill_sue, employee_id: @employee1 })
-      TM::db.assign({ task_id: @buy_gun.id, employee_id: @employee1 })
-      TM::db.assign({ task_id: @load_gun.id, employee_id: @employee1 })
+      TM::db.assign({ project_id: @kill_bob.id, employee_id: @employee1.id })
+      TM::db.assign({ project_id: @kill_bob.id, employee_id: @employee2.id })
+      TM::db.assign({ project_id: @kill_bob.id, employee_id: @employee3.id })
+      TM::db.assign({ project_id: @kill_sue.id, employee_id: @employee4.id })
+      TM::db.assign({ project_id: @kill_sue.id, employee_id: @employee1.id })
+      TM::db.assign({ task_id: @buy_gun.id, employee_id: @employee1.id })
+      TM::db.assign({ task_id: @load_gun.id, employee_id: @employee1.id })
       @buy_gun.finished = true
     end
 
@@ -281,13 +281,34 @@ module TM
 
     def show_assigned_employees(project_id)
       # get the project
-      project = TM::DB.instance.all_projects[project_id]
+      result = TM::GetProject.run(project_id)
 
-      # get the list
-      employee_list = TM::DB.instance.project_employees(project_id)
+      if result.success?
+        # get the list
+        result2 = TM::GetAssignedEmployees.run({ project_id: project_id })
+        if result2.success?
+          employee_list = result2[:assigned_employees]
+          #display it beautifully :)
+          puts "\n\n"
+          puts "ID\tEmployee\n"
+          puts "------------------------------------------------"
+          employee_list.each { | x | print("#{x.id}" + (' ' * (8 - x.id.to_s.length)) + # padding
+                        "#{x.name}" + "\n") }
+          puts "\n"
+        end
+      elsif result.error == :project_not_found
+        puts "\nThat project is not found.\n"
+      end
+    end
+
+    def list_employees
+      #get list
+      result = TM::ListEmployees.run
+
+      TM::DB.instance.all_employees.values.sort { |a,b| a.employee_id <=> b.employee_id }
 
       #display it beautifully :)
-      puts "\n\n"
+      puts "\nALL EMPLOYEES:\n\n"
       puts "ID\tEmployee\n"
       puts "------------------------------------------------"
       employee_list.each { | x | print("#{x.employee_id}" + (' ' * (8 - x.employee_id.to_s.length)) + # padding
@@ -295,36 +316,23 @@ module TM
       puts "\n"
     end
 
-    # def list_employees
-    #   #get list
-    #   employee_list = TM::DB.instance.all_employees.values.sort { |a,b| a.employee_id <=> b.employee_id }
+    # def show_employee(employee_id)
+    #   # get employee
+    #   employee = TM::DB.instance.all_employees[employee_id]
 
-    #   #display it beautifully :)
-    #   puts "\nALL EMPLOYEES:\n\n"
-    #   puts "ID\tEmployee\n"
-    #   puts "------------------------------------------------"
-    #   employee_list.each { | x | print("#{x.employee_id}" + (' ' * (8 - x.employee_id.to_s.length)) + # padding
-    #                 "#{x.name}" + "\n") }
+    #   # display employee info
+    #   puts "\n\nEmployee:  #{employee.name}   ID:  #{employee.employee_id}\n\n"
+    #   puts "    Projects:\n"
+    #   puts "---------------------"
+
+    #   # get projects array
+    #   projects = TM::DB.instance.employee_projects(employee)
+
+    #   if projects != nil
+    #     projects.each { |x| puts "#{x.id}"  + (' ' * (5 - x.id.to_s.length)) +  "#{x.name}\n" }
+    #   end
     #   puts "\n"
     # end
-
-    def show_employee(employee_id)
-      # get employee
-      employee = TM::DB.instance.all_employees[employee_id]
-
-      # display employee info
-      puts "\n\nEmployee:  #{employee.name}   ID:  #{employee.employee_id}\n\n"
-      puts "    Projects:\n"
-      puts "---------------------"
-
-      # get projects array
-      projects = TM::DB.instance.employee_projects(employee)
-
-      if projects != nil
-        projects.each { |x| puts "#{x.id}"  + (' ' * (5 - x.id.to_s.length)) +  "#{x.name}\n" }
-      end
-      puts "\n"
-    end
 
     # def show_employee_ongoing(employee_id)
     #   # get employee
