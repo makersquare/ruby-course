@@ -14,6 +14,7 @@ module TM
 			@memberships = []
 		end
 
+		# ----- Data Models Create Methods -----
 		def create_project(name)
 			project = TM::Project.new(name)
 			@projects[project.id] = project
@@ -32,23 +33,21 @@ module TM
 			task
 		end
 
-		def recruit(pid, eid)
-			membership = {project_id: pid, employee_id: eid}
-			@memberships << membership
-			membership
-		end
-
-		def mark_task_complete(tid)
-			task = @tasks[tid]
-			task.complete = true
-		end
-
-		def project_incomplete(pid)
+		# ----- Data Models Read Methods -----
+		def project_incomplete_tasks(pid)
 			@tasks.values.select { |task| task.project_id == pid && task.complete == false }.sort_by { |task| [task.priority, task.created_at] }
 		end
 
-		def project_complete(pid)
+		def project_complete_tasks(pid)
 			@tasks.values.select { |task| task.project_id == pid && task.complete == true }.sort_by { |task| task.created_at }
+		end
+
+		def emp_incomplete_tasks(eid)
+			@tasks.values.select { |task| task.employee_id == eid && task.complete == false }
+		end
+
+		def emp_complete_tasks(eid)
+			@tasks.values.select { |task| task.employee_id == eid && task.complete == true }
 		end
 
 		def all_projects
@@ -73,6 +72,90 @@ module TM
 
 		def get_task(tid)
 			@tasks[tid]
+		end
+
+		# ----- Data Models Update Methods -----
+		def mark_task_complete(tid)
+			task = @tasks[tid]
+			task.complete = true
+		end
+
+		def assign_task_to_emp(tid, eid)
+			task = @tasks[tid]
+			task.employee_id = eid
+			task
+		end
+
+		def update_project(pid, name)
+			project = @projects[pid]
+			project.name = name
+			project
+		end
+
+		def update_task(tid, options={})
+			task = @tasks[tid]
+			if options[:description]
+				task.description = options[:description]
+			end
+			if
+				task.priority = options[:priority]
+			end
+			task
+		end
+
+		def update_employee(eid, name)
+			employee = @employees[eid]
+			employee.name = name
+			employee
+		end
+
+		# ----- Data Models Delete Methods -----
+		def delete_project(pid)
+			@projects.delete(pid)
+			@projects
+		end
+
+		def delete_task(tid)
+			@tasks.delete(tid)
+			@tasks
+		end
+
+		def delete_employee(eid)
+			@employees.delete(eid)
+			@employees
+		end
+
+		# ----- Membership Methods -----
+		def recruit(pid, eid)
+			project = get_project(pid)
+			employee = get_employee(eid)
+			membership = {project.id => employee.id}
+			@memberships << membership
+			membership
+		end
+
+		def get_emp_for_proj(pid)
+      project_employees = []
+      @memberships.each do |membership|
+        membership.select do |key, value|
+          if key == pid
+            project_employees << value
+          end
+        end
+      end
+      project_employees
+    end
+
+		def get_proj_for_emp(eid)
+			employee_projects = []
+			@memberships.each do |membership|
+				membership.select do |key, value|
+					if value == eid
+						employee_projects << key
+          end
+				end
+			end
+			employee_projects
 		end
 	end
 end
