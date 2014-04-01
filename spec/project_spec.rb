@@ -21,18 +21,4 @@ describe 'Project' do
 	    expect(TM::Project.new("Project3").id).to eq(3)
 	  end
 	end
-
-	# describe "include_task?" do
-	# 	it "returns true if a project includes a task with a specified id" do
-	# 		TM::Task.class_variable_set :@@id_counter, 0
-	# 		eat = @project.add_task(3, 'eat')
-	# 		id = eat.id
-
-	# 		task_x = TM::Task.new(100, 1, 'dance')
-	# 		id_x = task_x.id
-
-	# 		expect(@project.include_task?(id)).to be_true
-	# 		expect(@project.include_task?(id_x)).to be_false
-	# 	end
-	# end
 end

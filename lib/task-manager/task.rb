@@ -1,8 +1,8 @@
 require_relative '../task-manager.rb'
 
 class TM::Task
-	attr_accessor :complete, :description, :priority
-	attr_reader :project_id, :employee_id, :id, :created_at
+	attr_accessor :complete, :description, :priority, :employee_id
+	attr_reader :project_id, :id, :created_at
 
 	@@id_counter = 0
 

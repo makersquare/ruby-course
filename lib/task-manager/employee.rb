@@ -1,7 +1,8 @@
 require_relative '../task-manager.rb'
 
 class TM::Employee
-	attr_reader :name, :id
+	attr_accessor :name
+	attr_reader :id
 
 	@@id_counter = 0
 
