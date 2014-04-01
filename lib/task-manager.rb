@@ -12,4 +12,5 @@ require_relative "task-manager/db.rb"
 require_relative "use_case.rb"
 require_relative "task-manager/use_case/project_show.rb"
 require_relative "task-manager/use_case/assign_task.rb"
+require_relative "task-manager/use_case/project_history.rb"
 require 'pry-debugger'
