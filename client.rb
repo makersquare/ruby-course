@@ -70,7 +70,7 @@ module TM
             when "list"
               self.list_employees
             when "create"
-              self.create_employee(choice_array[2..-1])
+              self.create_employee(choice_array[2..-1].join(' '))
             when "show"
               self.show_employee(choice_array[2].to_i)
             when "ongoing"
@@ -208,44 +208,6 @@ module TM
     end
 
 
-    def load_me_up    # loads up a couple projects with tasks for testing
-      @kill_bob = TM::db.create_project("Kill Bob")
-      @kill_sue = TM::db.create_project("Kill Sue")
-      @kill_ted = TM::db.create_project("Kill Ted")
-      @buy_milk = TM::db.create_project("Buy Milk")
-      @buy_gun = TM::db.create_task({ project_id: 1, description: "Go buy a gun", priority: 3 })
-      @load_gun = TM::db.create_task({ project_id: 1, description: "Load the gun", priority: 4 })
-      @buy_knife = TM::db.create_task({ project_id: 2, description: "Buy a knife", priority: 5 })
-      @sharpen_knife = TM::db.create_task({ project_id: 2, description: "Sharpen the knife", priority: 2 })
-      @buy_chainsaw = TM::db.create_task({ project_id: 3, description: "Buy a chainsaw", priority: 2 })
-      @sharpen_chainsaw = TM::db.create_task({ project_id: 3, description: "Sharpen the chainsaw", priority: 3 })
-      @get_in_car = TM::db.create_task({ project_id: 4, description: "Get in the car", priority: 9 })
-      @drive_to_store = TM::db.create_task({ project_id: 4, description: "Drive to the store", priority: 10 })
-      @talk_to_clerk = TM::db.create_task({ project_id: 4, description: "Talk to clerk", priority: 4 })
-      @pay_for_milk = TM::db.create_task({ project_id: 4, description: "Pay for milk", priority: 2 })
-      TM::db.assign({ project_id: @kill_bob.id, task_id: @buy_gun.id })
-      TM::db.assign({ project_id: @kill_bob.id, task_id: @load_gun.id })
-      TM::db.assign({ project_id: @kill_sue.id, task_id: @buy_knife.id })
-      TM::db.assign({ project_id: @kill_sue.id, task_id: @sharpen_knife.id })
-      TM::db.assign({ project_id: @kill_ted.id, task_id: @buy_chainsaw.id })
-      TM::db.assign({ project_id: @kill_ted.id, task_id: @sharpen_chainsaw.id })
-      TM::db.assign({ project_id: @buy_milk.id, task_id: @get_in_car.id })
-      TM::db.assign({ project_id: @buy_milk.id, task_id: @drive_to_store.id })
-      TM::db.assign({ project_id: @buy_milk.id, task_id: @talk_to_clerk.id })
-      TM::db.assign({ project_id: @buy_milk.id, task_id: @pay_for_milk.id })
-      @employee1 = TM::db.create_employee("Bill")
-      @employee2 = TM::db.create_employee("Rhonda")
-      @employee3 = TM::db.create_employee("Phil")
-      @employee4 = TM::db.create_employee("Martha")
-      TM::db.assign({ project_id: @kill_bob.id, employee_id: @employee1.id })
-      TM::db.assign({ project_id: @kill_bob.id, employee_id: @employee2.id })
-      TM::db.assign({ project_id: @kill_bob.id, employee_id: @employee3.id })
-      TM::db.assign({ project_id: @kill_sue.id, employee_id: @employee4.id })
-      TM::db.assign({ project_id: @kill_sue.id, employee_id: @employee1.id })
-      TM::db.assign({ task_id: @buy_gun.id, employee_id: @employee1.id })
-      TM::db.assign({ task_id: @load_gun.id, employee_id: @employee1.id })
-      @buy_gun.finished = true
-    end
 
     def create_task(project_id, description, priority)
       result = CreateTask.run({ project_id: project_id, description: description, priority: priority })
@@ -304,49 +266,60 @@ module TM
     def list_employees
       #get list
       result = TM::ListEmployees.run
-
-      TM::DB.instance.all_employees.values.sort { |a,b| a.employee_id <=> b.employee_id }
+      employee_list = result[:employees_list]
 
       #display it beautifully :)
       puts "\nALL EMPLOYEES:\n\n"
       puts "ID\tEmployee\n"
       puts "------------------------------------------------"
-      employee_list.each { | x | print("#{x.employee_id}" + (' ' * (8 - x.employee_id.to_s.length)) + # padding
+      employee_list.each { | x | print("#{x.id}" + (' ' * (8 - x.id.to_s.length)) + # padding
                     "#{x.name}" + "\n") }
       puts "\n"
     end
 
-    # def show_employee(employee_id)
-    #   # get employee
-    #   employee = TM::DB.instance.all_employees[employee_id]
+    def show_employee(employee_id)
+      # get employee
+      result = TM::GetEmployee.run(employee_id)
+      if result.success?
+        employee = result[:employee]
+        result2 = TM::GetEmployeeProjects.run(employee_id)
+        if result2.success?
+          projects = result2[:employee_projects]
 
-    #   # display employee info
-    #   puts "\n\nEmployee:  #{employee.name}   ID:  #{employee.employee_id}\n\n"
-    #   puts "    Projects:\n"
-    #   puts "---------------------"
+          # display employee info
+          puts "\n\nEmployee:  #{employee.name}   ID:  #{employee.id}\n\n"
+          puts "    Projects:\n"
+          puts "---------------------"
 
-    #   # get projects array
-    #   projects = TM::DB.instance.employee_projects(employee)
+          projects.each { |x| puts "#{x.id}"  + (' ' * (5 - x.id.to_s.length)) +  "#{x.name}\n" }
+          puts "\n"
+        end
+      elsif result.error == :employee_not_found
+        puts "\nEmployee not found\n"
+      end
+    end
 
-    #   if projects != nil
-    #     projects.each { |x| puts "#{x.id}"  + (' ' * (5 - x.id.to_s.length)) +  "#{x.name}\n" }
-    #   end
-    #   puts "\n"
-    # end
-
-    # def show_employee_ongoing(employee_id)
-    #   # get employee
-    #   employee = TM::DB.instance.all_employees[employee_id]
-
-    #   # display ongoing tasks
-    #   puts "\n\n"
-    #   puts "ID\tDescription\t\t\tPriority\n"
-    #   puts "------------------------------------------------"
-    #   TM::DB.instance.ongoing_tasks(employee).each { | x | print("#{x.task_id}" + (' ' * (8 - x.task_id.to_s.length)) + # padding
-    #                 "#{x.description}" + (' ' * (33 - x.description.length) +
-    #                 "#{x.priority}\n")) }
-    #   puts "\n"
-    # end
+    def show_employee_ongoing(employee_id)
+      # get employee
+      result = GetEmployee.run(employee_id)
+      if result.success?
+        employee = result[:employee]
+        result2 = GetOngoingTasks.run({ employee_id: employee_id })
+        if result2.success?
+          ongoing_tasks =result2[:ongoing_tasks]
+          # display ongoing tasks
+          puts "\n\n"
+          puts "ID\tDescription\t\t\tPriority\n"
+          puts "------------------------------------------------"
+          ongoing_tasks.each { | x | print("#{x.id}" + (' ' * (8 - x.id.to_s.length)) + # padding
+                        "#{x.description}" + (' ' * (33 - x.description.length) +
+                        "#{x.priority}\n")) }
+          puts "\n"
+        end
+      elsif result.error == :employee_not_found
+        puts "\nEmployee not found...\n"
+      end
+    end
 
     def show_employee_history(employee_id)
       # get employee
@@ -354,7 +327,6 @@ module TM
 
       if result.success?
         completed_tasks = result[:completed_tasks]
-        binding.pry
         if completed_tasks.size == 0
           puts "No tasks for this employee\n"
           return
@@ -362,7 +334,7 @@ module TM
 
         puts "ID\tDescription\t\t\tPriority\n"
         puts "------------------------------------------------"
-        completed_tasks.each { | x | print("#{x.task_id}" + (' ' * (8 - x.task_id.to_s.length)) + # padding
+        completed_tasks.each { | x | print("#{x.id}" + (' ' * (8 - x.id.to_s.length)) + # padding
                       "#{x.description}" + (' ' * (33 - x.description.length) +
                       "#{x.priority}\n")) }
         puts "\n"
@@ -376,6 +348,44 @@ module TM
       return remarks[random]
     end
 
+    def load_me_up    # loads some data for testing
+      @kill_bob = TM::db.create_project("Kill Bob")
+      @kill_sue = TM::db.create_project("Kill Sue")
+      @kill_ted = TM::db.create_project("Kill Ted")
+      @buy_milk = TM::db.create_project("Buy Milk")
+      @buy_gun = TM::db.create_task({ project_id: 1, description: "Go buy a gun", priority: 3 })
+      @load_gun = TM::db.create_task({ project_id: 1, description: "Load the gun", priority: 4 })
+      @buy_knife = TM::db.create_task({ project_id: 2, description: "Buy a knife", priority: 5 })
+      @sharpen_knife = TM::db.create_task({ project_id: 2, description: "Sharpen the knife", priority: 2 })
+      @buy_chainsaw = TM::db.create_task({ project_id: 3, description: "Buy a chainsaw", priority: 2 })
+      @sharpen_chainsaw = TM::db.create_task({ project_id: 3, description: "Sharpen the chainsaw", priority: 3 })
+      @get_in_car = TM::db.create_task({ project_id: 4, description: "Get in the car", priority: 9 })
+      @drive_to_store = TM::db.create_task({ project_id: 4, description: "Drive to the store", priority: 10 })
+      @talk_to_clerk = TM::db.create_task({ project_id: 4, description: "Talk to clerk", priority: 4 })
+      @pay_for_milk = TM::db.create_task({ project_id: 4, description: "Pay for milk", priority: 2 })
+      TM::db.assign({ project_id: @kill_bob.id, task_id: @buy_gun.id })
+      TM::db.assign({ project_id: @kill_bob.id, task_id: @load_gun.id })
+      TM::db.assign({ project_id: @kill_sue.id, task_id: @buy_knife.id })
+      TM::db.assign({ project_id: @kill_sue.id, task_id: @sharpen_knife.id })
+      TM::db.assign({ project_id: @kill_ted.id, task_id: @buy_chainsaw.id })
+      TM::db.assign({ project_id: @kill_ted.id, task_id: @sharpen_chainsaw.id })
+      TM::db.assign({ project_id: @buy_milk.id, task_id: @get_in_car.id })
+      TM::db.assign({ project_id: @buy_milk.id, task_id: @drive_to_store.id })
+      TM::db.assign({ project_id: @buy_milk.id, task_id: @talk_to_clerk.id })
+      TM::db.assign({ project_id: @buy_milk.id, task_id: @pay_for_milk.id })
+      @employee1 = TM::db.create_employee("Bill")
+      @employee2 = TM::db.create_employee("Rhonda")
+      @employee3 = TM::db.create_employee("Phil")
+      @employee4 = TM::db.create_employee("Martha")
+      TM::db.assign({ project_id: @kill_bob.id, employee_id: @employee1.id })
+      TM::db.assign({ project_id: @kill_bob.id, employee_id: @employee2.id })
+      TM::db.assign({ project_id: @kill_bob.id, employee_id: @employee3.id })
+      TM::db.assign({ project_id: @kill_sue.id, employee_id: @employee4.id })
+      TM::db.assign({ project_id: @kill_sue.id, employee_id: @employee1.id })
+      TM::db.assign({ task_id: @buy_gun.id, employee_id: @employee1.id })
+      TM::db.assign({ task_id: @load_gun.id, employee_id: @employee1.id })
+      @buy_gun.finished = true
+    end
   end
 end
 

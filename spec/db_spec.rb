@@ -143,5 +143,14 @@ module TM
       expect(@db1.employees_list.size).to eq(3)
     end
 
+    it "can return a list of projects assigned to an employee" do
+      emp1 = @db1.create_employee("Billy")
+      proj2 = @db1.create_project("Maim Sue")
+      @db1.assign({ project_id: @project1.id, employee_id: emp1.id })
+      @db1.assign({ project_id: proj2.id, employee_id: emp1.id })
+      expect(@db1.get_assigned_projects(emp1.id).size).to eq(2)
+    end
+
+
   end
 end

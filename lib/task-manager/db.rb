@@ -98,6 +98,10 @@ module TM
         return @all_tasks.select { |k,v| self.assigned?({ employee_id: employee_id, task_id: v.id }) }.values
     end
 
+    def get_assigned_projects(employee_id)
+      return @all_projects.select { |k,v| self.assigned?({ employee_id: employee_id, project_id: v.id }) }.values
+    end
+
     def get_assigned_employees(data)
       if data[:project_id] != nil
         return @all_employees.select { |k,v| self.assigned?({ employee_id: v.id, project_id: data[:project_id] }) }.values
