@@ -78,6 +78,7 @@ module TM
 		def mark_task_complete(tid)
 			task = @tasks[tid]
 			task.complete = true
+			task
 		end
 
 		def assign_task_to_emp(tid, eid)
@@ -127,35 +128,46 @@ module TM
 
 		# ----- Membership Methods -----
 		def recruit(pid, eid)
-			project = get_project(pid)
-			employee = get_employee(eid)
-			membership = {project.id => employee.id}
+			membership = {:pid => pid, :eid => eid}
 			@memberships << membership
 			membership
 		end
 
 		def get_emp_for_proj(pid)
-      project_employees = []
-      @memberships.each do |membership|
-        membership.select do |key, value|
-          if key == pid
-            project_employees << value
-          end
-        end
-      end
-      project_employees
-    end
+			proj_with_pid = @memberships.select { |memb| memb[:pid] == pid }
+			emps_for_proj =  proj_with_pid.map { |memb| @employees[memb[:eid]] }
+
+			emps_for_proj.each do |emp|
+				puts emp.name
+			end
+		end
+    #   project_employees = []
+    #   @memberships.each do |membership|
+    #     membership.select do |key, value|
+    #       if key == pid
+    #         project_employees << value
+    #       end
+    #     end
+    #   end
+    #   project_employees
+    # end
 
 		def get_proj_for_emp(eid)
-			employee_projects = []
-			@memberships.each do |membership|
-				membership.select do |key, value|
-					if value == eid
-						employee_projects << key
-          end
-				end
+			emp_with_eid = @memberships.select { |memb| memb[:eid] == eid }
+			proj_for_emp =  emp_with_eid.map { |memb| @projects[memb[:pid]] }
+
+			proj_for_emp.each do |proj|
+				puts proj.name
 			end
-			employee_projects
+			# employee_projects = []
+			# @memberships.each do |membership|
+			# 	membership.select do |key, value|
+			# 		if value == eid
+			# 			employee_projects << key
+   #        end
+			# 	end
+			# end
+			# employee_projects
 		end
 	end
 end

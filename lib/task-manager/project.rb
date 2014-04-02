@@ -10,4 +10,14 @@ class TM::Project
 		@name = name
 		@id = @@id_counter += 1
 	end
+
+	# def include_task?(tid)
+	# 	@tasks.select do |task|
+	# 		if task.id == tid
+	# 			return true
+	# 		else
+	# 			return false
+	# 		end	
+	# 	end
+	# end
 end

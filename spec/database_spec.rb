@@ -234,8 +234,8 @@ describe TM::Database do
 	      retrieved_employees = @db.get_emp_for_proj(@project1.id)
 
 	      expect(retrieved_employees.count).to eq(2)
-	      expect(retrieved_employees.first).to eq(@employee1.id)
-	      expect(retrieved_employees.last).to eq(@employee2.id)
+	      expect(retrieved_employees.first.id).to eq(@employee1.id)
+	      expect(retrieved_employees.last.id).to eq(@employee2.id)
 	    end
 	  end
 
@@ -246,8 +246,8 @@ describe TM::Database do
 	      retrieved_projects = @db.get_proj_for_emp(@employee2.id)
 
 	      expect(retrieved_projects.count).to eq(2)
-	      expect(retrieved_projects.first).to eq(@project1.id)
-	      expect(retrieved_projects.last).to eq(@project2.id)
+	      expect(retrieved_projects.first.id).to eq(@project1.id)
+	      expect(retrieved_projects.last.id).to eq(@project2.id)
 	    end
 	  end
 	end
