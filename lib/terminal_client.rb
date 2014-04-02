@@ -6,6 +6,7 @@ end
 require_relative 'task-manager/task.rb'
 require_relative 'task-manager/project.rb'
 require_relative 'task-manager/project_list.rb'
+require_relative 'task-manager/database.rb'
 
 class TM::Terminal
 
@@ -22,7 +23,7 @@ class TM::Terminal
           mark TID - Mark task with id=TID as complete"
   end
 
-  proj = TM::ProjectList.new
+  proj = TM::Database.new
 
   puts " \nWelcome to Project Manager Pro. What can I do for you today? \n"
   puts self.command_list
