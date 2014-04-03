@@ -3,10 +3,20 @@ require './lib/task-manager.rb'
 require 'pry-debugger'
 require 'time'
 
-# this configures rspec so that each test gets a newly created singleton instance
+# Set our database class to use a test database.
+# Any code that requires our business logic NEEDS to set a database name like this.
+# For example, a Terminal client would need to specify which db file it wants to save/read data to/from.
+TM.db_name = 'tm_test.db'
+
 RSpec.configure do |config|
-  # Reset singleton instance before every test
+  # Configure each test to always use a new singleton instance
   config.before(:each) do
-    Singleton.__init__(TM::DB)
+    TM.instance_variable_set(:@__db_instance, nil)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    # NEW: This clears your tables so you get fresh tables for every test
+    # Please READ THE METHOD yourself in database.rb
+    TM.db.clear_all_records
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
   end
 end

@@ -1,149 +1,140 @@
 require 'singleton'
 
-# made a singleton verion of ProjectList
+module TM
 
-class TM::DB
-  include Singleton
-
-  attr_reader :projects, :tasks, :employees
-
-  # examples
-  # proj_employees = @memberships.select do |memb|
-  #   memb[:pid] == 1
-  # end.map do |memb|
-  #   @employees[memb[:eid]]
-  # end
-
-  # @employees = { 5 => Emp}
-  # @memberships = [{ :eid => 5, :pid => 7 }, { :eid => 5, :pid => 9 }]
-
-  def initialize
-    @projects = {}
-    @tasks = {}
-
-    @employees = {}
+  # The singleton getter
+  def self.db
+    @__db_instance ||= DB.new(@app_db_name)
   end
 
-  def create_project(title)
-    proj = TM::Project.new(title)
-    proj_id = proj.id
-    @projects[proj_id] = proj
-
-    proj
+  # This allows us to set our database name in both our
+  # spec_helper.rb and also our client code.
+  # You MUST set this before the **first time** you call your singleton getter.
+  def self.db_name=(db_name)
+    @app_db_name = db_name
   end
 
-  def add_task_to_proj(pid, desc, priority)
+  class DB
 
-    # ensure id and priority are integers
-    pid = pid.to_i
-    priority = priority.to_i
+    def initialize(db_name)
+      raise StandardError.new("Please set TM.db_name") if db_name.nil?
 
-    proj = @projects[pid]
-
-    added_task = TM::Task.new(pid, desc, priority)
-
-    @tasks[added_task.id] = added_task
-
-    added_task
-  end
-
-  def show_proj_tasks_remaining(pid)
-    # ensure id is an integer
-    pid = pid.to_i
-
-    # binding.pry
-
-    # array of tasks belonging to this pid
-    # @tasks.values creates an array from values in @tasks hash
-    pid_tasks = @tasks.values.select { |task| task.proj_id == pid }
-
-    incomplete_tasks = pid_tasks.select do |task|
-      task.completed == false
+      # This creates a connection to our database file
+      @sqlite = SQLite3::Database.new(db_name)
+      @projects = {}
+      @tasks = {}
+      @employees = {}
     end
-  end
 
-  def show_proj_tasks_complete(pid)
-    # ensure id is an integer
-    pid = pid.to_i
+    ##########################
+    ## Project CRUD Methods ##
+    ##########################
 
-    pid_tasks = @tasks.values.select { |task| task.proj_id == pid }
+    # The OLD method
+    # def all_projects
+    #   @projects.values
+    # end
+    #
+    # The new, SQL method
+    def all_projects
+      result = @sqlite.execute("SELECT * FROM projects")
 
-    completed_tasks = pid_tasks.select { |task| task.completed == true }
-  end
+      # Here we convert our array of **data arrays** into an array of convenient Project objects.
+      # Due to Ruby's implicit returns, the new array gets returned.
+      result.map do |row|
+        # `row` is an array of data. Example: [1, 'My Project Name']
+        # You can discover the column order by looking at your table schema
+        # For example:
+        #   $ sqlite3 tm_test.db
+        #   sqlite> .schema projects
+        #
+        proj = TM::Project.new(row[1])
+        proj.id = row[0]
+        proj
+      end
+    end
 
+    # The OLD method
+    # def create_project(name)
+    #   proj = TM::Project.new(name)
+    #   proj
+    # end
+    #
+    # The new, SQL method
+    def create_project(name)
+      proj = TM::Project.new(name)
+      @sqlite.execute("INSERT INTO projects (name) VALUES (?);", name)
 
-  def mark_task_as_complete(tid)
-    # ensure id is an integer
-    tid = tid.to_i
+      # This is needed so other code can access the id of the project we just created
+      proj.id = @sqlite.execute("SELECT last_insert_rowid()")[0][0]
 
-    @tasks[tid].completed = true
+      # Return a Project object, just like in the old method
+      proj
+    end
 
-    @tasks[tid]
-  end
+    # The OLD method
+    # def get_project(pid)
+    #   @projects[pid]
+    # end
+    #
+    # The new, SQL method
+    def get_project(pid)
+      # Pro Tip: Always try SQL statements in the terminal first
+      rows = @sqlite.execute("SELECT * FROM projects WHERE id = ?", pid)
 
-  #############################
-  ## other Task CRUD Methods ##
-  #############################
+      # Since we are selecting by id, and ids are UNIQUE, we can assume only ONE row is returned
+      data = rows.first
 
-  # create already covered by add_task_to_proj
+      # Create a convenient Project object based on the data given to us by SQLite
+      project = TM::Project.new(data[1])
+      project.id = data[0]
+      project
+    end
 
-  def get_task(tid)
-    @tasks[tid]
-  end
+    #######################
+    ## Task CRUD Methods ##
+    #######################
 
-  def update_task(tid, new_description = nil, new_priority = nil)
-    task = @tasks[tid]
+    def all_tasks
+      @tasks.values
+    end
 
-    task.description = new_description || task.description
+    def create_task(pid, desc, priority)
+      pid = pid.to_i
+      priority = priority.to_i
 
-    task.priority = new_priority || task.priority
-  end
+      proj = @projects[pid]
 
-  def delete(tid)
-    @tasks.delete(tid)
-  end
+      added_task = TM::Task.new(pid, desc, priority)
 
-  ################################
-  ## other Project CRUD Methods ##
-  ################################
+      @tasks[added_task.id] = added_task
 
+      added_task
+    end
 
-  # create already covered by create_proj
+    def get_task(tid)
+      @tasks[tid]
+    end
 
-  def get_proj(pid)
-    @projects[pid]
-  end
+    def get_remaining_tasks_for_project(pid)
+      @tasks.values.select {|t| t.project_id == pid }
+    end
 
-  def update_proj(pid, new_name = nil)
-    proj = @projects[pid]
-    proj.name = new_name || proj.name
-  end
+    def update_task(tid, attrs)
+      task = @tasks[tid]
+      task.description = attrs[:description] if attrs[:description]
+      task.priority = attrs[:priority] if attrs[:priority]
+      task
+    end
 
-  def delete_proj(pid)
-    @projects.delete(pid)
-  end
+    ##############################
+    ## SQL Database Interaction ##
+    ##############################
 
-  ###########################
-  ## Employee CRUD Methods ##
-  ###########################
+    def clear_all_records
+      @sqlite.execute("DELETE FROM projects")
+      @sqlite.execute("DELETE FROM tasks")
+    end
 
-  def create_emp(name)
-    emp = TM::Employee.new(name)
-    @employees[emp.id] = emp
-    emp
-  end
-
-  def get_emp(eid)
-    @employees[eid]
-  end
-
-  def update_emp(eid, new_name)
-    emp = @employees[eid]
-    emp.name = new_name
-    emp
-  end
-
-  def delete_emp(eid)
-    @employees.delete(eid)
   end
 end

@@ -1,6 +1,6 @@
 
 class TM::Task
-  attr_reader :proj_id
+  attr_reader :project_id
   attr_reader :id
   attr_accessor :description, :priority
   attr_reader :time_created
@@ -15,8 +15,8 @@ class TM::Task
     @@counter
   end
 
-  def initialize(proj_id, desc, priority)
-    @proj_id = proj_id
+  def initialize(project_id, desc, priority)
+    @project_id = project_id
     @description = desc
     @priority = priority
     @id = TM::Task.gen_id
