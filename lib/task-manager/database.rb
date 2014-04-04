@@ -96,35 +96,58 @@ module TM
     #######################
 
     def all_tasks
-      @tasks.values
+      result = @sqlite.execute("SELECT * FROM tasks")
+      result.map do |row|
+        task = get_task(row[0])
+
+        # or do this
+        # task = TM::Task.new(row[1], row[2], row[3])
+        # task.id = row[0]
+        # task
+      end
     end
 
     def create_task(pid, desc, priority)
-      pid = pid.to_i
-      priority = priority.to_i
-
       proj = @projects[pid]
+      task = TM::Task.new(pid, desc, priority)
 
-      added_task = TM::Task.new(pid, desc, priority)
+      @sqlite.execute("INSERT INTO tasks (project_id, name, priority) VALUES (?,?,?);", pid, desc, priority)
 
-      @tasks[added_task.id] = added_task
+      task.id = @sqlite.execute("SELECT last_insert_rowid()")[0][0]
 
-      added_task
+      task
     end
 
     def get_task(tid)
-      @tasks[tid]
+      rows = @sqlite.execute("SELECT * FROM tasks WHERE id = ?", tid)
+      data = rows.first
+      # binding.pry
+      task = TM::Task.new(data[1], data[2], data[3])
+      task.id = data[0]
+      task
     end
 
     def get_remaining_tasks_for_project(pid)
-      @tasks.values.select {|t| t.project_id == pid }
+      result = @sqlite.execute("SELECT * FROM tasks WHERE project_id = ? ", pid)
+      result.map do |row|
+        task = get_task(row[0])
+
+        # or do this instead
+        # task = TM::Task.new(row[1], row[2], row[3])
+        # task.id = row[0]
+        # task
+      end
     end
 
     def update_task(tid, attrs)
-      task = @tasks[tid]
-      task.description = attrs[:description] if attrs[:description]
-      task.priority = attrs[:priority] if attrs[:priority]
-      task
+      @sqlite.execute("UPDATE tasks SET NAME = ? WHERE id = ?", attrs[:description], tid) if attrs[:description]
+      @sqlite.execute("UPDATE tasks SET NAME = ? WHERE id = ?", attrs[:priority], tid) if attrs[:priority]
+
+      get_task(tid)
+      # or the longer way - will finish this example later
+      # rows = @sqlite.execute("SELECT * FROM tasks WHERE id = ?", tid)
+      # data = rows.first
+      # task = Task.new(data[1])
     end
 
     ##############################
