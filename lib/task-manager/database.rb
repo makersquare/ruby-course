@@ -140,8 +140,8 @@ module TM
     end
 
     def update_task(tid, attrs)
-      @sqlite.execute("UPDATE tasks SET NAME = ? WHERE id = ?", attrs[:description], tid) if attrs[:description]
-      @sqlite.execute("UPDATE tasks SET NAME = ? WHERE id = ?", attrs[:priority], tid) if attrs[:priority]
+      @sqlite.execute("UPDATE tasks SET name = ? WHERE id = ?", attrs[:description], tid) if attrs[:description]
+      @sqlite.execute("UPDATE tasks SET priority = ? WHERE id = ?", attrs[:priority], tid) if attrs[:priority]
 
       get_task(tid)
       # or the longer way - will finish this example later

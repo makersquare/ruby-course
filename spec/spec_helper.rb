@@ -1,7 +1,6 @@
 # Require our project, which in turns requires everything else
 require './lib/task-manager.rb'
 require 'pry-debugger'
-require 'time'
 
 # Set our database class to use a test database.
 # Any code that requires our business logic NEEDS to set a database name like this.
