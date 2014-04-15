@@ -1,0 +1,11 @@
+# development:
+#   adapter: postgresql
+#   database: ar-ex_dev
+#   pool: 5
+#   timeout: 5000
+
+test:
+  adapter: sqlite3
+  database: ar-ex_test
+  pool: 5
+  timeout: 5000
