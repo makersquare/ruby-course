@@ -1,5 +1,10 @@
 
 shared_examples 'a database' do
+
+  let(:db) { described_class.new }
+
+  before { db.clear_everything }
+
   describe 'Users' do
     it "creates a user" do
       user = db.create_user :name => 'Johnny'
@@ -39,7 +44,8 @@ shared_examples 'a database' do
 
     it "gets all teams" do
       %w{R G B}.each {|name| db.create_team :name => name }
-
+      x = db.all_teams
+      # binding.pry
       expect(db.all_teams.count).to eq 3
       expect(db.all_teams.map &:name).to include('R', 'G', 'B')
     end
@@ -73,7 +79,7 @@ shared_examples 'a database' do
   end
 
 
-  describe "Searching Events" do
+  describe "Searching Events", pending: true do
     before do
       %w{Alice Bob}.each {|name| db.create_user :name => name }
       %w{Students Teachers}.each {|name| db.create_team :name => name }
