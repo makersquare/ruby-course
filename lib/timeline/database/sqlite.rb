@@ -5,12 +5,8 @@ module Timeline
   module Database
     class SQLite
       def initialize
-        ActiveRecord::Base.establish_connection(
-          :adapter => 'sqlite3',
-          :database => 'ar-ex_test'
-          )
-        # configs = YAML.load_file('db/config.yml')
-        # ActiveRecord::Base.establish_connection(configs[test])
+        configs = YAML.load_file('db/config.yml')
+        ActiveRecord::Base.establish_connection(configs["test"])
       end
 
       class User < ActiveRecord::Base
