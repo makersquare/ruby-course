@@ -59,10 +59,20 @@ class SQLiteDatabase
     team = Team.create(attrs)
     Timeline::Team.new(team.attributes)
   end
+
   def get_team(id)
     team = Team.find(id)
     Timeline::Team.new(team.attributes)
   end
 
+  def all_teams
+    teams = Team.all
+    rendered_teams= []
+    teams.each do |x|
+      new_team = Timeline::Team.new(x.attributes)
+      rendered_teams << new_team
+    end
+    rendered_teams
+  end
 
 end
