@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140415202237) do
+ActiveRecord::Schema.define(version: 20140415210518) do
 
   create_table "events", force: true do |t|
     t.integer  "team_id"
@@ -21,8 +21,21 @@ ActiveRecord::Schema.define(version: 20140415202237) do
     t.text     "content"
   end
 
+  create_table "tags", force: true do |t|
+    t.string  "name"
+    t.integer "event_id"
+  end
+
+  add_index "tags", ["event_id"], name: "index_tags_on_event_id"
+
   create_table "teams", force: true do |t|
     t.string "name"
+  end
+
+  create_table "timestamps", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|

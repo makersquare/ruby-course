@@ -12,6 +12,8 @@ module Timeline
       def clear_everything
         User.destroy_all
         Team.destroy_all
+        Event.destroy_all
+        Tag.destroy_all
       end
 
       # Define models and relationships here (yes, classes within a class)
@@ -19,9 +21,18 @@ module Timeline
       end
 
       class Team < ActiveRecord::Base
+        has_many :events
       end
 
       class Event < ActiveRecord::Base
+        has_many :tags
+      end
+
+      class Tag < ActiveRecord::Base
+        belongs_to :event
+      end
+
+      class Timestamp < ActiveRecord::Base
       end
 
       # Now implement you database methods here
@@ -61,9 +72,47 @@ module Timeline
       end
 
       def create_event(attrs)
-        ar_event = Event.create(attrs)
-        Timeline::Event.new(ar_event.attributes)
+        tag_names_arr = attrs[:tags] || []
+
+        attrs_without_tags = attrs.clone
+        attrs_without_tags.delete(:tags)
+
+        ar_event = Event.create(attrs_without_tags)
+
+        # create the tags in the db and associate them with the event
+        tag_names_arr.each do |tag_name|
+          ar_event.tags.create(name: tag_name)
+        end
+
+        # because ar_event.attributes by itself does not have tags
+        # we are adding a tags key and value
+        # note that we can't change ar_event.attributes hash itself
+        #
+        ar_event_attrs_with_tags = ar_event.attributes.clone
+        ar_event_attrs_with_tags[:tags] = tag_names_arr
+
+        # binding.pry
+        Timeline::Event.new(ar_event_attrs_with_tags)
       end
+
+      def get_event(eid)
+        ar_event = Event.find(eid)
+        tag_names_arr = ar_event.tags.map { |tag| tag.name }
+
+        ar_event_attrs_with_tags = ar_event.attributes.clone
+        ar_event_attrs_with_tags[:tags] = tag_names_arr
+
+        Timeline::Event.new(ar_event_attrs_with_tags)
+      end
+
+      def create_timestamp
+        ar_time = Timestamp.create(name: "something")
+      end
+
+      # def get_events_by_team(tid)
+      #   ar_team = get_team(tid)
+      #   ar_events = ar_team.events.order("created_at DESC")
+      # end
     end
   end
 end

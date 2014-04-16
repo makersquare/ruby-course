@@ -55,6 +55,7 @@ shared_examples 'a database' do
   describe 'Events' do
     it "creates an event" do
       event = db.create_event :name => 'Ping'
+
       expect(event).to be_a Timeline::Event
       expect(event.name).to eq 'Ping'
       expect(event.id).to_not be_nil
@@ -74,12 +75,13 @@ shared_examples 'a database' do
       expect(retrieved_event.name).to eq 'Doomsday'
 
       expect(retrieved_event.tags.count).to eq 3
+      # binding.pry
       expect(retrieved_event.tags).to include('x', 'y', 'z')
     end
   end
 
 
-  describe "Searching Events", pending: true do
+  describe "Searching Events" do
     before do
       %w{Alice Bob}.each {|name| db.create_user :name => name }
       %w{Students Teachers}.each {|name| db.create_team :name => name }
