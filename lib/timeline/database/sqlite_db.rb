@@ -89,9 +89,9 @@ module Timeline
         # because ar_event.attributes by itself does not have tags
         # we are adding a tags key and value
         # note that we can't change ar_event.attributes hash itself
-        #
-        ar_event_attrs_with_tags = ar_event.attributes.clone
-        ar_event_attrs_with_tags[:tags] = tag_names_arr
+        # the merge method creates a clone that merges in a new key value pairs
+        # 
+        ar_event_attrs_with_tags = ar_event.attributes.merge({:tags => tag_names_arr})
 
         Timeline::Event.new(ar_event_attrs_with_tags)
       end
@@ -100,8 +100,9 @@ module Timeline
         ar_event = Event.find(eid)
         tag_names_arr = ar_event.tags.map { |tag| tag.name }
 
-        ar_event_attrs_with_tags = ar_event.attributes.clone
-        ar_event_attrs_with_tags[:tags] = tag_names_arr
+        ar_event_attrs_with_tags = ar_event.attributes.merge({:tags => tag_names_arr})
+        # ar_event_attrs_with_tags = ar_event.attributes.clone
+        # ar_event_attrs_with_tags[:tags] = tag_names_arr
 
         Timeline::Event.new(ar_event_attrs_with_tags)
       end
