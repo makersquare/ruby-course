@@ -93,6 +93,7 @@ shared_examples 'a database' do
 
     it "queries events by team, ordered by creation date" do
       # Create event now
+      # binding.pry
       db.create_event :name => 'x', :team_id => @students.id
 
       # Create event in the past

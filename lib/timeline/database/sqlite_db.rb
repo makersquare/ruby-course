@@ -26,6 +26,8 @@ module Timeline
 
       class Event < ActiveRecord::Base
         has_many :tags
+
+        belongs_to :team
       end
 
       class Tag < ActiveRecord::Base
@@ -91,7 +93,6 @@ module Timeline
         ar_event_attrs_with_tags = ar_event.attributes.clone
         ar_event_attrs_with_tags[:tags] = tag_names_arr
 
-        # binding.pry
         Timeline::Event.new(ar_event_attrs_with_tags)
       end
 
@@ -109,10 +110,10 @@ module Timeline
         ar_time = Timestamp.create(name: "something")
       end
 
-      # def get_events_by_team(tid)
-      #   ar_team = get_team(tid)
-      #   ar_events = ar_team.events.order("created_at DESC")
-      # end
+      def get_events_by_team(tid)
+        ar_team = Team.find(tid)
+        ar_events = ar_team.events.order("created_at ASC")
+      end
     end
   end
 end
