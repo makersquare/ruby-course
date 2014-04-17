@@ -1,5 +1,6 @@
 require 'timeline'
 require 'timecop'
+require 'timeline/database/activerecord.rb'
 
 RSpec.configure do |config|
   # Auto-generated

@@ -1,4 +1,7 @@
 require 'active_model'
+require 'active_record'
+require 'yaml'
+require 'pry-debugger'
 
 module Timeline
 end
