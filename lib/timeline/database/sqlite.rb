@@ -76,22 +76,49 @@ module Timeline
 
       # Events
       def create_event(attrs)
-        event = Event.create(name: attrs[:name], user_id: attrs[:user_id], team_id: attrs[:team_id], content: attrs[:content], created_at: Time.now)
+        event = Event.create(
+          name: attrs[:name],
+          user_id: attrs[:user_id],
+          team_id: attrs[:team_id],
+          content: attrs[:content],
+          created_at: Time.now)
 
         attrs[:tags].each {|tag| Tag.create(tag: tag, event_id: event.id)} if attrs[:tags]
-        Timeline::Event.new({id: event.id, name: event.name, user_id: event.user_id, team_id: event.team_id, content: event.content, created_at: event.created_at, tags: attrs[:tags]})
+        Timeline::Event.new({
+          id: event.id,
+          name: event.name,
+          user_id: event.user_id,
+          team_id: event.team_id,
+          content: event.content,
+          created_at: event.created_at,
+          tags: attrs[:tags]})
       end
 
       def get_event(id)
         event = Event.find(id)
-        Timeline::Event.new({id: event.id, name: event.name, user_id: event.user_id, team_id: event.team_id, content: event.content, created_at: event.created_at, tags: get_tags_for_event(event.id)})
+        Timeline::Event.new({
+          id: event.id,
+          name: event.name,
+          user_id: event.user_id,
+          team_id: event.team_id,
+          content: event.content,
+          created_at: event.created_at,
+          tags: get_tags_for_event(event.id)})
       end
 
       def get_events_by_team(team_id)
         events = Event.where(team_id: team_id)
         array = []
         events.each do |event|
-          array.push(Timeline::Event.new({id: event.id, name: event.name, user_id: event.user_id, team_id: event.team_id, content: event.content, created_at: event.created_at, tags: get_tags_for_event(event.id)}))
+          array.push(Timeline::Event.new({
+            id: event.id,
+            name: event.name,
+            user_id: event.user_id,
+            team_id: event.team_id,
+            content: event.content,
+            created_at: event.created_at,
+            tags: get_tags_for_event(event.id)
+            }))
         end
         array.sort { |a,b| a.created_at <=> b.created_at }
       end
