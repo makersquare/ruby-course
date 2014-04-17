@@ -1,9 +1,10 @@
 require 'spec_helper'
+require 'pry-debugger'
 
 shared_examples_for "Database" do
   let(:db) { described_class.new }
 
-  before { db.clear_all_records }
+  before { db.clear_everything }
 
   describe 'Users' do
     it "creates a user" do
@@ -71,6 +72,7 @@ shared_examples_for "Database" do
 
       retrieved_event = db.get_event(event.id)
       expect(retrieved_event.name).to eq 'Doomsday'
+      # binding.pry
 
       expect(retrieved_event.tags.count).to eq 3
       expect(retrieved_event.tags).to include('x', 'y', 'z')
@@ -112,10 +114,10 @@ shared_examples_for "Database" do
   end
 end
 
-describe InMemory do
+describe Timeline::Database::InMemory do
   it_behaves_like "Database"
 end
 
-describe SQLiteDatabase do
+describe Timeline::Database::SQLiteDatabase do
   it_behaves_like "Database"
 end
