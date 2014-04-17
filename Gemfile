@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.1.0'
+ruby '2.1.1'
 
 # Core Application
 gem 'activemodel', '~> 4.1.0'

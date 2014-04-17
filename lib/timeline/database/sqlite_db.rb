@@ -2,6 +2,7 @@ module Timeline
   module Database
     class SQLiteDB
 
+
       def initialize
         ActiveRecord::Base.establish_connection(
           :adapter => 'sqlite3',
@@ -18,6 +19,7 @@ module Timeline
 
       # Define models and relationships here (yes, classes within a class)
       class User < ActiveRecord::Base
+        has_many :events # wasn't there before
       end
 
       class Team < ActiveRecord::Base
@@ -90,7 +92,7 @@ module Timeline
         # we are adding a tags key and value
         # note that we can't change ar_event.attributes hash itself
         # the merge method creates a clone that merges in a new key value pairs
-        # 
+        #
         ar_event_attrs_with_tags = ar_event.attributes.merge({:tags => tag_names_arr})
 
         Timeline::Event.new(ar_event_attrs_with_tags)
