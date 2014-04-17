@@ -11,11 +11,16 @@ class SQLiteDatabase
       :adapter => 'sqlite3',
       :database => 'ar-ex_test'
  )
+    # should be the same as in the yaml file
   end
 
 
    def clear_everything
       User.destroy_all
+      Team.destroy_all
+      Event.destroy_all
+      Tag.destroy_all
+
     end
   # Define models and relationships here (yes, classes within a class)
   class User < ActiveRecord::Base
@@ -23,11 +28,15 @@ class SQLiteDatabase
   end
 
   class Team < ActiveRecord::Base
-    has_many :user
+    has_many :users
   end
 
   class Event <ActiveRecord::Base
     has_many :teams
+  end
+
+  class Tag <ActiveRecord::Base
+    belongs_to :event
   end
 
   # Now implement you database methods here
@@ -40,10 +49,15 @@ class SQLiteDatabase
     Timeline::User.new(ar_user.attributes)
   end
 
+
+
   def get_user(id)
     ar_user= User.find(id)
     Timeline::User.new(ar_user.attributes)
   end
+
+# x = get_user(1)
+# x.update(name: "bob")
 
   def all_users
     ar_users = User.all
@@ -72,7 +86,38 @@ class SQLiteDatabase
       new_team = Timeline::Team.new(x.attributes)
       rendered_teams << new_team
     end
+
     rendered_teams
+  end
+
+
+  def create_event(attrs)
+    tags_array = attrs[:tags]
+    attrs.delete(:tags)
+    ar_event = Event.create(attrs)
+    event = Timeline::Event.new(ar_event.attributes)
+    event.tags = []
+    if tags_array != nil
+    tags_array.each do |x|
+      event.tags.push(x)
+      Tag.create( {name: x, event_id: ar_event.id } )
+    end
+  end
+    hash_tag = {:tags => tags_array}
+
+    event
+  end
+
+  def get_event(event_id)
+
+    event = Event.find(event_id)
+    event_tags = event.tags.all
+
+
+    event_entity = Timeline::Event.new(event.attributes)
+    event.attributes.tags = event_tags
+    event_entity
+
   end
 
 end
