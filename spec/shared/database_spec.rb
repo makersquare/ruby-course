@@ -64,7 +64,7 @@ shared_examples "a database" do
       expect(retrieved_event.name).to eq 'Pong'
     end
 
-    xit "stores tags along with an event" do
+    it "stores tags along with an event" do
       event = db.create_event :name => 'Doomsday', :tags => ['x', 'y', 'z']
 
       retrieved_event = db.get_event(event.id)
@@ -87,7 +87,7 @@ shared_examples "a database" do
       @teachers = db.all_teams.find {|team| team.name == 'Teachers' }
     end
 
-    xit "queries events by team, ordered by creation date" do
+    it "queries events by team, ordered by creation date" do
       # Create event now
       db.create_event :name => 'x', :team_id => @students.id
 
