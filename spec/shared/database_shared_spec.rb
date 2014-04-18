@@ -114,10 +114,3 @@ shared_examples_for "Database" do
   end
 end
 
-describe Timeline::Database::InMemory do
-  it_behaves_like "Database"
-end
-
-describe Timeline::Database::SQLiteDatabase do
-  it_behaves_like "Database"
-end
