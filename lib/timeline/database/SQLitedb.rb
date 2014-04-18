@@ -3,7 +3,9 @@ require 'active_record'
 require 'pry-debugger'
 # dbconfig = YAML::load(File.open('db/config.yml'))
 # ActiveRecord::Base.establish_connection(dbconfig)
-class SQLiteDatabase
+module Timeline
+  module Database
+  class SQLiteDatabase
 
   def initialize
     ActiveRecord::Base.establish_connection(
@@ -110,15 +112,14 @@ class SQLiteDatabase
     end
   end
    event_entity = Timeline::Event.new(event.attributes.merge(:tags => tag_array))
-
  end
 
 
   def get_events_by_team(team_id)
-
     event = Event.where(:team_id => team_id)
     event.sort_by(&:created_at)
   end
 
+  end
 end
-
+end
