@@ -6,6 +6,7 @@ require 'pry-debugger'
 require_relative 'usecase.rb'
 require_relative 'usecase/create_event.rb'
 require_relative 'usecase/get_team_events.rb'
+require_relative 'usecase/get_team.rb'
 
 module Timeline
   def self.db

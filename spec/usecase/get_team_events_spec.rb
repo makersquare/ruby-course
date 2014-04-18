@@ -12,13 +12,22 @@ describe Timeline::GetTeamEvents do
     event3 = @db.create_event(:name=>"hackathon",:team_id=>team.id)
     result = subject.run(:team_id => team.id)
     expect(result.success?).to eq true
-    expect(result.event.length).to eq 3
+     expect(result.event.length).to eq 3
+    @db.clear_everything
   end
 
   it "should return an error if a team does not exist" do
     result = subject.run(:team_id => 56)
     expect(result.error?).to eq true
     expect(result.error).to eq :no_team_with_that_id
+  end
+
+  it "should return an error if a team does not have events" do
+    team = @db.create_team(:name=> "Philip's team")
+    result = subject.run(:team_id => team.id)
+    expect(result.error?).to eq true
+    @db.clear_everything
+
   end
 
 end
