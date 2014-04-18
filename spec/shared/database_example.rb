@@ -72,7 +72,15 @@ shared_examples "a database" do
 
       expect(retrieved_event.tags.count).to eq 3
       expect(retrieved_event.tags).to include('x', 'y', 'z')
+    end
 
+    it "creates an event (regression test)" do
+      attrs = { :user_id => 103, :team_id => 503,
+                :name => "Waterfall", :content => "lots of water",
+                :tags => ["fun"] }
+      event = db.create_event(attrs)
+
+      expect(event).to_not be_nil
     end
   end
 

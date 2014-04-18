@@ -2,17 +2,20 @@ module Timeline
   class CreateEvent  < UseCase
     def run(inputs)
 
-      user = @db.get_user(inputs[:user_id])
-      return failure(:missing_uid) if user_id.nil?
+      user_id = inputs[:user_id]
+      user = Timeline.db.get_user(user_id)
 
+      return failure(:missing_user) if user.nil?
 
+      team_id = inputs[:team_id]
+      team = Timeline.db.get_team(team_id)
 
-      team = @db.create_team(inputs[:team_attrs])
+      return failure(:missing_team) if team.nil?
 
+      attrs = {user_id: user_id, team_id: team_id, name: inputs[:name], content: inputs[:content], tags: [inputs[:tags]]}
+      event = Timeline.db.create_event(attrs)
 
-      event = @db.create_event(inputs[:attributes])
-      success :event =>event
-
+      success :event => event
 
     end
   end
