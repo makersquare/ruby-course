@@ -4,7 +4,7 @@ module Timeline
 
   class UseCase
     # Convenience method that lets us call `.run` directly on the class
-    def self.run(inputs)
+    def self.run(inputs={})
       self.new.run(inputs)
     end
 

@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  post 'events/create', to: 'events#create'
+
+  get 'teams/show/:id', to: 'teams#show', :as => :team_show
+
+  get 'teams/index', to: 'teams#index'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

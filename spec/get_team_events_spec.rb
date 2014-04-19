@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Timeline::GetTeamEvents do
   before do
+    # Timeline.instance_variable_set(:@db_class, " ")
     @db = Timeline.db
     @team = @db.create_team({name: "Astros"})
     @user = @db.create_user({name: "Brian"})

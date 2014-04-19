@@ -1,6 +1,6 @@
 module Timeline
   class GetTeams < UseCase
-    def run()
+    def run(inputs)
       teams = Timeline.db.all_teams
 
       success :teams => teams

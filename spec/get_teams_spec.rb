@@ -9,7 +9,7 @@ describe Timeline::GetTeams do
    end
 
   it "returns all teams in database" do
-    result = subject.run()
+    result = subject.run({})
     expect(result.teams.last.name).to eq "Cardinals"
   end
 end
