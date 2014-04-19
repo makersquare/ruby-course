@@ -4,6 +4,9 @@ module Timeline
   def self.db
     @__db_instance ||= Database::InMemory.new
   end
+
+  def self.seed_db
+  end
 end
 
 require 'timeline/entity.rb'
