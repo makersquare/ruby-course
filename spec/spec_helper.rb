@@ -1,6 +1,9 @@
 require 'timeline'
 require 'timecop'
 require 'timeline/database/activerecord.rb'
+require 'use_case.rb'
+require 'timeline/use-cases/create_event.rb'
+require 'timeline/use-cases/see_all_events_by_team.rb'
 
 RSpec.configure do |config|
   # Auto-generated
