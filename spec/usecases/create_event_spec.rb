@@ -5,19 +5,6 @@ describe Timeline::CreateEvent do
     expect(Timeline::CreateEvent).to be_a Class
   end
 
-  it 'returns error for no user_id provided' do
-    result = subject.run(name: 'b', team_id: 15315)
-    expect(result.success?).to be_false
-    expect(result.error).to eq :no_user_id_provided
-  end
-
-  it 'returns error for no team_id provided' do
-    user = Timeline.db.create_user(name: 'bob')
-    result = subject.run(name: 'b', user_id: user.id)
-    expect(result.success?).to be_false
-    expect(result.error).to eq :no_team_id_provided
-  end
-
   it 'returns error for user_id doesnt exist' do
     result = subject.run(name: 'b', team_id:2491385091, user_id: 15318686458455)
     expect(result.success?).to be_false
