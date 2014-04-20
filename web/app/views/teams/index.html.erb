@@ -1,0 +1,15 @@
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+  <ul>
+  <% @teams.each do |team| %>
+    <li>
+     <a href = "/teams/show/<%=team.id%>"> <%= team.name %> </a>
+    </li>
+  <% end if @teams %>
+  </ul>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+  <%=flash[:notice]%>
+<%= form_tag("/events/create", method: "post") do %>
+ <%= label_tag(:user_id, "User ID:") %>
+ <%= text_field_tag(:user_id) %><br>
+ <%= hidden_field_tag :team_id, @team.id %>
+ <%= label_tag(:name, "Event Name:") %>
+ <%= text_field_tag(:name) %><br>
+ <%= submit_tag("Create Event") %>
+<% end %>
+  Team: <%= @team.name %>
+  <ul>
+  <% @events.each do |event| %>
+    <li>
+       <%= event.name %>
+    </li>
+  <% end %>
+  </ul>
+</body>
+</html>
+
