@@ -8,6 +8,9 @@
         </ul>
     <% end %>
 
+    <% if flash[:error] %>
+        <h2><%= flash[:error] %></h2>
+    <% end %>
 
 <%= form_tag '../events/create', method: 'post' do  %>
     <div>
