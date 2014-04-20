@@ -1,7 +1,7 @@
 module Timeline
   class GetTeamEvents < UseCase
     def run(inputs)
-      team_id = inputs[:team_id]
+      team_id = inputs[:team_id].to_i
       verify_team = Timeline.db.get_team(team_id)
       return failure(:team_doesnt_exist) if verify_team.nil?
       events = Timeline.db.get_events_by_team(team_id)
