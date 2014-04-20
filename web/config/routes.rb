@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+
+  post 'events'=> 'events#create'
+  root 'events#new'
+end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

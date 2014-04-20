@@ -14,3 +14,8 @@ gem 'timecop', '~> 0.7.1'
 gem 'sqlite3'
 gem 'activerecord', '~> 4.1.0'
 gem 'active_record_tasks', '~> 1.0.4'
+
+
+# Load Gemfile from our core application
+app_gemfile_path = File.expand_path('../../Gemfile', __FILE__)
+eval File.read(app_gemfile_path)
