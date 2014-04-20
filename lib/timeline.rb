@@ -14,8 +14,8 @@ module Timeline
 	end
 end
 
-require 'timeline/entity.rb'
-require 'timeline/usecases/usecase.rb'
+require_relative 'timeline/entity.rb'
+require_relative 'timeline/usecases/usecase.rb'
 
 Gem.find_files("timeline/database/*.rb").each { |path| require path }
 Gem.find_files("timeline/entities/*.rb").each { |path| require path }
