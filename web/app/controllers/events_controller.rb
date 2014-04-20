@@ -6,21 +6,14 @@ class EventsController < ApplicationController
     result = Timeline::CreateEvent.run(name: name, user_id: user_id, team_id: team_id)
 
     if (result.success?)
-      redirect_to ("/teams/#{params[:team_id]}")
+      flash[:msg] = "user created!"
+      # redirect_to ("/teams/#{params[:team_id]}")
     else
-      if (result.error == :no_user_id_provided)
-        error = "no user id provided!"
-      elsif (result.error == :user_doesnt_exist)
-        error = "user does not exist!"
-        # @error = "user does not exist!"
+      if (result.error == :user_doesnt_exist)
+        flash[:msg] = "user does not exist!"
         # redirect_to ("/teams/#{params[:team_id]}")
-      elsif (result.error == :no_team_id_provided)
-        error = "no team id provided!"
-      else
-        error = "team doesnt exist!"
       end
     end
-    flash[:error] = error
     redirect_to ("/teams/#{params[:team_id]}")
   end
 end
