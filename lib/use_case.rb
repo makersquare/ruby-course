@@ -20,17 +20,11 @@ module Timeline
     def success?
       false
     end
-    def error?
-      true
-    end
   end
 
   class UseCaseSuccess < OpenStruct
     def success?
       true
-    end
-    def error?
-      false
     end
   end
 end
