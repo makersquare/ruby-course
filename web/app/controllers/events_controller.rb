@@ -1,10 +1,12 @@
 class EventsController < ApplicationController
   def create
-    puts "#{params}"
-    result = Timeline::CreateEvent.run(params)
+    name = params[:name]
+    user_id = params[:user_id].to_i
+    team_id = params[:team_id].to_i
+    result = Timeline::CreateEvent.run(name: name, user_id: user_id, team_id: team_id)
+
     if (result.success?)
       @event = result.event
-      puts "#{@event.name}"
       redirect_to ("/teams/#{params[:team_id]}")
     else
       if (result.error == :no_user_id_provided)

@@ -10,7 +10,6 @@ class TeamsController < ApplicationController
   end
   def show
     @team_id = params[:id]
-    puts "#{@team_id}"
     result = Timeline::GetTeamEvents.run(team_id: @team_id)
     if (result.success?)
       @events = result.events

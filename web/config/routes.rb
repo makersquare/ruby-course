@@ -10,8 +10,6 @@ Web::Application.routes.draw do
   # Example of regular route:
     get 'teams' => 'teams#index'
 
-    # get 'teams/show' => 'teams#show'
-
     get '/teams/:id' => 'teams#show'
 
     post 'events/create' => 'events#create'

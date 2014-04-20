@@ -26,8 +26,8 @@ end
 
 
 
-Gem.find_files("timeline/database/*.rb").each { |path| require path }
-Gem.find_files("timeline/entities/*.rb").each { |path| require path }
+# Gem.find_files("timeline/database/*.rb").each { |path| require path }
+# Gem.find_files("timeline/entities/*.rb").each { |path| require path }
 require_relative 'timeline/database/active.rb'
 require_relative 'timeline/database/in_memory.rb'
 require_relative 'timeline/entity.rb'
