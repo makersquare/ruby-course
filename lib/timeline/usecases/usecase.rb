@@ -1,6 +1,6 @@
 require 'ostruct'
 
-module MyApp
+module Timeline
 
  class UseCase
    # Convenience method that lets us call `.run` directly on the class
