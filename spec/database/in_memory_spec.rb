@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-describe Timeline::Database::InMemory do
-
+shared_examples_for "database" do
   let(:db) { described_class.new }
 
   before { db.clear_everything }
@@ -111,5 +110,10 @@ describe Timeline::Database::InMemory do
       expect(events.map &:name).to eq ['y', 'x', 'z']
     end
   end
-
 end
+
+describe Timeline::Database::InMemory do
+  it_behaves_like "database"
+end
+
+
