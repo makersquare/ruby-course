@@ -16,13 +16,12 @@ end
 # # # # # # #
 
 def multiply(x, y)
-  result =  x * y
+  return  x * y
 end
 
 def give_me_seven
   # TODO: Use the `multiply` method
-  return 7
-
+  multiply(7,1)
 end
 
 
@@ -85,13 +84,13 @@ module GettersSetters
       @secret = 50
     end
     # TODO: Write getter and setter methods for secret
-    def getter
+    def secret
       @secret
     end
-
-    def setter
-      @secret=(@secret)
+    def secret=(new_secret)
+     @secret= new_secret
     end
+
   end
 
   # # # # # # # # # # #
@@ -99,13 +98,15 @@ module GettersSetters
   # # # # # # # # # # #
   class Person
 
-attr_reader :age
-attr_writer :secret
-attr_accessor :name
+
     def initialize(name, age)
       @name = name
       @age = age
     end
+
+    attr_reader :age
+    attr_writer :secret
+    attr_accessor :name
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     # TODO: Refactor the following to use attr_[reader|writer|accessible] shortcuts
     # NOTE: Don't provide any more access than necessary.
@@ -127,8 +128,8 @@ attr_accessor :name
       @name = value
     end
   end
-end
 
+end
 
 
 class ArrayProblems

@@ -10,7 +10,7 @@ describe "Ruby Diagnostic: You" do
     expect( toggle_oven(false) ).to eq "The oven is now off"
   end
 
-  xyou "know how to call a method within another method" do
+  you "know how to call a method within another method" do
     result = give_me_seven
     expect(result).to eq 7
     expect(@source).to include_code(:multiply).in_method(:give_me_seven)
@@ -55,7 +55,7 @@ describe "Ruby Diagnostic: You" do
 
   describe "Your knowledge of getters and setters" do
 
-    xyou "know how to write a getter method" do
+    you "know how to write a getter method" do
       box = GettersSetters::Box.new
       expect(box.secret).to eq 50
 
@@ -63,7 +63,7 @@ describe "Ruby Diagnostic: You" do
       expect(@source).to_not include_code(:attr_accessor).in(:Box).for(:GettersSetters)
     end
 
-    xyou "know how to write a setter method" do
+    you "know how to write a setter method" do
       box = GettersSetters::Box.new
       box.secret = 99
       expect(box.secret).to eq 99
