@@ -3,6 +3,14 @@
 # Problem 1 #
 # # # # # # #
 
+def toggle_oven(is_on)
+  if is_on == true
+    return "The oven is now on"
+  else
+    return "The oven is now off"
+  end
+end
+
 # TODO: Write a method caled `toggle_oven`
 
 # # # # # # #
