@@ -4,7 +4,13 @@
 # # # # # # #
 
 # TODO: Write a method caled `toggle_oven`
-
+def toggle_oven(status)
+  if status == true
+    "The oven is now on"
+  else
+    "The oven is now off"
+  end
+end
 # # # # # # #
 # Problem 2 #
 # # # # # # #
@@ -15,6 +21,7 @@ end
 
 def give_me_seven
   # TODO: Use the `multiply` method
+  multiply(7,1)
 end
 
 
@@ -26,8 +33,10 @@ module ClassesAndInstances
   # # # # # # # # # # # #
   class Animal
     attr_reader :name
+    attr_writer :name
     def initialize(name)
       # TODO: Set name
+      @name = name
     end
   end
 
@@ -41,6 +50,10 @@ module ClassesAndInstances
       @animals = []
     end
 
+    def adopt(animal)
+      @animal = animal
+      @animals.push(animal)
+    end
     # TODO: Write a method `adopt` that takes one paramater `animal`
     # and adds it to its animals array
   end
@@ -52,11 +65,11 @@ module ClassesAndInstances
     attr_accessor :size
     # TODO: Fix incorrect use of local and instance variables
     def initialize(initial_size)
-      size = initial_size
+      @size = initial_size
     end
 
     def grow
-      size = size + 1
+      @size += 1
     end
   end
 end
@@ -69,16 +82,25 @@ module GettersSetters
   # Getters/Setters 1 #
   # # # # # # # # # # #
   class Box
+
     def initialize
       @secret = 50
     end
     # TODO: Write getter and setter methods for secret
+    def secret
+      @secret
+    end
+
+    def secret=(new_secret)
+      @secret = new_secret
+    end
   end
 
   # # # # # # # # # # #
   # Getters/Setters 2 #
   # # # # # # # # # # #
   class Person
+    attr_accessor :name, :age, :secret
 
     def initialize(name, age)
       @name = name
@@ -89,16 +111,10 @@ module GettersSetters
     # NOTE: Don't provide any more access than necessary.
     #       For example, don't use attr_accessible when all you really need is attr_writer
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-    def age
-      @age
-    end
+
 
     def secret=(value)
       @secret = value
-    end
-
-    def name
-      @name
     end
 
     def name=(value)
@@ -116,6 +132,8 @@ class ArrayProblems
 
   def self.add_cake_to_array(array)
     # TODO: Complete this method
+    array.push("cake")
+
   end
 
   # # # # # # #
@@ -124,6 +142,7 @@ class ArrayProblems
 
   def self.uppercase_third_element(array)
     # TODO: Complete this method
+    array[2].upcase!
   end
 
   # # # # # # #
@@ -132,6 +151,9 @@ class ArrayProblems
 
   def self.iterate_and_print(array)
     # TODO: Iterate over this array and `puts` each element.
+    array.each do |x|
+      puts x
+    end
   end
 
   # # # # # # #
@@ -140,6 +162,11 @@ class ArrayProblems
 
   def self.select_higher(array, min)
     # TODO: Select and return all numbers higher than `min`
+    array.each do |x|
+      if x > min
+        puts x
+      end
+    end
   end
 
   # # # # # # #
@@ -148,6 +175,9 @@ class ArrayProblems
 
   def self.greet_everyone(people)
     # TODO: Select and return all numbers higher than `min`
+    people.map do |x|
+      "Hello, #{x}"
+    end
   end
 end
 
@@ -160,6 +190,7 @@ class HashProblems
 
   def self.create_empty_hash
     # TODO: Complete this method
+    Hash.new
   end
 
   # # # # # # #
@@ -168,6 +199,10 @@ class HashProblems
 
   def self.create_veggie_color_hash
     # TODO: Complete this method by returning a hash
+    {
+      tomato: "red",
+      kale: "green"
+    }
   end
 
   # # # # # # #
@@ -176,6 +211,7 @@ class HashProblems
 
   def self.update_father_last_name(hash)
     # TODO: Complete this method by writing A SINGLE LINE
+    hash["father"]["name"][:last] = "James XXX"
   end
 end
 
@@ -190,5 +226,10 @@ class ArraysAndHashes
     # TODO: Iterate over this array and `puts` each key and value
     # Example: if array is [{ egg: 12 }, { milk: 1 }],
     #          then `puts` both "egg: 12" and "milk: 1"
+    grocery_lists.each do |x|
+      x.each do |a, b|
+        puts "#{a}: #{b}"
+      end
+    end
   end
 end
