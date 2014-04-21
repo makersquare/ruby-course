@@ -72,7 +72,7 @@ describe "Ruby Diagnostic: You" do
       expect(@source).to_not include_code(:attr_accessor).in(:Box).for(:GettersSetters)
     end
 
-    xyou "can properly refactor getters/setters to their attr_ shortcut equivalents" do
+    you "can properly refactor getters/setters to their attr_ shortcut equivalents" do
       bob = GettersSetters::Person.new('Bob', 38)
       expect(bob.name).to eq 'Bob'
       expect(bob.age).to eq 38
