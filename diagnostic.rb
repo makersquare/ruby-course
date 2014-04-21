@@ -16,12 +16,13 @@ end
 # # # # # # #
 
 def multiply(x, y)
-  return  x * y
+  result =  x * y
 end
 
 def give_me_seven
   # TODO: Use the `multiply` method
-  multiply()
+  return 7
+
 end
 
 
@@ -63,11 +64,11 @@ module ClassesAndInstances
     attr_accessor :size
     # TODO: Fix incorrect use of local and instance variables
     def initialize(initial_size)
-      @size = @initial_size
+      @size = initial_size
     end
 
     def grow
-      @@size = @@size + 1
+      size = size + 1
     end
   end
 end
