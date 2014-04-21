@@ -87,7 +87,7 @@ describe "Ruby Diagnostic: You" do
 
   describe "Your knowledge of Arrays" do
 
-    xyou "know how to add an element to an array" do
+    you "know how to add an element to an array" do
       desserts = ['apple', 'ice cream']
       ArrayProblems.add_cake_to_array(desserts)
       expect(desserts).to eq ['apple', 'ice cream', 'cake']

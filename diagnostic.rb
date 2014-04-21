@@ -97,7 +97,9 @@ module GettersSetters
   # Getters/Setters 2 #
   # # # # # # # # # # #
   class Person
-
+    attr_reader :age
+    attr_writer :secret
+    attr_accessor :name
     def initialize(name, age)
       @name = name
       @age = age
@@ -107,21 +109,7 @@ module GettersSetters
     # NOTE: Don't provide any more access than necessary.
     #       For example, don't use attr_accessible when all you really need is attr_writer
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-    def age
-      @age
-    end
 
-    def secret=(value)
-      @secret = value
-    end
-
-    def name
-      @name
-    end
-
-    def name=(value)
-      @name = value
-    end
   end
 end
 
