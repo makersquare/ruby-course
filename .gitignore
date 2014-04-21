@@ -1,3 +1,5 @@
 .bundle
 vendor/bundle
 .DS_Store
+timeline-test
+timeline-test.db

@@ -1,0 +1,13 @@
+<h1>Teams#index</h1>
+
+<% if flash[:success] %>
+	<%= flash[:success] %>
+<% end %>
+
+<ul>
+	<% @teams.each do |team| %>
+	  <li>
+	    <a href = "/teams/show/<%=team.id%>"> <%= team.name %> </a>
+	  </li>
+	<% end %>
+</ul>
