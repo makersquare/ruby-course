@@ -34,7 +34,7 @@ module ClassesAndInstances
   class Animal
     attr_reader :name
     def initialize(name)
-      # TODO: Set name
+      @name = name
     end
   end
 
@@ -48,8 +48,11 @@ module ClassesAndInstances
       @animals = []
     end
 
-    # TODO: Write a method `adopt` that takes one paramater `animal`
+      # TODO: Write a method `adopt` that takes one paramater `animal`
     # and adds it to its animals array
+    def adopt(animal)
+      @animals.push(animal)
+    end
   end
 
   # # # # # # # # # # # #
