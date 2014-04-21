@@ -76,10 +76,21 @@ module GettersSetters
   # Getters/Setters 1 #
   # # # # # # # # # # #
   class Box
+    #attr_accessor :secret
+
     def initialize
       @secret = 50
     end
     # TODO: Write getter and setter methods for secret
+
+    def secret
+      @secret
+    end
+
+    def secret=(value)
+      @secret =  value
+    end
+
   end
 
   # # # # # # # # # # #

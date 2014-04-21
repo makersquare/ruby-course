@@ -55,7 +55,7 @@ describe "Ruby Diagnostic: You" do
 
   describe "Your knowledge of getters and setters" do
 
-    xyou "know how to write a getter method" do
+    you "know how to write a getter method" do
       box = GettersSetters::Box.new
       expect(box.secret).to eq 50
 
