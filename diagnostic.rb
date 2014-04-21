@@ -20,7 +20,7 @@ def multiply(x, y)
 end
 
 def give_me_seven
-
+  return multiply(1,7)
 end
 
 
@@ -33,7 +33,7 @@ module ClassesAndInstances
   class Animal
     attr_reader :name
     def initialize(name)
-      # TODO: Set name
+      @name = name
     end
   end
 

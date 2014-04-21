@@ -10,7 +10,7 @@ describe "Ruby Diagnostic: You" do
     expect( toggle_oven(false) ).to eq "The oven is now off"
   end
 
-  xyou "know how to call a method within another method" do
+  you "know how to call a method within another method" do
     result = give_me_seven
     expect(result).to eq 7
     expect(@source).to include_code(:multiply).in_method(:give_me_seven)
@@ -19,12 +19,12 @@ describe "Ruby Diagnostic: You" do
 
   describe "Your knowledge of Classes and Instances" do
 
-    xyou "know how to set an instance variable" do
+    you "know how to set an instance variable" do
       animal = ClassesAndInstances::Animal.new('bird')
       expect(animal.name).to eq 'bird'
     end
 
-    xyou "know how to write an instance method" do
+    you "know how to write an instance method" do
       lion = ClassesAndInstances::Animal.new('lion')
       tiger = ClassesAndInstances::Animal.new('tiger')
       liger = ClassesAndInstances::Animal.new('liger')
