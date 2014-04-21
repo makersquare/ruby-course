@@ -50,6 +50,9 @@ module ClassesAndInstances
       @animals = []
     end
 
+    def adopt(animal)
+      @animals.push(animal)
+    end
     # TODO: Write a method `adopt` that takes one paramater `animal`
     # and adds it to its animals array
   end
