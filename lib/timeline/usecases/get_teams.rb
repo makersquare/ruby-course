@@ -1,7 +1,6 @@
 module Timeline
   class GetTeams < UseCase
     def run(inputs=nil)
-
       @db = Timeline.db
       teams = @db.all_teams
 

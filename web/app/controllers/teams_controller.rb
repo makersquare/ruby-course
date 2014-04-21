@@ -1,13 +1,14 @@
 class TeamsController < ApplicationController
 	def index
-		@teams = Timeline::GetTeams.run(params).teams
+		result = Timeline::GetTeams.run({}).teams
+		
+		if (result.success?)
+      @teams = result
+    end
 	end
 
 	def show
-		@teams = Timeline.db.get_teams(params[:id].to_i)
-		@team_name = @team.name
-		@team_events = Timeline::GetTeamEvents.run(team_id: @team.id.to_i).team_events
-		puts @team_events
-		puts @team_events.size
+    @team = Timeline.db.get_team(params[:id].to_i)
+		@team_events = Timeline::GetTeamEvents.run(team_id: params[:id].to_i).events
 	end
 end

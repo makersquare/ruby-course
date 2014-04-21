@@ -1,1 +1,20 @@
 <h1>Teams#show</h1>
+
+<% if flash[:error] %>
+	<%= flash[:error] %>
+<% end %>
+
+
+<%= form_tag("/events/create", method: "post") do %>
+  <%= label_tag(:user_id, "User ID:") %>
+  <%= text_field_tag(:user_id) %><br>
+  <%= hidden_field_tag :id, @team.id %>
+  <%= label_tag(:name, "Event Name:") %>
+  <%= text_field_tag(:name) %><br>
+  <%= submit_tag("Create Event") %>
+<% end %>
+
+Team: <%= @team.name %><br />
+Team Events: <% @team_events.each do |event| %>
+								<%= event.name %>	
+						 <% end %>
