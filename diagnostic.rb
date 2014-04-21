@@ -4,6 +4,13 @@
 # # # # # # #
 
 # TODO: Write a method caled `toggle_oven`
+def toggle_oven(status)
+  if status == true
+    "The oven is now on"
+elsif status == false
+  "The oven is now off"
+  end
+  end
 
 # # # # # # #
 # Problem 2 #
@@ -14,6 +21,7 @@ def multiply(x, y)
 end
 
 def give_me_seven
+  result
   # TODO: Use the `multiply` method
 end
 
@@ -26,10 +34,14 @@ module ClassesAndInstances
   # # # # # # # # # # # #
   class Animal
     attr_reader :name
+    attr_writer :name
     def initialize(name)
+      @name = name
       # TODO: Set name
     end
   end
+animal = ClassesAndInstances::Animal.new('bird')
+animal.name
 
   # # # # # # # # # # # #
   # Classes/Instances 2 #
@@ -39,6 +51,10 @@ module ClassesAndInstances
     attr_reader :animals
     def initialize
       @animals = []
+    end
+
+    def adopt(animal)
+      @animal = animal
     end
 
     # TODO: Write a method `adopt` that takes one paramater `animal`
@@ -52,11 +68,11 @@ module ClassesAndInstances
     attr_accessor :size
     # TODO: Fix incorrect use of local and instance variables
     def initialize(initial_size)
-      size = initial_size
+      @size = initial_size
     end
 
     def grow
-      size = size + 1
+      @size = @size + 1
     end
   end
 end
@@ -79,6 +95,8 @@ module GettersSetters
   # Getters/Setters 2 #
   # # # # # # # # # # #
   class Person
+    attr_reader :age, :name
+    attr_writer :secret, :name
 
     def initialize(name, age)
       @name = name
@@ -89,21 +107,21 @@ module GettersSetters
     # NOTE: Don't provide any more access than necessary.
     #       For example, don't use attr_accessible when all you really need is attr_writer
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-    def age
-      @age
-    end
+    # def age
+    #   @age
+    # end
 
-    def secret=(value)
-      @secret = value
-    end
+    # def secret=(value)
+    #   @secret = value
+    # end
 
-    def name
-      @name
-    end
+    # def name
+    #   @name
+    # end
 
-    def name=(value)
-      @name = value
-    end
+    # def name=(value)
+    #   @name = value
+    # end
   end
 end
 
@@ -185,6 +203,9 @@ class ArraysAndHashes
   # # # # # # # # # # #
   # Arrays & Hashes 1 #
   # # # # # # # # # # #
+  def ArrayAndHashes
+
+  end
 
   def self.iterate_and_print(grocery_lists)
     # TODO: Iterate over this array and `puts` each key and value
