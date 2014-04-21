@@ -19,7 +19,7 @@ describe "Ruby Diagnostic: You" do
 
   describe "Your knowledge of Classes and Instances" do
 
-    xyou "know how to set an instance variable" do
+    you "know how to set an instance variable" do
       animal = ClassesAndInstances::Animal.new('bird')
       expect(animal.name).to eq 'bird'
     end
