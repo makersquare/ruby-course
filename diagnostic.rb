@@ -4,6 +4,14 @@
 # # # # # # #
 
 # TODO: Write a method caled `toggle_oven`
+def toggle_oven()
+  if true
+    puts "The oven is now on"
+  else
+    puts "The oven is now off"
+  end
+end
+
 
 # # # # # # #
 # Problem 2 #
@@ -15,6 +23,7 @@ end
 
 def give_me_seven
   # TODO: Use the `multiply` method
+  multiply(1, 7)
 end
 
 
@@ -27,7 +36,7 @@ module ClassesAndInstances
   class Animal
     attr_reader :name
     def initialize(name)
-      # TODO: Set name
+      @name = name
     end
   end
 
@@ -40,7 +49,9 @@ module ClassesAndInstances
     def initialize
       @animals = []
     end
-
+    def adopt(animal)
+      @animals.push(animal)
+    end
     # TODO: Write a method `adopt` that takes one paramater `animal`
     # and adds it to its animals array
   end
@@ -50,13 +61,13 @@ module ClassesAndInstances
   # # # # # # # # # # # #
   class Plant
     attr_accessor :size
-    # TODO: Fix incorrect use of local and instance variables
+    # TODO: Fix incorrect use of local and instance variables DONE
     def initialize(initial_size)
-      size = initial_size
+      @size = initial_size
     end
 
     def grow
-      size = size + 1
+      @size = @size + 1
     end
   end
 end
@@ -73,13 +84,21 @@ module GettersSetters
       @secret = 50
     end
     # TODO: Write getter and setter methods for secret
+    def secret
+      @secret
+    end
+    def secret=(value)
+      @secret = value
+    end
   end
 
   # # # # # # # # # # #
   # Getters/Setters 2 #
   # # # # # # # # # # #
   class Person
-
+    # :attr_writer secret
+    # :attr_accessor name
+    # :attr_reader age
     def initialize(name, age)
       @name = name
       @age = age
