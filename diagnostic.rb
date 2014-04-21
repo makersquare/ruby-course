@@ -81,6 +81,14 @@ module GettersSetters
     def initialize
       @secret = 50
     end
+
+    def secret
+      @secret
+    end
+
+    def secret=(value)
+      @secret = value
+    end
     # TODO: Write getter and setter methods for secret
   end
 
@@ -88,34 +96,24 @@ module GettersSetters
   # Getters/Setters 2 #
   # # # # # # # # # # #
   class Person
+    attr_writer :secret
+    attr_reader :age, :name
 
     def initialize(name, age)
       @name = name
       @age = age
+    end
+
+    def name
+      @name
     end
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     # TODO: Refator the following to use attr_[reader|writer|accessible] shortcuts
     # NOTE: Don't provide any more access than necessary.
     #       For example, don't use attr_accessible when all you really need is attr_writer
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-    def age
-      @age
-    end
-
-    def secret=(value)
-      @secret = value
-    end
-
-    def name
-      @name
-    end
-
-    def name=(value)
-      @name = value
-    end
   end
 end
-
 
 
 class ArrayProblems
