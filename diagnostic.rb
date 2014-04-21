@@ -194,6 +194,7 @@ class HashProblems
 
   def self.update_father_last_name(hash)
     # TODO: Complete this method by writing A SINGLE LINE
+    hash['father']['name'][:last] = 'James XXX'
   end
 end
 
