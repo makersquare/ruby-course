@@ -4,7 +4,13 @@
 # # # # # # #
 
 # TODO: Write a method caled `toggle_oven`
-
+def toggle_oven(answer)
+      if answer == true
+        return "The oven is now on"
+      else
+        return "The oven is now off"
+      end
+end
 # # # # # # #
 # Problem 2 #
 # # # # # # #
@@ -14,7 +20,7 @@ def multiply(x, y)
 end
 
 def give_me_seven
-  # TODO: Use the `multiply` method
+  multiply(1, 7)
 end
 
 
@@ -28,6 +34,7 @@ module ClassesAndInstances
     attr_reader :name
     def initialize(name)
       # TODO: Set name
+      @name = name
     end
   end
 
@@ -43,6 +50,9 @@ module ClassesAndInstances
 
     # TODO: Write a method `adopt` that takes one paramater `animal`
     # and adds it to its animals array
+    def adopt(animal)
+        @animals << animal
+    end
   end
 
   # # # # # # # # # # # #
