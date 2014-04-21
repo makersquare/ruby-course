@@ -146,7 +146,7 @@ describe "Ruby Diagnostic: You" do
 
   describe "Your knowledge of Hashes" do
 
-    xyou "know how to create an empty hash" do
+    you "know how to create an empty hash" do
       result = HashProblems.create_empty_hash
       expect(result.length).to eq 0
     end
