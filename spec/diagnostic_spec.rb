@@ -126,14 +126,14 @@ describe "Ruby Diagnostic: You" do
       expect(@source).to include_code(:each).in_class_method(:ArrayProblems, :iterate_and_print)
     end
 
-    xyou "know how to use the select method" do
+    you "know how to use the select method" do
       numbers = [33, 11, 5, 55, 67, 8, 95, 0, 110]
 
       result = ArrayProblems.select_higher(numbers, 55)
       expect(result).to include(67, 95, 110)
     end
 
-    xyou "know how to use the map method" do
+    you "know how to use the map method" do
       people = ['Alice', 'Bob']
 
       result = ArrayProblems.greet_everyone(people)
