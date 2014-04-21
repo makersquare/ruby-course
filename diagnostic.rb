@@ -134,7 +134,7 @@ class ArrayProblems
   # # # # # # #
 
   def self.uppercase_third_element(array)
-    # TODO: Complete this method
+    array[2].upcase!
   end
 
   # # # # # # #

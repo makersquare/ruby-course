@@ -97,7 +97,7 @@ describe "Ruby Diagnostic: You" do
       expect(desserts).to eq ['orange', 'froyo', 'cake']
     end
 
-    xyou "know how to manipulate an element in an array" do
+    you "know how to manipulate an element in an array" do
       fruits = ['radish', 'rutabaga', 'orange', 'apple']
       ArrayProblems.uppercase_third_element(fruits)
       expect(fruits).to eq ['radish', 'rutabaga', 'ORANGE', 'apple']
