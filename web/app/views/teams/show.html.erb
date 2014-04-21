@@ -1,0 +1,28 @@
+<h1>Show teams based on event</h1>
+
+    <% if @events %>
+        <ul>
+        <% @events.each do |event| %>
+            <li><%= event.name %></li>
+        <% end %>
+        </ul>
+    <% end %>
+
+    <% if flash[:msg] %>
+        <h2><%= flash[:msg] %></h2>
+    <% end %>
+
+<%= form_tag '../events/create', method: 'post' do  %>
+    <div>
+        <label for="name">Name: </label>
+        <input type="text" name="name" id="name"/>
+    </div>
+        <input type="hidden" name="team_id" value=<%= @team_id %> />
+    <div>
+        <label for="user_id">User id: </label>
+        <input type="text" name="user_id" id="user_id">
+    </div>
+    <input type="submit" value="create">
+<% end %>
+
+
