@@ -183,6 +183,7 @@ class HashProblems
 
   def self.create_veggie_color_hash
     # TODO: Complete this method by returning a hash
+    my_hash = Hash[:tomato, "red", :kale, "green"]
   end
 
   # # # # # # #
