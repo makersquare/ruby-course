@@ -1,5 +1,6 @@
 require 'timeline'
 require 'timecop'
+require_relative 'shared/shared_db_spec.rb'
 
 RSpec.configure do |config|
   # Auto-generated
