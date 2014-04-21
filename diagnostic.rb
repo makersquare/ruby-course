@@ -43,12 +43,15 @@ module ClassesAndInstances
 
   class Zoo
     attr_reader :animals
+    @@count = 0
     def initialize
       @animals = []
+      @@count += 1
     end
 
-    # TODO: Write a method `adopt` that takes one paramater `animal`
-    # and adds it to its animals array
+    def adopt(animal)
+      @animals<<animal
+    end
   end
 
   # # # # # # # # # # # #
