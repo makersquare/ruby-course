@@ -95,12 +95,14 @@ module GettersSetters
   # # # # # # # # # # #
   class Person
 
+    attr_accessor :name
+
     def initialize(name, age)
       @name = name
       @age = age
     end
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-    # TODO: Refator the following to use attr_[reader|writer|accessible] shortcuts
+    # TODO: Recfator the following to use attr_[reader|writer|accessible] shortcuts
     # NOTE: Don't provide any more access than necessary.
     #       For example, don't use attr_accessible when all you really need is attr_writer
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -130,7 +132,7 @@ class ArrayProblems
   # # # # # # #
 
   def self.add_cake_to_array(array)
-    # TODO: Complete this method
+    array.push("cake")
   end
 
   # # # # # # #
