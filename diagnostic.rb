@@ -149,6 +149,7 @@ class ArrayProblems
 
   def self.select_higher(array, min)
     # TODO: Select and return all numbers higher than `min`
+    array.select {|a| a > min}
   end
 
   # # # # # # #
