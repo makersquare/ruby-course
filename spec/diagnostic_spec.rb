@@ -107,7 +107,7 @@ describe "Ruby Diagnostic: You" do
       expect(fruits).to eq ['pear', 'banana', 'GRAPE']
     end
 
-    xyou "know how to iterate over an array" do
+    you "know how to iterate over an array" do
       # Take 1
       expect(ArrayProblems).to receive(:puts).with('top')
       expect(ArrayProblems).to receive(:puts).with('bowler')
