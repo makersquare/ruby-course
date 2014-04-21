@@ -151,6 +151,7 @@ class ArrayProblems
 
   def self.select_higher(array, min)
     # TODO: Select and return all numbers higher than `min`
+    array.select {|num| num > min}
   end
 
   # # # # # # #
@@ -159,6 +160,7 @@ class ArrayProblems
 
   def self.greet_everyone(people)
     # TODO: Select and return all numbers higher than `min`
+    people.map {|person| "Hello, #{person}"}
   end
 end
 
