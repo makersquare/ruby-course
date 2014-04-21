@@ -4,6 +4,13 @@
 # # # # # # #
 
 # TODO: Write a method caled `toggle_oven`
+def toggle_oven(switch)
+  if switch == true
+    return "The oven is now on"
+  elsif switch == false
+    return "The oven is now off"
+  end
+end
 
 # # # # # # #
 # Problem 2 #
