@@ -126,6 +126,7 @@ class ArrayProblems
 
   def self.add_cake_to_array(array)
     # TODO: Complete this method
+    array << "cake"
   end
 
   # # # # # # #
