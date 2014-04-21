@@ -21,7 +21,7 @@ def multiply(x, y)
 end
 
 def give_me_seven
-  # TODO: Use the `multiply` method
+  multiply(7,1)
 end
 
 
