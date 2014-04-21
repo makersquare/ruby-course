@@ -1,0 +1,7 @@
+<h1>Teams</h1>
+
+<% @teams.each do |team| %>
+	<% team_id = team.id %>
+	<h2><a href="/teams/show/<%= team_id %>">Team name: <%= team.name %></a>
+	</h2>
+	<% end %>
