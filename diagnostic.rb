@@ -83,6 +83,13 @@ module GettersSetters
       @secret = 50
     end
     # TODO: Write getter and setter methods for secret
+    def secret=(secret)
+      @secret = secret
+    end
+
+    def secret
+      @secret
+    end
   end
 
   # # # # # # # # # # #
