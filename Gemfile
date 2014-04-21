@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.1.0'
+ruby '2.1.1'
 
 # Core Application
 gem 'activemodel', '~> 4.1.0'
@@ -11,3 +11,11 @@ gem 'timecop', '~> 0.7.1'
 
 # Database
 # TODO: ADD ACTIVERECORD GEMS HERE
+gem 'sqlite3'
+gem 'activerecord', '~> 4.1.0'
+gem 'active_record_tasks', '~> 1.0.4'
+
+
+# Load Gemfile from our core application
+app_gemfile_path = File.expand_path('../../Gemfile', __FILE__)
+eval File.read(app_gemfile_path)

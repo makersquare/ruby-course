@@ -1,5 +1,7 @@
 require 'timeline'
 require 'timecop'
+require 'pry-debugger'
+require_relative 'shared/database_example.rb'
 
 RSpec.configure do |config|
   # Auto-generated
@@ -12,4 +14,5 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = 'random'
+  # Timeline.db.clear_everything
 end
