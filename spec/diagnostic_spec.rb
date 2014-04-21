@@ -10,7 +10,7 @@ describe "Ruby Diagnostic: You" do
     expect( toggle_oven(false) ).to eq "The oven is now off"
   end
 
-  xyou "know how to call a method within another method" do
+  you "know how to call a method within another method" do
     result = give_me_seven
     expect(result).to eq 7
     expect(@source).to include_code(:multiply).in_method(:give_me_seven)

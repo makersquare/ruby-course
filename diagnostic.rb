@@ -4,6 +4,9 @@
 # # # # # # #
 
 # TODO: Write a method caled `toggle_oven`
+def toggle_oven(value)
+  value ? "The oven is now on" : "The oven is now off"
+end
 
 # # # # # # #
 # Problem 2 #
