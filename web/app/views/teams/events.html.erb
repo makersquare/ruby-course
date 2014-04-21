@@ -1,0 +1,17 @@
+<% @team_name = Timeline.db.get_team(@team_id).name %>
+<h1>Events for <%=@team_name%></h1>
+
+<% @events.each do |event| %>
+<p><%= event.name%></p>
+<% end %>
+
+<%= form_tag("/events/create", method: "post") do %>
+  <%= label_tag(:name, "Event Name:") %>
+  <%= text_field_tag(:name) %>
+  <%= label_tag(:user_id, "User ID:") %>
+  <%= text_field_tag(:user_id) %>
+  <%= hidden_field_tag(:team_id, @team_id) %>
+  <%= submit_tag("Search") %>
+<% end %>
+
+
