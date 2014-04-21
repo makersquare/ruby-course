@@ -22,6 +22,7 @@ end
 
 def give_me_seven
   # TODO: Use the `multiply` method
+  multiply(1, 7)
 end
 
 
