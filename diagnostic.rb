@@ -4,11 +4,11 @@
 # # # # # # #
 
 # TODO: Write a method caled `toggle_oven`
-def toggle_oven()
-  if true
-    puts "The oven is now on"
-  else
-    puts "The oven is now off"
+def toggle_oven(status)
+  if status == true
+     "The oven is now on"
+  elsif status == false
+     "The oven is now off"
   end
 end
 
@@ -173,11 +173,12 @@ class ArrayProblems
   # Arrays  5 #
   # # # # # # #
 
-  # def self.greet_everyone(people)
-  #   # TODO: Select and return all numbers higher than `min`
-  #   greet_everyone.map { |name|
-  #     puts "Hello, #{name}!"}
-  # end
+  def self.greet_everyone(people)
+    # TODO: Select and return all numbers higher than `min`
+    people.map do |name|
+       "Hello, #{name}"
+    end
+  end
 end
 
 

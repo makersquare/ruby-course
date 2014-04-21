@@ -5,7 +5,7 @@ require 'spec_helper.rb'
 
 describe "Ruby Diagnostic: You" do
 
-  xyou "can deduce how to write a method based on a spec" do
+  you "can deduce how to write a method based on a spec" do
     expect( toggle_oven(true) ).to eq "The oven is now on"
     expect( toggle_oven(false) ).to eq "The oven is now off"
   end
@@ -133,7 +133,7 @@ describe "Ruby Diagnostic: You" do
       expect(result).to include(67, 95, 110)
     end
 
-    xyou "know how to use the map method" do
+    you "know how to use the map method" do
       people = ['Alice', 'Bob']
 
       result = ArrayProblems.greet_everyone(people)
