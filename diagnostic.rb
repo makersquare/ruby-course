@@ -61,11 +61,11 @@ module ClassesAndInstances
     attr_accessor :size
     # TODO: Fix incorrect use of local and instance variables
     def initialize(initial_size)
-      size = initial_size
+      @size = initial_size
     end
 
     def grow
-      size = size + 1
+      @size = size + 1
     end
   end
 end
