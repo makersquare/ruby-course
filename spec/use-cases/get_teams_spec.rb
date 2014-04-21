@@ -1,9 +1,9 @@
 require 'timeline'
 
 module Timeline
-	describe EventsByTeam do
+	describe GetTeams do
 		it "exists" do
-			result = subject.run(:team_id => 1)
+			result = subject.run
 		end
 	end
 end

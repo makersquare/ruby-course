@@ -1,12 +1,12 @@
 module Timeline
 	class EventsByTeam < UseCase
 		def run(inputs)
-			team_id = inputs[:team_id]
+			team_id = inputs[:team_id].to_i
 			
-			return failure(:team_id_not_found) if Team.find(team_id) == nil
-			return failure(:no_events) if Team.find(team_id).events == nil
+			return failure(:team_id_not_found) if Timeline.db.get_team(team_id) == nil
+			return failure(:no_events) if Timeline.db.get_events_by_team(team_id) == nil
 
-			events = Database::PersistentDB::Team.events
+			events = Timeline.db.get_events_by_team(team_id)
 
 			success :events => events
 		end
