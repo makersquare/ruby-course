@@ -209,5 +209,8 @@ class ArraysAndHashes
     # TODO: Iterate over this array and `puts` each key and value
     # Example: if array is [{ egg: 12 }, { milk: 1 }],
     #          then `puts` both "egg: 12" and "milk: 1"
+    grocery_lists.each do |array|
+      array.each {|key, value| puts "#{key}: #{value}"}
+    end
   end
 end
