@@ -189,6 +189,7 @@ class HashProblems
 
   def self.create_empty_hash
     # TODO: Complete this method
+    {}
   end
 
   # # # # # # #
@@ -197,6 +198,7 @@ class HashProblems
 
   def self.create_veggie_color_hash
     # TODO: Complete this method by returning a hash
+    {:tomato =>'red', :kale => 'green'}
   end
 
   # # # # # # #
@@ -205,6 +207,7 @@ class HashProblems
 
   def self.update_father_last_name(hash)
     # TODO: Complete this method by writing A SINGLE LINE
+    hash["father"]["name"][:last]= "James XXX"
   end
 end
 
@@ -219,5 +222,10 @@ class ArraysAndHashes
     # TODO: Iterate over this array and `puts` each key and value
     # Example: if array is [{ egg: 12 }, { milk: 1 }],
     #          then `puts` both "egg: 12" and "milk: 1"
+    grocery_lists.each do |list|
+      list.each do |key, value|
+        puts "#{key}: #{value}"
+      end
+    end
   end
 end
