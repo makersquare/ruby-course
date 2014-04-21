@@ -3,6 +3,13 @@
 # Problem 1 #
 # # # # # # #
 
+def toggle_oven(switch)
+  if switch
+    "The oven is now on"
+  elsif !switch
+    "The oven is now off"
+  end
+end
 # TODO: Write a method caled `toggle_oven`
 
 # # # # # # #
