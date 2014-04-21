@@ -41,7 +41,7 @@ describe "Ruby Diagnostic: You" do
       expect(zoo.animals.count).to eq 3
     end
 
-    xyou "know the difference between local variables and instance variables" do
+    you "know the difference between local variables and instance variables" do
       plant = ClassesAndInstances::Plant.new(1)
 
       plant.grow
