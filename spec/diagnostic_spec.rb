@@ -55,7 +55,7 @@ describe "Ruby Diagnostic: You" do
 
   describe "Your knowledge of getters and setters" do
 
-    xyou "know how to write a getter method" do
+    you "know how to write a getter method" do
       box = GettersSetters::Box.new
       expect(box.secret).to eq 50
 
@@ -63,7 +63,7 @@ describe "Ruby Diagnostic: You" do
       expect(@source).to_not include_code(:attr_accessor).in(:Box).for(:GettersSetters)
     end
 
-    xyou "know how to write a setter method" do
+    you "know how to write a setter method" do
       box = GettersSetters::Box.new
       box.secret = 99
       expect(box.secret).to eq 99
