@@ -10,9 +10,10 @@ describe Timeline::GetTeamEvents do
     event1 = @db.create_event(:name =>"waterpark", :team_id=>team.id)
     event2 = @db.create_event(:name=>"southbywest",:team_id=>team.id)
     event3 = @db.create_event(:name=>"hackathon",:team_id=>team.id)
-    result = subject.run(:team_id => team.id)
+    result = subject.run(:id => team.id)
     expect(result.success?).to eq true
-     expect(result.event.length).to eq 3
+    expect(result.team.name).to eq "good team"
+     expect(result.events.length).to eq 3
     @db.clear_everything
   end
 

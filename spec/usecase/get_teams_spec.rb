@@ -1,6 +1,6 @@
 require_relative '../spec_helper.rb'
 
-describe Timeline::GetTeam do
+describe Timeline::GetTeams do
   before do
     @db = Timeline.db
   end
@@ -12,7 +12,7 @@ describe Timeline::GetTeam do
     teamlist = @db.all_teams
     expect(teamlist.length).to eq 3
     result = subject.run()
-    expect(result.team.length).to eq 3
+    expect(result.teams.length).to eq 3
     expect(result.success?).to eq true
     # @db.clear_everything
   end

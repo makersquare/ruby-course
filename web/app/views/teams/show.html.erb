@@ -1,0 +1,25 @@
+<% if flash[:success]%>
+<%= flash[:success]%>
+<%end%>
+
+<% if @error %>
+  <%= @error %>
+<%else%>
+  <p><%=@teams.name%></p>
+  <p>Events for team</p>
+  <ul><%@events.each do |event|%></ul>
+  <li><%=event.name%></li>
+  <%end%>
+<%end%>
+
+
+
+<%= form_tag("/events", method: "post") do %>
+  <%= label_tag(:name, "Name:") %>
+  <%= text_field_tag(:name) %>
+  <%= label_tag(:user_id, "User Id:") %>
+  <%= text_field_tag(:user_id) %>
+  <%= label_tag(:team_id, "Team Id:") %>
+  <%= text_field_tag(:team_id) %>
+  <%= submit_tag("Create New Event") %>
+<% end %>

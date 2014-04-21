@@ -3,7 +3,7 @@ require 'ostruct'
 module Timeline
   class UseCase   # UseCase class
     # Convenience method that lets us call `.run` directly on the class
-    def self.run(inputs)         # your specific use case, will inherent from this class
+    def self.run(inputs=nil)         # your specific use case, will inherent from this class
       self.new.run(inputs)       # this method will run, your run method in your specific usecase scenario
     end
 
