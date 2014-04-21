@@ -24,7 +24,7 @@ describe "Ruby Diagnostic: You" do
       expect(animal.name).to eq 'bird'
     end
 
-    xyou "know how to write an instance method" do
+    you "know how to write an instance method" do
       lion = ClassesAndInstances::Animal.new('lion')
       tiger = ClassesAndInstances::Animal.new('tiger')
       liger = ClassesAndInstances::Animal.new('liger')
