@@ -55,6 +55,14 @@ describe Book do
     expect(book2.edition).to eq 4
   end
 
+  it "can have reviews left by borrowers" do
+    book = Book.new("The Stranger", "Albert Camus")
+    borrower = Borrower.new("David")
+    borrower.leave_review(book,5,"Great")
+    expect(book.ratings.first).to eq 5
+    expect(book.reviews.first).to eq "Great"
+  end
+
 end
 
 describe Borrower do

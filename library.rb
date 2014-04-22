@@ -1,6 +1,6 @@
 
 class Book
-  attr_accessor :author, :title, :id, :status, :year_published, :edition
+  attr_accessor :author, :title, :id, :status, :year_published, :edition, :ratings, :reviews
 
   def initialize(title, author, options = { })
     options = {year_published: nil, edition: nil}.merge(options)
@@ -11,6 +11,8 @@ class Book
     @edition = options[:edition]
     # Is ID necessary? We are referencing books by title instead of by id.
     @id = nil
+    @ratings = []
+    @reviews = []
   end
 
   def check_out
@@ -33,6 +35,11 @@ class Borrower
 
   def initialize(name)
     @name = name
+  end
+
+  def leave_review(book,rating,review)
+    book.ratings << rating
+    book.reviews << review
   end
 end
 
