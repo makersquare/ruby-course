@@ -85,7 +85,11 @@ module GettersSetters
     # TODO: Write getter and setter methods for secret
 
     def secret
-      @secret = 50
+      @secret
+    end
+
+    def secret=(value)
+      @secret = value
     end
 
   end
@@ -95,6 +99,8 @@ module GettersSetters
   # # # # # # # # # # #
   class Person
 
+    attr_reader :age
+    attr_writer :secret
     attr_accessor :name
 
     def initialize(name, age)
@@ -106,21 +112,21 @@ module GettersSetters
     # NOTE: Don't provide any more access than necessary.
     #       For example, don't use attr_accessible when all you really need is attr_writer
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-    def age
-      @age
-    end
+    # def age
+    #   @age
+    # end
 
-    def secret=(value)
-      @secret = value
-    end
+    # def secret=(value)
+    #   @secret = value
+    # end
 
-    def name
-      @name
-    end
+    # def name
+    #   @name
+    # end
 
-    def name=(value)
-      @name = value
-    end
+    # def name=(value)
+    #   @name = value
+    # end
   end
 end
 
@@ -140,7 +146,7 @@ class ArrayProblems
   # # # # # # #
 
   def self.uppercase_third_element(array)
-    # TODO: Complete this method
+    # TODO: Iterate over this array and upcase third element
   end
 
   # # # # # # #
