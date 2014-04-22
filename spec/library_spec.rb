@@ -52,7 +52,7 @@ end
 
 describe Library do
 
-  xit "starts with an empty array of books" do
+  it "starts with an empty array of books" do
     lib = Library.new
     expect(lib.books.count).to eq(0)
   end
