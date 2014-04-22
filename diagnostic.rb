@@ -1,9 +1,17 @@
 
+
 # # # # # # #
 # Problem 1 #
 # # # # # # #
 
-# TODO: Write a method caled `toggle_oven`
+
+def toggle_oven(switch_status)
+  if switch_status == true
+    "The oven is now on"
+  elsif switch_status == false
+    "The oven is now off"
+  end
+end
 
 # # # # # # #
 # Problem 2 #
@@ -14,7 +22,7 @@ def multiply(x, y)
 end
 
 def give_me_seven
-  # TODO: Use the `multiply` method
+  multiply(7,1)
 end
 
 
@@ -28,6 +36,7 @@ module ClassesAndInstances
     attr_reader :name
     def initialize(name)
       # TODO: Set name
+      @name = name
     end
   end
 
@@ -43,6 +52,9 @@ module ClassesAndInstances
 
     # TODO: Write a method `adopt` that takes one paramater `animal`
     # and adds it to its animals array
+    def adopt(animal)
+      @animals << animal
+    end
   end
 
   # # # # # # # # # # # #
@@ -52,12 +64,16 @@ module ClassesAndInstances
     attr_accessor :size
     # TODO: Fix incorrect use of local and instance variables
     def initialize(initial_size)
-      size = initial_size
+      @size = initial_size
     end
 
     def grow
-      size = size + 1
+      @size = @size + 1
     end
+
+    # def size
+    #   @size
+    # end
   end
 end
 
@@ -71,6 +87,14 @@ module GettersSetters
   class Box
     def initialize
       @secret = 50
+    end
+
+    def secret
+      @secret
+    end
+
+    def secret=(value)
+      @secret = value
     end
     # TODO: Write getter and setter methods for secret
   end
@@ -89,21 +113,25 @@ module GettersSetters
     # NOTE: Don't provide any more access than necessary.
     #       For example, don't use attr_accessible when all you really need is attr_writer
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-    def age
-      @age
-    end
+    attr_reader :age
+    attr_writer :secret
+    attr_accessor :name
 
-    def secret=(value)
-      @secret = value
-    end
+    # def age
+    #   @age
+    # end
 
-    def name
-      @name
-    end
+    # def secret=(value)
+    #   @secret = value
+    # end
 
-    def name=(value)
-      @name = value
-    end
+    # def name
+    #   @name
+    # end
+
+    # def name=(value)
+    #   @name = value
+    # end
   end
 end
 
@@ -116,6 +144,11 @@ class ArrayProblems
 
   def self.add_cake_to_array(array)
     # TODO: Complete this method
+    # desserts = ['apple', 'ice cream']
+    # ArrayProblems.add_cake_to_array(desserts)
+    # expect(desserts).to eq ['apple', 'ice cream', 'cake']
+
+    array << "cake"
   end
 
   # # # # # # #
@@ -124,6 +157,14 @@ class ArrayProblems
 
   def self.uppercase_third_element(array)
     # TODO: Complete this method
+    # fruits = ['radish', 'rutabaga', 'orange', 'apple']
+    #   ArrayProblems.uppercase_third_element(fruits)
+    #   expect(fruits).to eq ['radish', 'rutabaga', 'ORANGE', 'apple']
+
+    #   fruits = ['pear', 'banana', 'grape']
+    #   ArrayProblems.uppercase_third_element(fruits)
+    #   expect(fruits).to eq ['pear', 'banana', 'GRAPE']
+    array[2].upcase!
   end
 
   # # # # # # #
@@ -132,6 +173,14 @@ class ArrayProblems
 
   def self.iterate_and_print(array)
     # TODO: Iterate over this array and `puts` each element.
+     # Take 1
+      # expect(ArrayProblems).to receive(:puts).with('top')
+      # expect(ArrayProblems).to receive(:puts).with('bowler')
+      # expect(ArrayProblems).to receive(:puts).with('baseball')
+
+      # hats = ['top', 'bowler', 'baseball']
+      # ArrayProblems.iterate_and_print(hats)
+      array.each { |element| puts element }
   end
 
   # # # # # # #
@@ -140,6 +189,11 @@ class ArrayProblems
 
   def self.select_higher(array, min)
     # TODO: Select and return all numbers higher than `min`
+    # numbers = [33, 11, 5, 55, 67, 8, 95, 0, 110]
+
+    #   result = ArrayProblems.select_higher(numbers, 55)
+    #   expect(result).to include(67, 95, 110)
+    range_array = array.select {|number| number > min }
   end
 
   # # # # # # #
@@ -148,6 +202,16 @@ class ArrayProblems
 
   def self.greet_everyone(people)
     # TODO: Select and return all numbers higher than `min`
+    #   xyou "know how to use the map method" do
+    #   people = ['Alice', 'Bob']
+
+    #   result = ArrayProblems.greet_everyone(people)
+    #   expect(result).to include("Hello, Alice", "Hello, Bob")
+
+    #   expect(@source).to include_code(:map).in_class_method(:ArrayProblems, :greet_everyone)
+    # end
+    people.map { |person|  "Hello, #{person}"}
+
   end
 end
 
@@ -160,6 +224,12 @@ class HashProblems
 
   def self.create_empty_hash
     # TODO: Complete this method
+    #  xyou "know how to create an empty hash" do
+    #   result = HashProblems.create_empty_hash
+    #   expect(result.length).to eq 0
+    # end
+
+    Hash.new
   end
 
   # # # # # # #
@@ -168,6 +238,14 @@ class HashProblems
 
   def self.create_veggie_color_hash
     # TODO: Complete this method by returning a hash
+    # you "know how to create a hash with keys and values" do
+    #   result = HashProblems.create_veggie_color_hash
+    #   expect(result[:tomato]).to eq 'red'
+    #   expect(result[:kale]).to eq 'green'
+    # end
+    veggie_color = {:tomato => "red", :kale => "green"}
+
+
   end
 
   # # # # # # #
@@ -176,6 +254,27 @@ class HashProblems
 
   def self.update_father_last_name(hash)
     # TODO: Complete this method by writing A SINGLE LINE
+      #   xyou "know how to access a nested hash" do
+      # james = {
+      #     "name" => {
+      #         :first => "King",
+      #         :last => "James XXXI"
+      #     },
+      #     "father" => {
+      #         "name" => {
+      #             :first => "King",
+      #             :last => nil
+      #         }
+      #     }
+      # }
+
+      # HashProblems.update_father_last_name(james)
+      # father = james["father"]
+      # name = father["name"]
+      # expect(name[:last]).to eq "James XXX"
+
+      # expect(@source).to include_class_method(:HashProblems, :update_father_last_name).with_line_count(1)
+      hash["father"]["name"][:last] = "James XXX"
   end
 end
 
@@ -190,5 +289,20 @@ class ArraysAndHashes
     # TODO: Iterate over this array and `puts` each key and value
     # Example: if array is [{ egg: 12 }, { milk: 1 }],
     #          then `puts` both "egg: 12" and "milk: 1"
+    # you "know how to iterate through an array of hashes and output its contents" do
+    #   expect(ArraysAndHashes).to receive(:puts).with("oranges: 5")
+    #   expect(ArraysAndHashes).to receive(:puts).with("eggplants: 8")
+    #   expect(ArraysAndHashes).to receive(:puts).with("apples: 14")
+
+    #   grocery_list = [{ oranges: 5 }, { eggplants: 8, apples: 14 }]
+    #   ArraysAndHashes.iterate_and_print(grocery_list)
+
+    #   expect(@source).to include_code(:each).in_class_method(:ArraysAndHashes, :iterate_and_print)
+
+    grocery_lists.each do |group|
+      group.each do |item, quantity|
+        puts "#{item}: #{quantity}"
+      end
+    end
   end
 end
