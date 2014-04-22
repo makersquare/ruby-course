@@ -81,9 +81,10 @@ describe Library do
     expect(lib.books.count).to eq(3)
   end
 
-  xit "allows a Borrower to check out a book by its id" do
+  it "allows a Borrower to check out a book by its id" do
     lib = Library.new
-    lib.register_new_book("Green Eggs and Ham", "Dr. Seuss")
+    new_book = Book.new("Green Eggs and Ham", "Dr. Seuss")
+    lib.register_new_book(new_book)
     book_id = lib.books.first.id
 
     # Sam wants to check out Green Eggs and Ham
@@ -91,7 +92,7 @@ describe Library do
     book = lib.check_out_book(book_id, sam)
 
     # The checkout should return the book
-    expect(book).to be_a?(Book)
+    expect(book).to be_a(Book)
     expect(book.title).to eq "Green Eggs and Ham"
 
     # The book should now be marked as checked out

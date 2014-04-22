@@ -57,6 +57,17 @@ class Library
   end
 
   def check_out_book(book_id, borrower)
+    @books.each do |book|
+      if book.id == book_id
+        if book.check_out == false
+          return "Sorry, you can't check out this book"
+        else
+          return book
+        end
+      else
+        return "No book with that id is in this library"
+      end
+    end
   end
 
   def check_in_book(book)
