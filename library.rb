@@ -71,9 +71,14 @@ class Library
     if book_to_checkout.status == "checked_out"
       return nil
     else
-      @borrowers[book_id -1] = borrower
-      book_to_checkout.check_out
-      return book_to_checkout
+      num_books_borrowed = @borrowers.inject(0) {|sum, x| x == borrower ? sum +=1 : sum }
+      if num_books_borrowed > 1 
+        return nil
+      else
+        @borrowers[book_id -1] = borrower
+        book_to_checkout.check_out
+        return book_to_checkout
+      end
     end
   end
 
@@ -84,6 +89,8 @@ class Library
 
 
   def check_in_book(book)
+    @books[book.id-1].check_in
+    @borrowers[book.id-1] = nil
   end
 
   def available_books
