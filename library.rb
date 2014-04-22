@@ -15,9 +15,9 @@ class Book
   def check_out
     if @status == "available"
       @status = "checked_out"
-      return true
+      true
     else
-      return false
+      false
     end
   end
 
@@ -63,11 +63,12 @@ class Library
     if borrower.num_books < 2
       @books.each do |book|
         if book.id == book_id
-          if book.check_out == false
-            nil
+          if book.status == "checked_out"
+            return nil
           else
             book.borrower = borrower.name
             borrower.num_books += 1
+            book.check_out
             return book
           end
         end
