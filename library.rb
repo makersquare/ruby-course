@@ -4,6 +4,7 @@ class Book
   attr_reader :title
   attr_accessor :id
   attr_reader :status
+  attr_accessor :borrower
 
   def initialize(title, author)
     @title = title
@@ -62,10 +63,19 @@ class Library
         if book.check_out == false
           return "Sorry, you can't check out this book"
         else
+          book.borrower = borrower.name
           return book
         end
       else
         return "No book with that id is in this library"
+      end
+    end
+  end
+
+  def get_borrower(book_id)
+    @books.each do |book|
+      if book.id == book_id
+        return book.borrower
       end
     end
   end

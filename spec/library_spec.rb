@@ -99,9 +99,10 @@ describe Library do
     expect(book.status).to eq 'checked_out'
   end
 
-  xit "knows who borrowed a book" do
+  it "knows who borrowed a book" do
     lib = Library.new
-    lib.register_new_book("The Brothers Karamazov", "Fyodor Dostoesvky")
+    book = Book.new("The Brothers Karamazov", "Fyodor Dostoesvky")
+    lib.register_new_book(book)
     book_id = lib.books.first.id
 
     # Big Brother wants to check out The Brothers Karamazov
@@ -122,7 +123,7 @@ describe Library do
     book = lib.check_out_book(book_id, nielsen)
 
     # The first time should be successful
-    expect(book).to be_a?(Book)
+    expect(book).to be_a(Book)
 
     # However, you can't check out the same book twice!
     book_again = lib.check_out_book(book_id, nielsen)
