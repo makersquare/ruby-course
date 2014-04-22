@@ -59,7 +59,8 @@ describe Library do
 
   it "add new books and assigns it an id" do
     lib = Library.new("MakerSquare Library")
-    lib.register_new_book("Nausea", "Jean-Paul Sartre")
+    nausea_sartre = Book.new("Nausea", "Jean-Paul Sartre")
+    lib.register_new_book(nausea_sartre)
     expect(lib.books.count).to eq(1)
 
     created_book = lib.books.first
@@ -70,16 +71,16 @@ describe Library do
 
   it "can add multiple books" do
     lib = Library.new("MakerSquare Library")
-    lib.register_new_book("One", "Bob")
-    lib.register_new_book("Two", "Bob")
-    lib.register_new_book("Three", "Bob")
+    lib.register_new_book(Book.new("One", "Bob"))
+    lib.register_new_book(Book.new("Two", "Bob"))
+    lib.register_new_book(Book.new("Three", "Bob"))
 
     expect(lib.books.count).to eq(3)
   end
 
   it "allows a Borrower to check out a book by its id" do
     lib = Library.new("MakerSquare Library")
-    lib.register_new_book("Green Eggs and Ham", "Dr. Seuss")
+    lib.register_new_book(Book.new("Green Eggs and Ham", "Dr. Seuss"))
     book_id = lib.books.first.id
 
     # Sam wants to check out Green Eggs and Ham
@@ -98,7 +99,7 @@ describe Library do
 
   it "knows who borrowed a book" do
     lib = Library.new("MakerSquare Library")
-    lib.register_new_book("The Brothers Karamazov", "Fyodor Dostoesvky")
+    lib.register_new_book(Book.new("The Brothers Karamazov", "Fyodor Dostoesvky"))
     book_id = lib.books.first.id
 
     # Big Brother wants to check out The Brothers Karamazov
@@ -109,7 +110,7 @@ describe Library do
     expect( lib.get_borrower(book_id) ).to eq 'Big Brother'
   end
 
-  xit "does not allow a book to be checked out twice in a row" do
+  it "does not allow a book to be checked out twice in a row" do
     lib = Library.new("MakerSquare Library")
     lib.register_new_book = Book.new("Surely You're Joking Mr. Feynman", "Richard Feynman")
     book_id = lib.books.first.id
