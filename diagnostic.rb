@@ -92,12 +92,24 @@ module GettersSetters
   # # # # # # # # # # #
   # Getters/Setters 1 #
   # # # # # # # # # # #
+  # attr_accessor :secret
   class Box
     def initialize
       @secret = 50
     end
     # TODO: Write getter and setter methods for secret
+    def secret=(value)
+      @secret = value
+    end
+
+    def secret
+      @secret
+    end
   end
+  box = GettersSetters::Box.new
+  box.secret
+  box.secret = 99
+
 
   # # # # # # # # # # #
   # Getters/Setters 2 #
@@ -115,25 +127,29 @@ module GettersSetters
     # NOTE: Don't provide any more access than necessary.
     #       For example, don't use attr_accessible when all you really need is attr_writer
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-    def age
-      @age
-    end
+    # def age
+    #   @age
+    # end
 
-    def secret=(value)
-      @secret = value
-    end
+    # def secret=(value)
+    #   @secret = value
+    # end
 
-    def name
-      @name
-    end
+    # def name
+    #   @name
+    # end
 
-    def name=(value)
-      @name = value
-    end
+    # def name=(value)
+    #   @name = value
+    # end
   end
 end
-box = GettersSetters::Box.new
-box.secret
+
+bob = GettersSetters::Person.new('Bob', 38)
+bob.age
+bob.name
+bob.secret = 200
+
 
 
 
@@ -177,7 +193,7 @@ class ArrayProblems
   def self.greet_everyone(people)
     # TODO: Select and return all numbers higher than `min`
     people.map do |name|
-      "Hello {name}"
+      "Hello, {name}"
   end
 end
 

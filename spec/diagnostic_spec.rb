@@ -63,7 +63,7 @@ describe "Ruby Diagnostic: You" do
       expect(@source).to_not include_code(:attr_accessor).in(:Box).for(:GettersSetters)
     end
 
-    xyou "know how to write a setter method" do
+    you "know how to write a setter method" do
       box = GettersSetters::Box.new
       box.secret = 99
       expect(box.secret).to eq 99
@@ -72,7 +72,7 @@ describe "Ruby Diagnostic: You" do
       expect(@source).to_not include_code(:attr_accessor).in(:Box).for(:GettersSetters)
     end
 
-    xyou "can properly refactor getters/setters to their attr_ shortcut equivalents" do
+    you "can properly refactor getters/setters to their attr_ shortcut equivalents" do
       bob = GettersSetters::Person.new('Bob', 38)
       expect(bob.name).to eq 'Bob'
       expect(bob.age).to eq 38
@@ -151,13 +151,13 @@ describe "Ruby Diagnostic: You" do
       expect(result.length).to eq 0
     end
 
-    you "know how to create a hash with keys and values" do
+    xyou "know how to create a hash with keys and values" do
       result = HashProblems.create_veggie_color_hash
       expect(result[:tomato]).to eq 'red'
       expect(result[:kale]).to eq 'green'
     end
 
-    you "know how to access a nested hash" do
+    xyou "know how to access a nested hash" do
       james = {
           "name" => {
               :first => "King",
@@ -182,7 +182,7 @@ describe "Ruby Diagnostic: You" do
 
   describe "Your handle on using Hashes with Arrays" do
 
-    you "know how to iterate through an array of hashes and output its contents" do
+    xyou "know how to iterate through an array of hashes and output its contents" do
       expect(ArraysAndHashes).to receive(:puts).with("oranges: 5")
       expect(ArraysAndHashes).to receive(:puts).with("eggplants: 8")
       expect(ArraysAndHashes).to receive(:puts).with("apples: 14")
