@@ -58,7 +58,7 @@ describe Library do
   end
 
   it "add new books and assigns it an id" do
-    lib = Library.new("Nausea")
+    lib = Library.new(1)
     x = Book.new("Nausea", "Jean-Paul Sartre")
     lib.register_new_book(x)
     expect(lib.books.count).to eq(1)
@@ -177,7 +177,7 @@ describe Library do
 
     # At first, all books are available
     expect(lib.available_books.count).to eq(3)
-    expect(lib.available_books.first).to be_a?(Book)
+    expect(lib.available_books.first).to be_a(Book)
 
     jordan = Borrower.new("Michael Jordan")
     book = lib.check_out_book(lib.available_books.first.id, jordan)
@@ -219,6 +219,6 @@ describe Library do
 
     # But now there should be one checked out book
     expect(lib.borrowed_books.count).to eq(1)
-    expect(lib.borrowed_books.first).to be_a?(Book)
+    expect(lib.borrowed_books.first).to be_a(Book)
   end
 end
