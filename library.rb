@@ -33,11 +33,12 @@ class Borrower
 end
 
 class Library
-  attr_reader :books, :borrowers
+  attr_reader :books, :borrowers, :available_books
 
   def initialize(name)
     @books = []
     @borrowers = {}
+    @available_books = []
   end
 
   def register_new_book(book)
@@ -74,8 +75,10 @@ class Library
   end
 
   def available_books
+    @books.select {|book| book.status == 'available'}
   end
 
   def borrowed_books
+    @books.select {|book| book.status == 'checked_out'}
   end
 end
