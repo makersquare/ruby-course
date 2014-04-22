@@ -53,9 +53,13 @@ class Library
   def check_out_book(book_id, borrower)
     b = @inventory.select {|book| book.id == book_id}
     book = b.first
-    book.check_out
-    book.borrower = borrower
-    book
+    if book.status == "available"
+      book.check_out
+      book.borrower = borrower
+      book
+    else
+      nil
+    end
   end
 
   def check_in_book(book)
