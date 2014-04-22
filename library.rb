@@ -35,22 +35,21 @@ class Book
 end
 
 class Borrower
-  attr_reader :name
+  attr_reader :name, :borrowed
 
   def initialize(name)
     @name = name
+    @borrowed=[]
   end
 end
 
 class Library
-  attr_accessor :books, :borrowed, :available_books_list
+  attr_accessor :books
   @@count= 0
   def initialize(name)
     @books = []
     @name = name
     @@count=0
-    @borrowed=[]
-    @available_books_list=[]
   end
 
   def books
@@ -76,7 +75,12 @@ class Library
     else
       b[0].check_out
       b[0].borrower = borrower
-      b[0]
+      b[0].borrower.borrowed<<b[0]
+      if b[0].borrower.borrowed.count>2
+        return nil
+      else
+        b[0]
+      end
     end
   end
 
@@ -90,10 +94,8 @@ class Library
   end
 
   def available_books
-    @available_books_list
   end
 
   def borrowed_books
-    @borrowed
   end
 end
