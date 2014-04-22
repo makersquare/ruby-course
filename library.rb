@@ -44,12 +44,14 @@ class Borrower
 end
 
 class Library
-  attr_accessor :books
+  attr_accessor :books, :books_in, :books_out
   @@count= 0
   def initialize(name)
     @books = []
     @name = name
     @@count=0
+    @books_in=[]
+    @books_out=[]
   end
 
   def books
@@ -62,6 +64,7 @@ class Library
     a = Book.new(title, author)
     a.id = title
     @books<<a
+    @books_in<<a
   end
 
   def add_book(title, author)
@@ -79,6 +82,8 @@ class Library
       if b[0].borrower.borrowed.count>2
         return nil
       else
+        @books_out<<b[0]
+        @books_in.delete(b[0])
         b[0]
       end
     end
@@ -91,11 +96,15 @@ class Library
 
   def check_in_book(book)
     book.check_in
+    @books_in<<book
+    @books_out.delete(book)
   end
 
   def available_books
+    @books_in
   end
 
   def borrowed_books
+    @books_out
   end
 end
