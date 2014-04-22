@@ -1,12 +1,13 @@
 require "./library.rb"
 
-lib = Library.new
-lib.register_new_book("The Brothers Karamazov", "Fyodor Dostoesvky")
-book_id = lib.books.first.id
+    lib = Library.new
+    lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
+    lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
+    lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
 
-bro = Borrower.new('Big Brother')
-book = lib.check_out_book(book_id, bro)
-puts book.title
+    # At first, no books are checked out
 
-puts book_id
-puts lib.get_borrower(book_id-1)
+    kors = Borrower.new("Michael Kors")
+    puts lib.borrowed_books
+    
+    # book = lib.check_out_book(lib.borrowed_books.first.id, kors)

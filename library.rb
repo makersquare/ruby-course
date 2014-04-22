@@ -94,8 +94,23 @@ class Library
   end
 
   def available_books
+    @books.select {|x| x.status == "available"}
+    # no check if 0 books available, probably returns NilClass
+    # books_available = books.select {|x| x.status == "available"}
+    # if books_available == nil
+    #   return 0
+    # else
+    #   return books_available
+    # end
   end
 
   def borrowed_books
+    books_borrowed = @books.select {|x| x.status == "checked_out"}
+    # books_available = books.select {|x| x.status == "checked_out"}
+    # if books_available == nil
+    #   return 0
+    # else
+    #   return books_available
+    # end
   end
 end
