@@ -72,6 +72,9 @@ class Library
   end
 
   def check_in_book(book)
+    if book.status == 'checked_out'
+      book.check_in
+    end
   end
 
   def available_books
