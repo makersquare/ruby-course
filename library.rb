@@ -11,6 +11,10 @@ class Book
     nil
   end
 
+  def status
+    @status = "available"
+  end
+
 end
 
 class Borrower
