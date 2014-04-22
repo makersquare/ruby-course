@@ -13,6 +13,9 @@ class Book
   def id
   end
 
+  def status
+    "available"
+  end
 end
 
 class Borrower
