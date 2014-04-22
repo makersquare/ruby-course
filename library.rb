@@ -56,6 +56,10 @@ class Library
   end
 
   def check_out_book(book_id, borrower)
+    book =
+
+    @books[book_id].check_out
+    @books[book_id]
   end
 
   def check_in_book(book)
