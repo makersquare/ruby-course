@@ -58,9 +58,12 @@ class Library
 
   def check_out_book(book_id, borrower)
     book = @books.select {|item| item.id == book_id}.first
-    book.check_out
-    @borrowed_books[borrower] = book_id
-    book
+
+    if book.status == 'available'
+      book.check_out
+      @borrowed_books[borrower] = book_id
+      book
+    end
 
   end
 
