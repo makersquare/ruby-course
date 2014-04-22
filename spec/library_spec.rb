@@ -94,6 +94,8 @@ describe Library do
     expect(book.status).to eq 'checked_out'
   end
 
+
+
   it "knows who borrowed a book" do
     lib = Library.new("MakerSquare Library")
     lib.register_new_book("The Brothers Karamazov", "Fyodor Dostoesvky")
@@ -102,7 +104,7 @@ describe Library do
     # Big Brother wants to check out The Brothers Karamazov
     bro = Borrower.new('Big Brother')
     book = lib.check_out_book(book_id, bro)
-
+    #binding.pry
     # The Library should know that he checked out the book
     expect( lib.get_borrower(book_id) ).to eq 'Big Brother'
   end
