@@ -121,5 +121,15 @@ describe "Exercises" do
       expect(result).to eq(false)
     end
   end
+end
 
+describe "RPS" do
+  describe "initialize" do
+    it "should set player names and initial score" do
+      game = RPS.new("John", "Bob")
+      expect(game.player1).to eq("John")
+      expect(game.player2).to eq("Bob")
+      expect(game.score).to eq({"John" => 0, "Bob" => 0})
+    end
+  end
 end

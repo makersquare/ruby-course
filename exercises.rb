@@ -98,6 +98,15 @@ class RPS
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
+  attr_reader :player1, :player2, :score
+  def initialize(name1, name2)
+    @player1 = name1
+    @player2 = name2
+    @score = {name1 => 0, name2 => 0}
+  end
+  
+  def play(move1, move2)
+  end
 end
 
 
