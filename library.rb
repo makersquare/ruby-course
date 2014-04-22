@@ -91,6 +91,14 @@ class Library
   end
 
   def available_books
+    books = []
+    @books.each do |book|
+      if book.status == "available"
+        books << book
+      end
+    end
+
+    return books
   end
 
   def borrowed_books

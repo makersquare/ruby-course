@@ -179,15 +179,18 @@ describe Library do
     expect(book).to be_nil
   end
 
-  xit "returns available books" do
+  it "returns available books" do
     lib = Library.new
-    lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
-    lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
-    lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
+    book1 = Book.new("Eloquent JavaScript", "Marijn Haverbeke")
+    book2 = Book.new("Essential JavaScript Design Patterns", "Addy Osmani")
+    book3 = Book.new("JavaScript: The Good Parts", "Douglas Crockford")
+    lib.register_new_book(book1)
+    lib.register_new_book(book2)
+    lib.register_new_book(book3)
 
     # At first, all books are available
     expect(lib.available_books.count).to eq(3)
-    expect(lib.available_books.first).to be_a?(Book)
+    expect(lib.available_books.first).to be_a(Book)
 
     jordan = Borrower.new("Michael Jordan")
     book = lib.check_out_book(lib.available_books.first.id, jordan)
