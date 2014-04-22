@@ -33,7 +33,7 @@ class Borrower
 end
 
 class Library
-  attr_reader :books
+  attr_reader :books, :borrowers
 
   def initialize(name)
     @books = []

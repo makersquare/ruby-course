@@ -152,6 +152,9 @@ describe Library do
 
     # The book should now be marked as available!
     expect(book.status).to eq 'available'
+
+    # The borrower of the book should be removed from the borrowers hash
+    expect(lib.borrowers).should_not have_key(book.title)
   end
 
   xit "does not allow a Borrower to check out more than one Book at any given time" do
