@@ -44,7 +44,9 @@ class Library
     @books << book
   end
 
-  def check_out_book(book_id, borrower)
+  def check_out_book(book, borrower)
+    book.status = 'checked_out'
+    return book
   end
 
   def check_in_book(book)

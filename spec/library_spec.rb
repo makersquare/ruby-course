@@ -85,33 +85,34 @@ describe Library do
 
   it "allows a Borrower to check out a book by its id" do
     lib = Library.new("Public Library")
-    book = Book.new("Nausea","Jean-Paul Sartre")
+    book = Book.new("Green Eggs and Ham","Dr. Seuss")
     lib.register_new_book(book)
     book_id = lib.books.first.id
 
     # Sam wants to check out Green Eggs and Ham
     sam = Borrower.new('Sam-I-am')
-    book = lib.check_out_book(book_id, sam)
+    book_checking_out = lib.check_out_book(book, sam)
 
     # The checkout should return the book
-    expect(book).to be_a?(Book)
-    expect(book.title).to eq "Green Eggs and Ham"
+    expect(book_checking_out).to be_a(Book)
+    expect(book_checking_out.title).to eq "Green Eggs and Ham"
 
     # The book should now be marked as checked out
     expect(book.status).to eq 'checked_out'
   end
 
-  xit "knows who borrowed a book" do
+  it "knows who borrowed a book" do
     lib = Library.new("Public Library")
-    lib.register_new_book("The Brothers Karamazov", "Fyodor Dostoesvky")
+    book = Book.new("The Brothers Karamazov", "Fyodor Dostoesvky")
+    lib.register_new_book(book)
     book_id = lib.books.first.id
 
     # Big Brother wants to check out The Brothers Karamazov
     bro = Borrower.new('Big Brother')
-    book = lib.check_out_book(book_id, bro)
+    book = lib.check_out_book(book, bro)
 
     # The Library should know that he checked out the book
-    expect( lib.get_borrower(book_id) ).to eq 'Big Brother'
+    expect( lib.get_borrower(book) ).to eq 'Big Brother'
   end
 
   xit "does not allow a book to be checked out twice in a row" do
