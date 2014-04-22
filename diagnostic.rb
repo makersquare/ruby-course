@@ -36,6 +36,7 @@ module ClassesAndInstances
     attr_reader :name
     def initialize(name)
       # TODO: Set name
+      @name = name
     end
   end
 
