@@ -13,8 +13,16 @@ class Book
   end
 
   def check_out
-    @status = "checked_out"
-    true
+    if @status == "checked_out"
+      false
+    else
+      @status = "checked_out"
+      true
+    end
+  end
+
+  def check_in
+     @status = "available"
   end
 
   def status
@@ -25,19 +33,23 @@ class Book
 end
 
 class Borrower
+  attr_reader :name
+
   def initialize(name)
+    @name = name
   end
 end
 
 class Library
+  attr_accessor :books, :name
+
   def initialize(name)
     @books = []
   end
 
-  def books
-  end
+  def register_new_book(book)
+    @books << book
 
-  def add_book(title, author)
   end
 
   def check_out_book(book_id, borrower)
