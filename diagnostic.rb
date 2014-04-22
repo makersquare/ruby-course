@@ -67,7 +67,7 @@ module ClassesAndInstances
     end
 
     def grow
-      size = size + 1
+      @size = @size + 1
     end
   end
 end
@@ -97,36 +97,39 @@ module GettersSetters
   # Getters/Setters 2 #
   # # # # # # # # # # #
   class Person
-
+    attr_reader :age
+    attr_writer :secret
+    attr_accessor :name
 
     def initialize(name, age)
       @name = name
       @age = age
+
     end
 
-    attr_reader :age
-    attr_writer :secret
-    attr_accessor :name
+
+
+
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     # TODO: Refactor the following to use attr_[reader|writer|accessible] shortcuts
     # NOTE: Don't provide any more access than necessary.
     #       For example, don't use attr_accessible when all you really need is attr_writer
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-    def age
-      @age
-    end
+    # def age
+    #   @age
+    # end
 
-    def secret=(value)
-      @secret = value
-    end
+    # def secret=(value)
+    #   @secret = value
+    # end
 
-    def name
-      @name
-    end
+    # def name
+    #   @name
+    # end
 
-    def name=(value)
-      @name = value
-    end
+    # def name=(value)
+    #   @name = value
+    # end
   end
 
 end
@@ -148,7 +151,7 @@ class ArrayProblems
 
   def self.uppercase_third_element(array)
     # TODO: Complete this method
-    array(2).upcase
+    array[2].upcase!()
   end
 
   # # # # # # #
@@ -157,7 +160,7 @@ class ArrayProblems
 
   def self.iterate_and_print(array)
     # TODO: Iterate over this array and `puts` each element.
-    array.each
+    array.each {|x| puts x}
   end
 
   # # # # # # #
@@ -166,7 +169,7 @@ class ArrayProblems
 
   def self.select_higher(array, min)
     # TODO: Select and return all numbers higher than `min`
-    #array.each do {|x| if x > min return x}
+    array.select {|number| number > min}
   end
 
   # # # # # # #
@@ -175,8 +178,9 @@ class ArrayProblems
 
   def self.greet_everyone(people)
     # TODO: Select and return all numbers higher than `min`
+    people.map {|person| "Hello, #{person}"}
   end
-end
+
 
 
 
@@ -187,6 +191,7 @@ class HashProblems
 
   def self.create_empty_hash
     # TODO: Complete this method
+    {}
   end
 
   # # # # # # #
@@ -195,6 +200,7 @@ class HashProblems
 
   def self.create_veggie_color_hash
     # TODO: Complete this method by returning a hash
+
   end
 
   # # # # # # #
@@ -218,4 +224,5 @@ class ArraysAndHashes
     # Example: if array is [{ egg: 12 }, { milk: 1 }],
     #          then `puts` both "egg: 12" and "milk: 1"
   end
+end
 end
