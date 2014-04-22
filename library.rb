@@ -46,10 +46,21 @@ class Library
   end
 
   def check_out_book(book, borrower)
-    if book.status == 'available'
-      book.status = 'checked_out'
-      @borrowers[book.title] = borrower.name
-      return book
+    check_out_count = 0
+    # Count how many times a borrower's name appears in the borrowers hash. If more than 2, no more books can be borrowed
+    @borrowers.each do |key,value|
+      if value == borrower.name
+        check_out_count += 1
+      end
+    end
+
+    # If less than 2 books have been checked out by the borrower and the book is available, book can be checked out
+    if check_out_count < 2
+      if book.status == 'available'
+        book.status = 'checked_out'
+        @borrowers[book.title] = borrower.name
+        return book
+      end
     end
   end
 
