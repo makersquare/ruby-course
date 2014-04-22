@@ -1,5 +1,5 @@
 require 'spec_helper.rb'
-
+# require 'diagnostic.rb'
 # Note: In these tests we've aliased `you` to the method `it`. This
 # is to make the tests easier to read :)
 
@@ -10,7 +10,7 @@ describe "Ruby Diagnostic: You" do
     expect( toggle_oven(false) ).to eq "The oven is now off"
   end
 
-  xyou "know how to call a method within another method" do
+  you "know how to call a method within another method" do
     result = give_me_seven
     expect(result).to eq 7
     expect(@source).to include_code(:multiply).in_method(:give_me_seven)
@@ -19,12 +19,12 @@ describe "Ruby Diagnostic: You" do
 
   describe "Your knowledge of Classes and Instances" do
 
-    xyou "know how to set an instance variable" do
+    you "know how to set an instance variable" do
       animal = ClassesAndInstances::Animal.new('bird')
       expect(animal.name).to eq 'bird'
     end
 
-    xyou "know how to write an instance method" do
+    you "know how to write an instance method" do
       lion = ClassesAndInstances::Animal.new('lion')
       tiger = ClassesAndInstances::Animal.new('tiger')
       liger = ClassesAndInstances::Animal.new('liger')
@@ -41,7 +41,7 @@ describe "Ruby Diagnostic: You" do
       expect(zoo.animals.count).to eq 3
     end
 
-    xyou "know the difference between local variables and instance variables" do
+    you "know the difference between local variables and instance variables" do
       plant = ClassesAndInstances::Plant.new(1)
 
       plant.grow
@@ -55,7 +55,7 @@ describe "Ruby Diagnostic: You" do
 
   describe "Your knowledge of getters and setters" do
 
-    xyou "know how to write a getter method" do
+    you "know how to write a getter method" do
       box = GettersSetters::Box.new
       expect(box.secret).to eq 50
 
@@ -151,13 +151,13 @@ describe "Ruby Diagnostic: You" do
       expect(result.length).to eq 0
     end
 
-    xyou "know how to create a hash with keys and values" do
+    you "know how to create a hash with keys and values" do
       result = HashProblems.create_veggie_color_hash
       expect(result[:tomato]).to eq 'red'
       expect(result[:kale]).to eq 'green'
     end
 
-    xyou "know how to access a nested hash" do
+    you "know how to access a nested hash" do
       james = {
           "name" => {
               :first => "King",
@@ -182,7 +182,7 @@ describe "Ruby Diagnostic: You" do
 
   describe "Your handle on using Hashes with Arrays" do
 
-    xyou "know how to iterate through an array of hashes and output its contents" do
+    you "know how to iterate through an array of hashes and output its contents" do
       expect(ArraysAndHashes).to receive(:puts).with("oranges: 5")
       expect(ArraysAndHashes).to receive(:puts).with("eggplants: 8")
       expect(ArraysAndHashes).to receive(:puts).with("apples: 14")

@@ -21,11 +21,8 @@ def multiply(x, y)
 end
 
 def give_me_seven
-  result
-  # TODO: Use the `multiply` method
+  multiply(7, 1)
 end
-
-
 
 module ClassesAndInstances
 
@@ -40,7 +37,7 @@ module ClassesAndInstances
       # TODO: Set name
     end
   end
-animal = ClassesAndInstances::Animal.new('bird')
+animal = Animal.new('bird')
 animal.name
 
   # # # # # # # # # # # #
@@ -54,12 +51,19 @@ animal.name
     end
 
     def adopt(animal)
-      @animal = animal
+      @animals << animal
     end
 
     # TODO: Write a method `adopt` that takes one paramater `animal`
     # and adds it to its animals array
   end
+  lion = ClassesAndInstances::Animal.new('lion')
+  tiger = ClassesAndInstances::Animal.new('tiger')
+  liger = ClassesAndInstances::Animal.new('liger')
+
+  zoo = ClassesAndInstances::Zoo.new
+  zoo.adopt(lion)
+  zoo.adopt(tiger)
 
   # # # # # # # # # # # #
   # Classes/Instances 3 #
@@ -75,6 +79,10 @@ animal.name
       @size = @size + 1
     end
   end
+  plant = ClassesAndInstances::Plant.new(1)
+  plant.grow
+  plant.grow
+  plant.grow
 end
 
 
@@ -107,23 +115,25 @@ module GettersSetters
     # NOTE: Don't provide any more access than necessary.
     #       For example, don't use attr_accessible when all you really need is attr_writer
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-    # def age
-    #   @age
-    # end
+    def age
+      @age
+    end
 
-    # def secret=(value)
-    #   @secret = value
-    # end
+    def secret=(value)
+      @secret = value
+    end
 
-    # def name
-    #   @name
-    # end
+    def name
+      @name
+    end
 
-    # def name=(value)
-    #   @name = value
-    # end
+    def name=(value)
+      @name = value
+    end
   end
 end
+box = GettersSetters::Box.new
+box.secret
 
 
 
@@ -166,6 +176,8 @@ class ArrayProblems
 
   def self.greet_everyone(people)
     # TODO: Select and return all numbers higher than `min`
+    people.map do |name|
+      "Hello {name}"
   end
 end
 
@@ -178,6 +190,7 @@ class HashProblems
 
   def self.create_empty_hash
     # TODO: Complete this method
+    my_hash = {}
   end
 
   # # # # # # #
@@ -186,6 +199,7 @@ class HashProblems
 
   def self.create_veggie_color_hash
     # TODO: Complete this method by returning a hash
+    {tomato: "red", kale: "green"}
   end
 
   # # # # # # #
@@ -194,10 +208,9 @@ class HashProblems
 
   def self.update_father_last_name(hash)
     # TODO: Complete this method by writing A SINGLE LINE
+    hash["father"]["name"][:last] = "James XXX"
   end
 end
-
-
 
 class ArraysAndHashes
   # # # # # # # # # # #
@@ -211,5 +224,11 @@ class ArraysAndHashes
     # TODO: Iterate over this array and `puts` each key and value
     # Example: if array is [{ egg: 12 }, { milk: 1 }],
     #          then `puts` both "egg: 12" and "milk: 1"
+    grocery_lists.each do |x|
+      x.each do |item, num|
+        puts "{item}: {num}"
+      end
+    end
   end
+end
 end
