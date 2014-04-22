@@ -5,6 +5,7 @@ class Book
   def initialize(title='default_title', author='default_author')
     @author = author
     @title = title
+    @status = "available"
 
   end
 
@@ -16,7 +17,12 @@ class Book
   end
 
   def status
-    "available"
+    @status
+  end
+
+  def check_out
+    @status = "checked_out"
+    true
   end
 end
 
