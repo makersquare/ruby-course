@@ -63,6 +63,10 @@ class Library
   end
 
   def check_in_book(book)
+    if book.status == "checked_out"
+      book.status = "available"
+      book.borrower = nil
+    end
   end
 
   def available_books
