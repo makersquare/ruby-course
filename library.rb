@@ -23,36 +23,40 @@ class Book
 end
 
 class Borrower
+
+  attr_accessor :backpack
+  attr_reader :name
+
   def initialize(name)
     @name = name
-  end
-
-  def name
-    @name
+    @backpack = []
   end
 end
 
-class Library
 
+class Library
   @@book_id_counter = 0
 
   def initialize(name='default_library_name', books=[])
     @name = name
-    @books = books
+    @inventory = books
   end
 
   def books
-    @books
+    @inventory
   end
 
   def register_new_book(title, author)
     new_book = Book.new(title, author)
-    @books << new_book
     @@book_id_counter += 1
     new_book.id = @@book_id_counter
+    @inventory << new_book
   end
 
   def check_out_book(book_id, borrower)
+    b = @inventory.sort_by {|book| book.id == book_id}
+    b.first.check_out
+    b.first
   end
 
   def check_in_book(book)
@@ -62,5 +66,9 @@ class Library
   end
 
   def borrowed_books
+  end
+
+  def get_borrower(book_id)
+
   end
 end
