@@ -112,21 +112,6 @@ module GettersSetters
     # NOTE: Don't provide any more access than necessary.
     #       For example, don't use attr_accessible when all you really need is attr_writer
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-    # def age
-    #   @age
-    # end
-
-    # def secret=(value)
-    #   @secret = value
-    # end
-
-    # def name
-    #   @name
-    # end
-
-    # def name=(value)
-    #   @name = value
-    # end
   end
 end
 
@@ -164,6 +149,7 @@ class ArrayProblems
 
   def self.select_higher(array, min)
     # TODO: Select and return all numbers higher than `min`
+    array.select {|num| num > min}
   end
 
   # # # # # # #
