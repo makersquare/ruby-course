@@ -4,9 +4,6 @@ require "./library.rb"
 describe Book do
   it "has a title and author, and nil id" do
     book = Book.new("The Stranger", "Albert Camus")
-
-    # binding.pry
-
     expect(book.title).to eq "The Stranger"
     expect(book.author).to eq "Albert Camus"
     expect(book.id).to be_nil
@@ -52,16 +49,15 @@ end
 
 describe Library do
 
-  xit "starts with an empty array of books" do
+  it "starts with an empty array of books" do
     lib = Library.new
     expect(lib.books.count).to eq(0)
   end
 
-  xit "add new books and assigns it an id" do
+  it "add new books and assigns it an id" do
     lib = Library.new
     lib.register_new_book("Nausea", "Jean-Paul Sartre")
     expect(lib.books.count).to eq(1)
-
     created_book = lib.books.first
     expect(created_book.title).to eq "Nausea"
     expect(created_book.author).to eq "Jean-Paul Sartre"
