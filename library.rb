@@ -70,6 +70,7 @@ class Library
   end
 
   def check_in_book(book)
+    # Remove book from borrowers hash and change book status to available
     @borrowers.delete(book.title)
     book.status = 'available'
   end
@@ -79,6 +80,6 @@ class Library
   end
 
   def borrowed_books
-    @books.select {|book| book.status == 'checked_out'}
+    borrowed_books = @books.select {|book| book.status == 'checked_out'}
   end
 end
