@@ -209,9 +209,9 @@ class HashProblems
 
   def self.update_father_last_name(hash)
     # TODO: Complete this method by writing A SINGLE LINE
-    james.each {||}
-
+    hash["father"]["name"][:last] = "James XXX"
   end
+
 end
 
 
