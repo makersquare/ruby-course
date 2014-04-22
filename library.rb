@@ -58,6 +58,8 @@ class Library
   end
 
   def check_in_book(book)
+    @borrowers.delete(book.title)
+    book.status = 'available'
   end
 
   def available_books
