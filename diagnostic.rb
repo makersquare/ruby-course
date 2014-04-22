@@ -228,6 +228,8 @@ class HashProblems
     #   result = HashProblems.create_empty_hash
     #   expect(result.length).to eq 0
     # end
+
+    Hash.new
   end
 
   # # # # # # #
