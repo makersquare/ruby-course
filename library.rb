@@ -3,7 +3,16 @@ class Book
   attr_reader :author
 
   def initialize(title, author)
+    @title = title
     @author = author
+  end
+
+  def title
+    @title
+  end
+
+  def id
+    @id
   end
 end
 
