@@ -148,5 +148,15 @@ describe "RPS" do
       @game.play("scissors", "paper")
       expect(@game.score).to eq({"John" => 1, "Bob" => 2})
     end
+
+    it "should not update the score if its a tie" do
+      @game.play("rock", "rock")
+      expect(@game.score).to eq({"John" => 0, "Bob" => 0})
+
+      # only 1 of the next 2 games has a winner
+      @game.play("rock", "paper")
+      @game.play("rock", "rock")
+      expect(@game.score).to eq({"John" => 0, "Bob" => 1})
+    end
   end
 end
