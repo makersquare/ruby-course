@@ -77,6 +77,7 @@ class Library
   end
 
   def borrowed_books
+    @inventory.select {|book| book.status == "checked_out"}
   end
 
   def get_borrower(book_id)
