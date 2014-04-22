@@ -103,5 +103,13 @@ class Library
   end
 
   def borrowed_books
+    books = []
+    @books.each do |book|
+      if book.status == "checked_out"
+        books << book
+      end
+    end
+
+    return books
   end
 end
