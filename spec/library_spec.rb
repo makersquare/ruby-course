@@ -13,12 +13,12 @@ describe Book do
   end
 
   it "has a default status of available" do
-    book = Book.new("Harry Potter", "J.K. Rowling")
+    book = Book.new
     expect(book.status).to eq 'available'
   end
 
   it "can be checked out" do
-    book = Book.new("Harry Potter", "J.K. Rowling")
+    book = Book.new
     did_it_work = book.check_out
     expect(did_it_work).to be_true
     expect(book.status).to eq 'checked_out'
