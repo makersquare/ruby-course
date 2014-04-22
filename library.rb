@@ -1,3 +1,4 @@
+require 'csv'
 
 class Book
   attr_accessor :author, :title, :id, :status, :year_published, :edition, :ratings, :reviews
@@ -92,5 +93,12 @@ class Library
 
   def borrowed_books
     @books.select {|book| book.status == 'checked_out'}
+  end
+
+  def import_from_csv(filename)
+    book_import = CSV.read(filename)
+    book_import.each do |book|
+      @books << Book.new(book[0],book[1])
+    end
   end
 end

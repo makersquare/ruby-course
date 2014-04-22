@@ -100,7 +100,6 @@ describe Library do
     lib.register_new_book(book2)
     lib.register_new_book(book3)
 
-
     expect(lib.books.count).to eq(3)
   end
 
@@ -259,5 +258,14 @@ describe Library do
     # But now there should be one checked out book
     expect(lib.borrowed_books.count).to eq(1)
     expect(lib.borrowed_books.first).to be_a(Book)
+  end
+
+  it "it allows books to be imported from csv files" do
+    lib = Library.new("Public Library")
+    expect(lib.books.count).to eq 0
+    book_import = lib.import_from_csv('test.csv')
+    expect(lib.books.count).to eq 2
+    expect(lib.books.first.title).to eq "Green Eggs and Ham"
+    expect(lib.books.last.title).to eq "Harry Potter"
   end
 end
