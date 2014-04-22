@@ -31,13 +31,19 @@ module Exercises
   # Exercise 4
   #  - Returns the max number of the given array
   def self.ex4(array)
-    # TODO
+    max = array.first
+    array.each do |x|
+      if x > max
+        max = x
+      end
+    end
+    max
   end
 
   # Exercise 5
   #  - Iterates through an array and `puts` each element
   def self.ex5(array)
-    # TODO
+    array.each { |e| puts e }
   end
 
   # Exercise 6

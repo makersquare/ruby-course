@@ -63,4 +63,63 @@ describe "Exercises" do
     end
   end
 
+  describe "ex5" do
+    it "should print every element in an array" do
+      STDOUT.should_receive(:puts).with(1)
+      STDOUT.should_receive(:puts).with(2)
+      STDOUT.should_receive(:puts).with("b")
+      STDOUT.should_receive(:puts).with("c")
+      Exercises.ex5 [1, 2, 'b', 'c']
+    end
+  end
+
+  describe "ex3" do
+    it "should sum up an array" do
+      result = Exercises.ex3 [5,6,7]
+      expect(result).to eq(18)
+    end
+  end
+
+  describe "ex3" do
+    it "should sum up an array" do
+      result = Exercises.ex3 [5,6,7]
+      expect(result).to eq(18)
+    end
+  end
+
+  describe "ex3" do
+    it "should sum up an array" do
+      result = Exercises.ex3 [5,6,7]
+      expect(result).to eq(18)
+    end
+  end
+
+  describe "ex3" do
+    it "should sum up an array" do
+      result = Exercises.ex3 [5,6,7]
+      expect(result).to eq(18)
+    end
+  end
+
+  describe "ex3" do
+    it "should sum up an array" do
+      result = Exercises.ex3 [5,6,7]
+      expect(result).to eq(18)
+    end
+  end
+
+  describe "ex3" do
+    it "should sum up an array" do
+      result = Exercises.ex3 [5,6,7]
+      expect(result).to eq(18)
+    end
+  end
+
+  describe "ex3" do
+    it "should sum up an array" do
+      result = Exercises.ex3 [5,6,7]
+      expect(result).to eq(18)
+    end
+  end
+
 end
