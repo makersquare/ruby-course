@@ -80,7 +80,7 @@ module Exercises
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
-    # TODO
+    return time.year % 4 == 0
   end
 end
 

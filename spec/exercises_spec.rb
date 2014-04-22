@@ -108,31 +108,17 @@ describe "Exercises" do
     end
   end
 
-  describe "ex3" do
-    it "should sum up an array" do
-      result = Exercises.ex3 [5,6,7]
-      expect(result).to eq(18)
+  describe "ex9" do
+    it "should return true for leap years" do
+      Time.stub(:now).and_return(Time.parse("2012-1-2 11:00:00"))
+      result = Exercises.ex9 Time.now
+      expect(result).to eq(true)
     end
-  end
 
-  describe "ex3" do
-    it "should sum up an array" do
-      result = Exercises.ex3 [5,6,7]
-      expect(result).to eq(18)
-    end
-  end
-
-  describe "ex3" do
-    it "should sum up an array" do
-      result = Exercises.ex3 [5,6,7]
-      expect(result).to eq(18)
-    end
-  end
-
-  describe "ex3" do
-    it "should sum up an array" do
-      result = Exercises.ex3 [5,6,7]
-      expect(result).to eq(18)
+    it "should return false for other years" do
+      Time.stub(:now).and_return(Time.parse("2013-1-2 11:00:00"))
+      result = Exercises.ex9 Time.now
+      expect(result).to eq(false)
     end
   end
 
