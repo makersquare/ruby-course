@@ -1,11 +1,15 @@
 
 class Book
-  attr_accessor :author, :title, :id, :status
+  attr_accessor :author, :title, :id, :status, :year_published, :edition
 
-  def initialize(title, author)
+  def initialize(title, author, options = { })
+    options = {year_published: nil, edition: nil}.merge(options)
     @author = author
     @title = title
     @status = "available"
+    @year_published = options[:year_published]
+    @edition = options[:edition]
+    # Is ID necessary? We are referencing books by title instead of by id.
     @id = nil
   end
 

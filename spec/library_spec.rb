@@ -42,6 +42,19 @@ describe Book do
     book.check_in
     expect(book.status).to eq 'available'
   end
+
+  it "can have a year published and edition" do
+    book = Book.new("The Stranger", "Albert Camus", {:year_published => "1900", :edition => 1})
+    book1 = Book.new("The Stranger", "Albert Camus", {:year_published => "2005"})
+    book2 = Book.new("The Stranger", "Albert Camus", {:edition => 4})
+    expect(book.year_published).to eq "1900"
+    expect(book.edition).to eq 1
+    expect(book1.year_published).to eq "2005"
+    expect(book1.edition).to eq nil
+    expect(book2.year_published).to eq nil
+    expect(book2.edition).to eq 4
+  end
+
 end
 
 describe Borrower do
