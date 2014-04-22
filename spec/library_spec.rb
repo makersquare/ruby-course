@@ -17,15 +17,15 @@ describe Book do
     expect(book.status).to eq 'available'
   end
 
-  xit "can be checked out" do
-    book = Book.new
+  it "can be checked out" do
+    book = Book.new('Book1', "Mike")
     did_it_work = book.check_out
     expect(did_it_work).to be_true
     expect(book.status).to eq 'checked_out'
   end
 
   xit "can't be checked out twice in a row" do
-    book = Book.new
+    book = Book.new('Book1', "Mike")
     did_it_work = book.check_out
     expect(did_it_work).to eq(true)
 
@@ -36,7 +36,7 @@ describe Book do
   end
 
   xit "can be checked in" do
-    book = Book.new
+    book = Book.new('Book1', "Mike")
     book.check_out
     book.check_in
     expect(book.status).to eq 'available'
@@ -44,7 +44,7 @@ describe Book do
 end
 
 describe Borrower do
-  xit "has a name" do
+  it "has a name" do
     borrower = Borrower.new("Mike")
     expect(borrower.name).to eq "Mike"
   end
@@ -52,14 +52,15 @@ end
 
 describe Library do
 
-  xit "starts with an empty array of books" do
-    lib = Library.new
+  it "starts with an empty array of books" do
+    lib = Library.new("Bola")
     expect(lib.books.count).to eq(0)
   end
 
-  xit "add new books and assigns it an id" do
-    lib = Library.new
-    lib.register_new_book("Nausea", "Jean-Paul Sartre")
+  it "add new books and assigns it an id" do
+    lib = Library.new("Bola", 1)
+    neusea_book = Book.new("Nausea", "Jean-Paul Sartre")
+    lib.register_new_book(neusea_book)
     expect(lib.books.count).to eq(1)
 
     created_book = lib.books.first
