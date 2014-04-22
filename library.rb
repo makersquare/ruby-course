@@ -86,6 +86,7 @@ class Library
   end
 
   def check_in_book(book)
+    book.check_in
   end
 
   def available_books
