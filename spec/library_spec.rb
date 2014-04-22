@@ -69,11 +69,14 @@ describe Library do
     expect(created_book.id).to_not be_nil
   end
 
-  xit "can add multiple books" do
+  it "can add multiple books" do
     lib = Library.new
-    lib.register_new_book("One", "Bob")
-    lib.register_new_book("Two", "Bob")
-    lib.register_new_book("Three", "Bob")
+    new_book1 = Book.new("One", "Bob")
+    new_book2 = Book.new("Two", 'Bob')
+    new_book3 = Book.new("Three", "Bob")
+    lib.register_new_book(new_book1)
+    lib.register_new_book(new_book2)
+    lib.register_new_book(new_book3)
 
     expect(lib.books.count).to eq(3)
   end
