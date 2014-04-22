@@ -113,7 +113,7 @@ describe Library do
     book = lib.check_out_book(book_id, nielsen)
 
     # The first time should be successful
-    expect(book).to be_a?(Book)
+    expect(book).to be_a(Book)
 
     # However, you can't check out the same book twice!
     book_again = lib.check_out_book(book_id, nielsen)
@@ -214,6 +214,6 @@ describe Library do
 
     # But now there should be one checked out book
     expect(lib.borrowed_books.count).to eq(1)
-    expect(lib.borrowed_books.first).to be_a?(Book)
+    expect(lib.borrowed_books.first).to be_a(Book)
   end
 end
