@@ -53,7 +53,11 @@ class Library
   def books
     return @books
   end
-  
+
+  def register_new_book=(new_book)
+    register_new_book(new_book.title, new_book.author)
+  end
+
   def register_new_book(title, author)
     book = Book.new(title, author, @books.count+1)
     @books << book
@@ -63,10 +67,14 @@ class Library
   end
 
   def check_out_book(book_id, borrower)
-    checked_out_book = @books[book_id -1]
-    @borrowers[book_id -1] = borrower
-    checked_out_book.check_out
-    return checked_out_book
+    book_to_checkout = @books[book_id -1]
+    if book_to_checkout.status == "checked_out"
+      return nil
+    else
+      @borrowers[book_id -1] = borrower
+      book_to_checkout.check_out
+      return book_to_checkout
+    end
   end
 
 
