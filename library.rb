@@ -87,6 +87,7 @@ class Library
   end
 
   def check_in_book(book)
+    # book.getborrow.num_books -= 1
     book.check_in
   end
 
