@@ -3,10 +3,12 @@ class Book
   attr_reader :author
   attr_reader :title
   attr_reader :id
+  attr_reader :status
 
   def initialize(title, author)
     @title = title
     @author = author
+    @status = "available"
   end
 
 
