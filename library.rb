@@ -36,19 +36,28 @@ class Book
 end
 
 class Borrower
+  attr_reader :name
+
   def initialize(name)
+    @name = name
   end
 end
 
 class Library
+  attr_accessor :books
+  @@count= 0
   def initialize(name)
     @books = []
+    @name = name
+    @@count=0
   end
 
   def books
+    @books
   end
 
   def add_book(title, author)
+    @@count+=1
   end
 
   def check_out_book(book_id, borrower)
