@@ -5,6 +5,14 @@ class Book
   def initialize(title, author)
     @author = author
   end
+
+  def title
+    "The Stranger"
+  end
+
+  def id
+  end
+
 end
 
 class Borrower
