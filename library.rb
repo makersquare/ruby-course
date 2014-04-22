@@ -1,4 +1,4 @@
-
+require 'pry-debugger'
 class Book
   attr_reader :author
   attr_reader :title
@@ -28,19 +28,21 @@ end
 
 class Borrower
   attr_reader :name
+  attr_accessor :num_books
   def initialize(name)
     @name = name
+    @num_books = 0
   end
 end
 
 class Library
   attr_reader :books
   attr_reader :count
-  @@counter = 0
 
   def initialize
     @books = []
     @count = @books.length
+    @counter = 0
   end
 
   # def count
@@ -53,22 +55,25 @@ class Library
 
   def register_new_book(book)
     @books << book
-    book.id = @@counter
-    @@counter += 1
+    book.id = @counter
+    @counter += 1
   end
 
   def check_out_book(book_id, borrower)
-    @books.each do |book|
-      if book.id == book_id
-        if book.check_out == false
-          return nil
-        else
-          book.borrower = borrower.name
-          return book
+    if borrower.num_books < 2
+      @books.each do |book|
+        if book.id == book_id
+          if book.check_out == false
+            nil
+          else
+            book.borrower = borrower.name
+            borrower.num_books += 1
+            return book
+          end
         end
-      else
-        return "No book with that id is in this library"
       end
+    else
+      return nil
     end
   end
 

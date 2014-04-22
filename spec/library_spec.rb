@@ -1,5 +1,5 @@
 require "./library.rb"
-# require 'pry-debugger'
+require 'pry-debugger'
 
 describe Book do
   it "has a title and author, and nil id" do
@@ -152,12 +152,15 @@ describe Library do
     expect(book.status).to eq 'available'
   end
 
-  xit "does not allow a Borrower to check out more than one Book at any given time" do
+  it "does not allow a Borrower to check out more than two Books at any given time" do
     # yeah it's a stingy library
     lib = Library.new
-    lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
-    lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
-    lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
+    book1 = Book.new("Eloquent JavaScript", "Marijn Haverbeke")
+    book2 = Book.new("Essential JavaScript Design Patterns", "Addy Osmani")
+    book3 = Book.new("JavaScript: The Good Parts", "Douglas Crockford")
+    lib.register_new_book(book1)
+    lib.register_new_book(book2)
+    lib.register_new_book(book3)
 
     jackson = Borrower.new("Michael Jackson")
     book_1 = lib.books[0]
