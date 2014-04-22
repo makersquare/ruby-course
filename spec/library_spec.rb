@@ -38,6 +38,23 @@ describe Book do
     book.check_in
     expect(book.status).to eq 'available'
   end
+
+  # books should have optional attributes year-published and edition
+  it "should have a nil published year if it wasn't set" do
+    book = Book.new("Harry Potter", "J.K. Rowling")
+    expect(book.year_published).to be_nil
+  end
+
+  it "has a year published if it was set" do
+    book = Book.new("Harry Potter", "J.K. Rowling", 2012)
+    expect(book.year_published).to eq 2012
+  end
+
+  it "should have a nil publishd year if the given year wasn't an integer" do
+    book = Book.new("Harry Potter", "J.K. Rowling", "2012")
+    expect(book.year_published).to be_nil
+  end
+
 end
 
 describe Borrower do
@@ -210,6 +227,7 @@ describe Library do
     expect(lib.borrowed_books.count).to eq(0)
 
     kors = Borrower.new("Michael Kors")
+
     # binding.pry
 
     # changed lib.borrowed_books to lib.available_books
@@ -219,4 +237,5 @@ describe Library do
     expect(lib.borrowed_books.count).to eq(1)
     expect(lib.borrowed_books.first).to be_a(Book)
   end
+
 end
