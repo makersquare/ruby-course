@@ -41,7 +41,7 @@ class Borrower
   end
 end
 
-class Library <Book
+class Library
   attr_accessor :books
   @@count= 0
   def initialize(name)
@@ -58,7 +58,7 @@ class Library <Book
     @@count+=1
     @@count
     a = Book.new(title, author)
-    a.id = "first"
+    a.id = title
     @books<<a
   end
 
@@ -67,6 +67,9 @@ class Library <Book
   end
 
   def check_out_book(book_id, borrower)
+    b = @books.select {|x| x.title == book_id}
+    b[0].check_out
+    b[0]
   end
 
   def check_in_book(book)
