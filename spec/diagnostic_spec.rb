@@ -107,7 +107,7 @@ describe "Ruby Diagnostic: You" do
       expect(fruits).to eq ['pear', 'banana', 'GRAPE']
     end
 
-    xyou "know how to iterate over an array" do
+    you "know how to iterate over an array" do
       # Take 1
       expect(ArrayProblems).to receive(:puts).with('top')
       expect(ArrayProblems).to receive(:puts).with('bowler')
@@ -126,7 +126,7 @@ describe "Ruby Diagnostic: You" do
       expect(@source).to include_code(:each).in_class_method(:ArrayProblems, :iterate_and_print)
     end
 
-    xyou "know how to use the select method" do
+    you "know how to use the select method" do
       numbers = [33, 11, 5, 55, 67, 8, 95, 0, 110]
 
       result = ArrayProblems.select_higher(numbers, 55)

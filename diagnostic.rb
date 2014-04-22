@@ -173,6 +173,14 @@ class ArrayProblems
 
   def self.iterate_and_print(array)
     # TODO: Iterate over this array and `puts` each element.
+     # Take 1
+      # expect(ArrayProblems).to receive(:puts).with('top')
+      # expect(ArrayProblems).to receive(:puts).with('bowler')
+      # expect(ArrayProblems).to receive(:puts).with('baseball')
+
+      # hats = ['top', 'bowler', 'baseball']
+      # ArrayProblems.iterate_and_print(hats)
+      array.each { |element| puts element }
   end
 
   # # # # # # #
@@ -181,6 +189,11 @@ class ArrayProblems
 
   def self.select_higher(array, min)
     # TODO: Select and return all numbers higher than `min`
+    # numbers = [33, 11, 5, 55, 67, 8, 95, 0, 110]
+
+    #   result = ArrayProblems.select_higher(numbers, 55)
+    #   expect(result).to include(67, 95, 110)
+    range_array = array.select {|number| number > min}
   end
 
   # # # # # # #
@@ -189,6 +202,14 @@ class ArrayProblems
 
   def self.greet_everyone(people)
     # TODO: Select and return all numbers higher than `min`
+      #   xyou "know how to use the map method" do
+      # people = ['Alice', 'Bob']
+
+      # result = ArrayProblems.greet_everyone(people)
+      # expect(result).to include("Hello, Alice", "Hello, Bob")
+
+      # expect(@source).to include_code(:map).in_class_method(:ArrayProblems, :greet_everyone)
+    end
   end
 end
 
