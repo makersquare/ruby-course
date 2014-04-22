@@ -61,7 +61,7 @@ class Library
     @books.each do |book|
       if book.id == book_id
         if book.check_out == false
-          return "Sorry, you can't check out this book"
+          return nil
         else
           book.borrower = borrower.name
           return book
