@@ -193,7 +193,7 @@ class ArrayProblems
 
     #   result = ArrayProblems.select_higher(numbers, 55)
     #   expect(result).to include(67, 95, 110)
-    range_array = array.select {|number| number > min}
+    range_array = array.select {|number| number > min }
   end
 
   # # # # # # #
@@ -202,14 +202,16 @@ class ArrayProblems
 
   def self.greet_everyone(people)
     # TODO: Select and return all numbers higher than `min`
-      #   xyou "know how to use the map method" do
-      # people = ['Alice', 'Bob']
+    #   xyou "know how to use the map method" do
+    #   people = ['Alice', 'Bob']
 
-      # result = ArrayProblems.greet_everyone(people)
-      # expect(result).to include("Hello, Alice", "Hello, Bob")
+    #   result = ArrayProblems.greet_everyone(people)
+    #   expect(result).to include("Hello, Alice", "Hello, Bob")
 
-      # expect(@source).to include_code(:map).in_class_method(:ArrayProblems, :greet_everyone)
-    end
+    #   expect(@source).to include_code(:map).in_class_method(:ArrayProblems, :greet_everyone)
+    # end
+    people.map { |person|  "Hello, #{person}"}
+
   end
 end
 
@@ -222,6 +224,10 @@ class HashProblems
 
   def self.create_empty_hash
     # TODO: Complete this method
+    #  xyou "know how to create an empty hash" do
+    #   result = HashProblems.create_empty_hash
+    #   expect(result.length).to eq 0
+    # end
   end
 
   # # # # # # #
