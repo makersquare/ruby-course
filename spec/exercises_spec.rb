@@ -73,7 +73,7 @@ describe "Exercises" do
     end
   end
 
-  describe "ex3" do
+  describe "ex7" do
     it "doesn't change the array if it doesn't have str" do
       result = Exercises.ex7(["alpha", "beta", "gamma"], "hello")
       expect(result).to eq(["alpha", "beta", "gamma"])
@@ -85,10 +85,15 @@ describe "Exercises" do
     end
   end
 
-  describe "ex3" do
-    it "should sum up an array" do
-      result = Exercises.ex3 [5,6,7]
-      expect(result).to eq(18)
+  describe "ex6" do
+    it "changes last element in array to panda" do
+      result = Exercises.ex6 [5,6,7]
+      expect(result).to eq([5, 6, "panda"])
+    end
+
+    it "changes last element in array to GODZILLA if its panda" do
+      result = Exercises.ex6 [5,6,"panda"]
+      expect(result).to eq([5, 6, "GODZILLA"])
     end
   end
 
