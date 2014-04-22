@@ -289,5 +289,20 @@ class ArraysAndHashes
     # TODO: Iterate over this array and `puts` each key and value
     # Example: if array is [{ egg: 12 }, { milk: 1 }],
     #          then `puts` both "egg: 12" and "milk: 1"
+    # you "know how to iterate through an array of hashes and output its contents" do
+    #   expect(ArraysAndHashes).to receive(:puts).with("oranges: 5")
+    #   expect(ArraysAndHashes).to receive(:puts).with("eggplants: 8")
+    #   expect(ArraysAndHashes).to receive(:puts).with("apples: 14")
+
+    #   grocery_list = [{ oranges: 5 }, { eggplants: 8, apples: 14 }]
+    #   ArraysAndHashes.iterate_and_print(grocery_list)
+
+    #   expect(@source).to include_code(:each).in_class_method(:ArraysAndHashes, :iterate_and_print)
+
+    grocery_lists.each do |group|
+      group.each do |item, quantity|
+        puts "#{item}: #{quantity}"
+      end
+    end
   end
 end
