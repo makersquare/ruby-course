@@ -157,6 +157,14 @@ class ArrayProblems
 
   def self.uppercase_third_element(array)
     # TODO: Complete this method
+    # fruits = ['radish', 'rutabaga', 'orange', 'apple']
+    #   ArrayProblems.uppercase_third_element(fruits)
+    #   expect(fruits).to eq ['radish', 'rutabaga', 'ORANGE', 'apple']
+
+    #   fruits = ['pear', 'banana', 'grape']
+    #   ArrayProblems.uppercase_third_element(fruits)
+    #   expect(fruits).to eq ['pear', 'banana', 'GRAPE']
+    array[2].upcase!
   end
 
   # # # # # # #
