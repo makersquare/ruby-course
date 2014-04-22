@@ -13,7 +13,7 @@ describe Book do
   end
 
   it "has a default status of available" do
-    book = Book.new
+    book = Book.new("The Stranger", "Albert Camus")
     expect(book.status).to eq 'available'
   end
 
