@@ -14,6 +14,11 @@ class Book
   def id
     nil
   end
+
+  def status
+    return 'available'
+  end
+
 end
 
 class Borrower
