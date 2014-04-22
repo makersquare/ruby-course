@@ -132,4 +132,21 @@ describe "RPS" do
       expect(game.score).to eq({"John" => 0, "Bob" => 0})
     end
   end
+
+  describe "play" do
+    before(:each) do
+      @game = RPS.new("John", "Bob")
+    end
+
+    it "should update the score when a game is won" do
+      @game.play("rock", "paper")
+      expect(@game.score).to eq({"John" => 0, "Bob" => 1})
+
+      @game.play("rock", "paper")
+      expect(@game.score).to eq({"John" => 0, "Bob" => 2})
+
+      @game.play("scissors", "paper")
+      expect(@game.score).to eq({"John" => 1, "Bob" => 2})
+    end
+  end
 end

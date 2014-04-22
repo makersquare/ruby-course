@@ -106,6 +106,26 @@ class RPS
   end
   
   def play(move1, move2)
+    return if move1 == move2
+    if move1 == "rock"
+      if move2 == "paper"
+        score[player2] += 1
+      else
+        score[player1] += 1
+      end
+    elsif move1 == "paper"
+      if move2 == "rock"
+        score[player1] += 1
+      else
+        score[player2] += 1
+      end
+    elsif move1 == "scissors"
+      if move2 == "rock"
+        score[player2] += 1
+      else
+        score[player1] += 1
+      end
+    end
   end
 end
 
