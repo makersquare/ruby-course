@@ -37,6 +37,7 @@ class Library
 
   def initialize(name)
     @books = []
+    @borrowers = {}
   end
 
   def register_new_book(book)
@@ -45,8 +46,15 @@ class Library
   end
 
   def check_out_book(book, borrower)
-    book.status = 'checked_out'
-    return book
+    if book.status == 'available'
+      book.status = 'checked_out'
+      @borrowers[book.title] = borrower.name
+      return book
+    end
+  end
+
+  def get_borrower(book)
+    @borrowers[book.title]
   end
 
   def check_in_book(book)
