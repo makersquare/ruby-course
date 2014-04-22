@@ -80,6 +80,6 @@ class Library
   end
 
   def borrowed_books
-    borrowed_books = @books.select {|book| book.status == 'checked_out'}
+    @books.select {|book| book.status == 'checked_out'}
   end
 end
