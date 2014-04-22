@@ -44,11 +44,10 @@ class Library
     @inventory
   end
 
-  def register_new_book(title, author)
-    new_book = Book.new(title, author)
+  def register_new_book(book)
     @@book_id_counter += 1
-    new_book.id = @@book_id_counter
-    @inventory << new_book
+    book.id = @@book_id_counter
+    @inventory << book
   end
 
   def check_out_book(book_id, borrower)
