@@ -97,10 +97,14 @@ describe "Exercises" do
     end
   end
 
-  describe "ex3" do
-    it "should sum up an array" do
-      result = Exercises.ex3 [5,6,7]
-      expect(result).to eq(18)
+  describe "ex8" do
+    it "should print off each persons name and occupation" do
+      STDOUT.should_receive(:puts).with("bob builder")
+      STDOUT.should_receive(:puts).with("dora explorer")
+      Exercises.ex8 [
+        {name: "bob", occupation: "builder"},
+        {name: "dora", occupation: "explorer"}
+      ]
     end
   end
 
