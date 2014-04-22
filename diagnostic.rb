@@ -254,6 +254,27 @@ class HashProblems
 
   def self.update_father_last_name(hash)
     # TODO: Complete this method by writing A SINGLE LINE
+      #   xyou "know how to access a nested hash" do
+      # james = {
+      #     "name" => {
+      #         :first => "King",
+      #         :last => "James XXXI"
+      #     },
+      #     "father" => {
+      #         "name" => {
+      #             :first => "King",
+      #             :last => nil
+      #         }
+      #     }
+      # }
+
+      # HashProblems.update_father_last_name(james)
+      # father = james["father"]
+      # name = father["name"]
+      # expect(name[:last]).to eq "James XXX"
+
+      # expect(@source).to include_class_method(:HashProblems, :update_father_last_name).with_line_count(1)
+      hash["father"]["name"][:last] = "James XXX"
   end
 end
 
