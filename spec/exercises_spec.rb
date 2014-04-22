@@ -74,9 +74,14 @@ describe "Exercises" do
   end
 
   describe "ex3" do
-    it "should sum up an array" do
-      result = Exercises.ex3 [5,6,7]
-      expect(result).to eq(18)
+    it "doesn't change the array if it doesn't have str" do
+      result = Exercises.ex7(["alpha", "beta", "gamma"], "hello")
+      expect(result).to eq(["alpha", "beta", "gamma"])
+    end
+
+    it "adds str to the end of the array if its included" do
+      result = Exercises.ex7(["alpha", "beta", "gamma"], "beta")
+      expect(result).to eq(["alpha", "beta", "gamma", "beta"])
     end
   end
 
