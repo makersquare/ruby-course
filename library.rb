@@ -4,6 +4,15 @@ class Book
 
   def initialize(title, author)
     @author = author
+    @title = title
+  end
+
+  def title
+    @title
+  end
+
+  def id
+    nil
   end
 end
 
