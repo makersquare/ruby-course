@@ -4,25 +4,28 @@ module Exercises
   #  - Triples a given string `str`
   #  - Returns "nope" if `str` is "wishes"
   def self.ex0(str)
-    # TODO
+    if str == "wishes"
+      return 'nope'
+    end
+    str*3
   end
 
   # Exercise 1
   #  - Returns the number of elements in the array
   def self.ex1(array)
-    # TODO
+    array.size
   end
 
   # Exercise 2
   #  - Returns the second element of an array
   def self.ex2(array)
-    # TODO
+    array[1]
   end
 
   # Exercise 3
   #  - Returns the sum of the given array of numbers
   def self.ex3(array)
-    # TODO
+    array.inject(:+)
   end
 
   # Exercise 4
