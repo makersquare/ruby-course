@@ -64,12 +64,16 @@ module ClassesAndInstances
     attr_accessor :size
     # TODO: Fix incorrect use of local and instance variables
     def initialize(initial_size)
-      size = initial_size
+      @size = initial_size
     end
 
     def grow
-      size = size + 1
+      @size = @size + 1
     end
+
+    # def size
+    #   @size
+    # end
   end
 end
 
@@ -83,6 +87,14 @@ module GettersSetters
   class Box
     def initialize
       @secret = 50
+    end
+
+    def secret
+      @secret
+    end
+
+    def secret=(value)
+      @secret = value
     end
     # TODO: Write getter and setter methods for secret
   end
@@ -128,6 +140,11 @@ class ArrayProblems
 
   def self.add_cake_to_array(array)
     # TODO: Complete this method
+    # desserts = ['apple', 'ice cream']
+    # ArrayProblems.add_cake_to_array(desserts)
+    # expect(desserts).to eq ['apple', 'ice cream', 'cake']
+
+    array << "cake"
   end
 
   # # # # # # #
