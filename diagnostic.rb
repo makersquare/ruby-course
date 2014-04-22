@@ -7,10 +7,10 @@
 def toggle_oven(status)
   if status == true
     "The oven is now on"
-elsif status == false
-  "The oven is now off"
+  elsif status == false
+   "The oven is now off"
   end
-  end
+end
 
 # # # # # # #
 # Problem 2 #
@@ -160,6 +160,7 @@ class ArrayProblems
 
   def self.add_cake_to_array(array)
     # TODO: Complete this method
+    deserts.push("cake")
   end
 
   # # # # # # #
@@ -168,6 +169,7 @@ class ArrayProblems
 
   def self.uppercase_third_element(array)
     # TODO: Complete this method
+    fruits[2].upcase!
   end
 
   # # # # # # #
@@ -176,6 +178,7 @@ class ArrayProblems
 
   def self.iterate_and_print(array)
     # TODO: Iterate over this array and `puts` each element.
+    array.each {|a| puts a}
   end
 
   # # # # # # #
@@ -184,6 +187,7 @@ class ArrayProblems
 
   def self.select_higher(array, min)
     # TODO: Select and return all numbers higher than `min`
+    array.select {|num| num > min}
   end
 
   # # # # # # #
@@ -193,7 +197,7 @@ class ArrayProblems
   def self.greet_everyone(people)
     # TODO: Select and return all numbers higher than `min`
     people.map do |name|
-      "Hello, {name}"
+      "Hello, #{name}"
   end
 end
 
@@ -206,7 +210,7 @@ class HashProblems
 
   def self.create_empty_hash
     # TODO: Complete this method
-    my_hash = {}
+    hash = {}
   end
 
   # # # # # # #
@@ -215,7 +219,7 @@ class HashProblems
 
   def self.create_veggie_color_hash
     # TODO: Complete this method by returning a hash
-    {tomato: "red", kale: "green"}
+    veggie_color_hash = {tomato: "red", kale: "green"}
   end
 
   # # # # # # #
@@ -241,10 +245,10 @@ class ArraysAndHashes
     # Example: if array is [{ egg: 12 }, { milk: 1 }],
     #          then `puts` both "egg: 12" and "milk: 1"
     grocery_lists.each do |x|
-      x.each do |item, num|
-        puts "{item}: {num}"
+      x.each do |k, v|
+        puts "{k}: {v}"
       end
     end
   end
 end
-end
+
