@@ -238,6 +238,14 @@ class HashProblems
 
   def self.create_veggie_color_hash
     # TODO: Complete this method by returning a hash
+    # you "know how to create a hash with keys and values" do
+    #   result = HashProblems.create_veggie_color_hash
+    #   expect(result[:tomato]).to eq 'red'
+    #   expect(result[:kale]).to eq 'green'
+    # end
+    veggie_color = {:tomato => "red", :kale => "green"}
+
+
   end
 
   # # # # # # #
