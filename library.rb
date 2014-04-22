@@ -1,7 +1,7 @@
 require 'csv'
 
 class Book
-  attr_accessor :author, :title, :id, :status, :year_published, :edition, :ratings, :reviews
+  attr_accessor :author, :title, :id, :status, :year_published, :edition, :ratings, :reviews, :due_date
 
   def initialize(title, author, options = { })
     options = {year_published: nil, edition: nil}.merge(options)
@@ -14,6 +14,7 @@ class Book
     @id = nil
     @ratings = []
     @reviews = []
+    @due_date
   end
 
   def check_out
@@ -72,6 +73,7 @@ class Library
       if book.status == 'available'
         book.status = 'checked_out'
         @borrowers[book.title] = borrower.name
+        book.due_date = Time.now + (86400*7)
         return book
       end
     end
@@ -101,4 +103,5 @@ class Library
       @books << Book.new(book[0],book[1])
     end
   end
+
 end

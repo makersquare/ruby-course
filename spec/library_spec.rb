@@ -103,11 +103,10 @@ describe Library do
     expect(lib.books.count).to eq(3)
   end
 
-  it "allows a Borrower to check out a book by its id" do
+  it "allows a Borrower to check out a book" do
     lib = Library.new("Public Library")
     book = Book.new("Green Eggs and Ham","Dr. Seuss")
     lib.register_new_book(book)
-    book_id = lib.books.first.id
 
     # Sam wants to check out Green Eggs and Ham
     sam = Borrower.new('Sam-I-am')
@@ -125,7 +124,6 @@ describe Library do
     lib = Library.new("Public Library")
     book = Book.new("The Brothers Karamazov", "Fyodor Dostoesvky")
     lib.register_new_book(book)
-    book_id = lib.books.first.id
 
     # Big Brother wants to check out The Brothers Karamazov
     bro = Borrower.new('Big Brother')
@@ -139,7 +137,6 @@ describe Library do
     lib = Library.new("Public Library")
     book = Book.new("Surely You're Joking Mr. Feynman", "Richard Feynman")
     lib.register_new_book(book)
-    book_id = lib.books.first.id
 
     # Leslie Nielsen wants to double check on that
     nielsen = Borrower.new('Leslie Nielsen')
@@ -161,7 +158,6 @@ describe Library do
     lib = Library.new("Public Library")
     book = Book.new("Finnegans Wake", "James Joyce")
     lib.register_new_book(book)
-    book_id = lib.books.first.id
 
     # Bob wants to check out Finnegans Wake
     bob = Borrower.new('Bob Bobber')
@@ -267,5 +263,15 @@ describe Library do
     expect(lib.books.count).to eq 2
     expect(lib.books.first.title).to eq "Green Eggs and Ham"
     expect(lib.books.last.title).to eq "Harry Potter"
+  end
+
+  it "sets a due date when a book is borrowed" do
+    lib = Library.new("Public Library")
+    book1 = Book.new("Eloquent JavaScript", "Marijn Haverbeke")
+    kors = Borrower.new("Michael Kors")
+
+    lib.check_out_book(book1,kors)
+    due_on = Time.now + (86400*7)
+    expect(book1.due_date).to be_within(10).of(due_on)
   end
 end
