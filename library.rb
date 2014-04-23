@@ -1,9 +1,7 @@
 
 class Book
-  attr_reader :title
-  attr_reader :author
+  attr_reader :title, :author, :status
   attr_accessor :id
-  attr_reader :status
 
   def initialize(title, author)
     @title = title
@@ -37,16 +35,12 @@ class Borrower
 end
 
 class Library
-
+  attr_reader :name, :books, :borrowed_books
   def initialize(name)
     @name = name
     @books = []
     @books_id = 0
     @borrowed_books = {}
-  end
-
-  def books
-    @books
   end
 
   def register_new_book(book)
@@ -64,7 +58,6 @@ class Library
       @borrowed_books[book_id] = borrower
       book
     end
-    #fix if statement so if @borrowed_books has a borrower key it won't work
   end
 
   def get_borrower(book_id)
@@ -81,9 +74,5 @@ class Library
   def available_books
     available_books = @books.select { |book| @borrowed_books.has_key?(book.id) == false }
     available_books
-  end
-
-  def borrowed_books
-    @borrowed_books
   end
 end
