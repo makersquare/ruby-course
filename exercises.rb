@@ -180,9 +180,9 @@ class RPSPlayer
 
     while !rps.game_over?
       puts "#{rps.player1}, what is your move?"
-      m1 = STDIN.noecho(&:gets)
+      m1 = STDIN.noecho(&:gets).chomp
       puts "#{rps.player2}, what is your move?"
-      m2 = STDIN.noecho(&:gets)
+      m2 = STDIN.noecho(&:gets).chomp
 
       result = rps.play(m1, m2)
       puts result
