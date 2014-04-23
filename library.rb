@@ -7,7 +7,6 @@ class Book
     @author = author
     @title = title
     @status = "available"
-    @borrower = nil
     @year_published =
       case options[:year_published]
       when Fixnum then options[:year_published]
