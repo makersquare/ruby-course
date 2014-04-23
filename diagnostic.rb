@@ -37,8 +37,8 @@ module ClassesAndInstances
       # TODO: Set name
     end
   end
-animal = Animal.new('bird')
-animal.name
+# animal = Animal.new('bird')
+# animal.name
 
   # # # # # # # # # # # #
   # Classes/Instances 2 #
@@ -57,13 +57,13 @@ animal.name
     # TODO: Write a method `adopt` that takes one paramater `animal`
     # and adds it to its animals array
   end
-  lion = ClassesAndInstances::Animal.new('lion')
-  tiger = ClassesAndInstances::Animal.new('tiger')
-  liger = ClassesAndInstances::Animal.new('liger')
+  # lion = ClassesAndInstances::Animal.new('lion')
+  # tiger = ClassesAndInstances::Animal.new('tiger')
+  # liger = ClassesAndInstances::Animal.new('liger')
 
-  zoo = ClassesAndInstances::Zoo.new
-  zoo.adopt(lion)
-  zoo.adopt(tiger)
+  # zoo = ClassesAndInstances::Zoo.new
+  # zoo.adopt(lion)
+  # zoo.adopt(tiger)
 
   # # # # # # # # # # # #
   # Classes/Instances 3 #
@@ -79,10 +79,10 @@ animal.name
       @size = @size + 1
     end
   end
-  plant = ClassesAndInstances::Plant.new(1)
-  plant.grow
-  plant.grow
-  plant.grow
+  # plant = ClassesAndInstances::Plant.new(1)
+  # plant.grow
+  # plant.grow
+  # plant.grow
 end
 
 
@@ -106,9 +106,9 @@ module GettersSetters
       @secret
     end
   end
-  box = GettersSetters::Box.new
-  box.secret
-  box.secret = 99
+  # box = GettersSetters::Box.new
+  # box.secret
+  # box.secret = 99
 
 
   # # # # # # # # # # #
@@ -145,10 +145,10 @@ module GettersSetters
   end
 end
 
-bob = GettersSetters::Person.new('Bob', 38)
-bob.age
-bob.name
-bob.secret = 200
+# bob = GettersSetters::Person.new('Bob', 38)
+# bob.age
+# bob.name
+# bob.secret = 200
 
 
 
@@ -158,7 +158,7 @@ class ArrayProblems
   # Arrays  1 #
   # # # # # # #
 
-  def self.add_cake_to_array(array)
+  def self.add_cake_to_array(deserts)
     # TODO: Complete this method
     deserts.push("cake")
   end
@@ -167,7 +167,7 @@ class ArrayProblems
   # Arrays  2 #
   # # # # # # #
 
-  def self.uppercase_third_element(array)
+  def self.uppercase_third_element(fruits)
     # TODO: Complete this method
     fruits[2].upcase!
   end
@@ -200,6 +200,7 @@ class ArrayProblems
       "Hello, #{name}"
   end
 end
+end
 
 
 
@@ -210,8 +211,9 @@ class HashProblems
 
   def self.create_empty_hash
     # TODO: Complete this method
-    hash = {}
+    my_hash = Hash.new
   end
+
 
   # # # # # # #
   # Hashes  2 #
@@ -219,7 +221,7 @@ class HashProblems
 
   def self.create_veggie_color_hash
     # TODO: Complete this method by returning a hash
-    veggie_color_hash = {tomato: "red", kale: "green"}
+   {tomato: "red", kale: "green"}
   end
 
   # # # # # # #
@@ -236,9 +238,9 @@ class ArraysAndHashes
   # # # # # # # # # # #
   # Arrays & Hashes 1 #
   # # # # # # # # # # #
-  def ArrayAndHashes
+  # def ArrayAndHashes
 
-  end
+  # end
 
   def self.iterate_and_print(grocery_lists)
     # TODO: Iterate over this array and `puts` each key and value
@@ -246,7 +248,7 @@ class ArraysAndHashes
     #          then `puts` both "egg: 12" and "milk: 1"
     grocery_lists.each do |x|
       x.each do |k, v|
-        puts "{k}: {v}"
+        puts "#{k}: #{v}"
       end
     end
   end
