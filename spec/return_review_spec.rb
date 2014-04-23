@@ -72,7 +72,7 @@ describe "Puzzle Exercises" do
 
     it "greets correctly" do
       # TODO: Uncomment and complete
-      # result = greet(???)
+      # result = greet(???).???
       expect(result).to eq 'Hello there, World'
     end
   end
@@ -125,7 +125,7 @@ describe "Puzzle Exercises" do
       # message = ???
       expect( check(2,3) ).to eq(message)
       # TODO: Uncomment and complete
-      # result = compare(???)
+      # result = check(???)
       expect(result).to eq "Yep, these inputs evalute to true"
     end
   end
