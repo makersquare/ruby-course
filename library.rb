@@ -11,13 +11,11 @@ class Book
       case options[:year_published]
       when Fixnum then options[:year_published]
       when String then options[:year_published].to_i
-      else nil
       end
     @edition =
       case options[:edition]
       when String then options[:edition].to_i
       when Fixnum then options[:edition]
-      else nil
       end
   end
 
