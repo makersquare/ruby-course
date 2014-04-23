@@ -1,15 +1,25 @@
 
 class Book
   attr_accessor :id, :status, :title, :author, :borrower
-  attr_reader :year_published
+  attr_reader :year_published, :edition
 
   def initialize(title, author, options = {})
     @author = author
     @title = title
     @status = "available"
     @borrower = nil
-    @year_published = options[:year_published].class != Fixnum ? nil : options[:year_published]
-    @edition = options[:edition].class != Fixnum ? nil : options[:edition]
+    @year_published =
+      case options[:year_published]
+      when Fixnum then options[:year_published]
+      when String then options[:year_published].to_i
+      else nil
+      end
+    @edition =
+      case options[:edition]
+      when String then options[:edition].to_i
+      when Fixnum then options[:edition]
+      else nil
+      end
   end
 
   def check_out

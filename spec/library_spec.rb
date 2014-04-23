@@ -41,31 +41,35 @@ describe Book do
 
   ####################
   # My Tests
-  # Help me, Mike!
   ####################
 
   # books should have optional attributes year-published and edition
-  it "should have a nil published year if it wasn't set" do
+  it "should have a nil published year & edition if they weren't set" do
     book1 = Book.new("Harry Potter", "J.K. Rowling")
     book2 = Book.new("Harry Potter", "J.K. Rowling", {})
     book3 = Book.new("Harry Potter", "J.K. Rowling", {edition: 10})
     book4 = Book.new("Harry Potter", "J.K. Rowling", {condition: "good"})
     expect(book1.year_published).to be_nil
+    expect(book1.edition).to be_nil
     expect(book2.year_published).to be_nil
+    expect(book2.edition).to be_nil
     expect(book3.year_published).to be_nil
+    expect(book3.edition).to_not be_nil
     expect(book4.year_published).to be_nil
+    expect(book4.edition).to be_nil
   end
 
-  it "has a year published if it was set" do
+  it "has a year published or edition if it was set" do
     book = Book.new("Harry Potter", "J.K. Rowling", {year_published: 2012, edition: 5})
     expect(book.year_published).to eq 2012
+    expect(book.edition).to eq 5
   end
 
-  it "should have a nil publishd year if the given year wasn't an integer" do
+  it "should have a nil published year if the given year wasn't an integer or string" do
     book1 = Book.new("Harry Potter", "J.K. Rowling", {year_published: "2012"})
     book2 = Book.new("Harry Potter", "J.K. Rowling", {year_published: 3.1413592})
     book3 = Book.new("Harry Potter", "J.K. Rowling", {year_published: 2014})
-    expect(book1.year_published).to be_nil
+    expect(book1.year_published).to eq 2012
     expect(book2.year_published).to be_nil
     expect(book3.year_published).to eq 2014
   end
