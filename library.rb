@@ -79,6 +79,8 @@ class Library
   end
 
   def available_books
+    available_books = @books.select { |book| @borrowed_books.has_key?(book.id) == false }
+    available_books
   end
 
   def borrowed_books

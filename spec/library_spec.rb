@@ -105,7 +105,7 @@ describe Library do
     # Big Brother wants to check out The Brothers Karamazov
     bro = Borrower.new('Big Brother')
     book = lib.check_out_book(book_id, bro)
-    #binding.pry
+
     # The Library should know that he checked out the book
     expect( lib.get_borrower(book_id) ).to eq 'Big Brother'
   end
@@ -174,13 +174,13 @@ describe Library do
 
   it "returns available books" do
     lib = Library.new("MakerSquare Library")
-    lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
-    lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
-    lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
-
+    lib.register_new_book(Book.new("Eloquent JavaScript", "Marijn Haverbeke"))
+    lib.register_new_book(Book.new("Essential JavaScript Design Patterns", "Addy Osmani"))
+    lib.register_new_book(Book.new("JavaScript: The Good Parts", "Douglas Crockford"))
+    #binding.pry
     # At first, all books are available
     expect(lib.available_books.count).to eq(3)
-    expect(lib.available_books.first).to be_a?(Book)
+    expect(lib.available_books.first).to be_a(Book)
 
     jordan = Borrower.new("Michael Jordan")
     book = lib.check_out_book(lib.available_books.first.id, jordan)
@@ -208,7 +208,7 @@ describe Library do
     expect( lib.get_borrower(book_id) ).to eq 'Michael Schumacher'
   end
 
-  xit "returns borrowed books" do
+  it "returns borrowed books" do
     lib = Library.new("MakerSquare Library")
     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
     lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
