@@ -1,7 +1,8 @@
 require 'csv'
 
 class Book
-  attr_accessor :author, :title, :id, :status, :year_published, :edition, :ratings, :reviews, :due_date
+  attr_accessor :author, :title, :id, :status, :year_published, :edition, :ratings, :reviews, :due_date,
+                :overdue
 
   def initialize(title, author, options = { })
     options = {year_published: nil, edition: nil}.merge(options)
@@ -15,6 +16,7 @@ class Book
     @ratings = []
     @reviews = []
     @due_date
+    @overdue = false
   end
 
   def check_out
@@ -87,14 +89,25 @@ class Library
     # Remove book from borrowers hash and change book status to available
     @borrowers.delete(book.title)
     book.status = 'available'
+    book.overdue = false
   end
 
   def available_books
+    # Iterate through @books hash and return all books with available status
     @books.select {|book| book.status == 'available'}
   end
 
   def borrowed_books
+    # Iterate through @books hash and return all books with checked_out status
     @books.select {|book| book.status == 'checked_out'}
+  end
+
+  def overdue_books
+    # Build array of books that are past their due date and iterate through each to mark them as overdue
+    overdue_books = @books.select { |book| book.due_date < Time.now }
+    overdue_books.each do |book|
+      book.overdue = true
+    end
   end
 
   def import_from_csv(filename)
