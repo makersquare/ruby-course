@@ -1,10 +1,7 @@
 require 'pry-debugger'
 class Book
-  attr_reader :author
-  attr_reader :title
-  attr_accessor :id
-  attr_reader :status
-  attr_accessor :borrower
+  attr_reader :author, :title, :status
+  attr_accessor :id, :borrower
 
   def initialize(title, author)
     @title = title
@@ -37,21 +34,11 @@ end
 
 class Library
   attr_reader :books
-  attr_reader :count
 
   def initialize
     @books = []
-    @count = @books.length
     @counter = 0
   end
-
-  # def count
-  #   return @books.length
-  # end
-
-  # def books
-  #   return @books
-  # end
 
   def register_new_book(book)
     @books << book
