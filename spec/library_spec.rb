@@ -147,14 +147,15 @@ describe Library do
     expect(book.status).to eq 'available'
   end
 
-  xit "does not allow a Borrower to check out more than one Book at any given time" do
+  it "does not allow a Borrower to check out more than one Book at any given time" do
     # yeah it's a stingy library
     lib = Library.new("MakerSquare Library")
-    lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
-    lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
-    lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
+    lib.register_new_book(Book.new("Eloquent JavaScript", "Marijn Haverbeke"))
+    lib.register_new_book(Book.new("Essential JavaScript Design Patterns", "Addy Osmani"))
+    lib.register_new_book(Book.new("JavaScript: The Good Parts", "Douglas Crockford"))
 
     jackson = Borrower.new("Michael Jackson")
+    kelly = Borrower.new("R. Kelly")
     book_1 = lib.books[0]
     book_2 = lib.books[1]
     book_3 = lib.books[2]
@@ -163,7 +164,7 @@ describe Library do
     book = lib.check_out_book(book_1.id, jackson)
     expect(book.title).to eq "Eloquent JavaScript"
 
-    book = lib.check_out_book(book_2.id, jackson)
+    book = lib.check_out_book(book_2.id, kelly)
     expect(book.title).to eq "Essential JavaScript Design Patterns"
 
     # However, the third should return nil

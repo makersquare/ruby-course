@@ -61,19 +61,20 @@ class Library
 
     if book.status == 'available'
       book.check_out
-      @borrowed_books[borrower] = book_id
+      @borrowed_books[book_id] = borrower
       book
     end
-
+    #fix if statement so if @borrowed_books has a borrower key it won't work
   end
 
   def get_borrower(book_id)
-    @borrowed_books.key(book_id).name
+    @borrowed_books[book_id].name
   end
 
   def check_in_book(book)
     if book.status == 'checked_out'
       book.check_in
+      @borrowed_books.delete(book.id)
     end
   end
 
