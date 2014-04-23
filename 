@@ -1,0 +1,73 @@
+diff --git a/library.rb b/library.rb
+index f98f397..cd41d4f 100644
+--- a/library.rb
++++ b/library.rb
+@@ -1,11 +1,16 @@
+ 
+ class Book
+   attr_reader :author, :title, :id,:status
+-  def initialize(title="default_title", author ="default_author", id = nil)
++
++  def initialize(title="default_title", author ="default_author", id = nil, year_published = 1900, edition = "1st")
+     @author = author
+     @title = title
+     @id = id
+     @status = "available"
++    @year_published = year_published
++    @edition = edition
++    @rating = 5
++    @review = "No Review Written"
+   end
+ 
+   def check_out
+@@ -17,7 +22,7 @@ class Book
+     end
+   end
+ 
+-    def check_in
++  def check_in
+     if @status == "checked_out"
+       @status = "available"
+       return true 
+@@ -27,10 +32,13 @@ class Book
+     end
+   end
+ 
+-  # def a?(test)
+-  #   true
+-  # end
++  def write_review(text)
++    @review = text
++  end
+ 
++  def give_rating(rating)
++    @rating = rating
++  end
+ end
+ 
+ class Borrower
+@@ -58,6 +66,13 @@ class Library
+     register_new_book(new_book.title, new_book.author)
+   end
+ 
++  def register_books_from_csv(filepath)
++    CSV.foreach("path/to/file.csv") do |row|
++      row.each do |x|
++      end
++    end
++  end
++
+   def register_new_book(title, author)
+     book = Book.new(title, author, @books.count+1)
+     @books << book
+diff --git a/spec/library_spec.rb b/spec/library_spec.rb
+index fdf508f..1d547f6 100644
+--- a/spec/library_spec.rb
++++ b/spec/library_spec.rb
+@@ -1,5 +1,6 @@
+ require "./library.rb"
+ # require 'pry-debugger'
++# binding.pry
+ 
+ describe Book do
+   it "has a title and author, and nil id" do
