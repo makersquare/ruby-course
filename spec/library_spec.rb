@@ -39,6 +39,11 @@ describe Book do
     expect(book.status).to eq 'available'
   end
 
+  ####################
+  # My Tests
+  # Help me, Mike!
+  ####################
+
   # books should have optional attributes year-published and edition
   it "should have a nil published year if it wasn't set" do
     book = Book.new("Harry Potter", "J.K. Rowling")
@@ -46,13 +51,17 @@ describe Book do
   end
 
   it "has a year published if it was set" do
-    book = Book.new("Harry Potter", "J.K. Rowling", 2012)
+    book = Book.new("Harry Potter", "J.K. Rowling", {year_published: 2012})
     expect(book.year_published).to eq 2012
   end
 
   it "should have a nil publishd year if the given year wasn't an integer" do
-    book = Book.new("Harry Potter", "J.K. Rowling", "2012")
-    expect(book.year_published).to be_nil
+    book1 = Book.new("Harry Potter", "J.K. Rowling", {year_published: "2012"})
+    book2 = Book.new("Harry Potter", "J.K. Rowling", {year_published: 3.1413592})
+    book3 = Book.new("Harry Potter", "J.K. Rowling", {year_published: 2014})
+    expect(book1.year_published).to be_nil
+    expect(book2.year_published).to be_nil
+    expect(book3.year_published).to eq 2014
   end
 
 end
