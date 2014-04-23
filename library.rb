@@ -7,6 +7,7 @@ class Book
     @author = author
     @title = title
     @status = "available"
+
     @year_published =
       case options[:year_published]
       when Fixnum then options[:year_published]
@@ -31,6 +32,9 @@ class Book
   def check_in
     @status = "available"
   end
+end
+
+class Review
 end
 
 class Borrower

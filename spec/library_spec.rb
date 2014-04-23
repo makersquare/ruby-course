@@ -83,6 +83,12 @@ describe Borrower do
   end
 end
 
+describe Review do
+  it "exists" do
+    expect(Review).to be_a(Class)
+  end
+end
+
 describe Library do
 
   it "starts with an empty array of books" do
