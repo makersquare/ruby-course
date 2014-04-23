@@ -21,8 +21,8 @@ class Book
   #   check_out ? true : false
   # end
 end
-book = Book.new("The Stranger", "Albert Camus")
-book.status
+# book = Book.new("The Stranger", "Albert Camus")
+# book.status
 
 class Borrower
   attr_reader :name
