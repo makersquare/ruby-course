@@ -132,6 +132,7 @@ class ArrayProblems
 
   def self.uppercase_third_element(array)
     # TODO: Iterate over this array and upcase third element
+    array[2].upcase!
   end
 
   # # # # # # #
@@ -190,6 +191,7 @@ class HashProblems
 
   def self.update_father_last_name(hash)
     # TODO: Complete this method by writing A SINGLE LINE
+    hash
   end
 end
 
