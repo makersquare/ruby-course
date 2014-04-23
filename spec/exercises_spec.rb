@@ -138,15 +138,14 @@ describe "RPS" do
       @game = RPS.new("John", "Bob")
     end
 
-    it "should update the score when a game is won" do
-      @game.play("rock", "paper")
+    it "should update the score and return winner when a game is won" do
+      result = @game.play("rock", "paper")
       expect(@game.score).to eq({"John" => 0, "Bob" => 1})
+      expect(result).to eq("Bob wins")
 
-      @game.play("rock", "paper")
-      expect(@game.score).to eq({"John" => 0, "Bob" => 2})
-
-      @game.play("scissors", "paper")
-      expect(@game.score).to eq({"John" => 1, "Bob" => 2})
+      result = @game.play("scissors", "paper")
+      expect(@game.score).to eq({"John" => 1, "Bob" => 1})
+      expect(result).to eq("John wins")
     end
 
     it "should not update the score if its a tie" do
@@ -157,6 +156,24 @@ describe "RPS" do
       @game.play("rock", "paper")
       @game.play("rock", "rock")
       expect(@game.score).to eq({"John" => 0, "Bob" => 1})
+    end
+
+    it "should return 'tie game' when the round is tied" do
+      result = @game.play("rock", "rock")
+      expect(result).to eq("Tie game")
+
+      # only 1 of the next 2 games has a winner
+      @game.play("rock", "paper")
+      result = @game.play("rock", "rock")
+      expect(result).to eq("Tie game")
+    end
+    
+    it "should return an error string if the game is over" do
+      @game.play("rock", "paper")
+      @game.play("rock", "paper")
+      result = @game.play("rock", "paper")
+
+      expect(result).to eq("Game is already over")
     end
   end
 end

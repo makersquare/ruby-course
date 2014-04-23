@@ -104,29 +104,56 @@ class RPS
     @player2 = name2
     @score = {name1 => 0, name2 => 0}
   end
-  
-  def play(move1, move2)
-    return if move1 == move2
+
+  def find_winner(move1, move2)
     if move1 == "rock"
       if move2 == "paper"
-        score[player2] += 1
+        winner = player2
       else
-        score[player1] += 1
+        winner = player1
       end
     elsif move1 == "paper"
       if move2 == "rock"
-        score[player1] += 1
+        winner = player1
       else
-        score[player2] += 1
+        winner = player2
       end
     elsif move1 == "scissors"
       if move2 == "rock"
-        score[player2] += 1
+        winner = player2
       else
-        score[player1] += 1
+        winner = player1
       end
     end
   end
+  
+  def play(move1, move2)
+    if game_over?
+      return "Game is already over"
+    end
+
+    return "Tie game" if move1 == move2
+
+    winner = find_winner(move1, move2)
+
+    @score[winner] += 1
+    "#{winner} wins"
+  end
+
+  def winner
+    if @score[@player1] == 2
+      return @player1
+    elsif @score[@player2] == 2
+      return @player2
+    else
+      nil
+    end
+  end
+
+  def game_over?
+    winner != nil
+  end
+
 end
 
 
@@ -145,6 +172,24 @@ class RPSPlayer
   def start
 
     # TODO
+    puts "What is player 1's name?"
+    p1 = gets.chomp
+    puts "What is player 2's name?"
+    p2 = gets.chomp
+    rps = RPS.new p1, p2
+
+    while !rps.game_over?
+      puts "#{rps.player1}, what is your move?"
+      m1 = STDIN.noecho(&:gets)
+      puts "#{rps.player2}, what is your move?"
+      m2 = STDIN.noecho(&:gets)
+
+      result = rps.play(m1, m2)
+      puts result
+    end
+
+    puts "Game Over!"
+    puts "#{rps.winner} wins the round"
 
     # PRO TIP: Instead of using plain `gets` for grabbing a player's
     #          move, this line does the same thing but does NOT show
