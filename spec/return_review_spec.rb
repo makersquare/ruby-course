@@ -52,7 +52,9 @@ describe "Puzzle Exercises" do
       end
     end
 
-    @museum = ArtMuseum.new
+    before do
+      @museum = ArtMuseum.new
+    end
 
     it "counts correctly" do
       # TODO:
