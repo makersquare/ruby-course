@@ -10,19 +10,19 @@ describe Book do
   end
 
   it "has a default status of available" do
-    book = Book.new
+    book = Book.new("The Stranger", "Albert Camus")
     expect(book.status).to eq 'available'
   end
 
   it "can be checked out" do
-    book = Book.new
+    book = Book.new("The Stranger", "Albert Camus")
     did_it_work = book.check_out
     expect(did_it_work).to be_true
     expect(book.status).to eq 'checked_out'
   end
 
   it "can't be checked out twice in a row" do
-    book = Book.new
+    book = Book.new("The Stranger", "Albert Camus")
     did_it_work = book.check_out
     expect(did_it_work).to eq(true)
 
@@ -33,7 +33,7 @@ describe Book do
   end
 
   it "can be checked in" do
-    book = Book.new
+    book = Book.new("The Stranger", "Albert Camus")
     book.check_out
     book.check_in
     expect(book.status).to eq 'available'
@@ -46,12 +46,18 @@ describe Book do
 
   # books should have optional attributes year-published and edition
   it "should have a nil published year if it wasn't set" do
-    book = Book.new("Harry Potter", "J.K. Rowling")
-    expect(book.year_published).to be_nil
+    book1 = Book.new("Harry Potter", "J.K. Rowling")
+    book2 = Book.new("Harry Potter", "J.K. Rowling", {})
+    book3 = Book.new("Harry Potter", "J.K. Rowling", {edition: 10})
+    book4 = Book.new("Harry Potter", "J.K. Rowling", {condition: "good"})
+    expect(book1.year_published).to be_nil
+    expect(book2.year_published).to be_nil
+    expect(book3.year_published).to be_nil
+    expect(book4.year_published).to be_nil
   end
 
   it "has a year published if it was set" do
-    book = Book.new("Harry Potter", "J.K. Rowling", {year_published: 2012})
+    book = Book.new("Harry Potter", "J.K. Rowling", {year_published: 2012, edition: 5})
     expect(book.year_published).to eq 2012
   end
 

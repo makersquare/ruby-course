@@ -3,7 +3,7 @@ class Book
   attr_accessor :id, :status, :title, :author, :borrower
   attr_reader :year_published
 
-  def initialize(title='default_title', author='default_author', options = {})
+  def initialize(title, author, options = {})
     @author = author
     @title = title
     @status = "available"
