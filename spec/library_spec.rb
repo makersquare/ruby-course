@@ -12,6 +12,16 @@ describe Book do
     expect(book.id).to be_nil
   end
 
+  it "has optional attributes of year published and edition" do
+    book = Book.new("The Stranger", "Albert Camus")
+    book1 = Book.new("Pride and Prejudice", "Jane Austen", "1840", "First")
+
+    expect(book.year_published).to eq nil
+    expect(book.edition).to eq nil
+    expect(book1.year_published).to eq "1840"
+    expect(book1.edition).to eq "First"
+  end
+
   it "has a default status of available" do
     book = Book.new("The Stranger", "Albert Camus")
     expect(book.status).to eq 'available'
