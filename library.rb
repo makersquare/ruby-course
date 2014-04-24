@@ -35,11 +35,19 @@ class Borrower
 end
 
 class Library
-  def initialize(name)
-    @books = []
+  attr_accessor :count, :title, :author
+
+  def initialize
+    @count = []
   end
 
   def books
+    @count
+  end
+
+  def register_new_book(title, author)
+    title = Book.name
+    author = Book.author
   end
 
   def add_book(title, author)
