@@ -24,7 +24,7 @@ describe Book do
     expect(book.status).to eq 'checked_out'
   end
 
-  xit "can't be checked out twice in a row" do
+  it "can't be checked out twice in a row" do
     book = Book.new("The Stranger", "Albert Camus")
     did_it_work = book.check_out
     expect(did_it_work).to eq(true)
@@ -69,8 +69,8 @@ describe Library do
     expect(created_book.id).to_not be_nil
   end
 
-  xit "can add multiple books" do
-    lib = Library.new
+  it "can add multiple books" do
+    lib = Library.new("My Library")
     lib.register_new_book(Book.new("One", "Bob"))
     lib.register_new_book(Book.new("Two", "Bob"))
     lib.register_new_book(Book.new("Three", "Bob"))
@@ -78,8 +78,8 @@ describe Library do
     expect(lib.books.count).to eq(3)
   end
 
-  xit "allows a Borrower to check out a book by its id" do
-    lib = Library.new
+  it "allows a Borrower to check out a book by its id" do
+    lib = Library.new("My Library")
     lib.register_new_book(Book.new("Green Eggs and Ham", "Dr. Seuss"))
     book_id = lib.books.first.id
 
@@ -88,15 +88,15 @@ describe Library do
     book = lib.check_out_book(book_id, sam)
 
     # The checkout should return the book
-    expect(book).to be_a?(Book)
+    expect(book).to be_a(Book)
     expect(book.title).to eq "Green Eggs and Ham"
 
     # The book should now be marked as checked out
     expect(book.status).to eq 'checked_out'
   end
 
-  xit "knows who borrowed a book" do
-    lib = Library.new
+  it "knows who borrowed a book" do
+    lib = Library.new("My Library")
     lib.register_new_book(Book.new("The Brothers Karamazov", "Fyodor Dostoesvky"))
     book_id = lib.books.first.id
 
@@ -109,7 +109,7 @@ describe Library do
   end
 
   xit "does not allow a book to be checked out twice in a row" do
-    lib = Library.new
+    lib = Library.new("My Library")
     lib.register_new_book(Book.new("Surely You're Joking Mr. Feynman", "Richard Feynman"))
     book_id = lib.books.first.id
 
@@ -129,8 +129,8 @@ describe Library do
     expect(book_again).to be_nil
   end
 
-  xit "allows a Borrower to check a book back in" do
-    lib = Library.new
+  it "allows a Borrower to check a book back in" do
+    lib = Library.new("My Library")
     lib.register_new_book(Book.new("Finnegans Wake", "James Joyce"))
     book_id = lib.books.first.id
 
@@ -147,7 +147,7 @@ describe Library do
 
   xit "does not allow a Borrower to check out more than one Book at any given time" do
     # yeah it's a stingy library
-    lib = Library.new
+    lib = Library.new("My Library")
     lib.register_new_book(Book.new("Eloquent JavaScript", "Marijn Haverbeke"))
     lib.register_new_book(Book.new("Essential JavaScript Design Patterns", "Addy Osmani"))
     lib.register_new_book(Book.new("JavaScript: The Good Parts", "Douglas Crockford"))
@@ -169,15 +169,15 @@ describe Library do
     expect(book).to be_nil
   end
 
-  xit "returns available books" do
-    lib = Library.new
+  it "returns available books" do
+    lib = Library.new("My Library")
     lib.register_new_book(Book.new("Eloquent JavaScript", "Marijn Haverbeke"))
     lib.register_new_book(Book.new("Essential JavaScript Design Patterns", "Addy Osmani"))
     lib.register_new_book(Book.new("JavaScript: The Good Parts", "Douglas Crockford"))
 
     # At first, all books are available
     expect(lib.available_books.count).to eq(3)
-    expect(lib.available_books.first).to be_a?(Book)
+    expect(lib.available_books.first).to be_a(Book)
 
     jordan = Borrower.new("Michael Jordan")
     book = lib.check_out_book(lib.available_books.first.id, jordan)
@@ -187,7 +187,7 @@ describe Library do
   end
 
   xit "after a book it returned, it can be checked out again" do
-    lib = Library.new
+    lib = Library.new("My Library")
     lib.register_new_book("Harry Potter", "J. K. Rowling")
     book_id = lib.books.first.id
 
@@ -206,7 +206,7 @@ describe Library do
   end
 
   xit "returns borrowed books" do
-    lib = Library.new
+    lib = Library.new("My Library")
     lib.register_new_book(Book.new("Eloquent JavaScript", "Marijn Haverbeke"))
     lib.register_new_book(Book.new("Essential JavaScript Design Patterns", "Addy Osmani"))
     lib.register_new_book(Book.new("JavaScript: The Good Parts", "Douglas Crockford"))
