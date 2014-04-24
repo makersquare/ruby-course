@@ -12,4 +12,18 @@ class Car
 end
 
 class BigRig < Car
+
+  def initialize(color)
+    super(color)
+  end
+
+  def honk
+    'BBBBBRRRRRRAAAAAWWWHHHHH'
+  end
+
+  def wheel_count
+    super
+    @wheel_count = 18
+
+  end
 end
