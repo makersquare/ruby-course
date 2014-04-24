@@ -102,10 +102,9 @@ class Library
     @books.select {|book| book.status == 'checked_out'}
   end
 
-  def overdue_books
-    # Build array of books that are past their due date and iterate through each to mark them as overdue
-    overdue_books = @books.select { |book| book.due_date < Time.now }
-    overdue_books.each do |book|
+  def overdue_books(book, now=Time.now)
+    now = now
+    if book.due_date < now
       book.overdue = true
     end
   end

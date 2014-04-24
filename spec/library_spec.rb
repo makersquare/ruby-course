@@ -235,8 +235,7 @@ describe Library do
     kors = Borrower.new("Michael Kors")
 
     lib.check_out_book(book1, kors)
-    Time.stub!(:now).and_return(Time.mktime(2015,1,1))
-    lib.overdue_books
+    lib.overdue_books(book1,Time.now + (86400*10))
     expect(book1.overdue).to eq true
   end
 end
