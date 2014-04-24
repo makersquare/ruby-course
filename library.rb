@@ -1,6 +1,6 @@
 require 'pry-debugger'
 class Book
-  attr_reader :author, :title, :status
+  attr_reader :author, :title, :status, :rating, :reviews
   attr_accessor :id, :borrower, :year_published, :edition
 
   def initialize(title, author, year_published=nil, edition=nil)
@@ -9,6 +9,24 @@ class Book
     @year_published = year_published
     @edition = edition
     @status = "available"
+    @rating = nil
+    @reviews  = []
+    @counter = 0.0
+  end
+
+  def write_review(rating, review=nil)
+    if @rating == nil
+      @rating = rating
+      @counter += 1.0
+    else
+      @counter += 1.0
+      @rating += rating
+      @rating = @rating / counter
+    end
+
+    if review != nil
+      @reviews << review
+    end
   end
 
   def check_out
