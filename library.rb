@@ -10,16 +10,32 @@ class Book
     @status = "available"
   end
 
+  def check_out
+
+    if @status == "available"
+      @status = "checked_out"
+      return true
+    else
+      return false
+    end
+  end
+
+  def check_in
+    @status = "available"
+  end
 end
 
 class Borrower
+  attr_accessor :name
   def initialize(name)
+    @name = name
   end
 end
 
 class Library
-  def initialize(name)
+  def initialize(books = nil)
     @books = []
+
   end
 
   def books
