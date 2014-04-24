@@ -258,5 +258,6 @@ describe Library do
     lib.check_in_book(book)
 
     expect(book.status).to eq 'checked_out'
+    expect(lib.borrowers[book].name).to eq 'Mike'
   end
 end
