@@ -1,12 +1,13 @@
 require 'pry-debugger'
 class Book
   attr_reader :author, :title, :status
-  attr_accessor :id, :borrower
-  # :year_published, :edition
+  attr_accessor :id, :borrower, :year_published, :edition
 
-  def initialize(title, author)
+  def initialize(title, author, year_published=nil, edition=nil)
     @title = title
     @author = author
+    @year_published = year_published
+    @edition = edition
     @status = "available"
   end
 
