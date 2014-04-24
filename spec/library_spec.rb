@@ -229,7 +229,6 @@ describe Library do
     expect(book1.due_date).to be_within(10).of(due_on)
   end
 
-  # This test is failing, need to figure out how to test time in the future
   it "marks overdue books as overdue" do
     book1 = Book.new("Eloquent JavaScript", "Marijn Haverbeke")
     kors = Borrower.new("Michael Kors")
@@ -238,4 +237,15 @@ describe Library do
     lib.overdue_books(book1,Time.now + (86400*10))
     expect(book1.overdue).to eq true
   end
+
+  it "does not allow borrowers with overdue books to check_out a new book" do
+    book1 = Book.new("Eloquent JavaScript", "Marijn Haverbeke")
+    kors = Borrower.new("Michael Kors")
+
+    lib.check_out_book(book1, kors)
+    lib.overdue_books(book1,Time.now + (86400*10))
+    lib.check_out_book(book2,kors)
+    expect(book2.status).to eq 'available'
+  end
+
 end

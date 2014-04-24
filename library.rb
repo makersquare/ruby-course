@@ -35,10 +35,11 @@ class Book
 end
 
 class Borrower
-  attr_accessor :name
+  attr_accessor :name, :has_overdue_books
 
   def initialize(name)
     @name = name
+    @has_overdue_books = false
   end
 
   def leave_review(book,rating,review)
@@ -48,12 +49,13 @@ class Borrower
 end
 
 class Library
-  attr_reader :books, :borrowers, :available_books
+  attr_reader :books, :borrowers, :available_books, :checked_out_books
 
   def initialize(name)
     @books = []
     @borrowers = {}
     @available_books = []
+    @checked_out_books = []
   end
 
   def register_new_book(book)
@@ -65,29 +67,32 @@ class Library
     check_out_count = 0
     # Count how many times a borrower's name appears in the borrowers hash. If more than 2, no more books can be borrowed
     @borrowers.each do |key,value|
-      if value == borrower.name
+      if value == borrower
         check_out_count += 1
       end
     end
 
     # If less than 2 books have been checked out by the borrower and the book is available, book can be checked out
     if check_out_count < 2
-      if book.status == 'available'
+      if (book.status == 'available') && (borrower.has_overdue_books == false)
         book.status = 'checked_out'
-        @borrowers[book.title] = borrower.name
+        @borrowers[book] = borrower
         book.due_date = Time.now + (86400*7)
+        checked_out_books << book
         return book
       end
     end
   end
 
   def get_borrower(book)
-    @borrowers[book.title]
+    borrower = @borrowers[book]
+    borrower.name
   end
 
   def check_in_book(book)
     # Remove book from borrowers hash and change book status to available
-    @borrowers.delete(book.title)
+    @borrowers.delete(book)
+    @checked_out_books.delete(book)
     book.status = 'available'
     book.overdue = false
   end
@@ -107,8 +112,19 @@ class Library
     if book.due_date < now
       book.overdue = true
     end
+
+    # Find the borrower of the overdue book and set mark them as having overdue books
+    od_borrower = @borrowers.select{|book| book}
+    od_borrower[book].has_overdue_books = true
   end
 
+  def list_checked_out_books
+    @checked_out_books.each do |book|
+      puts "#{book.title.capitalize} is due back on #{book.due_date}"
+    end
+  end
+
+  # CSV extension
   def import_from_csv(filename)
     book_import = CSV.read(filename)
     book_import.each do |book|
