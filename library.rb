@@ -49,13 +49,15 @@ class Borrower
 end
 
 class Library
-  attr_reader :books, :borrowers, :available_books, :checked_out_books
+  attr_reader :books, :borrowers, :available_books, :checked_out_books, :queued_books
 
   def initialize(name)
     @books = []
     @borrowers = {}
     @available_books = []
     @checked_out_books = []
+    @queued_books = []
+    @queued_borrowers = {}
   end
 
   def register_new_book(book)
@@ -80,6 +82,10 @@ class Library
         book.due_date = Time.now + (86400*7)
         checked_out_books << book
         return book
+      elsif (book.status == 'checked_out') && (borrower.has_overdue_books == false)
+        @queued_books << book
+        @queued_borrowers[book] = borrower
+        return 0
       end
     end
   end
@@ -95,6 +101,12 @@ class Library
     @checked_out_books.delete(book)
     book.status = 'available'
     book.overdue = false
+
+    # If a book is queued for checkout when it is checked in, it should be checked out to the queued borrower
+    if @queued_borrowers[book]
+      check_out_book(book,@queued_borrowers[book])
+    end
+
   end
 
   def available_books

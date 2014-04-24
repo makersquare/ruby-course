@@ -123,17 +123,14 @@ describe Library do
     lib.register_new_book(book)
 
     # Leslie Nielsen wants to double check on that
-    book_1 = lib.check_out_book(book, david)
+    lib.check_out_book(book, david)
 
-    # The first time should be successful
-    expect(book_1).to be_a(Book)
+    expect(book.status).to eq 'checked_out'
 
     # However, you can't check out the same book twice!
-    book_again = lib.check_out_book(book, david)
-    expect(book_again).to be_nil
 
-    book_again = lib.check_out_book(book, david)
-    expect(book_again).to be_nil
+    lib.check_out_book(book, mike)
+    expect(lib.borrowers[book].name).to eq 'David'
   end
 
   it "allows a Borrower to check a book back in" do
@@ -248,4 +245,18 @@ describe Library do
     expect(book2.status).to eq 'available'
   end
 
+  it "allows borrowers to add checked out books to their queue" do
+    lib.check_out_book(book,david)
+    lib.check_out_book(book,mike)
+
+    expect(lib.queued_books.length).to eq 1
+  end
+
+  it "checks out books in queue when they are returned" do
+    lib.check_out_book(book,david)
+    lib.check_out_book(book,mike)
+    lib.check_in_book(book)
+
+    expect(book.status).to eq 'checked_out'
+  end
 end
