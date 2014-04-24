@@ -13,9 +13,11 @@ end
 
 class BigRig < Car
 
-  def wheel_count
-    18
+  def initialize(wheel_count)
+    super
+    @wheel_count =18
   end
+
 
   def honk
     'BBBBBRRRRRRAAAAAWWWHHHHH'
@@ -24,7 +26,33 @@ end
 
 class Motorcycle < Car
 
+#   def initialize
+#   super("red", 2)
+# end
+
   def wheel_count
     2
   end
   end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

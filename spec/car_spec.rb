@@ -47,7 +47,7 @@ end
 describe 'Motorcycle' do
 
   before do
-    @bike = Motorcycle.new('red')
+    @bike = Motorcycle.new("red")
   end
 
   it "is red by default" do
