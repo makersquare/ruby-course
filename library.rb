@@ -41,10 +41,6 @@ class Library
     @id_count = 1
   end
 
-  # def books
-  #   @books
-  # end
-
   def register_new_book(book)
     @books << book
     book.id = @id_count

@@ -95,7 +95,7 @@ describe Library do
     expect(book.status).to eq 'checked_out'
   end
 
-  it "knows who borrowed a book" do
+  xit "knows who borrowed a book" do
     lib = Library.new("My Library")
     lib.register_new_book(Book.new("The Brothers Karamazov", "Fyodor Dostoesvky"))
     book_id = lib.books.first.id
