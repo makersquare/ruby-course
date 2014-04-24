@@ -53,7 +53,7 @@ end
 describe Library do
 
   it "starts with an empty array of books" do
-    lib = Library.new("Nine Stories")
+    lib = Library.new("MakerLibrary")
     expect(lib.books.count).to eq(0)
   end
 
