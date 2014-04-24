@@ -44,7 +44,7 @@ describe 'BigRig' do
 end
 
 
-describe 'Motorcycle', :pending => true do
+describe 'Motorcycle' do
 
   before do
     @bike = Motorcycle.new

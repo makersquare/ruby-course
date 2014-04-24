@@ -24,6 +24,19 @@ class BigRig < Car
   def wheel_count
     super
     @wheel_count = 18
-
   end
+end
+
+class Motorcycle < Car
+
+  def initialize
+    super("red")
+  end
+
+  def wheel_count
+    super
+    @wheel_count = 2
+  end
+
+
 end
