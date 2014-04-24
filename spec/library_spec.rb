@@ -5,6 +5,7 @@ describe Book do
   # Use let outside of tests to define variables across all tests.
   let(:book) {Book.new("The Stranger", "Albert Camus")}
   let(:borrower) { Borrower.new("David") }
+  let(:lib) {Library.new("The library")}
   it "has a title and author, and nil id" do
     # binding.pry
 
@@ -18,25 +19,26 @@ describe Book do
   end
 
   it "can be checked out" do
-    did_it_work = book.check_out
+    did_it_work = lib.check_out_book(book,borrower)
     expect(did_it_work).to be_true
     expect(book.status).to eq 'checked_out'
   end
 
   it "can't be checked out twice in a row" do
-    did_it_work = book.check_out
+    did_it_work = lib.check_out_book(book,borrower)
+    due_date = book.due_date
     expect(did_it_work).to be_true
     expect(book.status).to eq 'checked_out'
 
-    did_it_work_again = book.check_out
-    expect(did_it_work_again).to eq(false)
+    lib.check_out_book(book,borrower)
+    expect(book.due_date).to eq due_date
 
     expect(book.status).to eq 'checked_out'
   end
 
   it "can be checked in" do
-    book.check_out
-    book.check_in
+    lib.check_out_book(book,borrower)
+    lib.check_in_book(book)
     expect(book.status).to eq 'available'
   end
 

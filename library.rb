@@ -19,19 +19,6 @@ class Book
     @overdue = false
   end
 
-  def check_out
-    if @status == 'checked_out'
-      false
-    else
-      @status = 'checked_out'
-    end
-  end
-
-  def check_in
-    if @status == 'checked_out'
-      @status = 'available'
-    end
-  end
 end
 
 class Borrower
