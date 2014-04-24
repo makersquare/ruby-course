@@ -220,4 +220,37 @@ describe Library do
     expect(lib.borrowed_books.count).to eq(1)
     expect(lib.borrowed_books.first).to be_a(Book)
   end
+
+  it "allows books to be borrowed for only a week at a time" do
+    lib = Library.new("LBJ")
+    lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
+    lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
+    lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
+    kors = Borrower.new("Michael Kors")
+    book = lib.check_out_book("Eloquent JavaScript", kors)
+    book.time+=86400
+
+    w = Time.now+86400
+
+    expect(book.time).to eq(w.to_i)
+  end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
