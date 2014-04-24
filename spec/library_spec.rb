@@ -171,10 +171,11 @@ describe Library do
     book = lib.check_out_book(book_id, bob)
 
     # o wait he changed his mind
-    lib.check_in_book(book)
+    lib.check_in_book(book, bob)
 
     # The book should now be marked as available!
     expect(book.status).to eq 'available'
+    expect(bob.num_books).to eq 0
   end
 
   it "does not allow a Borrower to check out more than two Books at any given time" do
@@ -236,7 +237,7 @@ describe Library do
     expect( lib.get_borrower(book_id) ).to eq 'Michael Vick'
 
     # When we check in a book, the Library does not care who checks it in
-    lib.check_in_book(book)
+    lib.check_in_book(book, vick)
 
     # Another person should be able to check the book out
     schumacher = Borrower.new("Michael Schumacher")
