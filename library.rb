@@ -1,37 +1,122 @@
-
+require 'pry-debugger'
 class Book
-  attr_reader :author
+  attr_reader :author, :title, :status, :rating, :reviews
+  attr_accessor :id, :borrower, :year_published, :edition
 
-  def initialize(title, author)
+  def initialize(title, author, year_published=nil, edition=nil)
+    @title = title
     @author = author
+    @year_published = year_published
+    @edition = edition
+    @status = "available"
+    @rating = nil
+    @reviews  = []
+    @counter = 0.0
+  end
+
+  def write_review(rating, review=nil)
+    if @rating == nil
+      @rating = rating
+      @counter += 1.0
+    else
+      @counter += 1.0
+      @rating += rating
+      @rating = @rating / counter
+    end
+
+    if review != nil
+      @reviews << review
+    end
+  end
+
+  def check_out
+    if @status == "available"
+      @status = "checked_out"
+      true
+    else
+      false
+    end
+  end
+
+  def check_in
+    @status = "available"
   end
 end
 
 class Borrower
+  attr_reader :name
+  attr_accessor :num_books
   def initialize(name)
+    @name = name
+    @num_books = 0
   end
 end
 
 class Library
-  def initialize(name)
+  attr_reader :books
+
+  def initialize
     @books = []
+    @counter = 0
   end
 
-  def books
-  end
-
-  def add_book(title, author)
+  def register_new_book(book)
+    @books << book
+    book.id = @counter
+    @counter += 1
   end
 
   def check_out_book(book_id, borrower)
+    if borrower.num_books < 2
+      @books.each do |book|
+        if book.id == book_id
+          if book.status == "checked_out"
+            return nil
+          else
+            book.borrower = borrower.name
+            borrower.num_books += 1
+            book.check_out
+            return book
+          end
+        end
+      end
+    else
+      return nil
+    end
   end
 
-  def check_in_book(book)
+  def get_borrower(book_id)
+    @books.each do |book|
+      if book.id == book_id
+        return book.borrower
+      end
+    end
+  end
+
+  def check_in_book(book, borrower)
+    borrower.num_books -= 1
+    book.check_in
   end
 
   def available_books
+    books = []
+    @books.each do |book|
+      if book.status == "available"
+        books << book
+      end
+    end
+
+    return books
   end
 
   def borrowed_books
+    books = []
+    @books.each do |book|
+      if book.status == "checked_out"
+        books << book
+      end
+    end
+
+    return books
   end
 end
