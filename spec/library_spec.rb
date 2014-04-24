@@ -248,4 +248,19 @@ describe Library do
     expect(lib.borrowed_books.count).to eq(1)
     expect(lib.borrowed_books.first).to be_a(Book)
   end
+
+  it "allows borrowers to leave book reviews with a rating and optional review" do
+    book = Book.new("Eloquent JavaScript", "Marijn Haverbeke")
+    book1 = Book.new("Essential JavaScript Design Patterns", "Addy Osmani")
+    book2 = Book.new("JavaScript: The Good Parts", "Douglas Crockford")
+
+    book.write_review("4")
+    book1.write_review("10", "I loved this book so much I want to eat it!")
+
+    expect(book2.rating).to eq nil
+    expect(book.rating).to eq "4"
+    expect(book.reviews.first).to eq nil
+    expect(book1.rating).to eq "10"
+    expeect(book1.reviews.first).to eq "I loved this book so much I want to eat it!"
+  end
 end
