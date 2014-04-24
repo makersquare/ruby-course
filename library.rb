@@ -139,4 +139,16 @@ class Library
     end
   end
 
+  def export_to_csv(filename)
+    CSV.open(filename, "w") do |data|
+      @books.each do |book|
+        if book.ratings.empty?
+          data << [book.title,book.author,book.status]
+        else
+          data << [book.title,book.author,book.status,book.ratings]
+        end
+      end
+    end
+  end
+
 end
