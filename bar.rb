@@ -1,4 +1,4 @@
-require 'time' # you're gonna need it
+require 'time'
 
 class Bar
 
@@ -31,6 +31,12 @@ class Bar
   end
 
   def happy_hour?
+    return (Time.now >= Time.parse('3pm') &&
+      Time.now <= Time.parse('4pm'))
+  end
+
+  def get_price(item)
+    @menu_items
   end
 end
 
