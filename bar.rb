@@ -14,6 +14,10 @@ class Bar
     @menu_items << MenuItem.new(item, price)
   end
 
+  def exempt_drink(drink_name)
+    @menu_items.select { |item| item.name == drink_name }.first.exempt = true
+  end
+
   def happy_hour?
     if Time.now >= Time.parse("3pm") && Time.now <= Time.parse("4pm")
       return true
@@ -62,10 +66,12 @@ end
 class MenuItem
 
   attr_reader :name, :price
+  attr_accessor :exempt
 
   def initialize(name, price)
     @name = name
     @price = price
+    @exempt = false
   end
 
 end
