@@ -66,6 +66,10 @@ class Bar
     end
   end
 
+  def discount_for_day(day)
+    end
+
+
   def get_price(drink_name)
     drink = select_drink(drink_name)
 

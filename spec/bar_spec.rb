@@ -130,6 +130,16 @@ describe Bar do
     end
   end
 
+  describe "discount for specific day" do
+
+    context "given a day for the discount" do
+      it "returns the right discount" do
+        allow(Date).to receive(:today).and_return(Date.parse("tuesday"))
+        expect(discount_for_day).to eq("0.25")
+      end
+    end
+  end
+
   describe "#order_track" do
     it "knows how many drinks are purchased" do
       @bar.add_menu_item('Little Johnny', 9.95)
@@ -158,7 +168,6 @@ describe Bar do
 
       expect(@bar.most_popular).to eq(["Texas Tea: 3", "JayJay: 2", "Little Johnny: 1"])
     end
-
   end
 end
 
