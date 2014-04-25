@@ -143,6 +143,21 @@ describe Bar do
 
       expect(@bar.total_purchases).to eq(6)
     end
+
+    it "list the most popular drinks" do
+      @bar.add_menu_item('Little Johnny', 9.95)
+      @bar.add_menu_item('JayJay', 9.95)
+      @bar.add_menu_item('Texas Tea', 9.95)
+      @bar.purchase('Texas Tea')
+      @bar.purchase('Texas Tea')
+      @bar.purchase('Texas Tea')
+      @bar.purchase('JayJay')
+      @bar.purchase('JayJay')
+      @bar.purchase('Little Johnny')
+
+      expect(@bar.most_popular).to eq(["Texas Tea: 3", "JayJay: 2", "Little Johnny: 1"])
+    end
+
   end
 end
 
