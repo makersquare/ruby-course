@@ -83,6 +83,11 @@ describe Library do
     lib.register_new_book(book)
     expect(lib.books.count).to eq(1)
 
+    # Does not register a book that has already been registered.
+
+    lib.register_new_book(book)
+    expect(lib.books.count).to eq(1)
+
     created_book = lib.books.first
     expect(created_book.title).to eq "Nausea"
     expect(created_book.author).to eq "Jean-Paul Sartre"
