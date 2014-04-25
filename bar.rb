@@ -14,7 +14,20 @@ class Bar
 	end
 
 	def happy_discount
-		happy_hour? ? @happy_discount : 0
+		weekday = Time.now.wday
+		if happy_hour?
+			if weekday == 1 || weekday == 3
+				# full discount on Mon/wed
+				@happy_discount
+			else
+				#halp discount rest of days
+				@happy_discount/2
+			end
+		else
+			0
+		end
+
+		# happy_hour? ? @happy_discount : 0
 	end
 
 	def happy_discount=(discount)
@@ -29,9 +42,9 @@ class Bar
 
 	def happy_hour?
 		if Time.now > Time.parse("3pm") && Time.now < Time.parse("4pm")
-			@happy_hour = true
+			true
 		else
-			@happy_hour = false
+			false
 		end			
 	end
 end

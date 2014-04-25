@@ -45,8 +45,11 @@ describe Bar do
     expect { @bar.happy_discount = 0.5 }.to_not raise_error
   end
 
-  it "only returns a discount when it's happy hour" do
+  it "only returns a full discount when it's happy hour monday or wednesday" do
     @bar.happy_discount = 0.5
+    # allow(Time.now).to receive(:wday).and_return(Time.parse("2014-04-21").wday)
+    # allow(Time.now).to receive(:wday).and_return(1)
+    allow(Time).to receive(:now).and_return(Date.parse("Monday"))
     # HINT: You need to write your own getter
 
     # We are STUBBING `happy_hour?` to return a specified value.
@@ -66,7 +69,30 @@ describe Bar do
     expect(@bar.happy_discount).to eq 0.3
   end
 
-  it "constrains its happy hour discount to between zero and one" do
+  it "only returns a half discount when it's happy hour rest of week" do
+    @bar.happy_discount = 0.5
+    allow(Time).to receive(:now).and_return(Date.parse("saturday"))
+    
+    # HINT: You need to write your own getter
+
+    # We are STUBBING `happy_hour?` to return a specified value.
+    # Because of this, you don't have to write a happy_hour? method (yet)
+    expect(@bar).to receive(:happy_hour?).and_return(false)
+    expect(@bar.happy_discount).to eq 0
+
+    expect(@bar).to receive(:happy_hour?).and_return(true)
+    expect(@bar.happy_discount).to eq 0.25
+
+    # Take 2
+    @bar.happy_discount = 0.3
+    expect(@bar).to receive(:happy_hour?).and_return(false)
+    expect(@bar.happy_discount).to eq 0
+
+    expect(@bar).to receive(:happy_hour?).and_return(true)
+    expect(@bar.happy_discount).to eq 0.15
+  end
+
+  xit "constrains its happy hour discount to between zero and one" do
     expect(@bar).to receive(:happy_hour?).twice.and_return(true)
 
     # HINT: You need to write your own setter
