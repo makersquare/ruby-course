@@ -12,7 +12,7 @@ describe Bar do
     expect(@bar.name).to eq("The Irish Yodel")
   end
 
-  xit "cannot change its name" do
+  it "cannot change its name" do
     # That would require a lengthy marketing meeting
     expect {
       @bar.name = 'lolcat cave'
