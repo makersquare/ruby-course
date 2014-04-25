@@ -1,4 +1,5 @@
 require 'time' # you're gonna need it
+require 'date'
 
 class Bar
   attr_reader :name, :menu_items
@@ -48,7 +49,10 @@ class Bar
     # Find the item by name in the menu_items array, apply a happy hour discount if necessary and then return the price
     item_price = @menu_items.select{|item| item.name == item_name}.first.price
     if happy_hour?
-      item_price = item_price * happy_discount
+      # Make sure that drink prices aren't 0 if happy_discount isn't set
+      if happy_discount != 0
+        item_price = item_price * happy_discount
+      end
     else
       item_price
     end
