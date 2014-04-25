@@ -49,7 +49,7 @@ class Library
 
   def register_new_book(book)
     # Assigns a random id to Book when it is added to the library. This is currently unused.
-    book.id = rand()
+    book.id = rand(10000)
     @books << book
   end
 
