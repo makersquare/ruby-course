@@ -21,9 +21,20 @@ class Bar
   end
 
   def purchase(drink_name)
-    purchases[select_drink(drink_name)] += 1
+    purchases[drink_name] += 1
     @total_purchases += 1
   end
+
+  def most_popular
+    answ = []
+    order = @purchases.sort_by { |k,v| v }.reverse
+
+    for i in order
+      answ << "#{i[0]}: #{i[1]}"
+    end
+    answ
+  end
+
 
   def select_drink(drink_name)
     @menu_items.select { |item| item.name == drink_name }.first
