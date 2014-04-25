@@ -19,7 +19,7 @@ describe Bar do
     }.to raise_error
   end
 
-  xit "initializes with an empty menu" do
+  it "initializes with an empty menu" do
     expect(@bar.menu_items.count).to eq(0)
   end
 
