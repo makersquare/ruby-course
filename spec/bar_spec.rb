@@ -51,6 +51,7 @@ describe Bar do
 
     # We are STUBBING `happy_hour?` to return a specified value.
     # Because of this, you don't have to write a happy_hour? method (yet)
+
     expect(@bar).to receive(:happy_hour?).and_return(false)
     expect(@bar.happy_discount).to eq 0
 
