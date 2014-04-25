@@ -15,7 +15,14 @@ class Bar
   end
 
   def exempt_drink(drink_name)
-    @menu_items.select { |item| item.name == drink_name }.first.exempt = true
+    select_drink(drink_name).exempt = true
+  end
+
+  def purchase(drink_name)
+  end
+
+  def select_drink(drink_name)
+    @menu_items.select { |item| item.name == drink_name }.first
   end
 
   def happy_hour?
@@ -45,7 +52,7 @@ class Bar
   end
 
   def get_price(drink_name)
-    drink = @menu_items.select { |item| item.name == drink_name }.first
+    drink = select_drink(drink_name)
 
     if (Date.today.monday? || Date.today.wednesday?)
       @happy_discount = 0.5

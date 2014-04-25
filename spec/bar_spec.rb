@@ -143,10 +143,7 @@ describe Bar do
 
       expect(@bar.purchases.count).to eq(6)
     end
-
-
   end
-
 end
 
 
