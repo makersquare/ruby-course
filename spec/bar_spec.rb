@@ -129,4 +129,25 @@ describe Bar do
     end
   end
 
+  describe "#order_track" do
+    it "knows how many drinks are purchased" do
+      @bar.add_menu_item('Little Johnny', 9.95)
+      @bar.add_menu_item('JayJay', 9.95)
+      @bar.add_menu_item('Texas Tea', 9.95)
+      @bar.purchase('Texas Tea')
+      @bar.purchase('Texas Tea')
+      @bar.purchase('Texas Tea')
+      @bar.purchase('JayJay')
+      @bar.purchase('JayJay')
+      @bar.purchase('Little Johnny')
+
+      expect(@bar.purchases.count).to eq(6)
+    end
+
+
+  end
+
 end
+
+
+
