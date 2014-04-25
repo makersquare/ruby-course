@@ -134,8 +134,7 @@ describe Bar do
 
     context "given a day for the discount" do
       it "returns the right discount" do
-        allow(Date).to receive(:today).and_return(Date.parse("tuesday"))
-        expect(discount_for_day).to eq("0.25")
+        expect(@bar.discount_for_day(Date.parse("tuesday").wday)).to eq(0.25)
       end
     end
   end

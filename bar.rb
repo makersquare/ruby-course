@@ -10,6 +10,7 @@ class Bar
     @happy_discount = 0
     @purchases = Hash.new(0)
     @total_purchases = 0
+    @discounts = [0.25, 0.5, 0.25, 0.5, 0.25, 0.25, 0.25]
   end
 
   def add_menu_item(item, price)
@@ -67,17 +68,14 @@ class Bar
   end
 
   def discount_for_day(day)
-    end
+    @discounts[day]
+  end
 
 
   def get_price(drink_name)
     drink = select_drink(drink_name)
 
-    if (Date.today.monday? || Date.today.wednesday?)
-      @happy_discount = 0.5
-    else
-      @happy_discount = 0.25
-    end
+    @happy_discount = discount_for_day(Date.today.wday)
 
 
     if self.happy_hour? && drink.exempt == false
