@@ -2,12 +2,13 @@ require 'time' # you're gonna need it
 require 'date'
 
 class Bar
-  attr_reader :name, :menu_items
+  attr_reader :name, :menu_items, :purchase_list
 
   def initialize(name)
     @name = name
     @menu_items = []
     @happy_discount = 0.75
+    @purchase_list = []
   end
 
   # Take in a name and price and create a new Item instance based on these args. Add new Item to @menu_items
@@ -54,15 +55,23 @@ class Bar
   def buy_drink(item_name)
     # Find the item by name in the menu_items array, apply a happy hour discount if necessary and then return the price
     item = @menu_items.select{|item| item.name == item_name}.first
-      item_price = item.price
-      if happy_hour? && item.exempt != true
-        # Make sure that drink prices aren't 0 if happy_discount isn't set
-        if happy_discount != 0
-          item_price = item_price * happy_discount
-        end
-      else
-        item_price
+    item_price = item.price
+    # Add item to purchase list array, do this before we return the price
+    @purchase_list << item
+
+    if happy_hour? && item.exempt != true
+      # Make sure that drink prices aren't 0 if happy_discount isn't set
+      if happy_discount != 0
+        item_price = item_price * happy_discount
       end
+    else
+      item_price
+    end
+  end
+
+  def most_popular_drink
+    mp = @purchase_list.group_by{|item| item.name}.values.max_by{|x| x.size}
+    mp.first.name
   end
 end
 

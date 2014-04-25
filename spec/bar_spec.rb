@@ -69,6 +69,23 @@ describe Bar do
     expect(@bar.happy_discount).to eq 0.75
   end
 
+  it "can track drink purchases" do
+    @bar.add_menu_item('Cosmo',4.5)
+    @bar.buy_drink('Cosmo')
+
+    expect(@bar.purchase_list.length).to eq 1
+  end
+
+  it "can return the most popular purchase" do
+    @bar.add_menu_item('Cosmo',4.5)
+    @bar.add_menu_item('Beer',3)
+    @bar.buy_drink('Cosmo')
+    @bar.buy_drink('Cosmo')
+    @bar.buy_drink('Beer')
+    expect(@bar.most_popular_drink).to eq 'Cosmo'
+  end
+
+
   #it "constrains its happy hour discount to between zero and one" do
   #  expect(@bar).to receive(:happy_hour?).twice.and_return(true)
 
