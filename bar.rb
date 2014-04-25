@@ -32,6 +32,8 @@ class Bar
     today = Date.today.wday
     if today == 1 || today == 3
       @happy_discount = 0.5
+    else
+      @happy_discount = 0.75
     end
     if happy_hour?
       @happy_discount
