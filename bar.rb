@@ -13,6 +13,10 @@ class Bar
     new_item = MenuItems.new(item, cost)
     @menu_items << new_item
   end
+
+  def happy_discount
+    0
+  end
 end
 
 class MenuItems
