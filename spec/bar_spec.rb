@@ -103,7 +103,7 @@ describe Bar do
 
   it "During happy hours on slow days" do
     allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
-    allow(Date).to receive(:wday).and_return(1)
+    allow(Date).to receive(:today).and_return(Date.parse("2014-04-21"))
     @bar.add_menu_item('Cosmo', 5.40)
     expect(@bar.get_price('Cosmo')).to eq (5.40*0.5)
   end
@@ -113,5 +113,12 @@ describe Bar do
     allow(Date).to receive(:wday).and_return(1)
     @bar.add_menu_item('Cosmo', 5.40)
     expect(@bar.get_price('Cosmo')).to eq (5.40*0.75)
+  end
+
+  it "Allows drinks to be exempt from happy hour discounts" do
+    @bar.add_menu_item('Cosmo', 5.40, true)
+    allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+
+    expect(@bar.get_price('Cosmo')).to eq 5.40
   end
 end

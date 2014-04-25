@@ -11,8 +11,8 @@ class Bar
   end
 
   # Take in a name and price and create a new Item instance based on these args. Add new Item to @menu_items
-  def add_menu_item(name,price)
-    item = Item.new(name,price)
+  def add_menu_item(name,price,exempt=false)
+    item = Item.new(name,price,exempt)
     @menu_items << item
   end
 
@@ -30,6 +30,9 @@ class Bar
 
   def happy_discount
     today = Date.today.wday
+    if today == 1 || today == 3
+      @happy_discount = 0.5
+    end
     if happy_hour?
       @happy_discount
     else
@@ -48,24 +51,26 @@ class Bar
 
   def get_price(item_name)
     # Find the item by name in the menu_items array, apply a happy hour discount if necessary and then return the price
-    item_price = @menu_items.select{|item| item.name == item_name}.first.price
-    if happy_hour?
-      # Make sure that drink prices aren't 0 if happy_discount isn't set
-      if happy_discount != 0
-        item_price = item_price * happy_discount
+    item = @menu_items.select{|item| item.name == item_name}.first
+      item_price = item.price
+      if happy_hour? && item.exempt != true
+        # Make sure that drink prices aren't 0 if happy_discount isn't set
+        if happy_discount != 0
+          item_price = item_price * happy_discount
+        end
+      else
+        item_price
       end
-    else
-      item_price
-    end
   end
 end
 
 class Item
-  attr_accessor :name, :price
+  attr_accessor :name, :price, :exempt
 
-  def initialize(name,price)
+  def initialize(name,price,exempt=false)
     @name = name
     @price = price
+    @exempt = exempt
   end
 
 end
