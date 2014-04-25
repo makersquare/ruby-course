@@ -15,6 +15,7 @@ class Bar
     @menu_items << item
   end
 
+
   # Custom happy hour discount setter - always between 0 and 1
   def happy_discount=(discount)
     if discount >= 1
@@ -43,6 +44,15 @@ class Bar
     end
   end
 
+  def get_price(item_name)
+    # Find the item by name in the menu_items array, apply a happy hour discount if necessary and then return the price
+    item_price = @menu_items.select{|item| item.name == item_name}.first.price
+    if happy_hour?
+      item_price = item_price * happy_discount
+    else
+      item_price
+    end
+  end
 end
 
 class Item
@@ -52,4 +62,5 @@ class Item
     @name = name
     @price = price
   end
+
 end
