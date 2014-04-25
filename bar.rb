@@ -15,7 +15,7 @@ class Bar
   end
 
   def happy_hour?
-    if Time.now >= Time.parse("3pm") && Time.now <= Time.parse("4pm") && (Date.today.monday? || Date.today.wednesday?)
+    if Time.now >= Time.parse("3pm") && Time.now <= Time.parse("4pm")
       return true
     else
       return false
@@ -42,7 +42,13 @@ class Bar
 
   def get_price(drink_name)
     drink = @menu_items.select { |item| item.name == drink_name }.first
-    @happy_discount = 0.5
+
+    if (Date.today.monday? || Date.today.wednesday?)
+      @happy_discount = 0.5
+    else
+      @happy_discount = 0.25
+    end
+
 
     if self.happy_hour?
       drink.price * @happy_discount
