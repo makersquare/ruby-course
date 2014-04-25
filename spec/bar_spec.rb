@@ -89,7 +89,7 @@ describe Bar do
     end
 
     it "is not happy hour otherwise" do
-      allow(Time).to receive(:now).and_return(Time.parse("2:30 PM"))
+      allow(Time).to receive(:now).and_return(Time.parse("12:30 PM"))
       expect(@bar.happy_hour?).to eq(false)
     end
   end
@@ -103,10 +103,21 @@ describe Bar do
   end
 
   context "During normal hours" do
-    # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+    it "should not give discounts when its not happy hour" do
+      allow(Time).to receive(:now).and_return(Time.parse("12:30 PM"))
+      @bar.add_menu_item('Cosmo', 5.40)
+    end
   end
 
   context "During happy hours" do
-    # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
+    it "should apply discounts when it is happy hour" do
+      allow(Time).to receive(:now).and_return(Time.parse("3:30 PM"))
+      @bar.happy_discount = 0.5
+      @bar.add_menu_item('Cosmo', 5.40)
+      expect(@bar.get_price('cosmo')).to eq (5.4 * (1 - @bar.happy_discount))
+
+      @bar.happy_discount = 0.3
+      expect(@bar.get_price('cosmo')).to eq (5.4 * (1 - @bar.happy_discount))
+    end
   end
 end

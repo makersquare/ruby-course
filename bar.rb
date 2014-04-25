@@ -36,8 +36,9 @@ class Bar
   end
 
   def get_price(drink)
-    item = @menu_items.select {|item| item.name.downcase == drink.downcase}
-    item[0].price
+    drinks = @menu_items.select {|item| item.name.downcase == drink.downcase}
+    price = drinks[0].price
+    happy_hour? ? price * (1 - @happy_discount) : price
   end
 end
 
