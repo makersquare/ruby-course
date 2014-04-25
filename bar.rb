@@ -49,7 +49,7 @@ class Bar
     end
   end
 
-  def get_price(item_name)
+  def buy_drink(item_name)
     # Find the item by name in the menu_items array, apply a happy hour discount if necessary and then return the price
     item = @menu_items.select{|item| item.name == item_name}.first
       item_price = item.price
