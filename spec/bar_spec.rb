@@ -37,8 +37,10 @@ describe Bar do
     expect(item.price).to eq 9.95
   end
 
-  it "has a default happy hour discount of zero" do
-    expect(@bar.happy_discount).to eq 0
+  # Changed this test after completing initial assignment - For extensions the happy_discount is initializd to 0.75 and is only accessible when it is happy hour
+  it "has a default happy hour discount of 0.25" do
+    expect(@bar).to receive(:happy_hour?).and_return(true)
+    expect(@bar.happy_discount).to eq 0.75
   end
 
   it "can set its happy hour discount" do
@@ -99,11 +101,17 @@ describe Bar do
     expect(@bar.get_price('Cosmo')).to eq 5.40
   end
 
-  it "During happy hours" do
+  it "During happy hours on slow days" do
     allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+    allow(Date).to receive(:wday).and_return(1)
     @bar.add_menu_item('Cosmo', 5.40)
-    @bar.happy_discount = 0.5
     expect(@bar.get_price('Cosmo')).to eq (5.40*0.5)
   end
 
+  it "During happy hours on busy days" do
+    allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+    allow(Date).to receive(:wday).and_return(1)
+    @bar.add_menu_item('Cosmo', 5.40)
+    expect(@bar.get_price('Cosmo')).to eq (5.40*0.75)
+  end
 end

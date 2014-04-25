@@ -7,7 +7,7 @@ class Bar
   def initialize(name)
     @name = name
     @menu_items = []
-    @happy_discount = 0
+    @happy_discount = 0.75
   end
 
   # Take in a name and price and create a new Item instance based on these args. Add new Item to @menu_items
@@ -29,10 +29,11 @@ class Bar
   end
 
   def happy_discount
+    today = Date.today.wday
     if happy_hour?
       @happy_discount
     else
-      return 0
+      0
     end
   end
 
