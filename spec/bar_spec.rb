@@ -118,4 +118,15 @@ describe Bar do
       expect(@bar.get_price('Little Johnny')).to eq(9.95 * 0.25)
     end
   end
+
+  context "Some drinks are exempt from happy hour" do
+    it "returns normal price for exempt drink during happy hour" do
+      @bar.add_menu_item('Little Johnny', 9.95)
+      @bar.exempt_drink('Little Jonny')
+      allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+      allow(Date).to receive(:today).and_return(Date.parse("tuesday"))
+      expect(@bar.get_price('Little Johnny')).to eq(9.95)
+    end
+  end
+
 end
