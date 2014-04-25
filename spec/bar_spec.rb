@@ -89,8 +89,16 @@ describe Bar do
     end
 
     it "is not happy hour otherwise" do
-      allow(Time).to receive(:now).and_return(Time.parse("3:30 PM"))
+      allow(Time).to receive(:now).and_return(Time.parse("2:30 PM"))
       expect(@bar.happy_hour?).to eq(false)
+    end
+  end
+
+  describe ".get_price" do
+    it "should return a price for a given drink name" do
+      @bar.add_menu_item('Cosmo', 5.40)
+      @bar.add_menu_item('Salty Dog', 7.80)
+      expect(@bar.get_price('Cosmo')).to eq 5.40
     end
   end
 

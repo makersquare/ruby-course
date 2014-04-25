@@ -35,11 +35,17 @@ class Bar
       Time.now <= Time.parse('4pm'))
   end
 
+  def get_price(drink)
+    item = @menu_items.select {|item| item.name.downcase == drink.downcase}
+    item[0].price
+  end
 end
 
 
 class Item
+
   attr_reader :name, :price
+
   def initialize(name, price)
     @name = name
     @price = price
