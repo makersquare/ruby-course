@@ -11,7 +11,7 @@ class Bar
   end
 
   def add_menu_item(item, price)
-    @menu_items << Item.new(item, price)
+    @menu_items << MenuItem.new(item, price)
   end
 
   def happy_hour?
@@ -40,10 +40,20 @@ class Bar
     end
   end
 
+  def get_price(drink_name)
+    drink = @menu_items.select { |item| item.name == drink_name }.first
+    @happy_discount = 0.5
+
+    if self.happy_hour?
+      drink.price * @happy_discount
+    else
+      drink.price
+    end
+  end
 
 end
 
-class Item
+class MenuItem
 
   attr_reader :name, :price
 

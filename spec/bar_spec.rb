@@ -94,10 +94,18 @@ describe Bar do
   end
 
   context "During normal hours" do
-    # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+    it "returns regular price during normal hours" do
+      @bar.add_menu_item('Little Johnny', 9.95)
+      allow(Time).to receive(:now).and_return(Time.parse("1pm"))
+      expect(@bar.get_price('Little Johnny')).to eq(9.95)
+    end
   end
 
   context "During happy hours" do
-    # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
+    it "returns discounted price during happy hour" do
+      @bar.add_menu_item('Little Johnny', 9.95)
+      allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+      expect(@bar.get_price('Little Johnny')).to eq(9.95 * 0.5)
+    end
   end
 end
