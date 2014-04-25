@@ -24,20 +24,20 @@ describe Bar do
   end
 
   it "can add menu items" do
-    @bar.add_menu_item('Cosmo', 5.40)
-    @bar.add_menu_item('Salty Dog', 7.80)
+    @bar.add_menu_item(MenuItem.new('Cosmo', 5.40))
+    @bar.add_menu_item(MenuItem.new('Salty Dog', 7.80))
 
     expect(@bar.menu_items.count).to eq(2)
   end
 
   it "can retrieve menu items" do
-    @bar.add_menu_item('Little Johnny', 9.95)
+    @bar.add_menu_item(MenuItem.new('Little Johnny', 9.95))
     item = @bar.menu_items.first
     expect(item.name).to eq 'Little Johnny'
     expect(item.price).to eq 9.95
   end
 
-  xit "has a default happy hour discount of zero" do
+  it "has a default happy hour discount of zero" do
     expect(@bar.happy_discount).to eq 0
   end
 
