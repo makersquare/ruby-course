@@ -26,14 +26,11 @@ end
 
 class Motorcycle < Car
 
-#   def initialize
-#   super("red", 2)
-# end
-
-  def wheel_count
-    2
+  def initialize(color)
+  super("red")
+  @wheel_count = 2
   end
-  end
+end
 
 
 
