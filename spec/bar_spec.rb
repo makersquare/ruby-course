@@ -84,12 +84,12 @@ describe Bar do
 
   describe '#happy_hour?' do
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
-      Time.stub(:now).and_return(Time.parse('3:30pm'))
+      allow(Time).to receive(:now).and_return(Time.parse("3:30 PM"))
       expect(@bar.happy_hour?).to eq(true)
     end
 
     it "is not happy hour otherwise" do
-      Time.stub(:now).and_return(Time.parse('2:30pm'))
+      allow(Time).to receive(:now).and_return(Time.parse("3:30 PM"))
       expect(@bar.happy_hour?).to eq(false)
     end
   end

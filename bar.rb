@@ -35,9 +35,6 @@ class Bar
       Time.now <= Time.parse('4pm'))
   end
 
-  def get_price(item)
-    @menu_items
-  end
 end
 
 
