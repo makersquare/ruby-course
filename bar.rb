@@ -54,8 +54,8 @@ class Bar
     end
 
 
-    if self.happy_hour?
-      drink.price * @happy_discount
+    if self.happy_hour? && drink.exempt == false
+      (drink.price * @happy_discount).round(2)
     else
       drink.price
     end
