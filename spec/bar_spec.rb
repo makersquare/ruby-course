@@ -45,7 +45,7 @@ describe Bar do
     expect { @bar.happy_discount = 0.5 }.to_not raise_error
   end
 
-  xit "only returns a discount when it's happy hour" do
+  it "only returns a discount when it's happy hour" do
     @bar.happy_discount = 0.5
     # HINT: You need to write your own getter
 
