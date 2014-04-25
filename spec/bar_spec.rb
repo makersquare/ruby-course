@@ -137,6 +137,14 @@ describe Bar do
         expect(@bar.discount_for_day(Date.parse("tuesday").wday)).to eq(0.25)
       end
     end
+
+    context "can update the discount" do
+      it "receives a day and discount and updates correctly" do
+        @bar.add_menu_item('Little Johnny', 9.95)
+        @bar.update_discount("Friday", 0.35)
+        expect(@bar.get_price('Little Johnny')).to eq(9.95 * 0.35).round(2)
+      end
+    end
   end
 
   describe "#order_track" do
