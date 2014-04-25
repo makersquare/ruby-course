@@ -82,8 +82,9 @@ describe Bar do
 # # # # # # # # # # # # # # # # # # # # # #
 
   describe '#happy_hour?' do
-    it "knows when it is happy hour (3:00pm to 4:00pm)" do
+    it "knows when it is happy hour (3:00pm to 4:00pm) and Mondays or Wednesdays" do
       allow(Time).to receive(:now).and_return(Time.parse("3pm"))
+      allow(Date).to receive(:today).and_return(Date.parse("wednesday"))
       expect(@bar.happy_hour?).to eq(true)
     end
 
@@ -97,6 +98,7 @@ describe Bar do
     it "returns regular price during normal hours" do
       @bar.add_menu_item('Little Johnny', 9.95)
       allow(Time).to receive(:now).and_return(Time.parse("1pm"))
+      allow(Date).to receive(:today).and_return(Date.parse("wednesday"))
       expect(@bar.get_price('Little Johnny')).to eq(9.95)
     end
   end
@@ -105,6 +107,7 @@ describe Bar do
     it "returns discounted price during happy hour" do
       @bar.add_menu_item('Little Johnny', 9.95)
       allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+      allow(Date).to receive(:today).and_return(Date.parse("wednesday"))
       expect(@bar.get_price('Little Johnny')).to eq(9.95 * 0.5)
     end
   end

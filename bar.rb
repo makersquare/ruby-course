@@ -15,7 +15,7 @@ class Bar
   end
 
   def happy_hour?
-    if Time.now >= Time.parse("3pm") && Time.now <= Time.parse("4pm")
+    if Time.now >= Time.parse("3pm") && Time.now <= Time.parse("4pm") && (Date.today.monday? || Date.today.wednesday?)
       return true
     else
       return false
