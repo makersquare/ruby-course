@@ -39,6 +39,21 @@ class Bar
     end
   end
 
+  def get_price(item, is_happy_hour)
+    price = 0
+    @menu_items.each do |menu_object|
+      if menu_object.name == item
+        price = menu_object.price
+      end
+    end
+
+    if is_happy_hour
+      return price * @happy_discount
+    else
+      return price
+    end
+  end
+
 end
 
 class Item

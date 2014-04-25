@@ -112,13 +112,14 @@ describe Bar do
       expect(@bar.happy_discount).to eq(0.5)
     end
 
-     it "Returns the happy price for a given drink" do
+     it "Returns the happy hour price for a given drink" do
       @bar.add_menu_item('Cosmo', 5.40)
       @bar.add_menu_item('Salty Dog', 7.80)
       @bar.happy_discount = 0.5
+      item = @bar.menu_items.first
 
       allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
-      expect(@bar.get_price('Cosmo')).to eq (2.7)
+      expect(@bar.get_price('Cosmo', @bar.happy_hour?)).to eq (2.7)
     end
 
   end
