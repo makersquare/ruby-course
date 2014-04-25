@@ -7,7 +7,6 @@ class Bar
   def initialize(name)
     @name = name
     @menu_items = []
-    @happy_discount = 0
   end
 
   def add_menu_item(item, cost)
@@ -18,6 +17,16 @@ class Bar
   def happy_hour?
   end
 
+  def happy_discount=(x)
+    if x < 1 && x > 0
+      @happy_discount = x
+    elsif x < 0
+      @happy_discount = 0
+    else
+      @happy_discount = 1
+    end
+  end
+
   def happy_discount
     if happy_hour? == true
       @happy_discount
@@ -25,6 +34,7 @@ class Bar
       0
     end
   end
+
 end
 
 class MenuItems
