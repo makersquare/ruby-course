@@ -141,7 +141,7 @@ describe Bar do
       @bar.purchase('JayJay')
       @bar.purchase('Little Johnny')
 
-      expect(@bar.purchases.count).to eq(6)
+      expect(@bar.total_purchases).to eq(6)
     end
   end
 end
