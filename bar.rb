@@ -38,15 +38,18 @@ class Bar
   def get_price(drink)
     drinks = @menu_items.select {|item| item.name.downcase == drink.downcase}
     price = drinks[0].price
-    happy_hour? ? price * (1 - @happy_discount) : price
+    if happy_hour?
+      @happy_discount = 0.5
+      price * (1 - @happy_discount)
+    else
+      price
+    end
   end
 end
 
 
 class Item
-
   attr_reader :name, :price
-
   def initialize(name, price)
     @name = name
     @price = price
