@@ -11,6 +11,7 @@ class Bar
     @happy_discount = 0
     @purchases = Hash.new(0)
     @happy_purchases = Hash.new(0)
+    @regular_hours_purchases = Hash.new(0)
     @total_purchases = 0
     @happy_hour_purchases = 0
     @regular_purchases = 0
@@ -33,6 +34,7 @@ class Bar
       @happy_purchases[drink_name] += 1
       @happy_hour_purchases += 1
     else
+      @regular_hours_purchases[drink_name] += 1
       @regular_purchases += 1
     end
   end
@@ -44,6 +46,8 @@ class Bar
       order = sort_most_popular(@purchases)
     elsif time_frame == :happy_hour
       order = sort_most_popular(@happy_purchases)
+    elsif time_frame == :regular
+      order = sort_most_popular(@regular_hours_purchases)
     else
       return nil
     end
