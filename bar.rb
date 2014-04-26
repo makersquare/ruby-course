@@ -89,6 +89,7 @@ class Bar
   def get_price(drink_name)
     drink = select_drink(drink_name)
 
+
     @happy_discount = discount_for_day(Date.today.wday)
 
 

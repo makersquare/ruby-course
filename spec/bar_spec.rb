@@ -149,7 +149,22 @@ describe Bar do
     end
   end
 
+  describe "discount for specific item" do
+
+    context "a drink is ordered during happy our" do
+      it "has a unique discount" do
+        @bar.add_menu_item('Little Johnny', 9.95)
+        allow(Date).to receive(:today).and_return(Date.parse("monday"))
+        allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+        @bar.add_unique_discount('Little Johnny', 0.75)
+
+        expect(@bar.get_price('Little Johnny')).to eq((9.95 * 0.75).round(2))
+      end
+    end
+  end
+
   describe "#order_track" do
+
     it "knows how many drinks are purchased" do
       @bar.add_menu_item('Little Johnny', 9.95)
       @bar.add_menu_item('JayJay', 9.95)
