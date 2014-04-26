@@ -84,7 +84,8 @@ describe Bar do
       @bar.add_menu_item('Cosmo', 5.40)
       @bar.add_menu_item('Salty Dog', 7.80)
       @bar.make_purchase('Cosmo')
-      expect(@bar.purchased_drinks['Cosmo']).to eq(1)
+
+      expect(@bar.purchased_drinks.length).to eq(1)
     end
 
     it "returns most popular drinks" do

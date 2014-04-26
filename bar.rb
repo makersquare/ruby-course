@@ -1,13 +1,14 @@
 require 'time' # you're gonna need it
 
 class Bar
-  attr_reader :name, :menu_items, :exempted_drinks
+  attr_reader :name, :menu_items, :exempted_drinks, :purchased_drinks
 
   def initialize(name)
     @name = name
     @menu_items = []
     @happy_discount = 0
     @exempted_drinks = []
+    @purchased_drinks = Hash.new
   end
 
   def happy_hour?
@@ -20,6 +21,20 @@ class Bar
 
   def add_menu_item(item, cost)
     @menu_items << Item.new(item, cost)
+  end
+
+  def make_purchase(item)
+    if @purchased_drinks.length == 0
+      @purchased_drinks[item] = 1
+    else
+      @purchased_drinks.each do |key, value|
+        if key == item
+          @purchased_drinks[key] += 1
+        else
+          @purchased_drinks[key] = 1
+        end
+      end
+    end
   end
 
   def exempt_drink(drink)
