@@ -102,7 +102,7 @@ describe Bar do
       @bar.exempt_drink("Cosmo")
       @bar.exempt_drink("Margarita")
 
-      expect(@bar.exempted_drinks).to eq(2)
+      expect(@bar.exempted_drinks.count).to eq(2)
     end
   end
 

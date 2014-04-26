@@ -1,12 +1,13 @@
 require 'time' # you're gonna need it
 
 class Bar
-  attr_reader :name, :menu_items
+  attr_reader :name, :menu_items, :exempted_drinks
 
   def initialize(name)
     @name = name
     @menu_items = []
     @happy_discount = 0
+    @exempted_drinks = []
   end
 
   def happy_hour?
@@ -19,6 +20,10 @@ class Bar
 
   def add_menu_item(item, cost)
     @menu_items << Item.new(item, cost)
+  end
+
+  def exempt_drink(drink)
+    exempted_drinks << drink
   end
 
   def happy_discount
