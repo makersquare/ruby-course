@@ -41,7 +41,20 @@ class Bar
     else
       @purchased_drinks[item] = 1
     end
+  end
 
+  def most_popular_drink
+    most_popular = ""
+    max = 0
+
+    @purchased_drinks.each do |key, value|
+      if value > max
+        most_popular = key
+        max = value
+      end
+    end
+
+    return most_popular
   end
 
   def exempt_drink(drink)
