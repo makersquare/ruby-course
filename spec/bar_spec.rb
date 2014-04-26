@@ -104,6 +104,16 @@ describe Bar do
 
       expect(@bar.exempted_drinks.count).to eq(2)
     end
+
+    it "knows which drinks are exempted from the happy hour discount" do
+      @bar.add_menu_item('Cosmo', 5.40)
+      @bar.add_menu_item('Salty Dog', 7.80)
+      @bar.exempt_drink("Cosmo")
+      date = Date.today
+
+      allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+      expect(@bar.get_price("Cosmo", @bar.happy_hour?, date)).to eq(5.40)
+    end
   end
 
   context "During normal hours" do
@@ -123,21 +133,22 @@ describe Bar do
       expect(@bar.happy_discount).to eq(0.5)
     end
 
-     it "Returns the happy hour price for a given drink" do
+    #  it "Returns the happy hour price for a given drink" do
+    #   @bar.add_menu_item('Cosmo', 5.40)
+    #   @bar.add_menu_item('Salty Dog', 7.80)
+    #   @bar.happy_discount = 0.5
+
+    #   allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+    #   expect(@bar.get_price('Cosmo', @bar.happy_hour?)).to eq (2.7)
+    # end
+
+    it "returns the regular price for a drink" do
       @bar.add_menu_item('Cosmo', 5.40)
       @bar.add_menu_item('Salty Dog', 7.80)
-      @bar.happy_discount = 0.5
-
-      allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
-      expect(@bar.get_price('Cosmo', @bar.happy_hour?)).to eq (2.7)
-    end
-
-    it "get_price returns the regular price for a drink" do
-      @bar.add_menu_item('Cosmo', 5.40)
-      @bar.add_menu_item('Salty Dog', 7.80)
+      date = Date.parse("28th Apr 2014")
 
       allow(Time).to receive(:now).and_return(Time.parse("1pm"))
-      expect(@bar.get_price('Cosmo', @bar.happy_hour?)).to eq(5.4)
+      expect(@bar.get_price('Cosmo', @bar.happy_hour?, date)).to eq(5.4)
     end
 
     it "returns 50% discount on Mondays and Wednesdays" do
@@ -145,11 +156,11 @@ describe Bar do
       @bar.add_menu_item('Salty Dog', 7.80)
       date = Date.parse("28th Apr 2014")
       allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
-      expect(@bar.get_price_date('Cosmo', @bar.happy_hour?, date)).to eq(2.7)
+      expect(@bar.get_price('Cosmo', @bar.happy_hour?, date)).to eq(2.7)
 
       date = Date.parse("30th Apr 2014")
       allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
-      expect(@bar.get_price_date('Cosmo', @bar.happy_hour?, date)).to eq(2.7)
+      expect(@bar.get_price('Cosmo', @bar.happy_hour?, date)).to eq(2.7)
     end
 
     it "returns 25% discount on all days except Monday and Wednesday" do
@@ -158,7 +169,7 @@ describe Bar do
       date = Date.parse("29th Apr 2014")
 
       allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
-      expect(@bar.get_price_date('Cosmo', @bar.happy_hour?, date)).to eq(4.05)
+      expect(@bar.get_price('Cosmo', @bar.happy_hour?, date)).to eq(4.05)
     end
 
   end

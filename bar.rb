@@ -44,22 +44,7 @@ class Bar
     end
   end
 
-  def get_price(item, is_happy_hour)
-    price = 0
-    @menu_items.each do |menu_object|
-      if menu_object.name == item
-        price = menu_object.price
-      end
-    end
-
-    if is_happy_hour
-      return price * 0.5
-    else
-      return price
-    end
-  end
-
-  def get_price_date(item, is_happy_hour, date)
+  def get_price(item, is_happy_hour, date)
     price = 0
     week_day = date.cwday
     @menu_items.each do |menu_object|
@@ -71,12 +56,13 @@ class Bar
     if is_happy_hour == false
       return price
     elsif week_day == 1 || week_day == 3
-      return price * 0.5
+      @happy_discount = 0.5
+      return price * @happy_discount
     else
-      return (price - (price * 0.25)).round(2)
+      @happy_discount = 0.25
+      return (price - (price * @happy_discount)).round(2)
     end
   end
-
 end
 
 class Item
