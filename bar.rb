@@ -15,7 +15,7 @@ class Bar
   end
 
   def happy_hour?
-    if Time.now != 'hello'.class || (Time.now < '3 pm' || Time.now > '4 pm')
+    if Time.now.class != 'hello'.class || (Time.now < '3 pm' || Time.now > '4 pm')
       false
     else
       true
