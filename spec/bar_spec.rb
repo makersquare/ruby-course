@@ -86,9 +86,21 @@ describe Bar do
       @bar.make_purchase('Cosmo')
 
       expect(@bar.purchased_drinks.length).to eq(1)
+
+      #Testing for additional drink purchases
+      @bar.make_purchase('Cosmo')
+      @bar.make_purchase("Salty Dog")
+      expect(@bar.purchased_drinks.length).to eq(2)
     end
 
     it "returns most popular drinks" do
+      @bar.add_menu_item('Cosmo', 5.40)
+      @bar.add_menu_item('Salty Dog', 7.80)
+      @bar.make_purchase('Cosmo')
+      @bar.make_purchase('Cosmo')
+      @bar.make_purchase("Salty Dog")
+
+      expect(@bar.most_popular_drink).to eq("Cosmo")
     end
 
   describe '#happy_hour?' do

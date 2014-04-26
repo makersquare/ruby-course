@@ -24,17 +24,24 @@ class Bar
   end
 
   def make_purchase(item)
+    in_hash = false
     if @purchased_drinks.length == 0
       @purchased_drinks[item] = 1
-    else
-      @purchased_drinks.each do |key, value|
+      return true
+    end
+
+    @purchased_drinks.each do |key, value|
         if key == item
-          @purchased_drinks[key] += 1
-        else
-          @purchased_drinks[key] = 1
+          in_hash = true
         end
       end
+
+    if in_hash
+      @purchased_drinks[item] += 1
+    else
+      @purchased_drinks[item] = 1
     end
+
   end
 
   def exempt_drink(drink)
