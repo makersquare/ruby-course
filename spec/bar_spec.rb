@@ -192,6 +192,24 @@ describe Bar do
 
       expect(@bar.most_popular).to eq(["Texas Tea: 3", "JayJay: 2", "Little Johnny: 1"])
     end
+
+    context "a drink is ordered during happy hour" do
+      it "keeps count of drinks during happy hour" do
+        @bar.add_menu_item('Little Johnny', 9.95)
+        @bar.add_menu_item('JayJay', 9.95)
+        @bar.add_menu_item('Texas Tea', 9.95)
+        @bar.purchase('Texas Tea')
+        @bar.purchase('Texas Tea')
+        @bar.purchase('Texas Tea')
+        @bar.purchase('JayJay')
+        @bar.purchase('JayJay')
+        @bar.purchase('Little Johnny')
+        allow(Date).to receive(:today).and_return(Date.parse("monday"))
+        allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+
+        expect(@bar.happy_hour_purchases).to eq(6)
+      end
+    end
   end
 end
 
