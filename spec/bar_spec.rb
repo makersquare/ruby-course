@@ -93,6 +93,17 @@ describe Bar do
       allow(Time).to receive(:now).and_return(Time.parse("1pm"))
       expect(@bar.happy_hour?).to eq(false)
     end
+
+    it "can exempt certain drinks from happy hour" do
+      @bar.add_menu_item('Cosmo', 5.40)
+      @bar.add_menu_item('Salty Dog', 7.80)
+      @bar.add_menu_item('Margarita', 8.10)
+
+      @bar.exempt_drink("Cosmo")
+      @bar.exempt_drink("Margarita")
+
+      expect(@bar.exempted_drinks).to eq(2)
+    end
   end
 
   context "During normal hours" do
