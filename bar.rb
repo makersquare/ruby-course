@@ -7,6 +7,7 @@ class Item
     @name = name
     @price = price
   end
+
 end
 
 class Bar
@@ -49,10 +50,15 @@ class Bar
       end
   end
 
+  def get_price(drink)
+    drink = @menu_items.select { |item| item.name == drink.name }
+    price = drink[0].price
+    if happy_hour?
+      price = price * 0.5
+    else
+      price
+    end
+  end
+
 end
 
-
-
-
-
-# Time.stub(:now).and_return(my_stuff)

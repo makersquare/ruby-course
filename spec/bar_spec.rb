@@ -95,11 +95,30 @@ describe Bar do
     end
   end
 
+describe "get_price" do
+  it "returns normal price" do
+    @bar.add_menu_item("manhattan", 9.00)
+    drink = @bar.menu_items.first
+    expect(@bar.get_price(drink)).to eq(9.00)
+  end
+
+  it "returns happy hour price" do
+    @bar.add_menu_item("manhattan", 4.50)
+    drink = @bar.menu_items.first
+
+    expect(@bar.get_price(drink)).to eq(4.50)
+  end
+
+end
+
+
   context "During normal hours" do
     # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+
   end
 
   context "During happy hours" do
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
   end
 end
+
