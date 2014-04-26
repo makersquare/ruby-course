@@ -244,6 +244,23 @@ describe Bar do
       end
     end
   end
+
+  context "a drink is purchases outside of happy hour" do
+    it "increases the outside of happy hour count" do
+      @bar.add_menu_item('Little Johnny', 9.95)
+      @bar.add_menu_item('JayJay', 9.95)
+      @bar.add_menu_item('Texas Tea', 9.95)
+
+      allow(Date).to receive(:today).and_return(Date.parse("monday"))
+      allow(Time).to receive(:now).and_return(Time.parse("5:30pm"))
+
+      @bar.purchase('Texas Tea')
+      @bar.purchase('Texas Tea')
+      @bar.purchase('JayJay')
+
+      expect(@bar.regular_purchases).to eq(3)
+    end
+  end
 end
 
 
