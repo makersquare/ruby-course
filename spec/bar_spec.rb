@@ -83,13 +83,21 @@ describe Bar do
 
   describe '#happy_hour?' do
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
-      Time.stub(:now).and_return('3 pm')
+      Time.stub(:now).and_return(Time.parse('3:00 pm'))
       expect(@bar.happy_hour?).to eq(true)
     end
 
     it "is not happy hour otherwise" do
-      Time.stub(:now).and_return('6 pm')
+      Time.stub(:now).and_return(Time.parse('6:00 pm'))
       expect(@bar.happy_hour?).to eq(false)
+    end
+  end
+
+  describe '#get_price' do
+    it "returns a price for a given drink name" do
+      @bar.add_menu_item("Whiskey Sour", 5.50)
+      drink = @bar.menu_items.first
+      expect(@bar.get_price(drink)).to eq(5.50)
     end
   end
 

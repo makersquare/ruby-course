@@ -14,11 +14,22 @@ class Bar
     @menu_items << new_item
   end
 
-  def happy_hour?
-    if Time.now.class != 'hello'.class || (Time.now < '3 pm' || Time.now > '4 pm')
-      false
+  def get_price(drinks)
+    drinks = @menu_items.select {|item| item.name == drinks.name}
+    price = drinks[0].price
+    if happy_hour?
+      @happy_discount = 0.5
+      price * (1 - @happy_discount)
     else
+      price
+    end
+  end
+
+  def happy_hour?
+    if Time.now >= Time.parse('3:00 pm') && Time.now <= Time.parse('4:00 pm')
       true
+    else
+      false
     end
   end
 
@@ -33,10 +44,10 @@ class Bar
   end
 
   def happy_discount
-    if happy_hour? == false
-      0
-    else
+    if happy_hour?
       @happy_discount
+    else
+      return 0
     end
   end
 
@@ -49,4 +60,6 @@ class MenuItems
     @name = name
     @price = price
   end
+
+
 end
