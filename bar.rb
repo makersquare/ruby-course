@@ -15,6 +15,11 @@ class Bar
   end
 
   def happy_hour?
+    if Time.now != 'hello'.class || (Time.now < '3 pm' || Time.now > '4 pm')
+      false
+    else
+      true
+    end
   end
 
   def happy_discount=(x)
@@ -28,10 +33,10 @@ class Bar
   end
 
   def happy_discount
-    if happy_hour? == true
-      @happy_discount
-    else
+    if happy_hour? == false
       0
+    else
+      @happy_discount
     end
   end
 
