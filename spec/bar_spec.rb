@@ -190,7 +190,7 @@ describe Bar do
       @bar.purchase('JayJay')
       @bar.purchase('Little Johnny')
 
-      expect(@bar.most_popular).to eq(["Texas Tea: 3", "JayJay: 2", "Little Johnny: 1"])
+      expect(@bar.most_popular(:total)).to eq(["Texas Tea: 3", "JayJay: 2", "Little Johnny: 1"])
     end
 
     context "a drink is ordered during happy hour" do
@@ -230,11 +230,19 @@ describe Bar do
         @bar.purchase('JayJay')
         @bar.purchase('Little Johnny')
 
+        allow(Date).to receive(:today).and_return(Date.parse("monday"))
+        allow(Time).to receive(:now).and_return(Time.parse("7pm"))
+
+        @bar.purchase('JayJay')
+        @bar.purchase('JayJay')
+        @bar.purchase('Little Johnny')
+
+        # binding.pry
+
         expect(@bar.most_popular(:happy_hour)).to eq([
         "JayJay: 5", "Texas Tea: 2", "Little Johnny: 1"])
       end
     end
-
   end
 end
 

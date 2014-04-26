@@ -9,6 +9,7 @@ class Bar
     @menu_items = []
     @happy_discount = 0
     @purchases = Hash.new(0)
+    @happy_purchases = Hash.new(0)
     @total_purchases = 0
     @happy_hour_purchases = 0
     @discounts = [0.25, 0.5, 0.25, 0.5, 0.25, 0.25, 0.25]
@@ -23,20 +24,34 @@ class Bar
   end
 
   def purchase(drink_name)
-    purchases[drink_name] += 1
+    @purchases[drink_name] += 1
     @total_purchases += 1
 
-    @happy_hour_purchases += 1 if happy_hour?
+    if happy_hour?
+      @happy_purchases[drink_name] += 1
+      @happy_hour_purchases += 1
+    end
   end
 
-  def most_popular
+  def most_popular(time_frame)
     answ = []
-    order = @purchases.sort_by { |k,v| v }.reverse
+
+    if time_frame == :total
+      order = sort_most_popular(@purchases)
+    elsif time_frame == :happy_hour
+      order = sort_most_popular(@happy_purchases)
+    else
+      return nil
+    end
 
     for i in order
       answ << "#{i[0]}: #{i[1]}"
     end
     answ
+  end
+
+  def sort_most_popular(hash)
+    hash.sort_by { |k,v| v }.reverse
   end
 
 
