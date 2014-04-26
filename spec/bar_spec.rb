@@ -212,7 +212,29 @@ describe Bar do
 
         expect(@bar.happy_hour_purchases).to eq(6)
       end
+
+      it "keeps track of the most popular drinks" do
+        @bar.add_menu_item('Little Johnny', 9.95)
+        @bar.add_menu_item('JayJay', 9.95)
+        @bar.add_menu_item('Texas Tea', 9.95)
+
+        allow(Date).to receive(:today).and_return(Date.parse("monday"))
+        allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+
+        @bar.purchase('Texas Tea')
+        @bar.purchase('Texas Tea')
+        @bar.purchase('JayJay')
+        @bar.purchase('JayJay')
+        @bar.purchase('JayJay')
+        @bar.purchase('JayJay')
+        @bar.purchase('JayJay')
+        @bar.purchase('Little Johnny')
+
+        expect(@bar.most_popular(:happy_hour)).to eq([
+        "JayJay: 5", "Texas Tea: 2", "Little Johnny: 1"])
+      end
     end
+
   end
 end
 
