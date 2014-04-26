@@ -102,10 +102,19 @@ describe Bar do
 
       Time.stub(:now).and_return(Time.parse('12 pm'))
       expect(@bar.happy_discount).to eq(0)
+
+      Time.stub(:now).and_return(Time.parse('5 pm'))
+      expect(@bar.happy_discount).to eq(0)
     end
   end
 
   context "During happy hours" do
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
+    it "sells items at happy hour discount price" do
+      @bar.happy_discount = 0.5
+
+      Time.stub(:now).and_return(Time.parse('3 pm'))
+      expect(@bar.happy_discount).to eq(0.5)
+    end
   end
 end
