@@ -156,7 +156,7 @@ describe Bar do
         @bar.add_menu_item('Little Johnny', 9.95)
         allow(Date).to receive(:today).and_return(Date.parse("monday"))
         allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
-        @bar.add_unique_discount('Little Johnny', 0.75)
+        @bar.unique_discount('Little Johnny', 0.75)
 
         expect(@bar.get_price('Little Johnny')).to eq((9.95 * 0.75).round(2))
       end

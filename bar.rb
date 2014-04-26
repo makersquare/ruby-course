@@ -85,18 +85,22 @@ class Bar
     @discounts[day_hash[day.downcase.to_sym]] = price
   end
 
+  def unique_discount(drink, discount)
+    select_drink(drink).unique = discount
+  end
 
   def get_price(drink_name)
     drink = select_drink(drink_name)
-
+    unique = drink.unique
+    price = drink.price
 
     @happy_discount = discount_for_day(Date.today.wday)
 
 
     if self.happy_hour? && drink.exempt == false
-      (drink.price * @happy_discount).round(2)
+      unique ? (unique * price).round(2) : (price * @happy_discount).round(2)
     else
-      drink.price
+      price
     end
   end
 
@@ -105,12 +109,13 @@ end
 class MenuItem
 
   attr_reader :name, :price
-  attr_accessor :exempt
+  attr_accessor :exempt, :unique
 
   def initialize(name, price)
     @name = name
     @price = price
     @exempt = false
+    @unique = false
   end
 
 end
