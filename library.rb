@@ -1,44 +1,45 @@
-
 class Book
-  attr_reader :author, :title, :check_out
+  attr_reader :author, :title
   attr_accessor :id, :status, :borrower
 
   def initialize(title, author)
     @author = author
     @title = title
-    @id = id
+    @id = nil
     @status = "available"
+    @borrower = nil
   end
 
   def check_out
-    @status = "checked_out"
+    if @status == "checked_out"
+      false
+    else
+      @status = "checked_out"
+      true
+    end
   end
 
   def check_in
     @status = "available"
   end
-  # def check_in
-
-  # end
-
-  # def status
-  #   check_out ? true : false
-  # end
 end
 
 
 class Borrower
-  attr_reader :name
+  attr_reader :name, :borrowed
+
   def initialize(name)
     @name = name
+    @borrowed = []
   end
 end
 
 class Library
-  attr_reader :books, :title, :author, :id
+  attr_accessor :books, :name, :title, :author, :id
+
   def initialize(name="")
     @name = name
-    @id_count = 1
+    @id_count = 0
     @books = []
   end
 
@@ -46,9 +47,9 @@ class Library
   end
 
   def register_new_book(book)
-    @books << book
+    @books.push(book)
     book.id = @id_count
-    @id_count += 1
+    @id_count = @id_count + 1
   end
 
 
@@ -59,18 +60,37 @@ class Library
   end
 
 
-  def created_book
+  def get_borrower(book_id)
+    book = @books.select {|bk| bk.title == book_id}
+    book.first.borrower.name
   end
 
   def check_in_book(book)
+    if book && book.status =="checked_out"
+    book.status = "available"
   end
+  end
+
 
   def available_books
+  available_books = []
+  @books.map do |bk|
+    if bk.status == "available"
+    available_books << bk
+  end
+  end
+    available_books
   end
 
+
   def borrowed_books
+    books_out = []
+    @books.map do |bk|
+      if bk.status == "checked_out"
+      books_out << bk
+    end
   end
+    books_out
 end
-# lib = Library.new("Bola")
-# lib.books
-# lib.add_book("Nausea", "Jean-Paul Sartre")
+end
+
