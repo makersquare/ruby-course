@@ -71,6 +71,20 @@ class Bar
     @discounts[day]
   end
 
+  def update_discount(day, price)
+    day_hash = {
+      sunday: 0,
+      monday: 1,
+      tuesday: 2,
+      wednesday: 3,
+      thursday: 4,
+      friday: 5,
+      saturday: 6
+    }
+
+    @discounts[day_hash[day.downcase.to_sym]] = price
+  end
+
 
   def get_price(drink_name)
     drink = select_drink(drink_name)

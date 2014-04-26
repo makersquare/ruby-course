@@ -142,7 +142,9 @@ describe Bar do
       it "receives a day and discount and updates correctly" do
         @bar.add_menu_item('Little Johnny', 9.95)
         @bar.update_discount("Friday", 0.35)
-        expect(@bar.get_price('Little Johnny')).to eq(9.95 * 0.35).round(2)
+        allow(Date).to receive(:today).and_return(Date.parse("friday"))
+        allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+        expect(@bar.get_price('Little Johnny')).to eq((9.95 * 0.35).round(2))
       end
     end
   end
