@@ -80,6 +80,15 @@ describe Bar do
 # # # # # # # # # # # # # # # # # # # # # #
   # DO NOT CHANGE SPECS ABOVE THIS LINE #
 # # # # # # # # # # # # # # # # # # # # # #
+   it "records drink purchases" do
+      @bar.add_menu_item('Cosmo', 5.40)
+      @bar.add_menu_item('Salty Dog', 7.80)
+      @bar.make_purchase('Cosmo')
+      expect(@bar.purchased_drinks['Cosmo']).to eq(1)
+    end
+
+    it "returns most popular drinks" do
+    end
 
   describe '#happy_hour?' do
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
