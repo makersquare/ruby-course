@@ -2,7 +2,7 @@ require 'time' # you're gonna need it
 
 class Bar
 
-  attr_reader :name, :menu_items, :purchases, :total_purchases
+  attr_reader :name, :menu_items, :purchases, :total_purchases, :happy_hour_purchases
 
   def initialize(name)
     @name = name
@@ -10,6 +10,7 @@ class Bar
     @happy_discount = 0
     @purchases = Hash.new(0)
     @total_purchases = 0
+    @happy_hour_purchases = 0
     @discounts = [0.25, 0.5, 0.25, 0.5, 0.25, 0.25, 0.25]
   end
 
@@ -24,6 +25,8 @@ class Bar
   def purchase(drink_name)
     purchases[drink_name] += 1
     @total_purchases += 1
+
+    @happy_hour_purchases += 1 if happy_hour?
   end
 
   def most_popular

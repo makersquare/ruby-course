@@ -198,14 +198,17 @@ describe Bar do
         @bar.add_menu_item('Little Johnny', 9.95)
         @bar.add_menu_item('JayJay', 9.95)
         @bar.add_menu_item('Texas Tea', 9.95)
+
+        allow(Date).to receive(:today).and_return(Date.parse("monday"))
+        allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+
         @bar.purchase('Texas Tea')
         @bar.purchase('Texas Tea')
         @bar.purchase('Texas Tea')
         @bar.purchase('JayJay')
         @bar.purchase('JayJay')
         @bar.purchase('Little Johnny')
-        allow(Date).to receive(:today).and_return(Date.parse("monday"))
-        allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+
 
         expect(@bar.happy_hour_purchases).to eq(6)
       end
