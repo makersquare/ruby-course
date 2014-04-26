@@ -24,6 +24,11 @@ class Bar
 
   def exempt_drink(drink)
     exempted_drinks << drink
+    @menu_items.each do |menu_object|
+      if menu_object.name == drink
+        menu_object.exempt = true
+      end
+    end
   end
 
   def happy_discount
@@ -46,14 +51,16 @@ class Bar
 
   def get_price(item, is_happy_hour, date)
     price = 0
+    exempt = false
     week_day = date.cwday
     @menu_items.each do |menu_object|
       if menu_object.name == item
         price = menu_object.price
+        exempt = menu_object.exempt
       end
     end
 
-    if is_happy_hour == false
+    if is_happy_hour == false || exempt
       return price
     elsif week_day == 1 || week_day == 3
       @happy_discount = 0.5
@@ -67,9 +74,11 @@ end
 
 class Item
   attr_reader :name, :price
+  attr_accessor :exempt
   def initialize(name, price)
     @name = name
     @price = price
+    @exempt = false
   end
 end
 
