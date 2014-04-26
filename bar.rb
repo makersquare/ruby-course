@@ -35,12 +35,6 @@ class Bar
 
   def happy_discount
     if happy_hour?
-      # refactored code above
-      # if @happy_discount > 1
-      #   return 1
-      # elsif @happy_discount < 0
-      #   return 0
-      # end
       return @happy_discount
     else
       return 0
@@ -48,7 +42,11 @@ class Bar
   end
 
   def happy_hour?
-
+    if Time.now >= Time.parse("3:00 PM") && Time.now <= Time.parse("4:00 PM")
+        true
+      else
+        false
+      end
   end
 
 end
