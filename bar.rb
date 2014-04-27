@@ -2,7 +2,7 @@ require 'time' # you're gonna need it
 require 'date'
 
 class Bar
-  attr_reader :name, :menu_items, :purchase_list, :hh_purchases
+  attr_reader :name, :menu_items, :purchase_list, :hh_purchases, :reg_purchases
 
   def initialize(name)
     @name = name
@@ -66,9 +66,9 @@ class Bar
     if happy_hour? && item.exempt != true
       @hh_purchases << item
       if item.spc_happy_discount.nil?
-        item_price = item_price * std_happy_discount
+        item_price *= std_happy_discount
       else
-        item_price = item_price * item.spc_happy_discount
+        item_price *= item.spc_happy_discount
       end
     else
       @reg_purchases << item
@@ -77,21 +77,12 @@ class Bar
 
   end
 
-  def most_popular_drink
-    # Turn the purchsae list array into a hash with unique elements as keys with the number of times each element appears as the value. Then sort the existing hash by the item that occurs most often. Return the name of the first element in the resulting array.
-    mp = @purchase_list.group_by{|item| item.name}.values.max_by(&:size)
+  def most_popular_drink(array)
+    # Turn the purchase list array into a hash with unique elements as keys with the number of times each element appears as the value. Then sort the existing hash by the item that occurs most often. Return the name of the first element in the resulting array.
+    mp = array.group_by{|item| item.name}.values.max_by(&:size)
     mp.first.name
   end
 
-  def mp_hh
-    mp = @hh_purchases.group_by{|item| item.name}.values.max_by(&:size)
-    mp.first.name
-  end
-
-  def mp_reg
-    mp = @reg_purchases.group_by{|item| item.name}.values.max_by(&:size)
-    mp.first.name
-  end
 end
 
 class Item
