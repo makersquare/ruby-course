@@ -37,36 +37,36 @@ describe Bar do
     expect(item.price).to eq 9.95
   end
 
-  # Changed this test after completing initial assignment - For extensions the happy_discount is initializd to 0.75 and is only accessible when it is happy hour
+  # Changed this test after completing initial assignment - For extensions the gen_happy_discount is initializd to 0.75 and is only accessible when it is happy hour
   it "has a default happy hour discount of 0.75" do
     expect(@bar).to receive(:happy_hour?).and_return(true)
-    expect(@bar.happy_discount).to eq 0.75
+    expect(@bar.gen_happy_discount).to eq 0.75
   end
 
   it "can set its happy hour discount" do
-    expect { @bar.happy_discount = 0.5 }.to_not raise_error
+    expect { @bar.gen_happy_discount = 0.5 }.to_not raise_error
   end
 
   it "only returns a discount when it's happy hour" do
-    # Changed this test after completing initial assignment. happy_discount is now always .75 or .5, depending on the day
-    # @bar.happy_discount = 0.5
+    # Changed this test after completing initial assignment. gen_happy_discount is now always .75 or .5, depending on the day
+    # @bar.gen_happy_discount = 0.5
     # HINT: You need to write your own getter
 
     # We are STUBBING `happy_hour?` to return a specified value.
     # Because of this, you don't have to write a happy_hour? method (yet)
     expect(@bar).to receive(:happy_hour?).and_return(false)
-    expect(@bar.happy_discount).to eq 0
+    expect(@bar.gen_happy_discount).to eq 0
 
     expect(@bar).to receive(:happy_hour?).and_return(true)
-    expect(@bar.happy_discount).to eq 0.75
+    expect(@bar.gen_happy_discount).to eq 0.75
 
     # Take 2
-    @bar.happy_discount = 0.3
+    @bar.gen_happy_discount = 0.3
     expect(@bar).to receive(:happy_hour?).and_return(false)
-    expect(@bar.happy_discount).to eq 0
+    expect(@bar.gen_happy_discount).to eq 0
 
     expect(@bar).to receive(:happy_hour?).and_return(true)
-    expect(@bar.happy_discount).to eq 0.75
+    expect(@bar.gen_happy_discount).to eq 0.75
   end
 
   it "can track drink purchases" do
@@ -90,11 +90,11 @@ describe Bar do
   #  expect(@bar).to receive(:happy_hour?).twice.and_return(true)
 
     # HINT: You need to write your own setter
-  #  @bar.happy_discount = 2
-    # expect(@bar.happy_discount).to eq 1
+  #  @bar.gen_happy_discount = 2
+    # expect(@bar.gen_happy_discount).to eq 1
 
-  #  @bar.happy_discount = -3
-    # expect(@bar.happy_discount).to eq 0
+  #  @bar.gen_happy_discount = -3
+    # expect(@bar.gen_happy_discount).to eq 0
   # end
 
 # # # # # # # # # # # # # # # # # # # # # #

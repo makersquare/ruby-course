@@ -7,7 +7,7 @@ class Bar
   def initialize(name)
     @name = name
     @menu_items = []
-    @happy_discount = 0.75
+    @std_happy_discount = 0.75
     @purchase_list = []
   end
 
@@ -19,25 +19,25 @@ class Bar
 
 
   # Custom happy hour discount setter - always between 0 and 1
-  def happy_discount=(discount)
+  def std_happy_discount=(discount)
     if discount >= 1
-      @happy_discount = 1
+      @std_happy_discount = 1
     elsif discount < 0
-      @happy_discount = 0
+      @std_happy_discount = 0
     else
-      @happy_discount = discount
+      @std_happy_discount = discount
     end
   end
 
-  def happy_discount
+  def std_happy_discount
     today = Date.today.wday
     if today == 1 || today == 3
-      @happy_discount = 0.5
+      @std_happy_discount = 0.5
     else
-      @happy_discount = 0.75
+      @std_happy_discount = 0.75
     end
     if happy_hour?
-      @happy_discount
+      @std_happy_discount
     else
       0
     end
@@ -60,9 +60,9 @@ class Bar
     @purchase_list << item
 
     if happy_hour? && item.exempt != true
-      # Make sure that drink prices aren't 0 if happy_discount isn't set
-      if happy_discount != 0
-        item_price = item_price * happy_discount
+      # Make sure that drink prices aren't 0 if std_happy_discount isn't set
+      if std_happy_discount != 0
+        item_price = item_price * std_happy_discount
       end
     else
       item_price
@@ -70,7 +70,8 @@ class Bar
   end
 
   def most_popular_drink
-    mp = @purchase_list.group_by{|item| item.name}.values.max_by{|x| x.size}
+    # Turn the purchsae list array into a hash with unique elements as keys with the number of times each element appears as the value. Then sort the existing hash by the item that occurs most often. Return the name of the first element in the resulting array.
+    mp = @purchase_list.group_by{|item| item.name}.values.max_by(&:size)
     mp.first.name
   end
 end
