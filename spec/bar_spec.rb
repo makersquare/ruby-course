@@ -194,6 +194,20 @@ describe Bar do
       expect(@bar.get_price('Cosmo', @bar.happy_hour?, date)).to eq(4.05)
     end
 
+    it "keeps a record of number of drinks purchased during happy hour" do
+      @bar.add_menu_item('Cosmo', 5.40)
+      @bar.add_menu_item('Salty Dog', 7.80)
+
+      allow(Time).to receive(:now).and_return(Time.parse("1:30pm"))
+      @bar.make_purchase("Cosmo")
+
+      allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+      @bar.make_purchase("Cosmo")
+      @bar.make_purchase("Cosmo")
+
+      expect(@bar.hh_drinks_bought.length).to eq(2)
+    end
+
   end
 
 end
