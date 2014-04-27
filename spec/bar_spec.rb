@@ -87,7 +87,7 @@ describe Bar do
   end
 
   it "Tracks most popular drinks in and out of happy hour" do
-    @bar.add_menu_item('Cosmo', 5.40)
+    @bar.add_menu_item('Cosmo', 5.40, true)
     @bar.add_menu_item('Special Beer', 3.00)
     @bar.buy_drink('Cosmo')
     @bar.buy_drink('Cosmo')

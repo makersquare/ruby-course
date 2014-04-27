@@ -60,14 +60,18 @@ class Bar
     # Add item to purchase list array, do this before we return the price
     @purchase_list << item
 
-    # Check if it is happy hour and ensure the item is not exempt from happy hour pricing. If either test fails, return the regualar item.price
-    # If both tests pass, check if the item has a special discount, if it doesn't, apply standard happy hour pricing, otherwise, use the special discount and return the item_price
-    if happy_hour? && item.exempt != true
+    # Check if it is happy hour and ensure the item is not exempt from happy hour pricing. If either test fails, return the regualar item.price.
+    # If both tests pass. Check if the item has a special discount, if it doesn't, apply standard happy hour pricing, otherwise, use the special discount and return the item_price
+    if happy_hour?
       @hh_purchases << item
-      if item.spc_happy_discount.nil?
-        item_price *= std_happy_discount
+      if !item.exempt
+        if item.spc_happy_discount.nil?
+          item_price *= std_happy_discount
+        else
+          item_price *= item.spc_happy_discount
+        end
       else
-        item_price *= item.spc_happy_discount
+      item_price
       end
     else
       @reg_purchases << item
