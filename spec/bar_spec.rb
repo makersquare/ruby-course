@@ -48,7 +48,8 @@ describe Bar do
   end
 
   it "only returns a discount when it's happy hour" do
-    # Changed this test after completing initial assignment. std_happy_discount is now always .75 or .5, depending on the day
+    # Changed this test after completing initial assignment. std_happy_discount is now initialized to 0.75 and changed to 0.5 on slow days.
+
     # @bar.std_happy_discount = 0.5
     # HINT: You need to write your own getter
 
@@ -66,7 +67,7 @@ describe Bar do
     expect(@bar.std_happy_discount).to eq 0
 
     expect(@bar).to receive(:happy_hour?).and_return(true)
-    expect(@bar.std_happy_discount).to eq 0.75
+    expect(@bar.std_happy_discount).to eq 0.3
   end
 
   it "can track drink purchases" do
