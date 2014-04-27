@@ -83,22 +83,22 @@ describe Bar do
    it "records drink purchases" do
       @bar.add_menu_item('Cosmo', 5.40)
       @bar.add_menu_item('Salty Dog', 7.80)
-      @bar.make_purchase('Cosmo')
+      @bar.make_purchase('Cosmo', @bar.happy_hour?)
 
       expect(@bar.purchased_drinks.length).to eq(1)
 
       #Testing for additional drink purchases
-      @bar.make_purchase('Cosmo')
-      @bar.make_purchase("Salty Dog")
+      @bar.make_purchase('Cosmo', @bar.happy_hour?)
+      @bar.make_purchase("Salty Dog", @bar.happy_hour?)
       expect(@bar.purchased_drinks.length).to eq(2)
     end
 
     it "returns most popular drinks" do
       @bar.add_menu_item('Cosmo', 5.40)
       @bar.add_menu_item('Salty Dog', 7.80)
-      @bar.make_purchase('Cosmo')
-      @bar.make_purchase('Cosmo')
-      @bar.make_purchase("Salty Dog")
+      @bar.make_purchase('Cosmo', @bar.happy_hour?)
+      @bar.make_purchase('Cosmo', @bar.happy_hour?)
+      @bar.make_purchase("Salty Dog", @bar.happy_hour?)
 
       expect(@bar.most_popular_drink).to eq("Cosmo")
     end
@@ -199,13 +199,13 @@ describe Bar do
       @bar.add_menu_item('Salty Dog', 7.80)
 
       allow(Time).to receive(:now).and_return(Time.parse("1:30pm"))
-      @bar.make_purchase("Cosmo")
+      @bar.make_purchase("Cosmo", @bar.happy_hour?)
 
       allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
-      @bar.make_purchase("Cosmo")
-      @bar.make_purchase("Cosmo")
+      @bar.make_purchase("Cosmo", @bar.happy_hour?)
+      @bar.make_purchase("Cosmo", @bar.happy_hour?)
 
-      expect(@bar.hh_drinks_bought.length).to eq(2)
+      expect(@bar.hh_drinks_bought).to eq(2)
     end
 
   end
