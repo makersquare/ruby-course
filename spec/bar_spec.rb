@@ -165,9 +165,25 @@ describe Bar do
     @bar.buy_drink('Cosmo')
     @bar.buy_drink('Special Beer')
     @bar.buy_drink('Special Beer')
+
+    expect(@bar.hh_purchases.count).to eq 4
+  end
+
+  it "Tracks most popular drinks in and out of happy hour" do
+    @bar.add_menu_item('Cosmo', 5.40)
+    @bar.add_menu_item('Special Beer', 3.00)
+    @bar.buy_drink('Cosmo')
+    @bar.buy_drink('Cosmo')
     @bar.buy_drink('Special Beer')
 
-    expect(@bar.hh_purchases.count).to eq 5
+    allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+    @bar.buy_drink('Special Beer')
+    @bar.buy_drink('Special Beer')
+    @bar.buy_drink('Cosmo')
+
+    expect(@bar.mp_reg).to eq 'Cosmo'
+    expect(@bar.mp_hh).to eq 'Special Beer'
   end
+
 
 end

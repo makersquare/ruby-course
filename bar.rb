@@ -10,6 +10,7 @@ class Bar
     @std_happy_discount = 0.75
     @purchase_list = []
     @hh_purchases = []
+    @reg_purchases = []
   end
 
   # Take in a name and price and create a new Item instance based on these args. Add new Item to @menu_items
@@ -70,6 +71,7 @@ class Bar
         item_price = item_price * item.spc_happy_discount
       end
     else
+      @reg_purchases << item
       item_price
     end
 
@@ -78,6 +80,16 @@ class Bar
   def most_popular_drink
     # Turn the purchsae list array into a hash with unique elements as keys with the number of times each element appears as the value. Then sort the existing hash by the item that occurs most often. Return the name of the first element in the resulting array.
     mp = @purchase_list.group_by{|item| item.name}.values.max_by(&:size)
+    mp.first.name
+  end
+
+  def mp_hh
+    mp = @hh_purchases.group_by{|item| item.name}.values.max_by(&:size)
+    mp.first.name
+  end
+
+  def mp_reg
+    mp = @reg_purchases.group_by{|item| item.name}.values.max_by(&:size)
     mp.first.name
   end
 end
