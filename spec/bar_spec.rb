@@ -104,16 +104,17 @@ describe Bar do
   end
 
 
-  #it "constrains its happy hour discount to between zero and one" do
-  #  expect(@bar).to receive(:happy_hour?).twice.and_return(true)
+  it "constrains its happy hour discount to between zero and one" do
+  expect(@bar).to receive(:happy_hour?).twice.and_return(true)
 
     # HINT: You need to write your own setter
-  #  @bar.std_happy_discount = 2
-    # expect(@bar.std_happy_discount).to eq 1
+  @bar.std_happy_discount = 2
+    expect(@bar.std_happy_discount).to eq 1
 
-  #  @bar.std_happy_discount = -3
-    # expect(@bar.std_happy_discount).to eq 0
-  # end
+    # Changed this test to eq 0.25 since the slow day discount reduces discount by an additional 0.25
+  @bar.std_happy_discount = -3
+    expect(@bar.std_happy_discount).to eq 0.25
+  end
 
 # # # # # # # # # # # # # # # # # # # # # #
   # DO NOT CHANGE SPECS ABOVE THIS LINE #
