@@ -88,19 +88,28 @@ describe Bar do
       expect(@bar.purchased_drinks.length).to eq(1)
 
       #Testing for additional drink purchases
+      allow(Time).to receive(:now).and_return(Time.parse("1:30pm"))
       @bar.make_purchase('Cosmo', @bar.happy_hour?)
       @bar.make_purchase("Salty Dog", @bar.happy_hour?)
       expect(@bar.purchased_drinks.length).to eq(2)
     end
 
-    it "returns most popular drinks" do
+    it "returns most popular drinks during happy hour and not during happy hour" do
       @bar.add_menu_item('Cosmo', 5.40)
       @bar.add_menu_item('Salty Dog', 7.80)
+      allow(Time).to receive(:now).and_return(Time.parse("1:30pm"))
       @bar.make_purchase('Cosmo', @bar.happy_hour?)
       @bar.make_purchase('Cosmo', @bar.happy_hour?)
       @bar.make_purchase("Salty Dog", @bar.happy_hour?)
 
-      expect(@bar.most_popular_drink).to eq("Cosmo")
+      allow(Time).to receive(:now).and_return(Time.parse("1:30pm"))
+      expect(@bar.most_popular_drink(false)).to eq("Cosmo")
+
+      allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+      @bar.make_purchase('Cosmo', @bar.happy_hour?)
+      @bar.make_purchase('Salty Dog', @bar.happy_hour?)
+      @bar.make_purchase("Salty Dog", @bar.happy_hour?)
+      expect(@bar.most_popular_drink(true)).to eq("Salty Dog")
     end
 
   describe '#happy_hour?' do
@@ -155,15 +164,6 @@ describe Bar do
       expect(@bar.happy_discount).to eq(0.5)
     end
 
-    #  it "Returns the happy hour price for a given drink" do
-    #   @bar.add_menu_item('Cosmo', 5.40)
-    #   @bar.add_menu_item('Salty Dog', 7.80)
-    #   @bar.happy_discount = 0.5
-
-    #   allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
-    #   expect(@bar.get_price('Cosmo', @bar.happy_hour?)).to eq (2.7)
-    # end
-
     it "returns the regular price for a drink" do
       @bar.add_menu_item('Cosmo', 5.40)
       @bar.add_menu_item('Salty Dog', 7.80)
@@ -203,26 +203,10 @@ describe Bar do
 
       allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
       @bar.make_purchase("Cosmo", @bar.happy_hour?)
-      @bar.make_purchase("Cosmo", @bar.happy_hour?)
+      @bar.make_purchase("Salty Dog", @bar.happy_hour?)
 
       expect(@bar.hh_drinks_bought.length).to eq(2)
     end
-
-    it "knows the most popular drinks during happy hour and outside of happy hour" do
-      @bar.add_menu_item('Cosmo', 5.40)
-      @bar.add_menu_item('Salty Dog', 7.80)
-
-      allow(Time).to receive(:now).and_return(Time.parse("1:30pm"))
-      @bar.make_purchase("Salty Dog", @bar.happy_hour?)
-
-      allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
-      @bar.make_purchase("Cosmo", @bar.happy_hour?)
-      @bar.make_purchase("Cosmo", @bar.happy_hour?)
-
-      expect(@bar.most_popular_drink(false)).to eq("Salty Dog")
-      expect(@bar.most_popular_drink(true)).to eq("Cosmo")
-    end
-
   end
 
 end

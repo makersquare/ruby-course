@@ -9,7 +9,7 @@ class Bar
     @happy_discount = 0
     @exempted_drinks = []
     @purchased_drinks = Hash.new
-    @hh_drinks_bought = 0
+    @hh_drinks_bought = Hash.new
   end
 
   def happy_hour?
@@ -27,31 +27,51 @@ class Bar
   def make_purchase(item, happy_hour)
     in_hash = false
 
-    @hh_drinks_bought += 1 if happy_hour
+    if happy_hour && @hh_drinks_bought.length == 0
+      @hh_drinks_bought[item] = 1
+      return true
+    end
 
     if @purchased_drinks.length == 0
       @purchased_drinks[item] = 1
       return true
     end
 
-    @purchased_drinks.each do |key, value|
+    if happy_hour
+      @hh_drinks_bought.each do |key, value|
         if key == item
           in_hash = true
         end
       end
-
-    in_hash ? @purchased_drinks[item] += 1 : @purchased_drinks[item] = 1
+      in_hash ? @hh_drinks_bought[item] += 1 : @hh_drinks_bought[item] = 1
+    else
+      @purchased_drinks.each do |key, value|
+        if key == item
+          in_hash = true
+        end
+      end
+      in_hash ? @purchased_drinks[item] += 1 : @purchased_drinks[item] = 1
+    end
 
   end
 
-  def most_popular_drink
+  def most_popular_drink(happy_hour)
     most_popular = ""
     max = 0
 
-    @purchased_drinks.each do |key, value|
-      if value > max
-        most_popular = key
-        max = value
+    if happy_hour
+      @hh_drinks_bought.each do |key, value|
+        if value > max
+          most_popular = key
+          max = value
+        end
+      end
+    else
+      @purchased_drinks.each do |key, value|
+        if value > max
+          most_popular = key
+          max = value
+        end
       end
     end
 
