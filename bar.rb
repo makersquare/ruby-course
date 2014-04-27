@@ -55,7 +55,10 @@ class Bar
 
   def buy_drink(item_name)
     # Find the item by name in the menu_items array, apply a happy hour discount if necessary and then return the price
-    item = @menu_items.select{|item| item.name == item_name}.first
+    # Use detect instead of select here since we only need to find one item, not multiple items. Detect finishes searching and returns the item as soon as it finds the item in the menu_items array, instead of moving all the way through the array every time.
+
+    item = @menu_items.detect{|item| item.name == item_name}
+
     item_price = item.price
     # Add item to purchase list array, do this before we return the price
     @purchase_list << item
