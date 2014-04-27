@@ -16,25 +16,30 @@ describe Bar do
     # That would require a lengthy marketing meeting
     expect {
       @bar.name = 'lolcat cave'
-    }.to raise_error
-  end
+      }.to raise_error
+    end
 
-  it "initializes with an empty menu" do
-    expect(@bar.menu_items.count).to eq(0)
-  end
+    it "initializes with an empty menu" do
+      expect(@bar.menu_items.count).to eq(0)
+    end
 
-  it "can add menu items" do
-    @bar.add_menu_item('Cosmo', 5.40)
-    @bar.add_menu_item('Salty Dog', 7.80)
+    it "can add menu items" do
+    # @bar.add_menu_item('Cosmo', 5.40)
+    item1 = MenuItem.new('Cosmo', 5.40)
+    @bar.add_menu_item(item1)
+    item2 = MenuItem.new('Salty Dog', 7.80)
+    @bar.add_menu_item(item2)
+    # @bar.add_menu_item('Salty Dog', 7.80)
 
     expect(@bar.menu_items.count).to eq(2)
   end
 
   it "can retrieve menu items" do
-    @bar.add_menu_item('Little Johnny', 9.95)
-    item = @bar.menu_items.first
-    expect(item.name).to eq 'Little Johnny'
-    expect(item.price).to eq 9.95
+    item1 = MenuItem.new('Cosmo', 5.40)
+    @bar.add_menu_item(item1)
+
+    expect(@bar.menu_items.first.name).to eq 'Cosmo'
+    expect(@bar.menu_items.first.price).to eq 5.40
   end
 
   it "has a default happy hour discount of zero" do
@@ -103,19 +108,44 @@ describe Bar do
     expect(@bar.happy_discount).to eq 0
   end
 
+  it "can order drinks" do
+    item1 = MenuItem.new('Cosmo', 5.40)
+    @bar.add_menu_item(item1)
+    item2 = MenuItem.new('Salty Dog', 7.80)
+    @bar.add_menu_item(item2)
+
+    @bar.order_drink(item1)
+    expect(@bar.drink_orders.size).to eq 1
+    expect(@bar.drink_orders.first[0]).to eq item1
+  end
+
+  it "tracks number of drink orders" do 
+    item1 = MenuItem.new('Cosmo', 5.40)
+    @bar.add_menu_item(item1)
+    item2 = MenuItem.new('Salty Dog', 7.80)
+    @bar.add_menu_item(item2)
+
+    3.times { @bar.order_drink(item1) }
+    5.times { @bar.order_drink(item2) }
+    expect(@bar.drink_orders.size).to eq 2
+    expect(@bar.drink_orders[item1]).to eq 3
+    expect(@bar.drink_orders[item2]).to eq 5
+  end
+
+
 # # # # # # # # # # # # # # # # # # # # # #
   # DO NOT CHANGE SPECS ABOVE THIS LINE #
 # # # # # # # # # # # # # # # # # # # # # #
 
-  describe '#happy_hour?' do
-    it "knows when it is happy hour (3:00pm to 4:00pm)" do
+describe '#happy_hour?' do
+  it "knows when it is happy hour (3:00pm to 4:00pm)" do
     allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
       # TODO: CONTROL TIME
       expect(@bar.happy_hour?).to eq(true)
     end
 
     it "is not happy hour otherwise" do
-    allow(Time).to receive(:now).and_return(Time.parse("2:30pm"))
+      allow(Time).to receive(:now).and_return(Time.parse("2:30pm"))
       # TODO: CONTROL TIME
       expect(@bar.happy_hour?).to eq(false)
     end
