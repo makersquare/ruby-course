@@ -156,4 +156,18 @@ describe Bar do
     # Make sure special happy hour pricing is applied where necessary
     expect(@bar.buy_drink('Special Beer')).to eq (3.00*0.5)
   end
+
+  it "Tracks how many drinks are purchased during happy hour" do
+    allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+    @bar.add_menu_item('Cosmo', 5.40)
+    @bar.add_menu_item('Special Beer', 3.00, false, 0.5)
+    @bar.buy_drink('Cosmo')
+    @bar.buy_drink('Cosmo')
+    @bar.buy_drink('Special Beer')
+    @bar.buy_drink('Special Beer')
+    @bar.buy_drink('Special Beer')
+
+    expect(@bar.hh_purchases.count).to eq 5
+  end
+
 end

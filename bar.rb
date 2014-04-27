@@ -2,13 +2,14 @@ require 'time' # you're gonna need it
 require 'date'
 
 class Bar
-  attr_reader :name, :menu_items, :purchase_list
+  attr_reader :name, :menu_items, :purchase_list, :hh_purchases
 
   def initialize(name)
     @name = name
     @menu_items = []
     @std_happy_discount = 0.75
     @purchase_list = []
+    @hh_purchases = []
   end
 
   # Take in a name and price and create a new Item instance based on these args. Add new Item to @menu_items
@@ -62,7 +63,7 @@ class Bar
     # Check if it is happy hour and ensure the item is not exempt from happy hour pricing. If either test fails, return the regualard item.price
     # If both tests pass, check if the item has a special discount, if it doesn't, apply standard happy hour pricing, otherwise, use the special discount and return the item_price
     if happy_hour? && item.exempt != true
-      # Check
+      @hh_purchases << item
       if item.spc_happy_discount.nil?
         item_price = item_price * std_happy_discount
       else
