@@ -37,36 +37,36 @@ describe Bar do
     expect(item.price).to eq 9.95
   end
 
-  # Changed this test after completing initial assignment - For extensions the gen_happy_discount is initializd to 0.75 and is only accessible when it is happy hour
+  # Changed this test after completing initial assignment - For extensions the std_happy_discount is initializd to 0.75 and is only accessible when it is happy hour
   it "has a default happy hour discount of 0.75" do
     expect(@bar).to receive(:happy_hour?).and_return(true)
-    expect(@bar.gen_happy_discount).to eq 0.75
+    expect(@bar.std_happy_discount).to eq 0.75
   end
 
   it "can set its happy hour discount" do
-    expect { @bar.gen_happy_discount = 0.5 }.to_not raise_error
+    expect { @bar.std_happy_discount = 0.5 }.to_not raise_error
   end
 
   it "only returns a discount when it's happy hour" do
-    # Changed this test after completing initial assignment. gen_happy_discount is now always .75 or .5, depending on the day
-    # @bar.gen_happy_discount = 0.5
+    # Changed this test after completing initial assignment. std_happy_discount is now always .75 or .5, depending on the day
+    # @bar.std_happy_discount = 0.5
     # HINT: You need to write your own getter
 
     # We are STUBBING `happy_hour?` to return a specified value.
     # Because of this, you don't have to write a happy_hour? method (yet)
     expect(@bar).to receive(:happy_hour?).and_return(false)
-    expect(@bar.gen_happy_discount).to eq 0
+    expect(@bar.std_happy_discount).to eq 0
 
     expect(@bar).to receive(:happy_hour?).and_return(true)
-    expect(@bar.gen_happy_discount).to eq 0.75
+    expect(@bar.std_happy_discount).to eq 0.75
 
     # Take 2
-    @bar.gen_happy_discount = 0.3
+    @bar.std_happy_discount = 0.3
     expect(@bar).to receive(:happy_hour?).and_return(false)
-    expect(@bar.gen_happy_discount).to eq 0
+    expect(@bar.std_happy_discount).to eq 0
 
     expect(@bar).to receive(:happy_hour?).and_return(true)
-    expect(@bar.gen_happy_discount).to eq 0.75
+    expect(@bar.std_happy_discount).to eq 0.75
   end
 
   it "can track drink purchases" do
@@ -90,11 +90,11 @@ describe Bar do
   #  expect(@bar).to receive(:happy_hour?).twice.and_return(true)
 
     # HINT: You need to write your own setter
-  #  @bar.gen_happy_discount = 2
-    # expect(@bar.gen_happy_discount).to eq 1
+  #  @bar.std_happy_discount = 2
+    # expect(@bar.std_happy_discount).to eq 1
 
-  #  @bar.gen_happy_discount = -3
-    # expect(@bar.gen_happy_discount).to eq 0
+  #  @bar.std_happy_discount = -3
+    # expect(@bar.std_happy_discount).to eq 0
   # end
 
 # # # # # # # # # # # # # # # # # # # # # #
@@ -116,6 +116,8 @@ describe Bar do
   it "During normal hours" do
     expect(@bar).to receive(:happy_hour?).and_return(false)
     @bar.add_menu_item('Cosmo', 5.40)
+
+    # Happy hour discount should not be applied unless it is happy hour
     expect(@bar.buy_drink('Cosmo')).to eq 5.40
   end
 
@@ -123,6 +125,8 @@ describe Bar do
     allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
     allow(Date).to receive(:today).and_return(Date.parse("2014-04-21"))
     @bar.add_menu_item('Cosmo', 5.40)
+
+    # Happy hour discount should be 50% on slow days
     expect(@bar.buy_drink('Cosmo')).to eq (5.40*0.5)
   end
 
@@ -130,6 +134,8 @@ describe Bar do
     allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
     allow(Date).to receive(:wday).and_return(1)
     @bar.add_menu_item('Cosmo', 5.40)
+
+    # Happy hour discount should be 25% on busy days
     expect(@bar.buy_drink('Cosmo')).to eq (5.40*0.75)
   end
 
@@ -138,5 +144,16 @@ describe Bar do
     allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
 
     expect(@bar.buy_drink('Cosmo')).to eq 5.40
+  end
+
+  it "Allow items to have special happy hour discounts" do
+    allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+    @bar.add_menu_item('Cosmo', 5.40)
+    @bar.add_menu_item('Special Beer', 3.00, false, 0.5)
+    # Make sure regular happy hour pricing still applies
+    expect(@bar.buy_drink('Cosmo')).to eq (5.40*0.75)
+
+    # Make sure special happy hour pricing is applied where necessary
+    expect(@bar.buy_drink('Special Beer')).to eq (3.00*0.5)
   end
 end
