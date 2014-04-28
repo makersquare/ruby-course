@@ -39,6 +39,7 @@ describe Bar do
 
   # Changed this test after completing initial assignment - For extensions the std_happy_discount is initializd to 0.75 and is only accessible when it is happy hour
   it "has a default happy hour discount of 0.75" do
+    allow(Date).to receive(:today).and_return(Date.parse("2014-04-22"))
     expect(@bar).to receive(:happy_hour?).and_return(true)
     expect(@bar.std_happy_discount).to eq 0.75
   end
@@ -48,6 +49,7 @@ describe Bar do
   end
 
   it "only returns a discount when it's happy hour" do
+    allow(Date).to receive(:today).and_return(Date.parse("2014-04-22"))
     # Changed this test after completing initial assignment. std_happy_discount is now initialized to 0.75 and changed to 0.5 on slow days.
 
     # @bar.std_happy_discount = 0.5
@@ -106,6 +108,7 @@ describe Bar do
 
   it "constrains its happy hour discount to between zero and one" do
   expect(@bar).to receive(:happy_hour?).twice.and_return(true)
+  allow(Date).to receive(:today).and_return(Date.parse("2014-04-22"))
 
     # HINT: You need to write your own setter
   @bar.std_happy_discount = 2
@@ -151,6 +154,7 @@ describe Bar do
 
   it "During happy hours on busy days" do
     allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+    allow(Date).to receive(:today).and_return(Date.parse("2014-04-22"))
     allow(Date).to receive(:wday).and_return(1)
     @bar.add_menu_item('Cosmo', 5.40)
 
@@ -166,6 +170,7 @@ describe Bar do
   end
 
   it "Allow items to have special happy hour discounts" do
+    allow(Date).to receive(:today).and_return(Date.parse("2014-04-22"))
     allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
     @bar.add_menu_item('Cosmo', 5.40)
     @bar.add_menu_item('Special Beer', 3.00, false, 0.5)
