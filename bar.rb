@@ -26,12 +26,18 @@ attr_accessor :menu_items, :happy_discount
   end
 
   def happy_hour?
-
+    current_time = Time.now
+    three = Time.parse("3 pm")
+    four = Time.parse("4 pm")
+    if current_time.between?(three,four)
+      true
+    else
+      false
+    end
   end
 
   def happy_discount#custom getter
     if happy_hour?
-
         if @happy_discount < 0
           return 0
         elsif @happy_discount > 1

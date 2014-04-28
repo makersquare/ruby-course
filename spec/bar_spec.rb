@@ -81,23 +81,34 @@ describe Bar do
   # DO NOT CHANGE SPECS ABOVE THIS LINE #
 # # # # # # # # # # # # # # # # # # # # # #
 
-  describe '#happy_hour?', :pending => true do
-    xit "knows when it is happy hour (3:00pm to 4:00pm)" do
+  describe '#happy_hour?' do
+    it "knows when it is happy hour (3:00pm to 4:00pm)" do
       # TODO: CONTROL TIME
+      current_time = Time.parse('3 pm')
+      Time.stub(:now).and_return(current_time)
       expect(@bar.happy_hour?).to eq(true)
     end
 
-    xit "is not happy hour otherwise" do
+    it "is not happy hour otherwise" do
       # TODO: CONTROL TIME
+      current_time = Time.parse("6 pm")
+      Time.stub(:now).and_return(current_time)
       expect(@bar.happy_hour?).to eq(false)
     end
   end
 
-  context "During normal hours" do
+  it  " knows not to apply discount during normal hours" do
     # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+    current_time = Time.parse("1 pm")
+    Time.stub(:now).and_return(current_time)
+    expect(@bar.happy_hour?).to eq(false)
   end
 
-  context "During happy hours" do
+  it "knows to apply discount during happy hours" do
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
+    current_time = Time.parse("3 pm")
+    Time.stub(:now).and_return(current_time)
+    @bar.happy_discount = 1
+    expect(@bar.happy_hour?).to eq(true)
   end
 end
