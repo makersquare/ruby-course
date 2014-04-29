@@ -10,6 +10,10 @@ class TM::Project
     @tasks = []
   end
 
+  def add_task(task)
+    @tasks << task
+  end
+
   def mark_complete(task_id)
     @tasks.each do |task|
       if task.task_id == task_id
