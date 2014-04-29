@@ -1,7 +1,7 @@
 
 class TM::Task
 
-  attr_reader :id, :created_at
+  attr_reader :id, :created_ats, :priority_number
   attr_accessor :complete
 
   def initialize(project_id, description, priority_number)
