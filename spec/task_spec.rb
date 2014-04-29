@@ -7,7 +7,8 @@ describe 'Task' do
 		end
 
 		it "can be initialized with a name" do
-
+			task1 = TM::Task.new("task1")
+			expect(task1.name).to eq("task1")
 		end
 
 		it "adds to global class variable @@tasks[]" do
@@ -15,11 +16,14 @@ describe 'Task' do
 		end
 
 		it "has a default name of 'default' if name not specified" do
+			task1 = TM::Task.new
+			expect(task1.name).to eq("default")
 
 		end
 
 		it "creates a unique ID is created starting with id=1" do
-
+			task1 = TM::Task.new
+			expect(task1.id).to eq(3)
 		end
 
 		it "has a project ID that defults to nil (unassigned)" do
@@ -27,7 +31,12 @@ describe 'Task' do
 		end
 
 		it "creates multiple unique IDS in numerical order" do
-
+			task1 = TM::Task.new
+			task2 = TM::Task.new
+			task3 = TM::Task.new
+			expect(task1.id).to eq(4)
+			expect(task2.id).to eq(5)
+			expect(task3.id).to eq(6)
 		end
 
 		it "can be initialized with a description" do

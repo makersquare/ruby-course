@@ -8,26 +8,23 @@ describe 'Project' do
   describe "initialize method" do
 
   	it "can be initialized with a name" do
-  		task1 = TM::Task.new("task1")
-  		expect(task1.name).to eq("task1")
+
   	end
 
   	it "has a default name of 'default' if name not specified" do
-  		task1 = TM::Task.new
-  		expect(task1.name).to eq("default")
+
   	end
 
   	it "creates a unique ID is created starting with id=1" do
-  		task1 = TM::Task.new
-  		expect(task1.id).to eq(3)
-  	end
-
-  	xit "creates multiple unique IDS in numerical order" do
 
   	end
 
-  	xit "creates an empty @tasks[] array" do
+  	it "creates multiple unique IDS in numerical order" do
 
+  	end
+
+  	it "creates an empty @tasks[] array" do
+  		
   	end
 
   	xit "increments global variable @@projects_count" do
