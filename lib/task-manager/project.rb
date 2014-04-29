@@ -11,6 +11,11 @@ class TM::Project
       @@id_counter += 1
       @pid = @@id_counter
       @@projects << {:name => @pid}
+      @completed_tasks = []
+    end
+
+    def history(pid)
+      @completed_tasks
     end
 
 end

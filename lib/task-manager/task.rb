@@ -5,12 +5,17 @@ class TM::Task
     attr_accessor :tid_counter, :tid, :description, :pnum
 
     @@tid_counter = 0
-    @@projects = []
+    @@tasks = []
   def initialize(pid, description, pnum)
-    @@pid = pid
     @description = description
     @pnum = pnum
     @@tid_counter += 1
     @tid = @@tid_counter
   end
+
+  # def markTID(task_id)
+  #   if
+  #   project.completed_tasks << task
+  #   #Pushes task to completed_tasks array in project class
+  # end
 end
