@@ -16,6 +16,11 @@ describe 'Project' do
       project1 = TM::Project.new("Grades")
       expect(project1.id).to_not raise_error()
     end
+
+    it "creates an empty tasks array to store project tasks" do
+      project1 = TM::Project.new("Grades")
+      expect(project1.tasks).to eq([])
+    end
   end
 
   describe 'mark_complete' do
