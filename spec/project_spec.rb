@@ -6,31 +6,31 @@ describe 'Project' do
   # end
 
   describe "initialize method" do
-  	it "exists" do
-  		expect(TM::Project).to be_a(Class)
-  	end
 
   	it "can be initialized with a name" do
-
+  		task1 = TM::Task.new("task1")
+  		expect(task1.name).to eq("task1")
   	end
 
   	it "has a default name of 'default' if name not specified" do
-  		
+  		task1 = TM::Task.new
+  		expect(task1.name).to eq("default")
   	end
 
   	it "creates a unique ID is created starting with id=1" do
+  		task1 = TM::Task.new
+  		expect(task1.id).to eq(3)
+  	end
+
+  	xit "creates multiple unique IDS in numerical order" do
 
   	end
 
-  	it "creates multiple unique IDS in numerical order" do
+  	xit "creates an empty @tasks[] array" do
 
   	end
 
-  	it "creates an empty @tasks[] array" do
-
-  	end
-
-  	it "increments global variable @@projects_count" do
+  	xit "increments global variable @@projects_count" do
 
   	end
 
@@ -49,11 +49,11 @@ describe 'Project' do
   	# only serches the current projects tasks[] array
   	# generic function to use in other methods
 
-  	it "returns nil if id not found" do
+  	xit "returns nil if id not found" do
 
   	end
 
-  	it "returns a task object if id is found" do
+  	xit "returns a task object if id is found" do
 
   	end
 
@@ -62,16 +62,16 @@ describe 'Project' do
   describe "delete_task_by_id method" do
   	#delete_task_by_id(id)
 
-  	it "returns nil if tasks array is empty" do
+  	xit "returns nil if tasks array is empty" do
 
   	end
 
 
-  	it "can delete task by task id" do
+  	xit "can delete task by task id" do
 
   	end
 
-  	it "returns nil and does nothing if an invalid id is passed" do
+  	xit "returns nil and does nothing if an invalid id is passed" do
 
   	end
 
@@ -80,11 +80,11 @@ describe 'Project' do
   describe "mark_task_completed_by_id method" do
   	# mark_task_completed_by_id(id_num)
 
-  	it "returns nil if id not found" do
+  	xit "returns nil if id not found" do
 
   	end
 
-  	it "returns the correct task object" do
+  	xit "returns the correct task object" do
   		#compare task1.id == id
 
   	end
@@ -94,24 +94,24 @@ describe 'Project' do
   describe "retrieve_tasks method" do
   	# ex retrieve_tasks(by_date, by_priority, by_completed)
 
-  	it "returns an array of task objects" do
+  	xit "returns an array of task objects" do
 
   	end
 
-  	it "can return tasks ordered by date created" do
+  	xit "can return tasks ordered by date created" do
 
   	end
 
-  	it "can return tasks ordered by priority" do
+  	xit "can return tasks ordered by priority" do
 
   	end
 
-  	it "can return just completed tasks" do
+  	xit "can return just completed tasks" do
 
   	end
 
 
-  	it "can return just incompleted tasks" do
+  	xit "can return just incompleted tasks" do
 
   	end
 
