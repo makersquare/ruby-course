@@ -26,22 +26,41 @@ describe 'Project' do
 
   	end
 
-  	it "initialiezes with a empty tasks array" do
+  	it "creates an empty @tasks[] array" do
+
+  	end
+
+  	it "increments global variable @@projects_count" do
 
   	end
 
   end
 
   describe "add_task method" do
+  	# add_task(task_object)
+  	it "adds given task to the @tasks[] array" do
+  		# check size of array and compare actual contents
+  	end
 
-  	it "adding tasks adds it to the instance variable tasks array" do
+  end
+
+  describe "get_task_by_id method" do
+  	# get_task_by_id(id_num)
+  	# only serches the current projects tasks[] array
+  	# generic function to use in other methods
+
+  	it "returns nil if id not found" do
+
+  	end
+
+  	it "returns a task object if id is found" do
 
   	end
 
   end
 
-  describe "delete_task method" do
-  	#delete_task(id)
+  describe "delete_task_by_id method" do
+  	#delete_task_by_id(id)
 
   	it "returns nil if tasks array is empty" do
 
@@ -58,21 +77,21 @@ describe 'Project' do
 
   end
 
-  describe "get_task_by_id method" do
-  	# get_task_by_id(id_num)
-  	# only serches the current projects tasks[] array
+  describe "mark_task_completed_by_id method" do
+  	# mark_task_completed_by_id(id_num)
 
   	it "returns nil if id not found" do
 
   	end
 
-  	it "returns a task object if id is found" do
+  	it "returns the correct task object" do
+  		#compare task1.id == id
 
   	end
 
   end
 
-  describe "retrieve tasks method" do
+  describe "retrieve_tasks method" do
   	# ex retrieve_tasks(by_date, by_priority, by_completed)
 
   	it "returns an array of task objects" do
@@ -96,11 +115,9 @@ describe 'Project' do
 
   	end
 
-
-
   end
 
-  describe "sort by date method" do
+  describe "<sort_by_date></sort_by_date> method" do
   	
   end
 

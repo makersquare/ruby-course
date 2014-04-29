@@ -64,12 +64,10 @@ describe 'Task' do
 
 	end
 
-	describe "initialize metho" do
-	end
-
 	describe "list_all_tasks method" do
+		# not sure how to implement!! defer until later
 
-		it "lists the correct number of tasks added" do 
+		xit "lists the correct number of tasks ever created" do 
 			#test by creating three tasks and checking @@tasks
 		end
 
