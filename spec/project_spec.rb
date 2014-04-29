@@ -18,10 +18,6 @@ describe 'Project' do
   		
   	end
 
-  	it "can be initialized with a name" do
-
-  	end
-
   	it "creates a unique ID is created starting with id=1" do
 
   	end
@@ -31,6 +27,41 @@ describe 'Project' do
   	end
 
   	it "initialiezes with a empty tasks array" do
+
+  	end
+
+  end
+
+  describe "add_task method" do
+
+  	it "adding tasks adds it to the instance variable tasks array" do
+
+  	end
+
+  end
+
+  describe "delete_task method" do
+  	#delete_task(id)
+
+  	it "returns nil if tasks array is empty" do
+
+  	end
+
+
+  	it "can delete task by task id" do
+
+  	end
+
+  	it "returns nil and does nothing if an invalid id is passed" do
+
+  	end
+
+  end
+
+  describe "get_task_by_id method" do
+  	
+
+  	it "adding tasks adds it to the instance variable tasks array" do
 
   	end
 
@@ -59,7 +90,7 @@ describe 'Project' do
   	it "can return just incompleted tasks" do
 
   	end
-  	
+
 
 
   end

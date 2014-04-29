@@ -18,6 +18,10 @@ describe 'Task' do
 
 		end
 
+		it "has a project ID that defults to nil (unassigned)" do
+
+		end
+
 		it "creates multiple unique IDS in numerical order" do
 
 		end
