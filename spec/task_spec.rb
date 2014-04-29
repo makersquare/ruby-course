@@ -2,17 +2,9 @@ require 'spec_helper'
 
 describe 'Task' do
 	describe "initialize method" do
-		it "exists" do
-			expect(TM::Task).to be_a(Class)
-		end
-
 		it "can be initialized with a name" do
 			task1 = TM::Task.new("task1")
 			expect(task1.name).to eq("task1")
-		end
-
-		it "adds to global class variable @@tasks[]" do
-
 		end
 
 		it "has a default name of 'default' if name not specified" do
@@ -26,10 +18,6 @@ describe 'Task' do
 			expect(task1.id).to eq(3)
 		end
 
-		it "has a project ID that defults to nil (unassigned)" do
-
-		end
-
 		it "creates multiple unique IDS in numerical order" do
 			task1 = TM::Task.new
 			task2 = TM::Task.new
@@ -39,35 +27,42 @@ describe 'Task' do
 			expect(task3.id).to eq(6)
 		end
 
-		it "can be initialized with a description" do
+		it "has a project ID that defults to nil (unassigned)" do
+			task1 = TM::Task.new
+			expect(task1.project_id).to eq(nil)
+		end
 
+		it "can be initialized with a description" do
+			task1 = TM::Task.new("test", description: "hello")
+			expect(task1.description).to eq("hello")
 		end
 
 		it "has default description of 'none'" do
-
-		end
-
-		it "has a priority number" do
+			task1 = TM::Task.new
+			expect(task1.description).to eq("none")
 
 		end
 
 		it "has a default priority number of 1" do
-
+			task1 = TM::Task.new
+			expect(task1.priority).to eq(1)
 		end
 
-		it "has a creation date" do
-
+		it "has a @date_created" do
+			# allow(Time).to receive(:now).and_return(Time.parse("1/1/2014"))
+			task1 = TM::Task.new
+			# expect(task1.).to eq(1)
+			expect(task1.date_created.class).to eq(Time)
 		end
 
-		it "creation date works with Time.now" do
-
+		it "has a @completed boolean variable with default value false" do
+			task1 = TM::Task.new
+			expect(task1.completed).to eq(false)
 		end
 
-		it "has a completed boolean variable with default value false" do
-
-		end
-
-		it "has a completed date with default value nil" do 
+		it "has a @date_completed with default value nil" do 
+			task1 = TM::Task.new
+			expect(task1.date_completed).to eq(nil)
 		end
 
 
@@ -84,11 +79,11 @@ describe 'Task' do
 
 	describe "mark_completed method" do
 
-		it "can set @completed to true" do 
+		xit "can set @completed to true" do 
 			
 		end
 
-		it "can set @completed to false" do 
+		xit "can set @completed to false" do 
 			
 		end
 

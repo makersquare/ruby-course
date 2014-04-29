@@ -7,24 +7,24 @@ describe 'Project' do
 
   describe "initialize method" do
 
-  	it "can be initialized with a name" do
+  	xit "can be initialized with a name" do
 
   	end
 
-  	it "has a default name of 'default' if name not specified" do
+  	xit "has a default name of 'default' if name not specified" do
 
   	end
 
-  	it "creates a unique ID is created starting with id=1" do
+  	xit "creates a unique ID is created starting with id=1" do
 
   	end
 
-  	it "creates multiple unique IDS in numerical order" do
+  	xit "creates multiple unique IDS in numerical order" do
 
   	end
 
-  	it "creates an empty @tasks[] array" do
-  		
+  	xit "creates an empty @tasks[] array" do
+
   	end
 
   	xit "increments global variable @@projects_count" do
@@ -35,7 +35,7 @@ describe 'Project' do
 
   describe "add_task method" do
   	# add_task(task_object)
-  	it "adds given task to the @tasks[] array" do
+  	xit "adds given task to the @tasks[] array" do
   		# check size of array and compare actual contents
   	end
 
@@ -114,7 +114,7 @@ describe 'Project' do
 
   end
 
-  describe "<sort_by_date></sort_by_date> method" do
+  describe "sort_by_date method" do
   	
   end
 
