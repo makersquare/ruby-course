@@ -2,22 +2,28 @@ require 'spec_helper'
 
 describe 'Task' do
 
-  let(:myproject) { project = TM::Project.new('MyProject') }
-  let(:task1) { task1 = TM::Task.new(myproject.id, 'take out the trash', 1) }
-  let(:task2) { task2 = TM::Task.new(myproject.id, 'clean up your room', 2) }
+  let(:my_project) { project = TM::Project.new('my_project') }
+  let(:task1) { task1 = TM::Task.new(my_project.id, 'take out the trash', 1) }
+  let(:task2) { task2 = TM::Task.new(my_project.id, 'clean up your room', 2) }
 
   describe '.initialize' do
-    it "should have a unique id" do
+    it "has a unique id" do
       expect(task1.id).to_not eq task2.id
     end
 
-    it "should have a description string" do
-      expect(trash_task.description).to eq 'take out the trash'
+    it "has a description string" do
+      expect(task1.description).to eq 'take out the trash'
     end
 
-    it "should have a priority from 1 to 3" do
-      expect(task.priority).to be_within(2).of(3)
-      expect(task.priority).to be_within(1).of(3)
+    it "has a priority between 1 and 3" do
+      expect(task1.priority).to be_within(2).of(3)
+      expect(task2.priority).to be_within(2).of(1)
+    end
+
+    it "has a timestamp of when it is created" do
+      allow(Time).to receive(:now).and_return(Time.parse("2014-04-29 12:00PM"))
+      fresh_task = TM::Task.new(my_project.id, 'do stuff NOW', 3)
+      expect(fresh_task.timestamp).to eq (Time.parse("2014-04-29 12:00PM"))
     end
   end
 

@@ -11,8 +11,8 @@ describe 'Project' do
 
     it "must have a unique id" do
       project1 = TM::Project.new('Unoriginally Named Project')
-      project2 = TM::Project.new('Unoriginally Named Project')
-      expect(project1.id).to_not eq project2.id
+      project2 = TM::Project.new('Another Unoriginally Named Project')
+      expect(project1.id).not_to eq project2.id
     end
   end
 
@@ -30,12 +30,6 @@ describe 'Project' do
       my_project.add_task(task1)
       my_project.add_task(task2)
       expect(my_project.tasks).to eq [task1, task2]
-    end
-
-    it "has a timestamp of when it is created" do
-      allow(Time).to receive(:now).and_return(Time.parse("2014-04-29 12:00PM"))
-      fresh_task = Task.new(my_project.id, 'do stuff NOW', 3)
-      expect(fresh_task.timestamp).to eq (Time.parse("2014-04-29 12:00PM"))
     end
   end
 
