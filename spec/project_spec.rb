@@ -17,18 +17,16 @@ describe 'Project' do
   end
 
   describe '.add_task' do
-    let (:my_project) {
-      my_project = Project.new('Some Project')
+    let (:my_project) { TM::Project.new('Some Project') }
+    let (:task1) { TM::Task.new(my_project.id, 'do some stuff', 1) }
+    let (:task2) { TM::Task.new(my_project.id, 'do other stuff', 2) }
+
+    before(:each) do
       my_project.add_task(task1)
       my_project.add_task(task2)
-    }
+    end
 
-    let (:task1) { task1 = Task.new(my_project.id, 'do some stuff', 1) }
-    let (:task2) { task2 = Task.new(my_project.id, 'do other stuff', 2) }
-
-    it "stores a list of task objects" do
-      my_project.add_task(task1)
-      my_project.add_task(task2)
+    it "stores task objects in an array" do
       expect(my_project.tasks).to eq [task1, task2]
     end
   end

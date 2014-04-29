@@ -3,8 +3,8 @@ require 'spec_helper'
 describe 'Task' do
 
   let(:my_project) { my_project = TM::Project.new('my_project') }
-  let(:task1) { task1 = TM::Task.new(my_project.id, 'take out the trash', 1) }
-  let(:task2) { task2 = TM::Task.new(my_project.id, 'clean up your room', 2) }
+  let(:task1) { TM::Task.new(my_project.id, 'take out the trash', 1) }
+  let(:task2) { TM::Task.new(my_project.id, 'clean up your room', 2) }
 
   describe '.initialize' do
     it "has a unique id" do
@@ -28,15 +28,8 @@ describe 'Task' do
   end
 
   describe '.mark_complete' do
-
     it "can be marked as complete, returning true if successful" do
       expect(task1.mark_complete).to eq true
-      expect(task1.status).to eq 'complete'
-    end
-
-    it "shouldn't mark completed tasks as complete, returning nil" do
-      task1.mark_complete
-      expect(task1.mark_complete).to eq nil
       expect(task1.status).to eq 'complete'
     end
   end
