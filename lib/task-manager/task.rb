@@ -1,8 +1,8 @@
 
 class TM::Task
 
-  attr_reader :id, :created_ats, :priority_number
-  attr_accessor :complete
+  attr_reader :id, :created_at, :priority_number, :description, :project_id
+  attr_accessor :complete, :completed_at
 
   def initialize(project_id, description, priority_number)
     @project_id = project_id
@@ -11,6 +11,7 @@ class TM::Task
     @complete = false
     @id = self.class.generate_id
     @created_at = Time.now
+    @completed_at = nil
     self.class.add_task(self)
   end
 
@@ -28,7 +29,11 @@ class TM::Task
   end
 
   def self.mark_complete(task_id)
-    @@tasks[task_id].complete = true
+    task = @@tasks[task_id]
+    task.complete = true
+    task.completed_at = Time.now
+
+    true
   end
 
   private

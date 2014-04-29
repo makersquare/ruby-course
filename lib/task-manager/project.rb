@@ -1,6 +1,6 @@
 
 class TM::Project
-  attr_reader :id
+  attr_reader :id, :name
 
   def initialize(name)
     @name = name

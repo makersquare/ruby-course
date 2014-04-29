@@ -117,7 +117,7 @@ describe 'Project' do
         let(:task7) { double("task7") }
 
         before(:each) do
-          allow(task7).to receive(:id).and_return(5)
+          allow(task7).to receive(:id).and_return(6)
           allow(task7).to receive(:complete?).and_return(false)
           allow(task7).to receive(:project_id).and_return(0)
           allow(task7).to receive(:created_at).and_return(Time.new(1949))
