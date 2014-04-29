@@ -1,4 +1,5 @@
 require 'spec_helper'
+# require_relative '../lib/task-manager/task'
 
 describe 'Project' do
   # it "exists" do
@@ -40,8 +41,22 @@ describe 'Project' do
 
   describe "add_task method" do
   	# add_task(task_object)
-  	xit "adds given task to the @tasks[] array" do
+  	it "adds given task to the @tasks[] array" do
   		# check size of array and compare actual contents
+  		project1 = TM::Project.new("project1")
+  		task1 = TM::Task.new("task1")
+  		project1.add_task(task1)
+  		expect(project1.tasks.size).to eq(1)
+  		expect(project1.tasks[0].name).to eq("task1")
+  	end
+
+  	it "should not add anything if not a valid task object" do
+  		# check size of array and compare actual contents
+  		#throw error? how to test that?
+  		project1 = TM::Project.new("project1")
+  		task1 = "i'm just a string"
+  		project1.add_task(task1)
+  		expect(project1.tasks.size).to eq(0)
   	end
 
   end
@@ -51,12 +66,20 @@ describe 'Project' do
   	# only serches the current projects tasks[] array
   	# generic function to use in other methods
 
-  	xit "returns nil if id not found" do
-
+  	it "returns nil if id not found" do
+  		project1 = TM::Project.new("project1")
+  		task1 = TM::Task.new("task1")
+  		task1.set_id(50)
+  		project1.add_task(task1)
+  		expect(project1.get_task_by_id(99)).to eq(nil)
   	end
 
-  	xit "returns a task object if id is found" do
-
+  	it "returns a task object if id is found" do
+  		project1 = TM::Project.new("project1")
+  		task1 = TM::Task.new("task1")
+  		task1.set_id(50)
+  		project1.add_task(task1)
+  		expect(project1.get_task_by_id(50)).to eq(task1)
   	end
 
   end

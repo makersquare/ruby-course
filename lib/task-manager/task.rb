@@ -25,4 +25,9 @@ class TM::Task
 		@completed = false
 		@date_completed = nil
 	end	
+
+	def set_id(id)
+		@id = id
+	end
+
 end
