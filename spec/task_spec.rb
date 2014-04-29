@@ -12,5 +12,9 @@ describe 'Task' do
     it 'creates a new task with a name' do
       expect(task.name).to eq("task1")
     end
+
+    it 'creates a new task with a priority' do
+      expect(task.priority).to eq(1)
+    end
   end
 end
