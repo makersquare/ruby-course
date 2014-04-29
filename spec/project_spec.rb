@@ -58,16 +58,21 @@ describe 'Project' do
       task2 = double("task2")
       task3 = double("task3")
 
+      #give each task an id
       allow(task).to receive(:id).and_return(0)
       allow(task2).to receive(:id).and_return(1)
       allow(task3).to receive(:id).and_return(2)
+      #set task and task3 to have matching project id's
       allow(task).to receive(:project_id).and_return(0)
       allow(task2).to receive(:project_id).and_return(1)
       allow(task3).to receive(:project_id).and_return(0)
+      # set task and task3 created_at times for sorting
+      allow(task).to receive(:created_at).and_return(Time.now)
+      allow(task3).to receive(:created_at).and_return(Time.new(1992))
 
       allow(TM::Task).to receive(:tasks).and_return({task.id => task, task2.id => task2, task3.id => task3})
 
-      expect(project.complete_tasks).to eq({task.id => task, task3.id => task3})
+      expect(project.complete_tasks).to eq([task3, task])
     end
   end
 end

@@ -19,9 +19,11 @@ class TM::Project
   end
 
   def complete_tasks
-    TM::Task.tasks.select do |k, v|
+    complete = TM::Task.tasks.select do |k, v|
       v.project_id == self.id
     end
+
+    complete.values.sort_by { |task| task.created_at }
   end
 
   private
