@@ -21,4 +21,11 @@ class TM::Project
       end
     end
   end
+
+  def completed_tasks
+    @tasks.select { |task|
+      task.status == "Completed"
+    }
+  end
+
 end
