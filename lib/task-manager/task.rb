@@ -16,9 +16,8 @@ class TM::Task
   end
 
   def complete
-    if @completed == false
-      @completed = true
-    end
+    @completed = true
+    self
   end
 
 end

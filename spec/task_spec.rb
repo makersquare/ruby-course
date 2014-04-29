@@ -8,7 +8,6 @@ describe 'Task' do
   end
 
   context 'a new task is initialized' do
-    let(:project) { TM::Project.new('my_project.rb') }
     let(:task) { TM::Task.new(1, 1, "complete this task manager") }
 
     it 'creates a new task with a projectID' do
