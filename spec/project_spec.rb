@@ -19,6 +19,15 @@ describe 'Project' do
     expect(test_project.name).to eq("Cleaning - 2")
   end
 
+  it "adds a date created at initiation" do
+    @created = Time.parse("Feb 24 1981")
+    Time.stub(:now).and_return(@created)
+  end
+
+
+
+
+
 
 
 end
