@@ -7,10 +7,14 @@ describe 'Task' do
 
   context 'a new task is initialized' do
     let(:project) { TM::Project.new('my_project.rb') }
-    let(:task) { TM::Task.new('task1', 1) }
+    let(:task) { TM::Task.new(1, 1, "complete this task manager") }
 
-    it 'creates a new task with a name' do
-      expect(task.name).to eq("task1")
+    it 'creates a new task with a projectID' do
+      expect(task.project_id).to eq(1)
+    end
+
+    it 'creates a new task with a description' do
+      expect(task.description).to eq("complete this task manager")
     end
 
     it 'creates a new task with a priority' do
