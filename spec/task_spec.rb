@@ -8,7 +8,7 @@ require 'spec_helper'
     it "allows a new project to be created with a name" do
       shopping = TM::Project.new("Shopping")
       expect(shopping.name).to eq("Shopping")
-      expect(shopping.pid).to eq(1)
+      expect(shopping.pid).to eq(Time.now.to_i)
     end
 end
 
