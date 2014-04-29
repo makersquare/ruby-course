@@ -1,7 +1,8 @@
 
 class TM::Task
 
-  attr_reader :project_id, :description, :priority, :id
+  attr_reader :project_id, :description, :priority
+  attr_reader :id, :timestamp
 
   @@id_counter = 0
 
@@ -9,8 +10,13 @@ class TM::Task
     @project_id = project_id
     @description = description
     @priority = priority
-    @id = @@task_id_counter
     @@id_counter += 1
+    @id = @@id_counter
+    @timestamp = Time.now
+  end
+
+  def mark_complete
+
   end
 
 end
