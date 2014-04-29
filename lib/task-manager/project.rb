@@ -44,4 +44,16 @@ class TM::Project
 		end
 	end
 
+	def retrieve_completed_tasks_by_date
+		filtered_tasks = []
+		@tasks.each_index do |x|
+			if @tasks[x].completed
+				filtered_tasks <<@tasks[x]
+			end
+		end
+
+		filtered_tasks.sort { |a,b| b.date_created > a.date_created }
+		
+	end
+
 end
