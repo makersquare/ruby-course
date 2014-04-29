@@ -29,7 +29,7 @@ describe 'Project' do
   it "A project can retrieve a list of all incomplete tasks, sorted by priority then by creation date " do
     project = TM::Project.new("hello")
     project.create_task(123,"hello",1)
-    #expect(project.mark_complete(123)).to eq("complete")
+    expect(project.mark_complete(123)).to eq("complete")
     project.mark_complete(123)
     project.create_task(122,"yessir",1)
     project.create_task(145,"jimbo", 10)
