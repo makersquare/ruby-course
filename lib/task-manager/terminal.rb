@@ -1,0 +1,2 @@
+class TM::TerminalClient
+end
