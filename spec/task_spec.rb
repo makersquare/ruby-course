@@ -3,8 +3,8 @@ require 'spec_helper'
 describe 'Task' do
 
   let(:myproject) { project = TM::Project.new('MyProject') }
-  let(:task1) { task1 = TM::Task.new(project_id, 'take out the trash', 1) }
-  let(:task2) { task2 = TM::Task.new(project_id, 'clean up your room', 2) }
+  let(:task1) { task1 = TM::Task.new(myproject.id, 'take out the trash', 1) }
+  let(:task2) { task2 = TM::Task.new(myproject.id, 'clean up your room', 2) }
 
   describe '.initialize' do
     it "should have a unique id" do

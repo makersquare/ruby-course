@@ -6,7 +6,7 @@ describe 'Project' do
     it "should be created with a name" do
       project = TM::Project.new('Project Mayhem')
       expect(project.name).to eq "Project Mayhem"
-      expect(TM::Project.new()).to raise_error
+      expect { TM::Project.new() }.to raise_error
     end
 
     it "must have a unique id" do
