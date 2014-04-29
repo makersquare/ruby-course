@@ -8,6 +8,8 @@ class TM::Project
   def initialize(name)
     @name = name
     @id = @@unique_id += 1
+    @uncompleted_task = []
+    @completed_task = []
   end
 
 end
