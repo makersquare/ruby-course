@@ -23,9 +23,9 @@ class TM::Project
   end
 
   def completed_tasks
-    @tasks.select { |task|
-      task.status == "Completed"
-    }
+    new_array = @tasks.select { |task| task.status == "Completed" }
+
+    new_array.sort! {|a, b| a.creation_date <=> b.creation_date}
   end
 
 end
