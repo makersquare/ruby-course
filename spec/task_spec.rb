@@ -79,14 +79,38 @@ describe 'Task' do
 
 	describe "mark_completed method" do
 
-		xit "can set @completed to true" do 
-			
+		xit "should set @completed to true and update @date_completed" do 
+			task1 = TM::Task.new
+			task1.mark_completed
+			expect(task1.completed).to eq(true)
+			expect(task1.date_completed.class).to eq(Time)
 		end
 
 		xit "can set @completed to false" do 
-			
+			task1 = TM::Task.new
+			task1.mark_completed
+			expect(task1.completed).to eq(true)
+			expect(task1.date_completed.class).to eq(Time)
 		end
 
+	end
+
+	describe "mark_complete method" do
+		it "should set @completed to false and update @date_completed" do 
+			task1 = TM::Task.new
+			task1.mark_completed
+			expect(task1.completed).to eq(true)
+			expect(task1.date_completed.class).to eq(Time)
+		end
+	end
+
+	describe "mark_incomplete method" do
+		it "should set @completed to false and update @date_completed" do 
+			task1 = TM::Task.new
+			task1.mark_incomplete
+			expect(task1.completed).to eq(false)
+			expect(task1.date_completed).to eq(nil)
+		end
 	end
 
 end

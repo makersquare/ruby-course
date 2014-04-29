@@ -16,5 +16,13 @@ class TM::Task
 		@completed = false
 	end
 
+	def mark_completed
+		@completed = true
+		@date_completed = Time.now
+	end
 
+	def mark_incomplete
+		@completed = false
+		@date_completed = nil
+	end	
 end
