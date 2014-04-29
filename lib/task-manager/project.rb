@@ -18,7 +18,7 @@ attr_accessor :name, :task, :list
     @list = []
     @created = Time.now
     @project_id = @@project_count
-    @name = name + " #{@project_id}"
+    @name = name + " - #{@project_id}"
     @@project_count += 1
   end
 

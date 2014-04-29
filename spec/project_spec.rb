@@ -11,7 +11,12 @@ describe 'Project' do
   end
 
   it "gives new project without name specified default name 'New Project w/ Project ID'" do
-    expect(TM::Project.new.name).to eq("New Project 1")
+    expect(TM::Project.new.name).to eq("New Project - 1")
+  end
+
+  it "take name arugment of new project instance" do
+    test_project = TM::Project.new("Cleaning")
+    expect(test_project.name).to eq("Cleaning - 2")
   end
 
 
