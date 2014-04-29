@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'pry-debugger'
 
 describe 'Task' do
   it "exists" do
@@ -38,11 +39,4 @@ describe 'Task' do
     end
   end
 
-  it "has a completed status id" do
-    project1 = TM::Project.new("Grades")
-    task = TM::Task.new("Create gradebook", project1.id, 1)
-    project1.mark_complete(task.task_id)
-
-    expect(task.status).to eq("Completed")
-  end
 end

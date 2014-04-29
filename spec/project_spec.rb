@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'pry-debugger'
 
 describe 'Project' do
   it "exists" do
@@ -34,10 +35,20 @@ describe 'Project' do
 
   describe 'mark_complete' do
 
-    it "marks a task as complete" do
+    it "has a mark_complete method" do
       project1 = TM::Project.new("Grades")
       task = TM::Task.new("Create gradebook", project1.id, 1)
-      expect(project1.mark_complete(task.task_id)).to eq(true)
+      t_id = task.task_id
+      expect(project1.mark_complete(t_id)).to_not raise_error()
+    end
+
+    it "marks a task's status as complete" do
+      project1 = TM::Project.new("Grades")
+      task = TM::Task.new("Create gradebook", project1.id, 1)
+      project1.add_task(task)
+      t_id = task.task_id
+      project1.mark_complete(t_id)
+      expect(task.status).to eq("Completed")
     end
 
   end
