@@ -13,11 +13,18 @@ class TM::Project
   end
 
   def completed_task
-    completed = []
-    @task.each do |task_item|
-      completed << task_item if task_item.completed
+    completed = @task.select do |task_item|
+      task_item.completed
     end
     completed.sort_by { |item| item.date_created }
+  end
+
+  def uncompleted_task
+    uncompleted = @task.select do |task_item|
+      task_item.completed == false
+    end
+    uncompleted.sort_by! { |item| item.task_id }
+    uncompleted.sort_by { |item| item.priority }
   end
 
 end
