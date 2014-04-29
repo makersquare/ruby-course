@@ -39,4 +39,15 @@ class TM::Project
     end
     @@completed_task.sort_by! {|x| x.creation_date}
   end
+
+  def incomplete_tasks()
+    @@incomplete_task = []
+    for i in 0...@@tasks.length
+      if @@tasks[i].status = "incomplete"
+        @@incomplete_task<<@@tasks[i]
+      end
+    end
+    @@incomplete_task.sort_by! {|x| [x.priority_number, x.creation_date]}
+  end
+
 end
