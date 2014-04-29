@@ -16,13 +16,32 @@ class TM::Project
 		@tasks << task if task.class == TM::Task
 	end
 
-	def get_task_by_id(id)
+	def get_task_by_id(task_id)
 		@tasks.each_index do |x|
-			if @tasks[x].id == id
+			if @tasks[x].id == task_id
 				return @tasks[x]
 			end
 		end
 		return nil
+	end
+
+	def delete_task_by_id(task_id)
+
+	end
+
+	def mark_task_completed_by_id(task_id)
+		task_index = nil
+
+		@tasks.each_index do |x|
+			if @tasks[x].id == task_id
+				task_index = x
+			end
+		end
+		if task_index == nil 
+			nil
+		else
+			@tasks[task_index].mark_completed
+		end
 	end
 
 end

@@ -105,13 +105,25 @@ describe 'Project' do
   describe "mark_task_completed_by_id method" do
   	# mark_task_completed_by_id(id_num)
 
-  	xit "returns nil if id not found" do
-
+  	it "returns nil if id not found and does nothing to array" do
+  		project1 = TM::Project.new("project1")
+  		task1 = TM::Task.new("task1")
+  		task1.set_id(50)
+  		project1.add_task(task1)
+  		expect(project1.tasks[0].completed).to eq(false)
+  		expect(project1.mark_task_completed_by_id(99)).to eq(nil)
+  		expect(project1.tasks[0].completed).to eq(false)
   	end
 
-  	xit "returns the correct task object" do
+  	it "marks the correct task object" do
   		#compare task1.id == id
-
+  		project1 = TM::Project.new("project1")
+  		task1 = TM::Task.new("task1")
+  		task1.set_id(50)
+  		project1.add_task(task1)
+  		expect(project1.tasks[0].completed).to eq(false)
+  		project1.mark_task_completed_by_id(50)
+  		expect(project1.tasks[0].completed).to eq(true)
   	end
 
   end
