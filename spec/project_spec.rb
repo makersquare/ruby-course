@@ -50,6 +50,26 @@ describe 'Project' do
       project1.mark_complete(t_id)
       expect(task.status).to eq("Completed")
     end
+  end
 
+  describe 'completed_tasks' do
+    it "returns an array/list of all completed tasks in the project" do
+      project1 = TM::Project.new("Grades")
+      task = TM::Task.new("Create gradebook", project1.id, 1)
+      task2 = TM::Task.new("Add students", project1.id, 2)
+      task3 = TM::Task.new("Add tests", project1.id, 3)
+
+      project1.add_task(task)
+      project1.add_task(task2)
+      project1.add_task(task3)
+
+      project1.mark_complete(task.task_id)
+      project1.mark_complete(task2.task_id)
+
+      expect(project1.completed_tasks.length).to eq(2)
+    end
+
+    # it "returns a list of completed tasks that are sorted by creation date" do
+    # end
   end
 end
