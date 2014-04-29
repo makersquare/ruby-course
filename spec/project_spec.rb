@@ -106,5 +106,20 @@ describe 'Project' do
 
       expect(project1.incomplete_tasks.length).to eq(2)
     end
+
+    it "returns an array sorted by priority date" do
+      project1 = TM::Project.new("Grades")
+      task = TM::Task.new("Create gradebook", project1.id, 1)
+      task2 = TM::Task.new("Add students", project1.id, 4)
+      task3 = TM::Task.new("Add tests", project1.id, 2)
+
+      project1.add_task(task)
+      project1.add_task(task2)
+      project1.add_task(task3)
+
+      project1.mark_complete(task.task_id)
+
+      expect(project1.incomplete_tasks).to eq([task3, task2])
+    end
   end
 end

@@ -28,4 +28,9 @@ class TM::Project
     new_array.sort! {|a, b| a.creation_date <=> b.creation_date}
   end
 
+  def incomplete_tasks
+    new_array = @tasks.select{ |task| task.status == "Not completed"}
+    new_array.sort! {|a,b| a.priority <=> b.priority}
+  end
+
 end
