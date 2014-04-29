@@ -11,5 +11,6 @@ class TM::Task
     @task_id = @@counter
     @@counter += 1
     @status = "Not completed"
+    @date_created = Date.today
   end
 end

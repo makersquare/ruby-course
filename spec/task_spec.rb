@@ -37,6 +37,14 @@ describe 'Task' do
       task = TM::Task.new("Create gradebook", project1.id, 1)
       expect(task.status).to eq("Not completed")
     end
+
+    it "is initialized with a creation date" do
+      project1 = TM::Project.new("Grades")
+      allow(Date).to receive(:today).and_return(Date.parse("14 Feb 2014"))
+      task = TM::Task.new("Create gradebook", project1.id, 1)
+
+      expect(task.creation_date.to_s).to eq("2014-02-14")
+    end
   end
 
 end
