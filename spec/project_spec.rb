@@ -59,9 +59,14 @@ describe 'Project' do
   end
 
   describe "get_task_by_id method" do
-  	
+  	# get_task_by_id(id_num)
+  	# only serches the current projects tasks[] array
 
-  	it "adding tasks adds it to the instance variable tasks array" do
+  	it "returns nil if id not found" do
+
+  	end
+
+  	it "returns a task object if id is found" do
 
   	end
 

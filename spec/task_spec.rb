@@ -10,6 +10,10 @@ describe 'Task' do
 
 		end
 
+		it "adds to global class variable @@tasks[]" do
+
+		end
+
 		it "has a default name of 'default' if name not specified" do
 
 		end
@@ -59,4 +63,28 @@ describe 'Task' do
 
 
 	end
+
+	describe "initialize metho" do
+	end
+
+	describe "list_all_tasks method" do
+
+		it "lists the correct number of tasks added" do 
+			#test by creating three tasks and checking @@tasks
+		end
+
+	end
+
+	describe "mark_completed method" do
+
+		it "can set @completed to true" do 
+			
+		end
+
+		it "can set @completed to false" do 
+			
+		end
+
+	end
+
 end
