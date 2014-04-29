@@ -90,4 +90,21 @@ describe 'Project' do
       expect(project1.completed_tasks).to eq([task2, task3, task])
     end
   end
+
+  describe 'incomplete_tasks' do
+    it "returns an array of all incomplete tasks" do
+      project1 = TM::Project.new("Grades")
+      task = TM::Task.new("Create gradebook", project1.id, 1)
+      task2 = TM::Task.new("Add students", project1.id, 2)
+      task3 = TM::Task.new("Add tests", project1.id, 3)
+
+      project1.add_task(task)
+      project1.add_task(task2)
+      project1.add_task(task3)
+
+      project1.mark_complete(task.task_id)
+
+      expect(project1.incomplete_tasks.length).to eq(2)
+    end
+  end
 end
