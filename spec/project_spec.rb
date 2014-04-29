@@ -7,7 +7,9 @@ describe 'Project' do
 
   it "creates an empty array at initalization" do
     new_project = TM::Project.new
-    expect(new_project.project).to eq([])
+    expect(new_project.list).to eq([])
   end
+
+
 
 end
