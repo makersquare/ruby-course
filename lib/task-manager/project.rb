@@ -11,6 +11,13 @@ class TM::Project
   end
 
   def mark_complete(task_id)
+    @tasks.each do |task|
+      if task.task_id == task_id
+        task.status = "Completed"
+        return true
+      end
+    end
 
+    return false
   end
 end

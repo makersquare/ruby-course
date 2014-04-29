@@ -23,6 +23,15 @@ describe 'Project' do
     end
   end
 
+  describe 'add_task' do
+    it "adds a task object to the tasks array" do
+      project1 = TM::Project.new("Grades")
+      project1.add_task(TM::Task.new("Create gradebook", project1.id, 1))
+
+      expect(project1.tasks.length).to eq(1)
+    end
+  end
+
   describe 'mark_complete' do
 
     it "marks a task as complete" do

@@ -30,6 +30,12 @@ describe 'Task' do
       task = TM::Task.new("Create gradebook", project1.id, 1)
       expect(task.task_id).to_not raise_error()
     end
+
+    it "Creates a status attribute that is initialized to not complete" do
+      project1 = TM::Project.new("Grades")
+      task = TM::Task.new("Create gradebook", project1.id, 1)
+      expect(task.status).to eq("Not completed")
+    end
   end
 
   it "has a completed status id" do
@@ -37,6 +43,6 @@ describe 'Task' do
     task = TM::Task.new("Create gradebook", project1.id, 1)
     project1.mark_complete(task.task_id)
 
-    expect(task.completed).to eq(true)
+    expect(task.status).to eq("Completed")
   end
 end
