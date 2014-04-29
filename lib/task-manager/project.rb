@@ -29,4 +29,14 @@ class TM::Project
       end
     end
   end
+
+  def completed_tasks()
+    @@completed_task = []
+    for i in 0...@@tasks.length
+      if @@tasks[i].status = "complete"
+        @@completed_task<<@@tasks[i]
+      end
+    end
+    @@completed_task.sort_by! {|x| x.creation_date}
+  end
 end

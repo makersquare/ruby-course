@@ -1,7 +1,7 @@
 
 class TM::Task
 
-  attr_reader :project_id
+  attr_reader :project_id, :creation_date
   attr_accessor :description, :priority_number, :status
 
   def initialize(project_id, description, priority_number, status="incomplete")
@@ -9,6 +9,7 @@ class TM::Task
     @description = description
     @priority_number = priority_number
     @status = "incomplete"
+    @creation_date = Time.now
   end
 
 
