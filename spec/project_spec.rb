@@ -11,10 +11,13 @@ describe 'Project' do
     expect(classy.name).to eq('ClassyLady')
   end
 
+  it 'must austomatically generate and assign the new project a unique id' do
+    classy = TM::Project.new('ClassyLady')
+
+    expect(classy.id).to_not be_nil
+  end
 end
 
-
-# A new project can be created with a name
 
 # This must automatically generate and assign the new project a unique id (you can use a class variable for this)
 
