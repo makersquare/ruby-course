@@ -1,7 +1,7 @@
 
 class TM::Task
   @@counter = 1
-  attr_reader :description, :project_id, :priority, :task_id
+  attr_reader :description, :project_id, :priority, :task_id, :creation_date
   attr_accessor :status
 
   def initialize(description, project_id, priority)
@@ -11,6 +11,6 @@ class TM::Task
     @task_id = @@counter
     @@counter += 1
     @status = "Not completed"
-    @date_created = Date.today
+    @creation_date = Date.today
   end
 end
