@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Task' do
 
-  let(:my_project) { project = TM::Project.new('my_project') }
+  let(:my_project) { my_project = TM::Project.new('my_project') }
   let(:task1) { task1 = TM::Task.new(my_project.id, 'take out the trash', 1) }
   let(:task2) { task2 = TM::Task.new(my_project.id, 'clean up your room', 2) }
 

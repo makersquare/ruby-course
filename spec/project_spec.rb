@@ -17,7 +17,7 @@ describe 'Project' do
   end
 
   describe '.add_task' do
-    let (:project) {
+    let (:my_project) {
       my_project = Project.new('Some Project')
       my_project.add_task(task1)
       my_project.add_task(task2)

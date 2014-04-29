@@ -2,7 +2,7 @@
 class TM::Task
 
   attr_reader :project_id, :description, :priority
-  attr_reader :id, :timestamp
+  attr_reader :id, :timestamp, :status
 
   @@id_counter = 0
 
@@ -13,10 +13,12 @@ class TM::Task
     @@id_counter += 1
     @id = @@id_counter
     @timestamp = Time.now
+    @status = 'incomplete'
   end
 
   def mark_complete
-
+    @status = 'complete'
+    return true
   end
 
 end
