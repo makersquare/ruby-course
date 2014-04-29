@@ -27,6 +27,7 @@ describe 'Project' do
     end
 
     it "stores task objects in an array" do
+      expect(my_project.tasks.size).to eq 2
       expect(my_project.tasks).to eq [task1, task2]
     end
   end
