@@ -57,4 +57,17 @@ describe 'TerminalClient' do
       expect(terminal.history(5)).to eq([task1])
     end
   end
+
+  context 'a task is added to a current project' do
+    let(:terminal) { TM::TerminalClient.new }
+    let(:project1) { TM::Project.new("Project 1") }
+
+    it "increases the project's task count by 1" do
+      terminal.projects << project1
+      expect(terminal.projects.first.task.count).to eq(0)
+      terminal.add_task(7,3, "Add a task already!")
+      expect(terminal.projects.first.task.count).to eq(1)
+    end
+
+  end
 end

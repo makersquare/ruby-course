@@ -24,8 +24,14 @@ class TM::TerminalClient
     project.completed_task
   end
 
+  def add_task(project_id, priority, description)
+    project = find_by_id(project_id)
+    project.task << TM::Task.new(project_id, priority, description)
+  end
+
   def find_by_id(project_id)
     @projects.select { |item| item.id == project_id }.first
   end
+
 
 end
