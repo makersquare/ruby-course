@@ -14,7 +14,7 @@ describe 'Project' do
   end
 
   it "Stores a list of all created projects" do
-    expect(@@projects.length).to eq(2)
+    expect(TM::Project.projects.length).to eq(2)
   end
 
   describe 'initialize' do
