@@ -4,6 +4,14 @@ class TM::Project
 attr_reader :created, :project_id, :add_task
 attr_accessor :name, :task, :list
 
+def self.project_count
+  @@project_count
+end
+
+def self.reset_class_variables
+  @@project_count = 0
+end
+
 @@project_count = 0
 
   # def initialize(name="New Project #{@project_id}")
@@ -17,7 +25,7 @@ attr_accessor :name, :task, :list
   def initialize(name="New Project")
     @list = []
     @created = Time.now
-    @project_id = @@project_count
+    @project_id = @@project_count + 1
     @name = name + " - #{@project_id}"
     @@project_count += 1
   end

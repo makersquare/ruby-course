@@ -1,19 +1,27 @@
 
 class TM::Task
+  attr_accessor :priority :complete :description
+  attr_reader :created
 
-  def initialize
+  def initialize(description, priority=1)
+    @description = description
+    @created = Time.now
+    @priority = priority
+    @complete = false
   end
 
-  def description
+  def mark_complete
+    @complete = true
   end
 
-  def create
+  def change_description(description)
+    @description = description
   end
 
-  def priority
+  def change_priority(priority)
+    @priority = priority
   end
 
-  def complete
-  end
+
 
 end
