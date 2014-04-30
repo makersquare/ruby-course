@@ -5,12 +5,11 @@ describe 'Project' do
   before (:each) do
     @project = TM::Project.new("project")
     @project1 = TM::Project.new("project 1")
-    @task = TM::Task.new(@project, "description1", 3)
-    @task1 = TM::Task.new(@project, "description2", 3)
-    @task2 = TM::Task.new(@project, "description3", 10)
+    @project.add_task(@project.pid, "description1", 3)
+    @project.add_task(@project.pid, "description2", 10)
+    @project.add_task(@project.pid, "description3", 5)
+    @project.add_task(@project.pid, "description4", 3)
 
-
-    # Use this method to reset the pid class variable instead of manually setting to 0 here
     TM::Project.reset_class_variables
     TM::Task.reset_class_variables
   end
@@ -19,43 +18,31 @@ describe 'Project' do
     expect(@project.pid).to eq 1
     expect(@project.name).to eq "project"
     expect(@project1.pid).to eq 2
-    expect(@project1.name).to eq "project 1"
   end
 
-  it "adds adds new tasks to a Project array" do
-    @project.add_task(@task)
-    expect(@project.tasks.length).to eq 1
+  it "adds new tasks to a Project array" do
+    expect(@project.tasks.length).to eq 4
     expect(@project.tasks)
   end
 
   it "allows tasks to be marked as complete by task_id" do
-    @project.add_task(@task)
     @project.complete_task(1)
 
-    expect(@task.status).to eq 1
+    expect(@project.tasks.first.status).to eq 1
   end
 
-  it "retrieves completed tasks and sorts them by completion date" do
-    # Add tasks out of order so we can check for sorting by creation date
-    @project.add_task(@task1)
-    @project.add_task(@task)
-    @project.add_task(@task2)
-
+  xit "retrieves completed tasks and sorts them by completion date" do
     @project.complete_task(1)
     @project.complete_task(2)
     @project.complete_task(3)
 
     expect(@project.completed_tasks.length).to eq 3
-    expect(@project.completed_tasks.first).to eq @task
-    expect(@project.completed_tasks.last).to eq @task2
+    expect(@project.completed_tasks.first.task_id).to eq 1
+    expect(@project.completed_tasks.last.task_id).to eq 3
   end
 
   it "retrieves incomplete tasks and sorts them by priority" do
-    @project.add_task(@task)
-    @project.add_task(@task1)
-    @project.add_task(@task2)
-
-    expect(@project.incomplete_tasks.first).to eq @task2
-    expect(@project.incomplete_tasks.last).to eq @task1
+    expect(@project.incomplete_tasks.first.task_id).to eq 2
+    expect(@project.incomplete_tasks.last.task_id).to eq 4
   end
 end

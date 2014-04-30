@@ -12,7 +12,8 @@ class TM::Project
     @@pid = @pid
   end
 
-  def add_task(task)
+  def add_task(project,desc,priority)
+    task = TM::Task.new(project, desc, priority)
     @tasks << task
   end
 

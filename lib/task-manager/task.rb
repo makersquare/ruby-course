@@ -4,8 +4,8 @@ class TM::Task
   attr_writer :status
   @@task_id = 0
 
-  def initialize(project, desc, priority)
-    @project_id = project.pid
+  def initialize(project_id, desc, priority)
+    @project_id = project_id
     @task_id = @@task_id + 1
     @description = desc
     @priority = priority

@@ -3,8 +3,8 @@ require 'spec_helper'
 describe 'Task' do
   before do
     @project = TM::Project.new("project")
-    @task = TM::Task.new(@project, "description1", 3)
-    @task1 = TM::Task.new(@project, "description", 5)
+    @task = TM::Task.new(@project.pid, "description1", 3)
+    @task1 = TM::Task.new(@project.pid, "description", 5)
   end
 
   it "inializes with a project id, description and priority number" do
