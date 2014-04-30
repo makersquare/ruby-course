@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Terminal' do
+describe 'TerminalClient' do
   before(:each) do
   end
 

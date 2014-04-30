@@ -30,6 +30,11 @@ class TM::Project
 
   def get_tasks_by_status(status)
     t = tasks.select {|task| task.status == status}
+    if status == 'complete'
+      sorted = t.sort {|a, b| a.timestamp <=> b.timestamp}.reverse
+    else
+      t.sort {|a, b| a.priority <=> b.priority}
+    end
     # t.sort_by {|t| t.timestamp }
     # sorting should take place in terminal?
   end

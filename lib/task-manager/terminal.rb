@@ -1,4 +1,4 @@
-class TM::Terminal
+class TM::TerminalClient
 
   def initialize
   end
