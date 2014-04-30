@@ -62,6 +62,17 @@ class TM::Project
 		
 	end
 
+	def retrieve_completed_tasks
+		filtered_tasks = []
+		@tasks.each_index do |x|
+			if @tasks[x].completed
+				filtered_tasks << @tasks[x]
+			end
+		end
+		return filtered_tasks
+		
+	end
+
 	def retrieve_incompleted_tasks_by_priority(highest_priority_first: true)
 		filtered_tasks = []
 		@tasks.each_index do |x|
@@ -75,8 +86,18 @@ class TM::Project
 		else
 			filtered_tasks.sort! { |a,b| b.priority <=> a.priority }
 		end
-		return filtered_tasks
-		
+		return filtered_tasks		
+	end
+
+	def retrieve_incompleted_tasks
+		filtered_tasks = []
+		@tasks.each_index do |x|
+			if @tasks[x].completed == false
+				filtered_tasks << @tasks[x]
+			end
+		end
+
+		return filtered_tasks		
 	end
 
 end

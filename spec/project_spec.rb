@@ -153,6 +153,7 @@ describe 'Project' do
       project1.add_task(task1)
       project1.add_task(task2)
       project1.add_task(task3)
+      project1.add_task(task4)
 
       task_array = project1.retrieve_completed_tasks_by_date
       expect(task_array.size).to eq(3)
@@ -184,6 +185,7 @@ describe 'Project' do
       project1.add_task(task1)
       project1.add_task(task2)
       project1.add_task(task3)
+      project1.add_task(task4)
 
       task_array = project1.retrieve_incompleted_tasks_by_priority
       expect(task_array.size).to eq(3)
@@ -197,13 +199,45 @@ describe 'Project' do
       expect(task_array[2].name).to eq("task1")
     end
 
+    it "can return just completed tasks" do
+      project1 = TM::Project.new("project1")
+      task1 = TM::Task.new("task1")
+      task1.mark_completed
+      task2 = TM::Task.new("task2")
+      task3 = TM::Task.new("task3")
+      task3.mark_completed
+      task4 = TM::Task.new("task4") 
+      
+      project1.add_task(task1)
+      project1.add_task(task2)
+      project1.add_task(task3)
+      project1.add_task(task4)
 
-    xit "can return just completed tasks" do
+      task_array = project1.retrieve_completed_tasks
+      expect(task_array.size).to eq(2)
+      expect(task_array[0].name).to eq("task1")
+      expect(task_array[1].name).to eq("task3")
 
     end
 
+    it "can return just incompleted tasks" do
+      project1 = TM::Project.new("project1")
+      task1 = TM::Task.new("task1")
+      task1.mark_completed
+      task2 = TM::Task.new("task2")
+      task3 = TM::Task.new("task3")
+      task3.mark_completed
+      task4 = TM::Task.new("task4") 
+      
+      project1.add_task(task1)
+      project1.add_task(task2)
+      project1.add_task(task3)
+      project1.add_task(task4)
 
-    xit "can return just incompleted tasks" do
+      task_array = project1.retrieve_incompleted_tasks
+      expect(task_array.size).to eq(2)
+      expect(task_array[0].name).to eq("task2")
+      expect(task_array[1].name).to eq("task4")
 
     end
 
