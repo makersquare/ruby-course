@@ -51,6 +51,9 @@ class TM::Project
       task
     end
 
-    def incomplete_tasks(pid)
+    def incomplete_tasks(projid)
+      task = @@tasks.select{|task| task.pid == projid && task.complete == false}
+      task.sort_by! {|task| [task.pnum, task.date]}
+      task
     end
 end
