@@ -49,6 +49,6 @@ describe 'Project' do
   	@p1.mark_complete(1, 1)
   	@p1.mark_complete(1, 2)
   	@p1.mark_complete(1, 3)
-  	expect(@p1.completed_tasks(1)).to eq([@t3, @t1, @t2])
+  	expect(@p1.completed_tasks(1)).to eq([@t3, @t2, @t1])
   end
 end
