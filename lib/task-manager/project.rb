@@ -23,12 +23,12 @@ class TM::Project
   end
 
   def completed_tasks
-    @tasks.each do |x|
-      if x.competed == true
-        @completed << x
+    @tasks.each do |task|
+      if task.completed == true
+        @completed << task.name
       end
     end
-    completed
+    @completed
   end
 
 
