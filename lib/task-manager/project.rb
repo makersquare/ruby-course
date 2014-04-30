@@ -1,7 +1,7 @@
 
 class TM::Project
   attr_reader :name, :id
-  attr_accessor :tasks, :complete_tasks
+  attr_accessor :tasks, :complete_tasks, :incomplete_tasks
   @@project_id = 0
 
   def initialize(name)
@@ -32,7 +32,12 @@ class TM::Project
 
   def completed_tasks
     @complete_tasks = []
-    @tasks.each { |task| @complete_tasks << task if task.completed == true }
-    @completed_tasks
+    @complete_tasks = @tasks.select { |task| task.completed == true }
+  end
+
+  def todo
+    @incomplete_tasks = []
+    @incomplete_tasks = @tasks.select {|task| task.completed == false}
+    @incomplete_tasks.sort_by! {|task| [-task.priority, task.time]}
   end
 end

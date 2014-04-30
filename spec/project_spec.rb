@@ -72,5 +72,15 @@ describe 'Project' do
     it "orders array by highest priority" do
       @p1.incomplete_tasks.first.priority.should be < @p1.incomplete_tasks.last.priority
     end
+
+    it "orders array by date if priority levels are equal" do
+      @p1.new_task("eat", 3)
+      @p1.new_task("work harder", 1)
+      @p1.todo
+
+      expect(@p1.incomplete_tasks.length).to eq(4)
+      @p1.incomplete_tasks.first.time.should be < @p1.incomplete_tasks[1].time
+      @p1.incomplete_tasks[2].time.should be < @p1.incomplete_tasks.last.time
+    end
   end
 end
