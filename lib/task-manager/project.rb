@@ -19,12 +19,13 @@ class TM::Project
 
   def complete_task(task_id)
     task = @tasks.select{ |task| task_id == task.task_id }.first
+    task.completed_at = Time.now
     task.status = 1
   end
 
   def completed_tasks
     completed_tasks = @tasks.select{ |task| task.status == 1 }
-    completed_tasks.sort_by{ |task| task.created_at }
+    completed_tasks.sort_by{ |task| task.completed_at }
   end
 
   def incomplete_tasks
