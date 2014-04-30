@@ -27,7 +27,6 @@ describe 'Project' do
   end
 
   it "retrieves completed tasks and sorts them by creation date" do
-
     @project.add_task(@task)
     @project.add_task(@task1)
     @project.add_task(@task2)
@@ -40,7 +39,13 @@ describe 'Project' do
     expect(@project.completed_tasks.last.task_id).to eq 3
   end
 
-  xit "retrieves incomplete tasks and sorts them by priority" do
+  it "retrieves incomplete tasks and sorts them by priority" do
+    @task3 = TM::Task.new(@project.pid, "description1", 3)
+    @project.add_task(@task)
+    @project.add_task(@task1)
+    @project.add_task(@task2)
+    @project.add_task(@task3)
+
     expect(@project.incomplete_tasks.first.task_id).to eq 2
     expect(@project.incomplete_tasks.last.task_id).to eq 4
   end
