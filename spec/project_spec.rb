@@ -18,14 +18,16 @@ describe 'Project' do
   end
 
   it "adds adds new tasks to a Project array" do
-    @project.add_task(1)
+    @project.add_task(@task)
     expect(@project.tasks.length).to eq 1
+    expect(@project.tasks)
   end
 
-  xit "allows tasks to be marked as complete by task_id" do
+  it "allows tasks to be marked as complete by task_id" do
+    @project.add_task(@task)
     @project.complete_task(1)
 
-    expect(@task.status).to eq 1
+    expect(@task.status).to eq true
   end
 
 end

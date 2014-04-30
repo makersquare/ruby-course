@@ -16,6 +16,11 @@ class TM::Project
     @tasks << task
   end
 
+  def complete_task(task_id)
+    task = @tasks.detect{|task| task.id == task_id}
+    task.status = true
+  end
+
   # Used to reset class variables for rspec tests
   def self.reset_class_variables
     @@pid = 0
