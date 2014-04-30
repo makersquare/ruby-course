@@ -16,4 +16,9 @@ class TM::Task
     @@task_id = @task_id
   end
 
+
+  # Reset class variables for rspec tests
+  def self.reset_class_variables
+    @@task_id = 0
+  end
 end

@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'pry-debugger'
 
 describe 'Project' do
   before do
@@ -6,8 +7,10 @@ describe 'Project' do
     @project1 = TM::Project.new("project 1")
     @task = TM::Task.new(@project, "description1", 3)
 
+
     # Use this method to reset the pid class variable instead of manually setting to 0 here
     TM::Project.reset_class_variables
+    TM::Task.reset_class_variables
   end
 
   it "initializes with a unique project id and name" do
@@ -24,6 +27,7 @@ describe 'Project' do
   end
 
   it "allows tasks to be marked as complete by task_id" do
+    # binding.pry
     @project.add_task(@task)
     @project.complete_task(1)
 

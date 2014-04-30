@@ -17,7 +17,7 @@ class TM::Project
   end
 
   def complete_task(task_id)
-    task = @tasks.detect{|task| task.id == task_id}
+    task = @tasks.select{|task| task_id == task.task_id}.first
     task.status = true
   end
 
