@@ -1,14 +1,14 @@
 require 'spec_helper'
 require 'pry-debugger'
 
-describe 'Project' do
+describe 'Project', :pending do
   before (:each) do
     @project = TM::Project.new("project")
     @project1 = TM::Project.new("project 1")
-    @project.add_task(@project.pid, "description1", 3)
-    @project.add_task(@project.pid, "description2", 10)
-    @project.add_task(@project.pid, "description3", 5)
-    @project.add_task(@project.pid, "description4", 3)
+    @task = @project.add_task(@project.pid, "description1", 3)
+    @task1 = @project.add_task(@project.pid, "description2", 10)
+    @task2 = @project.add_task(@project.pid, "description3", 5)
+    @task3 = @project.add_task(@project.pid, "description4", 3)
 
     TM::Project.reset_class_variables
     TM::Task.reset_class_variables
@@ -25,16 +25,7 @@ describe 'Project' do
     expect(@project.tasks)
   end
 
-  it "allows tasks to be marked as complete by task_id" do
-    @project.complete_task(1)
-
-    expect(@project.tasks.first.status).to eq 1
-  end
-
   it "retrieves completed tasks and sorts them by creation date" do
-    @project.complete_task(1)
-    @project.complete_task(2)
-    @project.complete_task(3)
 
     expect(@project.completed_tasks.length).to eq 3
     expect(@project.completed_tasks.first.task_id).to eq 1

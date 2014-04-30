@@ -5,7 +5,6 @@ end
 
 require_relative 'task-manager/task.rb'
 require_relative 'task-manager/project.rb'
-require_relative 'task-manager/project_list.rb'
 
 # class TMConsole
 #   # create new instance of project_list class to store user data for the session

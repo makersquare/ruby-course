@@ -1,9 +1,9 @@
 
 class TM::Task
   attr_reader :description, :priority, :project_id, :status, :task_id, :created_at
-  attr_accessor :status, :completed_at
+  attr_accessor :status, :completed_at, :tasks
   @@task_id = 0
-  @@task = []
+  @@tasks = []
 
   def initialize(project_id, desc, priority)
     @project_id = project_id
@@ -18,6 +18,12 @@ class TM::Task
     @@tasks << self
     # Increment task_id class variable
     @@task_id = @task_id
+  end
+
+  def self.complete_task(task_id)
+    task = @@tasks.detect{ |task| task_id == task.task_id }
+    task.completed_at = Time.now
+    task.status = 1
   end
 
   # Reset class variables for rspec tests

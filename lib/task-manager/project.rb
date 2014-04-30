@@ -20,11 +20,12 @@ class TM::Project
     @tasks << task
   end
 
-  # Rewrite this as a Task class method
-  def complete_task(task_id)
-    task = @tasks.select{ |task| task_id == task.task_id }.first
-    task.completed_at = Time.now
-    task.status = 1
+  def complete?(task)
+    if task.status == 1
+      true
+    else
+      false
+    end
   end
 
   def completed_tasks

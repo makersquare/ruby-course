@@ -13,4 +13,11 @@ describe 'Task' do
     expect(@task.priority).to eq 3
   end
 
+  it "marks tasks as complete" do
+    # binding.pry
+    TM::Task.complete_task(@task.task_id)
+
+    expect(@task.status).to eq 1
+  end
+
 end
