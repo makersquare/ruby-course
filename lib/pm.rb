@@ -7,15 +7,15 @@ class TerminalClient
 	def self.start
 		print_welcome_message
 		list_commands
+		exit_program = false
 		input = ""
-		while input != "exit" do
+		while !exit_program do
 			print ">> "
 			input = gets.chomp
 
 			input_arguments = split_text(input)
 
 			case input_arguments[0]
-				# before (:each) { check_arguments(input_arguments) }
 			when "help"
 				list_commands
 			when "list" , "ls"
@@ -57,6 +57,8 @@ class TerminalClient
 					puts "marking task complete..."
 					# show(input_arguments[1])
 				end
+			when "exit", "quit", "q"
+				exit_program = true
 			else
 				puts "Command [#{input_arguments[0]}] not recognized."
 				puts "Type 'help' for list of commands"
