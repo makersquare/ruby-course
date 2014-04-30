@@ -39,6 +39,7 @@ describe 'Project' do
 
   context 'a project can see all uncompleted task' do
     let(:project) { TM::Project.new("My_first_project") }
+    let(:projects_manger) { TM::ProjectsManager.new }
     let(:task1) { TM::Task.new(1, 1, "complete this task manager") }
     let(:task2) { TM::Task.new(1, 2, "complete this task manager like now") }
     let(:task3) { TM::Task.new(1, 2, "complete this task manager like YESTERDAY") }
