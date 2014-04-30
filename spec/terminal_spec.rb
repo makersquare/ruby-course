@@ -69,5 +69,17 @@ describe 'TerminalClient' do
       expect(terminal.projects.first.task.count).to eq(1)
     end
 
+    it  "can be marked as completed" do
+      terminal.projects << project1
+      terminal.add_task(8,3, "Add a task already!")
+      task = terminal.projects.first.task.first
+
+      expect(task.completed).to eq(false)
+      terminal.complete_task(6)
+      expect(task.completed).to eq(true)
+
+
+    end
+
   end
 end
