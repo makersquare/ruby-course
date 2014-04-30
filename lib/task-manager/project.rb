@@ -2,7 +2,7 @@
 require 'pry-debugger'
 
 class TM::Project
-    attr_accessor :name, :id_counter, :pid, :projects
+    attr_accessor :name, :id_counter, :pid, :projects, :completed_tasks, :incomplete_tasks
 
     @@id_counter = 0
     @@projects = []
@@ -10,12 +10,19 @@ class TM::Project
       @name = name
       @@id_counter += 1
       @pid = @@id_counter
-      @@projects << {:name => @pid}
       @completed_tasks = []
+      @incomplete_tasks = []
     end
 
-    def history(pid)
-      @completed_tasks
+    def mark_complete(pid, tid)
     end
 
+    def completed_tasks(pid)
+    end
+
+    def incomplete_tasks(pid)
+    end
+
+    def list_projects
+    end
 end

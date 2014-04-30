@@ -1,19 +1,6 @@
 require 'spec_helper'
 require 'pry-debugger'
 
- describe 'Project' do
-    it "exists" do
-      expect(TM::Project).to be_a(Class)
-    end
-
-    it "allows a new project to be created with a name" do
-      shopping = TM::Project.new("Shopping")
-      expect(shopping.name).to eq("Shopping")
-      expect(shopping.pid).to eq(1)
-    end
-end
-
-
 describe 'Task' do
   it "exists" do
     expect(TM::Task).to be_a(Class)
@@ -31,6 +18,5 @@ describe 'Task' do
     shop = TM::Project.new("clothes")
     buy_shirts = TM::Task.new(shop.pid, "But a new shirt", 1)
     expect(buy_shirts.markTID).to eq(false)
-
   end
 end
