@@ -18,7 +18,6 @@ describe 'Project' do
       test_project = TM::Project.new('Project Runway')
       test_project2 = TM::Project.new('Project Runway2')
       expect(TM::Project.projects).to eq [test_project, test_project2]
-
     end
   end
 
@@ -31,9 +30,7 @@ describe 'Project' do
     it "must have a unique id" do
       expect(@my_project.id).not_to eq @p2.id
     end
-
   end
-
 
   describe '.get_tasks_by_status' do
     it "stores task objects in an array" do
@@ -46,15 +43,14 @@ describe 'Project' do
     end
 
     it "returns the newest completed tasks first" do
-      # allow(Time).to receive(:now).and_return(Time.parse("2014-04-29"))
-      # @task3 = TM::Task.new(@my_project.id, "created yesterday", 1)
-
-      # allow(Time).to receive(:now).and_return(Time.now)
-      # @task4 = TM::Task.new(@my_project.id, "created today", 1)
-      # @my_project.tasks = []
-      # @my_project.add_task(@task3)
-      # @my_project.add_task(@task4)
-      # expect(@my_project.get_tasks_by_status('incomplete')).to eq([@task4, @task3])
+      allow(Time).to receive(:now).and_return(Time.parse("2014-04-29"))
+      @task3 = TM::Task.new(@my_project.id, "created yesterday", 1)
+      allow(Time).to receive(:now).and_return(Time.now)
+      @task4 = TM::Task.new(@my_project.id, "created today", 1)
+      @my_project.tasks = []
+      @my_project.add_task(@task3)
+      @my_project.add_task(@task4)
+      expect(@my_project.get_tasks_by_status('incomplete')).to eq([@task4, @task3])
     end
 
     it "retrieves a list of all incomplete tasks, sorted by priority" do
