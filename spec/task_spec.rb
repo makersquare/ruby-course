@@ -6,8 +6,8 @@ describe 'Task' do
   end
 
   before(:each) do
-    @t1 = TM::Task.new("create a new task", 1)
-    @t2 = TM::Task.new("eat lunch", 2)
+    @t1 = TM::Task.new(1, "create a new task", 1)
+    @t2 = TM::Task.new(2, "eat lunch", 2)
     TM::Task.reset_class_variables
   end
 
@@ -27,6 +27,11 @@ describe 'Task' do
 
     it "initializes with task set as incomplete" do
       expect(@t1.completed).to eq(false)
+    end
+
+    it "sets a project ID for the given task" do
+      expect(@t1.pid).to eq(1)
+      expect(@t2.pid).to eq(2)
     end
   end
 

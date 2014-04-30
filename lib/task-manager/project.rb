@@ -13,7 +13,7 @@ class TM::Project
   end
 
   def new_task(description, priority)
-    @tasks << TM::Task.new(description, priority)
+    @tasks << TM::Task.new(@id, description, priority)
   end
 
   def self.reset_class_variables
