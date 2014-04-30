@@ -1,29 +1,26 @@
 require 'spec_helper'
 
 describe 'Project' do
+  before(:each) do
+    TM::Project.reset_class_variables
+    @p1 = TM::Project.new"p1"
+    @p2 = TM::Project.new"p2"
+  end
+
   it "exists" do
     expect(TM::Project).to be_a(Class)
   end
 
   it 'can create a new project with a name' do
-    classy = TM::Project.new('ClassyLady')
-
-    expect(classy.name).to eq('ClassyLady')
+    expect(@p1.name).to eq('p1')
   end
 
   it 'must austomatically generate and assign the new project a unique id' do
-    classy = TM::Project.new('ClassyLady')
-
-    expect(classy.id).to_not be_nil
+    expect(@p1.id).to eq(1)
+    expect(@p2.id).to eq(2)
   end
 end
 
-
-# This must automatically generate and assign the new project a unique id (you can use a class variable for this)
-
-# A new task can be created with a project id, description, and priority number
-
-# A task can be marked as complete, specified by id
 
 # A project can retrieve a list of all complete tasks, sorted by creation date
 
