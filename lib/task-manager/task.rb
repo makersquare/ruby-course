@@ -1,6 +1,7 @@
 
 class TM::Task
-  attr_reader :description, :priority, :tid, :completed
+  attr_reader :description, :priority, :tid
+  attr_accessor :completed
 
   @@task_id = 0
   def initialize(description, priority)
@@ -12,7 +13,9 @@ class TM::Task
     @time = Time.now
   end
 
-
+  def set_complete
+    @completed = true
+  end
 
   def self.reset_class_variables
     @@task_id = 0
