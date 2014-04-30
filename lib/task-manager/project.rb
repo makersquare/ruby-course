@@ -21,6 +21,11 @@ class TM::Project
     task.status = 1
   end
 
+  def completed_tasks
+    completed_tasks = @tasks.select{|task| task.status == 1}
+    completed_tasks.sort_by{|task| task.created_at }
+  end
+
   # Used to reset class variables for rspec tests
   def self.reset_class_variables
     @@pid = 0
