@@ -16,11 +16,37 @@ describe 'TerminalClient' do
 
   context 'a new project is created' do
     let(:terminal) { TM::TerminalClient.new }
+    let(:project1) { TM::Project.new("Project 1") }
+    let(:project2) { TM::Project.new("Project 2") }
 
     it 'can create a new project' do
       terminal.create_project("Project 1")
       expect(terminal.projects.count).to eq(1)
     end
 
+    it 'can list all current projects' do
+      terminal.projects << project1
+      terminal.projects << project2
+
+      expect(terminal.list_projects).to eq([project1, project2])
+    end
+  end
+
+  context 'a project is created and task are viewed' do
+    let(:terminal) { TM::TerminalClient.new }
+    let(:project1) { TM::Project.new("Project 1") }
+    let(:project2) { TM::Project.new("Project 2") }
+    let(:task1) { TM::Task.new(3, 1, "complete this task manager") }
+    let(:task2) { TM::Task.new(3, 2, "complete this task manager") }
+
+    it 'can list all remaining task for a project by project ID' do
+      terminal.projects << project1
+      terminal.projects << project2
+      project1.task << task1
+      project1.task << task2
+
+      expect(terminal.remaining_task(3)).to eq([task1,task2])
+
+    end
   end
 end

@@ -10,4 +10,13 @@ class TM::TerminalClient
     @projects << TM::Project.new(name)
   end
 
+  def list_projects
+    @projects
+  end
+
+  def remaining_task(project_id)
+    project = @projects.select { |item| item.id == project_id }.first
+    project.uncompleted_task
+  end
+
 end
