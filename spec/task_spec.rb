@@ -7,6 +7,7 @@ describe 'Task' do
   end
 
   before(:each) do
+    TM::Task.reset_class_variables
     @project1 = TM::Project.new("Grades")
     @task = TM::Task.new("Create gradebook", @project1.id, 1)
   end

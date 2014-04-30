@@ -13,4 +13,8 @@ class TM::Task
     @status = "Not completed"
     @creation_date = Date.today
   end
+
+  def self.reset_class_variables
+    @@counter = 1
+  end
 end

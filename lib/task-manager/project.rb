@@ -16,6 +16,12 @@ class TM::Project
     @@projects
   end
 
+  def self.list_all
+    @@projects.each do |project|
+      puts "#{project.name}"
+    end
+  end
+
   #helper method for tests
   def self.reset_class_variables
     @@counter = 1

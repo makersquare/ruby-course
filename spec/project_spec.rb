@@ -13,12 +13,45 @@ describe 'Project' do
     expect(TM::Project).to be_a(Class)
   end
 
-  it "Stores a list of all created projects" do
-    expect(TM::Project.projects.length).to eq(2)
-  end
+  describe 'class methods' do
 
-  it "returns a list of all created projects" do
-    expect(TM::Project.projects).to eq([@project1, @project2])
+    describe 'projects' do
+
+      it "Stores a list of all created projects" do
+        expect(TM::Project.projects.length).to eq(2)
+      end
+
+      it "returns a list of all created projects" do
+        expect(TM::Project.projects).to eq([@project1, @project2])
+      end
+    end
+
+    describe 'list_all' do
+      it "lists all projects" do
+        STDOUT.should_receive(:puts).with("Grades")
+        STDOUT.should_receive(:puts).with("Tests")
+        TM::Project.list_all
+      end
+    end
+
+    describe "show_incomplete_tasks" do
+      it "displays incomplete tasks for inputted project" do
+        task = TM::Task.new("Create gradebook", @project1.id, 3)
+        task2 = TM::Task.new("Add students", @project1.id, 2)
+        task3 = TM::Task.new("Add tests", @project1.id, 1)
+
+        @project1.add_task(task)
+        @project1.add_task(task2)
+        @project1.add_task(task3)
+
+        @project1.mark_complete(task.task_id)
+
+        # STDOUT.should_receive(:puts).with("Priority    ID   Description")
+        STDOUT.should_receive(:puts).with("1 3 Add tests")
+        STDOUT.should_receive(:puts).with("2 2 Add students")
+        TM::Project.show_incomplete_tasks
+      end
+    end
   end
 
   describe 'initialize' do
