@@ -48,11 +48,14 @@ class TMTerminal
         puts "#{task.priority}\t#{task.task_id}\t#{task.description}"
       end
     when "history"
-      # Show completed tasks for project
+      project = TM::Project.get_project(1)
+      project.completed_tasks.each do |task|
+        puts "#{task.task_id} | #{task.description}"
+      end
     when "add"
-      TM::Task.new(1,10,"Description")
+      TM::Task.new(1,"Description",10)
     when "mark"
-      # Mark task as completed
+      TM::Task.complete_task(1)
     when "exit"
       choice = exit
     end
