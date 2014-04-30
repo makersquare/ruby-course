@@ -17,13 +17,18 @@ class TM::Project
   end
 
   def complete_task(task_id)
-    task = @tasks.select{|task| task_id == task.task_id}.first
+    task = @tasks.select{ |task| task_id == task.task_id }.first
     task.status = 1
   end
 
   def completed_tasks
-    completed_tasks = @tasks.select{|task| task.status == 1}
-    completed_tasks.sort_by{|task| task.created_at }
+    completed_tasks = @tasks.select{ |task| task.status == 1 }
+    completed_tasks.sort_by{ |task| task.created_at }
+  end
+
+  def incomplete_tasks
+    incomplete_tasks = @tasks.select{ |task| task.status == 0 }
+    incomplete_tasks.sort_by{ |task| task.priority }.reverse
   end
 
   # Used to reset class variables for rspec tests

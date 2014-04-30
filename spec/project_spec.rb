@@ -49,4 +49,15 @@ describe 'Project' do
     expect(@project.completed_tasks.first).to eq @task
     expect(@project.completed_tasks.last).to eq @task2
   end
+
+  it "retrieves incomplete tasks and sorts them by priority" do
+    @task3 = TM::Task.new(@project, "description1", 3)
+    @project.add_task(@task1)
+    @project.add_task(@task)
+    @project.add_task(@task2)
+    @project.add_task(@task3)
+
+    expect(@project.incomplete_tasks.first).to eq @task2
+    expect(@project.incomplete_tasks.last).to eq @task3
+  end
 end
