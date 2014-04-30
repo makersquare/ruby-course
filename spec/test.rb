@@ -45,6 +45,42 @@ def test2
 	task_array.each {|x| puts x.name}
 end
 
+def test3
+	project1 = TM::Project.new("project1")
+	task1 = TM::Task.new("task1")
+	task1.set_priority(1)
+	task1.set_date_created(Time.parse("1/1/2014"))
+	task2 = TM::Task.new("task2")
+	task2.set_priority(3)
+	task3 = TM::Task.new("task3")
+	task3.set_priority(2)
+	task3.set_date_created(Time.parse("5/1/2014"))
+	task4 = TM::Task.new("task4") 
+    task4.mark_completed #task completed, should't appear
+    task4.set_priority(4)
+    task5 = TM::Task.new("task5") 
+    task5.set_priority(2)
+	task5.set_date_created(Time.parse("1/1/2014"))
+    task6 = TM::Task.new("task6") 
+    task6.set_priority(1)
+	task6.set_date_created(Time.parse("5/1/2014"))
 
+    project1.add_task(task1)
+    project1.add_task(task2)
+    project1.add_task(task3)
+    project1.add_task(task4)
+    project1.add_task(task5)
+    project1.add_task(task6)
+
+    task_array = project1.retrieve_incompleted_tasks_by_priority
+    project1.tasks.each {|x| puts x.name}
+    puts "-------"
+    # task_array.each {|x| puts x.name }
+    task_array = project1.retrieve_incompleted_tasks_by_priority(highest_priority_first: false)
+    task_array.each {|x| puts x.name }
+    
+
+end
 # test
-test2 
+# test2 
+test3

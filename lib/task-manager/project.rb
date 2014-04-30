@@ -104,10 +104,17 @@ class TM::Project
 		end
 
 		if highest_priority_first
-			filtered_tasks.sort! { |a,b| a.priority <=> b.priority }
+			filtered_tasks.sort! do |a,b|
+				comp = a.priority <=> b.priority
+				comp.zero? ? a.date_created <=> b.date_created : comp
+			end
 		else
-			filtered_tasks.sort! { |a,b| b.priority <=> a.priority }
+			filtered_tasks.sort! do |a,b|
+				comp = b.priority <=> a.priority
+				comp.zero? ? a.date_created <=> b.date_created : comp
+			end
 		end
+
 		return filtered_tasks		
 	end
 

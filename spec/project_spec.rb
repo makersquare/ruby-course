@@ -219,34 +219,48 @@ describe 'Project' do
 
     end
 
-    it "can return incompleted tasks ordered by priority" do
+    it "can return incompleted tasks ordered by priority, tnen by date created" do
 
       project1 = TM::Project.new("project1")
       task1 = TM::Task.new("task1")
       task1.set_priority(1)
+      task1.set_date_created(Time.parse("1/1/2014"))
       task2 = TM::Task.new("task2")
       task2.set_priority(3)
       task3 = TM::Task.new("task3")
       task3.set_priority(2)
+      task3.set_date_created(Time.parse("5/1/2014"))
       task4 = TM::Task.new("task4") 
       task4.mark_completed #task completed, should't appear
       task4.set_priority(4)
-      
+      task5 = TM::Task.new("task5") 
+      task5.set_priority(2)
+      task5.set_date_created(Time.parse("1/1/2014"))
+      task6 = TM::Task.new("task6") 
+      task6.set_priority(1)
+      task6.set_date_created(Time.parse("5/1/2014"))
+
       project1.add_task(task1)
       project1.add_task(task2)
       project1.add_task(task3)
       project1.add_task(task4)
+      project1.add_task(task5)
+      project1.add_task(task6)
 
       task_array = project1.retrieve_incompleted_tasks_by_priority
-      expect(task_array.size).to eq(3)
+      expect(task_array.size).to eq(5)
       expect(task_array[0].name).to eq("task1")
-      expect(task_array[1].name).to eq("task3")
-      expect(task_array[2].name).to eq("task2")
+      expect(task_array[1].name).to eq("task6")
+      expect(task_array[2].name).to eq("task5")
+      expect(task_array[3].name).to eq("task3")
+      expect(task_array[4].name).to eq("task2")
       task_array = project1.retrieve_incompleted_tasks_by_priority(highest_priority_first: false)
-      expect(task_array.size).to eq(3)
+      expect(task_array.size).to eq(5)
       expect(task_array[0].name).to eq("task2")
-      expect(task_array[1].name).to eq("task3")
-      expect(task_array[2].name).to eq("task1")
+      expect(task_array[1].name).to eq("task5")
+      expect(task_array[2].name).to eq("task3")
+      expect(task_array[3].name).to eq("task1")
+      expect(task_array[4].name).to eq("task6")
     end
 
     it "can return just completed tasks" do
