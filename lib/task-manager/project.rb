@@ -25,14 +25,15 @@ class TM::Project
   def completed_tasks
     @tasks.each do |task|
       if task.completed == true
-        @completed << task.name
+        @completed << task
       end
+    end
+
+    @completed.sort_by! do |task|
+      task.creation_date
     end
     @completed
   end
-
-
-
 
 
   def self.reset_class_variables

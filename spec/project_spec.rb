@@ -51,11 +51,30 @@ describe 'Project' do
     @p1.add_task(@t3)
 
 
-    expect(@p1.completed_tasks).to eq(['t1', 't2'])
+    expect(@p1.completed_tasks).to eq([@t1, @t2])
   end
 
-  xit 'can retrieve a list of all complete tasks sorted by creation date' do
+  it 'can retrieve a list of all complete tasks sorted by creation date' do
+    allow(Time).to receive(:now).and_return(Time.parse('2pm'))
+    @e = TM::Task.new('e', 'learning things', 1)
+    allow(Time).to receive(:now).and_return(Time.parse('3pm'))
+    @m = TM::Task.new('m','learning moar things', 2)
+    allow(Time).to receive(:now).and_return(Time.parse('4pm'))
+    @i = TM::Task.new('i','learning moar things', 3)
+    allow(Time).to receive(:now).and_return(Time.parse('5pm'))
+    @l = TM::Task.new('l','learning moar things', 2)
+    allow(Time).to receive(:now).and_return(Time.parse('6pm'))
+    @y = TM::Task.new('y','learning moar things', 3)
 
+
+    @p1.add_task(@m)
+    @p1.add_task(@l)
+    @p1.add_task(@e)
+    @p1.add_task(@i)
+    @p1.complete
+    @p1.add_task(@y)
+
+    expect(@p1.completed_tasks).to eq([@e, @m, @i, @l])
   end
 
 end
