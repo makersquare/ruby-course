@@ -16,9 +16,8 @@ class TM::Task
     @status = 'incomplete'
   end
 
-  def mark_complete
-    @status = 'complete'
-    return true
+  def mark_complete(tid)
+    @id == tid ? @status = 'complete' : false
   end
 
 end
