@@ -1,6 +1,6 @@
 
 class TM::Project
-  attr_reader :pid, :name, :tasks, :projects
+  attr_reader :pid, :name, :tasks
   @@pid = 0
   @@projects = []
 
@@ -17,6 +17,10 @@ class TM::Project
 
   def self.get_project(project_id)
     @@projects.detect{|project| project_id == project.pid}
+  end
+
+  def self.list_projects
+    @@projects
   end
 
   def completed_tasks

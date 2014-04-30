@@ -35,12 +35,15 @@ class TMTerminal
       puts "\tadd PID PRIORITY DESC - Add a new task to project with id=PID"
       puts "\tmark TID - Mark task with id=TID as complete"
       puts "\texit with exit"
-      print "Enter a command: "
     when "list"
-      # List all projects
+      puts "Project ID\tProject Name"
+      TM::Project.list_projects.each do |project|
+        puts"#{project.pid}\t\t#{project.name}"
+      end
     when "create"
-      new_project = TM::Project.new("Project")
-      puts new_project.name
+      print "Enter the project's name: "
+      name = gets.chomp()
+      new_project = TM::Project.new(name)
     when "show"
       project = TM::Project.get_project(1)
       puts "Priority\tID\tDescription"
@@ -48,17 +51,26 @@ class TMTerminal
         puts "#{task.priority}\t#{task.task_id}\t#{task.description}"
       end
     when "history"
-      project = TM::Project.get_project(1)
+      print "Enter the project id: "
+      id = gets.chomp().to_i
+      project = TM::Project.get_project(id)
       project.completed_tasks.each do |task|
         puts "#{task.task_id} | #{task.description}"
       end
     when "add"
-      TM::Task.new(1,"Description",10)
-    when "mark"
-      TM::Task.complete_task(1)
-    when "exit"
-      choice = exit
-    end
+      print "Enter the project id: "
+      project = gets.chomp().to_i
+      print "Enter the task description: "
+      description = gets.chomp()
+      print "Enter the task priority: "
+      priority = gets.chomp()
 
+      TM::Task.new(project,description,priority)
+    when "mark"
+      print "Enter the task id: "
+      id = gets.chomp().to_i
+      TM::Task.complete_task(id)
+    end
   end while choice != "exit" # This isn't necessary, exit will always exit the program
+
 end
