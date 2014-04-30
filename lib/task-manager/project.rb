@@ -69,12 +69,17 @@ class TM::Project
 
 	def retrieve_completed_tasks_by_date(newest_first: true)
 		filtered_tasks = []
+
+		# use select for a one-liner!! david did this, very simple
+
+
 		@tasks.each_index do |x|
 			if @tasks[x].completed
 				filtered_tasks << @tasks[x]
 			end
 		end
 
+		# can refactor to one-line using sort_by
 		if newest_first
 			filtered_tasks.sort! { |a,b| b.date_created <=> a.date_created }
 		else

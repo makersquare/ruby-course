@@ -15,21 +15,36 @@ class TerminalClient
 			input_arguments = input.split
 
 			case input_arguments[0]
+				# before (:each) { check_arguments(input_arguments) }
 			when "list"
 				list_projects
+			when "create"
+				check_arguments(input_arguments)
+				if input_arguments.size == 2
+					puts "creating..."
+					@@projects << TM::Project.new(input_arguments[1])
+				end
+				# elsif input_arguments.size == 1
+				# 	puts "Please define project name to create."
+				# 	puts "Should be 'create [project_name]'"
+				# else
+				# 	puts "Too many arguments for [list] command."
+				# 	puts "Should be 'create [project_name]'"
+				# end
 			when "create"
 				if input_arguments.size == 2
 					puts "creating..."
 					@@projects << TM::Project.new(input_arguments[1])
-				elsif input_arguments.size == 1
-					puts "Please define project name to create."
-					puts "Should be 'create [project_name]'"
-				else
-					puts "Too many arguments for [list] command."
-					puts "Should be 'create [project_name]'"
 				end
+				# elsif input_arguments.size == 1
+				# 	puts "Please define project name to create."
+				# 	puts "Should be 'create [project_name]'"
+				# else
+				# 	puts "Too many arguments for [list] command."
+				# 	puts "Should be 'create [project_name]'"
+				# end
 			else
-  				puts "Command [#{input_arguments[0]}] not recognized."
+				puts "Command [#{input_arguments[0]}] not recognized."
 				puts "Type 'help' for list of commands"
 			end
 		end
@@ -50,6 +65,18 @@ class TerminalClient
 		puts "   add PID PRIORITY DESC - Add a new task to project with id=PID"
 		puts "   mark TID        Mark task with id=TID as complete"
 		puts "   exit            quits application"
+	end
+
+	def self.check_arguments(input_arguments)
+		if input_arguments.size == 1
+			puts "No arguments passed in for '#{input_arguments[0]}'."
+			puts "Should be '#{input_arguments[0]} [argument]'"
+		end
+		if input_arguments.size >2
+			puts "Too many arguments for [#{input_arguments[0]}]."
+			puts "Should be '#{input_arguments[0]} [argument]'"
+			# puts "Should be 'create [project_name]'"
+		end
 	end
 
 	def self.list_projects
