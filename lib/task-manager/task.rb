@@ -18,6 +18,10 @@ class TM::Task
     @@tasks << self
     # Increment task_id class variable
     @@task_id = @task_id
+
+    # Find associated project and add task to project
+    project = TM::Project.show_project(project_id)
+    project.tasks << self
   end
 
   def self.complete_task(task_id)

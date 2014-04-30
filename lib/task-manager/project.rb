@@ -1,6 +1,6 @@
 
 class TM::Project
-  attr_reader :pid, :name, :tasks
+  attr_reader :pid, :name, :tasks, :projects
   @@pid = 0
   @@projects = []
 

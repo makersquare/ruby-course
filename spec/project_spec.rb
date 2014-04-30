@@ -10,9 +10,6 @@ describe 'Project' do
     @task = TM::Task.new(@project.pid, "description1", 3)
     @task1 = TM::Task.new(@project.pid, "description1", 10)
     @task2 = TM::Task.new(@project.pid, "description1", 5)
-
-
-
   end
 
   it "initializes with a unique project id and name" do
@@ -22,14 +19,10 @@ describe 'Project' do
   end
 
   it "adds new tasks to a Project array" do
-    @project.add_task(@task)
-    expect(@project.tasks.length).to eq 1
+    expect(@project.tasks.length).to eq 3
   end
 
   it "retrieves completed tasks and sorts them by creation date" do
-    @project.add_task(@task)
-    @project.add_task(@task1)
-    @project.add_task(@task2)
     TM::Task.complete_task(@task.task_id)
     TM::Task.complete_task(@task1.task_id)
     TM::Task.complete_task(@task2.task_id)
@@ -41,10 +34,6 @@ describe 'Project' do
 
   it "retrieves incomplete tasks and sorts them by priority" do
     @task3 = TM::Task.new(@project.pid, "description1", 3)
-    @project.add_task(@task)
-    @project.add_task(@task1)
-    @project.add_task(@task2)
-    @project.add_task(@task3)
 
     expect(@project.incomplete_tasks.first.task_id).to eq 2
     expect(@project.incomplete_tasks.last.task_id).to eq 4
