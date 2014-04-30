@@ -31,7 +31,7 @@ describe 'Project' do
     expect(@project.tasks.first.status).to eq 1
   end
 
-  it "retrieves completed tasks and sorts them by completion date" do
+  it "retrieves completed tasks and sorts them by creation date" do
     @project.complete_task(1)
     @project.complete_task(2)
     @project.complete_task(3)

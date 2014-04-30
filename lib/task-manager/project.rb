@@ -25,7 +25,7 @@ class TM::Project
 
   def completed_tasks
     completed_tasks = @tasks.select{ |task| task.status == 1 }
-    completed_tasks.sort_by{ |task| task.completed_at }
+    completed_tasks.sort_by{ |task| task.created_at }
   end
 
   def incomplete_tasks
