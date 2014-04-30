@@ -103,8 +103,7 @@ describe 'Project' do
       expect(project1.tasks[0].name).to eq("task1")
     end
 
-
-    xit "can delete task by task id" do
+    it "can delete task by task id" do
       project1 = TM::Project.new("project1")
       task1 = TM::Task.new("task1")
       task1.set_id(10)
@@ -125,8 +124,13 @@ describe 'Project' do
       expect(project1.tasks[0].name).to eq("task3")
     end
 
-    xit "returns nil and does nothing if an invalid id is passed" do
-
+    it "returns a task object of deleted task if id found" do
+      project1 = TM::Project.new("project1")
+      task1 = TM::Task.new("task1")
+      task1.set_id(10)
+      project1.add_task(task1)
+      deleted_task = project1.delete_task_by_id(10)
+      expect(deleted_task.name).to eq("task1")
     end
 
   end

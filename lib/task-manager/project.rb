@@ -27,7 +27,24 @@ class TM::Project
 	end
 
 	def delete_task_by_id(task_id)
+		return nil if @tasks.size == 0
 
+		task_found = false
+		deleted_task = nil
+
+		@tasks.each_index do |x|
+			if @tasks[x].id == task_id
+				task_found = true
+				deleted_task = @tasks[x]
+				@tasks.delete_at(x)
+			end
+		end
+
+		if task_found
+			deleted_task
+		else
+			nil
+		end
 	end
 
 	def mark_task_completed_by_id(task_id)
