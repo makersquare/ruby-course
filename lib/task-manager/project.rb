@@ -1,12 +1,19 @@
 
 class TM::Project
-  attr_reader :pid, :name
+  attr_reader :pid, :name, :tasks
   @@pid = 0
 
   def initialize(name)
     @name = name
     @pid = @@pid + 1
+    @tasks = []
+
+    # Increment class variable to keep ids unique
     @@pid = @pid
+  end
+
+  def add_task(task)
+    @tasks << task
   end
 
   # Used to reset class variables for rspec tests
