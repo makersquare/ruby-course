@@ -1,6 +1,6 @@
 class TM::ProjectsManager
 
-  attr_reader :projects
+  attr_reader :projects,  :name
 
   def initialize
     @projects = []

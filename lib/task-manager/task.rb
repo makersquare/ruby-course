@@ -18,7 +18,7 @@ class TM::Task
 
   def complete
     if @completed == false
-      @completed = true
+        @completed = true
       self
     end
   end
