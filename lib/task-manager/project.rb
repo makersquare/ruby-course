@@ -1,16 +1,21 @@
 
 class TM::Project
   attr_reader :id
-  attr_accessor :name, :tasks, :completed_task, :incomplete_task
+  attr_accessor :name, :tasks, :completed_task, :incomplete_task, :projects
 
   @@class_id = 1
-
+  @@projects =[]
 
   def initialize(name=nil)
     @name = name
     @id = @@class_id
     @@class_id +=1
     @tasks = []
+    @@projects<<self
+  end
+
+  def self.projects
+    @@projects
   end
 
   def create_task(project_id, description, priority_number)
@@ -49,6 +54,10 @@ class TM::Project
       end
     end
     @incomplete_task.sort_by! {|x| x.priority_number}
+  end
+
+  def self.reset_class_variables
+      @@projects = []
   end
 
 end
