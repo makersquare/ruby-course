@@ -18,6 +18,11 @@ class TM::Task
     @@tasks << self
   end
 
+  def to_s
+    status = @complete? 'complete  ' : 'incomplete'
+    "#{@id} | #{status} | #{description}"
+  end
+
   def self.mark_complete(tid)
     t = @@tasks.select {|t| t.id == tid}.first
     t.complete = true

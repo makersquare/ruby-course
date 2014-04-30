@@ -15,6 +15,10 @@ class TM::Project
     @@projects << self
   end
 
+  def to_s
+    "#{@id} | #{@name}"
+  end
+
   def self.projects
     @@projects
   end
