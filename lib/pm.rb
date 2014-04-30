@@ -18,9 +18,18 @@ class TerminalClient
 			when "list"
 				list_projects
 			when "create"
-				puts "creating..."
+				if input_arguments.size == 2
+					puts "creating..."
+					@@projects << TM::Project.new(input_arguments[1])
+				elsif input_arguments.size == 1
+					puts "Please define project name to create."
+					puts "Should be 'create [project_name]'"
+				else
+					puts "Too many arguments for [list] command."
+					puts "Should be 'create [project_name]'"
+				end
 			else
-				puts "Command [#{input_arguments[0]}] not recognized."
+  				puts "Command [#{input_arguments[0]}] not recognized."
 				puts "Type 'help' for list of commands"
 			end
 		end
