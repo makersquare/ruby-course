@@ -2,23 +2,24 @@
 class TM::Task
 
   attr_reader :project_id, :description, :priority
-  attr_reader :id, :timestamp, :status
-
+  attr_reader :id, :timestamp
+  attr_accessor :complete
   @@id_counter = 0
+  @@tasks = []
 
   def initialize(project_id, description, priority)
     @@id_counter += 1
     @id = @@id_counter
     @timestamp = Time.now
-
     @project_id = project_id
     @description = description
     @priority = priority
-    @status = 'incomplete'
+    @complete = false
+    @@tasks << self
   end
 
-  def mark_complete(tid)
-    @id == tid ? @status = 'complete' : false
+  def self.mark_complete(tid)
+    t = @@tasks.select {|t| t.id == tid}.first
+    t.complete = true
   end
-
 end

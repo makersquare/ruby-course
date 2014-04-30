@@ -31,8 +31,8 @@ describe 'Task' do
 
   describe '.mark_complete' do
     it "can be marked as complete, returning true if successful" do
-      @task1.mark_complete(@task1.id)
-      expect(@task1.status).to eq 'complete'
+      TM::Task.mark_complete(@task1.id)
+      expect(@task1.complete).to eq true
     end
   end
 end

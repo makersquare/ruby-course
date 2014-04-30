@@ -1,4 +1,3 @@
-
 class TM::Project
 
   attr_reader :name, :id
@@ -28,15 +27,14 @@ class TM::Project
     @tasks << task
   end
 
-  def get_tasks_by_status(status)
-    t = tasks.select {|task| task.status == status}
-    sorted = t.sort {|a, b| a.timestamp <=> b.timestamp}
-    if status == 'complete'
-      sorted.reverse
-    else
-      sorted.sort {|a, b| a.priority <=> b.priority}
-    end
+  def completed
+    t = @tasks.select {|task| task.complete}
+    t.sort_by {|t| t.timestamp}.reverse
   end
 
+  def incomplete
+    t = @tasks.select {|task| task.complete == false}
+    t.sort_by {|task| [task.priority, task.timestamp]}
+  end
 
 end
