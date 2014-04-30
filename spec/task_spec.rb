@@ -62,25 +62,16 @@ describe 'Task' do
 
 	end
 
-	describe "list_all_tasks method" do
-		# not sure how to implement!! defer until later
-
-		xit "lists the correct number of tasks ever created" do 
-			#test by creating three tasks and checking @@tasks
-		end
-
-	end
-
 	describe "mark_completed method" do
 
-		xit "should set @completed to true and update @date_completed" do 
+		it "should set @completed to true and update @date_completed" do 
 			task1 = TM::Task.new
 			task1.mark_completed
 			expect(task1.completed).to eq(true)
 			expect(task1.date_completed.class).to eq(Time)
 		end
 
-		xit "can set @completed to false" do 
+		it "can set @completed to false" do 
 			task1 = TM::Task.new
 			task1.mark_completed
 			expect(task1.completed).to eq(true)
