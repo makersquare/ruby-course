@@ -131,17 +131,22 @@ describe 'Project' do
   describe "retrieve_tasks method" do
   	# ex retrieve_tasks(by_date, by_priority, by_completed)
 
-  	it "returns an array of task objects" do
+  	xit "returns an array of task objects" do
+
+    end
+
+    it "can return tasks ordered by date created, most recent date first is default" do
+
       project1 = TM::Project.new("project1")
       task1 = TM::Task.new("task1")
       task1.mark_completed
       task1.set_date_created(Time.parse("1/1/2014"))
       task2 = TM::Task.new("task2")
       task2.mark_completed
-      task2.set_date_created(Time.parse("2/1/2014"))
+      task2.set_date_created(Time.parse("3/1/2014"))
       task3 = TM::Task.new("task3")
       task3.mark_completed
-      task3.set_date_created(Time.parse("3/1/2014"))
+      task3.set_date_created(Time.parse("2/1/2014"))
       
       project1.add_task(task1)
       project1.add_task(task2)
@@ -149,18 +154,34 @@ describe 'Project' do
 
       task_array = project1.retrieve_completed_tasks_by_date
       expect(task_array.size).to eq(3)
-      expect(task_array[0].name).to eq("task3")
-      expect(task_array[1].name).to eq("task2")
+      expect(task_array[0].name).to eq("task2")
+      expect(task_array[1].name).to eq("task3")
       expect(task_array[2].name).to eq("task1")
 
-
     end
 
-    xit "can return tasks ordered by date created, most recent date first" do
+    it "can return tasks ordered by date created, earliest date first" do
 
-    end
+      project1 = TM::Project.new("project1")
+      task1 = TM::Task.new("task1")
+      task1.mark_completed
+      task1.set_date_created(Time.parse("1/1/2014"))
+      task2 = TM::Task.new("task2")
+      task2.mark_completed
+      task2.set_date_created(Time.parse("3/1/2014"))
+      task3 = TM::Task.new("task3")
+      task3.mark_completed
+      task3.set_date_created(Time.parse("2/1/2014"))
+      
+      project1.add_task(task1)
+      project1.add_task(task2)
+      project1.add_task(task3)
 
-    xit "can return tasks ordered by date created, earliest date first" do
+      task_array = project1.retrieve_completed_tasks_by_date(most_recent_first: false)
+      expect(task_array.size).to eq(3)
+      expect(task_array[0].name).to eq("task1")
+      expect(task_array[1].name).to eq("task3")
+      expect(task_array[2].name).to eq("task2")
 
     end
 
