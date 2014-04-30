@@ -38,28 +38,21 @@ describe 'Project' do
       expect(@my_project.tasks.size).to eq 2
     end
 
-    it "retrieves a list of all completed tasks" do
-      expect(@my_project.get_tasks_by_status('complete')).to eq [@task1]
-    end
-
     it "returns the most recently completed tasks first" do
       allow(Time).to receive(:now).and_return(Time.parse("2014-04-29"))
-      @task3 = TM::Task.new(@my_project.id, "created yesterday", 1)
+      task3 = TM::Task.new(@my_project.id, "created yesterday", 1)
       allow(Time).to receive(:now).and_return(Time.parse("2014-04-30"))
-      @task4 = TM::Task.new(@my_project.id, "created today", 1)
+      task4 = TM::Task.new(@my_project.id, "created today", 1)
       @my_project.tasks = []
-      @task3.mark_complete(@task3.id)
-      @task4.mark_complete(@task4.id)
-      @my_project.add_task(@task3)
-      @my_project.add_task(@task4)
-      expect(@my_project.get_tasks_by_status('complete')).to eq([@task4, @task3])
+      task3.mark_complete(task3.id)
+      task4.mark_complete(task4.id)
+      @my_project.add_task(task3)
+      @my_project.add_task(task4)
+      expect(@my_project.get_tasks_by_status('complete')).to eq([task4, task3])
     end
 
     it "retrieves a list of all incomplete tasks, sorted by priority" do
       expect(@my_project.get_tasks_by_status('incomplete')).to eq [@task2]
-    end
-
-    it "sorts incomplete tasks by priority" do
     end
 
     it "knows older tasks get priority over newer ones with the same priority" do
