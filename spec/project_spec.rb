@@ -23,8 +23,9 @@ describe 'Project' do
   	expect(@p2.pid).to eq(2)
   end
 
-  xit "A new task can be complete, specified by id" do
-  	expect(@p1.mark_complete(1, 1)).to_not_raise_error
-    expect(@t1.complete).to eq(false)
+  it "A new task can be complete, specified by id" do
+  	expect(@t1.complete).to eq(false)
+  	expect(@p1.mark_complete(1, 1)).to_not raise_error
+  	expect(@t1.complete).to eq(true)
   end
 end
