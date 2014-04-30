@@ -27,6 +27,10 @@ class TM::Project
     end
   end
 
+  def self.show_project(project_id)
+    @@projects.detect{|project| project_id == project.pid}
+  end
+
   def completed_tasks
     completed_tasks = @tasks.select{ |task| task.status == 1 }
     completed_tasks.sort_by{ |task| task.created_at }
