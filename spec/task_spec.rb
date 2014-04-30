@@ -3,6 +3,11 @@ require 'spec_helper'
 #allow(Time).to receive(:now).and_return(Time.parse("3PM"))
 
 describe 'Task' do
+  before(:each) do
+    TM::Project.reset_class_variables
+    TM::Task.reset_class_variables
+  end
+
   it "exists" do
     expect(TM::Task).to be_a(Class)
   end

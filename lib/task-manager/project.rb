@@ -8,9 +8,9 @@ class TM::Project
 
   def initialize(name)
     @name = name
+    @@unique_id += 1
     @id = @@unique_id
     @task = []
-    @@unique_id += 1
   end
 
   def completed_task
@@ -26,6 +26,15 @@ class TM::Project
     end
     uncompleted.sort_by! { |item| item.task_id }
     uncompleted.sort_by { |item| item.priority }
+  end
+
+  def add_task(project_id, priority, description)
+    task = TM::Task.new(project_id, priority, description)
+    @task << task
+  end
+
+  def self.reset_class_variables
+    @@unique_id = 0
   end
 
 end

@@ -2,6 +2,11 @@ require 'spec_helper'
 require 'pry'
 
 describe 'Project' do
+  before(:each) do
+    TM::Project.reset_class_variables
+    TM::Task.reset_class_variables
+  end
+
   it "exists" do
     expect(TM::Project).to be_a(Class)
   end
@@ -14,7 +19,7 @@ describe 'Project' do
     end
 
      it 'creates a unique ID' do
-      expect(project.id).to eq(2)
+      expect(project.id).to eq(1)
     end
 
   end
@@ -90,4 +95,16 @@ describe 'Project' do
       expect(project.uncompleted_task).to eq([task1, task2, task3])
     end
   end
+
+  context "A new task can be added" do
+    let(:project) { TM::Project.new("My_first_project") }
+
+    it "can add a new task" do
+      project.add_task(1, 1, "Add a new task already!")
+
+      expect(project.task.count).to eq(1)
+    end
+  end
+
+
 end

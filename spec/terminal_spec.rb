@@ -1,13 +1,18 @@
 require 'spec_helper'
 require 'pry'
 
-describe 'TerminalClient' do
+describe 'ProjectsManager' do
+ before(:each) do
+    TM::Project.reset_class_variables
+    TM::Task.reset_class_variables
+  end
+
   it "exists" do
-    expect(TM::TerminalClient).to be_a(Class)
+    expect(TM::ProjectsManager).to be_a(Class)
   end
 
   context 'a terminal client is initialized' do
-    let(:terminal) { TM::TerminalClient.new }
+    let(:terminal) { TM::ProjectsManager.new }
 
     it 'has an array for projects' do
       expect(terminal.projects).to eq([])
@@ -15,7 +20,7 @@ describe 'TerminalClient' do
   end
 
   context 'a new project is created' do
-    let(:terminal) { TM::TerminalClient.new }
+    let(:terminal) { TM::ProjectsManager.new }
     let(:project1) { TM::Project.new("Project 1") }
     let(:project2) { TM::Project.new("Project 2") }
 
@@ -33,11 +38,11 @@ describe 'TerminalClient' do
   end
 
   context 'a project is created and task are viewed' do
-    let(:terminal) { TM::TerminalClient.new }
+    let(:terminal) { TM::ProjectsManager.new }
     let(:project1) { TM::Project.new("Project 1") }
     let(:project2) { TM::Project.new("Project 2") }
-    let(:task1) { TM::Task.new(3, 1, "complete this task manager") }
-    let(:task2) { TM::Task.new(3, 2, "complete this task manager") }
+    let(:task1) { TM::Task.new(1, 1, "complete this task manager") }
+    let(:task2) { TM::Task.new(1, 2, "complete this task manager") }
 
     it 'can list all remaining task for a project by project ID' do
       terminal.projects << project1
@@ -45,7 +50,7 @@ describe 'TerminalClient' do
       project1.task << task1
       project1.task << task2
 
-      expect(terminal.remaining_task(3)).to eq([task1,task2])
+      expect(terminal.remaining_task(1)).to eq([task1,task2])
     end
 
     it 'can list all previously completed task' do
@@ -54,32 +59,29 @@ describe 'TerminalClient' do
       project1.task << task1.complete
       project1.task << task2
 
-      expect(terminal.history(5)).to eq([task1])
+      expect(terminal.history(1)).to eq([task1])
     end
   end
 
   context 'a task is added to a current project' do
-    let(:terminal) { TM::TerminalClient.new }
+    let(:terminal) { TM::ProjectsManager.new }
     let(:project1) { TM::Project.new("Project 1") }
 
     it "increases the project's task count by 1" do
       terminal.projects << project1
       expect(terminal.projects.first.task.count).to eq(0)
-      terminal.add_task(7,3, "Add a task already!")
+      terminal.add_task(1,3, "Add a task already!")
       expect(terminal.projects.first.task.count).to eq(1)
     end
 
     it  "can be marked as completed" do
       terminal.projects << project1
-      terminal.add_task(8,3, "Add a task already!")
+      terminal.add_task(1,3, "Add a task already!")
       task = terminal.projects.first.task.first
 
       expect(task.completed).to eq(false)
-      terminal.complete_task(6)
+      terminal.complete_task(1)
       expect(task.completed).to eq(true)
-
-
     end
-
   end
 end

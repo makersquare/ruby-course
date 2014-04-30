@@ -11,7 +11,8 @@ class TM::Task
     @priority = priority
     @description = description
     @completed = false
-    @task_id = @@task_ids += 1
+    @@task_ids += 1
+    @task_id = @@task_ids
     @date_created = Time.now
   end
 
@@ -20,6 +21,10 @@ class TM::Task
       @completed = true
       self
     end
+  end
+
+  def self.reset_class_variables
+    @@task_ids = 0
   end
 
 end

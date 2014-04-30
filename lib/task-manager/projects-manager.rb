@@ -43,19 +43,4 @@ class TM::ProjectsManager
     @projects.each { |project| task_hold << project.task}
     task_hold.flatten.select { |task| task.task_id == id }.first
   end
-
-
-  def start
-    answ = "y"
-    while answ == "y"
-      puts "Would you like to continue? Y/N"
-      answ = gets.chomp.downcase
-    end
-    puts "end"
-
-  end
-
 end
-
-# t = TM::TerminalClient.new
-# t.start
