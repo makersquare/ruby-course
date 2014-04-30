@@ -20,7 +20,7 @@ class TM::Task
     @@task_id = @task_id
 
     # Find associated project and add task to project
-    project = TM::Project.show_project(project_id)
+    project = TM::Project.get_project(project_id)
     project.tasks << self
   end
 

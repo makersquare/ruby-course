@@ -15,7 +15,7 @@ class TM::Project
     @@projects << self
   end
 
-  def self.show_project(project_id)
+  def self.get_project(project_id)
     @@projects.detect{|project| project_id == project.pid}
   end
 
