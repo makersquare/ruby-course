@@ -13,7 +13,7 @@ class TM::Project
 	end
 
 	def add_task(*tasks)
-		#extension -- handle multiple tasks, splat argument?
+		#extension -- handle multiple tasks, splat argument
 		tasks.each do |task|
 			if task.class == TM::Task
 				@tasks << task 

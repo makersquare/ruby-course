@@ -59,7 +59,16 @@ describe 'Project' do
       expect(project1.tasks[0].project_id).to eq(project_id)
     end
 
-    xit "can handle adding an array of task objects" do
+    it "can handle adding an multiple task objects passed in" do
+      project1 = TM::Project.new("project1")
+      task1 = TM::Task.new("task1")
+      task2 = TM::Task.new("task2")
+      task3 = TM::Task.new("task3")
+      project1.add_task(task1,task2, task3)
+      expect(project1.tasks.size).to eq(3)
+      expect(project1.tasks[0].name).to eq("task1")
+      expect(project1.tasks[1].name).to eq("task2")
+      expect(project1.tasks[2].name).to eq("task3")
     end
 
     it "should not add anything if not a valid task object" do
