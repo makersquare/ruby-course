@@ -1,17 +1,17 @@
 
 class TM::Task
-	attr_reader :name, :id, :description, :priority, :date_created, :date_completed, :completed
-	attr_accessor :project_id
-	
+	attr_reader :id, :date_created, :date_completed, :completed
+	attr_accessor :name, :project_id, :priority, :description
+
 	@@task_count = 0
 
-	def initialize(name = "default", description: "none")
+	def initialize(name = "default", description: "none", priority: 1)
 		@name = name
 		@@task_count +=1
 		@id = @@task_count
 		@project_id = nil
 		@description = description
-		@priority = 1
+		@priority = priority
 		@date_created= Time.now
 		@date_completed = nil
 		@completed = false
