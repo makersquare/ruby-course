@@ -5,6 +5,8 @@ class TM::Task
     attr_accessor :tid_counter, :tid, :description, :pnum, :complete, :pid
 
     @@tid_counter = 0
+    @@tasks = []
+    @@completed_tasks = []
   def initialize(pid, description, pnum)
     t = Time.now
     @pid = pid
@@ -14,9 +16,40 @@ class TM::Task
     @tid = @@tid_counter
     @description = description
     @complete = false
+    @@tasks << self
+    @@completed_tasks = []
   end
 
   def self.reset_class_variables
     @@tid_counter = 0
+    @@tasks = []
+    @@completed_tasks = []
+  end
+
+  def self.list_tasks
+    @@tasks
+  end
+
+  def self.mark_complete(taskid)
+    task = @@tasks.select{|task| task.tid == taskid}
+    task = task[0]
+   if task.complete == true
+      puts "Task is already complete"
+    else
+      task.complete = true
+      @@completed_tasks << task
+    end
+  end
+
+  def self.completed_tasks(projid)
+    task = @@tasks.select{|task| task.pid == projid && task.complete == true}
+    task.sort_by! {|task| task.date}
+    task
+  end
+
+  def self.incomplete_tasks(projid)
+    task = @@tasks.select{|task| task.pid == projid && task.complete == false}
+    task.sort_by! {|task| [task.pnum, task.date]}
+    task
   end
 end

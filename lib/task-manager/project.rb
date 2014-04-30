@@ -5,9 +5,7 @@ class TM::Project
     attr_accessor :name, :id_counter, :pid, :projects, :completed_tasks, :tasks
 
     @@id_counter = 0
-    @@tasks = []
     @@projects = []
-    @@completed_tasks = []
     def initialize(name)
       @name = name
       @@id_counter += 1
@@ -18,42 +16,9 @@ class TM::Project
     def self.reset_class_variables
       @@id_counter = 0
       @@projects = []
-      @@tasks = []
-      @@completed_tasks = []
     end
 
     def self.list_projects
       @@projects
-    end
-
-    def add_task(task)
-      @@tasks << task
-    end
-
-    def list_tasks
-      @@tasks
-    end
-
-    def mark_complete(projid, taskid)
-      task = @@tasks.select{|task| task.pid == projid && task.tid == taskid} 
-      task = task[0]
-     if task.complete == true
-        puts "Task is already complete"
-      else
-        task.complete = true
-        @@completed_tasks << task
-      end
-    end
-
-    def completed_tasks(projid)
-      task = @@tasks.select{|task| task.pid == projid && task.complete == true}
-      task.sort_by! {|task| task.date}
-      task
-    end
-
-    def incomplete_tasks(projid)
-      task = @@tasks.select{|task| task.pid == projid && task.complete == false}
-      task.sort_by! {|task| [task.pnum, task.date]}
-      task
     end
 end
