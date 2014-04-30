@@ -15,18 +15,6 @@ class TM::Project
     @@projects << self
   end
 
-  def add_task(task)
-    @tasks << task
-  end
-
-  def complete?(task)
-    if task.status == 1
-      true
-    else
-      false
-    end
-  end
-
   def self.show_project(project_id)
     @@projects.detect{|project| project_id == project.pid}
   end
