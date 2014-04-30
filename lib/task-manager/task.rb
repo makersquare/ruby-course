@@ -6,8 +6,9 @@ class TM::Task
 
     @@tid_counter = 0
   def initialize(pid, description, pnum)
+    t = Time.now
     @pid = pid
-    @date = Time.now
+    @date = "#{t.year} #{t.month} #{t.day}"
     @pnum = pnum
     @@tid_counter += 1
     @tid = @@tid_counter
