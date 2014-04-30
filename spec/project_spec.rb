@@ -78,27 +78,56 @@ describe 'Project' do
   		project1 = TM::Project.new("project1")
   		task1 = TM::Task.new("task1")
   		task1.set_id(50)
-  		project1.add_task(task1)
-  		expect(project1.get_task_by_id(50)).to eq(task1)
-  	end
+      project1.add_task(task1)
+      expect(project1.get_task_by_id(50)).to eq(task1)
+    end
 
   end
 
   describe "delete_task_by_id method" do
-  	#delete_task_by_id(id)
+    #delete_task_by_id(id)
 
-  	xit "returns nil if tasks array is empty" do
+    it "returns nil if tasks array is empty" do
+      project1 = TM::Project.new("project1")
+      result = project1.delete_task_by_id(50)
+      expect(result).to eq(nil)
+    end
 
-  	end
+    it "returns nil if id not found and doesn't affect @tasks array" do
+      project1 = TM::Project.new("project1")
+      task1 = TM::Task.new("task1")
+      task1.set_id(50)
+      project1.add_task(task1)
+      expect(project1.delete_task_by_id(99)).to eq(nil)
+      expect(project1.tasks.size).to eq(1)
+      expect(project1.tasks[0].name).to eq("task1")
+    end
 
 
-  	xit "can delete task by task id" do
+    xit "can delete task by task id" do
+      project1 = TM::Project.new("project1")
+      task1 = TM::Task.new("task1")
+      task1.set_id(10)
+      task2 = TM::Task.new("task2")
+      task2.set_id(20)
+      task3 = TM::Task.new("task3")
+      task3.set_id(30)
+      project1.add_task(task1)
+      project1.add_task(task2)
+      project1.add_task(task3)
+      expect(project1.tasks.size).to eq(3)
+      project1.delete_task_by_id(20)
+      expect(project1.tasks.size).to eq(2)
+      expect(project1.tasks[0].name).to eq("task1")
+      expect(project1.tasks[1].name).to eq("task3")
+      project1.delete_task_by_id(10)
+      expect(project1.tasks.size).to eq(1)
+      expect(project1.tasks[0].name).to eq("task3")
+    end
 
-  	end
+    xit "returns nil and does nothing if an invalid id is passed" do
 
-  	xit "returns nil and does nothing if an invalid id is passed" do
-
-  	end
+    end
 
   end
 
@@ -241,10 +270,6 @@ describe 'Project' do
 
     end
 
-  end
-
-  describe "sort_by_date method" do
-  	
   end
 
 end
