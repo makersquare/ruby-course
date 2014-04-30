@@ -11,9 +11,9 @@ describe 'Terminal' do
 
   end
 
-  describe '.parse_command' do
+  describe '.parse_cmd' do
   end
 
-  describe 'execute_command' do
+  describe 'execute_cmd' do
   end
 end
