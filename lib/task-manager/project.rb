@@ -70,35 +70,19 @@ class TM::Project
 	def retrieve_completed_tasks_by_date(newest_first: true)
 		filtered_tasks = []
 
-		# use select for a one-liner!! david did this, very simple
+		filtered_tasks = @tasks.select {|task| task.completed }
 
-		@tasks.each_index do |x|
-			if @tasks[x].completed
-				filtered_tasks << @tasks[x]
-			end
-		end
-
-		# can refactor to one-line using sort_by
-		# sort_by { |a| -.priority, -a.date_created }
-		# --> not the "-" sign will sort in reverse, nice!
 		if newest_first
 			filtered_tasks.sort! { |a,b| b.date_created <=> a.date_created }
 		else
 			filtered_tasks.sort! { |a,b| a.date_created <=> b.date_created }
 		end
+
 		return filtered_tasks
-		
 	end
 
 	def retrieve_completed_tasks
-		filtered_tasks = []
-		@tasks.each_index do |x|
-			if @tasks[x].completed
-				filtered_tasks << @tasks[x]
-			end
-		end
-		return filtered_tasks
-		
+		@tasks.select {|x| x.completed}
 	end
 
 	def retrieve_incompleted_tasks_by_priority(highest_priority_first: true)

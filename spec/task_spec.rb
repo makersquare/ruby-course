@@ -13,7 +13,7 @@ describe 'Task' do
 
 		it "has a default name of 'default' if name not specified" do
 			task1 = TM::Task.new
-			expect(task1.name).to eq("default")
+			expect(task1.name).to eq("untitled")
 		end
 
 		it "creates a unique ID" do 
