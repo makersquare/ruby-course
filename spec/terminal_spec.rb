@@ -14,6 +14,6 @@ describe 'TerminalClient' do
   describe '.parse_cmd' do
   end
 
-  describe 'execute_cmd' do
+  describe 'exec_cmd' do
   end
 end
