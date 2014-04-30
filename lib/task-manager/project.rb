@@ -87,22 +87,12 @@ class TM::Project
 
 	def retrieve_incompleted_tasks_by_priority(highest_priority_first: true)
 		filtered_tasks = []
-		@tasks.each_index do |x|
-			if @tasks[x].completed == false
-				filtered_tasks << @tasks[x]
-			end
-		end
+		filtered_tasks = @tasks.select {|x| !x.completed}
 
 		if highest_priority_first
-			filtered_tasks.sort! do |a,b|
-				comp = a.priority <=> b.priority
-				comp.zero? ? a.date_created <=> b.date_created : comp
-			end
+			filtered_tasks.sort_by! { |a| [a.priority, a.date_created] }
 		else
-			filtered_tasks.sort! do |a,b|
-				comp = b.priority <=> a.priority
-				comp.zero? ? a.date_created <=> b.date_created : comp
-			end
+			filtered_tasks.sort_by! { |a| [-a.priority, a.date_created] }
 		end
 
 		return filtered_tasks		
