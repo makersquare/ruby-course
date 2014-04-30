@@ -35,12 +35,5 @@ class TM::Project
     else
       t.sort {|a, b| a.priority <=> b.priority}
     end
-    # t.sort_by {|t| t.timestamp }
-    # sorting should take place in terminal?
   end
-
-  # def tasks(status)
-  #   a, b = tasks.partition {|task| task.status == status}
-  #   return a
-  # end
 end

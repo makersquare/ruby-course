@@ -7,12 +7,13 @@ class TM::Task
   @@id_counter = 0
 
   def initialize(project_id, description, priority)
-    @project_id = project_id
-    @description = description
-    @priority = priority
     @@id_counter += 1
     @id = @@id_counter
     @timestamp = Time.now
+
+    @project_id = project_id
+    @description = description
+    @priority = priority
     @status = 'incomplete'
   end
 

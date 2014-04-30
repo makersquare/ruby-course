@@ -51,8 +51,17 @@ describe 'Project' do
       expect(@my_project.get_tasks_by_status('complete')).to eq([task4, task3])
     end
 
-    it "retrieves a list of all incomplete tasks, sorted by priority" do
+    it "returns incomplete tasks, sorted by priority (1 = highest)" do
       expect(@my_project.get_tasks_by_status('incomplete')).to eq [@task2]
+      task3 = TM::Task.new(@my_project.id, "URGENT", 3)
+      task4 = TM::Task.new(@my_project.id, "sorta URGent...", 2)
+      task5 = TM::Task.new(@my_project.id, "meh.", 1)
+      @my_project.tasks = []
+      # add in unsorted fashion
+      @my_project.add_task(task4)
+      @my_project.add_task(task5)
+      @my_project.add_task(task3)
+      expect(@my_project.get_tasks_by_status('incomplete')).to eq([task5, task4, task3])
     end
 
     it "knows older tasks get priority over newer ones with the same priority" do
