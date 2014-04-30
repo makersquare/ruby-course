@@ -30,10 +30,13 @@ class TM::Project
 
   def get_tasks_by_status(status)
     t = tasks.select {|task| task.status == status}
+    sorted = t.sort {|a, b| a.timestamp <=> b.timestamp}
     if status == 'complete'
-      sorted = t.sort {|a, b| a.timestamp <=> b.timestamp}.reverse
+      sorted.reverse
     else
-      t.sort {|a, b| a.priority <=> b.priority}
+      sorted.sort {|a, b| a.priority <=> b.priority}
     end
   end
+
+
 end

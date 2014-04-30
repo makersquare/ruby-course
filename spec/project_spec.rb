@@ -64,8 +64,15 @@ describe 'Project' do
       expect(@my_project.get_tasks_by_status('incomplete')).to eq([task5, task4, task3])
     end
 
-    it "knows older tasks get priority over newer ones with the same priority" do
+    it 'knows if two tasks have the same priority number, the older task gets priority' do
+      @my_project.tasks = []
+      allow(Time).to receive(:now).and_return(Time.parse("2014-04-29"))
+      task3 = TM::Task.new(@my_project.id, "created yesterday", 2)
+      allow(Time).to receive(:now).and_return(Time.parse("2014-04-30"))
+      task4 = TM::Task.new(@my_project.id, "created today", 2)
+      @my_project.add_task(task4)
+      @my_project.add_task(task3)
+      expect(@my_project.get_tasks_by_status('incomplete')).to eq([task3, task4])
     end
   end
-
 end
