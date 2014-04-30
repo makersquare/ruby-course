@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'pry-debugger'
 
 describe 'Task' do
   it "exists" do
@@ -6,11 +7,12 @@ describe 'Task' do
   end
 
   before(:each) do
-    @t1 = TM::Task.new(1, "create a new task", 1)
-    @t2 = TM::Task.new(2, "eat lunch", 2)
     TM::Task.reset_class_variables
-  end
 
+    @t1 = TM::Task.new(1, "create a new task", 1)
+
+    @t2 = TM::Task.new(2, "eat lunch", 2)
+  end
   describe '.initialize' do
     it "sets a task ID number for new tasks" do
       expect(@t1.tid).to eq(1)
