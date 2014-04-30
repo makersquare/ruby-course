@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe 'Task' do
+	before (:each) do
+		TM::Task.reset_class_variables
+	end
+
 	describe "initialize method" do
 		it "can be initialized with a name" do
 			task1 = TM::Task.new("task1")
@@ -10,7 +14,15 @@ describe 'Task' do
 		it "has a default name of 'default' if name not specified" do
 			task1 = TM::Task.new
 			expect(task1.name).to eq("default")
+		end
 
+		it "creates a unique ID" do 
+			task1 = TM::Task.new
+			task2 = TM::Task.new
+			task3 = TM::Task.new
+			expect(task1.id).to eq(1)
+			expect(task2.id).to eq(2)
+			expect(task3.id).to eq(3)
 		end
 
 		it "creates multiple unique IDS in numerical order" do

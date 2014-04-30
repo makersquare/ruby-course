@@ -28,6 +28,11 @@ class TM::Task
 	end	
 
 	# following methods are to assist rspec
+
+	def self.reset_class_variables
+		@@task_count = 0
+	end
+
 	def set_id(id)
 		@id = id
 	end
