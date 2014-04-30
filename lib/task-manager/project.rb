@@ -1,5 +1,6 @@
 
 class TM::Project
+  # @@projects = 0
   @@counter = 1
   attr_accessor :name
   attr_reader :id, :tasks
@@ -8,6 +9,12 @@ class TM::Project
     @id = @@counter
     @@counter += 1
     @tasks = []
+
+  end
+
+  #helper method for tests
+  def self.reset_class_variables
+    @@counter = 1
   end
 
   def add_task(task)
