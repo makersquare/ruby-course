@@ -26,8 +26,13 @@ class TM::Task
 		@date_completed = nil
 	end	
 
+	# following methods are to assist rspec
 	def set_id(id)
 		@id = id
+	end
+
+	def set_date_created(time)
+		@date_created = time
 	end
 
 end

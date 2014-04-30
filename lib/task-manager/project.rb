@@ -13,6 +13,7 @@ class TM::Project
 	end
 
 	def add_task(task)
+		#extension -- handle multiple tasks, splat argument?
 		@tasks << task if task.class == TM::Task
 	end
 
@@ -48,11 +49,12 @@ class TM::Project
 		filtered_tasks = []
 		@tasks.each_index do |x|
 			if @tasks[x].completed
-				filtered_tasks <<@tasks[x]
+				filtered_tasks << @tasks[x]
 			end
 		end
 
-		filtered_tasks.sort { |a,b| b.date_created > a.date_created }
+		filtered_tasks.sort! { |a,b| b.date_created <=> a.date_created }
+		return filtered_tasks
 		
 	end
 
