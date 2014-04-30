@@ -1,11 +1,17 @@
 require 'spec_helper'
 
 describe 'Task' do
+   before(:each) do
+    @new_task = TM::Task.new("Write Spec")
+  end
+
   it "exists" do
     expect(TM::Task).to be_a(Class)
   end
 
-  xit "initalizes with a description" do
+  it "initalizes with a description" do
+    expect(@new_task.description).to eq("Write Spec")
+
   end
 
   xit "intializes with a time created" do
@@ -25,4 +31,5 @@ describe 'Task' do
 
   xit "it's priority can be changed" do
   end
+
 end

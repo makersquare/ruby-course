@@ -1,6 +1,6 @@
 
 class TM::Task
-  attr_accessor :priority :complete :description
+  attr_accessor :priority, :complete, :description
   attr_reader :created
 
   def initialize(description, priority=1)
