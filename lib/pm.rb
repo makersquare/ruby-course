@@ -16,6 +16,8 @@ class TerminalClient
 
 			case input_arguments[0]
 				# before (:each) { check_arguments(input_arguments) }
+			when "help"
+				list_commands
 			when "list"
 				list_projects
 			when "create"
@@ -101,18 +103,18 @@ class TerminalClient
 
 	end
 
-		def self.show(project_id)
-			project = get_project_by_id(project_id)
-			if project == nil
-				puts "Project with id='#{project_id}' not found."
-			else
-				puts "Remaining tasks for project '#{project.name}' with id=#{project.id}"
-				puts project.retrieve_incompleted_tasks_by_priority
-			end
+	def self.show(project_id)
+		project = get_project_by_id(project_id)
+		if project == nil
+			puts "Project with id='#{project_id}' not found."
+		else
+			puts "Remaining tasks for project '#{project.name}' with id=#{project.id}"
+			puts project.retrieve_incompleted_tasks_by_priority
 		end
+	end
 
-		def self.get_project_by_id(project_id)
-			@@projects.each_index do |x|
+	def self.get_project_by_id(project_id)
+		@@projects.each_index do |x|
 			return @@projects[x] if @@projects[x].id == project_id.to_i # note the to_i is needed!	
 		end
 		return nil
@@ -126,7 +128,6 @@ class TerminalClient
 		else
 			project.add_task(task)
 			puts "Added task [Description: #{task.description} to project #{project.name} with id=#{project.id}"
-			# puts project.retrieve_incompleted_tasks_by_priority
 		end
 	end
 
@@ -134,8 +135,8 @@ class TerminalClient
 		task_found = false
 		@@projects.each_index do |x|
 			@@projects[x].tasks.each_index do |y|
-				if @@projects[x].tasks[y].id == task_id
-					@@projects[x].tasks[y].mark_task_completed
+				if @@projects[x].tasks[y].id == task_id.to_i  # note the to_i is needed!
+					@@projects[x].tasks[y].mark_completed
 					task_found = true
 				end
 			end

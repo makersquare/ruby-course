@@ -28,13 +28,15 @@ class TM::Task
 	end
 
 	def print_details
-		puts "Task Name: #{@name}"
-		puts "Task ID: #{@id}"
-		puts "Description: #{@description}"
-		puts "Priority: #{@priority}"
-		puts "Date Created: #{@date_created}"
-		puts "Completed?: #{@completed}"
-		puts "Date Completed: #{@date_completed}"
+		puts "  --------------------"
+		puts "  Task Name: #{@name}"
+		puts "  Task ID: #{@id}"
+		puts "  Description: #{@description}"
+		puts "  Priority: #{@priority}"
+		puts "  Date Created: #{@date_created}"
+		puts "  Completed?: #{@completed}"
+		puts "  Date Completed: #{@date_completed}"
+		puts "  --------------------"
 	end	
 
 	# following methods are to assist rspec
