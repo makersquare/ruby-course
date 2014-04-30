@@ -10,9 +10,9 @@ class TM::Project
     @tasks = []
   end
 
-  def add_tasks(project_id, description, priority)
-    addTo = TM::Task.new(task_id, description, priority)
-    @tasks << addTo
+  def add_task(task)
+    task.project_id = self.id
+    @tasks << task
   end
 
   def self.reset_class_variables

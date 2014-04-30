@@ -1,11 +1,13 @@
 
 class TM::Task
-  attr_accessor :task_id, :description, :priority_number
+  attr_accessor :description, :priority_number, :project_id, :name
 
 
-  def initialize(description, priority_number)
+  def initialize(name, description, priority_number)
+    @name = name
     @description = description
     @priority_number = priority_number
   end
 
 end
+

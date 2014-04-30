@@ -19,8 +19,15 @@ describe 'Project' do
     expect(@p1.id).to eq(1)
     expect(@p2.id).to eq(2)
   end
-end
 
+  it 'can add a task with a project id' do
+    new = TM::Task.new("name", "description", 2)
+    @p1.add_task(new)
+
+    expect(new.project_id).to eq(1)
+  end
+
+end
 
 # A project can retrieve a list of all complete tasks, sorted by creation date
 
