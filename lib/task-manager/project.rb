@@ -129,4 +129,9 @@ class TM::Project
 		return filtered_tasks		
 	end
 
+	# to help rspec tests
+	def self.reset_class_variables
+		@@project_count = 0
+	end
+
 end

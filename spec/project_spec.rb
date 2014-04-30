@@ -6,6 +6,10 @@ describe 'Project' do
   #   expect(TM::Project).to be_a(Class)
   # end
 
+  before (:each) do
+    TM::Project.reset_class_variables
+  end
+
   describe "initialize method" do
 
   	it "can be initialized with a name" do
@@ -19,8 +23,12 @@ describe 'Project' do
   	end
 
   	it "creates a unique ID is created starting with id=1" do
-  		project1 = TM::Project.new
-  		expect(project1.id).to eq(3)
+      project1 = TM::Project.new
+      project2 = TM::Project.new
+  		project3 = TM::Project.new
+      expect(project1.id).to eq(1)
+      expect(project2.id).to eq(2)
+  		expect(project3.id).to eq(3)
   	end
 
   	it "creates multiple unique IDS in numerical order" do
