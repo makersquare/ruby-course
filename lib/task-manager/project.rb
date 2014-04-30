@@ -18,7 +18,7 @@ class TM::Project
 
   def complete_task(task_id)
     task = @tasks.select{|task| task_id == task.task_id}.first
-    task.status = true
+    task.status = 1
   end
 
   # Used to reset class variables for rspec tests

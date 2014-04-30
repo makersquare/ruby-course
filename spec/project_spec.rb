@@ -31,7 +31,7 @@ describe 'Project' do
     @project.add_task(@task)
     @project.complete_task(1)
 
-    expect(@task.status).to eq true
+    expect(@task.status).to eq 1
   end
 
 end
