@@ -25,6 +25,16 @@ class TM::Task
 	def mark_incomplete
 		@completed = false
 		@date_completed = nil
+	end
+
+	def print_details
+		puts "Task Name: #{@name}"
+		puts "Task ID: #{@id}"
+		puts "Description: #{@description}"
+		puts "Priority: #{@priority}"
+		puts "Date Created: #{@date_created}"
+		puts "Completed?: #{@completed}"
+		puts "Date Completed: #{@date_completed}"
 	end	
 
 	# following methods are to assist rspec

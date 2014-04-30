@@ -44,10 +44,10 @@ class TerminalClient
 				if input_arguments.size == 2
 					task_id = input_arguments[1]
 					mark_task_complete_with_id(task_id)
-					task = TM::Task.new(priority: input_arguments[2], description: input_arguments[3] )
-					project_id = input_arguments[1]
-					add_task_to_project(task, project_id)
-					puts "adding task..."
+					# task = TM::Task.new(priority: input_arguments[2], description: input_arguments[3] )
+					# project_id = input_arguments[1]
+					# add_task_to_project(task, project_id)
+					puts "marking task complete..."
 					# show(input_arguments[1])
 				end
 			else
@@ -55,7 +55,6 @@ class TerminalClient
 				puts "Type 'help' for list of commands"
 			end
 		end
-		# puts "Welcome to Project Manager Pro®. What can I do for you today?"
 	end
 
 	def self.print_welcome_message
@@ -96,22 +95,24 @@ class TerminalClient
 		@@projects.each do |project|
 			puts "Name: #{project.name}"
 			puts "ID: #{project.id}"
-			# puts "Description: #{project.description}"
+			puts "--- Tasks ---"
+			project.tasks.each { |task| task.print_details }
 		end
+
 	end
 
-	def self.show(project_id)
-		project = get_project_by_id(project_id)
-		if project == nil
-			puts "Project with id='#{project_id}' not found."
-		else
-			puts "Remaining tasks for project '#{project.name}' with id=#{project.id}"
-			puts project.retrieve_incompleted_tasks_by_priority
+		def self.show(project_id)
+			project = get_project_by_id(project_id)
+			if project == nil
+				puts "Project with id='#{project_id}' not found."
+			else
+				puts "Remaining tasks for project '#{project.name}' with id=#{project.id}"
+				puts project.retrieve_incompleted_tasks_by_priority
+			end
 		end
-	end
 
-	def self.get_project_by_id(project_id)
-		@@projects.each_index do |x|
+		def self.get_project_by_id(project_id)
+			@@projects.each_index do |x|
 			return @@projects[x] if @@projects[x].id == project_id.to_i # note the to_i is needed!	
 		end
 		return nil
@@ -129,8 +130,23 @@ class TerminalClient
 		end
 	end
 
+	def self.mark_task_complete_with_id(task_id)
+		task_found = false
+		@@projects.each_index do |x|
+			@@projects[x].tasks.each_index do |y|
+				if @@projects[x].tasks[y].id == task_id
+					@@projects[x].tasks[y].mark_task_completed
+					task_found = true
+				end
+			end
+		end
+		if task_found == false			
+			puts "Task with id='#{task_id}' not found in any of the projects."
+		end
+	end
+
 	def self.split_text(input)
-		new input = []
+		new_input = []
 		# everything up to first double quote
 		# "hello".index('e') --> 1
 		# input.scan(\".*\")
