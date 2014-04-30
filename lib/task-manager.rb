@@ -47,7 +47,7 @@ class TMTerminal
     when "show"
       project = TM::Project.get_project(1)
       puts "Priority\tID\tDescription"
-      project.tasks.each do |task|
+      project.incomplete_tasks.each do |task|
         puts "#{task.priority}\t#{task.task_id}\t#{task.description}"
       end
     when "history"
@@ -63,7 +63,7 @@ class TMTerminal
       print "Enter the task description: "
       description = gets.chomp()
       print "Enter the task priority: "
-      priority = gets.chomp()
+      priority = gets.chomp().to_i
 
       TM::Task.new(project,description,priority)
     when "mark"
