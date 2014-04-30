@@ -35,4 +35,8 @@ class TM::Task
 		@date_created = time
 	end
 
+	def set_priority(num)
+		@priority = num
+	end
+
 end

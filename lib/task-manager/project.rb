@@ -45,7 +45,7 @@ class TM::Project
 		end
 	end
 
-	def retrieve_completed_tasks_by_date(most_recent_first: true)
+	def retrieve_completed_tasks_by_date(newest_first: true)
 		filtered_tasks = []
 		@tasks.each_index do |x|
 			if @tasks[x].completed
@@ -53,10 +53,27 @@ class TM::Project
 			end
 		end
 
-		if most_recent_first
+		if newest_first
 			filtered_tasks.sort! { |a,b| b.date_created <=> a.date_created }
 		else
 			filtered_tasks.sort! { |a,b| a.date_created <=> b.date_created }
+		end
+		return filtered_tasks
+		
+	end
+
+	def retrieve_incompleted_tasks_by_priority(highest_priority_first: true)
+		filtered_tasks = []
+		@tasks.each_index do |x|
+			if @tasks[x].completed == false
+				filtered_tasks << @tasks[x]
+			end
+		end
+
+		if highest_priority_first
+			filtered_tasks.sort! { |a,b| a.priority <=> b.priority }
+		else
+			filtered_tasks.sort! { |a,b| b.priority <=> a.priority }
 		end
 		return filtered_tasks
 		

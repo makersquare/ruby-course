@@ -135,7 +135,7 @@ describe 'Project' do
 
     end
 
-    it "can return tasks ordered by date created, most recent date first is default" do
+    it "can return tasks ordered by date created, newest date first is default" do
 
       project1 = TM::Project.new("project1")
       task1 = TM::Task.new("task1")
@@ -147,6 +147,8 @@ describe 'Project' do
       task3 = TM::Task.new("task3")
       task3.mark_completed
       task3.set_date_created(Time.parse("2/1/2014"))
+      task4 = TM::Task.new("task4") #task not completed, should't appear
+      task4.set_date_created(Time.parse("4/1/2014"))
       
       project1.add_task(task1)
       project1.add_task(task2)
@@ -158,26 +160,7 @@ describe 'Project' do
       expect(task_array[1].name).to eq("task3")
       expect(task_array[2].name).to eq("task1")
 
-    end
-
-    it "can return tasks ordered by date created, earliest date first" do
-
-      project1 = TM::Project.new("project1")
-      task1 = TM::Task.new("task1")
-      task1.mark_completed
-      task1.set_date_created(Time.parse("1/1/2014"))
-      task2 = TM::Task.new("task2")
-      task2.mark_completed
-      task2.set_date_created(Time.parse("3/1/2014"))
-      task3 = TM::Task.new("task3")
-      task3.mark_completed
-      task3.set_date_created(Time.parse("2/1/2014"))
-      
-      project1.add_task(task1)
-      project1.add_task(task2)
-      project1.add_task(task3)
-
-      task_array = project1.retrieve_completed_tasks_by_date(most_recent_first: false)
+      task_array = project1.retrieve_completed_tasks_by_date(newest_first: false)
       expect(task_array.size).to eq(3)
       expect(task_array[0].name).to eq("task1")
       expect(task_array[1].name).to eq("task3")
@@ -185,9 +168,35 @@ describe 'Project' do
 
     end
 
-    xit "can return tasks ordered by priority" do
+    it "can return incompleted tasks ordered by priority" do
 
+      project1 = TM::Project.new("project1")
+      task1 = TM::Task.new("task1")
+      task1.set_priority(1)
+      task2 = TM::Task.new("task2")
+      task2.set_priority(3)
+      task3 = TM::Task.new("task3")
+      task3.set_priority(2)
+      task4 = TM::Task.new("task4") 
+      task4.mark_completed #task completed, should't appear
+      task4.set_priority(4)
+      
+      project1.add_task(task1)
+      project1.add_task(task2)
+      project1.add_task(task3)
+
+      task_array = project1.retrieve_incompleted_tasks_by_priority
+      expect(task_array.size).to eq(3)
+      expect(task_array[0].name).to eq("task1")
+      expect(task_array[1].name).to eq("task3")
+      expect(task_array[2].name).to eq("task2")
+      task_array = project1.retrieve_incompleted_tasks_by_priority(highest_priority_first: false)
+      expect(task_array.size).to eq(3)
+      expect(task_array[0].name).to eq("task2")
+      expect(task_array[1].name).to eq("task3")
+      expect(task_array[2].name).to eq("task1")
     end
+
 
     xit "can return just completed tasks" do
 
