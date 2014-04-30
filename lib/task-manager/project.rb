@@ -20,12 +20,11 @@ class TM::Project
     completed.sort_by { |item| item.date_created }
   end
 
-  def uncompleted_task
-    uncompleted = @task.select do |task_item|
+  def incompleted_task
+    incompleted = @task.select do |task_item|
       task_item.completed == false
     end
-    uncompleted.sort_by! { |item| item.task_id }
-    uncompleted.sort_by { |item| item.priority }
+    incompleted.sort_by { |item| [item.priority, item.task_id] }
   end
 
   def add_task(project_id, priority, description)

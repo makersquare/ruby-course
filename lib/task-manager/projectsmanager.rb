@@ -16,7 +16,7 @@ class TM::ProjectsManager
 
   def remaining_task(project_id)
     project = find_project_by_id(project_id)
-    project.uncompleted_task
+    project.incompleted_task
   end
 
   def history(project_id)
@@ -45,6 +45,3 @@ class TM::ProjectsManager
   end
 
 end
-
-# t = TM::TerminalClient.new
-# t.start

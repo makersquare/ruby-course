@@ -21,7 +21,7 @@ class TM::TerminalClient
     @project_manager.add_task(project_id, priority, description)
   end
 
-  def uncompleted_task(pid)
+  def incompleted_task(pid)
     puts "Priority  TID  Description"
     @project_manager.remaining_task(pid).each do |task|
       puts "       #{task.priority}   #{task.task_id}   #{task.description}"
@@ -69,24 +69,26 @@ class TM::TerminalClient
     input_array = input.split(" ")
     input_action = input_array[0].downcase.to_sym
 
-    if input_action == :list
+    case input_action
+    when :list
       list_all_projects
-    elsif input_action == :create
+    when :create
       create_project(input_array[1..-1].join(" "))
-    elsif input_action == :show
-      uncompleted_task(input_array.last.to_i)
-    elsif input_action == :show
+    when :show
+      incompleted_task(input_array.last.to_i)
+    when :history
       history(input_array.last.to_i)
-    elsif input_action == :add
+    when :add
       add_task(input_array[1].to_i, input_array[2].to_i, input_array[3..-1].join(" "))
-    elsif input_action == :mark
+    when :mark
       complete_task(input_array[1].to_i)
-    elsif input_action == :help
+    when :help
       list_instructions
-    elsif input_action == :exit
+    when :exit
       @run = false
     else
-      "I'm sorry that is not a valid command"
+      puts "I'm sorry that is not a valid command"
+      puts "Please enter in a valid command:"
     end
   end
 

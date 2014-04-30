@@ -37,7 +37,7 @@ describe 'Project' do
     end
   end
 
-  context 'a project can see all uncompleted task' do
+  context 'a project can see all incompleted task' do
     let(:project) { TM::Project.new("My_first_project") }
     let(:projects_manger) { TM::ProjectsManager.new }
     let(:task1) { TM::Task.new(1, 1, "complete this task manager") }
@@ -66,7 +66,7 @@ describe 'Project' do
       expect(project.completed_task).to eq([task1, task2])
     end
 
-    it 'list uncompleted task in order by priority' do
+    it 'list incompleted task in order by priority' do
       allow(Time).to receive(:now).and_return(Time.parse("12PM"))
       task1 = TM::Task.new(1, 3, "complete this task manager")
       allow(Time).to receive(:now).and_return(Time.parse("3PM"))
@@ -78,10 +78,10 @@ describe 'Project' do
       project.task << task2
       project.task << task3
 
-      expect(project.uncompleted_task).to eq([task3, task2, task1])
+      expect(project.incompleted_task).to eq([task3, task2, task1])
     end
 
-    it 'list uncompleted task in order by priority and oldest first' do
+    it 'list incompleted task in order by priority and oldest first' do
       allow(Time).to receive(:now).and_return(Time.parse("12PM"))
       task1 = TM::Task.new(1, 1, "complete this task manager")
       allow(Time).to receive(:now).and_return(Time.parse("3PM"))
