@@ -4,6 +4,8 @@ class TM::TerminalClient
 
   def initialize
     @projects = []
+    # array of all task that have been added
+    @task = []
   end
 
   def create_project(name)
@@ -26,7 +28,9 @@ class TM::TerminalClient
 
   def add_task(project_id, priority, description)
     project = find_by_id(project_id)
-    project.task << TM::Task.new(project_id, priority, description)
+    task = TM::Task.new(project_id, priority, description)
+    project.task << task
+    @task << task
   end
 
   def find_by_id(project_id)
