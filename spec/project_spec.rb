@@ -6,7 +6,7 @@ describe 'Project' do
     @project = TM::Project.new("project")
     @project1 = TM::Project.new("project 1")
     @task = TM::Task.new(@project, "description1", 3)
-    @task1 = TM::Task.new(@project, "description2", 5)
+    @task1 = TM::Task.new(@project, "description2", 3)
     @task2 = TM::Task.new(@project, "description3", 10)
 
 
@@ -51,13 +51,11 @@ describe 'Project' do
   end
 
   it "retrieves incomplete tasks and sorts them by priority" do
-    @task3 = TM::Task.new(@project, "description1", 3)
     @project.add_task(@task1)
     @project.add_task(@task)
     @project.add_task(@task2)
-    @project.add_task(@task3)
 
     expect(@project.incomplete_tasks.first).to eq @task2
-    expect(@project.incomplete_tasks.last).to eq @task3
+    expect(@project.incomplete_tasks.last).to eq @task
   end
 end
