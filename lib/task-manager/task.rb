@@ -13,4 +13,8 @@ class TM::Task
     @description = description
     @complete = false
   end
+
+  def self.reset_class_variables
+    @@tid_counter = 0
+  end
 end

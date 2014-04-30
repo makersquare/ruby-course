@@ -6,6 +6,7 @@ describe 'Project' do
     TM::Project.reset_class_variables
     @p1 = TM::Project.new("Project 1")
   	@p2 = TM::Project.new("Project 2")
+  	@t1 = TM::Task.new(1, "Task 1", 1)
   end
 
   it "exists" do
@@ -20,5 +21,10 @@ describe 'Project' do
   it "initializes with a unique id" do
   	expect(@p1.pid).to eq(1)
   	expect(@p2.pid).to eq(2)
+  end
+
+  xit "A new task can be complete, specified by id" do
+  	expect(@p1.mark_complete(1, 1)).to_not_raise_error
+    expect(@t1.complete).to eq(false)
   end
 end
