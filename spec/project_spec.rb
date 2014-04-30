@@ -17,6 +17,10 @@ describe 'Project' do
     expect(TM::Project.projects.length).to eq(2)
   end
 
+  it "returns a list of all created projects" do
+    expect(TM::Project.projects).to eq([@project1, @project2])
+  end
+
   describe 'initialize' do
     it "creates a new project with a name" do
       expect(@project1).to be_a(TM::Project)
