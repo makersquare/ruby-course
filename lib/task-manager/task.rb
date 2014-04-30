@@ -1,4 +1,3 @@
-
 class TM::Task
 	attr_reader :id, :date_created, :date_completed, :completed
 	attr_accessor :name, :project_id, :priority, :description

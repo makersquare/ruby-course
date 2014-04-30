@@ -18,20 +18,25 @@ class TerminalClient
 				# before (:each) { check_arguments(input_arguments) }
 			when "help"
 				list_commands
-			when "list"
+			when "list" , "ls"
 				list_projects
-			when "create"
+			when "create", "c"
 				check_arguments(input_arguments,1)
 				if input_arguments.size == 2
 					puts "creating..."
 					@@projects << TM::Project.new(input_arguments[1])
 				end
-			when "show"
+			when "show", "s"
 				check_arguments(input_arguments,1)
 				if input_arguments.size == 2
 					show(input_arguments[1])
 				end
-			when "add"
+			when "history", "h"
+				check_arguments(input_arguments,1)
+				if input_arguments.size == 2
+					history(input_arguments[1])
+				end
+			when "add", "a"
 				check_arguments(input_arguments, 3)
 				if input_arguments.size == 4
 					# task = TM::Task.new(description: "Get shit done!", priority: 3)
@@ -41,7 +46,7 @@ class TerminalClient
 					puts "adding task..."
 					# show(input_arguments[1])
 				end
-			when "mark"
+			when "mark", "m"
 				check_arguments(input_arguments, 1)
 				if input_arguments.size == 2
 					task_id = input_arguments[1]
@@ -66,7 +71,7 @@ class TerminalClient
 	def self.list_commands
 		puts "Available Commands:"
 		puts "   help            Show these commands again"
-		puts "   list            List all projects"
+		puts "   list (ls)       List all projects"
 		puts "   create NAME     Create a new project with name=NAME"
 		puts "   show PID        Show remaining tasks for project with id=PID"
 		puts "   history PID     Show completed tasks for project with id=PID"
@@ -92,12 +97,15 @@ class TerminalClient
 	end
 
 	def self.list_projects
-		puts "Projects List"
-		puts "-------------"
+		puts "-----------------"
+		puts "  Projects List  "
+		puts "-----------------"
+		puts "[No projects exist]" if @@projects.size == 0
 		@@projects.each do |project|
 			puts "Name: #{project.name}"
 			puts "ID: #{project.id}"
-			puts "--- Tasks ---"
+			puts "  --- Tasks ---"
+			puts "  [No tasks exist for this project]" if project.tasks.size == 0
 			project.tasks.each { |task| task.print_details }
 		end
 
@@ -109,7 +117,31 @@ class TerminalClient
 			puts "Project with id='#{project_id}' not found."
 		else
 			puts "Remaining tasks for project '#{project.name}' with id=#{project.id}"
-			puts project.retrieve_incompleted_tasks_by_priority
+			remaining_tasks = project.retrieve_incompleted_tasks_by_priority
+			if remaining_tasks.size == 0
+				puts "No remaining tasks, all are completed."
+			else
+				remaining_tasks.each do |task|
+					task.print_details
+				end
+			end
+		end
+	end
+
+	def self.history(project_id)
+		project = get_project_by_id(project_id)
+		if project == nil
+			puts "Project with id='#{project_id}' not found."
+		else
+			puts "History of completed tasks for project '#{project.name}' with id=#{project.id}"
+			completed_tasks = project.retrieve_completed_tasks_by_date
+			if completed_tasks.size == 0
+				puts "[No tasks have been completed for this project]"
+			else
+				completed_tasks.each do |task|
+					task.print_details
+				end
+			end
 		end
 	end
 
@@ -155,6 +187,8 @@ class TerminalClient
 
 		return input.split
 	end
+
+
 
 end
 
