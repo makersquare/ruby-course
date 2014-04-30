@@ -1,6 +1,9 @@
 require_relative 'task-manager.rb'
 
 class TerminalClient
+
+	@@projects = []
+
 	def self.start
 		print_welcome_message
 		list_commands
@@ -8,16 +11,26 @@ class TerminalClient
 		while input != "exit" do
 			print ">> "
 			input = gets.chomp
+
+			input_arguments = input.split
+
+			case input_arguments[0]
+			when "list"
+				list_projects
+			when "create"
+				puts "creating..."
+			else
+				puts "Command [#{input_arguments[0]}] not recognized."
+				puts "Type 'help' for list of commands"
+			end
 		end
 		# puts "Welcome to Project Manager Pro®. What can I do for you today?"
 	end
 
-	# private
 	def self.print_welcome_message
 		puts "Welcome to Project Manager Pro®. What can I do for you today?\n\n"
 	end
 
-	# private
 	def self.list_commands
 		puts "Available Commands:"
 		puts "   help            Show these commands again"
@@ -29,6 +42,17 @@ class TerminalClient
 		puts "   mark TID        Mark task with id=TID as complete"
 		puts "   exit            quits application"
 	end
+
+	def self.list_projects
+		puts "Projects List"
+		puts "-------------"
+		@@projects.each do |project|
+			puts "Name: #{project.name}"
+			puts "ID: #{project.id}"
+			# puts "Description: #{project.description}"
+		end
+	end
+
 end
 
 # project1 = TM::Project.new("project1")
