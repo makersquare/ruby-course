@@ -1,11 +1,12 @@
 
 class TM::Task
 
-    attr_reader :pid, :date
-    attr_accessor :tid_counter, :tid, :description, :pnum, :complete
+    attr_reader :date
+    attr_accessor :tid_counter, :tid, :description, :pnum, :complete, :pid
 
     @@tid_counter = 0
   def initialize(pid, description, pnum)
+    @pid = pid
     @date = Time.now
     @pnum = pnum
     @@tid_counter += 1
