@@ -1,0 +1,32 @@
+=> [[31m[1;31m#<[0m[31mTM::Task:0xb9b9a8d4
+  @completed_at=nil,
+  @created_at=2014-04-30 15:21:34 -0500,
+  @description="description1",
+  @priority=3,
+  @project_id=1,
+  @status=0,
+  @task_id=1[1;31m>[0m[31m[0m,
+ [31m[1;31m#<[0m[31mTM::Task:0xb9b9a884
+  @completed_at=nil,
+  @created_at=2014-04-30 15:21:34 -0500,
+  @description="description2",
+  @priority=10,
+  @project_id=1,
+  @status=0,
+  @task_id=2[1;31m>[0m[31m[0m,
+ [31m[1;31m#<[0m[31mTM::Task:0xb9b9a780
+  @completed_at=nil,
+  @created_at=2014-04-30 15:21:34 -0500,
+  @description="description3",
+  @priority=5,
+  @project_id=1,
+  @status=0,
+  @task_id=3[1;31m>[0m[31m[0m,
+ [31m[1;31m#<[0m[31mTM::Task:0xb9b9a744
+  @completed_at=nil,
+  @created_at=2014-04-30 15:21:34 -0500,
+  @description="description4",
+  @priority=3,
+  @project_id=1,
+  @status=0,
+  @task_id=4[1;31m>[0m[31m[0m][0m

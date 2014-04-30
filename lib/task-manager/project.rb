@@ -15,8 +15,7 @@ class TM::Project
     @@projects << self
   end
 
-  def add_task(project,desc,priority)
-    task = TM::Task.new(project, desc, priority)
+  def add_task(task)
     @tasks << task
   end
 
@@ -42,5 +41,6 @@ class TM::Project
   # Used to reset class variables for rspec tests
   def self.reset_class_variables
     @@pid = 0
+    @@projects = []
   end
 end

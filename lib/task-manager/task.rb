@@ -1,7 +1,7 @@
 
 class TM::Task
-  attr_reader :description, :priority, :project_id, :status, :task_id, :created_at
-  attr_accessor :status, :completed_at, :tasks
+  attr_reader :description, :priority, :project_id, :task_id, :created_at
+  attr_accessor :status, :completed_at
   @@task_id = 0
   @@tasks = []
 
@@ -29,5 +29,6 @@ class TM::Task
   # Reset class variables for rspec tests
   def self.reset_class_variables
     @@task_id = 0
+    @@tasks = []
   end
 end

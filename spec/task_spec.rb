@@ -1,10 +1,11 @@
 require 'spec_helper'
+require 'pry-debugger'
 
 describe 'Task' do
   before do
     @project = TM::Project.new("project")
     @task = TM::Task.new(@project.pid, "description1", 3)
-    @task1 = TM::Task.new(@project.pid, "description", 5)
+
   end
 
   it "inializes with a project id, description and priority number" do
@@ -14,7 +15,7 @@ describe 'Task' do
   end
 
   it "marks tasks as complete" do
-    # binding.pry
+    expect(@task.status).to eq 0
     TM::Task.complete_task(@task.task_id)
 
     expect(@task.status).to eq 1
