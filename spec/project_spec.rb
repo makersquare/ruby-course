@@ -34,4 +34,9 @@ describe 'Project' do
   	expect(@p1.mark_complete(1, 1)).to_not raise_error
   	expect(@t1.complete).to eq(true)
   end
+
+  it "a project can retrieve all completed tasks" do
+  	@p1.mark_complete(1,1)
+  	expect(@p1.completed_tasks(1)).to eq([@t1])
+  end
 end

@@ -45,7 +45,9 @@ class TM::Project
       end
     end
 
-    def completed_tasks(pid)
+    def completed_tasks(projid)
+      task = @@tasks.select{|task| task.pid == projid && task.complete == true}
+      task
     end
 
     def incomplete_tasks(pid)
