@@ -4,6 +4,7 @@ describe 'Task' do
   before(:each) do
     @t1 = TM::Task.new('t1', 'learning things', 1)
     @t2 = TM::Task.new('t2','learning moar things', 2)
+    @t3 = TM::Task.new('t3','learning moar things', 3)
   end
 
   it "exists" do
@@ -20,13 +21,13 @@ describe 'Task' do
     expect(@t2.priority_number).to eq(2)
   end
 
+  it 'can be marked as complete' do
 
-
-  xit 'can be marked as complete, specified by id' do
-    fancy = TM::Task.new('id', 'learning things', 1)
-
-    expect(fancy.priority_number).to eq(1)
+    expect(@t1.complete).to eq(true)
+    expect(@t2.complete).to eq(true)
+    expect(@t3.complete).to eq(true)
   end
+
 end
 
 

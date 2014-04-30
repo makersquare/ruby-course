@@ -27,6 +27,38 @@ describe 'Project' do
     expect(new.project_id).to eq(1)
   end
 
+  it 'can be marked as complete, specified by project' do
+    @t1 = TM::Task.new('t1', 'learning things', 1)
+    @t2 = TM::Task.new('t2','learning moar things', 2)
+    @t3 = TM::Task.new('t3','learning moar things', 3)
+    @p1.add_task(@t1)
+    @p1.add_task(@t2)
+    @p1.complete
+    @p1.add_task(@t3)
+
+    expect(@t1.completed).to eq(true)
+    expect(@t2.completed).to eq(true)
+    expect(@t3.completed).to eq(false)
+  end
+
+  xit 'can retrieve a list of all complete tasks' do
+    @t1 = TM::Task.new('t1', 'learning things', 1)
+    @t2 = TM::Task.new('t2','learning moar things', 2)
+    @t3 = TM::Task.new('t3','learning moar things', 3)
+    @p1.add_task(@t1)
+    @p1.add_task(@t2)
+    @p1.add_task(@t3)
+    @t1.complete
+    @t2.complete
+    @t3.complete
+
+    expect(@p1.completed_tasks).to eq('@t1, @t2, @t3')
+  end
+
+  xit 'can retrieve a list of all complete tasks sorted by creation date' do
+
+  end
+
 end
 
 # A project can retrieve a list of all complete tasks, sorted by creation date
