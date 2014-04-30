@@ -20,4 +20,14 @@ describe 'Project' do
       expect(@p2.id).to eq(2)
     end
   end
+
+  describe 'new_task' do
+    before (:each) do
+      @p1.new_task("complete task manager", 1)
+    end
+    it "creates a new task" do
+      expect(@p1.tasks.length).to eq(1)
+      expect(@p1.tasks.first).to be_a(Object)
+    end
+  end
 end
