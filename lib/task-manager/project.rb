@@ -16,6 +16,7 @@ class TM::Project
 
     def self.reset_class_variables
       @@id_counter = 0
+      @@projects = []
     end
 
     def mark_complete(pid, tid)
