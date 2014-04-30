@@ -12,7 +12,7 @@ class TerminalClient
 			print ">> "
 			input = gets.chomp
 
-			input_arguments = input.split
+			input_arguments = split_text(input)
 
 			case input_arguments[0]
 				# before (:each) { check_arguments(input_arguments) }
@@ -32,6 +32,21 @@ class TerminalClient
 			when "add"
 				check_arguments(input_arguments, 3)
 				if input_arguments.size == 4
+					# task = TM::Task.new(description: "Get shit done!", priority: 3)
+					task = TM::Task.new(priority: input_arguments[2], description: input_arguments[3] )
+					project_id = input_arguments[1]
+					add_task_to_project(task, project_id)
+					puts "adding task..."
+					# show(input_arguments[1])
+				end
+			when "mark"
+				check_arguments(input_arguments, 1)
+				if input_arguments.size == 2
+					task_id = input_arguments[1]
+					mark_task_complete_with_id(task_id)
+					task = TM::Task.new(priority: input_arguments[2], description: input_arguments[3] )
+					project_id = input_arguments[1]
+					add_task_to_project(task, project_id)
 					puts "adding task..."
 					# show(input_arguments[1])
 				end
@@ -64,11 +79,11 @@ class TerminalClient
 			puts "No arguments passed in for '#{input_arguments[0]}'."
 			puts "Should be '#{input_arguments[0]} [argument]'"
 		end
-		if input_arguments.size < expected_num_arguments
+		if input_arguments.size < expected_num_arguments +1
 			puts "Too few arguments for [#{input_arguments[0]}]."
 			puts "Should be '#{input_arguments[0]} [argument]*#{expected_num_arguments}'"
 		end
-		if input_arguments.size > expected_num_arguments
+		if input_arguments.size > expected_num_arguments +1
 			puts "Too many arguments for [#{input_arguments[0]}]."
 			puts "Should be '#{input_arguments[0]} [argument]*#{expected_num_arguments}'"
 			# puts "Should be 'create [project_name]'"
@@ -87,24 +102,42 @@ class TerminalClient
 
 	def self.show(project_id)
 		project = get_project_by_id(project_id)
-		# project = TM::Project.new
 		if project == nil
 			puts "Project with id='#{project_id}' not found."
 		else
 			puts "Remaining tasks for project '#{project.name}' with id=#{project.id}"
-			puts projectsect.retrieve_incompleted_tasks_by_priority
+			puts project.retrieve_incompleted_tasks_by_priority
 		end
 	end
 
 	def self.get_project_by_id(project_id)
 		@@projects.each_index do |x|
-			if @@projects[x].id == project_id.to_i
-			# note the to_i is needed!
-			return @@projects[x]
+			return @@projects[x] if @@projects[x].id == project_id.to_i # note the to_i is needed!	
+		end
+		return nil
+	end
+
+	def self.add_task_to_project(task, project_id)
+		# puts "test"
+		project = get_project_by_id(project_id)
+		if project == nil
+			puts "Project with id='#{project_id}' not found."
+		else
+			project.add_task(task)
+			puts "Added task [Description: #{task.description} to project #{project.name} with id=#{project.id}"
+			# puts project.retrieve_incompleted_tasks_by_priority
 		end
 	end
-	return nil
-end
+
+	def self.split_text(input)
+		new input = []
+		# everything up to first double quote
+		# "hello".index('e') --> 1
+		# input.scan(\".*\")
+		# text.scan(/"([^"]*)"/)
+
+		return input.split
+	end
 
 end
 
@@ -113,3 +146,4 @@ end
 # puts project1.name
 
 TerminalClient.start
+# TerminalClient.add_task_to_project(1, 2)
