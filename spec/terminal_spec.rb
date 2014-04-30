@@ -46,7 +46,15 @@ describe 'TerminalClient' do
       project1.task << task2
 
       expect(terminal.remaining_task(3)).to eq([task1,task2])
+    end
 
+    it 'can list all previously completed task' do
+      terminal.projects << project1
+      terminal.projects << project2
+      project1.task << task1.complete
+      project1.task << task2
+
+      expect(terminal.history(5)).to eq([task1])
     end
   end
 end

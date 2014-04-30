@@ -15,8 +15,17 @@ class TM::TerminalClient
   end
 
   def remaining_task(project_id)
-    project = @projects.select { |item| item.id == project_id }.first
+    project = find_by_id(project_id)
     project.uncompleted_task
+  end
+
+  def history(project_id)
+    project = @projects.select { |item| item.id == project_id }.first
+    project.completed_task
+  end
+
+  def find_by_id(project_id)
+    @projects.select { |item| item.id == project_id }.first
   end
 
 end
