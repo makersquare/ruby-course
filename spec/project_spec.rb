@@ -5,6 +5,7 @@ describe 'Project' do
 
   before(:each) do
     TM::Project.reset_class_variables
+    TM::Task.reset_class_variables
     @project1 = TM::Project.new("Grades")
     @project2 = TM::Project.new("Tests")
   end
@@ -66,20 +67,23 @@ describe 'Project' do
       end
 
       it "displays completed tasks for inputted project" do
-        task = TM::Task.new("Create gradebook", @project1.id, 3)
-        task2 = TM::Task.new("Add students", @project1.id, 2)
-        task3 = TM::Task.new("Add tests", @project1.id, 1)
+        allow(Date).to receive(:today).and_return(Date.parse("14 Feb 2014"))
+        task1 = TM::Task.new("Add students", @project1.id, 2)
+        allow(Date).to receive(:today).and_return(Date.parse("14 March 2014"))
+        task2 = TM::Task.new("Add tests", @project1.id, 3)
+        allow(Date).to receive(:today).and_return(Date.parse("14 March 2012"))
+        task3 = TM::Task.new("Create gradebook", @project1.id, 1)
 
-        @project1.add_task(task)
+
+        @project1.add_task(task1)
         @project1.add_task(task2)
         @project1.add_task(task3)
 
-        @project1.mark_complete(task.task_id)
+        @project1.mark_complete(task2.task_id)
 
         # STDOUT.should_receive(:puts).with("Priority    ID   Description")
-        STDOUT.should_receive(:puts).with("1 3 Add tests")
-        STDOUT.should_receive(:puts).with("2 2 Add students")
-        TM::Project.show_incomplete_tasks(@project1.id)
+        STDOUT.should_receive(:puts).with("Add tests 2")
+        TM::Project.show_completed_tasks(@project1.id)
       end
     end
   end
