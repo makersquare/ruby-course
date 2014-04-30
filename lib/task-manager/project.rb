@@ -13,8 +13,15 @@ class TM::Project
     @@id_counter += 1
     @id = @@id_counter
     @tasks = []
-
     @@projects << self
+  end
+
+  def self.projects
+    @@projects
+  end
+
+  def self.projects=(arg)
+    @@projects = arg
   end
 
   def add_task(task)

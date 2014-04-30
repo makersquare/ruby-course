@@ -12,6 +12,16 @@ describe 'Project' do
       @task1.mark_complete(@task1.id)
   end
 
+  describe 'self.projects' do
+    it "knows about all created projects" do
+      TM::Project.projects = []
+      test_project = TM::Project.new('Project Runway')
+      test_project2 = TM::Project.new('Project Runway2')
+      expect(TM::Project.projects).to eq [test_project, test_project2]
+
+    end
+  end
+
   describe '.initialize' do
     it "should be created with a name" do
       expect(@my_project.name).to eq "Project Mayhem"
@@ -22,9 +32,6 @@ describe 'Project' do
       expect(@my_project.id).not_to eq @p2.id
     end
 
-    it "'s class should know about all created projects" do
-      expect(Project.projects).to eq [@my_project, @p2]
-    end
   end
 
 
