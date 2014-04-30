@@ -28,13 +28,19 @@ describe 'Project' do
 
     describe 'list_all' do
       it "lists all projects" do
-        STDOUT.should_receive(:puts).with("Grades")
-        STDOUT.should_receive(:puts).with("Tests")
+        STDOUT.should_receive(:puts).with("Grades - 1")
+        STDOUT.should_receive(:puts).with("Tests - 2")
         TM::Project.list_all
       end
     end
 
     describe "show_incomplete_tasks" do
+
+      it "tells when there is not a project with the inputted id" do
+        STDOUT.should_receive(:puts).with("There is not project with that ID.")
+        TM::Project.show_incomplete_tasks(40)
+      end
+
       it "displays incomplete tasks for inputted project" do
         task = TM::Task.new("Create gradebook", @project1.id, 3)
         task2 = TM::Task.new("Add students", @project1.id, 2)
@@ -49,7 +55,31 @@ describe 'Project' do
         # STDOUT.should_receive(:puts).with("Priority    ID   Description")
         STDOUT.should_receive(:puts).with("1 3 Add tests")
         STDOUT.should_receive(:puts).with("2 2 Add students")
-        TM::Project.show_incomplete_tasks
+        TM::Project.show_incomplete_tasks(@project1.id)
+      end
+    end
+
+    describe 'show_completed_tasks' do
+      it "tells when there is not a project with inputted id" do
+        STDOUT.should_receive(:puts).with("There is not project with that ID.")
+        TM::Project.show_incomplete_tasks(40)
+      end
+
+      it "displays completed tasks for inputted project" do
+        task = TM::Task.new("Create gradebook", @project1.id, 3)
+        task2 = TM::Task.new("Add students", @project1.id, 2)
+        task3 = TM::Task.new("Add tests", @project1.id, 1)
+
+        @project1.add_task(task)
+        @project1.add_task(task2)
+        @project1.add_task(task3)
+
+        @project1.mark_complete(task.task_id)
+
+        # STDOUT.should_receive(:puts).with("Priority    ID   Description")
+        STDOUT.should_receive(:puts).with("1 3 Add tests")
+        STDOUT.should_receive(:puts).with("2 2 Add students")
+        TM::Project.show_incomplete_tasks(@project1.id)
       end
     end
   end

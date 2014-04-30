@@ -18,7 +18,25 @@ class TM::Project
 
   def self.list_all
     @@projects.each do |project|
-      puts "#{project.name}"
+      puts "#{project.name} - #{project.id}"
+    end
+  end
+
+  def self.show_incomplete_tasks(project_id)
+    temp_project = nil
+    @@projects.each do |project|
+      if project.id == project_id
+        temp_project = project
+      end
+    end
+
+    if temp_project != nil
+      tasks = temp_project.incomplete_tasks
+      tasks.each do |task|
+        puts "#{task.priority} #{task.task_id} #{task.description}"
+      end
+    else
+      puts "There is not project with that ID."
     end
   end
 

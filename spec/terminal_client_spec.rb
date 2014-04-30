@@ -10,10 +10,19 @@ describe 'TerminalClient' do
     expect(TM::TerminalClient).to be_a(Class)
   end
 
-  it "lists all projects" do
+  it "works" do
     TM::Project.reset_class_variables
-    @project1 = TM::Project.new("Grades")
-    @project2 = TM::Project.new("Tests")
-    x = TM::TerminalClient.new
+    project1 = TM::Project.new("Grades")
+    project2 = TM::Project.new("Tests")
+    task = TM::Task.new("Create gradebook", project1.id, 3)
+    task2 = TM::Task.new("Add students", project1.id, 2)
+    task3 = TM::Task.new("Add tests", project1.id, 1)
+
+    project1.add_task(task)
+    project1.add_task(task2)
+    project1.add_task(task3)
+
+
+    TM::TerminalClient.new
   end
 end
