@@ -19,30 +19,22 @@ class TerminalClient
 			when "list"
 				list_projects
 			when "create"
-				check_arguments(input_arguments)
+				check_arguments(input_arguments,1)
 				if input_arguments.size == 2
 					puts "creating..."
 					@@projects << TM::Project.new(input_arguments[1])
 				end
-				# elsif input_arguments.size == 1
-				# 	puts "Please define project name to create."
-				# 	puts "Should be 'create [project_name]'"
-				# else
-				# 	puts "Too many arguments for [list] command."
-				# 	puts "Should be 'create [project_name]'"
-				# end
-			when "create"
+			when "show"
+				check_arguments(input_arguments,1)
 				if input_arguments.size == 2
-					puts "creating..."
-					@@projects << TM::Project.new(input_arguments[1])
+					show(input_arguments[1])
 				end
-				# elsif input_arguments.size == 1
-				# 	puts "Please define project name to create."
-				# 	puts "Should be 'create [project_name]'"
-				# else
-				# 	puts "Too many arguments for [list] command."
-				# 	puts "Should be 'create [project_name]'"
-				# end
+			when "add"
+				check_arguments(input_arguments, 3)
+				if input_arguments.size == 4
+					puts "adding task..."
+					# show(input_arguments[1])
+				end
 			else
 				puts "Command [#{input_arguments[0]}] not recognized."
 				puts "Type 'help' for list of commands"
@@ -67,14 +59,18 @@ class TerminalClient
 		puts "   exit            quits application"
 	end
 
-	def self.check_arguments(input_arguments)
+	def self.check_arguments(input_arguments, expected_num_arguments)
 		if input_arguments.size == 1
 			puts "No arguments passed in for '#{input_arguments[0]}'."
 			puts "Should be '#{input_arguments[0]} [argument]'"
 		end
-		if input_arguments.size >2
+		if input_arguments.size < expected_num_arguments
+			puts "Too few arguments for [#{input_arguments[0]}]."
+			puts "Should be '#{input_arguments[0]} [argument]*#{expected_num_arguments}'"
+		end
+		if input_arguments.size > expected_num_arguments
 			puts "Too many arguments for [#{input_arguments[0]}]."
-			puts "Should be '#{input_arguments[0]} [argument]'"
+			puts "Should be '#{input_arguments[0]} [argument]*#{expected_num_arguments}'"
 			# puts "Should be 'create [project_name]'"
 		end
 	end
@@ -88,6 +84,27 @@ class TerminalClient
 			# puts "Description: #{project.description}"
 		end
 	end
+
+	def self.show(project_id)
+		project = get_project_by_id(project_id)
+		# project = TM::Project.new
+		if project == nil
+			puts "Project with id='#{project_id}' not found."
+		else
+			puts "Remaining tasks for project '#{project.name}' with id=#{project.id}"
+			puts projectsect.retrieve_incompleted_tasks_by_priority
+		end
+	end
+
+	def self.get_project_by_id(project_id)
+		@@projects.each_index do |x|
+			if @@projects[x].id == project_id.to_i
+			# note the to_i is needed!
+			return @@projects[x]
+		end
+	end
+	return nil
+end
 
 end
 

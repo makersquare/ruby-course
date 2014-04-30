@@ -72,7 +72,6 @@ class TM::Project
 
 		# use select for a one-liner!! david did this, very simple
 
-
 		@tasks.each_index do |x|
 			if @tasks[x].completed
 				filtered_tasks << @tasks[x]
@@ -80,6 +79,8 @@ class TM::Project
 		end
 
 		# can refactor to one-line using sort_by
+		# sort_by { |a| -.priority, -a.date_created }
+		# --> not the "-" sign will sort in reverse, nice!
 		if newest_first
 			filtered_tasks.sort! { |a,b| b.date_created <=> a.date_created }
 		else
