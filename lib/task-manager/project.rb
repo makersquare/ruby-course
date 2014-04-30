@@ -15,4 +15,10 @@ class TM::Project
   def add_task(task)
     @tasks << task
   end
+
+  def completed_tasks
+    @tasks.select {|task| task.status == 'complete'}
+  end
+
+
 end

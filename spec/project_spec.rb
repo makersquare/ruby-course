@@ -17,16 +17,13 @@ describe 'Project' do
   end
 
   describe '.add_task' do
-    let (:my_project) { TM::Project.new('Some Project') }
-    let (:task1) { TM::Task.new(my_project.id, 'do some stuff', 1) }
-    let (:task2) { TM::Task.new(my_project.id, 'do other stuff', 2) }
-
-    before(:each) do
-      my_project.add_task(task1)
-      my_project.add_task(task2)
-    end
 
     it "stores task objects in an array" do
+      my_project = TM::Project.new('some project')
+      task1 = TM::Task.new(my_project.id, 'do some stuff', 1)
+      task2 = TM::Task.new(my_project.id, 'do other stuff', 2)
+      my_project.add_task(task1)
+      my_project.add_task(task2)
       expect(my_project.tasks.size).to eq 2
       expect(my_project.tasks).to eq [task1, task2]
     end
@@ -34,7 +31,15 @@ describe 'Project' do
 
   describe '.completed_tasks' do
     it "retrieves a list of all completed tasks, sorted by creation date" do
+      my_project = TM::Project.new('some project')
+      task1 = TM::Task.new(my_project.id, 'do some stuff', 1)
+      task2 = TM::Task.new(my_project.id, 'do other stuff', 2)
+      my_project.add_task(task1)
+      my_project.add_task(task2)
 
+
+
+      expect(my_project.completed_tasks.size).to eq 1
     end
 
     it "retrieves a list of all incomplete tasks, sorted by priority" do
