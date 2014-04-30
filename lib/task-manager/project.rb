@@ -27,9 +27,9 @@ class TM::Project
   end
 
   def incomplete_tasks
+    # Find incomplete tasks and sort by highest priority first.
     incomplete_tasks = @tasks.select{ |task| task.status == 0 }
-    incomplete_tasks.sort_by{ |task| [task.priority,task.created_at] }.reverse
-
+    incomplete_tasks = incomplete_tasks.sort_by{ |task| [ -task.priority, task.created_at] }
   end
 
   # Used to reset class variables for rspec tests
