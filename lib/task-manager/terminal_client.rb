@@ -58,12 +58,16 @@ class TM::TerminalClient
         run(@choice)
         #shows completed tasks for inputted project
       when 'history'
+        TM::Project.show_completed_tasks(@answer[1].to_i)
+
         puts "Enter another command (help for list of command options) or exit if you wish to stop."
         @answer = gets.chomp.downcase.split(' ')
         @choice = @answer[0]
         run(@choice)
-        #adds a new task for inputted project ID, priority and description
+        #adds a new task with PID PRIORITY DESC
       when 'add'
+
+
         puts "Enter another command (help for list of command options) or exit if you wish to stop."
         @answer = gets.chomp.downcase.split(' ')
         @choice = @answer[0]

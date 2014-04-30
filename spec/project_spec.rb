@@ -86,6 +86,18 @@ describe 'Project' do
         TM::Project.show_completed_tasks(@project1.id)
       end
     end
+
+    # describe 'new_task' do
+    #   it "tells when there is not a project with inputted id" do
+    #     STDOUT.should_receive(:puts).with("There is not a project with that ID.")
+    #     TM::Project.show_incomplete_tasks(40)
+    #   end
+
+    #   it "adds a task with to project with inputted id" do
+    #     STDOUT.should_receive(:puts).with("There is not a project with that ID.")
+    #     TM::Project.new_task(@project1.id, 3, "Create gradebook")
+    #   end
+    # end
   end
 
   describe 'initialize' do
@@ -170,29 +182,51 @@ describe 'Project' do
 
   describe 'incomplete_tasks' do
 
-    before(:each) do
-      @task = TM::Task.new("Create gradebook", @project1.id, 1)
-      @task2 = TM::Task.new("Add students", @project1.id, 4)
-      @task3 = TM::Task.new("Add tests", @project1.id, 2)
-    end
     it "returns an array of all incomplete tasks" do
-      @project1.add_task(@task)
-      @project1.add_task(@task2)
-      @project1.add_task(@task3)
+      task = TM::Task.new("Create gradebook", @project1.id, 1)
+      task2 = TM::Task.new("Add students", @project1.id, 4)
+      task3 = TM::Task.new("Add tests", @project1.id, 2)
 
-      @project1.mark_complete(@task.task_id)
+      @project1.add_task(task)
+      @project1.add_task(task2)
+      @project1.add_task(task3)
+
+      @project1.mark_complete(task.task_id)
 
       expect(@project1.incomplete_tasks.length).to eq(2)
     end
 
-    it "returns an array sorted by priority date" do
-      @project1.add_task(@task)
-      @project1.add_task(@task2)
-      @project1.add_task(@task3)
+    it "returns an array sorted by priority" do
+      task = TM::Task.new("Create gradebook", @project1.id, 1)
+      task2 = TM::Task.new("Add students", @project1.id, 4)
+      task3 = TM::Task.new("Add tests", @project1.id, 2)
 
-      @project1.mark_complete(@task.task_id)
+      @project1.add_task(task)
+      @project1.add_task(task2)
+      @project1.add_task(task3)
 
-      expect(@project1.incomplete_tasks).to eq([@task3, @task2])
+      @project1.mark_complete(task.task_id)
+
+      expect(@project1.incomplete_tasks).to eq([task3, task2])
+    end
+
+    it "returns an array sorted by priority and creation date" do
+      task = TM::Task.new("Create gradebook", @project1.id, 1)
+      allow(Date).to receive(:today).and_return(Date.parse("14 Feb 2014"))
+      task2 = TM::Task.new("Add students", @project1.id, 1)
+      allow(Date).to receive(:today).and_return(Date.parse("14 March 2014"))
+      task3 = TM::Task.new("Add tests", @project1.id, 2)
+      allow(Date).to receive(:today).and_return(Date.parse("14 March 2012"))
+      task4 = TM::Task.new("Add tests", @project1.id, 2)
+
+      @project1.add_task(task)
+      @project1.add_task(task2)
+      @project1.add_task(task3)
+      @project1.add_task(task4)
+
+      @project1.mark_complete(task.task_id)
+
+      expect(@project1.incomplete_tasks).to eq([task2, task4, task3])
     end
   end
 end

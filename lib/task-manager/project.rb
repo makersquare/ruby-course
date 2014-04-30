@@ -58,6 +58,12 @@ class TM::Project
     end
   end
 
+  def self.new_task(project_id, priority, description)
+    @@projects.each do |project|
+
+    end
+  end
+
   #helper method for tests
   def self.reset_class_variables
     @@counter = 1
@@ -84,7 +90,8 @@ class TM::Project
 
   def incomplete_tasks
     new_array = @tasks.select{ |task| task.status == "Not completed"}
-    new_array.sort! {|a,b| a.priority <=> b.priority}
+    new_array.sort_by! {|a| [a.priority, a.creation_date]}
+
   end
 
 end

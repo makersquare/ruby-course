@@ -22,6 +22,7 @@ describe 'TerminalClient' do
     project1.add_task(task2)
     project1.add_task(task3)
 
+    project1.mark_complete(task.task_id)
 
     TM::TerminalClient.new
   end
