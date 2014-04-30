@@ -23,8 +23,8 @@ class TerminalClient
 			when "create", "c"
 				check_arguments(input_arguments,1)
 				if input_arguments.size == 2
-					puts "creating..."
 					@@projects << TM::Project.new(input_arguments[1])
+					puts "[Created new project '#{@@projects.last.name}'' with id=#{@@projects.last.id}]"
 				end
 			when "show", "s"
 				check_arguments(input_arguments,1)

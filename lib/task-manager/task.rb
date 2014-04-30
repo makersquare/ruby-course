@@ -4,7 +4,7 @@ class TM::Task
 
 	@@task_count = 0
 
-	def initialize(name = "default", description: "none", priority: 1)
+	def initialize(name = "untitled", description: "none", priority: 1)
 		@name = name
 		@@task_count +=1
 		@id = @@task_count
@@ -27,6 +27,25 @@ class TM::Task
 	end
 
 	def print_details
+		# puts "  --------------------"
+		print "#{@priority}  "
+		print "#{@id}  "
+		print "#{@name}  "
+		print "#{@description}  "
+		print "#{@date_created.strftime '%m/%d/%Y %I:%M%p'}  "
+		# print "#{@completed}  "
+		print "#{@completed ? 'yes' : 'no'}  "
+		# @date_completed ? print("yes  ") : (print "no  ")
+		if @date_completed == nil
+			print "   "
+		else 
+			print "#{@date_completed.strftime '%m/%d/%Y %I:%M%p'}  "
+		end
+		print "\n"
+		# puts "  --------------------"
+	end	
+
+	def print_details_old
 		puts "  --------------------"
 		puts "  Task Name: #{@name}"
 		puts "  Task ID: #{@id}"
