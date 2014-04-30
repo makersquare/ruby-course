@@ -2,6 +2,7 @@
 class TM::Project
   attr_reader :pid, :name, :tasks
   @@pid = 0
+  @@projects = []
 
   def initialize(name)
     @name = name
@@ -10,6 +11,8 @@ class TM::Project
 
     # Increment class variable to keep ids unique
     @@pid = @pid
+    # Add project to projects array
+    @@projects << self
   end
 
   def add_task(project,desc,priority)
@@ -17,6 +20,7 @@ class TM::Project
     @tasks << task
   end
 
+  # Rewrite this as a Task class method
   def complete_task(task_id)
     task = @tasks.select{ |task| task_id == task.task_id }.first
     task.completed_at = Time.now
