@@ -14,7 +14,10 @@ class TM::Project
 
 	def add_task(task)
 		#extension -- handle multiple tasks, splat argument?
-		@tasks << task if task.class == TM::Task
+		if task.class == TM::Task
+			@tasks << task 
+			@tasks.last.project_id = @id
+		end
 	end
 
 	def get_task_by_id(task_id)

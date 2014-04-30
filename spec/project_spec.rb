@@ -27,21 +27,20 @@ describe 'Project' do
   		project1 = TM::Project.new
   		project2 = TM::Project.new
   		project3 = TM::Project.new
-  		expect(project1.id).to eq(4)
-  		expect(project2.id).to eq(5)
-  		expect(project3.id).to eq(6)
-  	end
+      expect(project2.id-project1.id).to eq(1)
+      expect(project3.id-project2.id).to eq(1)
+    end
 
-  	it "creates an empty @tasks[] array" do
-  		project1 = TM::Project.new
-  		expect(project1.tasks.size).to eq(0)
-  	end
+    it "creates an empty @tasks[] array" do
+      project1 = TM::Project.new
+      expect(project1.tasks.size).to eq(0)
+    end
 
   end
 
   describe "add_task method" do
   	# add_task(task_object)
-  	it "adds given task to the @tasks[] array" do
+  	xit "adds given task to the @tasks[] array" do
   		# check size of array and compare actual contents
   		project1 = TM::Project.new("project1")
   		task1 = TM::Task.new("task1")
@@ -50,7 +49,19 @@ describe 'Project' do
   		expect(project1.tasks[0].name).to eq("task1")
   	end
 
-  	it "should not add anything if not a valid task object" do
+    xit "sets the task.project_id to the current projects id" do
+      # check size of array and compare actual contents
+      project1 = TM::Project.new("project1")
+      task1 = TM::Task.new("task1")
+      project1.add_task(task1)
+      expect(project1.tasks.size).to eq(1)
+      expect(project1.tasks[0].project_id).to eq(1)
+    end
+
+    xit "can handle adding an array of task objects" do
+    end
+
+    it "should not add anything if not a valid task object" do
   		# check size of array and compare actual contents
   		#throw error? how to test that?
   		project1 = TM::Project.new("project1")
@@ -163,10 +174,6 @@ describe 'Project' do
 
   describe "retrieve_tasks method" do
   	# ex retrieve_tasks(by_date, by_priority, by_completed)
-
-  	xit "returns an array of task objects" do
-
-    end
 
     it "can return tasks ordered by date created, newest date first is default" do
 

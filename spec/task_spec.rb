@@ -13,18 +13,12 @@ describe 'Task' do
 
 		end
 
-		xit "creates a unique ID is created starting with id=1" do
-			task1 = TM::Task.new
-			expect(task1.id).to eq(3)
-		end
-
-		xit "creates multiple unique IDS in numerical order" do
+		it "creates multiple unique IDS in numerical order" do
 			task1 = TM::Task.new
 			task2 = TM::Task.new
 			task3 = TM::Task.new
-			expect(task1.id).to eq(4)
-			expect(task2.id).to eq(5)
-			expect(task3.id).to eq(6)
+			expect(task2.id-task1.id).to eq(1)
+			expect(task3.id-task2.id).to eq(1)
 		end
 
 		it "has a project ID that defults to nil (unassigned)" do

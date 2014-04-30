@@ -1,7 +1,8 @@
 
 class TM::Task
-	attr_reader :name, :id, :project_id, :description, :priority, :date_created, :date_completed, :completed
-
+	attr_reader :name, :id, :description, :priority, :date_created, :date_completed, :completed
+	attr_accessor :project_id
+	
 	@@task_count = 0
 
 	def initialize(name = "default", description: "none")
