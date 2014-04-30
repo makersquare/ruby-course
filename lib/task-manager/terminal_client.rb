@@ -1,3 +1,4 @@
+require 'pry-debugger'
 class TM::TerminalClient
   attr_accessor :answer
 
@@ -66,7 +67,10 @@ class TM::TerminalClient
         run(@choice)
         #adds a new task with PID PRIORITY DESC
       when 'add'
-
+        temp_answer = @answer.dup
+        temp_answer.slice!(0, 3)
+        description = temp_answer.join(' ')
+        TM::Project.new_task(@answer[1].to_i, @answer[2].to_i, description)
 
         puts "Enter another command (help for list of command options) or exit if you wish to stop."
         @answer = gets.chomp.downcase.split(' ')
@@ -74,6 +78,7 @@ class TM::TerminalClient
         run(@choice)
         #marks task with inputted id as complete
       when 'mark'
+        TM::Task.mark_complete(@answer[1])
         puts "Enter another command (help for list of command options) or exit if you wish to stop."
         @answer = gets.chomp.downcase.split(' ')
         @choice = @answer[0]

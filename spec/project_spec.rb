@@ -87,17 +87,16 @@ describe 'Project' do
       end
     end
 
-    # describe 'new_task' do
-    #   it "tells when there is not a project with inputted id" do
-    #     STDOUT.should_receive(:puts).with("There is not a project with that ID.")
-    #     TM::Project.show_incomplete_tasks(40)
-    #   end
+    describe 'mark_task_complete' do
+      it "marks a task as complete when given task id number" do
+        task = TM::Task.new("Create gradebook", @project1.id, 3)
+        task2 = TM::Task.new("Add students", @project1.id, 2)
 
-    #   it "adds a task with to project with inputted id" do
-    #     STDOUT.should_receive(:puts).with("There is not a project with that ID.")
-    #     TM::Project.new_task(@project1.id, 3, "Create gradebook")
-    #   end
-    # end
+        STDOUT.should_receive(:puts).with("Task marked complete.")
+        TM::Project.mark_task_complete(task.task_id)
+        expect(task.task_id).to eq("Completed")
+      end
+    end
   end
 
   describe 'initialize' do

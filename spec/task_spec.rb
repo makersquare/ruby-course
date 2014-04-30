@@ -27,23 +27,28 @@ describe 'Task' do
     end
 
     it "Creates a task that has it's own id number" do
-      project1 = TM::Project.new("Grades")
-      task = TM::Task.new("Create gradebook", project1.id, 1)
-      expect(task.task_id).to_not raise_error()
+      expect(@task.task_id).to_not raise_error()
     end
 
     it "Creates a status attribute that is initialized to not complete" do
-      project1 = TM::Project.new("Grades")
-      task = TM::Task.new("Create gradebook", project1.id, 1)
-      expect(task.status).to eq("Not completed")
+      expect(@task.status).to eq("Not completed")
     end
 
     it "is initialized with a creation date" do
-      project1 = TM::Project.new("Grades")
+      project2 = TM::Project.new("Tests")
       allow(Date).to receive(:today).and_return(Date.parse("14 Feb 2014"))
-      task = TM::Task.new("Create gradebook", project1.id, 1)
+      task = TM::Task.new("Create gradebook", project2.id, 1)
 
       expect(task.creation_date.to_s).to eq("2014-02-14")
+    end
+
+    it "has a class variable that tracks all created tasks" do
+      expect(TM::Task.tasks.length).to eq(1)
+    end
+
+    it "marks a task as completed" do
+      TM::Task.mark_complete(1)
+      expect(@task.status).to eq("Completed")
     end
   end
 
