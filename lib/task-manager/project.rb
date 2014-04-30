@@ -14,6 +14,10 @@ class TM::Project
       @incomplete_tasks = []
     end
 
+    def self.reset_class_variables
+      @@id_counter = 0
+    end
+
     def mark_complete(pid, tid)
     end
 
