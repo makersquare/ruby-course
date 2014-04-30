@@ -38,7 +38,7 @@ describe 'Project' do
     describe "show_incomplete_tasks" do
 
       it "tells when there is not a project with the inputted id" do
-        STDOUT.should_receive(:puts).with("There is not project with that ID.")
+        STDOUT.should_receive(:puts).with("There is not a project with that ID.")
         TM::Project.show_incomplete_tasks(40)
       end
 
@@ -62,7 +62,7 @@ describe 'Project' do
 
     describe 'show_completed_tasks' do
       it "tells when there is not a project with inputted id" do
-        STDOUT.should_receive(:puts).with("There is not project with that ID.")
+        STDOUT.should_receive(:puts).with("There is not a project with that ID.")
         TM::Project.show_incomplete_tasks(40)
       end
 

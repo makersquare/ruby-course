@@ -36,7 +36,25 @@ class TM::Project
         puts "#{task.priority} #{task.task_id} #{task.description}"
       end
     else
-      puts "There is not project with that ID."
+      puts "There is not a project with that ID."
+    end
+  end
+
+  def self.show_completed_tasks(project_id)
+    temp_project = nil
+    @@projects.each do |project|
+      if project.id == project_id
+        temp_project = project
+      end
+    end
+
+    if temp_project != nil
+      tasks = temp_project.completed_tasks
+      tasks.each do |task|
+        puts "#{task.description} #{task.task_id}"
+      end
+    else
+      puts "There is not a project with that ID."
     end
   end
 
