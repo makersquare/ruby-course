@@ -18,7 +18,6 @@ class TM::TerminalClient
         mark TID - Mark task with id=TID as complete
         exit
         '
-    conf.echo = nil
     get_input
   end
 
@@ -42,7 +41,7 @@ class TM::TerminalClient
     when 'exit' then exit
     when 'list' then list_all_projects
     when 'create' then create_project(args.join(' '))
-    when 'show' then show_tasks(args)
+    when 'show' then display_tasks(args)
     else "command invalid. 'help' displays the menu."
     end
   end
@@ -58,8 +57,16 @@ class TM::TerminalClient
     nil
   end
 
-  def display_tasks(pid)
+  def find_by_project_by_id(pid)
+    TM::Project.projects.select {|proj| proj.id == pid}
+    nil
+  end
 
+  def display_tasks(pid)
+    project = find_project_by_id(pid)
+    project.incomplete
+    nil
+  end
 end
 
 
