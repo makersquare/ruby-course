@@ -5,7 +5,7 @@ include Organization
 
 
 attr_reader :created, :add_task, :task_list
-attr_accessor :name, :task, :project_list, :id
+attr_accessor :name, :task, :project_list
 
 def self.project_count
   @@project_count

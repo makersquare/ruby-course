@@ -5,9 +5,6 @@ describe 'Project' do
   before(:each) do
     TM::Project.reset_class_variables
   end
-  # before(:each) do
-  # #   TM::Project.call_count_reset
-  # # end
 
   # binding.pry
 
@@ -39,9 +36,9 @@ describe 'Project' do
     expect(new_project_2.id).to eq(2)
   end
 
-  xit "take name arugment of new project instance" do
+  it "take name arugment of new project instance" do
     test_project = TM::Project.new("Cleaning")
-    expect(test_project.name).to eq("Cleaning - 1")
+    expect(test_project.name).to eq("Cleaning")
   end
 
   xit "adds project to class instances array" do

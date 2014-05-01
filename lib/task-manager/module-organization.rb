@@ -1,6 +1,6 @@
 module Organization
   attr_reader :create_date, :complete, :complete_date, :id
-  attr_accessor :name, :call_count_reset, :call_count,
+  attr_accessor :name,
   # attr_accessor :name,:call_count_reset,:call_count
 
   def created
