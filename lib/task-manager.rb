@@ -20,11 +20,16 @@ def sort_by_priority(project)
 
 end
 
-
-def sort_by_date(project)
-# Load array from and iterate over value by comparing the @create as the argument passed in.  Return a sorted array.
-  project.task_list.sort {|a, b| a.created <=> b.created }
+def sort_date_and_priority(project, priority)
+  project.task_list.select {|task| task.priority == priority}
+  # Creates an array orderd by both priority and date, but priority must be specified.  Only returns array with specified priority
 end
+
+# Moved to project class
+# def sort_by_date(project)
+# # Load array from and iterate over value by comparing the @create as the argument passed in.  Return a sorted array.
+#   project.task_list.sort {|a, b| a.created <=> b.created }
+# end
 
 def mark_project_complete(project)
 # Mark project complete and clear out project list array

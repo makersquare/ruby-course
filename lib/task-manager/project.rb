@@ -34,7 +34,11 @@ end
 
 def add_id_to_name
   @name = "#{@name} - #{id}"
+end
 
+def sort_by_date(project)
+# Load array from and iterate over value by comparing the @create as the argument passed in.  Return a sorted array.
+  @task_list.sort {|a, b| a.created <=> b.created }
 end
 
 end
