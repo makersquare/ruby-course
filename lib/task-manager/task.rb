@@ -33,7 +33,6 @@ class TM::Task
 
 	def print_details
 		printf "%-10s %-4s %-12s %-15s %-21s %-12s %-15s\n", "#{@priority}", "#{@id}", "#{@name}", "#{@description}", "#{@date_created.strftime '%m/%d/%Y %I:%M%p'}", "#{@completed ? 'yes' : 'no'}", "#{@date_completed == nil ? "" : (@date_completed.strftime '%m/%d/%Y %I:%M%p')}"
-		print "\n"
 	end	
 
 	def print_details_old
