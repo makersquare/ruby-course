@@ -1,4 +1,5 @@
 class TM::ProjectManager
+
   attr_accessor :projects_list
 
   def initialize
@@ -75,7 +76,7 @@ end
     if @tasks_list == [] || @projects_list == []
       puts "You have to create your first projects and tasks"
     else
-      task2 = @tasks_list.each{|task| task.id == task_id.to_i}
+      task2 = @tasks_list.select{|task| task.id == task_id.to_i}
       task2.first.status = "complete"
    end
   end
@@ -84,10 +85,10 @@ end
     if @tasks_list == [] || @projects_list== []
       puts "You have to create your first projects and tasks"
     else
-      task = @projects_list.each{|task| task.id == project_id.to_i}
+      task = @projects_list.select{|task| task.id == project_id.to_i}
       puts "#{task.first.name}"
       puts "Task ID: Priority, Description"
-      task.first.completed_tasks.each do |x|
+      task.first.completed_tasks.select do |task|
       puts "#{task.id}: #{task.priority_no}, #{task.description}"
     end
   end

@@ -33,9 +33,9 @@ describe 'Project' do
    it "a task can be completed by calling upon its task id" do
   TM::Task.project_id_counter = 1
   task1 = @project1.create_new_task("Web-App", 5)
-  expect(task1.status).to eq("incomplete")
+  expect(task1.status).to eq(true)
   @project1.complete_task(1)
-  task1.status.should == "complete"
+  task1.status.should == true
   end
 
   it "has array of completed tasks sort out by date of creation" do

@@ -2,18 +2,28 @@ require 'time'
 
 class TM::Task
 
-  attr_accessor :project_id, :description, :priority_no, :id, :status, :project_id_counter, :creation_date
-  @@project_id_counter = 1
+  attr_accessor :project_id, :description, :priority_no, :id, :status, :project_id_counter, :created_at
+
 
   def initialize(project_id, description, priority_no)
     @project_id = project_id
     @description = description
     @priority_no = priority_no
-    @id = @@project_id_counter
+    @id = self.class.project_id_counter
     @@project_id_counter += 1
-    @status = "incomplete"
-    @creation_date = Time.now
+    @created_at = Time.now
+    @complete = true
+    #@status = "incomplete"
   end
+
+  def complete?
+    @complete
+  end
+
+  def status
+    complete? ? true : false
+  end
+
 
   def self.reset_Class_variable
     @@project_id_counter = 1
@@ -26,4 +36,11 @@ class TM::Task
   def self.project_id_counter=(count)
     @@project_id_counter = count
   end
+
+  private
+def self.project_id_counter
+  temp = @@project_id_counter ||= 0
+  @@project_id_counter += 1
+  temp
+end
 end

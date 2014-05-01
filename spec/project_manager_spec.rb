@@ -45,6 +45,6 @@ it "has method to complete task" do
   @manager.create_new_project("project")
   task = @manager.add_task("1", "project AB", "7")
   @manager.complete_task(1)
-  task.status.should =="complete"
+  task.status.should == true
 end
 end
