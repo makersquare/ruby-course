@@ -14,7 +14,7 @@ class TerminalClient
     puts 'show PID - Show remaining tasks for project with id=PID'
     puts 'history PID - Show completed tasks for project with id=PID'
     puts 'add PID DESC PRIORITY - Add a new task to project with id=PID'
-    puts 'mark TID - Mark task with id=TID as complete'
+    puts 'mark NAME - Mark task with id=TID as complete'
     get_command
   end
 
@@ -76,8 +76,7 @@ end
   end
 
   def mark(option)
-    option = TM::Task.
-    complete
+    option.complete
   end
 
 end
