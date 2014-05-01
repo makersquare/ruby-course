@@ -7,13 +7,14 @@ class TerminalClient
 	def self.start
 		print_welcome_message
 		list_commands
+
 		exit_program = false
-		input = ""
+
 		while !exit_program do
 			print ">> "
 			input = gets.chomp
 
-			input_arguments = split_text(input)
+			input_arguments = split_text(input.gsub(/\"/, ''))
 
 			case input_arguments[0]
 			when "help"
@@ -22,8 +23,8 @@ class TerminalClient
 				list_projects
 			when "create", "c"
 				check_arguments(input_arguments,1)
-				if input_arguments.size == 2
-					@@projects << TM::Project.new(input_arguments[1])
+				if input_arguments.size >= 2
+					@@projects << TM::Project.new(input_arguments[1...input_arguments.length].join(" "))
 					puts "[Created new project '#{@@projects.last.name}'' with id=#{@@projects.last.id}]"
 				end
 			when "show", "s"
@@ -83,19 +84,19 @@ class TerminalClient
 	end
 
 	def self.check_arguments(input_arguments, expected_num_arguments)
-		if input_arguments.size == 1
-			puts "No arguments passed in for '#{input_arguments[0]}'."
-			puts "Should be '#{input_arguments[0]} [argument]'"
-		end
+		# if input_arguments.size == 1
+		# 	puts "No arguments passed in for '#{input_arguments[0]}'."
+		# 	puts "Should be '#{input_arguments[0]} [argument]'"
+		# end
 		if input_arguments.size < expected_num_arguments +1
 			puts "Too few arguments for [#{input_arguments[0]}]."
 			puts "Should be '#{input_arguments[0]} [argument]*#{expected_num_arguments}'"
 		end
-		if input_arguments.size > expected_num_arguments +1
-			puts "Too many arguments for [#{input_arguments[0]}]."
-			puts "Should be '#{input_arguments[0]} [argument]*#{expected_num_arguments}'"
-			# puts "Should be 'create [project_name]'"
-		end
+		# if input_arguments.size > expected_num_arguments +1
+		# 	puts "Too many arguments for [#{input_arguments[0]}]."
+		# 	puts "Should be '#{input_arguments[0]} [argument]*#{expected_num_arguments}'"
+		# 	# puts "Should be 'create [project_name]'"
+		# end
 	end
 
 	def self.list_projects
