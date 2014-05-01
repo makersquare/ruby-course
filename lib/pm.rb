@@ -88,16 +88,7 @@ class TerminalClient
 
 	def self.list_projects
 		puts "[No projects exist]" if @@projects.size == 0
-		@@projects.each do |project|
-			header_line = "[Project] #{project.name} | [ID] #{project.id}"
-			header_line.length.times { print "-"} ; print "\n"
-			puts header_line
-			header_line.length.times { print "-"} ; print "\n"
-			TM::Task.print_header
-			puts "  [No tasks exist for this project]\n\n" if project.tasks.size == 0
-			project.tasks.each { |task| task.print_details }
-		end
-
+		@@projects.each {|project| project.print_details}
 	end
 
 	def self.list_tasks(project_id, completed: true)

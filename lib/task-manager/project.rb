@@ -60,6 +60,16 @@ class TM::Project
 		@tasks.select {|task| not task.completed}
 	end
 
+	def print_details
+		header_line = "[Project] #{@name} | [ID] #{@id}"
+		header_line.length.times { print "-"} ; print "\n"
+		puts header_line
+		header_line.length.times { print "-"} ; print "\n"
+		TM::Task.print_header
+		puts "  [No tasks exist for this project]\n\n" if @tasks.size == 0
+		@tasks.each { |task| task.print_details }
+	end
+
 	# to help rspec tests
 	def self.reset_class_variables
 		@@project_count = 0
