@@ -57,7 +57,11 @@ class TM::TerminalClient
           if tasks.length != 0
             #display organization
             tasks.each do |task|
-              puts "Priority: #{task.priority} - Task ID: #{task.task_id} - Description: #{task.description}"
+              if task.due_date < Date.today
+                puts "OVERDUE: #{task.due_date} - Priority: #{task.priority} - Task ID: #{task.task_id} - Description: #{task.description}"
+              else
+                puts "Due Date: #{task.due_date} - Priority: #{task.priority} - Task ID: #{task.task_id} - Description: #{task.description}"
+              end
             end
           else
             puts "This project has no incomplete tasks."

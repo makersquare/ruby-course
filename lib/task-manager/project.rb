@@ -50,7 +50,7 @@ class TM::Project
 
   def incomplete_tasks
     new_array = @tasks.select{ |task| task.status == "Not completed"}
-    new_array.sort_by! {|a| [a.priority, a.creation_date]}
+    new_array.sort_by! {|a| [a.due_date, a.priority, a.creation_date]}
   end
 
 end

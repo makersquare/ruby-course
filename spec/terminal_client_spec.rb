@@ -22,7 +22,11 @@ describe 'TerminalClient' do
     project1.add_task(task2)
     project1.add_task(task3)
 
-    TM::Task.mark_complete(task.task_id)
+    task.due_date = "1 Feb 2014"
+    task2.due_date = "1 June 2014"
+    task3.due_date = "3 Feb 2014"
+
+    # TM::Task.mark_complete(task.task_id)
 
     TM::TerminalClient.new
   end
