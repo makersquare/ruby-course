@@ -6,8 +6,8 @@ describe 'Task' do
     TM::Project.reset_class_vars
     TM::Task.reset_class_vars
     @my_project = TM::Project.new('my_project')
-    @task1 = TM::Task.new(@my_project.id, 'take out the trash', 1)
-    @task2 = TM::Task.new(@my_project.id, 'clean up your room', 1)
+    @task1 = TM::Task.new(@my_project.id, 1, 'take out the trash')
+    @task2 = TM::Task.new(@my_project.id, 1, 'clean up your room')
   end
 
   describe '.initialize' do

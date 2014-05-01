@@ -30,7 +30,7 @@ describe 'TerminalClient' do
     end
   end
 
-  describe 'exec_cmd' do
+  describe 'commands' do
 
     describe 'help' do
     end
@@ -67,7 +67,22 @@ describe 'TerminalClient' do
     end
 
     describe 'show' do
+      # this works in practice, but there is some scope issue with the test
+      # it could be related to the order in which task-manager.rb requires
+      # the project fiiles / need further testing
+      xit "returns a list of incomplete tasks w/ descr's for a project" do
+        TM::Project.reset_class_vars
+        binding.pry
+        p = TM::Project.new('new project')
+        t1 = TM::Task.new(p.id, 1, 't1 desc')
+        t2 = TM::Task.new(p.id, 1, 't2 desc')
+        p.add_task(t1)
+        p.add_task(t2)
+        tasks = @terminal.exec_cmd(@terminal.parse_cmd('show 1'))
+        expect(tasks).to eq([t1, t2])
+      end
     end
+
     describe 'history' do
     end
     describe 'mark' do

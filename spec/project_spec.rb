@@ -17,18 +17,16 @@ describe 'Project' do
 
   describe 'self.projects' do
     it "knows about all created projects" do
-      TM::Project.projects = []
-      test_project = TM::Project.new('Project Runway')
-      test_project2 = TM::Project.new('Project Runway2')
+      TM::Project.reset_class_vars
+      test_project = TM::Project.new('testproject')
+      test_project2 = TM::Project.new('testproject2')
       expect(TM::Project.projects).to eq [test_project, test_project2]
     end
   end
 
   describe 'self.find_project_by_id' do
-    xit "finds a project given a project id" do
-      TM::Project.projects = []
+    it "finds a project given a project id" do
       project = TM::Project.new('Project Mayhem')
-      # binding.pry
       expect(TM::Project.find_project_by_id(1)).to eq(@my_project)
     end
   end
@@ -45,7 +43,6 @@ describe 'Project' do
   end
 
   describe '.completed' do
-
     it "returns the most recently completed tasks first" do
       allow(Time).to receive(:now).and_return(Time.parse("2014-04-29"))
       task3 = TM::Task.new(@my_project.id, "created yesterday", 1)
@@ -65,15 +62,15 @@ describe 'Project' do
     it "returns incomplete tasks, sorted by priority (1 = highest)" do
       expect(@my_project.incomplete).to eq [@task2]
 
-      task3 = TM::Task.new(@my_project.id, "URGENT", 3)
-      task4 = TM::Task.new(@my_project.id, "sorta URGent...", 2)
-      task5 = TM::Task.new(@my_project.id, "meh.", 1)
+      task3 = TM::Task.new(@my_project.id, 1, "URGENT")
+      task4 = TM::Task.new(@my_project.id, 2, "sorta URGent...")
+      task5 = TM::Task.new(@my_project.id, 3, "meh.")
       @my_project.tasks = []
       @my_project.add_task(task4)
       @my_project.add_task(task5)
       @my_project.add_task(task3)
 
-      expect(@my_project.incomplete).to eq([task5, task4, task3])
+      expect(@my_project.incomplete).to eq([task3, task4, task5])
     end
 
     it 'knows if two tasks have the same priority number, the older task gets priority' do

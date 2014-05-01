@@ -8,7 +8,7 @@ class TM::Task
   @@id_counter = 0
   @@tasks = []
 
-  def initialize(project_id, description, priority)
+  def initialize(project_id, priority, description)
     @@id_counter += 1
     @id = @@id_counter
     @timestamp = Time.now
@@ -29,7 +29,7 @@ class TM::Task
   end
 
   def self.mark_complete(tid)
-    t = @@tasks.select {|t| t.id == tid}.first
+    t = @@tasks.select {|t| t.id == tid }.first
     t.complete = true
   end
 

@@ -10,7 +10,6 @@ class TM::TerminalClient
     'Welcome to Project Manager Pro®. What can I do for you today?
 
       Available Commands:
-        help - Show these commands again
         list - List all projects
         create NAME - Create a new project with name=NAME
         add PID PRIORITY DESC - Add a new task to project with id=PID
@@ -45,7 +44,7 @@ class TM::TerminalClient
     when 'list' then list_all_projects
     when 'create' then create_project(args)
     when 'add' then create_new_task(args)
-    when 'show' then display_incomplete(args)
+    when 'show' then show(args)
     # when 'history' then
     # when 'mark' then
     else "command invalid. 'help' displays the menu."
@@ -61,7 +60,9 @@ class TM::TerminalClient
     TM::Project.new(args[0])
   end
 
-  def display_incomplete(pid)
+
+  def show(args)
+    pid = args.shift.to_i
     project = TM::Project.find_project_by_id(pid)
     puts "Project_#{project.id}_Incomplete_Tasks"
     project.incomplete.each {|t| puts t}
@@ -71,7 +72,7 @@ class TM::TerminalClient
     pid = args.shift.to_i
     priority = args.shift.to_i
     desc = args.join(' ')
-    task = TM::Task.new(pid, desc, priority)
+    task = TM::Task.new(pid, priority, desc)
     # puts "New Task #{task.id} created and assigned to Project #{pid}"
     task
   end
