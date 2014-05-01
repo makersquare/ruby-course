@@ -28,7 +28,7 @@ class TM::TerminalClient
       puts "Please enter a project name:"
       name = gets.chomp
       project = TM::Project.new(name)
-      puts "You created a new project, #{project}! It's ID is: #{project.pid}"
+      puts "You created a new project, #{project.name}! It's ID is: #{project.pid}"
       command = gets.chomp
 
     elsif command == 'create t'
@@ -44,9 +44,11 @@ class TM::TerminalClient
       command = gets.chomp
 
     elsif command == 'show'
+
       puts "Please enter a project ID."
       projectid = gets.chomp
       tasks = TM::Task.incomplete_tasks(projectid)
+      puts "Showing Project #{TM::Project.project_name(projectid)}"
 
       command = gets.chomp
 

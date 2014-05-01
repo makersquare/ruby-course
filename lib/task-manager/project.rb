@@ -21,4 +21,10 @@ class TM::Project
     def self.list_projects
       @@projects
     end
+
+    def project_name(projectid)
+      project = @@projects.select {|project| project.pid == projectid}
+      project
+    end
+
 end
