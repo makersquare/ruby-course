@@ -63,10 +63,9 @@ describe 'Project' do
     end
 
   it "searches tags and returns matching tasks" do
-    task3 = TM::Task.new(@project.pid, "description1", 10, "2014-05-08",["tag1"])
-    task4 = TM::Task.new(@project.pid, "description2", 8, "2014-05-08",["tag2","tag3"])
-    task5 = TM::Task.new(@project.pid, "description2", 8, "2014-05-08",["tag2","tag3","tag4"])
-
+    task3 = TM::Task.new(@project.pid, "description1", 10, "2014-05-08",{tags: ["tag1","tag8","tag9"]})
+    task4 = TM::Task.new(@project.pid, "description1", 10, "2014-05-08",{tags: ["tag4","tag2","tag3"]})
+    task5 = TM::Task.new(@project.pid, "description1", 10, "2014-05-08",{tags: ["tag4","tag2","tag3"]})
 
     # It should find one tag if only one matches search
     expect(@project.search("tag1").first).to eq task3

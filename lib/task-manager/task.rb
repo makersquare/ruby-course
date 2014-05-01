@@ -1,11 +1,11 @@
 
 class TM::Task
-  attr_reader :description, :priority, :project_id, :task_id, :created_at, :due_date, :tags
+  attr_reader :description, :priority, :project_id, :task_id, :created_at, :due_date, :recurring
   attr_accessor :status, :completed_at, :overdue
   @@task_id = 0
   @@tasks = []
 
-  def initialize(project_id, desc, priority, due_date,tags=[])
+  def initialize(project_id, desc, priority, due_date,opts={})
     @project_id = project_id
     @task_id = @@task_id + 1
     @description = desc
@@ -15,7 +15,10 @@ class TM::Task
     @completed_at = nil
     @due_date = Date.parse(due_date)
     @overdue = 0
-    @tags = tags
+
+    # Optional parameters
+    @tags = nil || opts[:tags]
+    @recurring = nil || opts[:recurring]
 
     # Add task to task class variable array
     @@tasks << self
@@ -25,6 +28,10 @@ class TM::Task
     # Find associated project and add task to project
     project = TM::Project.get_project(project_id)
     project.tasks << self
+  end
+
+  def tags
+    @tags
   end
 
   def overdue?

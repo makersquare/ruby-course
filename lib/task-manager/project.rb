@@ -38,8 +38,15 @@ class TM::Project
     completion_percent = (1.0 - (overdue_tasks.length.to_f / @tasks.length)).round(2)
   end
 
+  def tagged_tasks
+    # Find tagged tasks to make searching easier
+    @tasks.select{|task| task.tags != nil}
+  end
+
   def search(tag)
-    @tasks.select{|task| task.tags.include?(tag)}
+    # Filter by tagged tasks and then select items with matching tags
+    search_in = self.tagged_tasks
+    @search_in.select{|task| task.tags.include?(tag)}
   end
 
   def self.list_projects
