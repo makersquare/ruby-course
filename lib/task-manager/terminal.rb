@@ -9,7 +9,7 @@ class TM::TerminalClient
   def list_all_projects
     puts "PID        Project Name"
     @project_manager.list_projects.each do |project|
-      puts " #{project.id}         #{project.name}"
+      puts " #{project.id}         #{project.name}         Completed Task: #{show_complete_percentage(project)}%       Incomplete Task: #{show_incomplete_percentage(project)}%"
     end
   end
 
@@ -54,6 +54,22 @@ class TM::TerminalClient
     end
   end
 
+  def show_complete_percentage(project)
+    if project.task.length == 0
+      0
+    else
+      (project.completed_task.length / project.task.length.to_f * 100).round(2)
+    end
+  end
+
+  def show_incomplete_percentage(project)
+    if project.task.length == 0
+      0
+    else
+      (100 - (project.completed_task.length / project.task.length.to_f * 100)).round(2)
+    end
+  end
+
   def list_instructions
     puts "Available Commands:"
     puts
@@ -61,7 +77,7 @@ class TM::TerminalClient
     puts "  list - List all projects"
     puts "  create NAME - Create a new project with name=NAME"
     puts "  show PID - Show remaining tasks for project with id=PID"
-    puts "  history PID - Show remaining tasks for project with id=PID"
+    puts "  history PID - Show completed tasks for project with id=PID"
     puts "  add PID PRIORITY DESC - Add a new task to project with id=PID"
     puts "  mark TID - Mark task with id=TID as complete"
     puts "  exit - Will exit the program"

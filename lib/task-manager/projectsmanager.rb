@@ -1,3 +1,5 @@
+require 'pry'
+
 class TM::ProjectsManager
 
   attr_reader :projects,  :name
@@ -15,6 +17,7 @@ class TM::ProjectsManager
   end
 
   def remaining_task(project_id)
+    # binding.pry
     project = find_project_by_id(project_id)
     project.incompleted_task
   end
