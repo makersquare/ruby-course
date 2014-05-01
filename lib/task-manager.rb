@@ -16,6 +16,10 @@ end
 def sort_by_priority(project, priority)
 # Iterate over projects task list array and create a hash with priority as the key and an array of tasks as the value
   #project.project_list
+  project.task_list.each do |task|
+    task.priority == priority
+    {priority => [task]}
+  end
 end
 
 
