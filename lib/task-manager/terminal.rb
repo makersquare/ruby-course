@@ -58,7 +58,9 @@ class TM::TerminalClient
     description = gets.chomp
     puts "Please enter a priority number for your task (one being the highest priority)."
     priority = gets.chomp
-    task = TM::Task.new(projectid,description,priority)
+    puts "Please enter the date you want to complete this in the form \'Year Month Day\'."
+    duedate = gets.chomp
+    task = TM::Task.new(projectid,description,priority,duedate)
     puts "You created a new task \"#{description}!\""
     @command = gets.chomp
     self.call_methods(@command)
@@ -67,14 +69,20 @@ class TM::TerminalClient
   def show
     puts "Please enter a project ID."
     projectid = gets.chomp
-    taskss = TM::Task.incomplete_tasks(projectid)
+    tasks = TM::Task.incomplete_tasks(projectid)
     projects = TM::Project.list_projects
     project = projects.select {|project| project.pid == projectid.to_i}
     project_name = project[0]
     project_name = project_name.name
     puts "Showing Project \"#{project_name}\"\n\n"
-    puts "Priority\tID Description"
-    taskss.each {|task| puts "\t#{task.pnum}\t#{task.tid} #{task.description}"}
+    puts "Priority\tID Description\tDue Date\tOver Due?"
+    overdue = 'No'
+    t = Time.now
+    today = "#{t.year} #{t.month} #{t.day}"
+    tasks.each do |task| 
+      overdue = 'Yes' if task.duedate < today
+      puts "#{task.pnum}\t#{task.tid} #{task.description}\t#{task.duedate}\t#{overdue}"
+    end
     @command = gets.chomp
     self.call_methods(@command)
   end
@@ -88,8 +96,8 @@ class TM::TerminalClient
     project_name = project[0]
     project_name = project_name.name
     puts "Showing Project #{project_name}\n\n"
-    puts "Priority\tID Description"
-    tasks.each {|task| puts "\t#{task.pnum}\t#{task.tid} #{task.description}"}
+    puts "Priority\tID Description\tDue Date"
+    tasks.each {|task|  puts "#{task.pnum}\t#{task.tid} #{task.description}\t#{task.duedate}"}
     @command = gets.chomp
     self.call_methods(@command)
   end
