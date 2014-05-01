@@ -38,6 +38,7 @@ class TM::Task
     else
       task.complete = true
       @@completed_tasks << task
+      puts "The task has been marked as complete!"
     end
   end
 

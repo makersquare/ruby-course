@@ -22,9 +22,10 @@ class TM::Project
       @@projects
     end
 
-    def project_name(projectid)
-      project = @@projects.select {|project| project.pid == projectid}
-      project
+    def self.project_name(projectid)
+      p = @@projects.select {|project| project.pid == projectid}
+      p = p[0]
+      p.name
     end
 
 end
