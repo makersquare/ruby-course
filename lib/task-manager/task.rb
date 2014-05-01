@@ -12,7 +12,7 @@ class TM::Task
   def initialize(description, priority=1)
     @description = description
     @created = Time.now
-    @priority = priority
+    @priority = (1..5)
     @complete = false
   end
 

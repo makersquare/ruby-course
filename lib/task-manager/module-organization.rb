@@ -3,9 +3,9 @@ module Organization
   attr_accessor :name,
   # attr_accessor :name,:call_count_reset,:call_count
 
-  def created
-    @create_date = Time.now
-  end
+  # def created
+  #   @create_date = Time.now
+  # end
 
   def complete(complete=false)
     @complete = complete
