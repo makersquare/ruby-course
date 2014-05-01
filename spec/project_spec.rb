@@ -38,13 +38,13 @@ describe 'Project' do
   task1.status.should == "complete"
   end
 
-  it "has array of completed tasks sorted by creation date" do
+  it "has array of completed tasks sort out by date of creation" do
     TM::Task.project_id_counter = 1
-    Time.stub(:now).and_return(Time.parse("4pm"))
+    allow(Time).to receive(:now).and_return(Time.parse("4pm"))
     task1 = @project1.create_new_task("Web App", 5)
-    Time.stub(:now).and_return(Time.parse("3pm"))
+    allow(Time).to receive(:now).and_return(Time.parse("3pm"))
     task2 = @project1.create_new_task("Guess Game", 4)
-    Time.stub(:now).and_return(Time.parse("5pm"))
+    allow(Time).to receive(:now).and_return(Time.parse("5pm"))
     task3 = @project1.create_new_task("Tic-Tac", 3)
     @project1.complete_task(1)
     @project1.complete_task(2)
