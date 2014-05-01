@@ -24,7 +24,11 @@ class TM::TerminalClient
   def incompleted_task(pid)
     puts "Priority  TID  Due-Date                  Description"
     @project_manager.remaining_task(pid).each do |task|
-      puts "       #{task.priority}   #{task.task_id}   #{task.complete_date.asctime}  #{task.description}"
+      if task.over_due?
+        puts "       #{task.priority}   #{task.task_id}   *#{task.complete_date.asctime}*  #{task.description}"
+      else
+        puts "       #{task.priority}   #{task.task_id}   #{task.complete_date.asctime}  #{task.description}"
+      end
     end
   end
 
