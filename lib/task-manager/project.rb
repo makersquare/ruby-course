@@ -40,9 +40,9 @@ class TM::Project
 
 	def retrieve_completed_tasks_by_date(newest_first: true)
 		if newest_first
-			retrieve_completed_tasks.sort { |a,b| b.date_created <=> a.date_created }
+			retrieve_completed_tasks.sort_by { |a| -a.date_created.to_i }
 		else
-			retrieve_completed_tasks.sort { |a,b| a.date_created <=> b.date_created }
+			retrieve_completed_tasks.sort_by { |a| a.date_created.to_i  }
 		end
 	end
 
