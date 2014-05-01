@@ -60,6 +60,10 @@ class TM::Project
   end
 
   def overdue_tasks
+    uncomplete = self.incomplete_tasks
+    overdue = uncomplete.select{|task| task.due_date < Date.today}
+    num_overdue = (overdue.length.to_f / @tasks.length.to_f).round(2)
+    "#{num_overdue * 100}%"
   end
 
 end

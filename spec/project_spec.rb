@@ -194,6 +194,10 @@ describe 'Project' do
 
     describe 'overdue_tasks' do
       it "returns a percentage of the tasks that are overdue in a project" do
+        @task.due_date = "1 Jan 2014"
+        @task3.due_date = "3 Feb 2014"
+
+        expect(@project1.overdue_tasks).to eq("67.0%")
       end
     end
   end
