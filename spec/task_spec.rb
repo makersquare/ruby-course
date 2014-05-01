@@ -33,10 +33,10 @@ describe 'Task' do
 			expect(task3.id-task2.id).to eq(1)
 		end
 
-		it "has a project ID that defults to nil (unassigned)" do
-			task1 = TM::Task.new
-			expect(task1.project_id).to eq(nil)
-		end
+		# it "has a project ID that defults to nil (unassigned)" do
+		# 	task1 = TM::Task.new
+		# 	expect(task1.project_id).to eq(nil)
+		# end
 
 		it "can be initialized with a description" do
 			task1 = TM::Task.new("test", description: "hello")

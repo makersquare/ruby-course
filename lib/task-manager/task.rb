@@ -1,6 +1,6 @@
 class TM::Task
 	attr_reader :id, :date_created, :date_completed, :completed
-	attr_accessor :name, :project_id, :priority, :description
+	attr_accessor :name, :priority, :description
 
 	@@task_count = 0
 
@@ -8,7 +8,7 @@ class TM::Task
 		@name = name
 		@@task_count +=1
 		@id = @@task_count
-		@project_id = nil
+		# @project_id = nil
 		@description = description
 		@priority = priority
 		@date_created= Time.now

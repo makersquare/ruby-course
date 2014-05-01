@@ -13,13 +13,7 @@ class TM::Project
 	end
 
 	def add_task(*tasks)
-		#extension -- handle multiple tasks, splat argument
-		tasks.each do |task|
-			if task.class == TM::Task
-				@tasks << task 
-				@tasks.last.project_id = @id
-			end
-		end
+		tasks.each { |task| @tasks << task if task.class == TM::Task}
 	end
 
 	def get_task_by_id(task_id)

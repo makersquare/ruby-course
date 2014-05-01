@@ -57,15 +57,15 @@ describe 'Project' do
   		expect(project1.tasks[0].name).to eq("task1")
   	end
 
-    it "sets the task.project_id to the current projects id" do
-      # check size of array and compare actual contents
-      project1 = TM::Project.new("project1")
-      task1 = TM::Task.new("task1")
-      project1.add_task(task1)
-      project_id = project1.id
-      expect(project1.tasks.size).to eq(1)
-      expect(project1.tasks[0].project_id).to eq(project_id)
-    end
+    # it "sets the task.project_id to the current projects id" do
+    #   # check size of array and compare actual contents
+    #   project1 = TM::Project.new("project1")
+    #   task1 = TM::Task.new("task1")
+    #   project1.add_task(task1)
+    #   project_id = project1.id
+    #   expect(project1.tasks.size).to eq(1)
+    #   expect(project1.tasks[0].project_id).to eq(project_id)
+    # end
 
     it "can handle adding an multiple task objects passed in" do
       project1 = TM::Project.new("project1")
