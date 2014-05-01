@@ -35,6 +35,17 @@ describe 'Project' do
       end
     end
 
+    describe 'find_project' do
+      it "returns the project that matches the given project id" do
+        expect(TM::Project.find_project(2)).to eq(@project2)
+      end
+
+      it "returns no project if given id has no matching project" do
+        STDOUT.should_receive(:puts).with("There is no project with that ID.")
+        TM::Project.find_project(5)
+      end
+    end
+
     describe "show_incomplete_tasks" do
 
       it "tells when there is not a project with the inputted id" do

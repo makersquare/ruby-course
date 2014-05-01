@@ -22,6 +22,15 @@ class TM::Project
     end
   end
 
+  def self.find_project(project_id)
+    @@projects.each do |project|
+      if project.id == project_id
+        return project
+      end
+    end
+    puts "There is no project with that ID."
+  end
+
   def self.show_incomplete_tasks(project_id)
     temp_project = nil
     @@projects.each do |project|
