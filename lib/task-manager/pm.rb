@@ -13,7 +13,7 @@ class TerminalClient
     puts 'create NAME - Create a new project with name=NAME'
     puts 'show PID - Show remaining tasks for project with id=PID'
     puts 'history PID - Show completed tasks for project with id=PID'
-    puts 'add PID PRIORITY DESC - Add a new task to project with id=PID'
+    puts 'add PID DESC PRIORITY - Add a new task to project with id=PID'
     puts 'mark TID - Mark task with id=TID as complete'
     get_command
   end
@@ -21,8 +21,11 @@ class TerminalClient
 def get_command
   input = gets.chomp.downcase!
   words = input.split(' ')
-  option = words[1]
   command = words[0]
+  option = words[1]
+  option1 = words[2]
+  option2 = words[3]
+  option2 = words[4]
 
   case command
     when 'help'
@@ -31,14 +34,14 @@ def get_command
       list
     when 'create'
       create(option)
-    when 'show PID'
-      show PID
-    when 'history PID'
-      history PID
-    when 'add PID PRIORITY DESC'
-      add PID PRIORITY DESC
-    when 'mark TID'
-      mark TID
+    when 'show'
+      show(option)
+    when 'history'
+      history(option)
+    when 'add'
+      add(option, option2, option3, option4)
+    when 'mark'
+      mark(option)
     when 'exit'
       exit
 
@@ -54,43 +57,26 @@ end
     TM::Project.list_projects
   end
 
-  def create(pid)
-
-
-    TM::Project.new(name)
+  def create(option)
+    TM::Project.new(option)
   end
 
-  def show(pid)
-    # MOVE STARTS HERE
-    @@projects.each do |x|
-      if x == pid
-        pid.incomplete_tasks
-      end
-
-     # FINISH THIS MAYBE IN PROJECT CLASS
+  def show(option)
+    option.incomplete_tasks
   end
 
-  def history(pid)
-# SAME AS ABOVE
-    pid.completed
+  def history(option)
+    option.completed
   end
 
-  def add(pid, name, description, priority_number)
-    # SAME AS ABOVE FOR PID
-    pid
-
-    name = TM::Task.name
-    description = TM::Task.description
-    priority_number = TM::Task.priority_number
-
-    newTask = TM::Task.new(name, description, priority_number)
-      # OMG HOW TO I ADD THIS TO A PROJECT!?!?!
-      spec @ symbols are what pid needs to be
-      pid.add_task
+  def add(option, option2, option3, option4)
+    option = TM::Project.id
+    newTask = TM::Task.new(option2, option3, option4)
+    option.add_task(newTask)
   end
 
-  def mark(task_name)
-    tid = TM::Task.
+  def mark(option)
+    option = TM::Task.
     complete
   end
 
