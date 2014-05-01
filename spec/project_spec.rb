@@ -7,9 +7,9 @@ describe 'Project' do
     TM::Task.reset_class_variables
     @project = TM::Project.new("project")
     @project1 = TM::Project.new("project 1")
-    @task = TM::Task.new(@project.pid, "description1", 3)
-    @task1 = TM::Task.new(@project.pid, "description1", 10)
-    @task2 = TM::Task.new(@project.pid, "description1", 5)
+    @task = TM::Task.new(@project.pid, "description1", 3, "2014-05-08")
+    @task1 = TM::Task.new(@project.pid, "description1", 10, "2014-05-08")
+    @task2 = TM::Task.new(@project.pid, "description1", 5, "2014-05-08")
   end
 
   it "initializes with a unique project id and name" do
@@ -33,7 +33,7 @@ describe 'Project' do
   end
 
   it "retrieves incomplete tasks and sorts them by priority" do
-    @task3 = TM::Task.new(@project.pid, "description1", 3)
+    @task3 = TM::Task.new(@project.pid, "description1", 3, "2014-05-08")
 
     expect(@project.incomplete_tasks.first.task_id).to eq 2
     expect(@project.incomplete_tasks.last.task_id).to eq 4

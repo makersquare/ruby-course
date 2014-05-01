@@ -1,11 +1,11 @@
 
 class TM::Task
-  attr_reader :description, :priority, :project_id, :task_id, :created_at
+  attr_reader :description, :priority, :project_id, :task_id, :created_at, :due_date
   attr_accessor :status, :completed_at
   @@task_id = 0
   @@tasks = []
 
-  def initialize(project_id, desc, priority)
+  def initialize(project_id, desc, priority, due_date)
     @project_id = project_id
     @task_id = @@task_id + 1
     @description = desc
@@ -13,6 +13,7 @@ class TM::Task
     @status = 0 # Initialize task as incomplete
     @created_at = Time.now
     @completed_at = nil
+    @due_date = Date.parse(due_date)
 
     # Add task to task class variable array
     @@tasks << self
