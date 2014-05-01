@@ -17,12 +17,8 @@ class TM::Project
 	end
 
 	def get_task_by_id(task_id)
-		@tasks.each_index do |x|
-			if @tasks[x].id == task_id
-				return @tasks[x]
-			end
-		end
-		return nil
+		@tasks.each_index { |x| return @tasks[x] if @tasks[x].id == task_id }
+		nil
 	end
 
 	def delete_task_by_id(task_id)
