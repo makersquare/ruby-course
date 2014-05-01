@@ -33,7 +33,7 @@ describe 'Project' do
   end
 
   it "retrieves incomplete tasks and sorts them by priority" do
-    @task3 = TM::Task.new(@project.pid, "description1", 3, "2014-05-08")
+    task3 = TM::Task.new(@project.pid, "description1", 3, "2014-05-08")
 
     expect(@project.incomplete_tasks.first.task_id).to eq 2
     expect(@project.incomplete_tasks.last.task_id).to eq 4
@@ -58,6 +58,22 @@ describe 'Project' do
     Date.stub(:today).and_return(@today)
     TM::Task.mark_overdue
     @project.completion = @project.project_completion_percent
+
     expect(@project.completion).to eq 0.33
     end
+
+  it "searches tags and returns matching tasks" do
+    task3 = TM::Task.new(@project.pid, "description1", 10, "2014-05-08",["tag1"])
+    task4 = TM::Task.new(@project.pid, "description2", 8, "2014-05-08",["tag2","tag3"])
+    task5 = TM::Task.new(@project.pid, "description2", 8, "2014-05-08",["tag2","tag3","tag4"])
+
+
+    # It should find one tag if only one matches search
+    expect(@project.search("tag1").first).to eq task3
+
+    # It should find more than one if more than one matches
+    expect(@project.search("tag3").first).to eq task4
+    expect(@project.search("tag3").length).to eq 2
+
+  end
 end

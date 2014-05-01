@@ -1,6 +1,6 @@
 
 class TM::Task
-  attr_reader :description, :priority, :project_id, :task_id, :created_at, :due_date
+  attr_reader :description, :priority, :project_id, :task_id, :created_at, :due_date, :tags
   attr_accessor :status, :completed_at, :overdue
   @@task_id = 0
   @@tasks = []
@@ -25,12 +25,6 @@ class TM::Task
     # Find associated project and add task to project
     project = TM::Project.get_project(project_id)
     project.tasks << self
-  end
-
-  def tags
-    @tags.each do |tag|
-      print "#{tag} "
-    end
   end
 
   def overdue?

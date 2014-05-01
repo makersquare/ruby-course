@@ -17,14 +17,6 @@ class TM::Project
     @@projects << self
   end
 
-  def self.list_projects
-    @@projects
-  end
-
-  def self.get_project(project_id)
-    @@projects.detect{|project| project_id == project.pid}
-  end
-
   def completed_tasks
     completed_tasks = @tasks.select{ |task| task.status == 1 }
     completed_tasks.sort_by{ |task| task.created_at }
@@ -44,6 +36,18 @@ class TM::Project
     # Find overdue tasks, calculate percentage of project that is not overdue and return % rounded to two.
     overdue_tasks = self.overdue_tasks
     completion_percent = (1.0 - (overdue_tasks.length.to_f / @tasks.length)).round(2)
+  end
+
+  def search(tag)
+    @tasks.select{|task| task.tags.include?(tag)}
+  end
+
+  def self.list_projects
+    @@projects
+  end
+
+  def self.get_project(project_id)
+    @@projects.detect{|project| project_id == project.pid}
   end
 
   # Used to reset class variables for rspec tests
