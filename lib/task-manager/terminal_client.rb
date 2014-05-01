@@ -51,6 +51,9 @@ class TM::TerminalClient
         run(@choice)
         #shows incomplete tasks for inputted project
       when 'show'
+        project = TM::Project.find_project(@answer[1].to_i)
+        tasks = project.incomplete_tasks
+
         TM::Project.show_incomplete_tasks(@answer[1].to_i)
 
         puts "Enter another command (help for list of command options) or exit if you wish to stop."

@@ -40,9 +40,8 @@ describe 'Project' do
         expect(TM::Project.find_project(2)).to eq(@project2)
       end
 
-      it "returns no project if given id has no matching project" do
-        STDOUT.should_receive(:puts).with("There is no project with that ID.")
-        TM::Project.find_project(5)
+      it "returns nil if given id has no matching project" do
+        expect(TM::Project.find_project(5)).to eq(nil)
       end
     end
 

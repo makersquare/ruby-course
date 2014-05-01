@@ -28,7 +28,7 @@ class TM::Project
         return project
       end
     end
-    puts "There is no project with that ID."
+    return nil
   end
 
   def self.show_incomplete_tasks(project_id)
