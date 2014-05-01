@@ -76,10 +76,10 @@ class TM::TerminalClient
     project_name = project_name.name
     puts "Showing Project \"#{project_name}\"\n\n"
     puts "Priority\tID Description\tDue Date\tOver Due?"
-    overdue = 'No'
     t = Time.now
     today = "#{t.year} #{t.month} #{t.day}"
     tasks.each do |task| 
+      overdue = 'No'
       overdue = 'Yes' if task.duedate < today
       puts "#{task.pnum}\t#{task.tid} #{task.description}\t#{task.duedate}\t#{overdue}"
     end
