@@ -19,7 +19,7 @@ class TM::TerminalClient
         mark TID - Mark task with id=TID as complete
         exit
         '
-    # get_input
+    get_input
   end
 
   def get_input
@@ -45,7 +45,7 @@ class TM::TerminalClient
     when 'create' then create_project(args)
     when 'add' then create_new_task(args)
     when 'show' then show(args)
-    # when 'history' then
+    when 'history' then history(args)
     # when 'mark' then
     else "command invalid. 'help' displays the menu."
     end
@@ -68,12 +68,20 @@ class TM::TerminalClient
     project.incomplete.each {|t| puts t}
   end
 
+  def history(args)
+    pid = args.shift.to_i
+    project = TM::Project.find_project_by_id(pid)
+    puts "Project_#{project.id}_Completed_Tasks_"
+    project.completed.each {|t| puts t}
+  end
+
   def create_new_task(args)
     pid = args.shift.to_i
     priority = args.shift.to_i
     desc = args.join(' ')
     task = TM::Task.new(pid, priority, desc)
-    # puts "New Task #{task.id} created and assigned to Project #{pid}"
+    puts "New Task #{task.id} created and assigned to Project #{pid}"
+    TM::Project.find_project_by_id(pid).add_task(task)
     task
   end
 
