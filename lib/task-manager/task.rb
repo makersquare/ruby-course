@@ -1,6 +1,8 @@
 
+require_relative './module-organization'
+
 class TM::Task
-  require_relative './module-organization'
+
   include Organization
 
 

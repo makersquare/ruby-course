@@ -1,6 +1,7 @@
 module Organization
-  attr_reader :create_date, :complete, :id, :complete_date
-  attr_accessor :name
+  attr_reader :create_date, :complete, :complete_date
+  attr_accessor :name, :call_count_reset, :call_count,
+  # attr_accessor :name,:call_count_reset,:call_count
 
   def created
     @create_date = Time.now
@@ -15,16 +16,27 @@ module Organization
     @complete_date = Time.now
   end
 
+
+
+  # def call_count_reset
+  #   @call_count = 1
+  # end
+
+  def id
+    @id
+  end
+
   def call_count
     @call_count = 1
   end
 
-  def id
+  def increment_id
     ## Implement a method for a unique ID
     ## Should be unique for projects
     @id = @call_count
     @call_count += 1
-
   end
+
+
 
 end

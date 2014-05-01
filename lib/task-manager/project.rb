@@ -4,7 +4,7 @@ class TM::Project
 include Organization
 
 
-attr_reader :created, :project_id, :add_task
+attr_reader :created, :add_task, :task_list
 attr_accessor :name, :task, :project_list
 
 # def self.project_count
@@ -37,8 +37,9 @@ attr_accessor :name, :task, :project_list
 
   def initialize(name="New Project")
     @name = name
-    #@created = Time.now
-    # @project_id = @@project_count + 1
+    @created = @create_date
+    @task_list = []
+    @id = @call_count
     # @name = name + " - #{@project_id}"
     # @project_list = {@project_id => []}
     # @@project_count += 1
