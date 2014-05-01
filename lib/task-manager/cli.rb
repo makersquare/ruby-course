@@ -48,10 +48,13 @@ class TerminalClient
 
   def list_projects
     projects = get_projects
-    projects.each do |k, project|
-      puts "\[#{project.id}\]: #{project.name}"
+    if projects.size > 0
+      projects.each do |k, project|
+        puts "\[#{project.id}\]: #{project.name}"
+      end
+    else
+      puts "No projects available, try 'help' for more options"
     end
-
     self.get_command
   end
 
