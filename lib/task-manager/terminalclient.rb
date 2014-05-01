@@ -8,7 +8,7 @@ class TM::TerminalClient
     puts "\tcreate NAME - Create a new project with name=NAME"
     puts "\tshow PID - Show remaining tasks for project with id=PID"
     puts "\thistory PID - Show completed tasks for project with id=PID"
-    puts "\tadd PID PRIORITY DESC - Add a new task to project with id=PID"
+    puts "\tadd PID PRIORITY DUE_DATE DESC - Add a new task to project with id=PID"
     puts "\tmark TID - Mark task with id=TID as complete"
     puts "\texit with EXIT"
     print "Enter a command: "
@@ -46,7 +46,7 @@ class TM::TerminalClient
     puts "\tcreate NAME - Create a new project with name=NAME"
     puts "\tshow PID - Show remaining tasks for project with id=PID"
     puts "\thistory PID - Show completed tasks for project with id=PID"
-    puts "\tadd PID DESC PRIORITY - Add a new task to project with id=PID"
+    puts "\tadd PID PRIORITY DUE_DATE DESC - Add a new task to project with id=PID"
     puts "\tmark TID - Mark task with id=TID as complete"
     puts "\texit with exit"
     print "Enter a command: "
@@ -94,12 +94,13 @@ class TM::TerminalClient
   end
 
   def add_task(choice)
-    choice = choice.split(" ",4)
+    choice = choice.split(" ",5)
     pid = choice[1].to_i
     priority = choice[2].to_i
-    description = choice[3]
+    due_date = choice[3]
+    description = choice[4]
 
-    TM::Task.new(pid,description,priority)
+    TM::Task.new(pid, description, priority, due_date)
     puts "Task created"
     print "Enter a command: "
   end
