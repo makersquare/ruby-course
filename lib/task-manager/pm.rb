@@ -15,36 +15,36 @@ class TerminalClient
     puts 'history PID - Show completed tasks for project with id=PID'
     puts 'add PID PRIORITY DESC - Add a new task to project with id=PID'
     puts 'mark TID - Mark task with id=TID as complete'
-    input = gets.chomp.downcase!
+    get_command
   end
 
-case input
-  when 'help'
-    puts 'help - Show these commands again'
-    puts 'list - List all projects'
-    puts 'create NAME - Create a new project with name=NAME'
-    puts 'show PID - Show remaining tasks for project with id=PID'
-    puts 'history PID - Show completed tasks for project with id=PID'
-    puts 'add PID PRIORITY DESC - Add a new task to project with id=PID'
-    puts 'mark TID - Mark task with id=TID as complete'
+def get_command
+  input = gets.chomp.downcase!
+    # split here w/ variables index[0]
+  words = input.split(' ')
+  name = words[1]
 
-  when 'list'
-    list
-  when 'create'
-    create
-  when 'show PID'
-    show PID
-  when 'history PID'
-    history PID
-  when 'add PID PRIORITY DESC'
-    add PID PRIORITY DESC
-  when 'mark TID'
-    mark TID
-  when 'exit'
-    exit
+  case input
+    when 'help'
+      start
+    when 'list'
+      list
+    when 'create'
+      create
+    when 'show PID'
+      show PID
+    when 'history PID'
+      history PID
+    when 'add PID PRIORITY DESC'
+      add PID PRIORITY DESC
+    when 'mark TID'
+      mark TID
+    when 'exit'
+      exit
 
-  else
-    "Sorry, that didn't match any of my commands. Please try again."
+    else
+      "Sorry, that didn't match any of my commands. Please try again."
+    end
 end
 
 
@@ -54,9 +54,10 @@ end
     TM::Project.list_projects
   end
 
-  def create(name)
-    # SEPARATE YO GETS CHOMPY
-    TM::Project.initialize(name)
+  def create(pid)
+
+
+    TM::Project.new(name)
   end
 
   def show(pid)
