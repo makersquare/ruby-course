@@ -59,7 +59,7 @@ class TMTerminal
       puts "Completed Tasks"
       puts "Task ID\tTask Description"
       project.completed_tasks.each do |task|
-        puts "#{task.task_id} | #{task.description}"
+        puts "#{task.task_id}\t\t#{task.description}"
       end
       print "Enter a command: "
     when /add ./
