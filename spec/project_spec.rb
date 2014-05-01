@@ -29,8 +29,18 @@ describe 'Project' do
 
     describe 'list_all' do
       it "lists all projects" do
+        task = TM::Task.new("Create gradebook", @project1.id, 1)
+        task2 = TM::Task.new("Add students", @project1.id, 2)
+
+        @project1.add_task(task)
+        @project1.add_task(task2)
+
+        TM::Task.mark_complete(1)
         STDOUT.should_receive(:puts).with("Name: Grades - ID: 1")
+        # STDOUT.should_receive(:puts).with("Percentage Finished - 50%")
         STDOUT.should_receive(:puts).with("Name: Tests - ID: 2")
+        # STDOUT.should_receive(:puts).with("Percentage Finished - 0%")
+
         TM::Project.list_all
       end
     end
@@ -160,12 +170,16 @@ describe 'Project' do
       allow(Date).to receive(:today).and_return(Date.parse("14 March 2014"))
       task3 = TM::Task.new("Add tests", @project1.id, 2)
       allow(Date).to receive(:today).and_return(Date.parse("14 March 2012"))
-      task4 = TM::Task.new("Add tests", @project1.id, 2)
+      task4 = TM::Task.new("Add hw", @project1.id, 2)
 
       @project1.add_task(task)
       @project1.add_task(task2)
       @project1.add_task(task3)
       @project1.add_task(task4)
+
+      task2.due_date = "1 May 2010"
+      task3.due_date = "1 May 2014"
+      task4.due_date = "1 May 2013"
 
       TM::Task.mark_complete(task.task_id)
 
@@ -182,22 +196,29 @@ describe 'Project' do
       @project1.add_task(@task)
       @project1.add_task(@task2)
       @project1.add_task(@task3)
-
-      TM::Task.mark_complete(2)
     end
 
     describe 'percentage_complete' do
+      it "returns 0 if no tasks have been completed" do
+        expect(@project1.percentage_complete).to eq(0)
+      end
+
       it "returns a percentage of the tasks that are complete in a project" do
-        expect(@project1.percentage_complete).to eq("33.0%")
+        TM::Task.mark_complete(2)
+        expect(@project1.percentage_complete).to eq(33.0)
       end
     end
 
     describe 'overdue_tasks' do
+      it "returns 0 if no tasks are overdue" do
+        expect(@project1.overdue_tasks).to eq(0)
+      end
+
       it "returns a percentage of the tasks that are overdue in a project" do
         @task.due_date = "1 Jan 2014"
         @task3.due_date = "3 Feb 2014"
 
-        expect(@project1.overdue_tasks).to eq("67.0%")
+        expect(@project1.overdue_tasks).to eq(67.0)
       end
     end
   end

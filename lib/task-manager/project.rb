@@ -25,6 +25,7 @@ class TM::Project
   def self.list_all
     @@projects.each do |project|
       puts "Name: #{project.name} - ID: #{project.id}"
+      # puts "Percentage Finished - #{project.percentage_complete}"
     end
   end
 
@@ -55,15 +56,23 @@ class TM::Project
 
   def percentage_complete
     num_complete_tasks = self.completed_tasks.length
-    num_completed = (num_complete_tasks.to_f / @tasks.length.to_f).round(2)
-    "#{num_completed * 100}%"
+    if num_complete_tasks != 0
+      num_completed = (num_complete_tasks.to_f / @tasks.length.to_f).round(2)
+      return num_completed * 100
+    else
+      return 0
+    end
   end
 
   def overdue_tasks
-    uncomplete = self.incomplete_tasks
-    overdue = uncomplete.select{|task| task.due_date < Date.today}
-    num_overdue = (overdue.length.to_f / @tasks.length.to_f).round(2)
-    "#{num_overdue * 100}%"
+
   end
+
+  # def overdue_tasks
+  #   uncomplete = self.incomplete_tasks
+  #   overdue = uncomplete.select{|task| task.due_date < Date.today}
+  #   num_overdue = (overdue.length.to_f / @tasks.length.to_f).round(2)
+  #   "#{num_overdue * 100}%"
+  # end
 
 end
