@@ -21,40 +21,19 @@ class TM::Project
 		nil
 	end
 
+	def get_task_index_by_id(task_id)
+		# use this if you need to modify the actual @tasks array
+		@tasks.each_index { |x| return x if @tasks[x].id == task_id }
+		nil
+	end
+
 	def delete_task_by_id(task_id)
-		return nil if @tasks.size == 0
-
-		task_found = false
-		deleted_task = nil
-
-		@tasks.each_index do |x|
-			if @tasks[x].id == task_id
-				task_found = true
-				deleted_task = @tasks[x]
-				@tasks.delete_at(x)
-			end
-		end
-
-		if task_found
-			deleted_task
-		else
-			nil
-		end
+		@tasks.delete_if {|task| task.id == task_id }
 	end
 
 	def mark_task_completed_by_id(task_id)
-		task_index = nil
-
-		@tasks.each_index do |x|
-			if @tasks[x].id == task_id
-				task_index = x
-			end
-		end
-		if task_index == nil 
-			nil
-		else
-			@tasks[task_index].mark_completed
-		end
+		index = get_task_index_by_id(task_id)
+		@tasks[index].mark_completed unless index == nil
 	end
 
 	def retrieve_completed_tasks_by_date(newest_first: true)

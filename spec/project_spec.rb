@@ -25,16 +25,16 @@ describe 'Project' do
   	it "creates a unique ID is created starting with id=1" do
       project1 = TM::Project.new
       project2 = TM::Project.new
-  		project3 = TM::Project.new
+      project3 = TM::Project.new
       expect(project1.id).to eq(1)
       expect(project2.id).to eq(2)
-  		expect(project3.id).to eq(3)
-  	end
+      expect(project3.id).to eq(3)
+    end
 
-  	it "creates multiple unique IDS in numerical order" do
-  		project1 = TM::Project.new
-  		project2 = TM::Project.new
-  		project3 = TM::Project.new
+    it "creates multiple unique IDS in numerical order" do
+      project1 = TM::Project.new
+      project2 = TM::Project.new
+      project3 = TM::Project.new
       expect(project2.id-project1.id).to eq(1)
       expect(project3.id-project2.id).to eq(1)
     end
@@ -91,10 +91,6 @@ describe 'Project' do
   end
 
   describe "get_task_by_id method" do
-  	# get_task_by_id(id_num)
-  	# only serches the current projects tasks[] array
-  	# generic function to use in other methods
-
   	it "returns nil if id not found" do
   		project1 = TM::Project.new("project1")
   		task1 = TM::Task.new("task1")
@@ -113,21 +109,42 @@ describe 'Project' do
 
   end
 
-  describe "delete_task_by_id method" do
-    #delete_task_by_id(id)
-
-    it "returns nil if tasks array is empty" do
+  describe "get_task_index_by_id method" do
+    it "returns nil if id not found" do
       project1 = TM::Project.new("project1")
-      result = project1.delete_task_by_id(50)
+      result = project1.get_task_index_by_id(50)
       expect(result).to eq(nil)
     end
 
-    it "returns nil if id not found and doesn't affect @tasks array" do
+    it "returns the index in @tasks array t if id is found" do
+      project1 = TM::Project.new("project1")
+      task1 = TM::Task.new("task1")
+      task2 = TM::Task.new("task2")
+      task1.set_id(50)
+      task2.set_id(60)
+      project1.add_task(task1)
+      project1.add_task(task2)
+      expect(project1.get_task_index_by_id(50)).to eq(0)
+      expect(project1.get_task_index_by_id(60)).to eq(1)
+    end
+  end
+
+  describe "delete_task_by_id method" do
+    #delete_task_by_id(id)
+
+    # it "returns nil if tasks array is empty" do
+    #   project1 = TM::Project.new("project1")
+    #   result = project1.delete_task_by_id(50)
+    #   expect(result).to eq(nil)
+    # end
+
+    it "if id not found it doesn't affect @tasks array" do
       project1 = TM::Project.new("project1")
       task1 = TM::Task.new("task1")
       task1.set_id(50)
       project1.add_task(task1)
-      expect(project1.delete_task_by_id(99)).to eq(nil)
+      expect(project1.tasks.size).to eq(1)
+      project1.delete_task_by_id(99)
       expect(project1.tasks.size).to eq(1)
       expect(project1.tasks[0].name).to eq("task1")
     end
@@ -153,27 +170,27 @@ describe 'Project' do
       expect(project1.tasks[0].name).to eq("task3")
     end
 
-    it "returns a task object of deleted task if id found" do
-      project1 = TM::Project.new("project1")
-      task1 = TM::Task.new("task1")
-      task1.set_id(10)
-      project1.add_task(task1)
-      deleted_task = project1.delete_task_by_id(10)
-      expect(deleted_task.name).to eq("task1")
-    end
+    # it "returns a task object of deleted task if id found" do
+    #   project1 = TM::Project.new("project1")
+    #   task1 = TM::Task.new("task1")
+    #   task1.set_id(10)
+    #   project1.add_task(task1)
+    #   deleted_task = project1.delete_task_by_id(10)
+    #   expect(deleted_task.name).to eq("task1")
+    # end
 
   end
 
   describe "mark_task_completed_by_id method" do
   	# mark_task_completed_by_id(id_num)
 
-  	it "returns nil if id not found and does nothing to array" do
+  	it "if id not found then it does nothing to array" do
   		project1 = TM::Project.new("project1")
   		task1 = TM::Task.new("task1")
   		task1.set_id(50)
   		project1.add_task(task1)
   		expect(project1.tasks[0].completed).to eq(false)
-  		expect(project1.mark_task_completed_by_id(99)).to eq(nil)
+  		project1.mark_task_completed_by_id(99)
   		expect(project1.tasks[0].completed).to eq(false)
   	end
 
