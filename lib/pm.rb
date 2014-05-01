@@ -14,10 +14,10 @@ class TerminalClient
 			print ">> "
 			input = gets.chomp
 
-			input_arguments = split_text(input.gsub(/\"/, ''))
+			input_arguments = input.gsub(/\"/, '').split(" ")
 
 			case input_arguments[0]
-			when "help"
+			when "help" 
 				list_commands
 			when "list" , "ls"
 				list_projects
@@ -27,16 +27,9 @@ class TerminalClient
 					puts "[Created new project '#{@@projects.last.name} with id=#{@@projects.last.id}]"
 				end
 			when "show", "s"
-				# show(input_arguments[1]) if check_arguments(input_arguments,1)
 				list_tasks(input_arguments[1], completed: false) if check_arguments(input_arguments,1)
-				# if input_arguments.size == 2
-				# end
 			when "history", "h"
-				# history(input_arguments[1]) if check_arguments(input_arguments,1)
 				list_tasks(input_arguments[1], completed: true) if check_arguments(input_arguments,1)
-				# if input_arguments.size == 2
-				# 	history(input_arguments[1])
-				# end
 			when "add", "a"
 				if check_arguments(input_arguments, 3, unlimited: true)
 					task = TM::Task.new(priority: input_arguments[2], description: input_arguments[3...input_arguments.length].join(" "))
@@ -107,38 +100,6 @@ class TerminalClient
 
 	end
 
-	def self.show(project_id)
-		project = get_project_by_id(project_id)
-		if project == nil
-			puts "Project with id='#{project_id}' not found."
-		else
-			puts "Remaining tasks for project '#{project.name}' with id=#{project.id}"
-			remaining_tasks = project.retrieve_incompleted_tasks_by_priority
-			if remaining_tasks.size == 0
-				puts "No remaining tasks, all are completed."
-			else
-				TM::Task.print_header
-				remaining_tasks.each {|task| task.print_details }
-			end
-		end
-	end
-
-	def self.history(project_id)
-		project = get_project_by_id(project_id)
-		if project == nil
-			puts "Project with id='#{project_id}' not found."
-		else
-			puts "History of completed tasks for project '#{project.name}' with id=#{project.id}"
-			completed_tasks = project.retrieve_completed_tasks_by_date
-			if completed_tasks.size == 0
-				puts "[No tasks have been completed for this project]"
-			else
-				TM::Task.print_header
-				completed_tasks.each {|task| task.print_details }
-			end
-		end
-	end
-
 	def self.list_tasks(project_id, completed: true)
 		project = get_project_by_id(project_id)
 		if project == nil
@@ -197,23 +158,6 @@ class TerminalClient
 		end
 	end
 
-	def self.split_text(input)
-		new_input = []
-		# everything up to first double quote
-		# "hello".index('e') --> 1
-		# input.scan(\".*\")
-		# text.scan(/"([^"]*)"/)
-
-		return input.split
-	end
-
-
-
 end
 
-# project1 = TM::Project.new("project1")
-
-# puts project1.name
-
 TerminalClient.start
-# TerminalClient.add_task_to_project(1, 2)
