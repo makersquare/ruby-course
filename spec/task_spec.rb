@@ -57,7 +57,7 @@ describe 'Task' do
   end
 
   it "allows a due date to be added to a task" do
-    @task.due_date = Date.parse("1 March 2015")
+    @task.due_date = "1 March 2015"
     expect(@task.due_date.to_s).to eq("2015-03-01")
   end
 end
