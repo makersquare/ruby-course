@@ -22,41 +22,32 @@ class TerminalClient
 			when "list" , "ls"
 				list_projects
 			when "create", "c"
-				check_arguments(input_arguments,1, unlimited: true)
-				if input_arguments.size >= 2
+				if check_arguments(input_arguments,1, unlimited: true)
 					@@projects << TM::Project.new(input_arguments[1...input_arguments.length].join(" "))
-					puts "[Created new project '#{@@projects.last.name}'' with id=#{@@projects.last.id}]"
+					puts "[Created new project '#{@@projects.last.name} with id=#{@@projects.last.id}]"
 				end
 			when "show", "s"
-				check_arguments(input_arguments,1)
-				if input_arguments.size == 2
-					show(input_arguments[1])
-				end
+				# show(input_arguments[1]) if check_arguments(input_arguments,1)
+				list_tasks(input_arguments[1], completed: false) if check_arguments(input_arguments,1)
+				# if input_arguments.size == 2
+				# end
 			when "history", "h"
-				check_arguments(input_arguments,1)
-				if input_arguments.size == 2
-					history(input_arguments[1])
-				end
+				# history(input_arguments[1]) if check_arguments(input_arguments,1)
+				list_tasks(input_arguments[1], completed: true) if check_arguments(input_arguments,1)
+				# if input_arguments.size == 2
+				# 	history(input_arguments[1])
+				# end
 			when "add", "a"
-				check_arguments(input_arguments, 3, unlimited: true)
-				if input_arguments.size >= 4
-					# task = TM::Task.new(description: "Get shit done!", priority: 3)
+				if check_arguments(input_arguments, 3, unlimited: true)
 					task = TM::Task.new(priority: input_arguments[2], description: input_arguments[3...input_arguments.length].join(" "))
 					project_id = input_arguments[1]
 					add_task_to_project(task, project_id)
-					puts "adding task..."
-					# show(input_arguments[1])
+					puts "[Added task '#{task.description}' to project id=#{project_id}]"
 				end
 			when "mark", "m"
-				check_arguments(input_arguments, 1)
-				if input_arguments.size == 2
-					task_id = input_arguments[1]
-					mark_task_complete_with_id(task_id)
-					# task = TM::Task.new(priority: input_arguments[2], description: input_arguments[3] )
-					# project_id = input_arguments[1]
-					# add_task_to_project(task, project_id)
-					puts "marking task complete..."
-					# show(input_arguments[1])
+				if check_arguments(input_arguments, 1)
+					mark_task_complete_with_id(input_arguments[1])
+					puts "[Marked task id=#{input_arguments[1]} as complete.]"
 				end
 			when "exit", "quit", "q"
 				exit_program = true
@@ -73,40 +64,36 @@ class TerminalClient
 
 	def self.list_commands
 		puts "Available Commands:"
-		puts "   help            Show these commands again"
-		puts "   list (ls)       List all projects"
-		puts "   create NAME     Create a new project with name=NAME"
-		puts "   show PID        Show remaining tasks for project with id=PID"
-		puts "   history PID     Show completed tasks for project with id=PID"
-		puts "   add PID PRIORITY DESC - Add a new task to project with id=PID"
-		puts "   mark TID        Mark task with id=TID as complete"
-		puts "   exit            quits application"
+		puts "   help                       Show these commands again"
+		puts "   list (ls)                  List all projects"
+		puts "   create NAME                Create a new project with name=NAME"
+		puts "   show PID                   Show remaining tasks for project with id=PID"
+		puts "   history PID                Show completed tasks for project with id=PID"
+		puts "   add PID PRIORITY DESC -    Add a new task to project with id=PID"
+		puts "   mark TID                   Mark task with id=TID as complete"
+		puts "   exit (q)                   quits application"
 	end
 
 	def self.check_arguments(input_arguments, expected_num_arguments, unlimited: false)
-		# if input_arguments.size == 1
-		# 	puts "No arguments passed in for '#{input_arguments[0]}'."
-		# 	puts "Should be '#{input_arguments[0]} [argument]'"
-		# end
-
 		if input_arguments.size < expected_num_arguments +1
 			puts "Too few arguments for [#{input_arguments[0]}]."
-			# puts "Should be '#{input_arguments[0]} [argument]*#{expected_num_arguments}'"
+			return false
 		end
 
 		unless unlimited
 			if input_arguments.size > expected_num_arguments +1
 				puts "Too many arguments for [#{input_arguments[0]}]."
-				# puts "Should be '#{input_arguments[0]} [argument]*#{expected_num_arguments}'"
-				# puts "Should be 'create [project_name]'"
+				return false
 			end
 		end
+		return true
+	end
+
+	def self.add_project(project)
+		@@projects << project
 	end
 
 	def self.list_projects
-		# puts "-----------------"
-		# puts "  Projects List  "
-		# puts "-----------------"
 		puts "[No projects exist]" if @@projects.size == 0
 		@@projects.each do |project|
 			header_line = "[Project] #{project.name} | [ID] #{project.id}"
@@ -130,9 +117,8 @@ class TerminalClient
 			if remaining_tasks.size == 0
 				puts "No remaining tasks, all are completed."
 			else
-				remaining_tasks.each do |task|
-					task.print_details
-				end
+				TM::Task.print_header
+				remaining_tasks.each {|task| task.print_details }
 			end
 		end
 	end
@@ -147,9 +133,33 @@ class TerminalClient
 			if completed_tasks.size == 0
 				puts "[No tasks have been completed for this project]"
 			else
-				completed_tasks.each do |task|
-					task.print_details
-				end
+				TM::Task.print_header
+				completed_tasks.each {|task| task.print_details }
+			end
+		end
+	end
+
+	def self.list_tasks(project_id, completed: true)
+		project = get_project_by_id(project_id)
+		if project == nil
+			puts "Project with id='#{project_id}' not found."
+		else
+			if completed
+				phrase_description = "History of completed tasks"
+				phrase_error = "No tasks have been completed"
+				filtered_tasks = project.retrieve_completed_tasks_by_date
+			else
+				phrase_description = "Remaining tasks"
+				phrase_error = "No remaining tasks"
+				filtered_tasks = project.retrieve_incompleted_tasks_by_priority
+			end
+
+			puts "#{phrase_description} for project '#{project.name}' with id=#{project.id}"	
+			if filtered_tasks.size == 0
+				puts "[#{phrase_error} for this project]"
+			else
+				TM::Task.print_header
+				filtered_tasks.each {|task| task.print_details }
 			end
 		end
 	end
