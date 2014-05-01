@@ -78,7 +78,7 @@ class TM::TerminalClient
         run(@choice)
         #marks task with inputted id as complete
       when 'mark'
-        TM::Task.mark_complete(@answer[1])
+        TM::Task.mark_complete(@answer[1].to_i)
         puts "Enter another command (help for list of command options) or exit if you wish to stop."
         @answer = gets.chomp.downcase.split(' ')
         @choice = @answer[0]

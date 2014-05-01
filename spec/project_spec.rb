@@ -51,7 +51,7 @@ describe 'Project' do
         @project1.add_task(task2)
         @project1.add_task(task3)
 
-        @project1.mark_complete(task.task_id)
+        TM::Task.mark_complete(task.task_id)
 
         # STDOUT.should_receive(:puts).with("Priority    ID   Description")
         STDOUT.should_receive(:puts).with("1 3 Add tests")
@@ -79,7 +79,7 @@ describe 'Project' do
         @project1.add_task(task2)
         @project1.add_task(task3)
 
-        @project1.mark_complete(task2.task_id)
+        TM::Task.mark_complete(task2.task_id)
 
         # STDOUT.should_receive(:puts).with("Priority    ID   Description")
         STDOUT.should_receive(:puts).with("Add tests 2")
@@ -87,16 +87,6 @@ describe 'Project' do
       end
     end
 
-    describe 'mark_task_complete' do
-      it "marks a task as complete when given task id number" do
-        task = TM::Task.new("Create gradebook", @project1.id, 3)
-        task2 = TM::Task.new("Add students", @project1.id, 2)
-
-        STDOUT.should_receive(:puts).with("Task marked complete.")
-        TM::Project.mark_task_complete(task.task_id)
-        expect(task.task_id).to eq("Completed")
-      end
-    end
   end
 
   describe 'initialize' do
@@ -123,25 +113,6 @@ describe 'Project' do
     end
   end
 
-  describe 'mark_complete' do
-
-    before(:each) do
-      @task = TM::Task.new("Create gradebook", @project1.id, 1)
-    end
-
-    it "has a mark_complete method" do
-      t_id = @task.task_id
-      expect(@project1.mark_complete(t_id)).to_not raise_error()
-    end
-
-    it "marks a task's status as complete" do
-      @project1.add_task(@task)
-      t_id = @task.task_id
-      @project1.mark_complete(t_id)
-      expect(@task.status).to eq("Completed")
-    end
-  end
-
   describe 'completed_tasks' do
     it "returns an array/list of all completed tasks in the project" do
       task = TM::Task.new("Create gradebook", @project1.id, 1)
@@ -152,8 +123,8 @@ describe 'Project' do
       @project1.add_task(task2)
       @project1.add_task(task3)
 
-      @project1.mark_complete(task.task_id)
-      @project1.mark_complete(task2.task_id)
+      TM::Task.mark_complete(task.task_id)
+      TM::Task.mark_complete(task2.task_id)
 
       expect(@project1.completed_tasks.length).to eq(2)
     end
@@ -171,9 +142,9 @@ describe 'Project' do
       @project1.add_task(task2)
       @project1.add_task(task3)
 
-      @project1.mark_complete(task.task_id)
-      @project1.mark_complete(task2.task_id)
-      @project1.mark_complete(task3.task_id)
+      TM::Task.mark_complete(task.task_id)
+      TM::Task.mark_complete(task2.task_id)
+      TM::Task.mark_complete(task3.task_id)
 
       expect(@project1.completed_tasks).to eq([task2, task3, task])
     end
@@ -190,7 +161,7 @@ describe 'Project' do
       @project1.add_task(task2)
       @project1.add_task(task3)
 
-      @project1.mark_complete(task.task_id)
+      TM::Task.mark_complete(task.task_id)
 
       expect(@project1.incomplete_tasks.length).to eq(2)
     end
@@ -204,7 +175,7 @@ describe 'Project' do
       @project1.add_task(task2)
       @project1.add_task(task3)
 
-      @project1.mark_complete(task.task_id)
+      TM::Task.mark_complete(task.task_id)
 
       expect(@project1.incomplete_tasks).to eq([task3, task2])
     end
@@ -223,7 +194,7 @@ describe 'Project' do
       @project1.add_task(task3)
       @project1.add_task(task4)
 
-      @project1.mark_complete(task.task_id)
+      TM::Task.mark_complete(task.task_id)
 
       expect(@project1.incomplete_tasks).to eq([task2, task4, task3])
     end

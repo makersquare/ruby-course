@@ -80,13 +80,6 @@ class TM::Project
     end
   end
 
-  # def self.mark_task_complete(task_id)
-  #   temp_project = nil
-  #   @@projects.each do |project|
-  #     project.@tasks
-  #   end
-  # end
-
   #helper method for tests
   def self.reset_class_variables
     @@counter = 1
@@ -97,13 +90,6 @@ class TM::Project
     @tasks << task
   end
 
-  def mark_complete(task_id)
-    @tasks.each do |task|
-      if task.task_id == task_id
-        task.status = "Completed"
-      end
-    end
-  end
 
   def completed_tasks
     new_array = @tasks.select { |task| task.status == "Completed" }
