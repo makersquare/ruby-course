@@ -67,14 +67,14 @@ class TM::TerminalClient
   def show
     puts "Please enter a project ID."
     projectid = gets.chomp
-    tasks = TM::Task.incomplete_tasks(projectid.to_i)
+    taskss = TM::Task.incomplete_tasks(projectid)
     projects = TM::Project.list_projects
     project = projects.select {|project| project.pid == projectid.to_i}
     project_name = project[0]
     project_name = project_name.name
     puts "Showing Project \"#{project_name}\"\n\n"
     puts "Priority\tID Description"
-    tasks.each {|task| puts "\t#{task.pnum}\t#{task.tid} #{task.description}"}
+    taskss.each {|task| puts "\t#{task.pnum}\t#{task.tid} #{task.description}"}
     @command = gets.chomp
     self.call_methods(@command)
   end
@@ -82,7 +82,7 @@ class TM::TerminalClient
   def history   
     puts "Please enter a project ID."
     projectid = gets.chomp
-    tasks = TM::Task.completed_tasks(projectid.to_i)
+    tasks = TM::Task.completed_tasks(projectid)
     projects = TM::Project.list_projects
     project = projects.select {|project| project.pid == projectid.to_i}
     project_name = project[0]

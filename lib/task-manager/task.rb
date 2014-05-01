@@ -2,7 +2,7 @@
 class TM::Task
 
     attr_reader :date
-    attr_accessor :tid_counter, :tid, :description, :pnum, :complete, :pid
+    attr_accessor :tid_counter, :tid, :description, :pnum, :complete, :pid, :tasks, :completed_tasks
 
     @@tid_counter = 0
     @@tasks = []
@@ -17,7 +17,6 @@ class TM::Task
     @description = description
     @complete = false
     @@tasks << self
-    @@completed_tasks = []
   end
 
   def self.reset_class_variables
