@@ -9,9 +9,9 @@ describe 'TerminalClient' do
     @t.create_project("Complete this task manager!")
     @t.create_project("Complete this task manager now!")
     @t.add_task(1, 2, "Complete the terminal client")
-    # allow(Time).to receive(:now).and_return(Time.at(0))
+    allow(Time).to receive(:now).and_return(Time.at(0))
     @t.add_task(1, 1, "Complete the terminal client, NOW")
-    # allow(Time).to receive(:now).and_return(Time.new)
+    allow(Time).to receive(:now).and_return(Time.new)
   end
 
   it "exists" do
