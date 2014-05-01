@@ -2,11 +2,12 @@ require 'spec_helper'
 
 
 describe 'Project' do
+  before(:each) do
+    TM::Project.reset_class_variables
+  end
   # before(:each) do
-  #   TM::Project.reset_class_variables
-  # before(:each) do
-  #   TM::Project.call_count_reset
-  # end
+  # #   TM::Project.call_count_reset
+  # # end
 
   # binding.pry
 
