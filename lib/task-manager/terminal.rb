@@ -1,5 +1,5 @@
 # require_relative 'project.rb'
-# require 'pry-debugger'
+require 'pry-debugger'
 
 class TM::TerminalClient
 
@@ -13,9 +13,10 @@ class TM::TerminalClient
         help - Show these commands again
         list - List all projects
         create NAME - Create a new project with name=NAME
+        add PID PRIORITY DESC - Add a new task to project with id=PID
         show PID - Show remaining tasks for project with id=PID
         history PID - Show completed tasks for project with id=PID
-        add PID PRIORITY DESC - Add a new task to project with id=PID
+
         mark TID - Mark task with id=TID as complete
         exit
         '
@@ -42,10 +43,10 @@ class TM::TerminalClient
     case cmd
     when 'exit' then exit
     when 'list' then list_all_projects
-    when 'create' then create_project(args[0])
+    when 'create' then create_project(args)
+    when 'add' then create_new_task(args)
     when 'show' then display_incomplete(args)
     # when 'history' then
-    when 'add' then create_new_task(args)
     # when 'mark' then
     else "command invalid. 'help' displays the menu."
     end
@@ -56,8 +57,8 @@ class TM::TerminalClient
     TM::Project.projects.each {|proj| puts proj}
   end
 
-  def create_project(name)
-    TM::Project.new(name)
+  def create_project(args)
+    TM::Project.new(args[0])
   end
 
   def display_incomplete(pid)
@@ -67,9 +68,12 @@ class TM::TerminalClient
   end
 
   def create_new_task(args)
-    task = TM::Task.new(args[0], args[1], args[2])
-    TM::Project.add_task(task)
-    puts "Task #{task.id} created and assigned to project #{task.project_id}"
+    pid = args.shift.to_i
+    priority = args.shift.to_i
+    desc = args.join(' ')
+    task = TM::Task.new(pid, desc, priority)
+    # puts "New Task #{task.id} created and assigned to Project #{pid}"
+    task
   end
 
 end
