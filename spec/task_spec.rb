@@ -48,10 +48,10 @@ describe 'Task' do
   end
 
   describe '#incomplete_tasks' do
-    it "a project can retrieve all incomplete tasks sorted by priority number, if priority number is the same, sort by date" do
+    it "a project can retrieve all incomplete tasks sorted by duedate, priority number, and date created." do
       Time.stub(:now).and_return(Time.parse('April 14 2014'))
-      t3 = TM::Task.new(1, "Task 3", 1, '2014 7 10')
-      expect(TM::Task.incomplete_tasks(1)).to eq([t3, @t1, @t2])
+      t3 = TM::Task.new(1, "Task 3", 1, '2014 2 10')
+      expect(TM::Task.incomplete_tasks(1)).to eq([@t1, t3, @t2])
     end
   end
 

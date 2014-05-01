@@ -50,7 +50,7 @@ class TM::Task
 
   def self.incomplete_tasks(projid)
     task = @@tasks.select{|task| task.pid == projid && task.complete == false}
-    task.sort_by! {|task| [task.pnum, task.date]}
+    task.sort_by! {|t| [t.duedate, t.pnum, t.date]}
     task
   end
 end
