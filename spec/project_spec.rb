@@ -15,6 +15,10 @@ describe 'Project' do
     expect(@p1.name).to eq('p1')
   end
 
+  it 'can call a list of current projects' do
+    expect(TM::Project.list_projects).to eq([['p1', 1],['p2', 2]])
+  end
+
   it 'must austomatically generate and assign the new project a unique id' do
     expect(@p1.id).to eq(1)
     expect(@p2.id).to eq(2)
@@ -52,6 +56,19 @@ describe 'Project' do
 
 
     expect(@p1.completed_tasks).to eq([@t1, @t2])
+  end
+
+  it 'can retrieve a list of all incomplete tasks' do
+    @t1 = TM::Task.new('t1', 'learning things', 1)
+    @t2 = TM::Task.new('t2','learning moar things', 2)
+    @t3 = TM::Task.new('t3','learning moar things', 3)
+    @p1.add_task(@t1)
+    @p1.complete
+    @p1.add_task(@t2)
+    @p1.add_task(@t3)
+
+
+    expect(@p1.incomplete_tasks).to eq([@t2, @t3])
   end
 
   it 'can retrieve a list of all complete tasks sorted by creation date' do

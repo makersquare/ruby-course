@@ -2,6 +2,7 @@ require 'pry-debugger'
 class TM::Project
   attr_reader :name, :id, :complete
   @@id_count = 0
+  @@projects = []
 
   def initialize(name)
     @name = name
@@ -9,6 +10,12 @@ class TM::Project
     @id = @@id_count
     @tasks = []
     @completed = []
+    @incomplete = []
+    @@projects << [@name, @id]
+  end
+
+  def self.list_projects
+    @@projects
   end
 
   def add_task(task)
@@ -52,8 +59,22 @@ class TM::Project
     @completed
   end
 
+  def incomplete_tasks
+    @tasks.each do |task|
+      if task.completed == false
+        @incomplete << task
+      end
+    end
+
+    @incomplete.sort_by! do |task|
+      task.creation_date
+    end
+    @incomplete
+  end
+
   def self.reset_class_variables
     @@id_count = 0
+    @@projects = []
   end
 end
 
