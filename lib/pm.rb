@@ -106,7 +106,8 @@ class TerminalClient
 		@@projects.each do |project|
 			puts "Name: #{project.name}"
 			puts "ID: #{project.id}"
-			puts "  --- Tasks ---"
+			# puts "  --- Tasks ---"
+			TM::Task.print_header
 			puts "  [No tasks exist for this project]" if project.tasks.size == 0
 			project.tasks.each { |task| task.print_details }
 		end

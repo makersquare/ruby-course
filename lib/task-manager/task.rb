@@ -26,23 +26,14 @@ class TM::Task
 		@date_completed = nil
 	end
 
+
+	def self.print_header
+		printf "%-10s %-4s %-12s %-15s %-21s %-12s %-15s\n", "[Priority]", "[ID]", "[Name]", "[Description]", "[Date Created]", "[Completed?]", "[Date Completed]"
+	end
+
 	def print_details
-		# puts "  --------------------"
-		print "#{@priority}  "
-		print "#{@id}  "
-		print "#{@name}  "
-		print "#{@description}  "
-		print "#{@date_created.strftime '%m/%d/%Y %I:%M%p'}  "
-		# print "#{@completed}  "
-		print "#{@completed ? 'yes' : 'no'}  "
-		# @date_completed ? print("yes  ") : (print "no  ")
-		if @date_completed == nil
-			print "   "
-		else 
-			print "#{@date_completed.strftime '%m/%d/%Y %I:%M%p'}  "
-		end
+		printf "%-10s %-4s %-12s %-15s %-21s %-12s %-15s\n", "#{@priority}", "#{@id}", "#{@name}", "#{@description}", "#{@date_created.strftime '%m/%d/%Y %I:%M%p'}", "#{@completed ? 'yes' : 'no'}", "#{@date_completed == nil ? "" : (@date_completed.strftime '%m/%d/%Y %I:%M%p')}"
 		print "\n"
-		# puts "  --------------------"
 	end	
 
 	def print_details_old
