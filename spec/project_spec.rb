@@ -54,16 +54,15 @@ describe 'Project' do
       expect(@p1.complete_tasks.length).to eq(2)
     end
     it "orders array by earliest creation date first" do
-    # binding.pry
       @p1.complete_tasks.first.time.should be < @p1.complete_tasks.last.time
     end
   end
 
   describe 'todo' do
     before(:each) do
-      @p1.todo
       @p1.set_priority(1, 3)
       @p1.set_priority(2, 1)
+      @p1.todo
     end
     it "creates an array of incomplete tasks" do
       expect(@p1.incomplete_tasks.length).to eq(2)

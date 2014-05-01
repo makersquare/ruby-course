@@ -3,8 +3,10 @@ class TM::Project
   attr_reader :name, :id
   attr_accessor :tasks, :complete_tasks, :incomplete_tasks
   @@project_id = 0
+  @@projects = []
 
   def initialize(name)
+    @@projects << self
     @name = name
     @@project_id += 1
     @id = @@project_id
@@ -12,6 +14,14 @@ class TM::Project
     @tasks = []
     @complete_tasks = []
     @incomplete_tasks = []
+  end
+
+  def self.print_projects
+    @@projects.each {|project| puts "#{project.id}\t#{project.name}"}
+  end
+
+  def self.get_project(id)
+    @@projects.select {|project| project.id == id}
   end
 
   def new_task(description, priority)
@@ -38,6 +48,6 @@ class TM::Project
   def todo
     @incomplete_tasks = []
     @incomplete_tasks = @tasks.select {|task| task.completed == false}
-    @incomplete_tasks.sort_by! {|task| [-task.priority, task.time]}
+    @incomplete_tasks.sort_by! {|task| [task.priority, task.time]}
   end
 end

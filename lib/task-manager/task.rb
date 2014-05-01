@@ -4,7 +4,9 @@ class TM::Task
   attr_accessor :completed, :priority
 
   @@task_id = 0
+  @@tasks = []
   def initialize(pid, description, priority)
+    @@tasks << self
     @pid = pid
     @description = description
     @priority = priority
@@ -16,6 +18,10 @@ class TM::Task
 
   def set_complete
     @completed = true
+  end
+
+  def self.find_task(id)
+    @@tasks.select{|task| task.tid == id}
   end
 
   # def self.mark_complete(task_id)
