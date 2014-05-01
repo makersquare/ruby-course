@@ -44,8 +44,39 @@ class TM::Project
 		end
 	end
 
+	def list_completed_tasks_by_date(newest_first: true)
+		phrase_description = "History of completed tasks"
+		phrase_error = "No tasks have been completed"
+		filtered_tasks = retrieve_completed_tasks_by_date
+
+		print_header
+		puts "#{phrase_description} for project '#{@name}' with id=#{@id}"	
+		if filtered_tasks.size == 0
+			puts "[#{phrase_error} for this project]"
+		else
+			TM::Task.print_header
+			filtered_tasks.each {|task| task.print_details }
+		end
+	end
+
+	def list_incompleted_tasks_by_priority(highest_priority_first: true)
+		phrase_description = "Remaining tasks"
+		phrase_error = "No remaining tasks"
+		filtered_tasks = retrieve_incompleted_tasks_by_priority
+
+		print_header
+		puts "#{phrase_description} for project '#{@name}' with id=#{@id}"	
+		if filtered_tasks.size == 0
+			puts "[#{phrase_error} for this project]"
+		else
+			TM::Task.print_header
+			filtered_tasks.each {|task| task.print_details }
+		end
+	end
+
+
 	def retrieve_completed_tasks
-		@tasks.select {|x| x.completed}
+		@tasks.select {|x| x.completed}	
 	end
 
 	def retrieve_incompleted_tasks_by_priority(highest_priority_first: true)
@@ -60,11 +91,15 @@ class TM::Project
 		@tasks.select {|task| not task.completed}
 	end
 
-	def print_details
+	def print_header
 		header_line = "[Project] #{@name} | [ID] #{@id}"
 		header_line.length.times { print "-"} ; print "\n"
 		puts header_line
 		header_line.length.times { print "-"} ; print "\n"
+	end
+
+	def print_details
+		print_header
 		TM::Task.print_header
 		puts "  [No tasks exist for this project]\n\n" if @tasks.size == 0
 		@tasks.each { |task| task.print_details }

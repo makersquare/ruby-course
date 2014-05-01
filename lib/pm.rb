@@ -96,23 +96,27 @@ class TerminalClient
 		if project == nil
 			puts "Project with id='#{project_id}' not found."
 		else
+			#project.list_completed_tasks_by_date
 			if completed
-				phrase_description = "History of completed tasks"
-				phrase_error = "No tasks have been completed"
-				filtered_tasks = project.retrieve_completed_tasks_by_date
+				project.list_completed_tasks_by_date
+				
+				# phrase_description = "History of completed tasks"
+				# phrase_error = "No tasks have been completed"
+				# filtered_tasks = project.retrieve_completed_tasks_by_date
 			else
-				phrase_description = "Remaining tasks"
-				phrase_error = "No remaining tasks"
-				filtered_tasks = project.retrieve_incompleted_tasks_by_priority
+				project.list_incompleted_tasks_by_priority
+				# phrase_description = "Remaining tasks"
+				# phrase_error = "No remaining tasks"
+				# filtered_tasks = project.retrieve_incompleted_tasks_by_priority
 			end
 
-			puts "#{phrase_description} for project '#{project.name}' with id=#{project.id}"	
-			if filtered_tasks.size == 0
-				puts "[#{phrase_error} for this project]"
-			else
-				TM::Task.print_header
-				filtered_tasks.each {|task| task.print_details }
-			end
+			# puts "#{phrase_description} for project '#{project.name}' with id=#{project.id}"	
+			# if filtered_tasks.size == 0
+			# 	puts "[#{phrase_error} for this project]"
+			# else
+			# 	TM::Task.print_header
+			# 	filtered_tasks.each {|task| task.print_details }
+			# end
 		end
 	end
 
