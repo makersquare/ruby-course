@@ -43,7 +43,7 @@ class TM::Task
   end
 
   def self.completed_tasks(projid)
-    task = @@tasks.select{|task| task.pid == projid && task.complete == true}
+    task = @@completed_tasks.select{|task| task.pid == projid}
     task.sort_by! {|task| task.date}
     task
   end
