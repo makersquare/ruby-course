@@ -5,13 +5,14 @@ class TM::Task
   attr_reader :description, :project_id, :priority, :task_id, :creation_date, :due_date
   attr_accessor :status, :date_completed
 
-  def initialize(description, project_id, priority, due_date=nil)
+  def initialize(description, project_id, priority, due_date=Date.today)
     @description = description
     @project_id = project_id
     @priority = priority
     @task_id = @@counter
     @@counter += 1
     @status = "Not completed"
+    @date_completed = nil
     @due_date = due_date
     @creation_date = Date.today
     @@tasks << self
@@ -30,7 +31,7 @@ class TM::Task
     @@tasks.each do |task|
       if task.task_id == task_id
         task.status = "Completed"
-        task.due_date = Date.today.to_s
+        task.date_completed = Date.today.to_s
       end
     end
   end
