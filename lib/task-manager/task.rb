@@ -1,6 +1,6 @@
 class TM::Task
-	attr_reader :id, :date_created, :date_completed, :completed
-	attr_accessor :name, :priority, :description
+	attr_reader :date_created, :date_completed, :completed
+	attr_accessor :id, :name, :priority, :description
 
 	@@task_count = 0
 
@@ -52,10 +52,6 @@ class TM::Task
 
 	def self.reset_class_variables
 		@@task_count = 0
-	end
-
-	def set_id(id)
-		@id = id
 	end
 
 	def set_date_created(time)

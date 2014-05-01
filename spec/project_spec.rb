@@ -2,10 +2,6 @@ require 'spec_helper'
 # require_relative '../lib/task-manager/task'
 
 describe 'Project' do
-  # it "exists" do
-  #   expect(TM::Project).to be_a(Class)
-  # end
-
   before (:each) do
     TM::Project.reset_class_variables
   end
@@ -57,16 +53,6 @@ describe 'Project' do
   		expect(project1.tasks[0].name).to eq("task1")
   	end
 
-    # it "sets the task.project_id to the current projects id" do
-    #   # check size of array and compare actual contents
-    #   project1 = TM::Project.new("project1")
-    #   task1 = TM::Task.new("task1")
-    #   project1.add_task(task1)
-    #   project_id = project1.id
-    #   expect(project1.tasks.size).to eq(1)
-    #   expect(project1.tasks[0].project_id).to eq(project_id)
-    # end
-
     it "can handle adding an multiple task objects passed in" do
       project1 = TM::Project.new("project1")
       task1 = TM::Task.new("task1")
@@ -94,7 +80,7 @@ describe 'Project' do
   	it "returns nil if id not found" do
   		project1 = TM::Project.new("project1")
   		task1 = TM::Task.new("task1")
-  		task1.set_id(50)
+  		task1.id = 50
   		project1.add_task(task1)
   		expect(project1.get_task_by_id(99)).to eq(nil)
   	end
@@ -102,7 +88,7 @@ describe 'Project' do
   	it "returns a task object if id is found" do
   		project1 = TM::Project.new("project1")
   		task1 = TM::Task.new("task1")
-  		task1.set_id(50)
+  		task1.id = 50
       project1.add_task(task1)
       expect(project1.get_task_by_id(50)).to eq(task1)
     end
@@ -120,8 +106,8 @@ describe 'Project' do
       project1 = TM::Project.new("project1")
       task1 = TM::Task.new("task1")
       task2 = TM::Task.new("task2")
-      task1.set_id(50)
-      task2.set_id(60)
+      task1.id = 50
+      task2.id = 60
       project1.add_task(task1)
       project1.add_task(task2)
       expect(project1.get_task_index_by_id(50)).to eq(0)
@@ -130,18 +116,10 @@ describe 'Project' do
   end
 
   describe "delete_task_by_id method" do
-    #delete_task_by_id(id)
-
-    # it "returns nil if tasks array is empty" do
-    #   project1 = TM::Project.new("project1")
-    #   result = project1.delete_task_by_id(50)
-    #   expect(result).to eq(nil)
-    # end
-
     it "if id not found it doesn't affect @tasks array" do
       project1 = TM::Project.new("project1")
       task1 = TM::Task.new("task1")
-      task1.set_id(50)
+      task1.id = 50
       project1.add_task(task1)
       expect(project1.tasks.size).to eq(1)
       project1.delete_task_by_id(99)
@@ -152,11 +130,11 @@ describe 'Project' do
     it "can delete task by task id" do
       project1 = TM::Project.new("project1")
       task1 = TM::Task.new("task1")
-      task1.set_id(10)
+      task1.id = 10
       task2 = TM::Task.new("task2")
-      task2.set_id(20)
+      task2.id = 20
       task3 = TM::Task.new("task3")
-      task3.set_id(30)
+      task3.id = 30
       project1.add_task(task1)
       project1.add_task(task2)
       project1.add_task(task3)
@@ -169,25 +147,14 @@ describe 'Project' do
       expect(project1.tasks.size).to eq(1)
       expect(project1.tasks[0].name).to eq("task3")
     end
-
-    # it "returns a task object of deleted task if id found" do
-    #   project1 = TM::Project.new("project1")
-    #   task1 = TM::Task.new("task1")
-    #   task1.set_id(10)
-    #   project1.add_task(task1)
-    #   deleted_task = project1.delete_task_by_id(10)
-    #   expect(deleted_task.name).to eq("task1")
-    # end
-
   end
 
   describe "mark_task_completed_by_id method" do
-  	# mark_task_completed_by_id(id_num)
 
   	it "if id not found then it does nothing to array" do
   		project1 = TM::Project.new("project1")
   		task1 = TM::Task.new("task1")
-  		task1.set_id(50)
+  		task1.id = 50
   		project1.add_task(task1)
   		expect(project1.tasks[0].completed).to eq(false)
   		project1.mark_task_completed_by_id(99)
@@ -195,10 +162,9 @@ describe 'Project' do
   	end
 
   	it "marks the correct task object" do
-  		#compare task1.id == id
   		project1 = TM::Project.new("project1")
   		task1 = TM::Task.new("task1")
-  		task1.set_id(50)
+  		task1.id = 50
   		project1.add_task(task1)
   		expect(project1.tasks[0].completed).to eq(false)
   		project1.mark_task_completed_by_id(50)
@@ -208,7 +174,6 @@ describe 'Project' do
   end
 
   describe "retrieve_tasks method" do
-  	# ex retrieve_tasks(by_date, by_priority, by_completed)
 
     it "can return tasks ordered by date created, newest date first is default" do
 
