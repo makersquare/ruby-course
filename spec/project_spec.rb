@@ -1,8 +1,10 @@
 require 'spec_helper'
+require 'pry-debugger'
 
 describe 'Project' do
 
   before(:each) do
+      # reset_class_variables(TM::Project)
       @my_project = TM::Project.new('Project Mayhem')
       @p2 = TM::Project.new('Orderly Project')
       @task1 = TM::Task.new(@my_project.id, 'do some stuff', 1)
@@ -21,6 +23,15 @@ describe 'Project' do
     end
   end
 
+  describe 'self.find_project_by_id' do
+    xit "finds a project given a project id" do
+      TM::Project.projects = []
+      project = TM::Project.new('Project Mayhem')
+      # binding.pry
+      expect(TM::Project.find_project_by_id(1)).to eq(@my_project)
+    end
+  end
+
   describe '.initialize' do
     it "should be created with a name" do
       expect(@my_project.name).to eq "Project Mayhem"
@@ -32,7 +43,7 @@ describe 'Project' do
     end
   end
 
-  describe '.get_tasks_by_status' do
+  describe '.completed' do
 
     it "returns the most recently completed tasks first" do
       allow(Time).to receive(:now).and_return(Time.parse("2014-04-29"))
@@ -47,7 +58,9 @@ describe 'Project' do
 
       expect(@my_project.completed).to eq([task4, task3])
     end
+  end
 
+  describe '.incomplete' do
     it "returns incomplete tasks, sorted by priority (1 = highest)" do
       expect(@my_project.incomplete).to eq [@task2]
 

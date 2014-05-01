@@ -27,6 +27,10 @@ class TM::Project
     @@projects = arg
   end
 
+  def self.find_project_by_id(pid)
+    @@projects.select {|p| p.id == pid.to_i}
+  end
+
   def add_task(task)
     @tasks << task
   end
@@ -37,7 +41,7 @@ class TM::Project
   end
 
   def incomplete
-    t = @tasks.select {|task| task.complete == false}
+    t = @tasks.select {|task| !task.complete? }
     t.sort_by {|task| [task.priority, task.timestamp]}
   end
 

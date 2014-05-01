@@ -4,7 +4,7 @@ class TM::Task
   attr_reader :project_id, :description, :priority
   attr_reader :id, :timestamp
   attr_accessor :complete
-  @@id_counter = 0
+  @@id_counter = 1
   @@tasks = []
 
   def initialize(project_id, description, priority)
@@ -21,6 +21,10 @@ class TM::Task
   def to_s
     status = @complete? 'complete  ' : 'incomplete'
     "#{@id} | #{status} | #{description}"
+  end
+
+  def complete?
+    @complete == true
   end
 
   def self.mark_complete(tid)

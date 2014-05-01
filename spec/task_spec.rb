@@ -3,6 +3,7 @@ require 'spec_helper'
 describe 'Task' do
 
   before(:each) do
+    # reset_class_variables(TM::Task)
     @my_project = TM::Project.new('my_project')
     @task1 = TM::Task.new(@my_project.id, 'take out the trash', 1)
     @task2 = TM::Task.new(@my_project.id, 'clean up your room', 1)
