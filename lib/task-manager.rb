@@ -1,6 +1,9 @@
 
 # Create our module. This is so other files can start using it immediately
 module TM
+  def self.review(task)
+
+  end
 end
 
 # Require all of our project files
