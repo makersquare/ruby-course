@@ -77,10 +77,49 @@ describe 'Project' do
     expect(@p1.completed_tasks).to eq([@e, @m, @i, @l])
   end
 
+    it 'can retrieve a list of all complete tasks sorted by priority' do
+    allow(Time).to receive(:now).and_return(Time.parse('2pm'))
+    @e = TM::Task.new('e', 'learning things', 1)
+    allow(Time).to receive(:now).and_return(Time.parse('3pm'))
+    @m = TM::Task.new('m','learning moar things', 4)
+    allow(Time).to receive(:now).and_return(Time.parse('4pm'))
+    @i = TM::Task.new('i','learning moar things', 3)
+    allow(Time).to receive(:now).and_return(Time.parse('5pm'))
+    @l = TM::Task.new('l','learning moar things', 6)
+    allow(Time).to receive(:now).and_return(Time.parse('6pm'))
+    @y = TM::Task.new('y','learning moar things', 1)
+
+
+    @p1.add_task(@m)
+    @p1.add_task(@l)
+    @p1.add_task(@e)
+    @p1.add_task(@i)
+    @p1.complete
+    @p1.add_task(@y)
+
+    expect(@p1.completed_tasks_by_priority).to eq([@e, @i, @m, @l])
+  end
+
+  it 'can retrieve a list of all complete tasks sorted by priority with pref to oldest' do
+    allow(Time).to receive(:now).and_return(Time.parse('2pm'))
+    @e = TM::Task.new('e', 'learning things', 1)
+    allow(Time).to receive(:now).and_return(Time.parse('3pm'))
+    @m = TM::Task.new('m','learning moar things', 4)
+    allow(Time).to receive(:now).and_return(Time.parse('4pm'))
+    @i = TM::Task.new('i','learning moar things', 3)
+    allow(Time).to receive(:now).and_return(Time.parse('5pm'))
+    @l = TM::Task.new('l','learning moar things', 6)
+    allow(Time).to receive(:now).and_return(Time.parse('6pm'))
+    @y = TM::Task.new('y','learning moar things', 1)
+
+
+    @p1.add_task(@m)
+    @p1.add_task(@l)
+    @p1.add_task(@e)
+    @p1.add_task(@i)
+    @p1.add_task(@y)
+    @p1.complete
+
+    expect(@p1.completed_tasks_by_priority).to eq([@e, @y, @i, @m, @l])
+  end
 end
-
-# A project can retrieve a list of all complete tasks, sorted by creation date
-
-# A project can retrieve a list of all incomplete tasks, sorted by priority
-
-# If two tasks have the same priority number, the older task gets priority

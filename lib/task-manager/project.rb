@@ -36,7 +36,34 @@ class TM::Project
   end
 
 
+  def completed_tasks_by_priority
+    @tasks.each do |task|
+      if task.completed == true
+        @completed << task
+      end
+    end
+
+    @completed.sort_by! do |task|
+      task.creation_date
+    end
+    @completed.sort_by! do |task|
+      task.priority_number
+    end
+    @completed
+  end
+
   def self.reset_class_variables
     @@id_count = 0
   end
 end
+
+
+
+
+
+
+
+
+
+
+
