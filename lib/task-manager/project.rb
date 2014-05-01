@@ -1,3 +1,5 @@
+class FalseClass; def to_i; 0 end end
+class TrueClass; def to_i; 1 end end
 
 class TM::Project
 
@@ -48,11 +50,14 @@ class TM::Project
 		@tasks.select {|x| x.completed}	
 	end
 
-	def retrieve_incompleted_tasks_by_priority(highest_priority_first: true)
+	def retrieve_incompleted_tasks_by_priority(highest_priority_first: true, overdue_first: true)
+
 		if highest_priority_first
-			retrieve_incompleted_tasks.sort_by { |a| [a.priority, a.date_created] }
+			retrieve_incompleted_tasks.sort_by! { |a| [-a.overdue?.to_i, a.priority, a.date_created] }
+			# retrieve_incompleted_tasks.sort_by! { |a| [a.priority] }
 		else
-			retrieve_incompleted_tasks.sort_by { |a| [-a.priority, a.date_created] }
+			# retrieve_incompleted_tasks.sort_by! { |a| [a.priority] }
+			retrieve_incompleted_tasks.sort_by! { |a| [a.overdue?, -a.priority, a.date_created] }
 		end
 	end
 
@@ -85,7 +90,7 @@ class TM::Project
 			header_ending =  "| [HISTORY OF COMPLETED TASKS]"
 		else
 			phrase_error = "No remaining tasks"
-			filtered_tasks = retrieve_incompleted_tasks_by_priority(highest_priority_first: highest_priority_first)
+			filtered_tasks = retrieve_incompleted_tasks_by_priority
 			header_ending =  "| [SHOWING REMAINING TASKS]"
 		end
 
