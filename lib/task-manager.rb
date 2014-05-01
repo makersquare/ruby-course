@@ -39,4 +39,8 @@ def mark_project_complete(project)
   end
 end
 
+def retrieve_complete_tasks(project)
+  project.task_list.select {|task| task.complete == true}
+end
+
 

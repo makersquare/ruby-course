@@ -17,7 +17,4 @@ class TM::Task
   end
 
 
-  def mark_complete_by_id(id)
-  end
-
 end
