@@ -65,14 +65,16 @@ class TM::Project
   end
 
   def overdue_tasks
-
+    incomplete = self.incomplete_tasks
+    if incomplete.length != 0
+      overdue_array = incomplete.select{|task| task.due_date < Date.today}
+      if overdue_array != 0
+        num_overdue = (overdue_array.length.to_f / @tasks.length.to_f).round(2)
+        return num_overdue * 100
+      else
+        return 0
+      end
+    end
   end
-
-  # def overdue_tasks
-  #   uncomplete = self.incomplete_tasks
-  #   overdue = uncomplete.select{|task| task.due_date < Date.today}
-  #   num_overdue = (overdue.length.to_f / @tasks.length.to_f).round(2)
-  #   "#{num_overdue * 100}%"
-  # end
 
 end
