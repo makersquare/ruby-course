@@ -12,7 +12,7 @@ require_relative 'task-manager/project_manager.rb'
 
 class TM::ProjectManager
   def self.start
-    manager = TM::ProjectTracker.new
+    manager = TM::ProjectManager.new
     @@exit = false
     while @@exit == false
     puts "Welcome to Project Manager Pro®. What can I do for you today?"
