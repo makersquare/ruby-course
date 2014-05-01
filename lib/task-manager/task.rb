@@ -1,5 +1,9 @@
 
 class TM::Task
+  require_relative './module-organization'
+  include Organization
+
+
   attr_accessor :priority, :complete, :description
   attr_reader :created
 

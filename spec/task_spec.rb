@@ -15,6 +15,7 @@ describe 'Task' do
   end
 
   xit "intializes with a time created" do
+    expect
   end
 
   xit "initalizes with as default priority of 1" do
