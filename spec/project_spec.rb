@@ -172,4 +172,29 @@ describe 'Project' do
       expect(@project1.incomplete_tasks).to eq([task2, task4, task3])
     end
   end
+
+  describe 'Project task completion' do
+    before(:each) do
+      @task = TM::Task.new("Create gradebook", @project1.id, 1)
+      @task2 = TM::Task.new("Add students", @project1.id, 2)
+      @task3 = TM::Task.new("Add tests", @project1.id, 3)
+
+      @project1.add_task(@task)
+      @project1.add_task(@task2)
+      @project1.add_task(@task3)
+
+      TM::Task.mark_complete(2)
+    end
+
+    describe 'tasks_complete' do
+      it "returns a percentage of the tasks that are complete in a project" do
+        expect(@project1.tasks_complete).to eq("33%")
+      end
+    end
+
+    describe 'overdue_tasks' do
+      it "returns a percentage of the tasks that are overdue in a project" do
+      end
+    end
+  end
 end
