@@ -1,11 +1,11 @@
 
 class TM::Task
-  attr_reader :description, :priority, :project_id, :task_id, :created_at, :due_date
+  attr_reader :description, :priority, :project_id, :task_id, :created_at, :due_date, :tags
   attr_accessor :status, :completed_at, :overdue
   @@task_id = 0
   @@tasks = []
 
-  def initialize(project_id, desc, priority, due_date)
+  def initialize(project_id, desc, priority, due_date,tags={})
     @project_id = project_id
     @task_id = @@task_id + 1
     @description = desc
@@ -15,6 +15,7 @@ class TM::Task
     @completed_at = nil
     @due_date = Date.parse(due_date)
     @overdue = 0
+    @tags = tags
 
     # Add task to task class variable array
     @@tasks << self

@@ -29,4 +29,8 @@ describe 'Task' do
     TM::Task.mark_overdue
     expect(@task.overdue).to eq 1
   end
+
+  it "allows tasks to have tags" do
+    task1 = TM::Task.new(@project.pid, "description1", 10, "2014-05-08",{tags: "tag1, tag2"})
+    end
 end
