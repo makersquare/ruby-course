@@ -44,34 +44,6 @@ class TM::Project
 		end
 	end
 
-	def list_tasks(completed: true, newest_first: true, highest_priority_first: true)
-		if completed
-			phrase_error = "No tasks have been completed"
-			filtered_tasks = retrieve_completed_tasks_by_date(newest_first: newest_first)
-			header_ending =  "| [HISTORY OF COMPLETED TASKS]"
-		else
-			phrase_error = "No remaining tasks"
-			filtered_tasks = retrieve_incompleted_tasks_by_priority(highest_priority_first: highest_priority_first)
-			header_ending =  "| [SHOWING REMAINING TASKS]"
-		end
-
-		print_header(string_ending: header_ending)
-		if filtered_tasks.size == 0
-			puts "[#{phrase_error} for this project]"
-		else
-			TM::Task.print_header
-			filtered_tasks.each {|task| task.print_details }
-		end
-	end
-
-	def list_completed_tasks_by_date(newest_first: true)
-		list_tasks(completed: true, newest_first: true)
-	end
-
-	def list_incompleted_tasks_by_priority(highest_priority_first: true)
-		list_tasks(completed: false, highest_priority_first: true)
-	end
-
 	def retrieve_completed_tasks
 		@tasks.select {|x| x.completed}	
 	end
@@ -104,6 +76,34 @@ class TM::Project
 		TM::Task.print_header
 		puts "  [No tasks exist for this project]\n\n" if @tasks.size == 0
 		@tasks.each { |task| task.print_details }
+	end
+
+	def list_tasks(completed: true, newest_first: true, highest_priority_first: true)
+		if completed
+			phrase_error = "No tasks have been completed"
+			filtered_tasks = retrieve_completed_tasks_by_date(newest_first: newest_first)
+			header_ending =  "| [HISTORY OF COMPLETED TASKS]"
+		else
+			phrase_error = "No remaining tasks"
+			filtered_tasks = retrieve_incompleted_tasks_by_priority(highest_priority_first: highest_priority_first)
+			header_ending =  "| [SHOWING REMAINING TASKS]"
+		end
+
+		print_header(string_ending: header_ending)
+		if filtered_tasks.size == 0
+			puts "[#{phrase_error} for this project]"
+		else
+			TM::Task.print_header
+			filtered_tasks.each {|task| task.print_details }
+		end
+	end
+
+	def list_completed_tasks_by_date(newest_first: true)
+		list_tasks(completed: true, newest_first: true)
+	end
+
+	def list_incompleted_tasks_by_priority(highest_priority_first: true)
+		list_tasks(completed: false, highest_priority_first: true)
 	end
 
 	# to help rspec tests
