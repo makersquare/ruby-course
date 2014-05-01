@@ -186,9 +186,9 @@ describe 'Project' do
       TM::Task.mark_complete(2)
     end
 
-    describe 'tasks_complete' do
+    describe 'percentage_complete' do
       it "returns a percentage of the tasks that are complete in a project" do
-        expect(@project1.tasks_complete).to eq("33%")
+        expect(@project1.percentage_complete).to eq("33.0%")
       end
     end
 

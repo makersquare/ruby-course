@@ -53,4 +53,13 @@ class TM::Project
     new_array.sort_by! {|a| [a.due_date, a.priority, a.creation_date]}
   end
 
+  def percentage_complete
+    num_complete_tasks = self.completed_tasks.length
+    num_completed = (num_complete_tasks.to_f / @tasks.length.to_f).round(2)
+    "#{num_completed * 100}%"
+  end
+
+  def overdue_tasks
+  end
+
 end
