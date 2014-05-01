@@ -14,6 +14,7 @@ describe 'Task' do
 
   context 'a new task is initialized' do
     let(:task) { TM::Task.new(1, 1, "complete this task manager") }
+    let(:task2) { TM::Task.new(1, 1, "complete this task manager", "maker","square") }
 
     it 'creates a new task with a projectID' do
       expect(task.project_id).to eq(1)
@@ -31,6 +32,12 @@ describe 'Task' do
       # allow(TM::Task).to receive(:now).and_return(Time.parse("12PM"))
 
       expect(task.complete_date).to eq(task.date_created + (86400 * 5))
+    end
+
+    it 'can be created with tags' do
+
+      expect(task2.tags).to eq(["maker", "square"])
+
     end
 
   end
