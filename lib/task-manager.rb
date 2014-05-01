@@ -23,8 +23,10 @@ def sort_by_date
 # Load hash from sort_by_priority and iterate over value by comparing the @create as the argument passed in.  Return a sorted array.
 end
 
-def mark_project_complete
+def mark_project_complete(project)
 # Mark project complete and clear out project list array
+  project.
+  project.task_list.clear
 end
 
 
