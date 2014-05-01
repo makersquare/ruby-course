@@ -39,8 +39,12 @@ describe 'Task' do
 
   describe '.add_task' do
     it 'adds a task to @@tasks' do
+      # using a "mock" here, if I call TM::Task.new, it will automatically call `add_task`
+      # as part of `initialize`, so I have to make a fake task using `double` and then
+      # add a stub to it so I can test the functionality of the actual method `add_task`
       task = double("task")
       allow(task).to receive(:id).and_return(0)
+      # now I can call `task.id` and it will return 0, even though its not an actual instance
 
       expect(TM::Task.tasks).to eq([])
       TM::Task.add_task(task)
