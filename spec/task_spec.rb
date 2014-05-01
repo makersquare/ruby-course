@@ -42,14 +42,22 @@ describe 'Task' do
       expect(task.creation_date.to_s).to eq("2014-02-14")
     end
 
-    it "has a class variable that tracks all created tasks" do
-      expect(TM::Task.tasks.length).to eq(1)
-    end
-
-    it "marks a task as completed" do
-      TM::Task.mark_complete(1)
-      expect(@task.status).to eq("Completed")
+    it "has a due date attribute with a default value of nil" do
+      expect(@task.due_date).to eq(nil)
     end
   end
 
+  it "has a class variable that tracks all created tasks" do
+    expect(TM::Task.tasks.length).to eq(1)
+  end
+
+  it "marks a task as completed" do
+    TM::Task.mark_complete(1)
+    expect(@task.status).to eq("Completed")
+  end
+
+  it "allows a due date to be added to a task" do
+    @task.due_date = Date.parse("1 March 2015")
+    expect(@task.due_date.to_s).to eq("2015-03-01")
+  end
 end

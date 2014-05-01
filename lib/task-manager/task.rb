@@ -3,7 +3,7 @@ class TM::Task
   @@counter = 1
   @@tasks = []
   attr_reader :description, :project_id, :priority, :task_id, :creation_date
-  attr_accessor :status, :date_completed
+  attr_accessor :status, :date_completed, :due_date
 
   def initialize(description, project_id, priority)
     @description = description
