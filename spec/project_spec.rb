@@ -12,17 +12,21 @@ describe 'Project' do
     expect(TM::Project).to be_a(Class)
   end
 
-  it "allows a new project to be created with a name" do
-      expect(@p1).to be_a(TM::Project)
-      expect(@p1.name).to eq("Project 1")
+  describe '#initialze' do
+    it "allows a new project to be created with a name" do
+        expect(@p1).to be_a(TM::Project)
+        expect(@p1.name).to eq("Project 1")
+    end
+
+    it "initializes with a unique id" do
+    	expect(@p1.pid).to eq(1)
+    	expect(@p2.pid).to eq(2)
+    end
   end
 
-  it "initializes with a unique id" do
-  	expect(@p1.pid).to eq(1)
-  	expect(@p2.pid).to eq(2)
-  end
-
-  it "lists all projects" do
-  	expect(TM::Project.list_projects).to eq([@p1, @p2])
+  describe '#list_projects' do
+    it "lists all projects" do
+    	expect(TM::Project.list_projects).to eq([@p1, @p2])
+    end
   end
 end
