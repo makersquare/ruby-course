@@ -12,13 +12,19 @@ class TM::Project
     @@projects << self
   end
 
+  #helper method for tests
+  def self.reset_class_variables
+    @@counter = 1
+    @@projects = []
+  end
+
   def self.projects
     @@projects
   end
 
   def self.list_all
     @@projects.each do |project|
-      puts "#{project.name} - #{project.id}"
+      puts "Name: #{project.name} - ID: #{project.id}"
     end
   end
 
@@ -29,70 +35,6 @@ class TM::Project
       end
     end
     return nil
-  end
-
-  def self.show_incomplete_tasks(project_id)
-    temp_project = nil
-    @@projects.each do |project|
-      if project.id == project_id
-        temp_project = project
-      end
-    end
-
-    if temp_project != nil
-      tasks = temp_project.incomplete_tasks
-      if tasks.length != 0
-        tasks.each do |task|
-          puts "#{task.priority} #{task.task_id} #{task.description}"
-        end
-      else
-        puts "This project has no tasks."
-      end
-    else
-      puts "There is not a project with that ID."
-    end
-  end
-
-  def self.show_completed_tasks(project_id)
-    temp_project = nil
-    @@projects.each do |project|
-      if project.id == project_id
-        temp_project = project
-      end
-    end
-
-    if temp_project != nil
-      tasks = temp_project.completed_tasks
-      if tasks.length != 0
-        tasks.each do |task|
-          puts "#{task.description} #{task.task_id}"
-        end
-      else
-        puts "This project has no tasks"
-      end
-    else
-      puts "There is not a project with that ID."
-    end
-  end
-
-  def self.new_task(project_id, priority, description)
-    temp_project = nil
-    @@projects.each do |project|
-      if project.id == project_id
-        temp_project = true
-        project.add_task(TM::Task.new(description, project_id, priority))
-      end
-    end
-
-    if temp_project != true
-      puts "There is not a project with that ID."
-    end
-  end
-
-  #helper method for tests
-  def self.reset_class_variables
-    @@counter = 1
-    @@projects = []
   end
 
   def add_task(task)

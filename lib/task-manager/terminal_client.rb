@@ -44,7 +44,7 @@ class TM::TerminalClient
         run(@choice)
         #creates a new project with inputted name
       when 'create'
-        TM::Project.new(@answer[1])
+        TM::Project.new(@answer[1].capitalize!)
         puts "Project #{@answer[1]} Created. Enter another command (help for list of command options) or exit if you wish to stop."
         @answer = gets.chomp.downcase.split(' ')
         @choice = @choice[0]
@@ -52,9 +52,19 @@ class TM::TerminalClient
         #shows incomplete tasks for inputted project
       when 'show'
         project = TM::Project.find_project(@answer[1].to_i)
-        tasks = project.incomplete_tasks
-
-        TM::Project.show_incomplete_tasks(@answer[1].to_i)
+        if project != nil
+          tasks = project.incomplete_tasks
+          if tasks.length != 0
+            #display organization
+            tasks.each do |task|
+              puts "Priority: #{task.priority} - Task ID: #{task.task_id} - Description: #{task.description}"
+            end
+          else
+            puts "This project has no incomplete tasks."
+          end
+        else
+          puts "There is not a project with that ID."
+        end
 
         puts "Enter another command (help for list of command options) or exit if you wish to stop."
         @answer = gets.chomp.downcase.split(' ')
@@ -62,7 +72,21 @@ class TM::TerminalClient
         run(@choice)
         #shows completed tasks for inputted project
       when 'history'
-        TM::Project.show_completed_tasks(@answer[1].to_i)
+        project = TM::Project.find_project(@answer[1].to_i)
+        if project != nil
+          tasks = project.completed_tasks
+          if tasks.length != 0
+            #display organization
+            tasks.each do |task|
+              puts "Description: #{task.description} - Task ID: #{task.task_id} - Completed: #{task.date_completed}"
+            end
+          else
+            puts "This project has no completed tasks."
+          end
+        else
+          puts "There is not a project with that ID."
+        end
+        # TM::Project.show_completed_tasks(@answer[1].to_i)
 
         puts "Enter another command (help for list of command options) or exit if you wish to stop."
         @answer = gets.chomp.downcase.split(' ')
@@ -73,7 +97,13 @@ class TM::TerminalClient
         temp_answer = @answer.dup
         temp_answer.slice!(0, 3)
         description = temp_answer.join(' ')
-        TM::Project.new_task(@answer[1].to_i, @answer[2].to_i, description)
+        project = TM::Project.find_project(@answer[1].to_i)
+        if project != nil
+          project.add_task(TM::Task.new(description, @answer[1].to_i, @answer[2].to_i))
+          puts "Task added to #{project.name}."
+        else
+          puts "There is not a project with that ID."
+        end
 
         puts "Enter another command (help for list of command options) or exit if you wish to stop."
         @answer = gets.chomp.downcase.split(' ')

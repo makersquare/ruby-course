@@ -29,8 +29,8 @@ describe 'Project' do
 
     describe 'list_all' do
       it "lists all projects" do
-        STDOUT.should_receive(:puts).with("Grades - 1")
-        STDOUT.should_receive(:puts).with("Tests - 2")
+        STDOUT.should_receive(:puts).with("Name: Grades - ID: 1")
+        STDOUT.should_receive(:puts).with("Name: Tests - ID: 2")
         TM::Project.list_all
       end
     end
@@ -44,59 +44,6 @@ describe 'Project' do
         expect(TM::Project.find_project(5)).to eq(nil)
       end
     end
-
-    describe "show_incomplete_tasks" do
-
-      it "tells when there is not a project with the inputted id" do
-        STDOUT.should_receive(:puts).with("There is not a project with that ID.")
-        TM::Project.show_incomplete_tasks(40)
-      end
-
-      it "displays incomplete tasks for inputted project" do
-        task = TM::Task.new("Create gradebook", @project1.id, 3)
-        task2 = TM::Task.new("Add students", @project1.id, 2)
-        task3 = TM::Task.new("Add tests", @project1.id, 1)
-
-        @project1.add_task(task)
-        @project1.add_task(task2)
-        @project1.add_task(task3)
-
-        TM::Task.mark_complete(task.task_id)
-
-        # STDOUT.should_receive(:puts).with("Priority    ID   Description")
-        STDOUT.should_receive(:puts).with("1 3 Add tests")
-        STDOUT.should_receive(:puts).with("2 2 Add students")
-        TM::Project.show_incomplete_tasks(@project1.id)
-      end
-    end
-
-    describe 'show_completed_tasks' do
-      it "tells when there is not a project with inputted id" do
-        STDOUT.should_receive(:puts).with("There is not a project with that ID.")
-        TM::Project.show_incomplete_tasks(40)
-      end
-
-      it "displays completed tasks for inputted project" do
-        allow(Date).to receive(:today).and_return(Date.parse("14 Feb 2014"))
-        task1 = TM::Task.new("Add students", @project1.id, 2)
-        allow(Date).to receive(:today).and_return(Date.parse("14 March 2014"))
-        task2 = TM::Task.new("Add tests", @project1.id, 3)
-        allow(Date).to receive(:today).and_return(Date.parse("14 March 2012"))
-        task3 = TM::Task.new("Create gradebook", @project1.id, 1)
-
-
-        @project1.add_task(task1)
-        @project1.add_task(task2)
-        @project1.add_task(task3)
-
-        TM::Task.mark_complete(task2.task_id)
-
-        # STDOUT.should_receive(:puts).with("Priority    ID   Description")
-        STDOUT.should_receive(:puts).with("Add tests 2")
-        TM::Project.show_completed_tasks(@project1.id)
-      end
-    end
-
   end
 
   describe 'initialize' do
