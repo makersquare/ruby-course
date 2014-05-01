@@ -3,12 +3,11 @@ class TM::Task
 	attr_accessor :id, :name, :priority, :description
 
 	@@task_count = 0
+	@@tasks = []
 
 	def initialize(name = "untitled", description: "none", priority: 1)
 		@name = name
-		@@task_count +=1
-		@id = @@task_count
-		# @project_id = nil
+		@id = self.class.generate_id
 		@description = description
 		@priority = priority
 		@date_created= Time.now
@@ -16,6 +15,19 @@ class TM::Task
 		@date_due = Time.now + (7*24*60*60) #1 week from now
 		# @date_due = Time.now + (30) #1 week from now
 		@completed = false
+		
+		# foreign keys
+		@project_id = nil
+
+		self.class.add_task(self)
+	end
+
+	def self.add_task(task)
+		@@tasks << task
+	end
+
+	def self.generate_id
+		@@task_count += 1
 	end
 
 	def mark_completed

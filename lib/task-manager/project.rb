@@ -2,6 +2,9 @@ class FalseClass; def to_i; 0 end end
 class TrueClass; def to_i; 1 end end
 
 class TM::Project
+	
+	@@project_count = 0
+	@@projects = []
 
 	attr_reader :name, :id, :tasks
 	
@@ -13,12 +16,10 @@ class TM::Project
 	end
 
 	def self.add_project(project)
-		@@projects ||= []
 		@@projects << project
 	end
 
 	def self.generate_id
-		@@project_count ||= 0
 		@@project_count += 1
 	end
 
