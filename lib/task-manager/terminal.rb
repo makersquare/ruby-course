@@ -47,7 +47,7 @@ class TM::TerminalClient
     while @run == true
       input = gets.chomp
       check_user_input(input)
-   end
+    end
   end
 
   def list_instructions

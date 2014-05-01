@@ -25,6 +25,10 @@ class TM::Task
     end
   end
 
+  def over_due?
+    Time.now > @complete_date ? true : false
+  end
+
   def self.reset_class_variables
     @@task_ids = 0
   end

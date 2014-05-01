@@ -81,19 +81,28 @@ describe 'Project' do
       expect(project.incompleted_task).to eq([task3, task2, task1])
     end
 
-    it 'list incompleted task in order by priority and oldest first' do
+    it 'list over_due task first' do
       allow(Time).to receive(:now).and_return(Time.parse("12PM"))
-      task1 = TM::Task.new(1, 1, "complete this task manager")
+      task1 = TM::Task.new(1, 3, "complete this task manager")
       allow(Time).to receive(:now).and_return(Time.parse("3PM"))
       task2 = TM::Task.new(1, 2, "complete this task manager like now")
       allow(Time).to receive(:now).and_return(Time.parse("5PM"))
-      task3 = TM::Task.new(1, 2, "complete this task manager YESTERDAY")
+      task3 = TM::Task.new(1, 1, "complete this task manager YESTERDAY")
 
       project.task << task1
-      project.task << task3
       project.task << task2
+      project.task << task3
+    end
 
-      expect(project.incompleted_task).to eq([task1, task2, task3])
+    it 'list incompleted task in order by priority and oldest first' do
+      task4 = TM::Task.new(1, 2, "complete this task manager Today")
+      allow(Time).to receive(:now).and_return(Time.at(0))
+      task1 = TM::Task.new(1, 2, "complete this task manager")
+
+      project.task << task1
+      project.task << task4
+
+      expect(project.incompleted_task).to eq([task4, task1])
     end
   end
 
