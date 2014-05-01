@@ -13,8 +13,8 @@ class TM::Task
 		@priority = priority
 		@date_created= Time.now
 		@date_completed = nil
-		# @date_due = Time.now + (7*24*60*60) #1 week from now
-		@date_due = Time.now + (30) #1 week from now
+		@date_due = Time.now + (7*24*60*60) #1 week from now
+		# @date_due = Time.now + (30) #1 week from now
 		@completed = false
 	end
 

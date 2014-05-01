@@ -5,13 +5,21 @@ class TM::Project
 
 	attr_reader :name, :id, :tasks
 	
-	@@project_count = 0
-
 	def initialize(name="default")
 		@name = name
-		@@project_count +=1
-		@id = @@project_count
 		@tasks = []
+		@id = self.class.generate_id
+		self.class.add_project(self)
+	end
+
+	def self.add_project(project)
+		@@projects ||= []
+		@@projects << project
+	end
+
+	def self.generate_id
+		@@project_count ||= 0
+		@@project_count += 1
 	end
 
 	def add_task(*tasks)
