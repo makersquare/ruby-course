@@ -1,7 +1,7 @@
 
 class TM::Task
 
-  attr_reader :project_id, :priority, :description, :task_id, :date_created
+  attr_reader :project_id, :priority, :description, :task_id, :date_created, :complete_date
   attr_accessor :completed
 
   @@task_ids = 0
@@ -14,6 +14,8 @@ class TM::Task
     @@task_ids += 1
     @task_id = @@task_ids
     @date_created = Time.now
+    @complete_date = @date_created + (86400 * 5)
+    @happy = true
   end
 
   def complete

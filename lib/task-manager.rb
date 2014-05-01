@@ -8,5 +8,5 @@ require_relative 'task-manager/project.rb'
 require_relative 'task-manager/projectsmanager.rb'
 require_relative 'task-manager/terminal.rb'
 
-t = TM::TerminalClient.new
-t.run_program
+# t = TM::TerminalClient.new
+# t.run_program

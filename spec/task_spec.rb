@@ -26,6 +26,13 @@ describe 'Task' do
     it 'creates a new task with a priority' do
       expect(task.priority).to eq(1)
     end
+
+    it 'has a due date' do
+      # allow(TM::Task).to receive(:now).and_return(Time.parse("12PM"))
+
+      expect(task.complete_date).to eq(task.date_created + (86400 * 5))
+    end
+
   end
 
   context 'a task is completed' do

@@ -93,7 +93,7 @@ describe 'Project' do
       project.task << task3
       project.task << task2
 
-      expect(project.uncompleted_task).to eq([task1, task2, task3])
+      expect(project.incompleted_task).to eq([task1, task2, task3])
     end
   end
 
