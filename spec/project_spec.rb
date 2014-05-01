@@ -39,7 +39,7 @@ describe 'Project' do
     expect(@project.incomplete_tasks.last.task_id).to eq 4
   end
 
-  it "retrieves overdue tasks" do
+  it "retrieves and sorts overdue tasks" do
     # Stub today as a date in the future so this test can pass
     @today = Date.parse("2015-05-08")
     Date.stub(:today).and_return(@today)
@@ -52,4 +52,12 @@ describe 'Project' do
     expect(@project.incomplete_tasks.first.task_id).to eq 2
     expect(@project.incomplete_tasks.last.task_id).to eq 3
   end
+
+  it "calculates percentage completion of all tasks in project" do
+    @today = Date.parse("2015-05-08")
+    Date.stub(:today).and_return(@today)
+    TM::Task.mark_overdue
+    @project.completion = @project.project_completion_percent
+    expect(@project.completion).to eq 0.33
+    end
 end

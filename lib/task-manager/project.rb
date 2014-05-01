@@ -1,6 +1,7 @@
 
 class TM::Project
   attr_reader :pid, :name, :tasks, :projects
+  attr_accessor :completion
   @@pid = 0
   @@projects = []
 
@@ -8,6 +9,7 @@ class TM::Project
     @name = name
     @pid = @@pid + 1
     @tasks = []
+    @completion = 0.0
 
     # Increment class variable to keep ids unique
     @@pid = @pid
@@ -35,7 +37,13 @@ class TM::Project
   end
 
   def overdue_tasks
+    @tasks.select{ |task| task.overdue? }
+  end
+
+  def project_completion_percent
     overdue_tasks = @tasks.select{|task| task.overdue? }
+    completion_percent = 1.0 - (overdue_tasks.length.to_f / @tasks.length)
+    completion_percent.round(2)
   end
 
   # Used to reset class variables for rspec tests
