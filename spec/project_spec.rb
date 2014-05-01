@@ -25,14 +25,13 @@ describe 'Project' do
     expect(@p2.id).to eq(2)
   end
 
-  # it "has a description" do
-  #   expect(@p1.description).to eq("Monday")
-  #   expect(@p2.description).to eq("To Do")
-  # end
+  it "can retrieve a list of completed tasks by date created" do
+    # Time.stub(:now).and_return(Time.parse("5:00 PM"))
 
-  # it "changes priorty number" do
-  #   @p1.change_priority(5)
-  #   expect(@p1.change_priority).to eq(5)
-  # end
+  end
+
+  it "can retrieve a list of incomplete tasks sorted by priority number" do
+
+  end
 
 end

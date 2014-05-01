@@ -7,7 +7,7 @@ describe 'Task' do
     TM::Project.reset_class_variables
     @p1 = TM::Project.new("project1")
     @p2 = TM::Project.new("project2")
-    @task1 = TM::Task.new(@task_id, "To Do", 2)
+    @task1 = TM::Task.new("To Do", 2, 1)
   end
 
   it "exists" do
@@ -26,15 +26,16 @@ describe 'Task' do
     expect(@task1.priority_number).to eq(2)
   end
 
-  it "changes priority number" do
-    @task1.change_priority(3)
-    expect(@task1.priority_number).to eq(3)
+  it "has a project id" do
+    expect(@task1.project_id).to eq(1)
   end
 
+  # it "changes priority number" do
+  #   @task1.change_priority(3)
+  #   expect(@task1.priority_number).to eq(3)
+  # end
+
   it "task can be marked complete by id" do
-    # expect(@task1.mark_complete(@task_id)).to eq(true)
-    # Take a task id, change the task's status to complete
-    # task =
     expect(@task1.complete_status).to eq(false)
     TM::Task.complete_task(@task1.task_id)
     expect(@task1.complete_status).to eq(true)
@@ -43,17 +44,5 @@ describe 'Task' do
     # 2. execute the method mark_complete
     # 3. test to make sure the the status is complete
   end
-
-  # it "retrieves a list of completes tasks by completion date" do
-
-  # end
-
-  # it "retrieves list of incomplete tasks by priority number" do
-
-  # end
-
-  # it "puts older task first if priority numbers match with incomplete tasks" do
-
-  # end
 
 end
