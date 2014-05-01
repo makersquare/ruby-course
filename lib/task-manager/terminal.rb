@@ -1,5 +1,5 @@
 # require_relative 'project.rb'
-require 'pry-debugger'
+# require 'pry-debugger'
 
 class TM::TerminalClient
 
@@ -25,8 +25,8 @@ class TM::TerminalClient
   def get_input
     puts @menu
     while true
-      cmd, args = parse_cmd(gets.chomp!)
-      puts exec_cmd(cmd, args)
+      cmds = parse_cmd(gets.chomp!)
+      puts exec_cmd(cmds)
     end
   end
 
@@ -38,13 +38,11 @@ class TM::TerminalClient
   end
 
   def exec_cmd(cmds)
-    # create_project('asdfasdf project')
-    # create_new_task([1, 1, 'asdfasdfa task'])
-    # binding.pry
-    case cmds.first
+    cmd, args = cmds.shift, cmds.last
+    case cmd
     when 'exit' then exit
     when 'list' then list_all_projects
-    when 'create' then create_project(args)
+    when 'create' then create_project(args[0])
     when 'show' then display_incomplete(args)
     # when 'history' then
     when 'add' then create_new_task(args)
@@ -56,26 +54,22 @@ class TM::TerminalClient
   def list_all_projects
     puts "ID__Project_Name"  + ("_" * 20)
     TM::Project.projects.each {|proj| puts proj}
-    # nil
   end
 
   def create_project(name)
     TM::Project.new(name)
-    nil
   end
 
   def display_incomplete(pid)
     project = TM::Project.find_project_by_id(pid)
     puts "Project_#{project.id}_Incomplete_Tasks"
     project.incomplete.each {|t| puts t}
-    nil
   end
 
   def create_new_task(args)
     task = TM::Task.new(args[0], args[1], args[2])
     TM::Project.add_task(task)
     puts "Task #{task.id} created and assigned to project #{task.project_id}"
-    nil
   end
 
 end

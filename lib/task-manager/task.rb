@@ -4,7 +4,8 @@ class TM::Task
   attr_reader :project_id, :description, :priority
   attr_reader :id, :timestamp
   attr_accessor :complete
-  @@id_counter = 1
+
+  @@id_counter = 0
   @@tasks = []
 
   def initialize(project_id, description, priority)
@@ -31,4 +32,10 @@ class TM::Task
     t = @@tasks.select {|t| t.id == tid}.first
     t.complete = true
   end
+
+  def self.reset_class_vars
+    @@id_counter = 0
+    @@tasks = []
+  end
+
 end

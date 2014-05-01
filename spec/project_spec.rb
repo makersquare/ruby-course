@@ -4,14 +4,15 @@ require 'pry-debugger'
 describe 'Project' do
 
   before(:each) do
-      # reset_class_variables(TM::Project)
-      @my_project = TM::Project.new('Project Mayhem')
-      @p2 = TM::Project.new('Orderly Project')
-      @task1 = TM::Task.new(@my_project.id, 'do some stuff', 1)
-      @task2 = TM::Task.new(@my_project.id, 'do other stuff', 2)
-      @my_project.add_task(@task1)
-      @my_project.add_task(@task2)
-      TM::Task.mark_complete(@task1.id)
+    TM::Project.reset_class_vars
+    TM::Task.reset_class_vars
+    @my_project = TM::Project.new('Project Mayhem')
+    @p2 = TM::Project.new('Orderly Project')
+    @task1 = TM::Task.new(@my_project.id, 'do some stuff', 1)
+    @task2 = TM::Task.new(@my_project.id, 'do other stuff', 2)
+    @my_project.add_task(@task1)
+    @my_project.add_task(@task2)
+    TM::Task.mark_complete(@task1.id)
   end
 
   describe 'self.projects' do

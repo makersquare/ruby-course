@@ -4,10 +4,11 @@ describe 'TerminalClient' do
 
   before(:all) do
     @terminal = TM::TerminalClient.new
-    reset_class_variables(TM::TerminalClient)
   end
 
   before(:each) do
+    TM::Project.reset_class_vars
+    TM::Task.reset_class_vars
   end
 
   describe '.initialize' do
@@ -37,17 +38,23 @@ describe 'TerminalClient' do
     describe 'list' do
       it 'lists all projects' do
         list1 = @terminal.exec_cmd(@terminal.parse_cmd('list'))
-        expect(list1).to eq(nil)
+        expect(list1).to eq([])
 
         mayhem = TM::Project.new('mayhem')
         list2 = @terminal.exec_cmd(@terminal.parse_cmd('list'))
         expect(list2).to eq([mayhem])
 
+        runway = TM::Project.new('runway')
+        list3 = @terminal.exec_cmd(@terminal.parse_cmd('list'))
+        expect(list3).to eq([mayhem, runway])
       end
     end
 
     describe 'create' do
-
+      it "creates a new project with a name" do
+        p = @terminal.exec_cmd(@terminal.parse_cmd('create ASDF'))
+        expect(p.name).to eq("ASDF")
+      end
     end
     describe 'show' do
     end

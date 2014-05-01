@@ -4,7 +4,6 @@ class TM::Project
   attr_accessor :tasks
 
   @@id_counter = 0
-
   @@projects = []
 
   def initialize(name)
@@ -43,6 +42,11 @@ class TM::Project
   def incomplete
     t = @tasks.select {|task| !task.complete? }
     t.sort_by {|task| [task.priority, task.timestamp]}
+  end
+
+  def self.reset_class_vars
+    @@id_counter = 0
+    @@projects = []
   end
 
 end
