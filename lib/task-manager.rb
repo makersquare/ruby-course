@@ -8,14 +8,14 @@ require_relative 'task-manager/task.rb'
 require_relative 'task-manager/project.rb'
 
 def add_task_to_project(task, project)
-  #When task is passed to project list associate project id with task
-  # task = task
-  # project = project
-  # new_task.id(project.id)
+   task.id = project.id
+   project.task_list << task
+   puts "#{task.description} added to #{project.name}"
 end
 
-def sort_by_priority
+def sort_by_priority(project, priority)
 # Iterate over projects task list array and create a hash with priority as the key and an array of tasks as the value
+  #project.project_list
 end
 
 

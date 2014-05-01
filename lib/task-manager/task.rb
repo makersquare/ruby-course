@@ -12,13 +12,11 @@ class TM::Task
   def initialize(description, priority=1)
     @description = description
     @created = Time.now
-    @priority = (1..5)
+    @priority = priority
     @complete = false
   end
 
-  def mark_complete
-    @complete = true
-  end
+
 
   def change_description(description)
     @description = description
@@ -27,7 +25,5 @@ class TM::Task
   def change_priority(priority)
     @priority = priority
   end
-
-
 
 end
