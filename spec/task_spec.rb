@@ -33,5 +33,16 @@ describe 'Task' do
   it "allows tasks to have tags" do
     task1 = TM::Task.new(@project.pid, "description1", 10, "2014-05-08",{tags: ["tag1","tag2","tag3"]})
     expect(task1.tags).to include ("tag1")
-    end
+  end
+
+  it "allows tasks to be marked as recurring, daily or weekly" do
+    # Task repeats daily
+    task1 = TM::Task.new(@project.pid, "description1", 10, "2014-05-08",{tags: ["tag1","tag2","tag3"], recurring: 1})
+    # Task repeats weekly
+    task2 = TM::Task.new(@project.pid, "description1", 10, "2014-05-08",{tags: ["tag1","tag2","tag3"], recurring: 2})
+    task3 = TM::Task.new(@project.pid, "description1", 10, "2014-05-08",{tags: ["tag1","tag2","tag3"]})
+
+    expect(task1.frequency).to eq 'daily'
+    expect(task2.frequency).to eq 'weekly'
+  end
 end

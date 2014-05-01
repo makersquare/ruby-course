@@ -38,6 +38,16 @@ class TM::Task
     true if @due_date < Date.today
   end
 
+  def frequency
+    if @recurring == 1
+      'daily'
+    elsif @recurring == 2
+      'weekly'
+    else
+      'one time'
+    end
+  end
+
   def self.complete_task(task_id)
     task = @@tasks.detect{ |task| task_id == task.task_id }
     task.completed_at = Time.now
