@@ -95,14 +95,16 @@ describe 'Project' do
     end
 
     it 'list incompleted task in order by priority and oldest first' do
-      task4 = TM::Task.new(1, 2, "complete this task manager Today")
+      task2 = TM::Task.new(1, 2, "complete this task manager Today")
       allow(Time).to receive(:now).and_return(Time.at(0))
       task1 = TM::Task.new(1, 2, "complete this task manager")
 
       project.task << task1
-      project.task << task4
+      project.task << task2
 
-      expect(project.incompleted_task).to eq([task4, task1])
+      allow(Time).to receive(:now).and_return(Time.new)
+
+      expect(project.incompleted_task).to eq([task1, task2])
     end
   end
 

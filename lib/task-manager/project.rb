@@ -34,7 +34,7 @@ class TM::Project
         incompleted << task
       end
     end
-    [over_due, incompleted].flatten
+    over_due + incompleted
   end
 
   # def sort_overdue(task_array)
