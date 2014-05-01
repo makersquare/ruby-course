@@ -45,4 +45,32 @@ describe 'Task' do
     expect(task1.frequency).to eq 'daily'
     expect(task2.frequency).to eq 'weekly'
   end
+
+  it "creates a new copy of daily recurring tasks each day" do
+    task1 = TM::Task.new(@project.pid, "description1", 10, "2014-05-08",{tags: ["tag1","tag2","tag3"], recurring: 1})
+    task2 = TM::Task.new(@project.pid, "description1", 10, "2014-05-08",{tags: ["tag1","tag2","tag3"], recurring: 1})
+
+    # Before repeated tasks, @project should have 3 tasks
+    expect(@project.tasks.length).to eq 3
+    @time = Time.parse("2014-05-02 23:23:23")
+    Time.stub(:now).and_return(@time)
+
+    TM::Task.repeat_tasks
+    # After repeated tasks, @project should have 4 tasks
+    expect(@project.tasks.length).to eq 5
+  end
+
+  it "creates a new copy of weekly recurring tasks each week" do
+    task1 = TM::Task.new(@project.pid, "description1", 10, "2014-05-08",{tags: ["tag1","tag2","tag3"], recurring: 2})
+    task2 = TM::Task.new(@project.pid, "description1", 10, "2014-05-08",{tags: ["tag1","tag2","tag3"], recurring: 2})
+
+    # Before repeated tasks, @project should have 3 tasks
+    expect(@project.tasks.length).to eq 3
+    @time = Time.parse("2014-05-10 23:23:23")
+    Time.stub(:now).and_return(@time)
+
+    TM::Task.repeat_tasks
+    # After repeated tasks, @project should have 4 tasks
+    expect(@project.tasks.length).to eq 5
+  end
 end

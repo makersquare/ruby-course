@@ -46,7 +46,7 @@ class TM::Project
   def search(tag)
     # Filter by tagged tasks and then select items with matching tags
     search_in = self.tagged_tasks
-    @search_in.select{|task| task.tags.include?(tag)}
+    search_in.select{|task| task.tags.include?(tag)}
   end
 
   def self.list_projects

@@ -75,4 +75,5 @@ describe 'Project' do
     expect(@project.search("tag3").length).to eq 2
 
   end
+
 end

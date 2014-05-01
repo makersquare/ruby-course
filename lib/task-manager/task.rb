@@ -15,6 +15,7 @@ class TM::Task
     @completed_at = nil
     @due_date = Date.parse(due_date)
     @overdue = 0
+    @duplicated = false
 
     # Optional parameters
     @tags = nil || opts[:tags]
@@ -48,6 +49,14 @@ class TM::Task
     end
   end
 
+  def duplicated?
+    true if @duplicated == true
+  end
+
+  def duplicated=(duplicated)
+    @duplicated = true
+  end
+
   def self.complete_task(task_id)
     task = @@tasks.detect{ |task| task_id == task.task_id }
     task.completed_at = Time.now
@@ -65,5 +74,38 @@ class TM::Task
   def self.reset_class_variables
     @@task_id = 0
     @@tasks = []
+  end
+
+  def self.repeat_tasks
+    # Find daily tasks
+    daily = @@tasks.select{|task| task.recurring == 1}
+
+    # Find weekly tasks
+    weekly = @@tasks.select{|task| task.recurring == 2}
+    daily.each do |task|
+      if task.created_at + (24*60*60) < Time.now && !task.duplicated?
+        pid = task.project_id
+        desc = task.description
+        priority = task.priority
+        due_date = task.due_date.to_s
+        tags = task.tags
+        recurring = task.recurring
+        self.new(pid,desc,priority,due_date,tags: tags, recurring: recurring)
+        task.duplicated = true
+      end
+    end
+
+    weekly.each do |task|
+      if task.created_at + (144*60*60) < Time.now && !task.duplicated?
+        pid = task.project_id
+        desc = task.description
+        priority = task.priority
+        due_date = task.due_date.to_s
+        tags = task.tags
+        recurring = task.recurring
+        self.new(pid,desc,priority,due_date,tags: tags, recurring: recurring)
+        task.duplicated = true
+      end
+    end
   end
 end
