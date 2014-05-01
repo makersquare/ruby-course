@@ -10,28 +10,46 @@ class TM::Project
   end
 
   def self.add_project(project)
-    @@projects ||= {}
-    @@projects[project.id] = project
+    # @@projects ||= {}
+    # @@projects[project.id] = project
+
+    @@projects ||= []
+    @@projects << project
   end
 
   def self.projects
-    @@projects ||= {}
+    # @@projects ||= {}
+
+    @@projects ||= []
   end
 
   def complete_tasks
-    complete = TM::Task.tasks.select do |k, v|
-      (v.project_id == self.id) && v.complete?
+    # complete = TM::Task.tasks.select do |k, v|
+    #   (v.project_id == self.id) && v.complete?
+    # end
+
+    # complete.values.sort_by { |task| task.created_at }
+
+    complete = TM::Task.tasks.select do |t|
+      (t.project_id == self.id) && t.complete?
     end
 
-    complete.values.sort_by { |task| task.created_at }
+    complete.sort_by { |t| t.created_at }
   end
 
   def incomplete_tasks
-    incomplete = TM::Task.tasks.select do |k, v|
-      (v.project_id == self.id) && !v.complete?
+    # incomplete = TM::Task.tasks.select do |k, v|
+    #   (v.project_id == self.id) && !v.complete?
+    # end
+
+    # incomplete.values.sort_by { |task| [task.priority_number, task.created_at] }
+
+    incomplete = TM::Task.tasks.select do |t|
+      (t.project_id == self.id) && !t.complete?
     end
 
-    incomplete.values.sort_by { |task| [task.priority_number, task.created_at] }
+    incomplete.sort_by { |t| [t.priority_number, t.created_at] }
+
   end
 
   private

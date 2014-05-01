@@ -20,20 +20,26 @@ class TM::Task
   end
 
   def self.add_task(task)
-    @@tasks ||= {}
-    @@tasks[task.id] = task
+    # @@tasks ||= {}
+    # @@tasks[task.id] = task
+
+    @@tasks ||= []
+    @@tasks << task
   end
 
   def self.tasks
-    @@tasks ||= {}
+    # @@tasks ||= {}
+
+    @@tasks ||= []
   end
 
   def self.mark_complete(task_id)
-    task = @@tasks[task_id]
-    task.complete = true
-    task.completed_at = Time.now
+    # task = @@tasks[task_id]
 
-    true
+    task = @@tasks.select { |task| task.id == task_id }
+    task = task[0]
+    task.completed_at = Time.now
+    task.complete = true
   end
 
   private

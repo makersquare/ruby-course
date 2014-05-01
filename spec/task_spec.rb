@@ -3,6 +3,7 @@ require 'spec_helper'
 describe 'Task' do
   before(:each) do
     reset_class_variables(TM::Task)
+    reset_class_variables(TM::Project)
   end
 
   let(:task) { TM::Task.new(0, "A new task", 1) }
@@ -31,7 +32,8 @@ describe 'Task' do
       task
       task2 = TM::Task.new(0, "another task", 2)
       task3 = TM::Task.new(0, "is this a task?", 2)
-      expect(TM::Task.tasks).to eq({task.id => task, task2.id => task2, task3.id => task3})
+      # expect(TM::Task.tasks).to eq({task.id => task, task2.id => task2, task3.id => task3})
+      expect(TM::Task.tasks).to eq([task, task2, task3])
     end
   end
 
@@ -40,9 +42,9 @@ describe 'Task' do
       task = double("task")
       allow(task).to receive(:id).and_return(0)
 
-      expect(TM::Task.tasks).to eq({})
+      expect(TM::Task.tasks).to eq([])
       TM::Task.add_task(task)
-      expect(TM::Task.tasks).to eq({task.id => task})
+      expect(TM::Task.tasks).to eq([task])
     end
   end
 end
