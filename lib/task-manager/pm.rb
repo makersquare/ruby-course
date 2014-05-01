@@ -1,7 +1,7 @@
 require_relative '../task-manager.rb'
 
 
-#   $ bundle exec ruby pm.rb
+# bundle exec ruby pm.rb
 
 class TerminalClient
   attr_accessor :input
@@ -18,40 +18,38 @@ class TerminalClient
     get_command
   end
 
-def get_command
-  input = gets.chomp.downcase!
-  words = input.split(' ')
-  command = words[0]
-  option = words[1]
-  option1 = words[2]
-  option2 = words[3]
-  option2 = words[4]
+  def get_command
+    input = gets.chomp.downcase!
+    words = input.split(' ')
+    command = words[0]
+    option = words[1]
+    option1 = words[2]
+    option2 = words[3]
+    option2 = words[4]
 
-  case command
-    when 'help'
-      start
-    when 'list'
-      list
-    when 'create'
-      create(option)
-    when 'show'
-      show(option)
-    when 'history'
-      history(option)
-    when 'add'
-      add(option, option2, option3, option4)
-    when 'mark'
-      mark(option)
-    when 'exit'
-      exit
+    case command
+      when 'help'
+        start
+      when 'list'
+        list
+      when 'create'
+        create(option)
+      when 'show'
+        show(option)
+      when 'history'
+        history(option)
+      when 'add'
+        add(option, option2, option3, option4)
+      when 'mark'
+        mark(option)
+      when 'exit'
+        exit
 
-    else
-      "Sorry, that didn't match any of my commands. Please try again."
+      else
+        "Sorry, that didn't match any of my commands. Please try again."
     end
-end
+  end
 
-
-end
 
   def list
     TM::Project.list_projects
@@ -70,7 +68,7 @@ end
   end
 
   def add(option, option2, option3, option4)
-    option = TM::Project.id
+    TM::Project.id = option
     newTask = TM::Task.new(option2, option3, option4)
     option.add_task(newTask)
   end
