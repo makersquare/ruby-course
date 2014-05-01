@@ -22,7 +22,11 @@ describe 'Task' do
     expect(@task.status).to eq 1
   end
 
-  it "has a due date" do
-
+  it "marks overdue tasks as overdue" do
+    # Stub today as a date in the future so this test can pass
+    @today = Date.parse("2015-05-08")
+    Date.stub(:today).and_return(@today)
+    TM::Task.mark_overdue
+    expect(@task.overdue).to eq 1
   end
 end

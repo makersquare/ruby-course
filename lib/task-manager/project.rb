@@ -29,9 +29,13 @@ class TM::Project
   end
 
   def incomplete_tasks
-    # Find incomplete tasks and sort by highest priority first.
+    # Find incomplete tasks, sorted by overdue? first, then by priority. In case of priority tie, sort by created at, oldest first
     incomplete_tasks = @tasks.select{ |task| task.status == 0 }
-    incomplete_tasks = incomplete_tasks.sort_by{ |task| [ -task.priority, task.created_at] }
+    incomplete_tasks = incomplete_tasks.sort_by{ |task| [ -task.overdue, -task.priority, task.created_at] }
+  end
+
+  def overdue_tasks
+    overdue_tasks = @tasks.select{|task| task.overdue? }
   end
 
   # Used to reset class variables for rspec tests
