@@ -1,11 +1,11 @@
 
 class TM::Task
-  attr_reader :description, :priority, :project_id, :task_id, :created_at, :due_date, :tags
+  attr_reader :description, :priority, :project_id, :task_id, :created_at, :due_date
   attr_accessor :status, :completed_at, :overdue
   @@task_id = 0
   @@tasks = []
 
-  def initialize(project_id, desc, priority, due_date,tags={})
+  def initialize(project_id, desc, priority, due_date,tags=[])
     @project_id = project_id
     @task_id = @@task_id + 1
     @description = desc
@@ -27,10 +27,9 @@ class TM::Task
     project.tasks << self
   end
 
-  def self.mark_overdue
-    # Do this in a class method so all tasks can be updated as overdue at once. Not ideal.
-    @@tasks.each do |task|
-      task.overdue = 1 if task.overdue?
+  def tags
+    @tags.each do |tag|
+      print "#{tag} "
     end
   end
 
@@ -42,6 +41,13 @@ class TM::Task
     task = @@tasks.detect{ |task| task_id == task.task_id }
     task.completed_at = Time.now
     task.status = 1
+  end
+
+  def self.mark_overdue
+    # Do this in a class method so all tasks can be updated as overdue at once. Not ideal.
+    @@tasks.each do |task|
+      task.overdue = 1 if task.overdue?
+    end
   end
 
   # Reset class variables for rspec tests

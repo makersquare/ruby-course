@@ -31,6 +31,8 @@ describe 'Task' do
   end
 
   it "allows tasks to have tags" do
-    task1 = TM::Task.new(@project.pid, "description1", 10, "2014-05-08",{tags: "tag1, tag2"})
+    task1 = TM::Task.new(@project.pid, "description1", 10, "2014-05-08",["tag1","tag2","tag3"])
+
+    expect(task1.tags).to include ("tag1")
     end
 end
