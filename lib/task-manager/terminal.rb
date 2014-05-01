@@ -1,3 +1,5 @@
+require 'date'
+
 class TM::Terminal
 
   attr_accessor :choice
@@ -64,11 +66,13 @@ class TM::Terminal
         task_description = gets.chomp
         puts "what is the priority of the task?"
         task_priority = gets.chomp.to_i
+        puts "Do you want to assign a due date to this task?"
+        task_due_date = gets.chomp
         for i in 0...TM::Project.projects.length
           if TM::Project.projects[i].name == project_task
-            TM::Project.projects[i].create_task(task_id,task_description,task_priority)
+            TM::Project.projects[i].create_task(task_id,task_description,task_priority,task_due_date)
           end
-          TM::Project.projects[i].create_task(task_id,task_description,task_priority)
+          TM::Project.projects[i].create_task(task_id,task_description,task_priority, task_due_date)
           puts TM::Project.projects[i].incomplete_tasks().each {|x| puts x.description}
         end
       when 'mark'

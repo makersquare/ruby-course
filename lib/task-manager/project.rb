@@ -1,4 +1,4 @@
-
+require 'date'
 class TM::Project
   attr_reader :id
   attr_accessor :name, :tasks, :completed_task, :incomplete_task, :projects
@@ -18,8 +18,8 @@ class TM::Project
     @@projects
   end
 
-  def create_task(project_id, description, priority_number)
-    x = TM::Task.new(project_id, description, priority_number)
+  def create_task(project_id, description, priority_number, due_date)
+    x = TM::Task.new(project_id, description, priority_number, due_date)
     @tasks<<x
   end
 
@@ -52,8 +52,11 @@ class TM::Project
       if @tasks[i].status == "incomplete"
         @incomplete_task<<@tasks[i]
       end
+      if @tasks[i].due_date < Date.today
+        @tasks[i].overdue = "overdue"
+      end
     end
-    @incomplete_task.sort_by! {|x| x.priority_number}
+    @incomplete_task.sort_by! {|x| [x.priority_number, x.overdue]}
   end
 
   def self.reset_class_variables
