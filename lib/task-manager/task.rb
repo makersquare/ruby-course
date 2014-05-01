@@ -17,13 +17,7 @@ class TM::Task
   end
 
 
-
-  def change_description(description)
-    @description = description
-  end
-
-  def change_priority(priority)
-    @priority = priority
+  def mark_complete_by_id(id)
   end
 
 end
