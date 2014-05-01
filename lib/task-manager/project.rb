@@ -49,8 +49,8 @@ class TM::Project
 		phrase_error = "No tasks have been completed"
 		filtered_tasks = retrieve_completed_tasks_by_date
 
-		print_header
-		puts "#{phrase_description} for project '#{@name}' with id=#{@id}"	
+		print_header(string_ending: " | [HISTORY OF COMPLETED TASKS]")
+		# puts "#{phrase_description} for project '#{@name}' with id=#{@id}"	
 		if filtered_tasks.size == 0
 			puts "[#{phrase_error} for this project]"
 		else
@@ -64,8 +64,8 @@ class TM::Project
 		phrase_error = "No remaining tasks"
 		filtered_tasks = retrieve_incompleted_tasks_by_priority
 
-		print_header
-		puts "#{phrase_description} for project '#{@name}' with id=#{@id}"	
+		print_header(string_ending: " | [SHOWING REMAINING TASKS]")
+		# puts "#{phrase_description} for project '#{@name}' with id=#{@id}"	
 		if filtered_tasks.size == 0
 			puts "[#{phrase_error} for this project]"
 		else
@@ -91,11 +91,15 @@ class TM::Project
 		@tasks.select {|task| not task.completed}
 	end
 
-	def print_header
-		header_line = "[Project] #{@name} | [ID] #{@id}"
-		header_line.length.times { print "-"} ; print "\n"
+	##################
+	# Printing Methods
+	##################
+
+	def print_header(string_ending: "")
+		header_line = "[Project] #{@name} | [ID] #{@id}#{string_ending}"
+		header_line.length.times { print "="} ; print "\n"
 		puts header_line
-		header_line.length.times { print "-"} ; print "\n"
+		header_line.length.times { print "="} ; print "\n"
 	end
 
 	def print_details
