@@ -6,8 +6,8 @@ describe 'Task' do
   before(:each) do
     TM::Task.reset_class_variables
     @p1 = TM::Project.new("Project 1")
-    @t1 = TM::Task.new(1, 'Task 1', 1)
-    @t2 = TM::Task.new(1, 'Task 2', 2)
+    @t1 = TM::Task.new(1, 'Task 1', 1, '2014 1 31')
+    @t2 = TM::Task.new(1, 'Task 2', 2, '2014 5 6')
   end
 
   it "exists" do
@@ -15,10 +15,11 @@ describe 'Task' do
   end
 
   describe '#initialize' do
-    it "A new task can be created with a project id, description, and priority number." do
+    it "A new task can be created with a project id, description, priority number, and due date(y m d)." do
       expect(@t1.tid).to eq(1)
       expect(@t1.description).to eq("Task 1")
       expect(@t1.pnum).to eq(1)
+      expect(@t1.duedate).to eq('2014 1 31')
     end
   end
 
@@ -38,7 +39,7 @@ describe 'Task' do
 
     it "the completed tasks are listed by date" do
       Time.stub(:now).and_return(Time.parse('April 14 2014'))
-      t3 = TM::Task.new(1, "Task 3", 1)
+      t3 = TM::Task.new(1, "Task 3", 1, '2014 5 10')
       TM::Task.mark_complete(1)
       TM::Task.mark_complete(2)
       TM::Task.mark_complete(3)
@@ -49,8 +50,10 @@ describe 'Task' do
   describe '#incomplete_tasks' do
     it "a project can retrieve all incomplete tasks sorted by priority number, if priority number is the same, sort by date" do
       Time.stub(:now).and_return(Time.parse('April 14 2014'))
-      t3 = TM::Task.new(1, "Task 3", 1)
+      t3 = TM::Task.new(1, "Task 3", 1, '2014 7 10')
       expect(TM::Task.incomplete_tasks(1)).to eq([t3, @t1, @t2])
     end
   end
+
+  describe ''
 end

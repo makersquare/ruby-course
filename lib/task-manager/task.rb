@@ -1,13 +1,13 @@
 
 class TM::Task
 
-    attr_reader :date
+    attr_reader :date, :duedate
     attr_accessor :tid_counter, :tid, :description, :pnum, :complete, :pid, :tasks, :completed_tasks
 
     @@tid_counter = 0
     @@tasks = []
     @@completed_tasks = []
-  def initialize(pid, description, pnum)
+  def initialize(pid, description, pnum, duedate)
     t = Time.now
     @pid = pid
     @date = "#{t.year} #{t.month} #{t.day}"
@@ -16,6 +16,7 @@ class TM::Task
     @tid = @@tid_counter
     @description = description
     @complete = false
+    @duedate = duedate
     @@tasks << self
   end
 
