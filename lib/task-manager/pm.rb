@@ -20,17 +20,17 @@ class TerminalClient
 
 def get_command
   input = gets.chomp.downcase!
-    # split here w/ variables index[0]
   words = input.split(' ')
-  name = words[1]
+  option = words[1]
+  command = words[0]
 
-  case input
+  case command
     when 'help'
       start
     when 'list'
       list
     when 'create'
-      create
+      create(option)
     when 'show PID'
       show PID
     when 'history PID'
