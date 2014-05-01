@@ -1,5 +1,5 @@
-require 'project'
-require 'task'
+require_relative '../task-manager.rb'
+
 
 #   $ bundle exec ruby pm.rb
 
@@ -55,27 +55,42 @@ end
   end
 
   def create(name)
+    # SEPARATE YO GETS CHOMPY
     TM::Project.initialize(name)
   end
 
-  def show(PID)
-     # 'show PID - Show remaining tasks for project with id=PID'
+  def show(pid)
+    # MOVE STARTS HERE
+    @@projects.each do |x|
+      if x == pid
+        pid.incomplete_tasks
+      end
 
+     # FINISH THIS MAYBE IN PROJECT CLASS
   end
 
-  def history
-     'history PID - Show completed tasks for project with id=PID'
-
+  def history(pid)
+# SAME AS ABOVE
+    pid.completed
   end
 
-  def add_pid_priority_desc
-     'add PID PRIORITY DESC - Add a new task to project with id=PID'
+  def add(pid, name, description, priority_number)
+    # SAME AS ABOVE FOR PID
+    pid
 
+    name = TM::Task.name
+    description = TM::Task.description
+    priority_number = TM::Task.priority_number
+
+    newTask = TM::Task.new(name, description, priority_number)
+      # OMG HOW TO I ADD THIS TO A PROJECT!?!?!
+      spec @ symbols are what pid needs to be
+      pid.add_task
   end
 
-  def mark_tid
-     'mark TID - Mark task with id=TID as complete'
-
+  def mark(task_name)
+    tid = TM::Task.
+    complete
   end
 
 end
