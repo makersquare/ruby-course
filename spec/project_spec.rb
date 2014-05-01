@@ -23,7 +23,7 @@ describe 'Project' do
   end
 
   it "gives new project without name specified default name 'New Project'" do
-    expect(TM::Project.new.name).to eq("New Project")
+    expect(TM::Project.new.name).to eq("New Project - 1")
   end
 
 
@@ -38,20 +38,20 @@ describe 'Project' do
 
   it "take name arugment of new project instance" do
     test_project = TM::Project.new("Cleaning")
-    expect(test_project.name).to eq("Cleaning")
+    expect(test_project.name).to eq("Cleaning - 1")
   end
 
-  xit "adds project to class instances array" do
-    TM::Project.new("Project 1")
-    TM::Project.new("Project 2")
-    expect(self.project_instances_list).to eq(["Project 1", "Project 2"])
+  it "adds project to class instances array" do
+    TM::Project.new("Project")
+    TM::Project.new("Project")
+    expect(TM::Project.project_list).to eq(["Project - 1", "Project - 2"])
   end
 end
 
-  describe 'project class' do
-  xit "increments project class - project count when new instance created" do
-    TM::Project.new
-    expect(TM::Project.project_count).to eq(1)
-  end
-  end
+  # describe 'project class' do
+  # xit "increments project class - project count when new instance created" do
+  #   TM::Project.new
+  #   expect(TM::Project.project_count).to eq(1)
+  # end
+# end
 

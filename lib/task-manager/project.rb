@@ -5,19 +5,26 @@ include Organization
 
 
 attr_reader :created, :add_task, :task_list
-attr_accessor :name, :task, :project_list
+attr_accessor :name, :task,
 
 def self.project_count
   @@project_count
 end
 
-@@project_count = 0
-
+def self.project_list
+  @@project_list
+end
 
 def self.reset_class_variables
   @@project_count = 0
-  # @@project_instances_list.clear
+  @@project_list.clear
 end
+
+@@project_count = 0
+@@project_list = []
+
+
+
 
 # def self.project_instances_list
 #   @@project_instances_list
@@ -44,11 +51,12 @@ end
   # end
 
   def initialize(name="New Project")
-    @name = name
     @created = @create_date
     @task_list = []
     @@project_count += 1
     @id = @@project_count
+    @name = "#{name} - #{@id}"
+    @@project_list << @name
 
     # @id = @id_call_count
     # @id_call_count += 1
@@ -58,8 +66,11 @@ end
     # @@project_instances_list << @name
   end
 
-  def add_task(task, project)
-    @add_task = Task.new(task)
+def add_id_to_name
+  @name = "#{@name} - #{id}"
+
+  # def add_task(task, project)
+  #   @add_task = Task.new(task)
 
     # ## if the project doesn't exist, I need to add a new project
     # if @@project_instances_list.include?
