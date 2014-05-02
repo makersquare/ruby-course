@@ -1,7 +1,7 @@
 
 class TM::Project #this means project class belongs to TM module...doing this sill help with class conflict names ex MKS::Project...creating a new onject would be p = TM::Project.new
   attr_reader :name, :id
-  attr_accessor :description
+  attr_accessor :description, :projects
 
   @@id_count = 0
   @@projects = {}
