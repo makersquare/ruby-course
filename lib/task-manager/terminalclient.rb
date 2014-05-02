@@ -11,28 +11,21 @@ class TM::TerminalClient
     puts "\tadd PID PRIORITY DUE_DATE DESC - Add a new task to project with id=PID"
     puts "\tmark TID - Mark task with id=TID as complete"
     puts "\texit with EXIT"
-    print "Enter a command: "
     self.run_program
   end
 
   def run_program
     begin
+      print "Enter a command: "
       choice = gets.chomp()
       case choice
-      when "help"
-        help
-      when "list"
-        list
-      when /create ./
-        create_project(choice)
-      when /show ./
-        show_project(choice)
-      when /history ./
-        project_history(choice)
-      when /add ./
-        add_task(choice)
-      when /mark ./
-        complete_task(choice)
+      when "help" then help
+      when "list" then list
+      when /create ./ then create_project(choice)
+      when /show ./ then show_project(choice)
+      when /history ./ then project_history(choice)
+      when /add ./ then add_task(choice)
+      when /mark ./ then complete_task(choice)
       end
     end while choice != "exit" # This isn't necessary, exit will always exit the program
   end
@@ -49,7 +42,6 @@ class TM::TerminalClient
     puts "\tadd PID PRIORITY DUE_DATE DESC - Add a new task to project with id=PID"
     puts "\tmark TID - Mark task with id=TID as complete"
     puts "\texit with exit"
-    print "Enter a command: "
   end
 
   def list
@@ -57,7 +49,6 @@ class TM::TerminalClient
     TM::Project.list_projects.each do |project|
       puts"#{project.pid}\t\t#{project.name}"
     end
-    print "Enter a command: "
   end
 
   def create_project(choice)
@@ -66,18 +57,16 @@ class TM::TerminalClient
 
     new_project = TM::Project.new(name)
     puts "Project created."
-    print "Enter a command: "
   end
   def show_project(choice)
     choice = choice.split(" ")
     pid = choice[1].to_i
     project = TM::Project.get_project(pid)
 
-    puts "Priority\tID\tDescription"
+    puts "Priority\tID\tDue Date\tDescription\tTags"
     project.incomplete_tasks.each do |task|
-      puts "#{task.priority}\t\t#{task.task_id}\t#{task.description}"
+      puts "#{task.priority}\t\t#{task.task_id}\t#{task.due_date}\t#{task.description}\t\t#{task.tags}"
     end
-    print "Enter a command: "
   end
 
   def project_history(choice)
@@ -90,7 +79,6 @@ class TM::TerminalClient
     project.completed_tasks.each do |task|
       puts "#{task.task_id}\t\t#{task.description}"
     end
-    print "Enter a command: "
   end
 
   def add_task(choice)
@@ -99,10 +87,11 @@ class TM::TerminalClient
     priority = choice[2].to_i
     due_date = choice[3]
     description = choice[4]
+    print "Add tags to this task (optional): "
+    tags = gets.chomp()
 
-    TM::Task.new(pid, description, priority, due_date)
+    TM::Task.new(pid, description, priority, due_date, tags: tags)
     puts "Task created"
-    print "Enter a command: "
   end
 
   def complete_task(choice)
@@ -111,6 +100,5 @@ class TM::TerminalClient
 
     TM::Task.complete_task(id)
     puts "Task completed"
-    print "Enter a command: "
   end
 end
