@@ -53,4 +53,5 @@ class TM::Task
     task.sort_by! {|t| [t.duedate, t.pnum, t.date]}
     task
   end
+
 end

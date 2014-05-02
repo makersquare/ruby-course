@@ -36,8 +36,11 @@ class TM::TerminalClient
 
   def list
     projects = TM::Project.list_projects
-    puts "ID\tProject Name"
-    projects.each {|x| puts "#{x.pid}\t#{x.name}"}
+    puts "ID\tProject Name\t% Done \t% Over Due"
+    projects.each do|x| 
+      percentage = TM::Project.percentage_complete(x.pid)
+      puts "#{x.pid}\t#{x.name}\t#{percentage}"
+    end
     @command = gets.chomp
     self.call_methods(@command)
   end
@@ -53,14 +56,14 @@ class TM::TerminalClient
 
   def create_task
     puts "Please enter the id of the project you want the task to be in."
-    projectid = gets.chomp
+    projid = gets.chomp
     puts "Please enter a description for your task."
     description = gets.chomp
     puts "Please enter a priority number for your task (one being the highest priority)."
     priority = gets.chomp
     puts "Please enter the date you want to complete this in the form \'Year Month Day\'."
     duedate = gets.chomp
-    task = TM::Task.new(projectid,description,priority,duedate)
+    task = TM::Task.new(projid,description,priority,duedate)
     puts "You created a new task \"#{description}!\""
     @command = gets.chomp
     self.call_methods(@command)
@@ -69,19 +72,22 @@ class TM::TerminalClient
   def show
     puts "Please enter a project ID."
     projectid = gets.chomp
+    self.get_projects
     tasks = TM::Task.incomplete_tasks(projectid)
     projects = TM::Project.list_projects
     project = projects.select {|project| project.pid == projectid.to_i}
     project_name = project[0]
     project_name = project_name.name
-    puts "Showing Project \"#{project_name}\"\n\n"
-    puts "Priority\tID Description\tDue Date\tOver Due?"
+    puts "Project Name\t% Done \t% Over Due"
+    percentage = TM::Project.percentage_complete(projectid)
+    puts "\"#{project_name}\t#{percentage}\"\n\n"
+    puts " Priority\tID Description\tDue Date\tOver Due?"
     t = Time.now
     today = "#{t.year} #{t.month} #{t.day}"
     tasks.each do |task| 
       overdue = 'No'
       overdue = 'Yes' if task.duedate < today
-      puts "#{task.pnum}\t#{task.tid} #{task.description}\t#{task.duedate}\t#{overdue}"
+      puts "\t#{task.pnum}\t#{task.tid}  #{task.description}\t#{task.duedate}\t#{overdue}"
     end
     @command = gets.chomp
     self.call_methods(@command)
@@ -90,14 +96,17 @@ class TM::TerminalClient
   def history   
     puts "Please enter a project ID."
     projectid = gets.chomp
+    self.get_projects
     tasks = TM::Task.completed_tasks(projectid)
     projects = TM::Project.list_projects
     project = projects.select {|project| project.pid == projectid.to_i}
     project_name = project[0]
     project_name = project_name.name
-    puts "Showing Project #{project_name}\n\n"
-    puts "Priority\tID Description\tDue Date"
-    tasks.each {|task|  puts "#{task.pnum}\t#{task.tid} #{task.description}\t#{task.duedate}"}
+    puts "Project Name\t% Done \t% Over Due"
+    percentage = TM::Project.percentage_complete(projectid)
+    puts "\"#{project_name}\t#{percentage}\"\n\n"
+    puts " Priority\tID Description\tDue Date"
+    tasks.each {|task|  puts "\t#{task.pnum}\t#{task.tid}  #{task.description}\t#{task.duedate}"}
     @command = gets.chomp
     self.call_methods(@command)
   end

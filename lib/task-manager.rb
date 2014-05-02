@@ -1,5 +1,6 @@
 
 # Create our module. This is so other files can start using it immediately
+require 'pry-debugger'
 module TM
 
 end
