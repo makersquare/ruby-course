@@ -75,6 +75,8 @@ class TM::Project
       else
         return 0
       end
+    else
+      return 0
     end
   end
 

@@ -2,19 +2,20 @@
 class TM::Task
   @@counter = 1
   @@tasks = []
-  attr_reader :description, :project_id, :priority, :task_id, :creation_date, :due_date
+  attr_reader :description, :project_id, :priority, :task_id, :creation_date, :options
   attr_accessor :status, :date_completed
 
-  def initialize(description, project_id, priority, due_date=Date.today)
+  def initialize(description, project_id, priority, opts={})
     @description = description
     @project_id = project_id
     @priority = priority
     @task_id = @@counter
-    @@counter += 1
     @status = "Not completed"
     @date_completed = nil
-    @due_date = due_date
     @creation_date = Date.today
+    @@counter += 1
+    @options = {:due_date => Date.today}
+    @options.merge!(opts)
     @@tasks << self
   end
 
@@ -36,7 +37,16 @@ class TM::Task
     end
   end
 
+  def add_tags(tag_array)
+    if @options.has_key?(:tags)
+      temp_tags = @options[:tags]
+      @options[:tags] = temp_tags + tag_array
+    else
+      @options[:tags] = tag_array
+    end
+  end
+
   def due_date=(date)
-    @due_date = Date.parse(date)
+    @options[:due_date] = Date.parse(date)
   end
 end

@@ -43,7 +43,25 @@ describe 'Task' do
     end
 
     it "has a due date attribute with a default value of Date.today" do
-      expect(@task.due_date).to eq(Date.today)
+      expect(@task.options[:due_date]).to eq(Date.today)
+    end
+
+    it "can be initialized with tags" do
+      task = TM::Task.new("Create gradebook", @project1.id, 1, {:tags => ["School", "Grading"]})
+      expect(task.options[:tags]).to eq(["School", "Grading"])
+    end
+  end
+
+  describe 'add_tags' do
+     it "can have tags added to it" do
+      @task.add_tags(["School", "Grading"])
+      expect(@task.options[:tags]).to eq(["School", "Grading"])
+    end
+
+    it "doesn't override other tags when new tags are added" do
+      task = TM::Task.new("Create gradebook", @project1.id, 1, {:tags => ["School", "Grading"]})
+      task.add_tags(["Students"])
+      expect(task.options[:tags]).to eq(["School", "Grading", "Students"])
     end
   end
 
@@ -53,7 +71,7 @@ describe 'Task' do
 
   it "allows a due date to be added to a task" do
     @task.due_date = "1 March 2015"
-    expect(@task.due_date.to_s).to eq("2015-03-01")
+    expect(@task.options[:due_date].to_s).to eq("2015-03-01")
   end
 
   describe 'mark_complete' do
