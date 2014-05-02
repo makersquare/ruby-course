@@ -43,6 +43,10 @@ class TM::TerminalClient
     end
   end
 
+  def search(tag)
+    @project_manager.find_task_by_tag(tag)
+  end
+
   def run_program
     @run = true
     puts "Welcome to Project Manager Pro.  What can I do for you today?"
@@ -79,7 +83,9 @@ class TM::TerminalClient
     puts "  show PID - Show remaining tasks for project with id=PID"
     puts "  history PID - Show completed tasks for project with id=PID"
     puts "  add PID PRIORITY DESC - Add a new task to project with id=PID"
+    puts "  tags TID TAGS - add tags to a task by"
     puts "  mark TID - Mark task with id=TID as complete"
+    puts "  search TAG - Search for tags on task"
     puts "  exit - Will exit the program"
     puts
     puts "Please enter in a command: "
@@ -99,9 +105,12 @@ class TM::TerminalClient
     when :history
       history(input_array.last.to_i)
     when :add
-      add_task(input_array[1].to_i, input_array[2].to_i, input_array[3..-1].join(" "))
+      # index_of_hash = input_array.index("#")
+      add_task(input_array[1].to_i, input_array[2].to_i, input_array[3...-1].join(" "), )
     when :mark
       complete_task(input_array[1].to_i)
+    when :search
+      search(input_array[1..-1])
     when :help
       list_instructions
     when :exit
