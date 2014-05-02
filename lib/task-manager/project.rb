@@ -52,7 +52,7 @@ class TM::Project
 
   def incomplete_tasks
     new_array = @tasks.select{ |task| task.status == "Not completed"}
-    new_array.sort_by! {|a| [a.due_date, a.priority, a.creation_date]}
+    new_array.sort_by! {|a| [a.options[:due_date], a.priority, a.creation_date]}
   end
 
   def percentage_complete
@@ -68,7 +68,7 @@ class TM::Project
   def overdue_tasks
     incomplete = self.incomplete_tasks
     if incomplete.length != 0
-      overdue_array = incomplete.select{|task| task.due_date < Date.today}
+      overdue_array = incomplete.select{|task| task.options[:due_date] < Date.today}
       if overdue_array.length != 0
         num_overdue = (overdue_array.length.to_f / @tasks.length.to_f).round(2)
         return num_overdue * 100

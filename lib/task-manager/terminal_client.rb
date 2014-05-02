@@ -12,6 +12,7 @@ class TM::TerminalClient
           history PID - Show completed tasks for project with id=PID
           add PID PRIORITY DESC - Add a new task to project with id=PID
           mark TID - Mark task with id=TID as complete
+          tag add TID TAG - Add a new tag to a task with id=TID
           exit - exits project manager"
     puts "Enter a choice: "
     @answer = gets.chomp.downcase.split(' ')
@@ -31,6 +32,7 @@ class TM::TerminalClient
               history PID - Show completed tasks for project with id=PID
               add PID PRIORITY DESC - Add a new task to project with id=PID
               mark TID - Mark task with id=TID as complete
+              tag add TID TAG - Add a new tag to a task with id=TID
               exit - exits project manager"
         @answer = gets.chomp.downcase.split(' ')
         @choice = @answer[0]
@@ -57,10 +59,10 @@ class TM::TerminalClient
           if tasks.length != 0
             #display organization
             tasks.each do |task|
-              if task.due_date < Date.today
-                puts "OVERDUE: #{task.due_date} - Priority: #{task.priority} - Task ID: #{task.task_id} - Description: #{task.description}"
+              if task.options[:due_date] < Date.today
+                puts "OVERDUE: #{task.options[:due_date]} - Priority: #{task.priority} - Task ID: #{task.task_id} - Description: #{task.description} - Tags: #{task.options[:tags]}"
               else
-                puts "Due Date: #{task.due_date} - Priority: #{task.priority} - Task ID: #{task.task_id} - Description: #{task.description}"
+                puts "Due Date: #{task.options[:due_date]} - Priority: #{task.priority} - Task ID: #{task.task_id} - Description: #{task.description} - Tags: #{task.options[:tags]}"
               end
             end
           else
@@ -116,6 +118,21 @@ class TM::TerminalClient
         #marks task with inputted id as complete
       when 'mark'
         TM::Task.mark_complete(@answer[1].to_i)
+        puts "Enter another command (help for list of command options) or exit if you wish to stop."
+        @answer = gets.chomp.downcase.split(' ')
+        @choice = @answer[0]
+        run(@choice)
+        #adds new tag to task with TID
+      when 'tag'
+        temp_answer = @answer.dup
+        temp_answer.slice!(0,3)
+        task = TM::Task.find_task(@answer[2].to_i )
+        if task != nil
+          task.add_tags(temp_answer)
+          puts "Tags added to #{task.description}."
+        else
+          puts "There is not a task with that ID."
+        end
         puts "Enter another command (help for list of command options) or exit if you wish to stop."
         @answer = gets.chomp.downcase.split(' ')
         @choice = @answer[0]

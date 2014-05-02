@@ -74,6 +74,11 @@ describe 'Task' do
     expect(@task.options[:due_date].to_s).to eq("2015-03-01")
   end
 
+  it 'finds a task with inputted id' do
+    task2 = TM::Task.new("Start Grading", @project1.id, 1)
+    expect(TM::Task.find_task(1)).to eq(@task)
+  end
+
   describe 'mark_complete' do
     it "marks a task as completed" do
       TM::Task.mark_complete(1)

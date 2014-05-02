@@ -23,6 +23,15 @@ class TM::Task
     @@tasks
   end
 
+  def self.find_task(task_id)
+    @@tasks.each do |task|
+      if task.task_id == task_id
+        return task
+      end
+    end
+    return nil
+  end
+
   def self.reset_class_variables
     @@counter = 1
     @@tasks = []
