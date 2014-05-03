@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Jurassic Park Security System</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <style>
+  body {
+    background-color: blue;
+    font-family: 'courier new';
+    color: white;
+    font-weight: 500;
+    line-height: 0.5em;
+    border: 50px solid black;
+    margin: 0px;
+    padding: 25px;
+  }
+  #browser {
+    display: none;
+    position: absolute;
+    height: auto;
+    right: 200px;
+    top: 115px;
+    width: 445px;
+    z-index: 2;
+  }
+  #magic-word {
+    display: none;
+    height: auto;
+    width: 487px;
+    position: absolute;
+    right: 171px;
+    top: 179px;
+    z-index: 3;
+  }
+  #system-monitor {
+    position: absolute;
+    left: 340px;
+    top: 261px;
+    z-index: 1;
+  }
+  #hacker-shit {
+    height: 900px;
+    background: blue;
+    overflow: hidden;
+  }
+  /*#the-king { display: none; }*/
+  </style>
+</head>
+<body>
+  <img id="magic-word" src="magic-word.gif">
+  <img id="system-monitor" src="system-monitor.gif">
+  <img id="browser" src="browser.png">
+  <div id="hacker-shit"></div>
+  <script type="text/javascript">
+  var hackerShit = function() {
+    document.getElementById("hacker-shit").innerHTML += "<p>YOU DIDN'T SAY THE MAGIC WORD!</p>"
+  };
+
+  var nedry = function() {
+    $("body").append('<embed src="theKing.swf" width="0px" height="0px" loop="false">');
+  }
+  var magicWord = function() {
+    // load browser window
+    $('#browser').fadeIn('fast', function() {
+    // load nedry
+      $("#magic-word").fadeIn('fast', function() {
+        nedry();
+        setInterval(nedry, 3500);
+      });
+    });
+  };
+  setInterval(hackerShit, 300);
+  setTimeout(magicWord, 2000);
+  </script>
+</body>
+</html>
