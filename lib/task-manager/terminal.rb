@@ -27,7 +27,7 @@ class TM::TerminalClient
   end
 
   def get_input
-    puts `head -28 task-manager/rawr`
+    puts `head -28 lib/task-manager/rawr`
     header('')
     puts @help
     while true
