@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Timeline::Database::InMemory do
+shared_examples "a database" do
 
   let(:db) { described_class.new }
 
@@ -112,4 +112,13 @@ describe Timeline::Database::InMemory do
     end
   end
 
+end
+
+
+describe Timeline::Database::InMemory do
+  include_examples "a database"
+end
+
+describe Timeline::Database::SqliteDatabase do
+  include_examples "a database"
 end
