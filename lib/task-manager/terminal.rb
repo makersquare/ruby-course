@@ -26,16 +26,8 @@ class TM::TerminalClient
     get_input
   end
 
-  def stuff
-    # puts __FILE__
-    # puts Dir.getwd
-    dir = '/lib/task-manager/nedry.html'
-    path = File.expand_path $0
-    puts path+dir
-  end
-
   def get_input
-    puts `head -28 task-manager/util`
+    puts `head -28 task-manager/rawr`
     header('')
     puts @help
     while true
@@ -125,14 +117,18 @@ class TM::TerminalClient
 
   def nedry args=[]
     if args.join(' ') == 'main security grid'
-      puts "access: PERMISSION DENIED....and..."
-      6.times do
-        puts "YOU DIDN'T SAY THE MAGIC WORD!"
-        sleep(0.2)
-      end
-      `open task-manager/nedry.html`
-    else
       puts "access: PERMISSION DENIED"
+      sleep(0.4)
+      puts "....and..."
+      path = File.expand_path $0
+      dir = '/task-manager/nedry.html'
+      p = path.split('/')
+      p = p.slice(0..p.size-2).join('/')
+      nedry = p + dir
+      c ="open #{nedry}"
+      exec c
+    else
+      puts "access: PERMISSION DENIED. What are you trying to access?"
     end
   end
 
