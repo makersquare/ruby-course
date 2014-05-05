@@ -74,7 +74,7 @@ module Timeline
       end
 
       def all_teams
-        Team.all.map {|ar_team| Timeline::Team.new(ar_team.attributes) }
+        Team.all.map { |ar_team| Timeline::Team.new(ar_team.attributes) }
       end
 
       ## # # # #
