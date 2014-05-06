@@ -34,7 +34,7 @@ describe 'Task' do
       expect(task.complete_date).to eq(task.date_created + (86400 * 5))
     end
 
-    it 'can be created with tags' do
+    xit 'can be created with tags' do
 
       expect(task2.tags).to eq(["maker", "square"])
 

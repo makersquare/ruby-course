@@ -37,15 +37,15 @@ class TM::ProjectsManager
     task.completed = true
   end
 
-  def find_task_by_tag(tag)
-    task_array = []
-    @projects.each do |project|
-      project.task.each do |item|
-        task_array << item if item.tags.include?(tag)
-      end
-    end
-    task_array
-  end
+  # def find_task_by_tag(tag)
+  #   task_array = []
+  #   @projects.each do |project|
+  #     project.task.each do |item|
+  #       task_array << item if item.tags.include?(tag)
+  #     end
+  #   end
+  #   task_array
+  # end
 
   def find_project_by_id(project_id)
     @projects.select { |item| item.id == project_id }.first

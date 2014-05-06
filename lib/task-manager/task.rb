@@ -6,7 +6,7 @@ class TM::Task
 
   @@task_ids = 0
 
-  def initialize(project_id, priority, description, *tags)
+  def initialize(project_id, priority, description)
     @project_id = project_id
     @priority = priority
     @description = description
@@ -16,7 +16,6 @@ class TM::Task
     @date_created = Time.now
     @complete_date = @date_created + (86400 * 5)
     @happy = true
-    tags.length == 0 ? @tags = [] : @tags = tags
   end
 
   def complete

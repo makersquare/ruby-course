@@ -1,4 +1,3 @@
-
 class TM::Project
 
   attr_reader :name, :id, :projects
@@ -17,16 +16,22 @@ class TM::Project
     completed = @task.select do |task_item|
       task_item.completed
     end
-    completed.sort_by { |item| item.date_created }
+    sort_by_date_completed(completed)
   end
 
-  def incompleted_task
-    over_due = []
-    incompleted = []
-    incomplete = @task.select do |task_item|
+  def sort_by_date_completed(task)
+    task.sort_by { |item| item.date_created }
+  end
+
+  def incomplete_task
+    @task.select do |task_item|
       task_item.completed == false
     end
-    incomplete.sort_by! { |task| [task.priority, task.task_id] }
+  end
+
+  def overdue_sort(incomplete)
+    over_due = []
+    incompleted = []
     incomplete.each do |task|
       if task.over_due?
         over_due << task
@@ -37,14 +42,10 @@ class TM::Project
     over_due + incompleted
   end
 
-  # def sort_overdue(task_array)
-  #   over_due = task_array.select { |task| task.over_due? }
-  #   over_due.sort_by { |item|  [item.priority, item.task_id] }
-  # end
-
-  # def sort_non_overdue(task_array)
-  #   task_array.select { |task| task.over_due? == false }.sort_by { |item|  [item.priority, item.task_id] }
-  # end
+  def incompleted_task
+    incomplete = incomplete_task.sort_by! { |task| [task.priority, task.task_id] }
+    overdue_sort(incomplete)
+  end
 
   def add_task(project_id, priority, description)
     task = TM::Task.new(project_id, priority, description)
