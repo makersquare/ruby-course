@@ -7,6 +7,10 @@ class TM::TerminalClient
   def initialize
     @command = command
     puts "Welcome to Project Manager Pro. What can I do for you today?\n\n"
+    self.welcome
+  end
+
+  def command_list
     puts "Available Commands:"
     puts "\thelp - Show these commands again"
     puts "\tlist - List all projects"
@@ -27,7 +31,7 @@ class TM::TerminalClient
     self.show if @command == 'show'
     self.history if @command == 'history'
     self.mark_task if @command == 'mark task'
-    self.help if  @command == 'help'
+    self.command_list if  @command == 'help'
     if @command == 'exit'
     else 
       self.not_a_command
@@ -113,21 +117,6 @@ class TM::TerminalClient
     puts "Please enter the task ID."
     taskid = gets.chomp
     task = TM::Task.mark_complete(taskid.to_i)
-    @command = gets.chomp
-    self.call_methods(@command)
-  end
-
-  def help
-    puts "Welcome to Project Manager Pro. What can I do for you today?\n\n"
-    puts "Available Commands:"
-    puts "\thelp - Show these commands again"
-    puts "\tlist - List all projects"
-    puts "\tcreate p - Create a new project"
-    puts "\tcreate t - Create a new task for a project"
-    puts "\tshow - Show remaining tasks for a project"
-    puts "\thistory - Show completed tasks for a project"
-    puts "\tmark task - Mark a task as complete"
-    puts "\texit - exits the program"
     @command = gets.chomp
     self.call_methods(@command)
   end
