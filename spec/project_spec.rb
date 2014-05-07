@@ -16,16 +16,16 @@ describe 'Project' do
 
   describe 'class methods' do
 
-    describe 'projects' do
+    # describe 'projects' do
 
-      it "Stores a list of all created projects" do
-        expect(TM::Project.projects.length).to eq(2)
-      end
+    #   it "Stores a list of all created projects" do
+    #     expect(TM::Project.projects.length).to eq(2)
+    #   end
 
-      it "returns a list of all created projects" do
-        expect(TM::Project.projects).to eq([@project1, @project2])
-      end
-    end
+    #   it "returns a list of all created projects" do
+    #     expect(TM::Project.projects).to eq([@project1, @project2])
+    #   end
+    # end
 
     describe 'list_all' do
       it "lists all projects" do
@@ -56,15 +56,15 @@ describe 'Project' do
       end
     end
 
-    describe 'find_project' do
-      it "returns the project that matches the given project id" do
-        expect(TM::Project.find_project(2)).to eq(@project2)
-      end
+    # describe 'find_project' do
+    #   it "returns the project that matches the given project id" do
+    #     expect(TM::Project.find_project(2)).to eq(@project2)
+    #   end
 
-      it "returns nil if given id has no matching project" do
-        expect(TM::Project.find_project(5)).to eq(nil)
-      end
-    end
+    #   it "returns nil if given id has no matching project" do
+    #     expect(TM::Project.find_project(5)).to eq(nil)
+    #   end
+    # end
   end
 
   describe 'initialize' do

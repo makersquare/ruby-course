@@ -29,7 +29,7 @@ class TM::Task
         return task
       end
     end
-    return nil
+    nil
   end
 
   def self.reset_class_variables

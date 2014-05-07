@@ -1,6 +1,6 @@
 
 class TM::Project
-  @@projects = []
+  # @@projects = []
   @@counter = 1
   attr_accessor :name
   attr_reader :id, :tasks
@@ -9,18 +9,18 @@ class TM::Project
     @id = @@counter
     @@counter += 1
     @tasks = []
-    @@projects << self
+    # @@projects << self
   end
 
   #helper method for tests
   def self.reset_class_variables
     @@counter = 1
-    @@projects = []
+    # @@projects = []
   end
 
-  def self.projects
-    @@projects
-  end
+  # def self.projects
+  #   @@projects
+  # end
 
   def self.list_all
     @@projects.each do |project|
@@ -30,14 +30,14 @@ class TM::Project
     end
   end
 
-  def self.find_project(project_id)
-    @@projects.each do |project|
-      if project.id == project_id
-        return project
-      end
-    end
-    return nil
-  end
+  # def self.find_project(project_id)
+  #   @@projects.each do |project|
+  #     if project.id == project_id
+  #       return project
+  #     end
+  #   end
+  #   return nil
+  # end
 
   def add_task(task)
     @tasks << task
@@ -46,8 +46,7 @@ class TM::Project
 
   def completed_tasks
     new_array = @tasks.select { |task| task.status == "Completed" }
-
-    new_array.sort! {|a, b| a.creation_date <=> b.creation_date}
+    new_array.sort_by! {|a, b| a.creation_date}
   end
 
   def incomplete_tasks
@@ -73,10 +72,10 @@ class TM::Project
         num_overdue = (overdue_array.length.to_f / @tasks.length.to_f).round(2)
         return num_overdue * 100
       else
-        return 0
+        0
       end
     else
-      return 0
+      0
     end
   end
 
