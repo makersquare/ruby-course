@@ -12,7 +12,7 @@ class TM::ProjectManager
   end
 
   def listed_projects
-    @projects_list
+   @projects_list
   end
 
   def listed_tasks
