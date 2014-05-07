@@ -22,8 +22,8 @@ describe 'Task' do
   end
 
   it "initalizes with a time created" do
-    task_one = TM::Task.new("Another Task")
-    expect(task_one.created).to be_truthy
+    # task_one = TM::Task.new("Another Task", 1)
+    # expect(task_one.created).to eq(Time.parse)
   end
 
   xit "initalizes with as default priority of 1" do

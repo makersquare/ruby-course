@@ -1,6 +1,6 @@
 module Organization
   attr_reader :created, :complete, :complete_date, :id
-  attr_accessor :name,
+  attr_accessor :name
 
 
   def complete(complete=false)

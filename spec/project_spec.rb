@@ -46,12 +46,8 @@ describe 'Project' do
     TM::Project.new("Project")
     expect(TM::Project.project_list).to eq(["Project - 1", "Project - 2"])
   end
+
+
 end
 
-  # describe 'project class' do
-  # xit "increments project class - project count when new instance created" do
-  #   TM::Project.new
-  #   expect(TM::Project.project_count).to eq(1)
-  # end
-# end
 
