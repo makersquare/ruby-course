@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  post 'events/create'
+
   get 'teams/show'
 
   get 'teams/index'

@@ -38,9 +38,12 @@ describe 'Use Cases' do
       )
       
       result = Timeline::GetTeamEvents.run :team_id => team.id
-    
+
       expect(result.success?).to be_true
       expect(result.events.count).to eq 2
+      event = result.events.find {|event| event.id == event1.id}
+      expect(event.nil?).to be_false
+      expect(event.tags).to eq ['winning']
     end
   end
   
@@ -51,7 +54,6 @@ describe 'Use Cases' do
       
       result = Timeline::CreateEvent.run(
         :name => 'home game',
-        :created_at => Time.now,
         :user_id => user.id,
         :team_id => team.id,
         :tags => ['winning', 'pwned']

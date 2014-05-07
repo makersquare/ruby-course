@@ -28,6 +28,4 @@ module Timeline
       true
     end
   end
-
-
 end

@@ -1,2 +1,21 @@
-<h1>Teams#show</h1>
-<p>Find me in app/views/teams/show.html.erb</p>
+<h1>Events for <%= @team_name %></h1>
+
+<ul>
+<% @events.each do |event| %>
+  <h3>Name: <%= event.name %>: Created at: <%= event.created_at %> Tags: <%= event.tags.to_s %> </h3>
+<% end %>
+</ul>
+
+
+<h4>Create new event for <%= @team_name %>:</h4>
+<%= form_tag('/events/create', method: 'post') do %>
+	<%= label_tag(:event_name, 'Event name:') %>
+	<%= text_field_tag(:event_name) %>
+	<%= label_tag(:user_name, 'Your name:') %>
+	<%= text_field_tag(:user) %>
+	<%= label_tag(:tags, 'Optional tags (separate by commas:') %>
+	<%= text_field_tag(:tags) %>
+	<%= hidden_field_tag 'team', @team_id %>
+	<%= hidden_field_tag 'team_name', @team_name %>
+	<%= submit_tag('Create') %>
+<% end %>

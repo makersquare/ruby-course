@@ -6,6 +6,9 @@ module Timeline
     class SqliteDatabase
       def initialize
         dbconfig = YAML::load_file(File.join(__dir__, '../../../db/config.yml'))
+        dbconfig.each do |key, value|
+          value['database'] = File.join(__dir__, '../../../',  value['database'])
+        end
         ActiveRecord::Base.establish_connection(dbconfig['test'])  # adapter not found for some reason
       end
       
@@ -107,7 +110,10 @@ module Timeline
 
       def get_events_by_team(team_id)
         ar_events = Event.where(:team_id => team_id).order(:created_at)
-        ar_events.map {|ar| Timeline::Event.new(ar.attributes) }
+        ar_events.collect do |ar_event|
+          event_attrs = ar_event.attributes.merge :tags => ar_event.tags.map(&:name)
+          Timeline::Event.new(event_attrs)
+        end
       end
     end
   end
