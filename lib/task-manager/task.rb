@@ -43,13 +43,13 @@ class TM::Task
   end
 
   def self.completed_tasks(projid)
-    task = @@completed_tasks.select{|task| task.pid == projid}
+    task = @@completed_tasks.select{|task| task.pid == projid.to_i}
     task.sort_by! {|task| task.date}
     task
   end
 
   def self.incomplete_tasks(projid)
-    task = @@tasks.select{|task| task.pid == projid && task.complete == false}
+    task = @@tasks.select{|task| task.pid == projid.to_i && task.complete == false}
     task.sort_by! {|t| [t.duedate, t.pnum, t.date]}
     task
   end

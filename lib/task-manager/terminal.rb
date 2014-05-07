@@ -63,7 +63,7 @@ class TM::TerminalClient
     priority = gets.chomp
     puts "Please enter the date you want to complete this in the form \'Year Month Day\'."
     duedate = gets.chomp
-    task = TM::Task.new(projid,description,priority,duedate)
+    task = TM::Task.new(projid.to_i,description,priority.to_i,duedate)
     puts "You created a new task \"#{description}!\""
     @command = gets.chomp
     self.call_methods(@command)
@@ -72,15 +72,14 @@ class TM::TerminalClient
   def show
     puts "Please enter a project ID."
     projectid = gets.chomp
-    self.get_projects
-    tasks = TM::Task.incomplete_tasks(projectid)
+    tasks = TM::Task.incomplete_tasks(projectid.to_i)
     projects = TM::Project.list_projects
     project = projects.select {|project| project.pid == projectid.to_i}
     project_name = project[0]
     project_name = project_name.name
     puts "Project Name\t% Done \t% Over Due"
-    percentage = TM::Project.percentage_complete(projectid)
-    puts "\"#{project_name}\t#{percentage}\"\n\n"
+    percentage = TM::Project.percentage_complete(projectid.to_i)
+    puts "#{project_name}\t#{percentage}\n\n"
     puts " Priority\tID Description\tDue Date\tOver Due?"
     t = Time.now
     today = "#{t.year} #{t.month} #{t.day}"
@@ -96,14 +95,13 @@ class TM::TerminalClient
   def history   
     puts "Please enter a project ID."
     projectid = gets.chomp
-    self.get_projects
-    tasks = TM::Task.completed_tasks(projectid)
+    tasks = TM::Task.completed_tasks(projectid.to_i)
     projects = TM::Project.list_projects
     project = projects.select {|project| project.pid == projectid.to_i}
     project_name = project[0]
     project_name = project_name.name
     puts "Project Name\t% Done \t% Over Due"
-    percentage = TM::Project.percentage_complete(projectid)
+    percentage = TM::Project.percentage_complete(projectid.to_i)
     puts "\"#{project_name}\t#{percentage}\"\n\n"
     puts " Priority\tID Description\tDue Date"
     tasks.each {|task|  puts "\t#{task.pnum}\t#{task.tid}  #{task.description}\t#{task.duedate}"}
