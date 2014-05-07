@@ -2,9 +2,9 @@ require_relative '../task_manager.rb'
 require 'pry-debugger'
 
 
-class TM::ProjectManager
+class TM::TerminalClient
   def self.start
-    manager = TM::ProjectManager.new
+    manager = TM::TerminalClient.new
     @@user = ""
     @@exit = false
     while @@exit == false
