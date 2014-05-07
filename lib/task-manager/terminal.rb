@@ -34,7 +34,9 @@ class TM::TerminalClient
     self.command_list if  @command == 'help'
     if @command == 'exit'
     else 
-      self.not_a_command
+      puts "That is not a command."
+      @command = gets.chomp
+      self.call_methods(@command)
     end
   end
 
@@ -117,12 +119,6 @@ class TM::TerminalClient
     puts "Please enter the task ID."
     taskid = gets.chomp
     task = TM::Task.mark_complete(taskid.to_i)
-    @command = gets.chomp
-    self.call_methods(@command)
-  end
-
-  def not_a_command
-    puts "That is not a command."
     @command = gets.chomp
     self.call_methods(@command)
   end
