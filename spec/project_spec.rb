@@ -14,59 +14,6 @@ describe 'Project' do
     expect(TM::Project).to be_a(Class)
   end
 
-  describe 'class methods' do
-
-    # describe 'projects' do
-
-    #   it "Stores a list of all created projects" do
-    #     expect(TM::Project.projects.length).to eq(2)
-    #   end
-
-    #   it "returns a list of all created projects" do
-    #     expect(TM::Project.projects).to eq([@project1, @project2])
-    #   end
-    # end
-
-    describe 'list_all' do
-      it "lists all projects" do
-        task = TM::Task.new("Create gradebook", @project1.id, 1)
-        task2 = TM::Task.new("Add students", @project1.id, 2)
-        task3 = TM::Task.new("Create gradebook", @project2.id, 1)
-        task4 = TM::Task.new("Add students", @project2.id, 2)
-
-        @project1.add_task(task)
-        @project1.add_task(task2)
-        @project2.add_task(task3)
-        @project2.add_task(task4)
-
-        task.due_date = "1 Feb 2014"
-        task2.due_date = "1 June 2012"
-        task3.due_date = "3 Feb 2015"
-        task4.due_date = "1 May 2020"
-
-        TM::Task.mark_complete(1)
-        STDOUT.should_receive(:puts).with("Name: Grades - ID: 1")
-        STDOUT.should_receive(:puts).with("Percentage Finished - 50.0%")
-        STDOUT.should_receive(:puts).with("Percentage Tasks Overdue - 50.0%")
-        STDOUT.should_receive(:puts).with("Name: Tests - ID: 2")
-        STDOUT.should_receive(:puts).with("Percentage Finished - 0%")
-        STDOUT.should_receive(:puts).with("Percentage Tasks Overdue - 0%")
-        TM::Project.list_all
-
-      end
-    end
-
-    # describe 'find_project' do
-    #   it "returns the project that matches the given project id" do
-    #     expect(TM::Project.find_project(2)).to eq(@project2)
-    #   end
-
-    #   it "returns nil if given id has no matching project" do
-    #     expect(TM::Project.find_project(5)).to eq(nil)
-    #   end
-    # end
-  end
-
   describe 'initialize' do
     it "creates a new project with a name" do
       expect(@project1).to be_a(TM::Project)
@@ -113,8 +60,6 @@ describe 'Project' do
       task2 = TM::Task.new("Add students", @project1.id, 2)
       allow(Date).to receive(:today).and_return(Date.parse("14 March 2014"))
       task3 = TM::Task.new("Add tests", @project1.id, 3)
-      allow(Date).to receive(:today).and_return(Date.parse("14 March 2012"))
-      task4 = TM::Task.new("Add tests", @project1.id, 4)
 
       @project1.add_task(task)
       @project1.add_task(task2)

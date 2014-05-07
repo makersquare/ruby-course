@@ -18,27 +18,6 @@ class TM::Project
     # @@projects = []
   end
 
-  # def self.projects
-  #   @@projects
-  # end
-
-  def self.list_all
-    @@projects.each do |project|
-      puts "Name: #{project.name} - ID: #{project.id}"
-      puts "Percentage Finished - #{project.percentage_complete}%"
-      puts "Percentage Tasks Overdue - #{project.overdue_tasks}%"
-    end
-  end
-
-  # def self.find_project(project_id)
-  #   @@projects.each do |project|
-  #     if project.id == project_id
-  #       return project
-  #     end
-  #   end
-  #   return nil
-  # end
-
   def add_task(task)
     @tasks << task
   end
@@ -72,11 +51,10 @@ class TM::Project
         num_overdue = (overdue_array.length.to_f / @tasks.length.to_f).round(2)
         return num_overdue * 100
       else
-        0
+        return 0
       end
     else
-      0
+      return 0
     end
   end
-
 end
