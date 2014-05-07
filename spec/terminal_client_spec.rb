@@ -8,19 +8,20 @@ describe 'TerminalClient' do
 
   it "works" do
     TM::Project.reset_class_variables
-    project1 = TM::Project.new("Grades")
-    project2 = TM::Project.new("Tests")
-    task = TM::Task.new("Create gradebook", project1.id, 3)
-    task2 = TM::Task.new("Add students", project1.id, 2)
-    task3 = TM::Task.new("Add tests", project1.id, 1)
+    # project1 = TM::Project.new("Grades")
+    # project2 = TM::Project.new("Tests")
 
-    project1.add_task(task)
-    project1.add_task(task2)
-    project1.add_task(task3)
+    # task = TM::Task.new("Create gradebook", project1.id, 3)
+    # task2 = TM::Task.new("Add students", project1.id, 2)
+    # task3 = TM::Task.new("Add tests", project1.id, 1)
 
-    task.due_date = "1 Feb 2014"
-    task2.due_date = "1 June 2014"
-    task3.due_date = "3 Feb 2014"
+    # project1.add_task(task)
+    # project1.add_task(task2)
+    # project1.add_task(task3)
+
+    # task.due_date = "1 Feb 2014"
+    # task2.due_date = "1 June 2014"
+    # task3.due_date = "3 Feb 2014"
 
     # TM::Task.mark_complete(task.task_id)
 
