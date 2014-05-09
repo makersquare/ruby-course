@@ -11,7 +11,8 @@ class TM::DB
   def create_project(data)
     @project_count +=1
     @projects[@project_count] = data
-    return build_project(data)
+    @projects[@project_count][:id] = @project_count
+    return build_project(@projects[@project_count])
   end
 
   def get_project(id)
@@ -31,8 +32,8 @@ class TM::DB
   end
 
   def build_project(data)
-    # TM::Project.new(data[:name], data[:id])
-    TM::Project.new(data[:name])
+    TM::Project.new(data[:name], data[:id])
+    # TM::Project.new(data[:name])
   end
 
   def self.db

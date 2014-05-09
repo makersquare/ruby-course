@@ -3,13 +3,14 @@ require_relative 'task-manager.rb'
 class TerminalClient
 
 	@@projects = []
+	@@db = TM::DB.new
 
 	def self.start
 		print_welcome_message
 		list_commands
 
-		db = TM::DB.new
-		
+		# db = TM::DB.new
+
 		exit_program = false
 
 		while !exit_program do
@@ -25,7 +26,7 @@ class TerminalClient
 				list_projects
 			when "create", "c"
 				if check_arguments(input_arguments,1, unlimited: true)
-					project = db.create_project({name: input_arguments[1...input_arguments.length].join(" ")})
+					project = @@db.create_project({name: input_arguments[1...input_arguments.length].join(" ")})
 					# @@projects << TM::Project.new(input_arguments[1...input_arguments.length].join(" "))
 					# puts "[Created new project '#{@@projects.last.name} with id=#{@@projects.last.id}]"
 					puts "[Created new project '#{project.name} with id=#{project.id}]"
@@ -91,8 +92,8 @@ class TerminalClient
 	end
 
 	def self.list_projects
-		puts "[No projects exist]" if @@projects.size == 0
-		@@projects.each {|project| project.print_details}
+		puts "[No projects exist]" if @@db.projects.size == 0
+		@@db.projects.each {|key, data| @@db.build_project(data).print_details}
 	end
 
 	def self.list_tasks(project_id, completed: true)
