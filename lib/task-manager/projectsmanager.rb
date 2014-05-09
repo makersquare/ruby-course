@@ -17,14 +17,13 @@ class TM::ProjectsManager
   end
 
   def remaining_task(project_id)
-    # binding.pry
     project = find_project_by_id(project_id)
     project.incompleted_task
   end
 
   def history(project_id)
     project = find_project_by_id(project_id)
-    project.completed_task
+    completed_task(project)
   end
 
   def add_task(project_id, priority, description)
@@ -37,16 +36,6 @@ class TM::ProjectsManager
     task.completed = true
   end
 
-  # def find_task_by_tag(tag)
-  #   task_array = []
-  #   @projects.each do |project|
-  #     project.task.each do |item|
-  #       task_array << item if item.tags.include?(tag)
-  #     end
-  #   end
-  #   task_array
-  # end
-
   def find_project_by_id(project_id)
     @projects.select { |item| item.id == project_id }.first
   end
@@ -56,5 +45,18 @@ class TM::ProjectsManager
     @projects.each { |project| task_hold << project.task}
     task_hold.flatten.select { |task| task.task_id == id }.first
   end
+
+  # Project concerns
+
+  # def completed_task(project)
+  #   completed = project.task.select do |task_item|
+  #     task_item.completed
+  #   end
+  #   sort_by_date_completed(completed)
+  # end
+
+  # def sort_by_date_completed(task)
+  #   task.sort_by { |item| item.date_created }
+  # end
 
 end
