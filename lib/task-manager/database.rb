@@ -1,6 +1,12 @@
+module TM
+  def self.db
+    @__db_instance ||= DB.new
+  end
+end
+
 class TM::DB
 
-  attr_reader :tasks, :projects
+  attr_reader :tasks, :projects, :project_count
 
   def initialize
     @projects = {}
@@ -34,10 +40,6 @@ class TM::DB
   def build_project(data)
     TM::Project.new(data[:name], data[:id])
     # TM::Project.new(data[:name])
-  end
-
-  def self.db
-    @__db_instance ||= DB.new
   end
 
 end
