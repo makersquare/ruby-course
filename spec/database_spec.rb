@@ -58,12 +58,28 @@ describe 'Database class' do
   end
   
   describe 'get_project method' do
-    it "should pass this test" do 
+    it "return nil if no projects" do 
       expect(true).to eq(true)
     end
 
-    it "should pass this test" do 
-      expect(true).to eq(true)
+    it "return the correct project as a Project object" do 
+      db = TM::DB.new
+      data = { name: "Twitter" }
+      db.create_project(data)
+
+      data = { name: "Facebook" }
+      db.create_project(data)
+      expect(db.projects.size).to eq(2)
+
+      project1 = db.get_project(1)
+      project2 = db.get_project(2)
+      expect(project1.class).to eq(TM::Project)
+      expect(project1.name).to eq("Twitter")
+      expect(project1.id).to eq(1)
+      expect(project2.class).to eq(TM::Project)
+      expect(project2.name).to eq("Facebook")
+      expect(project2.id).to eq(2)
+
     end
 
     it "should pass this test" do 

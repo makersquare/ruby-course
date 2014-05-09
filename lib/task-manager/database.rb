@@ -1,3 +1,5 @@
+# require 'pry-debugger'
+
 module TM
   def self.db
     @__db_instance ||= DB.new
@@ -24,7 +26,7 @@ class TM::DB
   def get_project(id)
     project_key = nil
     @projects.each do |key, data|
-      project_key = key if data[id] == id
+      project_key = key if data[:id] == id
     end
     return build_project(@projects[project_key])
   end
@@ -38,6 +40,8 @@ class TM::DB
   end
 
   def build_project(data)
+    # binding.pry
+    puts "data --> #{data}"
     TM::Project.new(data[:name], data[:id])
     # TM::Project.new(data[:name])
   end
