@@ -26,7 +26,7 @@ class TM::Project
   end
 
   def self.projects=(var)
-    @@projects = arg
+    @@projects = var
   end
 
   def self.find_pid(pid)
