@@ -52,7 +52,7 @@ describe 'Task' do
 
     # Before repeated tasks, @project should have 3 tasks
     expect(@project.tasks.length).to eq 3
-    @time = Time.parse("2014-05-02 23:23:23")
+    @time = Time.parse("2014-05-09 23:23:23")
     Time.stub(:now).and_return(@time)
 
     TM::Task.repeat_tasks
@@ -66,7 +66,7 @@ describe 'Task' do
 
     # Before repeated tasks, @project should have 3 tasks
     expect(@project.tasks.length).to eq 3
-    @time = Time.parse("2014-05-10 23:23:23")
+    @time = Time.parse("2014-05-16 23:23:23")
     Time.stub(:now).and_return(@time)
 
     TM::Task.repeat_tasks
