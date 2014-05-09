@@ -1,9 +1,10 @@
 class TM::Task
-	attr_reader :date_created, :date_completed, :completed, :date_due
-	attr_accessor :id, :name, :priority, :description
 
 	@@task_count = 0
 	@@tasks = []
+
+	attr_reader :date_created, :date_completed, :completed, :date_due
+	attr_accessor :id, :name, :priority, :description
 
 	def initialize(name = "untitled", description: "none", priority: 1)
 		@name = name
