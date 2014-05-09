@@ -49,4 +49,14 @@ describe "TaskManager::Database" do
 
   end
 
+  context 'a project can be updated' do
+    let(:new_project) { @db.create_project({:name => "Pizza Party Planning"}) }
+
+    it 'can update a project' do
+      new_project
+      @db.update_project(1, {:name => "Pizza and Ice Cream Party Planning"} )
+      expect(@db.get_project(1)[:name]).to eq("Pizza and Ice Cream Party Planning")
+    end
+  end
+
 end

@@ -22,6 +22,13 @@ module TM
       @projects[id]
     end
 
+    def update_project(id, data)
+      project = get_project(id)
+      data.each do |key, value|
+        project[key] = value
+      end
+    end
+
   end
 
   def self.db
