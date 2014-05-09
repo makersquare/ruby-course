@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'pry'
+require 'pry-debugger'
 
 describe 'Project' do
   before(:each) do
@@ -104,7 +104,6 @@ describe 'Project' do
         end
 
         it 'the older task comes first' do
-          binding.pry
           expect(@project.incomplete_tasks).to eq([@task5, @task7, @task, @task3])
         end
       end

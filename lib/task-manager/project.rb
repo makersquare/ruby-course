@@ -1,4 +1,3 @@
-
 class TM::Project
   attr_reader :id, :name
 
@@ -9,27 +8,18 @@ class TM::Project
     self.class.add_project(self)
   end
 
-  def self.add_project(project)
-    # @@projects ||= {}
-    # @@projects[project.id] = project
 
+  def self.add_project(project)
     @@projects ||= []
     @@projects << project
+    self.projects
   end
 
   def self.projects
-    # @@projects ||= {}
-
     @@projects ||= []
   end
 
   def complete_tasks
-    # complete = TM::Task.tasks.select do |k, v|
-    #   (v.project_id == self.id) && v.complete?
-    # end
-
-    # complete.values.sort_by { |task| task.created_at }
-
     complete = TM::Task.tasks.select do |t|
       (t.project_id == self.id) && t.complete?
     end
@@ -38,18 +28,11 @@ class TM::Project
   end
 
   def incomplete_tasks
-    # incomplete = TM::Task.tasks.select do |k, v|
-    #   (v.project_id == self.id) && !v.complete?
-    # end
-
-    # incomplete.values.sort_by { |task| [task.priority_number, task.created_at] }
-
     incomplete = TM::Task.tasks.select do |t|
       (t.project_id == self.id) && !t.complete?
     end
 
     incomplete.sort_by { |t| [t.priority_number, t.created_at] }
-
   end
 
   private
