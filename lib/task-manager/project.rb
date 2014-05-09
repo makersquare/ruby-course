@@ -1,6 +1,5 @@
-
 class TM::Project
-  attr_reader :pid, :name, :tasks, :projects
+  attr_reader :name, :tasks, :pid, :projects
   attr_accessor :completion
   @@pid = 0
   @@projects = []

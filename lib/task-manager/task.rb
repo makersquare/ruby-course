@@ -18,8 +18,8 @@ class TM::Task
     @duplicated = false
 
     # Optional parameters
-    @tags = nil || opts[:tags]
-    @recurring = nil || opts[:recurring]
+    @tags ||= opts[:tags]
+    @recurring ||= opts[:recurring]
 
     # Add task to task class variable array
     @@tasks << self
