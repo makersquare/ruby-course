@@ -17,6 +17,7 @@ class TM::DB
   end
 
   def create_project(data)
+    ## use the actual "data" argument to contsruct!!
     @project_count +=1
     @projects[@project_count] = data
     @projects[@project_count][:id] = @project_count
@@ -24,19 +25,26 @@ class TM::DB
   end
 
   def get_project(id)
-    project_key = nil
-    @projects.each do |key, data|
-      project_key = key if data[:id] == id
-    end
-    return build_project(@projects[project_key])
+    ## use select
+    # project_key = nil
+    project = @projects.select { |key, value| key == id }
+    # @projects.each do |key, data|
+    #   project_key = key if data[:id] == id
+    # end
+    # build_project(@projects[project_key])
+    # puts "Project --> #{project}"
+    # puts "Project --> #{project[id]}"
+    build_project(project[id])
   end
 
   def destroy_project(id)
-    project_key = nil
-    @projects.each do |key, data|
-      project_key = key if data[:id] == id
-    end
-    @projects.delete(project_key)
+    project = @projects.select { |key, value| key == id }
+    # project_key = nil
+    # @projects.each do |key, data|
+    #   project_key = key if data[:id] == id
+    # end
+    # @projects.delete(project_key)
+    @projects.delete(id)
   end
 
   def build_project(data)

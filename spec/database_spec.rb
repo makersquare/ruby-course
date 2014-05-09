@@ -2,6 +2,9 @@ require 'spec_helper'
 
 describe 'Database class' do
 
+  # get this to work eventually! takes place of before each for this case
+  # let(:db) {TM.db}
+
   describe 'initialize method' do
     # db = TM::DB.new
     # puts TM::DB.projects.inspect
