@@ -1,12 +1,11 @@
 
 class TM::Task
 
-  #a way to begin counting the amount of tasks
-  @@task_id_count = 0
-  @@all_tasks = []
+  @@all_tasks = []  #an array of all tasks
+  @@task_id_count = 0 #a way to begin counting the amount of tasks
 
-  attr_accessor :creation_date, :completed, :task_priority_number
-  attr_reader :project_id, :task_description, :task_id, :all_tasks
+  attr_reader :project_id, :task_description, :task_priority_number, :task_id
+  attr_accessor :completed, :creation_date
 
   # .new method - creates instances of the TM::Task class
   # each @'value' is called an instance variable

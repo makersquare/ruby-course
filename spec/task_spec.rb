@@ -19,14 +19,23 @@ describe 'Task' do    #describes what the Task class should do
   end
 
   it "a new task is created with a project_id" do
+<<<<<<< HEAD
+=======
+    # @task_1 = TM::Task.new(1, "First Task", 1)
+>>>>>>> 95ab761f126dd483a551bec3331bfeea5c9def89
     expect(@task_1.project_id).to eq(1)
   end
 
   it "a new task can be created with a description" do
+<<<<<<< HEAD
+=======
+    # @task_1 = TM::Task.new(1, "First Task", 1)
+>>>>>>> 95ab761f126dd483a551bec3331bfeea5c9def89
     expect(@task_1.task_description).to eq("First Task")
   end
 
   it "a new task can be created with a priority number" do
+<<<<<<< HEAD
     expect(@task_1.task_priority_number).to eq(1)
   end
 
@@ -35,4 +44,13 @@ describe 'Task' do    #describes what the Task class should do
     expect(@task_1.completed(1)).to eq(true)
   end
 
+=======
+    # @task_1 = TM::Task.new(1, "First Task", 1)
+    expect(@task_1.task_priority_number).to eq(1)
+  end
+
+  it "a task can be marked complete specified by id" do
+    expect(TM::Task.completed(1)).to eq(true)
+  end
+>>>>>>> 95ab761f126dd483a551bec3331bfeea5c9def89
 end

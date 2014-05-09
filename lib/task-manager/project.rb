@@ -9,7 +9,6 @@ class TM::Project
   attr_reader :name, :completed_tasks, :project_id
   attr_accessor :project_id_counter, :projects
 
-
   # .new method - creates instances of the TM::Project class
   # each @'value' is called an instance variable
   # these are the attributes which are specific to the instance
@@ -26,8 +25,6 @@ class TM::Project
   def retrieve_list
     @@projects
   end
-
-
 
   # Resets the project_id_count so that it doesn't increment while testing
   # the 'self' means that it is a Class method
