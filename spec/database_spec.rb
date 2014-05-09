@@ -82,19 +82,38 @@ describe 'Database class' do
 
     end
 
-    it "should pass this test" do 
-      expect(true).to eq(true)
-    end
   end
   
   describe 'destroy_project method' do
-    it "should pass this test" do 
+    it "return nil if no projects exist" do 
       expect(true).to eq(true)
     end
-    it "should pass this test" do 
-      expect(true).to eq(true)
+
+    it "delete the correct object and reduce size" do 
+      db = TM::DB.new
+      data = { name: "Twitter" }
+      db.create_project(data)
+
+      data = { name: "Facebook" }
+      db.create_project(data)
+
+      expect(db.projects.size).to eq(2)
+
+      db.destroy_project(1)
+
+      expect(db.projects.size).to eq(1)
+      expect(db.projects[1]).to eq(nil)
+      expect(db.projects[2][:name]).to eq("Facebook")
+
+      db.destroy_project(2)
+
+      expect(db.projects.size).to eq(0)
+      expect(db.projects[1]).to eq(nil)
+      expect(db.projects[2]).to eq(nil)
+      # expect(db.projects[2][:name]).to eq("Facebook")
     end
-    it "should pass this test" do 
+
+    it "can handle more than one consecutive delete" do 
       expect(true).to eq(true)
     end
   end

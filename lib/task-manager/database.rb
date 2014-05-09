@@ -34,14 +34,14 @@ class TM::DB
   def destroy_project(id)
     project_key = nil
     @projects.each do |key, data|
-      project_key = key if data[id] == id
+      project_key = key if data[:id] == id
     end
-    @projects[project_count].delete
+    @projects.delete(project_key)
   end
 
   def build_project(data)
     # binding.pry
-    puts "data --> #{data}"
+    # puts "data --> #{data}"
     TM::Project.new(data[:name], data[:id])
     # TM::Project.new(data[:name])
   end
