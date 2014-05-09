@@ -8,6 +8,8 @@ class TerminalClient
 		print_welcome_message
 		list_commands
 
+		db = TM::DB.new
+		
 		exit_program = false
 
 		while !exit_program do
@@ -23,8 +25,10 @@ class TerminalClient
 				list_projects
 			when "create", "c"
 				if check_arguments(input_arguments,1, unlimited: true)
-					@@projects << TM::Project.new(input_arguments[1...input_arguments.length].join(" "))
-					puts "[Created new project '#{@@projects.last.name} with id=#{@@projects.last.id}]"
+					project = db.create_project({name: input_arguments[1...input_arguments.length].join(" ")})
+					# @@projects << TM::Project.new(input_arguments[1...input_arguments.length].join(" "))
+					# puts "[Created new project '#{@@projects.last.name} with id=#{@@projects.last.id}]"
+					puts "[Created new project '#{project.name} with id=#{project.id}]"
 				end
 			when "show", "s"
 				list_tasks(input_arguments[1], completed: false) if check_arguments(input_arguments,1)
