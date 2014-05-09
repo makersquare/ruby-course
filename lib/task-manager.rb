@@ -29,6 +29,10 @@ module TM
       end
     end
 
+    def destroy_project(id)
+      @projects.delete(id)
+    end
+
   end
 
   def self.db

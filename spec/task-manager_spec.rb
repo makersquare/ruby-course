@@ -34,29 +34,29 @@ describe "TaskManager::Database" do
   end
 
   context 'a new project is added to the datebase' do
-    let(:new_project) { @db.create_project({:name => "Pizza Party Planning"}) }
+    before(:each) do
+      @new_project = @db.create_project({ :name => "Pizza Party Planning" })
+    end
 
     it 'can add new projects' do
-      new_project
       expect(@db.projects).to eq({1 => {:name => "Pizza Party Planning", :id => 1}})
       expect(@db.projects_counter).to eq(1)
     end
 
     it 'can return a hash of a created project' do
-      new_project
       expect(@db.get_project(1)).to eq({:name => "Pizza Party Planning", :id => 1})
     end
 
-  end
-
-  context 'a project can be updated' do
-    let(:new_project) { @db.create_project({:name => "Pizza Party Planning"}) }
-
     it 'can update a project' do
-      new_project
       @db.update_project(1, {:name => "Pizza and Ice Cream Party Planning"} )
       expect(@db.get_project(1)[:name]).to eq("Pizza and Ice Cream Party Planning")
     end
+
+    it 'can destroy a project' do
+      @db.destroy_project(1)
+      expect(@db.projects).to eq({})
+    end
+
   end
 
 end
