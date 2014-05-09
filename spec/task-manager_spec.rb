@@ -33,17 +33,20 @@ describe "TaskManager::Database" do
 
   end
 
-  context 'it can add a new project to the datebase' do
+  context 'a new project is added to the datebase' do
+    let(:new_project) { @db.create_project({:name => "Pizza Party Planning"}) }
 
     it 'can add new projects' do
-      @db.create_project({:name => "Pizza Party Planning"})
-      expect(@db.projects).to eq({0 => {:name => "Pizza Party Planning", :id => 0}})
+      new_project
+      expect(@db.projects).to eq({1 => {:name => "Pizza Party Planning", :id => 1}})
       expect(@db.projects_counter).to eq(1)
     end
 
-  end
+    it 'can return a hash of a created project' do
+      new_project
+      expect(@db.get_project(1)).to eq({:name => "Pizza Party Planning", :id => 1})
+    end
 
-  context 'it can return a new project from the database' do
   end
 
 end

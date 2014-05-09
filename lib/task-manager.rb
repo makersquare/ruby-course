@@ -13,9 +13,13 @@ module TM
     end
 
     def create_project(data)
+      @projects_counter += 1
       data[:id] = @projects_counter
       @projects[@projects_counter] = data
-      @projects_counter += 1
+    end
+
+    def get_project(id)
+      @projects[id]
     end
 
   end
