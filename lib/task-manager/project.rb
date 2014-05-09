@@ -2,16 +2,9 @@
 class TM::Project
   attr_reader :name, :id
 
-  @@id_count = 0
-
-  def initialize(name)
+  def initialize(name, id)
     @name = name
-    @@id_count += 1
-    @id = @@id_count
-  end
-
-  def self.reset_class_variables
-    @@id_count = 0
+    @id = id
   end
 
   def complete_tasks
