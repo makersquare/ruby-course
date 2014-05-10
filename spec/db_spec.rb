@@ -35,7 +35,6 @@ describe 'DB' do
         project_id = db.project_count
         db.create_project( {:name => "Project", :id => project_id} )
         db.create_project( {:name => "Project", :id => project_id+1} )
-        project = db.projects.select {|key,value| key == 1}
         expect(db.show_project(1).name).to eq db.projects[1][:name]
       end
     end
@@ -77,6 +76,20 @@ describe 'DB' do
 
         expect(db.tasks.length).to eq 1
         expect(db.task_count).to eq 1
+      end
+    end
+
+    context 'when retrieving a task from the database' do
+      it 'retrieves all task information from a task id' do
+        db.create_task(:project_id => 0, :desc => "Description", :priority => 10, :due_date => "2014-05-09")
+        db.create_task(:project_id => 0, :desc => "Description 2", :priority => 10, :due_date => "2014-05-10")
+
+        # both tasks should be in the tasks database hash
+        expect(db.tasks.length).to eq 2
+
+        # look up both tasks
+        expect(db.show_task(0).description).to eq (db.tasks[0][:desc])
+        expect(db.show_task(1).description).to eq (db.tasks[1][:desc])
       end
     end
 

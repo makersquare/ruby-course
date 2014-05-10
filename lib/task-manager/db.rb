@@ -10,6 +10,8 @@ class TM::DB
     @task_count = 0
   end
 
+  # Project management
+
   def build_project(data)
     TM::Project.new(data[:name], data[:id])
   end
@@ -28,6 +30,7 @@ class TM::DB
     # Find a project by id in the @project hash and remove
     project = @projects.select{|key,value| key == id}
     @projects.delete(id)
+
     # Return the deleted object in case we need it
     build_project(project[id])
   end
@@ -46,8 +49,9 @@ class TM::DB
     build_project(data)
   end
 
+  # Task management
+
   def build_task(data)
-    # binding.pry
     TM::Task.new(data[:project_id], data[:desc], data[:priority], data[:due_date])
   end
 
@@ -55,6 +59,10 @@ class TM::DB
     @tasks[task_count] = data
     build_task(data)
     @task_count += 1
-    binding.pry
+  end
+
+  def show_task(id)
+    task = @tasks.select{|key,value| key == id}
+    build_task(task[id])
   end
 end
