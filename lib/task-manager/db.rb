@@ -13,7 +13,7 @@ class TM::DB
   # Project management
 
   def build_project(data)
-    TM::Project.new(data[:name], data[:id])
+    TM::Project.new(data[:name], data[:id], data[:project_tasks])
   end
 
   def update_project(id, data)
@@ -57,8 +57,11 @@ class TM::DB
 
   def create_task(data)
     @tasks[task_count] = data
-    build_task(data)
+    task = build_task(data)
+    @projects[data[:project_id]][:project_tasks] << task
     @task_count += 1
+    task
+    # binding.pry
   end
 
   def show_task(id)

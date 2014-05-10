@@ -4,10 +4,10 @@ class TM::Project
   @@pid = 0
   @@projects = []
 
-  def initialize(name, id)
+  def initialize(name, id, tasks)
     @name = name
     @pid = id
-    @tasks = []
+    @tasks = {}
     @completion = 0.0
   end
 
