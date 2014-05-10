@@ -1,3 +1,4 @@
+require 'pry'
 
 # Create our module. This is so other files can start using it immediately
 module TM
@@ -15,15 +16,18 @@ module TM
     def create_project(data)
       @projects_counter += 1
       data[:id] = @projects_counter
+      data[:completed] = false
       @projects[@projects_counter] = data
+      build_project(@projects[@projects_counter])
     end
 
     def get_project(id)
-      @projects[id]
+      project = @projects[id]
+      build_project(project)
     end
 
     def update_project(id, data)
-      project = get_project(id)
+      project = @projects[id]
       data.each do |key, value|
         project[key] = value
       end
@@ -31,6 +35,10 @@ module TM
 
     def destroy_project(id)
       @projects.delete(id)
+    end
+
+    def build_project(data)
+      TM::Project.new(data[:name], data[:id], data[:complted])
     end
 
   end

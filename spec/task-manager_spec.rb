@@ -4,7 +4,6 @@ require 'pry'
 describe "TaskManager::Database" do
 
   before(:each) do
-    @database = TM::Database.new
     @db = TM.db
   end
 
@@ -15,7 +14,6 @@ describe "TaskManager::Database" do
   context 'it is initialized' do
 
     it 'creates an empty projects hash' do
-
       expect(@db.projects).to eq({})
     end
 
@@ -39,22 +37,26 @@ describe "TaskManager::Database" do
     end
 
     it 'can add new projects' do
-      expect(@db.projects).to eq({1 => {:name => "Pizza Party Planning", :id => 1}})
+      expect(@db.projects).to eq({ 1 => { name: "Pizza Party Planning", id: 1, completed: false } })
       expect(@db.projects_counter).to eq(1)
     end
 
-    it 'can return a hash of a created project' do
-      expect(@db.get_project(1)).to eq({:name => "Pizza Party Planning", :id => 1})
+    it 'can return a project' do
+      expect(@db.get_project(1).name).to eq("Pizza Party Planning")
     end
 
     it 'can update a project' do
-      @db.update_project(1, {:name => "Pizza and Ice Cream Party Planning"} )
-      expect(@db.get_project(1)[:name]).to eq("Pizza and Ice Cream Party Planning")
+      @db.update_project(1, { name: "Pizza and Ice Cream Party Planning" } )
+      expect(@db.projects[1][:name]).to eq("Pizza and Ice Cream Party Planning")
     end
 
     it 'can destroy a project' do
       @db.destroy_project(1)
       expect(@db.projects).to eq({})
+    end
+
+    it 'can build a new project' do
+      expect(@db.build_project({ :name => "Pizza Party Planning", id: 1, completed: false }).id).to eq(1)
     end
 
   end
