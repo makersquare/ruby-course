@@ -112,5 +112,23 @@ describe 'DB' do
         expect(updated_task.task_id).to eq (1)
       end
     end
+
+    context 'when deleting an existing task' do
+      it 'deletes the correct from the task from the database' do
+        db.create_task(:task_id => db.task_count, :project_id => 0, :desc => "Description 2", :priority => 10, :due_date => "2014-05-09")
+        expect(db.tasks.length).to eq 1
+        db.delete_task(0)
+
+        expect(db.tasks.length).to eq 0
+      end
+
+      it 'returns the deleted task to the client' do
+        db.create_task(:task_id => db.task_count, :project_id => 0, :desc => "Description 2", :priority => 10, :due_date => "2014-05-09")
+        deleted_task = db.delete_task(0)
+
+        expect(deleted_task.description).to eq ("Description 2")
+      end
+    end
+
   end
 end

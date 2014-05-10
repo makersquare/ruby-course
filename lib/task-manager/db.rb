@@ -76,4 +76,13 @@ class TM::DB
     # Return the task
     build_task(task[id])
   end
+
+  def delete_task(id)
+    # Retrieve task before we delete it from database
+    task = @tasks.select{|key,value| key == id}
+    @tasks.delete(id)
+
+    # Return the task
+    build_task(task[id])
+  end
 end
