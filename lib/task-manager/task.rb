@@ -5,9 +5,9 @@ class TM::Task
   @@task_id = 0
   @@tasks = []
 
-  def initialize(project_id, desc, priority, due_date,opts={})
+  def initialize(task_id, project_id, desc, priority, due_date,opts={})
     @project_id = project_id
-    @task_id = @@task_id + 1
+    @task_id = task_id
     @description = desc
     @priority = priority
     @status = 0 # Initialize task as incomplete
@@ -20,9 +20,6 @@ class TM::Task
     # Optional parameters
     @tags ||= opts[:tags]
     @recurring ||= opts[:recurring]
-
-    # Increment task_id class variable
-    @@task_id = @task_id
   end
 
   def tags

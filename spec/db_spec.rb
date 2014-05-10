@@ -72,7 +72,7 @@ describe 'DB' do
 
     context 'when adding a new task to the database' do
       it 'adds the task to the tasks hash and increments task_count by 1' do
-        db.create_task(:project_id => 0, :desc => "Description", :priority => 10, :due_date => "2014-05-09")
+        db.create_task(:task_id => db.task_count, :project_id => 0, :desc => "Description", :priority => 10, :due_date => "2014-05-09")
 
         expect(db.tasks.length).to eq 1
         expect(db.task_count).to eq 1
@@ -81,17 +81,36 @@ describe 'DB' do
 
     context 'when retrieving a task from the database' do
       it 'retrieves all task information from a task id' do
-        db.create_task(:project_id => 0, :desc => "Description", :priority => 10, :due_date => "2014-05-09")
-        db.create_task(:project_id => 0, :desc => "Description 2", :priority => 10, :due_date => "2014-05-10")
+        db.create_task(:task_id => db.task_count, :project_id => 0, :desc => "Description", :priority => 10, :due_date => "2014-05-09")
+        db.create_task(:task_id => db.task_count, :project_id => 0, :desc => "Description 2", :priority => 10, :due_date => "2014-05-10")
 
         # both tasks should be in the tasks database hash
         expect(db.tasks.length).to eq 2
 
-        # look up both tasks
+        # look up both tasks, descriptions should match
         expect(db.show_task(0).description).to eq (db.tasks[0][:desc])
         expect(db.show_task(1).description).to eq (db.tasks[1][:desc])
       end
     end
 
+    context 'when updating an existing task' do
+      it 'retrieves the correct task and updates the correct fields' do
+        db.create_task(:task_id => db.task_count, :project_id => 0, :desc => "Description", :priority => 10, :due_date => "2014-05-09")
+        db.create_task(:task_id => db.task_count, :project_id => 0, :desc => "Description 2", :priority => 10, :due_date => "2014-05-09")
+
+        updated_task = db.update_task(1, {:desc => "New Description", :priority => 4} )
+
+        # Changes the selected tasks
+        expect(db.tasks[1][:desc]).to eq ("New Description")
+        expect(db.tasks[1][:priority]).to eq (4)
+
+        # Doesn't change other tasks
+        expect(db.tasks[0][:desc]).to eq ("Description")
+
+        # Returns a Task object with the correct id
+        expect(updated_task).to be_a(TM::Task)
+        expect(updated_task.task_id).to eq (1)
+      end
+    end
   end
 end

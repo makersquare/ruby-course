@@ -52,7 +52,7 @@ class TM::DB
   # Task management
 
   def build_task(data)
-    TM::Task.new(data[:project_id], data[:desc], data[:priority], data[:due_date])
+    TM::Task.new(data[:task_id], data[:project_id], data[:desc], data[:priority], data[:due_date])
   end
 
   def create_task(data)
@@ -63,6 +63,17 @@ class TM::DB
 
   def show_task(id)
     task = @tasks.select{|key,value| key == id}
+    build_task(task[id])
+  end
+
+  def update_task(id, data)
+    task = @tasks.select{|key,value| key == id}
+
+    data.each do |key,value|
+      task[id][key] = value
+    end
+
+    # Return the task
     build_task(task[id])
   end
 end
