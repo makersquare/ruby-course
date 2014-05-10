@@ -1,47 +1,38 @@
 
-class TM::Project #this means project class belongs to TM module...doing this sill help with class conflict names ex MKS::Project...creating a new onject would be p = TM::Project.new
-  attr_reader :name, :id
-  attr_accessor :description, :projects
+class TM::Project
+  attr_reader :project_id, :project_name
 
-  @@id_count = 0
-  @@projects = {}
+  @@id_counter = 0
+  @@projects_list = []
 
-  def initialize(name)
-    @name = name
-    @@id_count += 1
-    @id = @@id_count
-    @created_at = Time.now
+  def initialize(project_name)
+    @project_name = project_name
+    @@id_counter += 1
+    @project_id = @@id_counter
+    @@projects_list << self
   end
 
-  def self.add_project_to_hash(new_project)
-    @@projects = {}
-    @@projects[new_project.id] = new_project
-  end
-
-  def complete_tasks
-    complete = TM::Task.task_list do |task|
-      (task.project_id == self.id) && task.complete_status == true
+  # returns a list of completed tasks
+  def get_completed_tasks
+    completed_tasks = TM::Task.task_list.select do |task|
+      task.task_complete_status == true && task.project_id == @project_id
     end
-
-    complete.sort_by { |task| task.created_at }
+    completed_tasks.sort_by {|task| task.task_creation_date}
   end
-
-  def incomplete_tasks
-    incomplete = TM::Task.task_list do |task|
-      (task.project_id == self.id) && task.complete_status == false
+  # returns a list of incomplete tasks
+  def get_incompleted_tasks
+    incompleted_tasks = TM::Task.task_list.select do |task|
+      task.task_complete_status == false && task.project_id == @project_id
     end
-
-    incomplete.sort_by { |task| task.created_at }
+    # for each task we are sorting by the number first and the date second, this is done with <=> (combined comparison operator)
+    incompleted_tasks.sort_by do |task|
+      task.priority_number <=> task.task_creation_date
+    end
   end
-
-  # def get_tasks
-  #   tasks_array = TM::Task.get_tasks
-  #   tasks_array.select { |task| task.project_id == self.id }
-  # end
 
   def self.reset_class_variables
-    @@id_count = 0
-    @@projects = {}
+    @@id_counter = 0
+    @@projects_list
   end
 
 end
