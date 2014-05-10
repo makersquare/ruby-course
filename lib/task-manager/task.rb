@@ -21,14 +21,8 @@ class TM::Task
     @tags ||= opts[:tags]
     @recurring ||= opts[:recurring]
 
-    # Add task to task class variable array
-    @@tasks << self
     # Increment task_id class variable
     @@task_id = @task_id
-
-    # Find associated project and add task to project
-    project = TM::Project.get_project(project_id)
-    project.tasks << self
   end
 
   def tags

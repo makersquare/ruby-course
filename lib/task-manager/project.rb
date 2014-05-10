@@ -4,16 +4,11 @@ class TM::Project
   @@pid = 0
   @@projects = []
 
-  def initialize(name)
+  def initialize(name, id)
     @name = name
-    @pid = @@pid + 1
+    @pid = id
     @tasks = []
     @completion = 0.0
-
-    # Increment class variable to keep ids unique
-    @@pid = @pid
-    # Add project to projects array
-    @@projects << self
   end
 
   def completed_tasks
