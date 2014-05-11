@@ -21,8 +21,8 @@ describe 'Project' do   #describes what the Project class should do
   #the .name and .project_id values are accessible because of
   #the attr_reader in the project.rb code
 
-  it "can a new project with a name and a unique ID number" do
-    @project_1 = TM::Project.new("proj1")
+  it "new project can be created with a name and a unique ID number" do
+    # @project_1 = TM::Project.new("proj1")
     expect(@project_1.name).to eq ("proj1")
     expect(@project_1.project_id).to eq(1)
   end

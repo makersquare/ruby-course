@@ -4,8 +4,8 @@ class TM::Task
   @@all_tasks = []  #an array of all tasks
   @@task_id_count = 0 #a way to begin counting the amount of tasks
 
-  attr_reader :project_id, :task_description, :task_priority_number, :task_id
-  attr_accessor :completed, :creation_date
+  attr_reader :project_id, :task_description, :task_priority_number, :task_id, :completed
+  attr_accessor :creation_date
 
   # .new method - creates instances of the TM::Task class
   # each @'value' is called an instance variable
@@ -19,15 +19,13 @@ class TM::Task
     @task_id = @@task_id_count          #assigns a task-id number
     @@task_id_count += 1                #ensures that each task-id number increments by 1
     @creation_date = Time.now           #puts a time stamp on newly created tasks
-    # @all_tasks = @@all_tasks
   end
 
 
   def self.completed(task_num)
     task = @@all_tasks.select { |x| x.task_id == task_num }
     task = task[0]
-    task.completed = true
-    task.creation_date = Time.now
+    @completed = true
   end
 
   def self.reset_class_variables
