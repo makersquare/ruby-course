@@ -21,7 +21,7 @@ end
 def complete_task(task_id)
   @tasks.each do |task|
   if task.id == task_id
-  task.status = "complete"
+  task.status = true
   end
   end
 end
