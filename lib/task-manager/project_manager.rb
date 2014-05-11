@@ -77,7 +77,7 @@ end
       puts "You have to create your first projects and tasks"
     else
       task2 = @tasks_list.select{|task| task.id == task_id.to_i}
-      task2.first.status = "complete"
+      task2.first.status = true
    end
   end
 
