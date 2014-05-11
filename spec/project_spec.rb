@@ -31,5 +31,5 @@ describe 'Project' do   #describes what the Project class should do
     sample_task_a = TM::Task.completed(1)
     expect(TM::Project.retrieve_list).to eq([sample_task_a])
   end
-# binding.pry
+
 end

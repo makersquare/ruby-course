@@ -20,6 +20,7 @@ module TM
     def destroy_project(id)
     end
 
+#takes entities
     def build_project(data)
       Project.new(data[:name], data[:id])
     end

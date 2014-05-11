@@ -21,7 +21,6 @@ class TM::Task
     @creation_date = Time.now           #puts a time stamp on newly created tasks
   end
 
-
   def self.completed(task_num)
     task = @@all_tasks.select { |x| x.task_id == task_num }
     task = task[0]

@@ -37,11 +37,11 @@ class TM::TerminalClient
       when "create NAME"
         TM::Project.new(name)
       # when "show PID"
-        # PID
+      #   do something
       when "new TASK"
         TM::Task.new(PID,desc,num)
       when "add"
-
+        # do something
       when "mark TID"
         TM::Task.complete(mark)
       when "help"

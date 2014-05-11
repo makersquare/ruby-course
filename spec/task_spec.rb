@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'pry'             #used to allow Pry debugger
+# require 'pry'
 
 describe 'Task' do    #describes what the Task class should do
 
