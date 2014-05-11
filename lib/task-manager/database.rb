@@ -18,10 +18,13 @@ class TM::DB
 
   def create_project(data)
     ## use the actual "data" argument to contsruct!!
+    ## should i validate the 'data' argument?
+    ## what if already a project with same id?...reject!()
     @project_count +=1
-    @projects[@project_count] = data
-    @projects[@project_count][:id] = @project_count
-    return build_project(@projects[@project_count])
+    @projects[data[:id]] = data
+    # @projects[@project_count] = data
+    # @projects[@project_count][:id] = @project_count
+    build_project(data)
   end
 
   def get_project(id)

@@ -29,7 +29,7 @@ describe 'Database class' do
   describe 'create_project method' do
     it "increments @project_count" do 
       db = TM::DB.new
-      data = { name: "test" }
+      data = { name: "test", id: 1}
       db.create_project(data)
       expect(db.projects.size).to eq(1)
       # puts db.projects.inspect
@@ -41,12 +41,12 @@ describe 'Database class' do
     it "can create more than 1 project correctly" do 
       db = TM::DB.new
 
-      data = { name: "test" }
+      data = { name: "test", id: 1}
       db.create_project(data)
       expect(db.projects.size).to eq(1)
       expect(db.project_count).to eq(1)
 
-      data = { name: "hello" }
+      data = { name: "hello", id: 2 }
       db.create_project(data)
       expect(db.projects.size).to eq(2)
       expect(db.project_count).to eq(2)
@@ -67,10 +67,10 @@ describe 'Database class' do
 
     it "return the correct project as a Project object" do 
       db = TM::DB.new
-      data = { name: "Twitter" }
+      data = { name: "Twitter", id: 1}
       db.create_project(data)
 
-      data = { name: "Facebook" }
+      data = { name: "Facebook", id: 2}
       db.create_project(data)
       expect(db.projects.size).to eq(2)
 
@@ -82,7 +82,6 @@ describe 'Database class' do
       expect(project2.class).to eq(TM::Project)
       expect(project2.name).to eq("Facebook")
       expect(project2.id).to eq(2)
-
     end
 
   end
@@ -94,10 +93,10 @@ describe 'Database class' do
 
     it "delete the correct object and reduce size" do 
       db = TM::DB.new
-      data = { name: "Twitter" }
+      data = { name: "Twitter", id: 1}
       db.create_project(data)
 
-      data = { name: "Facebook" }
+      data = { name: "Facebook", id: 2}
       db.create_project(data)
 
       expect(db.projects.size).to eq(2)
