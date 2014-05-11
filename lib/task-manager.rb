@@ -13,17 +13,17 @@ module TM
       @task_counter = 0
     end
 
+    #  Project Methods
+
     def create_project(data)
       @projects_counter += 1
       data[:id] = @projects_counter
       data[:completed] = false
       @projects[@projects_counter] = data
-      build_project(@projects[@projects_counter])
     end
 
     def get_project(id)
-      project = @projects[id]
-      build_project(project)
+      build_project(@projects[id])
     end
 
     def update_project(id, data)
@@ -38,8 +38,37 @@ module TM
     end
 
     def build_project(data)
-      TM::Project.new(data[:name], data[:id], data[:complted])
+      TM::Project.new(data[:name], data[:id], data[:completed])
     end
+
+    # Task Methods
+
+    def create_task(data)
+      @task_counter += 1
+      data[:id] = @task_counter
+      data[:completed] = false
+      @task[@task_counter] = data
+    end
+
+    def get_task(id)
+      build_task(@task[id])
+    end
+
+    def update_task(id, data)
+      task = @task[id]
+      data.each do |key, value|
+        task[key] = value
+      end
+    end
+
+    def destroy_task(id)
+      @task.delete(id)
+    end
+
+    def build_task(data)
+      TM::Task.new(data[:id], data[:pid], data[:completed], data[:description], data[:priority])
+    end
+
 
   end
 

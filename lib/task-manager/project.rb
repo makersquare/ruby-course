@@ -6,15 +6,35 @@ class TM::Project
   def initialize(name, id, completed)
     @name = name
     @id = id
-    @completed = false
+    @completed = completed
   end
 
   def complete_project
-    @completed = true
+    TM.db.update_project(@id, { completed: true })
   end
 
   def completed?
     @completed
+  end
+
+  def incomplete_task
+    hold_task = []
+    TM.db.task.each do |key, value|
+      if value[:pid] == @id && value[:completed] == false
+        hold_task << value
+      end
+    end
+    hold_task.sort_by { |task| [task[:priority], task[:id]]}
+  end
+
+  def completed_task
+    hold_task = []
+    TM.db.task.each do |key, value|
+      if value[:pid] == @id && value[:completed] == true
+        hold_task << value
+      end
+    end
+    hold_task.sort_by { |task| [task[:priority], task[:id]]}
   end
 
   # def completed_task

@@ -24,6 +24,44 @@ describe 'Project' do
 
   end
 
+  context 'a project can be updated' do
+    before(:each) do
+      @db = TM.db
+      @db.create_project({ :name => "Pizza Party Planning" })
+      @new_project = @db.get_project(1)
+    end
+
+    it 'can make a project as complete' do
+      @new_project.complete_project
+      expect(@db.get_project(1).completed?).to eq(true)
+    end
+  end
+
+  context 'a project is created and task are assigned to it' do
+    before(:each) do
+      @db = TM.db
+      @db.create_project({ :name => "Pizza Party Planning" })
+      @new_project = @db.get_project(1)
+      @db.create_task({description: "Second Task", priority: 2, pid: 1})
+      @db.create_task({description: "First Task", priority: 1, pid: 1})
+    end
+
+    it 'can can get a list of incomplete task' do
+      expect(@new_project.incomplete_task.length).to eq(2)
+      # binding.pry
+    end
+
+    it 'can can list incomplete task by priority' do
+      expect(@new_project.incomplete_task.first[:priority]).to eq(1)
+    end
+
+    it 'can show a list of completed task' do
+      TM.db.get_task(2).complete_task
+      # binding.pry
+      expect(@new_project.completed_task.first[:description]).to eq("First Task")
+    end
+  end
+
   # context 'a project can see all incompleted task' do
   #   let(:project) { TM::Project.new("My_first_project") }
   #   let(:projects_manger) { TM::ProjectsManager.new }

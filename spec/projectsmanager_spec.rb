@@ -1,15 +1,11 @@
 # require 'spec_helper'
 # require 'pry'
 
-# describe 'ProjectsManager' do
-#  before(:each) do
-#     TM::Project.reset_class_variables
-#     TM::Task.reset_class_variables
-#   end
+describe 'ProjectsManager' do
 
-#   it "exists" do
-#     expect(TM::ProjectsManager).to be_a(Class)
-#   end
+  it "exists" do
+    expect(TM::ProjectsManager).to be_a(Class)
+  end
 
 #   context 'a projects_manager client is initialized' do
 #     let(:projects_manager) { TM::ProjectsManager.new }
@@ -85,4 +81,4 @@
 #       expect(task.completed).to eq(true)
 #     end
 #   end
-# end
+end

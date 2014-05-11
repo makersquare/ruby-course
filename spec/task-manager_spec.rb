@@ -61,4 +61,36 @@ describe "TaskManager::Database" do
 
   end
 
+
+  context 'a task is created' do
+
+    before(:each) do
+      @new_project = @db.create_project({ :name => "Pizza Party Planning" })
+      @new_task = @db.create_task({ description: "Find Pizza", pid: 1, priority: 1 })
+    end
+
+    it 'can add new task' do
+      expect(@db.task.count).to eq(1)
+    end
+
+    it 'increases the task counter' do
+      expect(@db.task_counter).to eq(1)
+    end
+
+    it 'can retrieve a task by its id' do
+      expect(@db.get_task(1).description).to eq("Find Pizza")
+    end
+
+    it 'can update a tasks information' do
+      @db.update_task(1, {description: "Find some ice cream"})
+      expect(@db.task[1][:description]).to eq("Find some ice cream")
+    end
+
+    it 'can destroy a task' do
+      @db.destroy_task(1)
+      expect(@db.task[1]).to eq(nil)
+    end
+
+  end
+
 end
