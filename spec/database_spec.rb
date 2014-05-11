@@ -37,6 +37,8 @@ describe 'Database class' do
       expect(db.projects[1][:id]).to eq(1)
       expect(db.projects[1][:name]).to eq("test")
     end
+
+    ## add test to see if create project from data with just name, no id
     
     it "can create more than 1 project correctly" do 
       db = TM::DB.new
