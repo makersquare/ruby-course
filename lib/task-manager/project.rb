@@ -8,11 +8,14 @@ class TM::Project
 
 	attr_reader :name, :id, :tasks
 	
-	def initialize(name="default", id)
+	def initialize(name: "default", id: nil)
+	# def initialize(data = {})
 		@name = name
+		# @name = data[:name]
 		@tasks = []
 		# @id = self.class.generate_id
 		@id = id
+		# @id = data[:id]
 		# self.class.add_project(self)
 	end
 

@@ -26,6 +26,18 @@ describe 'Database class' do
 
   end
 
+  describe 'build_project method' do
+    it "return a Project object" do 
+      db = TM::DB.new
+      data = { name: "Twitter", id: 1}
+      project1 = db.build_project(data)
+
+      expect(project1.class).to eq(TM::Project)
+      expect(project1.name).to eq("Twitter")
+      expect(project1.id).to eq(1)
+    end
+  end
+
   describe 'create_project method' do
     it "increments @project_count" do 
       db = TM::DB.new
@@ -122,15 +134,38 @@ describe 'Database class' do
     end
   end
 
-  describe 'build_project method' do
-    it "return a Project object" do 
-      db = TM::DB.new
-      data = { name: "Twitter", id: 1}
-      project1 = db.build_project(data)
+  ### Tasks
 
-      expect(project1.class).to eq(TM::Project)
-      expect(project1.name).to eq("Twitter")
-      expect(project1.id).to eq(1)
+  describe 'build_task method' do
+    it "return a Task object" do 
+      db = TM::DB.new
+      data = { name: "Buy Eggs", id: 1, description: "One Dozen"}
+      task1 = db.build_task(data)
+
+      expect(task1.class).to eq(TM::Task)
+      expect(task1.name).to eq("Buy Eggs")
+      expect(task1.description).to eq("One Dozen")
+      expect(task1.priority).to eq(1)
+      expect(task1.date_created.mday).to eq(Time.now.mday)
+      expect(task1.date_completed).to eq(nil)
+      expect(task1.date_due.class).to eq(Time)
+      expect(task1.completed).to eq(false)
+      expect(task1.project_id).to eq(nil)
+
+      data = { name: "Exercise", id: 1, description: "Bike 12 miles",
+        priority: 4, date_created: Time.now - 3, date_completed: Time.now + 3,
+        date_due: Time.now, completed: true, project_id: 12 }
+      task2 = db.build_task(data)
+
+      expect(task2.class).to eq(TM::Task)
+      expect(task2.name).to eq("Exercise")
+      expect(task2.description).to eq("Bike 12 miles")
+      expect(task2.priority).to eq(4)
+      expect(task2.date_created.class).to eq(Time)
+      expect(task2.date_completed.class).to eq(Time)
+      expect(task2.date_due.class).to eq(Time)
+      expect(task2.completed).to eq(true)
+      expect(task2.project_id).to eq(12)
     end
   end
 

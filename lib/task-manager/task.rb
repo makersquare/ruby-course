@@ -4,32 +4,51 @@ class TM::Task
 	@@tasks = []
 
 	attr_reader :date_created, :date_completed, :completed, :date_due
-	attr_accessor :id, :name, :priority, :description
+	attr_accessor :id, :name, :priority, :description, :project_id
 
-	def initialize(name = "untitled", description: "none", priority: 1)
-		@name = name
-		@id = self.class.generate_id
-		@description = description
-		@priority = priority
-		@date_created= Time.now
-		@date_completed = nil
-		@date_due = Time.now + (7*24*60*60) #1 week from now
+	# def initialize(name = "untitled", id, description: "none", priority: 1)
+	# def initialize(name: "untitled", id: nil, description: "none", priority: 1,
+	# 	date_created: Time.now, date_completed: nil, date_due: Time.now + (7*24*60*60),
+	# 	completed: false, project_id: nil)
+		# @name = name
+		# @id = self.class.generate_id
+		# @id = id
+		# @description = description
+		# @priority = priority
+		# @date_created= Time.now
+		# @date_completed = nil	
+		# @date_due = Time.now + (7*24*60*60) #1 week from now
 		# @date_due = Time.now + (30) #1 week from now
-		@completed = false
+		# @completed = false
 		
 		# foreign keys
-		@project_id = nil
+		# @project_id = nil
 
-		self.class.add_task(self)
+		# self.class.add_task(self)
+	# end
+
+	def initialize(args)
+		@name = args[:name] || "untitled"
+		@id = args[:id]
+		@description = args[:description] || "none"
+		@priority = args[:priority] || 1
+		@date_created = args[:date_created] || Time.now
+		@date_completed = args[:date_completed] || nil	
+		@date_due = args[:date_due] || Time.now + (7*24*60*60) #1 week from now
+		@completed = args[:completed] || false
+		# foreign keys
+		@project_id = args[:project_id] || nil
+
+		# self.class.add_task(self)
 	end
 
-	def self.add_task(task)
-		@@tasks << task
-	end
+	# def self.add_task(task)
+	# 	@@tasks << task
+	# end
 
-	def self.generate_id
-		@@task_count += 1
-	end
+	# def self.generate_id
+	# 	@@task_count += 1
+	# end
 
 	def mark_completed
 		@completed = true

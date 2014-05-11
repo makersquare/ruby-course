@@ -18,6 +18,21 @@ class TM::DB
     @task_count = 0
   end
 
+  ## universal methods
+
+  def get_timestamp
+    Time.now
+  end
+
+  ##########
+  # Projects
+  ##########
+
+  def build_project(data)
+    # TM::Project.new(name: data[:name], id: data[:id])
+    TM::Project.new(data)
+  end
+
   def create_project(data)
     ## should i validate the 'data' argument?
     ## what if already a project with same id?...reject!
@@ -37,8 +52,35 @@ class TM::DB
     @projects.delete(id)
   end
 
-  def build_project(data)
-    TM::Project.new(data[:name], data[:id])
+  #######
+  # Tasks
+  #######
+
+  def build_task(data)
+    #name, id, description, priority, date_created, due_date, date_completed
+    # completed, project_id --> independent variables/properties
+    TM::Task.new(data)
+
+  end
+
+  def create_task(data)
+    ## should i validate the 'data' argument?
+    ## what if already a project with same id?...reject!
+    # how to hanlde the auto-genarated timestamp?
+    @task_count +=1
+    data[:id] ||= @task_count
+    @projects[data[:id]] = data
+    build_project(data)
+  end
+
+  def get_task(id)
+    project = @projects.select { |key, value| key == id }
+    build_project(project[id])
+  end
+
+  def destroy_task(id)
+    project = @projects.select { |key, value| key == id }
+    @projects.delete(id)
   end
 
 end
