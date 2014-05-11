@@ -12,7 +12,7 @@ class TM::Task
     @id = self.class.project_id_counter
     @@project_id_counter += 1
     @created_at = Time.now
-    @complete = true
+    @complete ||= []
 
   end
 
