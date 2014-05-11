@@ -3,8 +3,8 @@ class TrueClass; def to_i; 1 end end
 
 class TM::Project
 	
-	@@project_count = 0
-	@@projects = []
+	# @@project_count = 0
+	# @@projects = []
 
 	attr_reader :name, :id, :tasks
 	
@@ -13,7 +13,7 @@ class TM::Project
 		@tasks = []
 		# @id = self.class.generate_id
 		@id = id
-		self.class.add_project(self)
+		# self.class.add_project(self)
 	end
 
 	def self.add_project(project)

@@ -123,14 +123,14 @@ describe 'Database class' do
   end
 
   describe 'build_project method' do
-    it "should pass this test" do 
-      expect(true).to eq(true)
-    end
-    it "should pass this test" do 
-      expect(true).to eq(true)
-    end
-    it "should pass this test" do 
-      expect(true).to eq(true)
+    it "return a Project object" do 
+      db = TM::DB.new
+      data = { name: "Twitter", id: 1}
+      project1 = db.build_project(data)
+
+      expect(project1.class).to eq(TM::Project)
+      expect(project1.name).to eq("Twitter")
+      expect(project1.id).to eq(1)
     end
   end
 
