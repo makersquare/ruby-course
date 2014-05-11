@@ -1,16 +1,15 @@
 
 class TM::Task
 
-  attr_reader :pid, :priority, :description, :id
+  attr_reader :pid, :priority, :description, :id, :creation_date
 
-  def initialize(id, pid, completed, description, priority)
+  def initialize(id, pid, completed, description, priority, creation_date)
     @id = id
     @pid = pid
     @completed = completed
     @description = description
     @priority = priority
-    # @date_created = Time.now
-    # @complete_date = @date_created + (86400 * 5)
+    @creation_date = creation_date
   end
 
   def complete_task
@@ -20,9 +19,5 @@ class TM::Task
   def complete?
     @completed
   end
-
-  # def over_due?
-  #   Time.now > @complete_date ? true : false
-  # end
 
 end

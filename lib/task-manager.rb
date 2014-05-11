@@ -47,6 +47,7 @@ module TM
       @task_counter += 1
       data[:id] = @task_counter
       data[:completed] = false
+      data[:creation_date] = Time.now
       @task[@task_counter] = data
     end
 
@@ -66,9 +67,8 @@ module TM
     end
 
     def build_task(data)
-      TM::Task.new(data[:id], data[:pid], data[:completed], data[:description], data[:priority])
+      TM::Task.new(data[:id], data[:pid], data[:completed], data[:description], data[:priority], data[:creation_date])
     end
-
 
   end
 
