@@ -7,7 +7,7 @@ class TM::TerminalClient
   def initialize
     @command = command
     puts "Welcome to Project Manager Pro. What can I do for you today?\n\n"
-    self.welcome
+    self.command_list
   end
 
   def command_list
@@ -33,7 +33,7 @@ class TM::TerminalClient
     self.mark_task if @command == 'mark task'
     self.command_list if  @command == 'help'
     if @command == 'exit'
-    else 
+    else
       puts "That is not a command."
       @command = gets.chomp
       self.call_methods(@command)
@@ -43,7 +43,7 @@ class TM::TerminalClient
   def list
     projects = TM::Project.list_projects
     puts "ID\tProject Name\t% Done \t% Over Due"
-    projects.each do|x| 
+    projects.each do|x|
       percentage = TM::Project.percentage_complete(x.pid)
       puts "#{x.pid}\t#{x.name}\t#{percentage}"
     end
@@ -89,7 +89,7 @@ class TM::TerminalClient
     puts " Priority\tID Description\tDue Date\tOver Due?"
     t = Time.now
     today = "#{t.year} #{t.month} #{t.day}"
-    tasks.each do |task| 
+    tasks.each do |task|
       overdue = 'No'
       overdue = 'Yes' if task.duedate < today
       puts "\t#{task.pnum}\t#{task.tid}  #{task.description}\t#{task.duedate}\t#{overdue}"
@@ -98,7 +98,7 @@ class TM::TerminalClient
     self.call_methods(@command)
   end
 
-  def history   
+  def history
     puts "Please enter a project ID."
     projectid = gets.chomp
     tasks = TM::Task.completed_tasks(projectid.to_i)

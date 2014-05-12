@@ -2,31 +2,13 @@ require 'pry-debugger'
 
 class TM::DB
 
-  attr_reader :tasks, :projects
+  attr_reader :tasks, :projects, :project_count, :task_count
   def initialize
-    @projects = {
-      1 => {
-        id: 1,
-        name: "Project 1"
-      }
-    }
+    @projects = {}
     @project_count = 0
-    @tasks = {
-      1 => {
-        tid: 1,
-        pid: 1,
-        desc: "buy shit",
-        date: "2014 1 31",
-        pnum: 1,
-        complete: false,
-        duedate: "2014 1 1"
-      }
-    }
+    @tasks = {}
     @task_count = 0
   end
-
-#return instances
-#edit hash separately
 
   def create_project(data)
     @project_count += 1
@@ -36,38 +18,41 @@ class TM::DB
   end
 
   def get_project(id)
-    data = @projects[:id]
+    data = @projects[id]
     return TM::DB.build_project(data)
   end
 
   def update_project(id, data)
-    data.each {|x,y| @projects[:id][:x] = y }
+    data.each {|x,y| @projects[:id][:x] = data[:x] }
     return TM::DB.build_project(data)
   end
 
   def destroy_project(id)
     @projects.delete("id")
+    @tasks.each do |x,y|
+      @tasks.delete("x") if @tasks[:x][:pid] = id
+    end
   end
 
-  def build_project(data)
+  def self.build_project(data)
     TM::Project.new(data[:name], data[:id])
   end
 
   def create_task(data) #pid, des, pnum, duedate
     @task_count += 1
     data[:tid] = @task_count
-    @tasks[:tid] = data
-    @tasks[:@task_count] = TM::DB.build_task(data)
+    @tasks[:@task_count] = data
+    return TM::DB.build_task(data)
   end
 
   def get_task(tid)
-    data = tasks[:tid]
+    data = tasks[tid]
     return TM::DB.build_task(data)
   end
 
   def update_task(id, data)
-    data.each {|x,y| @tasks[:id][:x] = y }
-    TM::Task.edit_project(data)
+    data.each {|x,y| @tasks[:id][:x] = data[:x]}
+    return TM::DB.build_task(data)
   end
 
   def destroy_task(id)
