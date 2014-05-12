@@ -267,16 +267,21 @@ describe 'Database class' do
   end
 
   describe 'update_task method' do
-    xit "return nil if no tasks exist" do 
-      task1 = db.destroy_task(1)
+    it "return nil if no tasks exist" do 
+      data = { name: "Buy Eggs", id: 1, description: "One Dozen"}
+      task1 = db.update_task(1, data)
       expect(task1).to eq(nil)
       expect(db.tasks.size).to eq(0)      
     end
 
-    xit "returns nil if task does not exist" do 
-      task1 = db.destroy_task(1)
-      expect(task1).to eq(nil)
-      expect(db.tasks.size).to eq(0)      
+    it "returns nil if task does not exist" do 
+      data = { name: "Buy Eggs", id: 1, description: "One Dozen"}
+      task1 = db.create_task(data)
+      expect(db.tasks.size).to eq(1)      
+
+      task2 = db.update_task(2, data)
+      expect(task2).to eq(nil)
+      expect(db.tasks.size).to eq(1)
     end
 
     it "updates the right task" do 

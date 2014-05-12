@@ -38,13 +38,11 @@ class TM::DB
   end
 
   def get_project(id)
-    project = @projects.select { |key, value| key == id }
-    build_project(project[id]) unless project.size == 0
+    build_project(@projects[id]) if @projects.has_key?(id)
   end
 
   def destroy_project(id)
-    project = @projects.select { |key, value| key == id }
-    build_project(@projects.delete(id)) unless project.size == 0
+    build_project(@projects.delete(id)) if @projects.has_key?(id)
   end
 
   #################
@@ -78,23 +76,20 @@ class TM::DB
   end
 
   def get_task(id)
-    task = @tasks.select { |key, value| key == id }
-    build_task(task[id]) unless task.size == 0
+    build_task(@tasks[id]) if @tasks.has_key?(id)
   end
 
   def update_task(id, data)
-    # Need to add check if the task exists or not
-    # task = @tasks.select { |key, value| key == id }
-    @tasks[id].merge!(data) if @tasks.has_key?(id)
-    # if @tasks.select { |key, value| key == id }
-    # data.each {|key, val| @tasks[id][key] = val}
-    build_task(@tasks[id]) # unless task.size == 0
-    # puts @tasks.inspect
+    if @tasks.has_key?(id)
+      @tasks[id].merge!(data)
+      build_task(@tasks[id])
+    else
+      nil
+    end
   end
 
   def destroy_task(id)
-    task = @tasks.select { |key, value| key == id }
-    build_task(@tasks.delete(id)) unless task.size == 0
+    build_task(@tasks.delete(id)) if @tasks.has_key?(id)
   end
 
   ##############
