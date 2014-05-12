@@ -30,7 +30,7 @@ describe 'Task' do
       expect(@task.complete?).to eq(false)
     end
 
-    it 'has a uniquer id' do
+    it 'has a unique id' do
       expect(@db.get_task(2).id).to eq(2)
     end
 

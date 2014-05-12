@@ -117,20 +117,10 @@ describe "TaskManager::Database" do
       # binding.pry
     end
 
-    it 'has no initial project id' do
-      @employee = @db.get_employee(1)
-      expect(@employee.pid).to eq(nil)
-    end
-
-    it 'has no initial task id' do
-      @employee = @db.get_employee(1)
-      expect(@employee.tid).to eq(nil)
-    end
-
     it 'can be updated' do
-      expect(@employee1[:pid]).to eq(nil)
-      @db.update_employee(1, pid: 1)
-      expect(@employee1[:pid]).to eq(1)
+      expect(@employee1[:name]).to eq("Jason")
+      @db.update_employee(1, name: "Joven")
+      expect(@employee1[:name]).to eq("Joven")
     end
 
     it 'can be destroyed' do

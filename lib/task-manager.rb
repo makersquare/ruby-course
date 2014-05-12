@@ -98,7 +98,6 @@ module TM
   def create_employee(data)
     @employee_counter += 1
     data[:id] = @employee_counter
-    data[:pid] = nil
     @employees[data[:id]] = data
   end
 
