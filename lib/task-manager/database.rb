@@ -72,6 +72,17 @@ class TM::DB
     build_task(task[id]) unless task.size == 0
   end
 
+  def update_task(id, data)
+    # Need to add check if the task exists or not
+    # task = @tasks.select { |key, value| key == id }
+    if @tasks.has_key?(id)
+      @tasks[id].merge!(data)
+    end
+    # if @tasks.select { |key, value| key == id }
+    # data.each {|key, val| @tasks[id][key] = val}
+    build_task(@tasks[id]) # unless task.size == 0
+  end
+
   def destroy_task(id)
     task = @tasks.select { |key, value| key == id }
     build_task(@tasks.delete(id)) unless task.size == 0
@@ -81,6 +92,6 @@ class TM::DB
   # Print methods
   ###############
 
-  
+
 
 end

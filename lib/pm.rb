@@ -21,16 +21,13 @@ class TerminalClient
 			when "list" , "ls" then list_projects
 			when "create", "c" then create_project(args)
 			when "show", "s" then show_remaining_tasks(args)
-				# list_tasks(args[1], completed: false) if check_arguments(args,1)
 			when "history", "h" then show_completed_tasks(args)
-				# list_tasks(args[1], completed: true) if check_arguments(args,1)
 			when "add", "a" then add_task(args)
-				
-			when "mark", "m"
-				if check_arguments(args, 1)
-					mark_task_complete_with_id(args[1])
-					puts "[Marked task id=#{args[1]} as complete.]"
-				end
+			when "mark", "m" then mark_task_completed(args)
+				# if check_arguments(args, 1)
+				# 	mark_task_complete_with_id(args[1])
+				# 	puts "[Marked task id=#{args[1]} as complete.]"
+				# end
 			when "exit", "quit", "q"
 				exit_program = true
 			else
@@ -156,6 +153,17 @@ class TerminalClient
 		end
 		if task_found == false			
 			puts "Task with id='#{task_id}' not found in any of the projects."
+		end
+	end
+
+	def self.mark_task_completed(args)
+		if check_arguments(args, 1)
+			id = args[1]
+			TM.db.update_task(id, {completed: true})
+			# task = TM.db.get_task(id)
+			# task.completed
+			# mark_task_complete_with_id(args[1])
+			puts "[Marked task id=#{id} as complete.]"
 		end
 	end
 
