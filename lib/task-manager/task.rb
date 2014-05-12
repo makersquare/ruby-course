@@ -9,12 +9,12 @@ class TM::Task
     @task_id = params[:task_id]
     @description = params[:desc]
     @priority = params[:priority]
-    @status = 0 # Initialize task as incomplete
-    @created_at = Time.now
-    @completed_at = nil
+    @status = params[:status] # Initialize task as incomplete
+    @created_at = params[:created_at]
+    @completed_at = params[:completed_at]
     @due_date = Date.parse(params[:due_date])
-    @overdue = 0
-    @duplicated = false
+    @overdue = params[:overdue]
+    @duplicated = params[:duplicated]
 
     # Optional parameters
     @tags ||= params[:tags]
@@ -51,6 +51,7 @@ class TM::Task
     task = TM.database.show_task(task_id)
     task.completed_at = Time.now
     task.status = 1
+    TM.database.update_task(task_id, {completed_at: task.completed_at, status: task.status} )
   end
 
   def self.mark_overdue

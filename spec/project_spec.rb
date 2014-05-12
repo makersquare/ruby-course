@@ -8,9 +8,9 @@ describe 'Project' do
     TM::Task.reset_class_variables
     @project = db.create_project( {name: "project", id: db.project_count, project_tasks: {} } )
     @project1 = db.create_project( {name: "project 1", id: db.project_count, project_tasks: {} } )
-    @task = db.create_task( {task_id: db.task_count, project_id: @project.pid, desc: "description1", priority: 3, due_date: "2014-05-08" } )
-    @task1 = db.create_task( {task_id: db.task_count, project_id: @project.pid, desc: "description1", priority: 10, due_date: "2014-05-08"} )
-    @task2 = db.create_task( {task_id: db.task_count, project_id: @project.pid, desc: "description1", priority: 5, due_date: "2016-05-08"} )
+    @task = db.create_task( {task_id: db.task_count, project_id: @project.pid, desc: "description1", priority: 3, due_date: "2014-05-08" , completed_at: nil, status: 0, created_at: Time.now} )
+    @task1 = db.create_task( {task_id: db.task_count, project_id: @project.pid, desc: "description1", priority: 10, due_date: "2014-05-08", completed_at: nil, status: 0, created_at: Time.now + 100} )
+    @task2 = db.create_task( {task_id: db.task_count, project_id: @project.pid, desc: "description1", priority: 5, due_date: "2016-05-08", completed_at: nil, status: 0, created_at: Time.now + 200} )
   end
 
   it "initializes with a unique project id and name" do
@@ -23,7 +23,6 @@ describe 'Project' do
   it "adds new tasks to a Project array" do
     expect(db.projects[@project.pid][:project_tasks].length).to eq 3
     project = db.show_project(@project.pid)
-    binding.pry
     expect(@project.project_tasks.length).to eq 3
   end
 
@@ -33,16 +32,18 @@ describe 'Project' do
     @task2.complete_task(@task2.task_id)
 
     expect(@project.completed_tasks.length).to eq 3
-    expect(@project.completed_tasks.first.task_id).to eq 1
-    expect(@project.completed_tasks.last.task_id).to eq 3
+    # Should return task objects, not data
+    expect(@project.completed_tasks.first).to be_a(TM::Task)
   end
 
-  xit "retrieves incomplete tasks and sorts them by priority" do
-    task3 = TM::Task.new(@project.pid, "description1", 3, "2014-05-08")
+  it "retrieves incomplete tasks and sorts them by priority" do
+    @task.complete_task(@task.task_id)
 
-    expect(@project.incomplete_tasks.first.task_id).to eq 2
-    expect(@project.incomplete_tasks.last.task_id).to eq 4
+    expect(@project.incomplete_tasks.first.task_id).to eq 1
+    expect(@project.incomplete_tasks.last.task_id).to eq 2
   end
+
+  # Extension tests, leave pending until basic functionality is restored with DB
 
   xit "retrieves and sorts overdue tasks" do
     # Stub today as a date in the future so this test can pass

@@ -11,14 +11,28 @@ class TM::Project
   end
 
   def completed_tasks
-    completed_tasks = @tasks.select{ |task| task.status == 1 }
-    completed_tasks.sort_by{ |task| task.created_at }
+    completed_tasks = []
+    TM.database.tasks.each do |key, value|
+      task = TM.database.build_task(value)
+      if task.status == 1
+        completed_tasks << task
+      end
+    end
+    completed_tasks
   end
 
   def incomplete_tasks
-    # Find incomplete tasks, sorted by overdue? first, then by priority. In case of priority tie, sort by created at, oldest first
-    incomplete_tasks = @tasks.select{ |task| task.status == 0 }
-    incomplete_tasks = incomplete_tasks.sort_by{ |task| [ -task.overdue, -task.priority, task.created_at] }
+    # Find incomplete tasks sory by priority. In case of priority tie, sort by created at, oldest first
+    # Removed overdue functionality for now, restore once basic function is working
+    incomplete_tasks = []
+    TM.database.tasks.each do |key,value|
+      task = TM.database.build_task(value)
+      if task.status == 0
+        incomplete_tasks << task
+      end
+    end
+    incomplete_tasks = incomplete_tasks.sort_by{ |task| [-task.priority, task.created_at] }
+    incomplete_tasks
   end
 
   def overdue_tasks
