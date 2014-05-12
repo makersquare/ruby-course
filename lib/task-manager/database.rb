@@ -12,16 +12,9 @@ class TM::DB
 
   def initialize
     @projects = {}
-    # { id: {name: "project1, id: 1"}}
     @project_count = 0
     @tasks = {}
     @task_count = 0
-  end
-
-  ## universal methods
-
-  def get_timestamp
-    Time.now
   end
 
   ##########
@@ -29,13 +22,10 @@ class TM::DB
   ##########
 
   def build_project(data)
-    # TM::Project.new(name: data[:name], id: data[:id])
     TM::Project.new(data)
   end
 
   def create_project(data)
-    ## should i validate the 'data' argument?
-    ## what if already a project with same id?...reject!
     @project_count +=1
     data[:id] ||= @project_count
     if @projects[data[:id]]
@@ -62,15 +52,10 @@ class TM::DB
   #######
 
   def build_task(data)
-    #name, id, description, priority, date_created, due_date, date_completed
-    # completed, project_id --> independent variables/properties
     TM::Task.new(data)
   end
 
   def create_task(data)
-    ## should i validate the 'data' argument?
-    ## what if already a project with same id?...reject!
-    # how to hanlde the auto-genarated timestamp?
     @task_count +=1
     data[:id] ||= @task_count
     if @tasks[data[:id]]

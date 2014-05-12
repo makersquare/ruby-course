@@ -3,32 +3,26 @@ require 'spec_helper'
 describe 'Database class' do
 
   # get this to work eventually! takes place of before each for this case
-  # let(:db) {TM.db}
+  let(:db) {TM.db}
 
   describe 'initialize method' do
-    # db = TM::DB.new
-    # puts TM::DB.projects.inspect
     it "should have empty projects hash" do 
-      expect(TM.db.projects.size).to eq(0)
-      expect(TM.db.projects.class).to eq(Hash)
+      expect(db.projects.size).to eq(0)
+      expect(db.projects.class).to eq(Hash)
     end
     
     it "project_count_should be zero" do 
-      expect(TM.db.project_count).to eq(0)
+      expect(db.project_count).to eq(0)
     end
 
     it "can't create more than 1 instance" do
-      # puts db.object_id
-      # db2 = TM::DB.new
-      # puts db2.object_id
-      expect(TM.db.object_id == TM.db.object_id).to eq(true)
+      expect(db.object_id == db.object_id).to eq(true)
     end
 
   end
 
   describe 'build_project method' do
     it "return a Project object" do 
-      db = TM::DB.new
       data = { name: "Twitter", id: 1}
       project1 = db.build_project(data)
 
@@ -40,7 +34,6 @@ describe 'Database class' do
 
   describe 'create_project method' do
     it "increments @project_count" do 
-      db = TM::DB.new
       data = { name: "test", id: 1}
       db.create_project(data)
       expect(db.projects.size).to eq(1)
@@ -53,8 +46,6 @@ describe 'Database class' do
     ## add test to see if create project from data with just name, no id
     
     it "can create more than 1 project correctly" do 
-      db = TM::DB.new
-
       data = { name: "test", id: 1}
       project1 = db.create_project(data)
       expect(project1.class).to eq(TM::Project)
@@ -75,8 +66,6 @@ describe 'Database class' do
     end
 
     it "returns nil and doesn't affect @projects if id already exists" do 
-      db = TM::DB.new
-
       data = { name: "test", id: 1}
       project1 = db.create_project(data)
       expect(project1.class).to eq(TM::Project)
@@ -98,13 +87,11 @@ describe 'Database class' do
   
   describe 'get_project method' do
     it "return nil if no projects" do 
-      db = TM::DB.new
       project1 = db.get_project(1)
       expect(project1).to eq(nil)
     end
 
     it "return the correct project as a Project object" do 
-      db = TM::DB.new
       data = { name: "Twitter", id: 1}
       db.create_project(data)
 
@@ -126,14 +113,12 @@ describe 'Database class' do
   
   describe 'destroy_project method' do
     it "return nil if no projects exist" do 
-      db = TM::DB.new
       project1 = db.destroy_project(1)
       expect(project1).to eq(nil)
       expect(db.projects.size).to eq(0)      
     end
 
     it "delete the correct object and reduce size" do 
-      db = TM::DB.new
       data = { name: "Twitter", id: 1}
       db.create_project(data)
 
@@ -160,7 +145,6 @@ describe 'Database class' do
 
   describe 'build_task method' do
     it "return a Task object" do 
-      db = TM::DB.new
       data = { name: "Buy Eggs", id: 1, description: "One Dozen"}
       task1 = db.build_task(data)
 
@@ -191,7 +175,6 @@ describe 'Database class' do
 
   describe 'create_task method' do
     it "increments @task_count" do 
-      db = TM::DB.new
       data = { name: "Buy Eggs", id: 1, description: "One Dozen"}
       task1 = db.create_task(data)
       expect(db.tasks.size).to eq(1)
@@ -204,8 +187,6 @@ describe 'Database class' do
     ## add test to see if create project from data with just name, no id
     
     it "can create more than 1 task correctly" do 
-      db = TM::DB.new
-
       data = { name: "Buy Eggs", id: 1, description: "One Dozen"}
       task1 = db.create_task(data)
       expect(task1.class).to eq(TM::Task)
@@ -230,8 +211,6 @@ describe 'Database class' do
     end
 
     it "returns nil and doesn't affect @tasks if id already exists" do 
-      db = TM::DB.new
-
       data = { name: "Buy Eggs", id: 1, description: "One Dozen"}
       task1 = db.create_task(data)
       expect(task1.class).to eq(TM::Task)
@@ -252,13 +231,11 @@ describe 'Database class' do
 
   describe 'get_task method' do
     it "returns nil if no tasks" do 
-      db = TM::DB.new
       task1 = db.get_task(1)
       expect(task1).to eq(nil)
     end
 
     it "returns nil if id not found" do 
-      db = TM::DB.new
       data = { name: "Buy Eggs", id: 1, description: "One Dozen"}
       db.create_task(data)
       expect(db.tasks.size).to eq(1)
@@ -269,7 +246,6 @@ describe 'Database class' do
     end
 
     it "return the correct task as a Task object" do 
-      db = TM::DB.new
       data = { name: "Buy Eggs", id: 1, description: "One Dozen"}
       db.create_task(data)
 
@@ -292,14 +268,12 @@ describe 'Database class' do
 
   describe 'destroy_task method' do
     it "return nil if no tasks exist" do 
-      db = TM::DB.new
       task1 = db.destroy_task(1)
       expect(task1).to eq(nil)
       expect(db.tasks.size).to eq(0)      
     end
 
     it "delete the correct object and reduce size" do 
-      db = TM::DB.new
       data = { name: "Buy Eggs", id: 1, description: "One Dozen"}
       db.create_task(data)
 
@@ -323,5 +297,4 @@ describe 'Database class' do
       expect(db.tasks[2]).to eq(nil)
     end
   end
-
 end
