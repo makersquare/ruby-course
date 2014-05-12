@@ -2,11 +2,10 @@
 require 'pry-debugger'
 
 class TM::Project
-    attr_accessor :name, :pid, :complete
+    attr_accessor :name, :pid
 
     def initialize(name, pid)
       @name = name
-      @complete = false
       @pid = pid
     end
 
