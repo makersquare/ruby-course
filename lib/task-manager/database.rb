@@ -23,7 +23,7 @@ class TM::DB
   end
 
   def update_project(id, data)
-    data.each {|x,y| @projects[id][:x] = data[:x] }
+    data.map {|x,y| @projects[id][x] = data[x] }
     return TM::DB.build_project(data)
   end
 
@@ -54,7 +54,7 @@ class TM::DB
   end
 
   def update_task(id, data)
-    data.each {|x,y| @tasks[:id][:x] = data[:x]}
+    data.map {|x,y| @tasks[id][x] = data[x]}
     return TM::DB.build_task(data)
   end
 

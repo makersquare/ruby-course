@@ -31,7 +31,7 @@ describe 'Database' do
     it 'should update the projects name in the projects hash given the id of the project' do
       proj1
       result = db.update_project(proj1.pid, name: "New Project")
-      expect(result.name).to eq("New Project")
+      expect(db.projects[1][:name]).to eq("New Project")
     end
   end
 
@@ -87,7 +87,11 @@ describe 'Database' do
   end
 
   describe '#update_task' do
-    xit 'should update the given data in the correct task in the task hash' do
+    it 'should update the given data in the correct task in the task hash' do
+      task1
+      task2
+      result1 = db.update_task(task2.tid, complete: true)
+      expect(db.tasks[2][:complete]).to eq(true)
     end
 
     xit 'should return an instance of the TM::Task class with the updated data' do
