@@ -41,11 +41,11 @@ class TM::TerminalClient
   end
 
   def list
-    projects = TM::DB.projects
+    projects = TM::DB.db.projects
     puts "ID\tProject Name\t% Done \t% Over Due"
     projects.each do|x,y|
-      percentage = TM::DB.projects_tasks(x)
-      puts "#{x[:pid]}\t#{x[:name]}\t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
+      percentage = TM::DB.db.projects_tasks(x)
+      puts "#{y[:pid]}\t#{y[:name]}\t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
     end
     @command = gets.chomp
     self.call_methods(@command)
@@ -54,7 +54,7 @@ class TM::TerminalClient
   def create_project
     puts "Please enter a project name:"
     name = gets.chomp
-    project = TM::DB.create_project(name: name)
+    project = TM::DB.db.create_project(name: name)
     puts "You created a new project, \"#{project.name}\"! It's ID is: #{project.pid}"
     @command = gets.chomp
     self.call_methods(@command)
@@ -69,7 +69,7 @@ class TM::TerminalClient
     priority = gets.chomp
     puts "Please enter the date you want to complete this in the form \'Year Month Day\'."
     duedate = gets.chomp
-    task = TM::DB.create_task(pid: projid.to_i, desc: description, pnum: priority.to_i, duedate: duedate)
+    task = TM::DB.db.create_task(pid: projid.to_i, desc: description, pnum: priority.to_i, duedate: duedate)
     puts "You created a new task \"#{task.desc}!\""
     @command = gets.chomp
     self.call_methods(@command)

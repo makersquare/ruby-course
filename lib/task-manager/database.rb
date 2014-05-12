@@ -39,16 +39,14 @@ class TM::DB
 
   def projects_tasks(pid)
     done = @tasks.select{|x,y| @tasks[x][:pid] == pid && @tasks[x][:complete] == true}
-    done.sort_by! {|t| t.date}
     not_done = @tasks.select{|x,y| @tasks[x][:pid] == pid && @tasks[x][:complete] == false}
-    not_done.sort_by! {|t| [t.duedate, t.pnum, t.date]}
     total = done.length + not_done.length
     percent_done = 0
     percent_overdue = 0
     percent_done = done.length/total*100 if done.length > 0
     t = Time.now
     today = "#{t.year} #{t.month} #{t.day}"
-    over = not_done.select{|task| task[:duedate] < today}
+    over = not_done.select{|x,y| not_done[x][:duedate] < today}
     percent_overdue = over.length/total*100 if over.length > 0
     return {done: done, not_done: not_done, over: over, percent_done: percent_done, percent_over: percent_overdue}
   end
@@ -97,8 +95,8 @@ class TM::DB
   def self.build_employee(data)
   end
 
-end
+  def self.db
+    @__db_instance ||= TM::DB.new
+  end
 
-def self.db
-  @__db_instance ||= DB.new
 end
