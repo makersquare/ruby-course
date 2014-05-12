@@ -13,45 +13,28 @@ class TerminalClient
 		while !exit_program do
 			print ">> "
 			input = gets.chomp
+			args = input.gsub(/\"/, '').split(" ")
+			command = args[0]
 
-			input_arguments = input.gsub(/\"/, '').split(" ")
-
-			case input_arguments[0]
-			when "help" 
-				list_commands
-			when "list" , "ls"
-				list_projects
-			when "create", "c"
-				if check_arguments(input_arguments,1, unlimited: true)
-					# project = @@db.create_project({name: input_arguments[1...input_arguments.length].join(" ")})
-					project = TM.db.create_project({name: input_arguments[1...input_arguments.length].join(" ")})
-					# @@projects << TM::Project.new(input_arguments[1...input_arguments.length].join(" "))
-					# puts "[Created new project '#{@@projects.last.name} with id=#{@@projects.last.id}]"
-					puts "[Created new project '#{project.name} with id=#{project.id}]"
-				end
+			case command
+			when "help" then list_commands
+			when "list" , "ls" then list_projects
+			when "create", "c" then create(args)				
 			when "show", "s"
-				list_tasks(input_arguments[1], completed: false) if check_arguments(input_arguments,1)
+				list_tasks(args[1], completed: false) if check_arguments(args,1)
 			when "history", "h"
-				list_tasks(input_arguments[1], completed: true) if check_arguments(input_arguments,1)
-			when "add", "a"
-				if check_arguments(input_arguments, 3, unlimited: true)
-					project_id = input_arguments[1].to_i
-					priority = input_arguments[2]
-					description = input_arguments[3...input_arguments.length].join(" ")
-					task = TM.db.create_task({project_id: project_id, priority: priority, description: description})
-					# task = TM::Task.new(priority: input_arguments[2], description: input_arguments[3...input_arguments.length].join(" "))
-					# add_task_to_project(task, project_id)
-					puts "[Added task '#{task.description}' to project id=#{project_id}]"
-				end
+				list_tasks(args[1], completed: true) if check_arguments(args,1)
+			when "add", "a" then add_task(args)
+				
 			when "mark", "m"
-				if check_arguments(input_arguments, 1)
-					mark_task_complete_with_id(input_arguments[1])
-					puts "[Marked task id=#{input_arguments[1]} as complete.]"
+				if check_arguments(args, 1)
+					mark_task_complete_with_id(args[1])
+					puts "[Marked task id=#{args[1]} as complete.]"
 				end
 			when "exit", "quit", "q"
 				exit_program = true
 			else
-				puts "Command [#{input_arguments[0]}] not recognized."
+				puts "Command [#{args[0]}] not recognized."
 				puts "Type 'help' for list of commands"
 			end
 		end
@@ -73,15 +56,15 @@ class TerminalClient
 		puts "   exit (q)                   quits application"
 	end
 
-	def self.check_arguments(input_arguments, expected_num_arguments, unlimited: false)
-		if input_arguments.size < expected_num_arguments +1
-			puts "Too few arguments for [#{input_arguments[0]}]."
+	def self.check_arguments(args, expected_num_arguments, unlimited: false)
+		if args.size < expected_num_arguments +1
+			puts "Too few arguments for [#{args[0]}]."
 			return false
 		end
 
 		unless unlimited
-			if input_arguments.size > expected_num_arguments +1
-				puts "Too many arguments for [#{input_arguments[0]}]."
+			if args.size > expected_num_arguments +1
+				puts "Too many arguments for [#{args[0]}]."
 				return false
 			end
 		end
@@ -105,12 +88,29 @@ class TerminalClient
 		end
 	end
 
+	def self.create(args)
+		if check_arguments(args,1, unlimited: true)
+			project = TM.db.create_project({name: args[1...args.length].join(" ")})
+			puts "[Created new project '#{project.name} with id=#{project.id}]"
+		end
+	end
+
 	def self.list_tasks(project_id, completed: true)
 		project = get_project_by_id(project_id)
 		if project == nil
 			puts "Project with id='#{project_id}' not found."
 		else
 			completed ? project.list_completed_tasks_by_date : project.list_incompleted_tasks_by_priority
+		end
+	end
+
+	def self.add_task(args)
+		if check_arguments(args, 3, unlimited: true)
+			project_id = args[1].to_i
+			priority = args[2]
+			description = args[3...args.length].join(" ")
+			task = TM.db.create_task({project_id: project_id, priority: priority, description: description})
+			puts "[Added task '#{task.description}' to project id=#{project_id}]"
 		end
 	end
 
