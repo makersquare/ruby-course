@@ -19,11 +19,11 @@ class TerminalClient
 			case command
 			when "help" then list_commands
 			when "list" , "ls" then list_projects
-			when "create", "c" then create(args)				
-			when "show", "s"
-				list_tasks(args[1], completed: false) if check_arguments(args,1)
-			when "history", "h"
-				list_tasks(args[1], completed: true) if check_arguments(args,1)
+			when "create", "c" then create_project(args)
+			when "show", "s" then show_remaining_tasks(args)
+				# list_tasks(args[1], completed: false) if check_arguments(args,1)
+			when "history", "h" then show_completed_tasks(args)
+				# list_tasks(args[1], completed: true) if check_arguments(args,1)
 			when "add", "a" then add_task(args)
 				
 			when "mark", "m"
@@ -88,19 +88,10 @@ class TerminalClient
 		end
 	end
 
-	def self.create(args)
+	def self.create_project(args)
 		if check_arguments(args,1, unlimited: true)
 			project = TM.db.create_project({name: args[1...args.length].join(" ")})
 			puts "[Created new project '#{project.name} with id=#{project.id}]"
-		end
-	end
-
-	def self.list_tasks(project_id, completed: true)
-		project = get_project_by_id(project_id)
-		if project == nil
-			puts "Project with id='#{project_id}' not found."
-		else
-			completed ? project.list_completed_tasks_by_date : project.list_incompleted_tasks_by_priority
 		end
 	end
 
@@ -111,6 +102,30 @@ class TerminalClient
 			description = args[3...args.length].join(" ")
 			task = TM.db.create_task({project_id: project_id, priority: priority, description: description})
 			puts "[Added task '#{task.description}' to project id=#{project_id}]"
+		end
+	end
+
+	def self.show_remaining_tasks(args)
+		list_tasks(args[1].to_i, completed: false) if check_arguments(args,1)
+	end
+
+	def self.show_completed_tasks(args)
+		list_tasks(args[1].to_i, completed: true) if check_arguments(args,1)
+	end
+
+	def self.list_tasks(project_id, completed: true)
+		project = TM.db.get_project(project_id)
+		if project == nil
+			puts "Project with id='#{project_id}' not found."
+			return project
+		end
+		TM.db.tasks.each do |task_key, task_data|
+			task = TM.db.build_task(task_data)
+			if completed
+				task.print_details if task.project_id == project.id && task.completed
+			else
+				task.print_details if task.project_id == project.id && !task.completed
+			end
 		end
 	end
 
