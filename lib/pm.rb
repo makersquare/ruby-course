@@ -64,10 +64,6 @@ class TerminalClient
 		return true
 	end
 
-	def self.add_project(project)
-		@@projects << project
-	end
-
 	def self.list_projects
 		puts "[No projects exist]" if TM.db.projects.size == 0
 		projects = TM.db.get_all_projects
@@ -97,11 +93,17 @@ class TerminalClient
 	end
 
 	def self.show_remaining_tasks(args)
-		list_tasks(args[1].to_i, completed: false) if check_arguments(args,1)
+		return if !check_arguments(args,1)
+		project_id = args[1].to_i
+		tasks = TM.db.get_remaining_tasks_from_project(project_id)
+		tasks.each {|task| task.print_details}
 	end
 
 	def self.show_completed_tasks(args)
-		list_tasks(args[1].to_i, completed: true) if check_arguments(args,1)
+		return if !check_arguments(args,1)
+		project_id = args[1].to_i
+		tasks = TM.db.get_completed_tasks_from_project(project_id)
+		tasks.each {|task| task.print_details}
 	end
 
 	def self.list_tasks(project_id, completed: true)
@@ -110,8 +112,8 @@ class TerminalClient
 			puts "Project with id='#{project_id}' not found."
 			return project
 		end
-		TM.db.tasks.each do |task_key, task_data|
-			task = TM.db.build_task(task_data)
+		tasks = TM.db.get_all_tasks
+		tasks.each do |task|
 			if completed
 				task.print_details if task.project_id == project.id && task.completed
 			else

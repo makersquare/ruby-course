@@ -115,6 +115,16 @@ class TM::DB
     all
   end
 
+  def get_completed_tasks_from_project(project_id)
+    all = get_tasks_from_project(project_id)
+    all.select {|task| task.completed }
+  end
+
+  def get_remaining_tasks_from_project(project_id)
+    all = get_tasks_from_project(project_id)
+    all.select {|task| !task.completed }
+  end
+
   ###############
   # Print methods
   ###############
