@@ -78,21 +78,21 @@ class TM::TerminalClient
   def show
     puts "Please enter a project ID."
     projectid = gets.chomp
-    tasks = TM::Task.incomplete_tasks(projectid.to_i)
-    projects = TM::Project.list_projects
-    project = projects.select {|project| project.pid == projectid.to_i}
-    project_name = project[0]
-    project_name = project_name.name
+    projects = TM::DB.db.projects
     puts "Project Name\t% Done \t% Over Due"
-    percentage = TM::Project.percentage_complete(projectid.to_i)
-    puts "#{project_name}\t#{percentage}\n\n"
+    projects.each do|x,y|
+      if y[:pid] == projectid
+        percentage = TM::DB.db.projects_tasks(x)
+        puts "#{y[:name]}\t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
+      end
+    end
     puts " Priority\tID Description\tDue Date\tOver Due?"
     t = Time.now
     today = "#{t.year} #{t.month} #{t.day}"
-    tasks.each do |task|
+    TM::DB.db.tasks.each do |x,y|
       overdue = 'No'
-      overdue = 'Yes' if task.duedate < today
-      puts "\t#{task.pnum}\t#{task.tid}  #{task.description}\t#{task.duedate}\t#{overdue}"
+      overdue = 'Yes' if y[:duedate] < today
+      puts "\t#{y[:pnum]}\t#{y[:tid]}  #{y[:desc]}\t#{y[:duedate]}\t#{overdue}"
     end
     @command = gets.chomp
     self.call_methods(@command)
