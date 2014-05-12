@@ -10,7 +10,7 @@ module TM
 
     def create_project(data)
       id = @project_count
-      @projects[id]= [name: data[:name], id: id]
+      @projects[id]= {name: data[:name], id: id}
       build_project(@projects[id])
       @project_count+=1
     end
@@ -19,15 +19,15 @@ module TM
       build_project(@projects[id])
     end
 
-    def update_project(id,hash)
-      @projects[id].each {|x,y| y = hash[x] }
-      build_project(@projects[id])
-      #attrs = @projects[project.id]
-      #attrs[:name] = project.name
+    def update_project(project)
+      #@projects[id].each {|x,y| hash[x] = y }
+      #build_project(@projects[id])
+      attrs = @projects[project.id]
+      attrs[:name] = project.name
     end
 
     def destroy_project(id)
-      @projects[id] = nil
+      @projects.delete_if {|x,y| x == id}
     end
 
     def build_project(data)
@@ -36,7 +36,7 @@ module TM
 
     def create_task(data)
       id = @task_count
-      @tasks[id]= [name: data[:name], id: id, project_id: data[:project_id], description: data[:description], priority: data[:priority], status: data[:status], due_date: data[:due_date]]
+      @tasks[id]= {name: data[:name], id: id, project_id: data[:project_id], description: data[:description], priority: data[:priority], status: data[:status], due_date: data[:due_date]}
       build_task(@tasks[id])
       @task_count+=1
     end
@@ -45,11 +45,12 @@ module TM
       build_task(@tasks[id])
     end
 
-    def update_task(id,hash)
-      @tasks[id].each {|x,y| y = hash[x] }
-      build_task(@tasks[id])
-      #attrs = @projects[project.id]
-      #attrs[:name] = project.name
+    def update_task(task)
+      # @tasks[id].each {|x,y| y = hash[x] }
+      # build_task(@tasks[id])
+      attrs = @tasks[task.id]
+      attrs[:name] = task.name
+      attrs[:status] = task.status
     end
 
     def destroy_task(id)
