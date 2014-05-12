@@ -71,7 +71,7 @@ class TM::DB
   end
 
   def update_task(id, data)
-    data.map {|x,y| @tasks[id][x] = data[x]}
+    data.map {|x,y| @tasks[id][x] = y}
     return TM::DB.build_task(data)
   end
 

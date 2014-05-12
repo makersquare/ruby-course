@@ -101,16 +101,20 @@ class TM::TerminalClient
   def history
     puts "Please enter a project ID."
     projectid = gets.chomp
-    tasks = TM::Task.completed_tasks(projectid.to_i)
-    projects = TM::Project.list_projects
-    project = projects.select {|project| project.pid == projectid.to_i}
-    project_name = project[0]
-    project_name = project_name.name
+    projects = TM::DB.db.projects
     puts "Project Name\t% Done \t% Over Due"
-    percentage = TM::Project.percentage_complete(projectid.to_i)
-    puts "\"#{project_name}\t#{percentage}\"\n\n"
+    projects.each do|x,y|
+      if y[:pid] == projectid
+        percentage = TM::DB.db.projects_tasks(x)
+        puts "#{y[:pid]}\t#{y[:name]}\t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
+      end
+    end
     puts " Priority\tID Description\tDue Date"
-    tasks.each {|task|  puts "\t#{task.pnum}\t#{task.tid}  #{task.description}\t#{task.duedate}"}
+    TM::DB.db.tasks.each do |x,y|
+      if y[:complete] && y[:pid] == projectid
+        puts "\t#{y[:pnum]}\t#{y[:tid]}  #{y[:desc]}\t#{y[:duedate]}"
+      end
+    end
     @command = gets.chomp
     self.call_methods(@command)
   end
@@ -118,7 +122,7 @@ class TM::TerminalClient
   def mark_task
     puts "Please enter the task ID."
     taskid = gets.chomp
-    task = TM::Task.mark_complete(taskid.to_i)
+    TM::DB.db.update_task(taskid, complete: true)
     @command = gets.chomp
     self.call_methods(@command)
   end
