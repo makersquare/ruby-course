@@ -23,14 +23,14 @@ class TM::DB
   end
 
   def update_project(id, data)
-    data.each {|x,y| @projects[:id][:x] = data[:x] }
+    data.each {|x,y| @projects[id][:x] = data[:x] }
     return TM::DB.build_project(data)
   end
 
   def destroy_project(id)
-    @projects.delete("id")
+    @projects.delete(id)
     @tasks.each do |x,y|
-      @tasks.delete("x") if @tasks[:x][:pid] = id
+      @tasks.delete(x) if @tasks[:x][:pid] = id
     end
   end
 
@@ -56,7 +56,7 @@ class TM::DB
   end
 
   def destroy_task(id)
-    @tasks.delete("id")
+    @tasks.delete(id)
   end
 
   def build_task(data)

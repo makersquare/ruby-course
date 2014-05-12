@@ -29,19 +29,17 @@ describe 'Database' do
 
   describe '#update_project' do
     it 'should update the projects name in the projects hash given the id of the project' do
-    end
-
-    xit 'should return an instance of the TM::Project class with the updated data' do
+      proj1
+      result = db.update_project(proj1.pid, name: "New Project")
+      expect(result.name).to eq("New Project")
     end
   end
 
   describe '#destroy_project' do
-    xit 'should delete a project from the projects has given the id of the project' do
-    end
-  end
-
-  describe '#build_task' do
-    xit 'should be able to return an instance of the TM::Task class' do
+    it 'should delete a project from the projects has given the id of the project' do
+      proj1
+      result = db.destroy_project(proj1.pid)
+      expect(db.projects).to eq({})
     end
   end
 
