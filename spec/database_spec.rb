@@ -61,7 +61,9 @@ describe 'Database' do
       expect(task1.duedate).to eq("2014 1 1")
     end
 
-    xit 'should make a new task in the tasks hash' do
+    it 'should make a new task in the tasks hash' do
+      task1
+      expect(db.tasks).to eq(1=>{:pid=>1, :desc=>"Task 1", :pnum=>1, :duedate=>"2014 1 1", :tid=>1})
     end
   end
 
