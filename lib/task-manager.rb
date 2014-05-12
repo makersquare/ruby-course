@@ -38,8 +38,15 @@ module TM
     end
 
     def build_project(data)
-      TM::Project.new(data[:name], data[:id], data[:completed])
+      TM::Project.new(data)
     end
+
+    # Project Query Methods
+
+      # def incomplete_task(id)
+      #   hold_task = []
+      #   @task.each do |key, value|
+      #     hold_task <<
 
     # Task Methods
 
@@ -67,7 +74,7 @@ module TM
     end
 
     def build_task(data)
-      TM::Task.new(data[:id], data[:pid], data[:completed], data[:description], data[:priority], data[:creation_date])
+      TM::Task.new(data)
     end
 
   end

@@ -3,13 +3,13 @@ class TM::Task
 
   attr_reader :pid, :priority, :description, :id, :creation_date
 
-  def initialize(id, pid, completed, description, priority, creation_date)
-    @id = id
-    @pid = pid
-    @completed = completed
-    @description = description
-    @priority = priority
-    @creation_date = creation_date
+  def initialize(params)
+    @id = params[:id]
+    @pid = params[:pid]
+    @completed = params[:completed]
+    @description = params[:description]
+    @priority = params[:priority]
+    @creation_date = params[:creation_date]
   end
 
   def complete_task

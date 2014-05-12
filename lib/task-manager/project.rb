@@ -3,10 +3,10 @@ class TM::Project
   attr_reader :name, :id
   # attr_accessor :task
 
-  def initialize(name, id, completed)
-    @name = name
-    @id = id
-    @completed = completed
+  def initialize(params)
+    @name = params[:name]
+    @id = params[:id]
+    @completed = params[:completed]
   end
 
   def complete_project
@@ -24,7 +24,7 @@ class TM::Project
         hold_task << value
       end
     end
-    hold_task.sort_by { |task| [task[:creation_date], task[:priority], task[:id]]}
+    hold_task.sort_by { |task| [task[:creation_date], task[:priority], task[:id]] }
   end
 
   def completed_task
@@ -34,7 +34,7 @@ class TM::Project
         hold_task << value
       end
     end
-    hold_task.sort_by { |task| [task[:priority], task[:id]]}
+    hold_task.sort_by { |task| [task[:priority], task[:id]] }
   end
 
   def destroy

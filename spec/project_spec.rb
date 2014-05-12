@@ -8,7 +8,7 @@ describe 'Project' do
   end
 
   context 'a project is initalized' do
-    let(:project) { TM::Project.new("My_first_project", 1, false) }
+    let(:project) { TM::Project.new({ name: "My_first_project", id: 1, completed: false } )}
 
     it 'initializes with a name' do
         expect(project.name).to eq("My_first_project")
