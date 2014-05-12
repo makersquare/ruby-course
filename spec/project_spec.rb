@@ -17,16 +17,6 @@ describe 'Project' do
         expect(@p1).to be_a(TM::Project)
         expect(@p1.name).to eq("Project 1")
     end
-
-    xit "initializes with a unique id" do
-    	expect(@p1.pid).to eq(1)
-    	expect(@p2.pid).to eq(2)
-    end
   end
 
-  describe '#list_projects' do
-    xit "lists all projects" do
-    	expect(TM::Project.list_projects).to eq([@p1, @p2])
-    end
-  end
 end
