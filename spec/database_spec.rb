@@ -4,11 +4,11 @@ describe 'Database' do
 
   let(:db) { TM::DB.new }
   let(:proj1) { db.create_project({id: 1, name: "Project 1"}) }
-  let(:task1) { db.create_task({tid: 1, desc: "Task 1", pnum: 1, duedate: "2014 1 1"}) }
-  let(:task2) { db.create_task({tid: 2, desc: "Task 2", pnum: 2, duedate: "2014 6 6"}) }
+  let(:task1) { db.create_task({pid: 1, desc: "Task 1", pnum: 1, duedate: "2014 1 1"}) }
+  let(:task2) { db.create_task({pid: 1, desc: "Task 2", pnum: 2, duedate: "2014 6 6"}) }
 
   describe '#create_project' do
-    it 'should make an instance of the TM::Project class' do
+    it 'should return an instance of the TM::Project class' do
       expect(proj1.pid).to eq(1)
       expect(proj1.name).to eq("Project 1")
     end
@@ -41,13 +41,27 @@ describe 'Database' do
       result = db.destroy_project(proj1.pid)
       expect(db.projects).to eq({})
     end
+
+    xit 'should delete all the tasks assocaited with the deleted project' do
+      proj1
+      task1
+      task2
+      result = db.destroy_project(proj1.id)
+      expect(db.projects).to eq({})
+    end
   end
 
   describe '#create_task' do
-    xit 'should make a new task in the tasks hash' do
+    it 'should return an instance of the TM::Task class' do
+      task1
+      expect(task1.pid).to eq(1)
+      expect(task1.tid).to eq(1)
+      expect(task1.desc).to eq("Task 1")
+      expect(task1.pnum).to eq(1)
+      expect(task1.duedate).to eq("2014 1 1")
     end
 
-    xit 'should return an instance of the TM::Task class' do
+    xit 'should make a new task in the tasks hash' do
     end
   end
 

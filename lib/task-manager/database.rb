@@ -41,7 +41,7 @@ class TM::DB
   def create_task(data) #pid, des, pnum, duedate
     @task_count += 1
     data[:tid] = @task_count
-    @tasks[:@task_count] = data
+    @tasks[@task_count] = data
     return TM::DB.build_task(data)
   end
 
@@ -59,8 +59,8 @@ class TM::DB
     @tasks.delete(id)
   end
 
-  def build_task(data)
-    TM::Task.new(data[:pid], data[:desc], data[:duedate], data[:tid])
+  def self.build_task(data)
+    TM::Task.new(data[:pid], data[:desc], data[:pnum], data[:duedate], data[:tid])
   end
 
 end
