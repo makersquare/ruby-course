@@ -69,6 +69,10 @@ describe "TaskManager::Database" do
       @new_task = @db.create_task({ description: "Find Pizza", pid: 1, priority: 1 })
     end
 
+    it 'has a uinquie employee id' do
+      expect(@new_task[:eid]).to eq(true)
+    end
+
     it 'can add new task' do
       expect(@db.task.count).to eq(1)
     end
@@ -90,6 +94,87 @@ describe "TaskManager::Database" do
       @db.destroy_task(1)
       expect(@db.task[1]).to eq(nil)
     end
+  end
+
+  context 'a new employee is created' do
+
+    before(:each) do
+      @new_project = @db.create_project({ :name => "Pizza Party Planning" })
+      @new_task = @db.create_task({ description: "Find Pizza", pid: 1, priority: 1 })
+      @employee1 = @db.create_employee( {name: "Jason" })
+      @employee2 = @db.create_employee( {name: "Rogger" })
+    end
+
+    it 'assignes a unique ID' do
+      # binding.pry
+      expect(@db.employees[1][:id]).to eq(1)
+      expect(@db.employees[2][:id]).to eq(2)
+    end
+
+    it 'can get an employee' do
+      @employee = @db.get_employee(1)
+      expect(@employee.name).to eq("Jason")
+      # binding.pry
+    end
+
+    it 'has no initial project id' do
+      @employee = @db.get_employee(1)
+      expect(@employee.pid).to eq(nil)
+    end
+
+    it 'has no initial task id' do
+      @employee = @db.get_employee(1)
+      expect(@employee.tid).to eq(nil)
+    end
+
+    it 'can be updated' do
+      expect(@employee1[:pid]).to eq(nil)
+      @db.update_employee(1, pid: 1)
+      expect(@employee1[:pid]).to eq(1)
+    end
+
+    it 'can be destroyed' do
+      @db.destroy_employee(1)
+      expect(@db.employees[1]).to eq(nil)
+    end
+
+  end
+
+  context 'project membership is defined' do
+
+    before(:each) do
+      @new_project = @db.create_project({ :name => "Pizza Party Planning" })
+      @new_task = @db.create_task({ description: "Find Pizza", pid: 1, priority: 1 })
+      @db.create_employee( {name: "Jason" })
+      @employee1 = @db.get_employee(1)
+      @employee2 = @db.create_employee( {name: "Rogger" })
+    end
+
+    it 'is initialized when a project is created' do
+      expect(@db.project_membership[1]).to eq({})
+    end
+
+    it 'updates when an employee is assigned to a project' do
+      @db.update_membership(pid: 1, eid: 1, add: true)
+      expect(@db.project_membership[1]).to eq({1 =>true})
+    end
+
+    it 'can remove an employee from a project' do
+      @db.update_membership(pid: 1, eid: 1, add: true)
+      @db.update_membership(pid: 1, eid: 1)
+      expect(@db.project_membership[1]).to eq({})
+    end
+
+    it 'can retrieve a membership hash' do
+      @db.update_membership(pid: 1, eid: 1, add: true)
+      expect(@db.get_membership(1)).to eq({ 1 => true })
+    end
+
+    it 'can destroy a membership' do
+      @db.destroy_membership(1)
+      expect(@db.get_membership(1)).to eq(nil)
+    end
+
 
   end
 
