@@ -13,7 +13,7 @@ class TM::DB
   # Project management
 
   def build_project(data)
-    TM::Project.new(data[:name], data[:id], data[:project_tasks])
+    TM::Project.new( { name: data[:name], id: data[:id], project_tasks: data[:project_tasks] } )
   end
 
   def update_project(id, data)
@@ -52,16 +52,18 @@ class TM::DB
   # Task management
 
   def build_task(data)
-    TM::Task.new(data[:task_id], data[:project_id], data[:desc], data[:priority], data[:due_date])
+    TM::Task.new( {:task_id => data[:task_id], :project_id => data[:project_id], :description => data[:desc], :priority => data[:priority], :due_date => data[:due_date]} )
   end
 
   def create_task(data)
     @tasks[task_count] = data
     task = build_task(data)
-    @projects[data[:project_id]][:project_tasks] << task
+
+    # Add the task data to the project's :project tasks hash, with the task id as the key
+    @projects[data[:project_id]][:project_tasks][data[:task_id]] = data
+    update_project(data[:project_id], data)
     @task_count += 1
     task
-    # binding.pry
   end
 
   def show_task(id)

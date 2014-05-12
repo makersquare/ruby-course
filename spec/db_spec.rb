@@ -18,13 +18,13 @@ describe 'DB' do
 
       it 'adds the project data to the projects hash' do
         project_id = db.project_count
-        db.create_project( {:name => "Project", :id => project_id} )
+        db.create_project( {:name => "Project", :id => project_id, :tasks => []} )
         expect(db.projects).not_to be_empty
       end
 
       it 'increments the project_count by 1 each time' do
         project_id = db.project_count
-        db.create_project( {:name => "Project", :id => project_id} )
+        db.create_project( {:name => "Project", :id => project_id, :tasks => []} )
         expect(db.project_count).to eq 1
       end
     end

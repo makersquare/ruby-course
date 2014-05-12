@@ -1,13 +1,12 @@
 class TM::Project
-  attr_reader :name, :tasks, :pid, :projects
-  attr_accessor :completion
+  attr_accessor :name, :project_tasks, :pid, :projects, :completion
   @@pid = 0
   @@projects = []
 
-  def initialize(name, id, tasks)
-    @name = name
-    @pid = id
-    @tasks = {}
+  def initialize(params)
+    @name = params[:name]
+    @pid = params[:id]
+    @project_tasks = params[:project_tasks]
     @completion = 0.0
   end
 

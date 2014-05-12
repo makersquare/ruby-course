@@ -1,25 +1,24 @@
 
 class TM::Task
-  attr_reader :description, :priority, :project_id, :task_id, :created_at, :due_date, :recurring
-  attr_accessor :status, :completed_at, :overdue
+  attr_accessor :description, :priority, :project_id, :task_id, :created_at,
+                :due_date, :recurring, :status, :completed_at, :overdue
   @@task_id = 0
-  @@tasks = []
 
-  def initialize(task_id, project_id, desc, priority, due_date,opts={})
-    @project_id = project_id
-    @task_id = task_id
-    @description = desc
-    @priority = priority
+  def initialize(params)
+    @project_id = params[:project_id]
+    @task_id = params[:task_id]
+    @description = params[:desc]
+    @priority = params[:priority]
     @status = 0 # Initialize task as incomplete
     @created_at = Time.now
     @completed_at = nil
-    @due_date = Date.parse(due_date)
+    @due_date = Date.parse(params[:due_date])
     @overdue = 0
     @duplicated = false
 
     # Optional parameters
-    @tags ||= opts[:tags]
-    @recurring ||= opts[:recurring]
+    @tags ||= params[:tags]
+    @recurring ||= params[:recurring]
   end
 
   def tags
@@ -48,8 +47,8 @@ class TM::Task
     @duplicated = true
   end
 
-  def self.complete_task(task_id)
-    task = @@tasks.detect{ |task| task_id == task.task_id }
+  def complete_task(task_id)
+    task = TM.database.show_task(task_id)
     task.completed_at = Time.now
     task.status = 1
   end

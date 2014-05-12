@@ -6,8 +6,11 @@ describe 'Project' do
   before (:each) do
     TM::Project.reset_class_variables
     TM::Task.reset_class_variables
-    @project = db.create_project( {name: "project", id: db.project_count, project_tasks: []} )
-    @project1 = db.create_project( {name: "project 1", id: db.project_count, project_tasks: []} )
+    @project = db.create_project( {name: "project", id: db.project_count, project_tasks: {} } )
+    @project1 = db.create_project( {name: "project 1", id: db.project_count, project_tasks: {} } )
+    @task = db.create_task( {task_id: db.task_count, project_id: @project.pid, desc: "description1", priority: 3, due_date: "2014-05-08" } )
+    @task1 = db.create_task( {task_id: db.task_count, project_id: @project.pid, desc: "description1", priority: 10, due_date: "2014-05-08"} )
+    @task2 = db.create_task( {task_id: db.task_count, project_id: @project.pid, desc: "description1", priority: 5, due_date: "2016-05-08"} )
   end
 
   it "initializes with a unique project id and name" do
@@ -18,16 +21,16 @@ describe 'Project' do
   end
 
   it "adds new tasks to a Project array" do
-    @task = db.create_task( {id: db.task_count, project_id: @project.pid, desc: "description1", priority: 3, due_date: "2014-05-08" } )
-    @task1 = db.create_task( {id: db.task_count, project_id: @project.pid, desc: "description1", priority: 10, due_date: "2014-05-08"} )
-    @task2 = db.create_task( {id: db.task_count, project_id: @project.pid, desc: "description1", priority: 5, due_date: "2016-05-08"} )
     expect(db.projects[@project.pid][:project_tasks].length).to eq 3
+    project = db.show_project(@project.pid)
+    binding.pry
+    expect(@project.project_tasks.length).to eq 3
   end
 
-  xit "retrieves completed tasks and sorts them by creation date" do
-    TM::Task.complete_task(@task.task_id)
-    TM::Task.complete_task(@task1.task_id)
-    TM::Task.complete_task(@task2.task_id)
+  it "retrieves completed tasks and sorts them by creation date" do
+    @task.complete_task(@task.task_id)
+    @task1.complete_task(@task1.task_id)
+    @task2.complete_task(@task2.task_id)
 
     expect(@project.completed_tasks.length).to eq 3
     expect(@project.completed_tasks.first.task_id).to eq 1
