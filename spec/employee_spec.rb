@@ -18,6 +18,10 @@ describe 'Employee' do
     expect(@db.project_membership[1]).to eq({ 1 => true })
   end
 
+  it 'cannot add to a project that does not exist' do
+    expect(@employee1.assign_project(5)).to eq(false)
+  end
+
   it 'can remove an employee from a project' do
     @employee1.remove_project(1)
     expect(@db.project_membership[1]).to eq({})

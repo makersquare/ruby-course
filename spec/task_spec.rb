@@ -6,6 +6,7 @@ describe 'Task' do
     allow(Time).to receive(:now).and_return(Time.parse("8am"))
     @db.create_task({description: "New Task", priority: 1, pid: 1})
     @db.create_task({description: "Second Task", priority: 2, pid: 1})
+    @db.create_employee(name: "Jason")
     @task = @db.get_task(1)
   end
 
@@ -43,6 +44,18 @@ describe 'Task' do
       expect(@db.task.count).to eq(1)
     end
 
-  end
+    it 'can assign and remove an employee' do
+      @db.create_project(name: "New Project")
 
+      @task.assign_employee(1)
+      expect(@db.get_task(1).eid).to eq(false)
+
+      @db.get_employee(1).assign_project(1)
+      @task.assign_employee(1)
+      expect(@db.get_task(1).eid).to eq(1)
+
+      @db.get_task(1).remove_employee
+      expect(@db.get_task(1).eid).to eq(false)
+    end
+  end
 end

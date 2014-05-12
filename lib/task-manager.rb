@@ -10,11 +10,14 @@ module TM
       # Project specs
       @projects = {}
       @projects_counter = 0
+
       # Project relationships
       @project_membership = {}
+
       # Task specs
       @task = {}
       @task_counter = 0
+
       # Employee specs
       @employees = {}
       @employee_counter = 0
@@ -69,7 +72,7 @@ module TM
       @task_counter += 1
       data[:id] = @task_counter
       data[:completed] = false
-      data[:eid] = true
+      data[:eid] = false
       data[:creation_date] = Time.now
       @task[data[:id]] = data
     end
@@ -93,7 +96,7 @@ module TM
       TM::Task.new(data)
     end
 
-    # Employee Methods
+  # Employee Methods
 
   def create_employee(data)
     @employee_counter += 1
@@ -132,7 +135,11 @@ module TM
   end
 
   def update_membership(params)
-    params[:add] ? @project_membership[params[:pid]][params[:eid]] = true : @project_membership[params[:pid]].delete(params[:eid])
+    if params[:add]
+      @project_membership[params[:pid]][params[:eid]] = true
+    else
+      @project_membership[params[:pid]].delete(params[:eid])
+    end
   end
 
   def destroy_membership(id)

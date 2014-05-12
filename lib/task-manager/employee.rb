@@ -10,11 +10,19 @@ class TM::Employee
   end
 
   def assign_project(pid)
-    TM.db.update_membership(pid: pid, eid: @id, add: true)
+    if TM.db.projects[pid]
+      TM.db.update_membership(pid: pid, eid: @id, add: true)
+    else
+      return false
+    end
   end
 
   def remove_project(pid)
-    TM.db.update_membership(pid: pid, eid: @id)
+    if TM.db.projects[pid]
+      TM.db.update_membership(pid: pid, eid: @id)
+    else
+      false
+    end
   end
 
 

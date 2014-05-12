@@ -70,7 +70,7 @@ describe "TaskManager::Database" do
     end
 
     it 'has a uinquie employee id' do
-      expect(@new_task[:eid]).to eq(true)
+      expect(@new_task[:eid]).to eq(false)
     end
 
     it 'can add new task' do
