@@ -70,14 +70,12 @@ class TerminalClient
 
 	def self.list_projects
 		puts "[No projects exist]" if TM.db.projects.size == 0
-		TM.db.projects.each do |project_key, project_data|
-			project = TM.db.build_project(project_data)
+		projects = TM.db.get_all_projects
+		projects.each do |project|
 			project.print_details
 			TM::Task.print_header
-			TM.db.tasks.each do |task_key, task_data|
-				task = TM.db.build_task(task_data)
-				task.print_details if task.project_id == project.id
-			end
+			tasks = TM.db.get_tasks_from_project(project.id)
+			tasks.each {|task| task.print_details}
 		end
 	end
 

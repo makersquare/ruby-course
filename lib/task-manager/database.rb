@@ -47,6 +47,16 @@ class TM::DB
     build_project(@projects.delete(id)) unless project.size == 0
   end
 
+  #################
+  # Project Queries
+  #################
+
+  def get_all_projects
+    all = []
+    @projects.each {|id, data| all << build_project(data)}
+    all
+  end
+
   #######
   # Tasks
   #######
@@ -85,6 +95,24 @@ class TM::DB
   def destroy_task(id)
     task = @tasks.select { |key, value| key == id }
     build_task(@tasks.delete(id)) unless task.size == 0
+  end
+
+  ##############
+  # Task Queries
+  ##############
+
+  def get_all_tasks
+    all = []
+    @tasks.each {|id, data| all << build_task(data)}
+    all
+  end
+
+  def get_tasks_from_project(project_id)
+    all = []
+    @tasks.each do |id, data|
+      all << build_task(data) if data[:project_id] == project_id
+    end
+    all
   end
 
   ###############
