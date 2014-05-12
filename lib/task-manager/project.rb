@@ -10,18 +10,6 @@ class TM::Project
       @pid = pid
     end
 
-    # def self.reset_class_variables
-    #   @@id_counter = 0
-    #   @@projects = []
-    # end
-
-    # def self.list_projects
-    #   @@projects
-    # end
-
-    def edit_project()
-    end
-
     def self.percentage_complete(projid)
       task_done = TM::Task.completed_tasks(projid.to_i)
       task_do = TM::Task.incomplete_tasks(projid.to_i)

@@ -14,28 +14,6 @@ class TM::Task
     @complete = complete
   end
 
-  def self.reset_class_variables
-    @@tid_counter = 0
-    @@tasks = []
-    @@completed_tasks = []
-  end
-
-  def self.list_tasks
-    @@tasks
-  end
-
-  def self.mark_complete(taskid)
-    task = @@tasks.select{|task| task.tid == taskid}
-    task = task[0]
-   if task.complete == true
-      puts "Task is already complete"
-    else
-      task.complete = true
-      @@completed_tasks << task
-      puts "The task has been marked as complete!"
-    end
-  end
-
   def self.completed_tasks(projid)
     task = @@completed_tasks.select{|task| task.pid == projid.to_i}
     task.sort_by! {|task| task.date}
