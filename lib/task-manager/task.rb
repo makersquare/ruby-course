@@ -2,7 +2,6 @@
 class TM::Task
   attr_accessor :description, :priority, :project_id, :task_id, :created_at,
                 :due_date, :recurring, :status, :completed_at, :overdue
-  @@task_id = 0
 
   def initialize(params)
     @project_id = params[:project_id]

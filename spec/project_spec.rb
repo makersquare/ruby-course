@@ -26,12 +26,13 @@ describe 'Project' do
     expect(@project.project_tasks.length).to eq 3
   end
 
-  it "retrieves completed tasks and sorts them by creation date" do
+  it "retrieves completed tasks and sorts them by completion date" do
     @task.complete_task(@task.task_id)
     @task1.complete_task(@task1.task_id)
     @task2.complete_task(@task2.task_id)
 
     expect(@project.completed_tasks.length).to eq 3
+    expect(@project.completed_tasks.first.task_id).to eq (0)
     # Should return task objects, not data
     expect(@project.completed_tasks.first).to be_a(TM::Task)
   end

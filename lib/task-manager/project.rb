@@ -1,13 +1,11 @@
 class TM::Project
-  attr_accessor :name, :project_tasks, :pid, :projects, :completion
+  attr_accessor :name, :project_tasks, :pid, :projects
   @@pid = 0
-  @@projects = []
 
   def initialize(params)
     @name = params[:name]
     @pid = params[:id]
     @project_tasks = params[:project_tasks]
-    @completion = 0.0
   end
 
   def completed_tasks
@@ -18,7 +16,7 @@ class TM::Project
         completed_tasks << task
       end
     end
-    completed_tasks
+    completed_tasks.sort_by{|task| task.completed_at}
   end
 
   def incomplete_tasks
@@ -31,8 +29,7 @@ class TM::Project
         incomplete_tasks << task
       end
     end
-    incomplete_tasks = incomplete_tasks.sort_by{ |task| [-task.priority, task.created_at] }
-    incomplete_tasks
+    incomplete_tasks.sort_by{ |task| [-task.priority, task.created_at] }
   end
 
   def overdue_tasks
