@@ -35,6 +35,11 @@ describe 'Project' do
       @new_project.complete_project
       expect(@db.get_project(1).completed?).to eq(true)
     end
+
+    it 'can delete a project' do
+      @new_project.destroy
+      expect(@db.projects.count).to eq(0)
+    end
   end
 
   context 'a project is created and task are assigned to it' do

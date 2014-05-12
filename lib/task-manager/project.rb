@@ -37,4 +37,8 @@ class TM::Project
     hold_task.sort_by { |task| [task[:priority], task[:id]]}
   end
 
+  def destroy
+    TM.db.destroy_project(@id)
+  end
+
 end

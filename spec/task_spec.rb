@@ -38,6 +38,11 @@ describe 'Task' do
       expect(@task.creation_date).to eq(Time.parse("8am"))
     end
 
+    it 'can destroy a task' do
+      @db.get_task(1).destroy
+      expect(@db.task.count).to eq(1)
+    end
+
   end
 
 end

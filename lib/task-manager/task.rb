@@ -20,4 +20,8 @@ class TM::Task
     @completed
   end
 
+  def destroy
+    TM.db.destroy_task(@id)
+  end
+
 end
