@@ -10,8 +10,12 @@ class TM::Employee
   end
 
   def assign_project(pid)
-    database = TM.db
-    database.update_membership(pid: pid, eid: @id, add: true)
+    TM.db.update_membership(pid: pid, eid: @id, add: true)
   end
+
+  def remove_project(pid)
+    TM.db.update_membership(pid: pid, eid: @id)
+  end
+
 
 end
