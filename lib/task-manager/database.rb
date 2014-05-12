@@ -75,12 +75,11 @@ class TM::DB
   def update_task(id, data)
     # Need to add check if the task exists or not
     # task = @tasks.select { |key, value| key == id }
-    if @tasks.has_key?(id)
-      @tasks[id].merge!(data)
-    end
+    @tasks[id].merge!(data) if @tasks.has_key?(id)
     # if @tasks.select { |key, value| key == id }
     # data.each {|key, val| @tasks[id][key] = val}
     build_task(@tasks[id]) # unless task.size == 0
+    # puts @tasks.inspect
   end
 
   def destroy_task(id)

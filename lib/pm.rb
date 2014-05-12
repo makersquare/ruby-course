@@ -24,21 +24,19 @@ class TerminalClient
 			when "history", "h" then show_completed_tasks(args)
 			when "add", "a" then add_task(args)
 			when "mark", "m" then mark_task_completed(args)
-				# if check_arguments(args, 1)
-				# 	mark_task_complete_with_id(args[1])
-				# 	puts "[Marked task id=#{args[1]} as complete.]"
-				# end
-			when "exit", "quit", "q"
-				exit_program = true
-			else
-				puts "Command [#{args[0]}] not recognized."
-				puts "Type 'help' for list of commands"
+			when "exit", "quit", "q" then exit_program = true
+			else print_command_error
 			end
 		end
 	end
 
 	def self.print_welcome_message
 		puts "Welcome to Project Manager Pro®. What can I do for you today?\n\n"
+	end
+
+	def self.print_command_error
+		puts "Command not recognized."
+		puts "Type 'help' for list of commands"
 	end
 
 	def self.list_commands
@@ -158,11 +156,8 @@ class TerminalClient
 
 	def self.mark_task_completed(args)
 		if check_arguments(args, 1)
-			id = args[1]
+			id = args[1].to_i
 			TM.db.update_task(id, {completed: true})
-			# task = TM.db.get_task(id)
-			# task.completed
-			# mark_task_complete_with_id(args[1])
 			puts "[Marked task id=#{id} as complete.]"
 		end
 	end
