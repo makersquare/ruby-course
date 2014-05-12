@@ -1,26 +1,30 @@
 require 'date'
 class TM::Project
   attr_reader :id
-  attr_accessor :name, :tasks, :completed_task, :incomplete_task, :projects
+  attr_accessor :name, :tasks, :completed_task, :incomplete_task, :projects, :percentage
 
-  @@class_id = 1
-  @@projects =[]
+  # @@class_id = 1
+  # @@projects =[]
 
-  def initialize(name=nil)
+  def initialize(name, id)
     @name = name
-    @id = @@class_id
-    @@class_id +=1
+    @id = id
     @tasks = []
-    @@projects<<self
+    # @@projects<<self
+    @percentage = 0
   end
 
-  def self.projects
-    @@projects
-  end
+  # def self.projects
+  #   @@projects
+  # end
 
   def create_task(project_id, description, priority_number, due_date)
     x = TM::Task.new(project_id, description, priority_number, due_date)
     @tasks<<x
+  end
+
+  def percentage_complete
+    @percentage = @completed_task.length/@tasks.length
   end
 
   def mark_complete(project_id)
@@ -59,8 +63,8 @@ class TM::Project
     @incomplete_task.sort_by! {|x| [x.priority_number, x.overdue]}
   end
 
-  def self.reset_class_variables
-      @@projects = []
-  end
+  # def self.reset_class_variables
+  #     @@projects = []
+  # end
 
 end
