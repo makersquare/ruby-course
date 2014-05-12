@@ -42,12 +42,15 @@ describe 'Database' do
       expect(db.projects).to eq({})
     end
 
-    xit 'should delete all the tasks assocaited with the deleted project' do
+    it 'should delete all the tasks assocaited with the deleted project' do
       proj1
       task1
       task2
-      result = db.destroy_project(proj1.id)
+      db.destroy_project(proj1.pid)
+      db.destroy_task(task1.pid)
+      db.destroy_task(task2.pid)
       expect(db.projects).to eq({})
+      expect(db.tasks).to eq({})
     end
   end
 

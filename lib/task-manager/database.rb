@@ -30,7 +30,7 @@ class TM::DB
   def destroy_project(id)
     @projects.delete(id)
     @tasks.each do |x,y|
-      @tasks.delete(x) if @tasks[:x][:pid] = id
+      @tasks.delete(x) if @tasks[x][:pid] = id
     end
   end
 
