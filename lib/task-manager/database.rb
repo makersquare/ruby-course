@@ -54,22 +54,22 @@ module TM
     end
 
     def destroy_task(id)
-      @tasks[id] = nil
+      @tasks.delete_if {|x,y| x == id}
     end
 
     def get_all_tasks_for_project(project_id)
       all_tasks_hash = @tasks.select {|x,y| y[:project_id] == project_id}
-      all_task_object = all_tasks_hash.each {|x| build_task(x)}
+      #all_task_object = all_tasks_hash.each {|x| build_task(x)}
     end
 
     def get_all_incomplete_tasks_for_project(project_id)
-      all_incomplete_tasks_hash = @tasks.select {|x,y| [y[:project_id] == project_id, y[:status] == 'incomplete']}
-      all_incomplete_task_object = all_incomplete_tasks_hash.each {|x| build_task(x)}
+      all_incomplete_tasks_hash = @tasks.select {|x,y| y[:status] == 'incomplete'}.select {|k,v| v[:project_id] == project_id}
+      #all_incomplete_task_object = all_incomplete_tasks_hash.each {|x| build_task(x)}
     end
 
     def get_all_completed_tasks_for_project(project_id)
-      all_complete_tasks_hash = @tasks.select {|x,y| [y[:project_id] == project_id, y[:status] == 'complete']}
-      all_complete_task_object = all_complete_tasks_hash.each {|x| build_task(x)}
+      all_complete_tasks_hash = @tasks.select {|x,y| y[:project_id] == project_id}.select {|k,v| v[:status] == 'complete'}
+      #all_complete_task_object = all_complete_tasks_hash.each {|x| build_task(x)}
     end
 
     def build_task(data)

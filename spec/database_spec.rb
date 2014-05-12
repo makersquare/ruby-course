@@ -64,4 +64,54 @@ describe TM::DB do
     expect(test_task.status).to eq('complete')
   end
 
+  it 'deletes task given task id' do
+    db = TM::DB.new
+    db.create_project(name: 'test')
+    db.create_task(name: 'pancake', project_id: 0, descripton: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.create_task(name: 'waffle', project_id: 0, descripton: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.create_task(name: 'eggs', project_id: 0, descripton: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.destroy_task(1)
+    p db.tasks
+    expect(db.tasks.length).to eq(2)
+  end
+
+  it 'gets all tasks associated with a project given project id' do
+    db = TM::DB.new
+    db.create_project(name: 'test')
+    db.create_task(name: 'pancake', project_id: 0, descripton: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.create_task(name: 'waffle', project_id: 0, descripton: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.create_task(name: 'eggs', project_id: 0, descripton: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    test_tasks = db.get_all_tasks_for_project(0)
+    p test_tasks
+    expect(test_tasks.length).to eq(3)
+  end
+
+  it 'gets all inconplete tasks associated with a given project id' do
+    db = TM::DB.new
+    db.create_project(name: 'test')
+    db.create_task(name: 'pancake', project_id: 0, descripton: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.create_task(name: 'waffle', project_id: 0, descripton: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.create_task(name: 'eggs', project_id: 0, descripton: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    test_task = db.get_task(0)
+    test_task.status = 'complete'
+    db.update_task(test_task)
+    incomp_test_task = db.get_all_incomplete_tasks_for_project(0)
+    p incomp_test_task
+    expect(incomp_test_task.length).to eq(2)
+  end
+
+  it 'gets all completed tasks associated with a given project id' do
+    db = TM::DB.new
+    db.create_project(name: 'test')
+    db.create_task(name: 'pancake', project_id: 0, descripton: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.create_task(name: 'waffle', project_id: 0, descripton: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.create_task(name: 'eggs', project_id: 0, descripton: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    test_task = db.get_task(0)
+    test_task.status = 'complete'
+    db.update_task(test_task)
+    comp_task_test = db.get_all_completed_tasks_for_project(0)
+    p comp_task_test
+    expect(comp_task_test.length).to eq(1)
+  end
+
 end
