@@ -90,16 +90,18 @@ describe 'Database' do
     it 'should update the given data in the correct task in the task hash' do
       task1
       task2
-      result1 = db.update_task(task2.tid, complete: true)
+      db.update_task(task2.tid, complete: true)
+      db.update_task(task1.tid, desc: "new description")
       expect(db.tasks[2][:complete]).to eq(true)
-    end
-
-    xit 'should return an instance of the TM::Task class with the updated data' do
+      expect(db.tasks[1][:desc]).to eq("new description")
     end
   end
 
   describe '#destroy_task' do
-    xit 'should delete a task from the task hash' do
+    it 'should delete a task from the task hash' do
+      task1
+      db.destroy_task(task1.tid)
+      expect(db.tasks).to eq({})
     end
   end
 
