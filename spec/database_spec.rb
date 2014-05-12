@@ -74,7 +74,15 @@ describe 'Database' do
   describe '#get_task' do
     it 'should return an instance of TM::Task class given the task id' do
       task1
-
+      t = Time.now
+      result = db.get_task(task1.tid)
+      expect(result.pid).to eq(1)
+      expect(result.tid).to eq(1)
+      expect(result.desc).to eq("Task 1")
+      expect(result.pnum).to eq(1)
+      expect(result.duedate).to eq("2014 1 1")
+      expect(result.date).to eq("#{t.year} #{t.month} #{t.day}")
+      expect(result.complete).to eq(false)
     end
   end
 
