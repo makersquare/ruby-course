@@ -6,8 +6,6 @@ class TerminalClient
 		print_welcome_message
 		list_commands
 
-
-
 		exit_program = false
 
 		while !exit_program do
