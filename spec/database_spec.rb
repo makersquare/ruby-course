@@ -56,12 +56,14 @@ describe 'Database class' do
       db = TM::DB.new
 
       data = { name: "test", id: 1}
-      db.create_project(data)
+      project1 = db.create_project(data)
+      expect(project1.class).to eq(TM::Project)
       expect(db.projects.size).to eq(1)
       expect(db.project_count).to eq(1)
 
       data = { name: "hello", id: 2 }
-      db.create_project(data)
+      project2 = db.create_project(data)
+      expect(project2.class).to eq(TM::Project)
       expect(db.projects.size).to eq(2)
       expect(db.project_count).to eq(2)
 
@@ -70,6 +72,26 @@ describe 'Database class' do
 
       expect(db.projects[2][:id]).to eq(2)
       expect(db.projects[2][:name]).to eq("hello")
+    end
+
+    it "returns nil and doesn't affect @projects if id already exists" do 
+      db = TM::DB.new
+
+      data = { name: "test", id: 1}
+      project1 = db.create_project(data)
+      expect(project1.class).to eq(TM::Project)
+      expect(db.projects.size).to eq(1)
+      expect(db.project_count).to eq(1)
+
+      data = { name: "hello", id: 1 }
+      project2 = db.create_project(data)
+      expect(project2).to eq(nil)
+
+      expect(db.projects.size).to eq(1)
+      expect(db.project_count).to eq(1)
+
+      expect(db.projects[1][:id]).to eq(1)
+      expect(db.projects[1][:name]).to eq("test")
     end
 
   end
@@ -186,12 +208,14 @@ describe 'Database class' do
 
       data = { name: "Buy Eggs", id: 1, description: "One Dozen"}
       task1 = db.create_task(data)
+      expect(task1.class).to eq(TM::Task)
 
       expect(db.tasks.size).to eq(1)
       expect(db.task_count).to eq(1)
 
       data = { name: "Exercise", id: 2, description: "Bike 12 miles", priority: 4, date_created: Time.now - 3, date_completed: Time.now + 3, date_due: Time.now, completed: true, project_id: 12 }
       task2 = db.create_task(data)
+      expect(task2.class).to eq(TM::Task)
 
       expect(db.tasks.size).to eq(2)
       expect(db.task_count).to eq(2)
@@ -203,6 +227,26 @@ describe 'Database class' do
       expect(db.tasks[2][:id]).to eq(2)
       expect(db.tasks[2][:name]).to eq("Exercise")
       expect(db.tasks[2][:description]).to eq("Bike 12 miles")
+    end
+
+    it "returns nil and doesn't affect @tasks if id already exists" do 
+      db = TM::DB.new
+
+      data = { name: "Buy Eggs", id: 1, description: "One Dozen"}
+      task1 = db.create_task(data)
+      expect(task1.class).to eq(TM::Task)
+      expect(db.tasks.size).to eq(1)
+      expect(db.task_count).to eq(1)
+
+      data = { name: "Exercise", id: 1, description: "Bike 12 miles", priority: 4, date_created: Time.now - 3, date_completed: Time.now + 3, date_due: Time.now, completed: true, task_id: 12 }
+      task2 = db.create_task(data)
+      expect(task2).to eq(nil)
+
+      expect(db.tasks.size).to eq(1)
+      expect(db.task_count).to eq(1)
+
+      expect(db.tasks[1][:id]).to eq(1)
+      expect(db.tasks[1][:name]).to eq("Buy Eggs")
     end
   end
 

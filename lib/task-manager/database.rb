@@ -38,8 +38,13 @@ class TM::DB
     ## what if already a project with same id?...reject!
     @project_count +=1
     data[:id] ||= @project_count
-    @projects[data[:id]] = data
-    build_project(data)
+    if @projects[data[:id]]
+      @project_count -=1
+      return nil
+    else
+      @projects[data[:id]] = data
+      build_project(data)
+    end
   end
 
   def get_project(id)
@@ -68,8 +73,13 @@ class TM::DB
     # how to hanlde the auto-genarated timestamp?
     @task_count +=1
     data[:id] ||= @task_count
-    @tasks[data[:id]] = data
-    build_task(data)
+    if @tasks[data[:id]]
+      @task_count -=1
+      return nil
+    else
+      @tasks[data[:id]] = data
+      build_task(data)
+    end
   end
 
   def get_task(id)
