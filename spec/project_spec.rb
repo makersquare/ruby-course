@@ -57,13 +57,13 @@ describe 'Project' do
     end
 
     it 'can can list incomplete task by priority' do
-      expect(@new_project.incomplete_task.first[:priority]).to eq(2)
+      expect(@new_project.incomplete_task.first.priority).to eq(2)
     end
 
     it 'can show a list of completed task' do
       TM.db.get_task(2).complete_task
       # binding.pry
-      expect(@new_project.completed_task.first[:description]).to eq("First Task")
+      expect(@new_project.completed_task.first.description).to eq("First Task")
     end
   end
 end

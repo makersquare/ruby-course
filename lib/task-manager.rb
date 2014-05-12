@@ -43,10 +43,17 @@ module TM
 
     # Project Query Methods
 
-      # def incomplete_task(id)
-      #   hold_task = []
-      #   @task.each do |key, value|
-      #     hold_task <<
+      def project_task(id, status)
+        task = []
+        @task.each do |key, value|
+          if status[:completed]
+            task << build_task(value) if value[:pid] == id && value[:completed] == status[:completed]
+          else
+            task << build_task(value) if value[:pid] == id
+          end
+        end
+        task.sort_by { |task_hash| task_hash.creation_date }
+      end
 
     # Task Methods
 
