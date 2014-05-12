@@ -77,4 +77,10 @@ class TM::DB
     build_task(@tasks.delete(id)) unless task.size == 0
   end
 
+  ###############
+  # Print methods
+  ###############
+
+  
+
 end

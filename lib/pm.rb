@@ -2,14 +2,11 @@ require_relative 'task-manager.rb'
 
 class TerminalClient
 
-	@@projects = []
-	@@db = TM::DB.new
-
 	def self.start
 		print_welcome_message
 		list_commands
 
-		# db = TM::DB.new
+
 
 		exit_program = false
 
@@ -26,7 +23,8 @@ class TerminalClient
 				list_projects
 			when "create", "c"
 				if check_arguments(input_arguments,1, unlimited: true)
-					project = @@db.create_project({name: input_arguments[1...input_arguments.length].join(" ")})
+					# project = @@db.create_project({name: input_arguments[1...input_arguments.length].join(" ")})
+					project = TM.db.create_project({name: input_arguments[1...input_arguments.length].join(" ")})
 					# @@projects << TM::Project.new(input_arguments[1...input_arguments.length].join(" "))
 					# puts "[Created new project '#{@@projects.last.name} with id=#{@@projects.last.id}]"
 					puts "[Created new project '#{project.name} with id=#{project.id}]"
@@ -37,9 +35,12 @@ class TerminalClient
 				list_tasks(input_arguments[1], completed: true) if check_arguments(input_arguments,1)
 			when "add", "a"
 				if check_arguments(input_arguments, 3, unlimited: true)
-					task = TM::Task.new(priority: input_arguments[2], description: input_arguments[3...input_arguments.length].join(" "))
-					project_id = input_arguments[1]
-					add_task_to_project(task, project_id)
+					project_id = input_arguments[1].to_i
+					priority = input_arguments[2]
+					description = input_arguments[3...input_arguments.length].join(" ")
+					task = TM.db.create_task({project_id: project_id, priority: priority, description: description})
+					# task = TM::Task.new(priority: input_arguments[2], description: input_arguments[3...input_arguments.length].join(" "))
+					# add_task_to_project(task, project_id)
 					puts "[Added task '#{task.description}' to project id=#{project_id}]"
 				end
 			when "mark", "m"
@@ -92,8 +93,16 @@ class TerminalClient
 	end
 
 	def self.list_projects
-		puts "[No projects exist]" if @@db.projects.size == 0
-		@@db.projects.each {|key, data| @@db.build_project(data).print_details}
+		puts "[No projects exist]" if TM.db.projects.size == 0
+		TM.db.projects.each do |project_key, project_data|
+			project = TM.db.build_project(project_data)
+			project.print_details
+			TM::Task.print_header
+			TM.db.tasks.each do |task_key, task_data|
+				task = TM.db.build_task(task_data)
+				task.print_details if task.project_id == project.id
+			end
+		end
 	end
 
 	def self.list_tasks(project_id, completed: true)

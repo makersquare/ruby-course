@@ -3,28 +3,12 @@ class TrueClass; def to_i; 1 end end
 
 class TM::Project
 	
-	# @@project_count = 0
-	# @@projects = []
-
 	attr_reader :name, :id, :tasks
 	
-	def initialize(name: "default", id: nil)
-	# def initialize(data = {})
-		@name = name
-		# @name = data[:name]
-		@tasks = []
-		# @id = self.class.generate_id
-		@id = id
-		# @id = data[:id]
-		# self.class.add_project(self)
-	end
-
-	def self.add_project(project)
-		@@projects << project
-	end
-
-	def self.generate_id
-		@@project_count += 1
+	def initialize(args)
+		@name = args[:name] || "default"
+		@id = args[:id]
+		# @tasks = []
 	end
 
 	def add_task(*tasks)
@@ -91,9 +75,9 @@ class TM::Project
 
 	def print_details
 		print_header
-		TM::Task.print_header
-		puts "  [No tasks exist for this project]\n\n" if @tasks.size == 0
-		@tasks.each { |task| task.print_details }
+		# TM::Task.print_header
+		# puts "  [No tasks exist for this project]\n\n" if @tasks.size == 0
+		# @tasks.each { |task| task.print_details }
 	end
 
 	def list_tasks(completed: true, newest_first: true, highest_priority_first: true)
