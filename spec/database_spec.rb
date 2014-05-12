@@ -76,7 +76,9 @@ describe 'Database class' do
   
   describe 'get_project method' do
     it "return nil if no projects" do 
-      expect(true).to eq(true)
+      db = TM::DB.new
+      project1 = db.get_project(1)
+      expect(project1).to eq(nil)
     end
 
     it "return the correct project as a Project object" do 
@@ -102,7 +104,10 @@ describe 'Database class' do
   
   describe 'destroy_project method' do
     it "return nil if no projects exist" do 
-      expect(true).to eq(true)
+      db = TM::DB.new
+      project1 = db.destroy_project(1)
+      expect(project1).to eq(nil)
+      expect(db.projects.size).to eq(0)      
     end
 
     it "delete the correct object and reduce size" do 
@@ -126,11 +131,6 @@ describe 'Database class' do
       expect(db.projects.size).to eq(0)
       expect(db.projects[1]).to eq(nil)
       expect(db.projects[2]).to eq(nil)
-      # expect(db.projects[2][:name]).to eq("Facebook")
-    end
-
-    it "can handle more than one consecutive delete" do 
-      expect(true).to eq(true)
     end
   end
 
@@ -152,9 +152,7 @@ describe 'Database class' do
       expect(task1.completed).to eq(false)
       expect(task1.project_id).to eq(nil)
 
-      data = { name: "Exercise", id: 1, description: "Bike 12 miles",
-        priority: 4, date_created: Time.now - 3, date_completed: Time.now + 3,
-        date_due: Time.now, completed: true, project_id: 12 }
+      data = { name: "Exercise", id: 1, description: "Bike 12 miles", priority: 4, date_created: Time.now - 3, date_completed: Time.now + 3, date_due: Time.now, completed: true, project_id: 12 }
       task2 = db.build_task(data)
 
       expect(task2.class).to eq(TM::Task)
@@ -166,6 +164,119 @@ describe 'Database class' do
       expect(task2.date_due.class).to eq(Time)
       expect(task2.completed).to eq(true)
       expect(task2.project_id).to eq(12)
+    end
+  end
+
+  describe 'create_task method' do
+    it "increments @task_count" do 
+      db = TM::DB.new
+      data = { name: "Buy Eggs", id: 1, description: "One Dozen"}
+      task1 = db.create_task(data)
+      expect(db.tasks.size).to eq(1)
+      expect(db.task_count).to eq(1)
+      expect(db.tasks[1][:name]).to eq("Buy Eggs")
+      expect(db.tasks[1][:id]).to eq(1)
+      expect(db.tasks[1][:description]).to eq("One Dozen")
+    end
+
+    ## add test to see if create project from data with just name, no id
+    
+    it "can create more than 1 task correctly" do 
+      db = TM::DB.new
+
+      data = { name: "Buy Eggs", id: 1, description: "One Dozen"}
+      task1 = db.create_task(data)
+
+      expect(db.tasks.size).to eq(1)
+      expect(db.task_count).to eq(1)
+
+      data = { name: "Exercise", id: 2, description: "Bike 12 miles", priority: 4, date_created: Time.now - 3, date_completed: Time.now + 3, date_due: Time.now, completed: true, project_id: 12 }
+      task2 = db.create_task(data)
+
+      expect(db.tasks.size).to eq(2)
+      expect(db.task_count).to eq(2)
+
+      expect(db.tasks[1][:id]).to eq(1)
+      expect(db.tasks[1][:name]).to eq("Buy Eggs")
+      expect(db.tasks[1][:description]).to eq("One Dozen")
+
+      expect(db.tasks[2][:id]).to eq(2)
+      expect(db.tasks[2][:name]).to eq("Exercise")
+      expect(db.tasks[2][:description]).to eq("Bike 12 miles")
+    end
+  end
+
+  describe 'get_task method' do
+    it "returns nil if no tasks" do 
+      db = TM::DB.new
+      task1 = db.get_task(1)
+      expect(task1).to eq(nil)
+    end
+
+    it "returns nil if id not found" do 
+      db = TM::DB.new
+      data = { name: "Buy Eggs", id: 1, description: "One Dozen"}
+      db.create_task(data)
+      expect(db.tasks.size).to eq(1)
+
+      task1 = db.get_task(5)
+      expect(task1).to eq(nil)
+
+    end
+
+    it "return the correct task as a Task object" do 
+      db = TM::DB.new
+      data = { name: "Buy Eggs", id: 1, description: "One Dozen"}
+      db.create_task(data)
+
+      data = { name: "Exercise", id: 2, description: "Bike 12 miles", priority: 4, date_created: Time.now - 3, date_completed: Time.now + 3, date_due: Time.now, completed: true, project_id: 12 }
+      db.create_task(data)
+
+      expect(db.tasks.size).to eq(2)
+
+      task1 = db.get_task(1)
+      task2 = db.get_task(2)
+      expect(task1.class).to eq(TM::Task)
+      expect(task1.name).to eq("Buy Eggs")
+      expect(task1.id).to eq(1)
+      expect(task2.class).to eq(TM::Task)
+      expect(task2.name).to eq("Exercise")
+      expect(task2.id).to eq(2)
+    end
+
+  end
+
+  describe 'destroy_task method' do
+    it "return nil if no tasks exist" do 
+      db = TM::DB.new
+      task1 = db.destroy_task(1)
+      expect(task1).to eq(nil)
+      expect(db.tasks.size).to eq(0)      
+    end
+
+    it "delete the correct object and reduce size" do 
+      db = TM::DB.new
+      data = { name: "Buy Eggs", id: 1, description: "One Dozen"}
+      db.create_task(data)
+
+      data = { name: "Exercise", id: 2, description: "Bike 12 miles", priority: 4, date_created: Time.now - 3, date_completed: Time.now + 3, date_due: Time.now, completed: true, project_id: 12 }
+      db.create_task(data)
+
+      expect(db.tasks.size).to eq(2)
+
+      task1 = db.destroy_task(1)
+      expect(task1.name).to eq("Buy Eggs")
+
+      expect(db.tasks.size).to eq(1)
+      expect(db.tasks[1]).to eq(nil)
+      expect(db.tasks[2][:name]).to eq("Exercise")
+
+      task2 = db.destroy_task(2)
+      expect(task2.name).to eq("Exercise")
+
+      expect(db.tasks.size).to eq(0)
+      expect(db.tasks[1]).to eq(nil)
+      expect(db.tasks[2]).to eq(nil)
     end
   end
 

@@ -38,8 +38,6 @@ class TM::Task
 		@completed = args[:completed] || false
 		# foreign keys
 		@project_id = args[:project_id] || nil
-
-		# self.class.add_task(self)
 	end
 
 	# def self.add_task(task)

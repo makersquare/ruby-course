@@ -8,7 +8,7 @@ end
 
 class TM::DB
 
-  attr_reader :tasks, :projects, :project_count
+  attr_reader :projects, :project_count, :tasks, :task_count
 
   def initialize
     @projects = {}
@@ -44,12 +44,12 @@ class TM::DB
 
   def get_project(id)
     project = @projects.select { |key, value| key == id }
-    build_project(project[id])
+    build_project(project[id]) unless project.size == 0
   end
 
   def destroy_project(id)
     project = @projects.select { |key, value| key == id }
-    @projects.delete(id)
+    build_project(@projects.delete(id)) unless project.size == 0
   end
 
   #######
@@ -60,7 +60,6 @@ class TM::DB
     #name, id, description, priority, date_created, due_date, date_completed
     # completed, project_id --> independent variables/properties
     TM::Task.new(data)
-
   end
 
   def create_task(data)
@@ -69,18 +68,18 @@ class TM::DB
     # how to hanlde the auto-genarated timestamp?
     @task_count +=1
     data[:id] ||= @task_count
-    @projects[data[:id]] = data
-    build_project(data)
+    @tasks[data[:id]] = data
+    build_task(data)
   end
 
   def get_task(id)
-    project = @projects.select { |key, value| key == id }
-    build_project(project[id])
+    task = @tasks.select { |key, value| key == id }
+    build_task(task[id]) unless task.size == 0
   end
 
   def destroy_task(id)
-    project = @projects.select { |key, value| key == id }
-    @projects.delete(id)
+    task = @tasks.select { |key, value| key == id }
+    build_task(@tasks.delete(id)) unless task.size == 0
   end
 
 end
