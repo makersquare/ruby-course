@@ -76,20 +76,18 @@ class TerminalClient
 	end
 
 	def self.create_project(args)
-		if check_arguments(args,1, unlimited: true)
-			project = TM.db.create_project({name: args[1...args.length].join(" ")})
-			puts "[Created new project '#{project.name} with id=#{project.id}]"
-		end
+		return if !check_arguments(args,1, unlimited: true)
+		project = TM.db.create_project({name: args[1...args.length].join(" ")})
+		puts "[Created new project '#{project.name} with id=#{project.id}]"
 	end
 
 	def self.add_task(args)
-		if check_arguments(args, 3, unlimited: true)
-			project_id = args[1].to_i
-			priority = args[2]
-			description = args[3...args.length].join(" ")
-			task = TM.db.create_task({project_id: project_id, priority: priority, description: description})
-			puts "[Added task '#{task.description}' to project id=#{project_id}]"
-		end
+		return if !check_arguments(args, 3, unlimited: true)
+		project_id = args[1].to_i
+		priority = args[2]
+		description = args[3...args.length].join(" ")
+		task = TM.db.create_task({project_id: project_id, priority: priority, description: description})
+		puts "[Added task '#{task.description}' to project id=#{project_id}]"
 	end
 
 	def self.show_remaining_tasks(args)
@@ -106,58 +104,11 @@ class TerminalClient
 		tasks.each {|task| task.print_details}
 	end
 
-	def self.list_tasks(project_id, completed: true)
-		project = TM.db.get_project(project_id)
-		if project == nil
-			puts "Project with id='#{project_id}' not found."
-			return project
-		end
-		tasks = TM.db.get_all_tasks
-		tasks.each do |task|
-			if completed
-				task.print_details if task.project_id == project.id && task.completed
-			else
-				task.print_details if task.project_id == project.id && !task.completed
-			end
-		end
-	end
-
-	def self.get_project_by_id(project_id)
-		@@projects.each_index {|x| return @@projects[x] if @@projects[x].id == project_id.to_i }
-		return nil
-	end
-
-	def self.add_task_to_project(task, project_id)
-		project = get_project_by_id(project_id)
-		if project == nil
-			puts "Project with id='#{project_id}' not found."
-		else
-			project.add_task(task)
-			puts "Added task [Description: #{task.description} to project #{project.name} with id=#{project.id}"
-		end
-	end
-
-	def self.mark_task_complete_with_id(task_id)
-		task_found = false
-		@@projects.each_index do |x|
-			@@projects[x].tasks.each_index do |y|
-				if @@projects[x].tasks[y].id == task_id.to_i  # note the to_i is needed!
-					@@projects[x].tasks[y].mark_completed
-					task_found = true
-				end
-			end
-		end
-		if task_found == false			
-			puts "Task with id='#{task_id}' not found in any of the projects."
-		end
-	end
-
 	def self.mark_task_completed(args)
-		if check_arguments(args, 1)
-			id = args[1].to_i
-			TM.db.update_task(id, {completed: true})
-			puts "[Marked task id=#{id} as complete.]"
-		end
+		return if !check_arguments(args, 1)
+		id = args[1].to_i
+		TM.db.update_task(id, {completed: true})
+		puts "[Marked task id=#{id} as complete.]"
 	end
 
 end
