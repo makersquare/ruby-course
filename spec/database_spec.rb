@@ -30,7 +30,7 @@ describe 'Database' do
   describe '#update_project' do
     it 'should update the projects name in the projects hash given the id of the project' do
       proj1
-      result = db.update_project(proj1.pid, name: "New Project")
+      db.update_project(proj1.pid, name: "New Project")
       expect(db.projects[1][:name]).to eq("New Project")
     end
   end

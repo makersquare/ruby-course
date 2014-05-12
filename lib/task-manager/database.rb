@@ -2,12 +2,15 @@ require 'pry-debugger'
 
 class TM::DB
 
-  attr_reader :tasks, :projects, :project_count, :task_count
+  attr_reader :tasks, :projects, :project_count, :task_count, :employees, :employee_count, :employees_projects
   def initialize
     @projects = {}
     @project_count = 0
     @tasks = {}
     @task_count = 0
+    @employees = {}
+    @employee_count = 0
+    @employees_projects = {}
   end
 
   def create_project(data)
@@ -23,7 +26,7 @@ class TM::DB
   end
 
   def update_project(id, data)
-    data.map {|x,y| @projects[id][x] = data[x] }
+    data.map {|x,y| @projects[id][x] = data[x]}
     return TM::DB.build_project(data)
   end
 
@@ -32,6 +35,22 @@ class TM::DB
     @tasks.each do |x,y|
       @tasks.delete(x) if @tasks[x][:pid] = id
     end
+  end
+
+  def projects_tasks(pid)
+    done = @tasks.select{|x,y| @tasks[x][:pid] == pid && @tasks[x][:complete] == true}
+    done.sort_by! {|t| t.date}
+    not_done = @tasks.select{|x,y| @tasks[x][:pid] == pid && @tasks[x][:complete] == false}
+    not_done.sort_by! {|t| [t.duedate, t.pnum, t.date]}
+    total = done.length + not_done.length
+    percent_done = 0
+    percent_overdue = 0
+    percent_done = done.length/total*100 if done.length > 0
+    t = Time.now
+    today = "#{t.year} #{t.month} #{t.day}"
+    over = not_done.select{|task| task[:duedate] < today}
+    percent_overdue = over.length/total*100 if over.length > 0
+    return {done: done, not_done: not_done, over: over, percent_done: percent_done, percent_over: percent_overdue}
   end
 
   def self.build_project(data)
@@ -64,6 +83,18 @@ class TM::DB
 
   def self.build_task(data)
     TM::Task.new(data[:pid], data[:tid], data[:desc], data[:pnum], data[:duedate], data[:date], data[:complete])
+  end
+
+  def create_employee(data)
+  end
+
+  def add_project(data)
+  end
+
+  def add_task(data)
+  end
+
+  def self.build_employee(data)
   end
 
 end
