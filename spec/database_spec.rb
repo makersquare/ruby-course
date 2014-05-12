@@ -266,6 +266,57 @@ describe 'Database class' do
 
   end
 
+  describe 'update_task method' do
+    xit "return nil if no tasks exist" do 
+      task1 = db.destroy_task(1)
+      expect(task1).to eq(nil)
+      expect(db.tasks.size).to eq(0)      
+    end
+
+    xit "returns nil if task does not exist" do 
+      task1 = db.destroy_task(1)
+      expect(task1).to eq(nil)
+      expect(db.tasks.size).to eq(0)      
+    end
+
+    it "updates the right task" do 
+      data = { name: "Buy Eggs", id: 1, description: "One Dozen"}
+      db.create_task(data)
+
+      data = { name: "Exercise", id: 2, description: "Bike 12 miles", priority: 4, date_created: Time.now - 3, date_completed: Time.now + 3, date_due: Time.now, completed: true, project_id: 12 }
+      db.create_task(data)
+
+      expect(db.tasks.size).to eq(2)
+      expect(db.tasks[1][:name]).to eq("Buy Eggs")
+      expect(db.tasks[1][:description]).to eq("One Dozen")
+      expect(db.tasks[2][:name]).to eq("Exercise")
+      expect(db.tasks[2][:description]).to eq("Bike 12 miles")
+
+      db.update_task(1, {name: "Buy Donuts"})
+      expect(db.tasks[1][:name]).to eq("Buy Donuts")
+      expect(db.tasks[1][:description]).to eq("One Dozen")
+
+      db.update_task(2, {description: "Do 50 burpees"})
+      expect(db.tasks[2][:name]).to eq("Exercise")
+      expect(db.tasks[2][:description]).to eq("Do 50 burpees")
+
+      expect(db.tasks.size).to eq(2)
+      # task1 = db.destroy_task(1)
+      # expect(task1.name).to eq("Buy Eggs")
+
+      # expect(db.tasks.size).to eq(1)
+      # expect(db.tasks[1]).to eq(nil)
+      # expect(db.tasks[2][:name]).to eq("Exercise")
+
+      # task2 = db.destroy_task(2)
+      # expect(task2.name).to eq("Exercise")
+
+      # expect(db.tasks.size).to eq(0)
+      # expect(db.tasks[1]).to eq(nil)
+      # expect(db.tasks[2]).to eq(nil)
+    end
+  end
+
   describe 'destroy_task method' do
     it "return nil if no tasks exist" do 
       task1 = db.destroy_task(1)
