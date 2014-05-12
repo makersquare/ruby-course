@@ -52,7 +52,7 @@ class TM::DB
   # Task management
 
   def build_task(data)
-    TM::Task.new( {:task_id => data[:task_id], :project_id => data[:project_id], :description => data[:desc], :priority => data[:priority], :due_date => data[:due_date], :status => data[:status], :completed_at => data[:completed_at]} )
+    TM::Task.new( {:task_id => data[:task_id], :project_id => data[:project_id], :desc => data[:desc], :priority => data[:priority], :due_date => data[:due_date], :status => data[:status], :completed_at => data[:completed_at]} )
   end
 
   def create_task(data)

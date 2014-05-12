@@ -2,15 +2,18 @@ require 'spec_helper'
 require 'pry-debugger'
 
 describe 'DB' do
+
   let(:db) { TM.database }
   describe 'Projects' do
     context 'creating a new database' do
       it 'initializes with an empty projects hash' do
+        expect(db.tasks).to eq ({})
         expect(db.projects).to eq ({})
       end
 
       it 'initializes with 0 projects' do
-        expect(db.project_count).to eq (0)
+        expect(db.project_count).to eq 0
+        expect(db.task_count).to eq 0
       end
     end
 
@@ -60,33 +63,25 @@ describe 'DB' do
   end
 
   describe 'Tasks' do
-
-    context 'when creating a new database' do
-      it 'initializes with an empty tasks hash' do
-        expect(db.tasks).to eq ({})
-      end
-      it 'initializes with 0 tasks' do
-        expect(db.task_count).to eq 0
-      end
+    before (:each) do
+      TM::Project.reset_class_variables
+      TM::Task.reset_class_variables
+      @project = db.create_project( {name: "project", id: db.project_count, project_tasks: {} } )
+      @task = db.create_task( {task_id: db.task_count, project_id: @project.pid, desc: "Description", priority: 3, due_date: "2014-05-08" , completed_at: nil, status: 0, created_at: Time.now} )
+      @task1 = db.create_task( {task_id: db.task_count, project_id: @project.pid, desc: "description1", priority: 10, due_date: "2014-05-08", completed_at: nil, status: 0, created_at: Time.now + 100} )
+      @task2 = db.create_task( {task_id: db.task_count, project_id: @project.pid, desc: "description1", priority: 5, due_date: "2016-05-08", completed_at: nil, status: 0, created_at: Time.now + 200} )
     end
+
 
     context 'when adding a new task to the database' do
       it 'adds the task to the tasks hash and increments task_count by 1' do
-        db.create_task(:task_id => db.task_count, :project_id => 0, :desc => "Description", :priority => 10, :due_date => "2014-05-09")
-
-        expect(db.tasks.length).to eq 1
-        expect(db.task_count).to eq 1
+        expect(db.tasks.length).to eq 3
+        expect(db.task_count).to eq 3
       end
     end
 
     context 'when retrieving a task from the database' do
       it 'retrieves all task information from a task id' do
-        db.create_task(:task_id => db.task_count, :project_id => 0, :desc => "Description", :priority => 10, :due_date => "2014-05-09")
-        db.create_task(:task_id => db.task_count, :project_id => 0, :desc => "Description 2", :priority => 10, :due_date => "2014-05-10")
-
-        # both tasks should be in the tasks database hash
-        expect(db.tasks.length).to eq 2
-
         # look up both tasks, descriptions should match
         expect(db.show_task(0).description).to eq (db.tasks[0][:desc])
         expect(db.show_task(1).description).to eq (db.tasks[1][:desc])
@@ -95,8 +90,6 @@ describe 'DB' do
 
     context 'when updating an existing task' do
       it 'retrieves the correct task and updates the correct fields' do
-        db.create_task(:task_id => db.task_count, :project_id => 0, :desc => "Description", :priority => 10, :due_date => "2014-05-09")
-        db.create_task(:task_id => db.task_count, :project_id => 0, :desc => "Description 2", :priority => 10, :due_date => "2014-05-09")
 
         updated_task = db.update_task(1, {:desc => "New Description", :priority => 4} )
 
@@ -115,18 +108,18 @@ describe 'DB' do
 
     context 'when deleting an existing task' do
       it 'deletes the correct from the task from the database' do
-        db.create_task(:task_id => db.task_count, :project_id => 0, :desc => "Description 2", :priority => 10, :due_date => "2014-05-09")
-        expect(db.tasks.length).to eq 1
+        # Start with 3 tasks
+        expect(db.tasks.length).to eq 3
         db.delete_task(0)
 
-        expect(db.tasks.length).to eq 0
+        # Two left after delete method runs
+        expect(db.tasks.length).to eq 2
       end
 
       it 'returns the deleted task to the client' do
-        db.create_task(:task_id => db.task_count, :project_id => 0, :desc => "Description 2", :priority => 10, :due_date => "2014-05-09")
         deleted_task = db.delete_task(0)
 
-        expect(deleted_task.description).to eq ("Description 2")
+        expect(deleted_task.description).to eq ("Description")
       end
     end
 
