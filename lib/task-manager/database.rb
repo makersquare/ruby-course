@@ -41,9 +41,7 @@ class TM::DB
   end
 
   def update_project(id, data)
-    data[:id] = id
-    project_id = @projects[:id]
-    project_id[:name] = data[:name] #trying to access the projects name in the database to edit it.
+    data.each {|x,y| @projects[:id][:x] = y }
     return TM::DB.build_project(data)
   end
 
@@ -58,8 +56,8 @@ class TM::DB
   def create_task(data) #pid, des, pnum, duedate
     @task_count += 1
     data[:tid] = @task_count
-    @accounts[:tid] = data
-    @tasks["@task_count"] = TM::DB.build_task(data)
+    @tasks[:tid] = data
+    @tasks[:@task_count] = TM::DB.build_task(data)
   end
 
   def get_task(tid)
@@ -68,8 +66,8 @@ class TM::DB
   end
 
   def update_task(id, data)
-    data.each {|x,y| tasks[:id][:x] = y }
-    TM::Task.edit_project(id, data)
+    data.each {|x,y| @tasks[:id][:x] = y }
+    TM::Task.edit_project(data)
   end
 
   def destroy_task(id)
