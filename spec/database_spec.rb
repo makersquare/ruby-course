@@ -54,21 +54,27 @@ describe 'Database' do
   describe '#create_task' do
     it 'should return an instance of the TM::Task class' do
       task1
+      t = Time.now
       expect(task1.pid).to eq(1)
       expect(task1.tid).to eq(1)
       expect(task1.desc).to eq("Task 1")
       expect(task1.pnum).to eq(1)
       expect(task1.duedate).to eq("2014 1 1")
+      expect(task1.date).to eq("#{t.year} #{t.month} #{t.day}")
+      expect(task1.complete).to eq(false)
     end
 
     it 'should make a new task in the tasks hash' do
       task1
-      expect(db.tasks).to eq(1=>{:pid=>1, :desc=>"Task 1", :pnum=>1, :duedate=>"2014 1 1", :tid=>1})
+      t = Time.now
+      expect(db.tasks).to eq(1=>{:pid=>1, :desc=>"Task 1", :pnum=>1, :duedate=>"2014 1 1", :tid=>1, :date => "#{t.year} #{t.month} #{t.day}", :complete => false})
     end
   end
 
   describe '#get_task' do
-    xit 'should return an instance of TM::Task class given the task id' do
+    it 'should return an instance of TM::Task class given the task id' do
+      task1
+
     end
   end
 

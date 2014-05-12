@@ -2,25 +2,16 @@
 class TM::Task
 
     attr_reader :date, :duedate
-    attr_accessor :tid_counter, :tid, :desc, :pnum, :complete, :pid, :tasks, :completed_tasks
+    attr_accessor :tid, :desc, :pnum, :complete, :pid
 
-    # @@tid_counter = 0
-    # @@tasks = []
-    # @@completed_tasks = []
-  def initialize(pid, desc, pnum, duedate, tid)
-    t = Time.now
+  def initialize(pid, tid, desc, pnum, duedate, date, complete)
     @pid = pid
-    @date = "#{t.year} #{t.month} #{t.day}"
+    @date = date
     @pnum = pnum
     @tid = tid
     @desc = desc
     @duedate = duedate
-    # @@tid_counter += 1
-    # @tid = @@tid_counter
-    # @description = description
-    # @complete = false
-    # @duedate = duedate
-    # @@tasks << self
+    @complete = complete
   end
 
   def self.reset_class_variables
