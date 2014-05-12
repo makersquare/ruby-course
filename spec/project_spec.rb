@@ -1,7 +1,300 @@
 require 'spec_helper'
+# require_relative '../lib/task-manager/task'
 
 describe 'Project' do
-  it "exists" do
-    expect(TM::Project).to be_a(Class)
+  before (:each) do
+    TM::Project.reset_class_variables
   end
+
+  describe "initialize method" do
+
+  	it "can be initialized with a name" do
+  		project1 = TM::Project.new("project1")
+  		expect(project1.name).to eq("project1")
+  	end
+
+  	it "has a default name of 'default' if name not specified" do
+  		project1 = TM::Project.new
+  		expect(project1.name).to eq("default")
+  	end
+
+  	it "creates a unique ID is created starting with id=1" do
+      project1 = TM::Project.new
+      project2 = TM::Project.new
+      project3 = TM::Project.new
+      expect(project1.id).to eq(1)
+      expect(project2.id).to eq(2)
+      expect(project3.id).to eq(3)
+    end
+
+    it "creates multiple unique IDS in numerical order" do
+      project1 = TM::Project.new
+      project2 = TM::Project.new
+      project3 = TM::Project.new
+      expect(project2.id-project1.id).to eq(1)
+      expect(project3.id-project2.id).to eq(1)
+    end
+
+    it "creates an empty @tasks[] array" do
+      project1 = TM::Project.new
+      expect(project1.tasks.size).to eq(0)
+    end
+
+  end
+
+  describe "add_task method" do
+  	# add_task(task_object)
+  	it "adds given task to the @tasks[] array" do
+  		# check size of array and compare actual contents
+  		project1 = TM::Project.new("project1")
+  		task1 = TM::Task.new("task1")
+  		project1.add_task(task1)
+  		expect(project1.tasks.size).to eq(1)
+  		expect(project1.tasks[0].name).to eq("task1")
+  	end
+
+    it "can handle adding an multiple task objects passed in" do
+      project1 = TM::Project.new("project1")
+      task1 = TM::Task.new("task1")
+      task2 = TM::Task.new("task2")
+      task3 = TM::Task.new("task3")
+      project1.add_task(task1,task2, task3)
+      expect(project1.tasks.size).to eq(3)
+      expect(project1.tasks[0].name).to eq("task1")
+      expect(project1.tasks[1].name).to eq("task2")
+      expect(project1.tasks[2].name).to eq("task3")
+    end
+
+    it "should not add anything if not a valid task object" do
+  		# check size of array and compare actual contents
+  		#throw error? how to test that?
+  		project1 = TM::Project.new("project1")
+  		task1 = "i'm just a string"
+  		project1.add_task(task1)
+  		expect(project1.tasks.size).to eq(0)
+  	end
+
+  end
+
+  describe "get_task_by_id method" do
+  	it "returns nil if id not found" do
+  		project1 = TM::Project.new("project1")
+  		task1 = TM::Task.new("task1")
+  		task1.id = 50
+  		project1.add_task(task1)
+  		expect(project1.get_task_by_id(99)).to eq(nil)
+  	end
+
+  	it "returns a task object if id is found" do
+  		project1 = TM::Project.new("project1")
+  		task1 = TM::Task.new("task1")
+  		task1.id = 50
+      project1.add_task(task1)
+      expect(project1.get_task_by_id(50)).to eq(task1)
+    end
+
+  end
+
+  describe "get_task_index_by_id method" do
+    it "returns nil if id not found" do
+      project1 = TM::Project.new("project1")
+      result = project1.get_task_index_by_id(50)
+      expect(result).to eq(nil)
+    end
+
+    it "returns the index in @tasks array t if id is found" do
+      project1 = TM::Project.new("project1")
+      task1 = TM::Task.new("task1")
+      task2 = TM::Task.new("task2")
+      task1.id = 50
+      task2.id = 60
+      project1.add_task(task1)
+      project1.add_task(task2)
+      expect(project1.get_task_index_by_id(50)).to eq(0)
+      expect(project1.get_task_index_by_id(60)).to eq(1)
+    end
+  end
+
+  describe "delete_task_by_id method" do
+    it "if id not found it doesn't affect @tasks array" do
+      project1 = TM::Project.new("project1")
+      task1 = TM::Task.new("task1")
+      task1.id = 50
+      project1.add_task(task1)
+      expect(project1.tasks.size).to eq(1)
+      project1.delete_task_by_id(99)
+      expect(project1.tasks.size).to eq(1)
+      expect(project1.tasks[0].name).to eq("task1")
+    end
+
+    it "can delete task by task id" do
+      project1 = TM::Project.new("project1")
+      task1 = TM::Task.new("task1")
+      task1.id = 10
+      task2 = TM::Task.new("task2")
+      task2.id = 20
+      task3 = TM::Task.new("task3")
+      task3.id = 30
+      project1.add_task(task1)
+      project1.add_task(task2)
+      project1.add_task(task3)
+      expect(project1.tasks.size).to eq(3)
+      project1.delete_task_by_id(20)
+      expect(project1.tasks.size).to eq(2)
+      expect(project1.tasks[0].name).to eq("task1")
+      expect(project1.tasks[1].name).to eq("task3")
+      project1.delete_task_by_id(10)
+      expect(project1.tasks.size).to eq(1)
+      expect(project1.tasks[0].name).to eq("task3")
+    end
+  end
+
+  describe "mark_task_completed_by_id method" do
+
+  	it "if id not found then it does nothing to array" do
+  		project1 = TM::Project.new("project1")
+  		task1 = TM::Task.new("task1")
+  		task1.id = 50
+  		project1.add_task(task1)
+  		expect(project1.tasks[0].completed).to eq(false)
+  		project1.mark_task_completed_by_id(99)
+  		expect(project1.tasks[0].completed).to eq(false)
+  	end
+
+  	it "marks the correct task object" do
+  		project1 = TM::Project.new("project1")
+  		task1 = TM::Task.new("task1")
+  		task1.id = 50
+  		project1.add_task(task1)
+  		expect(project1.tasks[0].completed).to eq(false)
+  		project1.mark_task_completed_by_id(50)
+  		expect(project1.tasks[0].completed).to eq(true)
+  	end
+
+  end
+
+  describe "retrieve_tasks method" do
+
+    it "can return tasks ordered by date created, newest date first is default" do
+
+      project1 = TM::Project.new("project1")
+      task1 = TM::Task.new("task1")
+      task1.mark_completed
+      task1.set_date_created(Time.parse("1/1/2014"))
+      task2 = TM::Task.new("task2")
+      task2.mark_completed
+      task2.set_date_created(Time.parse("3/1/2014"))
+      task3 = TM::Task.new("task3")
+      task3.mark_completed
+      task3.set_date_created(Time.parse("2/1/2014"))
+      task4 = TM::Task.new("task4") #task not completed, should't appear
+      task4.set_date_created(Time.parse("4/1/2014"))
+      
+      project1.add_task(task1)
+      project1.add_task(task2)
+      project1.add_task(task3)
+      project1.add_task(task4)
+
+      task_array = project1.retrieve_completed_tasks_by_date
+      expect(task_array.size).to eq(3)
+      expect(task_array[0].name).to eq("task2")
+      expect(task_array[1].name).to eq("task3")
+      expect(task_array[2].name).to eq("task1")
+
+      task_array = project1.retrieve_completed_tasks_by_date(newest_first: false)
+      expect(task_array.size).to eq(3)
+      expect(task_array[0].name).to eq("task1")
+      expect(task_array[1].name).to eq("task3")
+      expect(task_array[2].name).to eq("task2")
+
+    end
+
+    it "can return incompleted tasks ordered by priority, tnen by date created" do
+
+      project1 = TM::Project.new("project1")
+      task1 = TM::Task.new("task1")
+      task1.set_priority(1)
+      task1.set_date_created(Time.parse("1/1/2014"))
+      task2 = TM::Task.new("task2")
+      task2.set_priority(3)
+      task3 = TM::Task.new("task3")
+      task3.set_priority(2)
+      task3.set_date_created(Time.parse("5/1/2014"))
+      task4 = TM::Task.new("task4") 
+      task4.mark_completed #task completed, should't appear
+      task4.set_priority(4)
+      task5 = TM::Task.new("task5") 
+      task5.set_priority(2)
+      task5.set_date_created(Time.parse("1/1/2014"))
+      task6 = TM::Task.new("task6") 
+      task6.set_priority(1)
+      task6.set_date_created(Time.parse("5/1/2014"))
+
+      project1.add_task(task1)
+      project1.add_task(task2)
+      project1.add_task(task3)
+      project1.add_task(task4)
+      project1.add_task(task5)
+      project1.add_task(task6)
+
+      task_array = project1.retrieve_incompleted_tasks_by_priority
+      expect(task_array.size).to eq(5)
+      expect(task_array[0].name).to eq("task1")
+      expect(task_array[1].name).to eq("task6")
+      expect(task_array[2].name).to eq("task5")
+      expect(task_array[3].name).to eq("task3")
+      expect(task_array[4].name).to eq("task2")
+      task_array = project1.retrieve_incompleted_tasks_by_priority(highest_priority_first: false)
+      expect(task_array.size).to eq(5)
+      expect(task_array[0].name).to eq("task2")
+      expect(task_array[1].name).to eq("task5")
+      expect(task_array[2].name).to eq("task3")
+      expect(task_array[3].name).to eq("task1")
+      expect(task_array[4].name).to eq("task6")
+    end
+
+    it "can return just completed tasks" do
+      project1 = TM::Project.new("project1")
+      task1 = TM::Task.new("task1")
+      task1.mark_completed
+      task2 = TM::Task.new("task2")
+      task3 = TM::Task.new("task3")
+      task3.mark_completed
+      task4 = TM::Task.new("task4") 
+      
+      project1.add_task(task1)
+      project1.add_task(task2)
+      project1.add_task(task3)
+      project1.add_task(task4)
+
+      task_array = project1.retrieve_completed_tasks
+      expect(task_array.size).to eq(2)
+      expect(task_array[0].name).to eq("task1")
+      expect(task_array[1].name).to eq("task3")
+
+    end
+
+    it "can return just incompleted tasks" do
+      project1 = TM::Project.new("project1")
+      task1 = TM::Task.new("task1")
+      task1.mark_completed
+      task2 = TM::Task.new("task2")
+      task3 = TM::Task.new("task3")
+      task3.mark_completed
+      task4 = TM::Task.new("task4") 
+      
+      project1.add_task(task1)
+      project1.add_task(task2)
+      project1.add_task(task3)
+      project1.add_task(task4)
+
+      task_array = project1.retrieve_incompleted_tasks
+      expect(task_array.size).to eq(2)
+      expect(task_array[0].name).to eq("task2")
+      expect(task_array[1].name).to eq("task4")
+
+    end
+
+  end
+
 end
