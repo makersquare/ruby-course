@@ -144,6 +144,11 @@ class TM::TerminalClient
   end
 
   def employees_projects
+    puts "Please enter the employee\'s id."
+    eid = gets.chomp
+    TM::DB.db.emps_projs(eid.to_i)
+    @command = gets.chomp
+    self.call_methods(@command)
   end
 
   def emp_remaining_tasks

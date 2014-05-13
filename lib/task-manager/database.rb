@@ -11,6 +11,8 @@ class TM::DB
     @employees = {}
     @employee_count = 0
     @employees_projects = {}
+    # @employees_projects = {1 => {1=>true, 2=>true}, 2=>...}
+    # The projects id is the key. The employee id is the key with a value of true.
   end
 
 # Projects ---------------------------------------
@@ -186,6 +188,18 @@ class TM::DB
     if old_data[:eid].nil?
       old_data[:eid] = eid
       return TM::DB.build_task(old_data)
+    end
+  end
+
+  def emps_projs(eid)
+    @employees_projects.each do |x,y|
+      if y[eid]
+        puts "ID\tEmployee Name"
+        puts "#{@employees[eid][:eid]}\t#{@employees[eid][:name]}"
+        puts "ID\tProject Name\t% Done \t% Over Due"
+        percentage = TM::DB.db.projects_tasks(x)
+        puts "#{x}\t#{@projects[x][:name]}\t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
+      end
     end
   end
 
