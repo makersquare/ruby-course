@@ -146,4 +146,18 @@ describe 'Database' do
     end
   end
 
+  describe '#give_employees_projects' do
+    xit 'should be able to add employees to projects and projects to employees in the employees_projects hash' do
+    end
+  end
+
+  describe '#add_employee_to_task' do
+    it 'should be able to assign an employee to a task' do
+      emp1
+      task1
+      db.add_employee_to_task(1,1)
+      expect(db.tasks[1][:eid]).to eq(1)
+    end
+  end
+
 end

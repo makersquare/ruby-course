@@ -113,11 +113,11 @@ class TM::DB
     @employees.delete(eid)
   end
 
-  def add_project(data)
+  def give_employees_projects(pid, eid)
 
   end
 
-  def add_task(data)
+  def add_employee_to_task(tid, eid)
 
   end
 
