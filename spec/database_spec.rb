@@ -116,9 +116,9 @@ describe 'Database' do
       expect(emp1.name).to eq("Katrina")
     end
 
-    xit 'should create a project in a project hash' do
-      proj1
-      expect(db.projects).to eq(1=>{:id=>1, :name=>"Project 1"})
+    it 'should create a employee in a employee hash' do
+      emp1
+      expect(db.employees).to eq(1=>{:eid=>1, :name=>"Katrina"})
     end
   end
 
