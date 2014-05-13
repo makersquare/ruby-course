@@ -94,7 +94,7 @@ class TM::DB
     end
     puts "Priority\tID Description\tDue Date"
     TM::DB.db.tasks.each do |x,y|
-      if y[:complete] && y[:pid] == projectid.to_i
+      if y[:complete] && y[:pid] == pid.to_i
         puts "#{y[:pnum]}\t\t#{y[:tid]}  #{y[:desc]}\t#{y[:duedate]}"
       end
     end
@@ -172,7 +172,7 @@ class TM::DB
     end
   end
 
-
+  # Can assign only one employee to task, but employees can have multiple tasks
   def add_emp_to_task(tid, eid)
     old_data = @tasks[tid]
     if old_data[:eid].nil?

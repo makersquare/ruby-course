@@ -18,8 +18,16 @@ class TM::TerminalClient
     puts "\tcreate t - Create a new task for a project"
     puts "\tshow - Show remaining tasks for a project"
     puts "\thistory - Show completed tasks for a project"
+    puts "\tprojects employees - Show the employees in a project"
+    puts "\tcreate e - Add a new employee"
+    puts "\temployees - Lists all employees"
+    puts "\tadd project - Assign an employee to a project"
+    puts "\tadd task - Assign an employee to a task"
+    puts "\temployees projects - Show the projects for an employee"
     puts "\tmark task - Mark a task as complete"
-    puts "\texit - exits the program"
+    puts "\temployees tasks - Show remaining tasks for an employee"
+    puts "\temployees complete - Show completed tasks for an employee"
+    puts "\texit - Exits the program"
     @command = gets.chomp
     self.call_methods(@command)
   end
@@ -30,7 +38,15 @@ class TM::TerminalClient
     self.create_task if @command == 'create t'
     self.show if @command == 'show'
     self.history if @command == 'history'
+    self.projects_employees if @command == 'projects employees'
+    self.create_employee if @command == 'create e'
+    self.list_employees if @command == 'employees'
+    self.add_emp_to_proj if @command == 'add project'
+    self.add_emp_to_task if @command == 'add task'
+    self.employees_projects if @command == 'employees projects'
     self.mark_task if @command == 'mark task'
+    self.emp_remaining_tasks if @command == 'employees tasks'
+    self.emp_comp_tasks if @command == 'employees complete'
     self.command_list if  @command == 'help'
     if @command == 'exit'
     else
@@ -86,6 +102,27 @@ class TM::TerminalClient
     self.call_methods(@command)
   end
 
+  def projects_employees
+  end
+
+  def create_employee
+    puts "Please enter the employees name."
+    name = gets.chomp
+    emp = TM::DB.db.create_employee(name: name)
+    puts "Your new employee is #{emp.name} with the id: #{emp.eid}"
+    @command = gets.chomp
+    self.call_methods(@command)
+  end
+
+  def list_employees
+  end
+
+  def add_emp_to_proj
+  end
+
+  def add_emp_to_task
+  end
+
   def mark_task
     puts "Please enter the task ID."
     taskid = gets.chomp
@@ -94,6 +131,15 @@ class TM::TerminalClient
     puts "Task with id #{task[:id]} and description \"#{task[:desc]}\" has been marked complete!"
     @command = gets.chomp
     self.call_methods(@command)
+  end
+
+  def employees_projects
+  end
+
+  def emp_remaining_tasks
+  end
+
+  def emp_comp_tasks
   end
 
 end
