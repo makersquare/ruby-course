@@ -34,18 +34,21 @@ module TM
     end
 
     def get_project(id)
-      build_project(@projects[id])
+      project = @projects[id]
+      project ? build_project(project) : false
     end
 
     def update_project(id, data)
       project = @projects[id]
-      data.each do |key, value|
-        project[key] = value
+      if project
+        data.each { |key, value| project[key] = value }
+      else
+        false
       end
     end
 
     def destroy_project(id)
-      @projects.delete(id)
+      @projects[id] ? @projects.delete(id) : false
     end
 
     def build_project(data)
@@ -55,15 +58,19 @@ module TM
     # Project Query Methods
 
       def project_task(id, status)
-        task = []
-        @task.each do |key, value|
-          if status[:completed]
-            task << build_task(value) if value[:pid] == id && value[:completed] == status[:completed]
-          else
-            task << build_task(value) if value[:pid] == id
+        if @projects[id]
+          task = []
+          @task.each do |key, value|
+            if status[:completed]
+              task << build_task(value) if value[:pid] == id && value[:completed] == status[:completed]
+            else
+              task << build_task(value) if value[:pid] == id
+            end
           end
+          task.sort_by { |task_hash| task_hash.creation_date }
+        else
+          false
         end
-        task.sort_by { |task_hash| task_hash.creation_date }
       end
 
     # Task Methods
@@ -78,18 +85,21 @@ module TM
     end
 
     def get_task(id)
-      build_task(@task[id])
+      task = @task[id]
+      task ? build_task(task) : false
     end
 
     def update_task(id, data)
       task = @task[id]
-      data.each do |key, value|
-        task[key] = value
+      if task
+        data.each { |key, value| task[key] = value }
+      else
+        false
       end
     end
 
     def destroy_task(id)
-      @task.delete(id)
+      @task[id] ? @task.delete(id) : false
     end
 
     def build_task(data)
@@ -105,24 +115,33 @@ module TM
   end
 
   def get_employee(id)
-    build_employee(@employees[id])
+    employee = @employees[id]
+    employee ? build_employee(employee) : false
   end
 
   def update_employee(id, data)
-    # binding.pry
     employee = @employees[id]
-    data.each do |key, value|
-      employee[key] = value if employee.has_key?(key)
+    if employee
+      data.each { |key, value| employee[key] = value if employee.has_key?(key) }
+    else
+      false
     end
   end
 
   def destroy_employee(id)
-    @employees.delete(id)
+    @employees[id] ? @employees.delete(id) : false
   end
 
   def build_employee(data)
     TM::Employee.new(data)
   end
+
+    # Employee Query Methods
+    def all_employees
+      employees_array = []
+      @employees.each { |key, value| employees_array << build_employee(value) }
+      employees_array
+    end
 
   # Project Membership Methods
 
@@ -143,7 +162,7 @@ module TM
   end
 
   def destroy_membership(id)
-    @project_membership.delete(id)
+    @project_membership[id] ? @project_membership.delete(id) : false
   end
 
 

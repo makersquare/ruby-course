@@ -21,12 +21,20 @@ class TM::Project
 
   def incomplete_task
     incomplete = TM.db.project_task(@id, completed: false)
-    incomplete.sort_by { |task| [task.creation_date, task.priority, task.id] }
+    if incomplete
+      incomplete.sort_by { |task| [task.creation_date, task.priority, task.id] }
+    else
+      false
+    end
   end
 
   def completed_task
     complete = TM.db.project_task(@id, completed: true)
-    complete.sort_by { |task| [task.priority, task.id] }
+    if complete
+      complete.sort_by { |task| [task.priority, task.id] }
+    else
+      false
+    end
   end
 
   def destroy
