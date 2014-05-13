@@ -151,14 +151,15 @@ module TM
       employees_array
     end
 
-    def employee_task(id, status)
-      return false if !@employees[id]
+    def employee_task(query_data)
+      return false if !@employees[query_data[:eid]]
       task = []
+      # binding.pry
       @task.each do |key, value|
-        if status[:completed]
-          task << build_task(value) if value[:eid] == id && value[:completed] == true
+        if query_data[:completed]
+          task << build_task(value) if value[:eid] == query_data[:eid]
         else
-          task << build_task(value) if value[:eid] == id
+          task << build_task(value) if value[:eid] == query_data[:eid]
         end
       end
       task
@@ -202,6 +203,14 @@ module TM
       else
         false
       end
+    end
+
+    def projects_for_employee(employee_data)
+      projects = []
+      @project_membership.each do |key, value|
+        projects << get_project(key) if value[employee_data[:eid]]
+      end
+      projects
     end
 
   end

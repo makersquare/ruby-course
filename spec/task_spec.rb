@@ -47,11 +47,11 @@ describe 'Task' do
     it 'can assign and remove an employee' do
       @db.create_project(name: "New Project")
 
-      @task.assign_employee(1)
+      @task.assign_employee(eid: 1)
       expect(@db.get_task(1).eid).to eq(false)
 
       @db.add_employee_to_project(eid: 1, pid: 1)
-      @task.assign_employee(1)
+      @task.assign_employee(eid: 1)
       expect(@db.get_task(1).eid).to eq(1)
 
       @db.get_task(1).remove_employee
