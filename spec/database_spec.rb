@@ -114,4 +114,66 @@ describe TM::DB do
     expect(comp_task_test.length).to eq(1)
   end
 
+  it 'creates employee given hash' do
+    db = TM::DB.new
+    db.create_project(name: 'test')
+    db.create_task(name: 'pancake', project_id: 0, description: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.create_task(name: 'waffle', project_id: 0, description: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.create_task(name: 'eggs', project_id: 0, description: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    test_task = db.get_task(0)
+    test_task.status = 'complete'
+    db.update_task(test_task)
+    db.create_employee(name: 'john jay')
+    expect(db.employees.length).to eq(1)
+  end
+
+  it 'gets the employee given the id' do
+    db = TM::DB.new
+    db.create_project(name: 'test')
+    db.create_task(name: 'pancake', project_id: 0, description: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.create_task(name: 'waffle', project_id: 0, description: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.create_task(name: 'eggs', project_id: 0, description: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    test_task = db.get_task(0)
+    test_task.status = 'complete'
+    db.update_task(test_task)
+    db.create_employee(name: 'john jay')
+    test_employee = db.get_employee(0)
+    p test_employee
+    expect(test_employee.name).to eq('john jay')
+  end
+
+  it 'updates employee given employee' do
+    db = TM::DB.new
+    db.create_project(name: 'test')
+    db.create_task(name: 'pancake', project_id: 0, description: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.create_task(name: 'waffle', project_id: 0, description: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.create_task(name: 'eggs', project_id: 0, description: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    test_task = db.get_task(0)
+    test_task.status = 'complete'
+    db.update_task(test_task)
+    db.create_employee(name: 'john jay')
+    test_employee = db.get_employee(0)
+    p test_employee
+    test_employee.name = 'Rich'
+    p test_employee
+    db.update_employee(test_employee)
+    p db.employees
+    expect(db.employees[0][:name]).to eq('Rich')
+  end
+
+  it 'destroys employee given id' do
+    db = TM::DB.new
+    db.create_project(name: 'test')
+    db.create_task(name: 'pancake', project_id: 0, description: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.create_task(name: 'waffle', project_id: 0, description: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.create_task(name: 'eggs', project_id: 0, description: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    test_task = db.get_task(0)
+    test_task.status = 'complete'
+    db.update_task(test_task)
+    db.create_employee(name: 'john jay')
+    test_employee = db.get_employee(0)
+    db.destroy_employee(test_employee.id)
+    expect(db.employees.length).to eq(0)
+  end
+
 end

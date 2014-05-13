@@ -4,8 +4,6 @@ class TM::Employee
   def initialize(name, id)
     @name = name
     @id = id
-    @project_id_list = []
-    @task_id_list = []
   end
 end
 
