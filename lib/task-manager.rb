@@ -73,6 +73,14 @@ module TM
         end
       end
 
+      def all_projects
+        projects_array = []
+        @projects.each do |key, value|
+          projects_array << build_project(value)
+        end
+        projects_array
+      end
+
     # Task Methods
 
     def create_task(data)

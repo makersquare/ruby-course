@@ -34,6 +34,13 @@ describe "TaskManager::Database" do
       expect(@db.all_employees.first.name).to eq("Johnny")
     end
 
+    it 'can list all projects' do
+      @db.create_project(name: "New Project")
+      @db.create_project(name: "Second Project")
+      expect(@db.all_projects.last.name).to eq("Second Project")
+      expect(@db.all_projects.first.id).to eq(1)
+    end
+
   end
 
   context 'a new project is added to the datebase' do
