@@ -104,7 +104,7 @@ class TM::DB
   end
 
   def update_employee(eid, data)
-    old_data = @tasks[eid]
+    old_data = @employees[eid]
     old_data.merge!(data)
     return TM::DB.build_employee(old_data)
   end

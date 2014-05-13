@@ -130,11 +130,11 @@ describe 'Database' do
     end
   end
 
-  describe '#update_project' do
-    xit 'should update the projects name in the projects hash given the id of the project' do
-      proj1
-      db.update_project(proj1.pid, name: "New Project")
-      expect(db.projects[1][:name]).to eq("New Project")
+  describe '#update_employee' do
+    it 'should update the employees name in the employees hash given the id of the employee' do
+      emp1
+      db.update_employee(emp1.eid, name: "Raquel")
+      expect(db.employees[1][:name]).to eq("Raquel")
     end
   end
 
