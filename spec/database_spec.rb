@@ -38,7 +38,7 @@ describe 'Database' do
   end
 
   describe '#destroy_project' do
-    it 'should delete a project from the projects has given the id of the project' do
+    it 'should delete a project from the projects hash given the id of the project' do
       proj1
       result = db.destroy_project(proj1.pid)
       expect(db.projects).to eq({})
@@ -138,11 +138,11 @@ describe 'Database' do
     end
   end
 
-  describe '#destroy_project' do
-    xit 'should delete a project from the projects has given the id of the project' do
-      proj1
-      result = db.destroy_project(proj1.pid)
-      expect(db.projects).to eq({})
+  describe '#destroy_employee' do
+    it 'should delete an employee from the employees hash given the id of the employee' do
+      emp1
+      result = db.destroy_employee(emp1.eid)
+      expect(db.employees).to eq({})
     end
   end
 
