@@ -36,4 +36,17 @@ describe 'Employee' do
     expect(@employee1.show_task(completed: false).last.description).to eq("Task 2")
   end
 
+  it 'can show all completed task' do
+    @db.create_task(description: "Task 1", priority: 1, pid: 2)
+    @db.create_task(description: "Task 2", priority: 2, pid: 1)
+    @db.add_employee_to_project(eid: 1, pid: 1)
+    @db.add_employee_to_project(eid: 1, pid: 2)
+    @db.get_task(1).assign_employee(:eid => 1)
+    @db.get_task(2).assign_employee(:eid => 1)
+    @db.get_task(1).complete_task
+
+    binding.pry
+    expect(@employee1.show_task(completed: true).first.pid).to eq(2)
+  end
+
 end
