@@ -147,7 +147,13 @@ describe 'Database' do
   end
 
   describe '#give_employees_projects' do
-    xit 'should be able to add employees to projects and projects to employees in the employees_projects hash' do
+    it 'should be able to add employees to projects and projects to employees in the employees_projects hash' do
+      emp1
+      emp2
+      proj1
+      db.give_employees_projects(proj1.pid, emp1.eid)
+      db.give_employees_projects(proj1.pid, emp2.eid)
+      expect(db.employees_projects).to eq(1 => {1=>true,2=>true})
     end
   end
 

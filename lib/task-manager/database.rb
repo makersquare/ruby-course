@@ -114,7 +114,11 @@ class TM::DB
   end
 
   def give_employees_projects(pid, eid)
-
+    if @employees_projects.has_key?(pid)
+      @employees_projects[pid][eid] = true
+    else
+      @employees_projects[pid] = {eid => true}
+    end
   end
 
   def add_employee_to_task(tid, eid)
