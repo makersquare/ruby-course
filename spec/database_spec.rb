@@ -168,6 +168,7 @@ describe 'Database' do
       task1
       task2
       db.add_emp_to_task(1,1)
+      expect(db.tasks[2][:eid]).to eq(nil)
       db.add_emp_to_task(2,1)
       db.add_emp_to_task(2,2)
       expect(db.tasks[1][:eid]).to eq(1)
