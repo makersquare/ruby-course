@@ -22,7 +22,7 @@ describe 'Database' do
   end
 
   describe '#get_project' do
-    it 'should return an instance of the TM::Project class with to project id' do
+    it 'should return an instance of the TM::Project class with the project id' do
       result = db.get_project(proj1.pid)
       expect(result.pid).to eq(1)
       expect(result.name).to eq("Project 1")
@@ -122,11 +122,11 @@ describe 'Database' do
     end
   end
 
-  describe '#get_project' do
-    xit 'should return an instance of the TM::Project class with to project id' do
-      result = db.get_project(proj1.pid)
-      expect(result.pid).to eq(1)
-      expect(result.name).to eq("Project 1")
+  describe '#get_employee' do
+    it 'should return an instance of the TM::Employee class with an employee id' do
+      result = db.get_employee(emp1.eid)
+      expect(result.eid).to eq(1)
+      expect(result.name).to eq("Katrina")
     end
   end
 
