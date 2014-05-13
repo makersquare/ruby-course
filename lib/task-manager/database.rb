@@ -59,10 +59,12 @@ class TM::DB
   end
 
   def list_projects
-    puts "ID\tProject Name\t% Done \t% Over Due"
+    # puts "ID\tProject Name\t% Done \t% Over Due"
+    array = []
     @projects.each do|x,y|
       percentage = TM::DB.db.projects_tasks(x)
-      puts "#{x}\t#{y[:name]}\t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
+      array << {pid: y[:pid],name: y[:name],percent_done: percentage[:percent_done],percent_over: percentage[:percent_over]}
+      # puts "#{x}\t#{y[:name]}\t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
     end
   end
 
@@ -176,8 +178,9 @@ class TM::DB
 
   def list_employees
     puts "ID\tEmployee Name"
+    array = []
     @employees.each do|x,y|
-      puts "#{y[:eid]}\t#{y[:name]}"
+      array << {eid: y[:eid],name: y[:name]}
     end
   end
 
@@ -191,7 +194,8 @@ class TM::DB
     @emp_proj_count += 1
     data[:id] = @emp_proj_count
     @employees_projects[data[:id]] = data
-    puts "#{@employees[data[:eid]][:name]} has been added to the project #{@projects[data[:pid]][:name]}."
+    return {name: @employees[data[:eid]][:name],project: @projects[data[:pid]][:name]}
+    # puts "#{@employees[data[:eid]][:name]} has been added to the project #{@projects[data[:pid]][:name]}."
   end
 
   # List projects for an employee
