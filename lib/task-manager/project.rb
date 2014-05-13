@@ -6,18 +6,20 @@ class TM::Project
   @@all_projects = []
 
   #allows instance variables to be 'read'
-  attr_reader :name, :completed_tasks, :project_id
+  attr_reader :name, :completed_tasks, :id
   attr_accessor :project_id_counter, :projects
 
   # .new method - creates instances of the TM::Project class
   # each @'value' is called an instance variable
   # these are the attributes which are specific to the instance
-  def initialize(name)
+  def initialize(name, id)
     @name = name
-    @@project_id_counter += 1
-    @project_id = @@project_id_counter
-    @completed_tasks = []
-    @@all_projects << self
+    @id = id
+    # @@project_id_counter += 1
+
+    # @project_id = @@project_id_counter
+    # @completed_tasks = []
+    # @@all_projects << self
   end
 
   #this method will have to do two things
@@ -27,6 +29,7 @@ class TM::Project
     list = @completed_tasks.each {|task| task.completed = true}
     list.sort_by { |task| task.creation_date}
     @completed_tasks << list
+    return @completed_tasks
   end
 
   # Resets the project_id_count so that it doesn't increment while testing
@@ -38,3 +41,8 @@ class TM::Project
   end
 
 end
+
+
+# TM::Project.new("to do")
+# ==>
+

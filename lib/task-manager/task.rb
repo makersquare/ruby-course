@@ -4,7 +4,7 @@ class TM::Task
   @@all_tasks = []  #an array of all tasks
   @@task_id_count = 0 #a way to begin counting the amount of tasks
 
-  attr_reader :project_id, :task_description, :task_priority_number, :task_id, :completed
+  attr_reader :project_id, :task_description, :task_priority_number, :task_id, :completed, :task_id_count
   attr_accessor :creation_date
 
   # .new method - creates instances of the TM::Task class
@@ -33,3 +33,5 @@ class TM::Task
   end
 
 end
+
+

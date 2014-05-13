@@ -8,7 +8,7 @@ describe 'Task' do    #describes what the Task class should do
   # the @ also indicates that it is a
   before(:each) do
     TM::Project.reset_class_variables                           #class method
-    @project_1 = TM::Project.new("proj1")                       #Project intstance method
+    @project_1 = TM::Project.new("proj1", 1)                       #Project intstance method
     @task_1 = TM::Task.new(1, "First Task", 1)                  #Task intstance method
   end
 
