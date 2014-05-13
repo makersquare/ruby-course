@@ -12,8 +12,7 @@ class TM::DB
     @employee_count = 0
     @employees_projects = {}
     @emp_proj_count = 0
-    # @employees_projects = {1 => {1=>true, 2=>true}, 2=>...}
-    # The projects id is the key. The employee id is the key with a value of true.
+    # @employees_projects = {1 => {id: 1, pid: 1, eid: 2}, 2=>...}
   end
 
 # Projects ---------------------------------------
