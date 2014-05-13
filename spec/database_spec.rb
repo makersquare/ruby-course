@@ -6,6 +6,8 @@ describe 'Database' do
   let(:proj1) { db.create_project({id: 1, name: "Project 1"}) }
   let(:task1) { db.create_task({pid: 1, desc: "Task 1", pnum: 1, duedate: "2014 1 1"}) }
   let(:task2) { db.create_task({pid: 1, desc: "Task 2", pnum: 2, duedate: "2014 6 6"}) }
+  let(:emp1) { db.create_employee({eid: 1, name: "Katrina"}) }
+  let(:emp2) { db.create_employee({eid: 2, name: "Alex"}) }
 
   describe '#create_project' do
     it 'should return an instance of the TM::Project class' do
@@ -105,6 +107,42 @@ describe 'Database' do
       task1
       db.destroy_task(task1.tid)
       expect(db.tasks).to eq({})
+    end
+  end
+
+  describe '#create_employee' do
+    it 'should return an instance of the TM::Employee class' do
+      expect(emp1.eid).to eq(1)
+      expect(emp1.name).to eq("Katrina")
+    end
+
+    xit 'should create a project in a project hash' do
+      proj1
+      expect(db.projects).to eq(1=>{:id=>1, :name=>"Project 1"})
+    end
+  end
+
+  describe '#get_project' do
+    xit 'should return an instance of the TM::Project class with to project id' do
+      result = db.get_project(proj1.pid)
+      expect(result.pid).to eq(1)
+      expect(result.name).to eq("Project 1")
+    end
+  end
+
+  describe '#update_project' do
+    xit 'should update the projects name in the projects hash given the id of the project' do
+      proj1
+      db.update_project(proj1.pid, name: "New Project")
+      expect(db.projects[1][:name]).to eq("New Project")
+    end
+  end
+
+  describe '#destroy_project' do
+    xit 'should delete a project from the projects has given the id of the project' do
+      proj1
+      result = db.destroy_project(proj1.pid)
+      expect(db.projects).to eq({})
     end
   end
 

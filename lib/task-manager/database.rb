@@ -22,7 +22,9 @@ class TM::DB
 
   def get_project(id)
     data = @projects[id]
-    return TM::DB.build_project(data)
+    if !data.nil?
+      return TM::DB.build_project(data)
+    end
   end
 
   def update_project(id, data)
@@ -95,12 +97,20 @@ class TM::DB
   end
 
   def get_employee(eid)
+    data = @employees[eid]
+    if !data.nil?
+      return TM::DB.build_employee(data)
+    end
   end
 
   def update_employee(eid, data)
+    old_data = @tasks[eid]
+    old_data.merge!(data)
+    return TM::DB.build_employee(old_data)
   end
 
   def destroy_employee(eid)
+    @employees.delete(eid)
   end
 
   def add_project(data)
