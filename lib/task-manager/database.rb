@@ -119,13 +119,14 @@ module TM
       task_assigned_to_x =get_task(@task_assignment[id][:task_id])
       project_assigned_to_x = get_project(@task_assignment[id][:project_id])
       puts "#{employee_x.name} has been assigned to task #{task_assigned_to_x.name} on project #{project_assigned_to_x.name}."
+      @task_assignment[id]
     end
 
     def update_task_assignment(task_assignment)
-      attrs = @task_assignment[task_assignment.id]
-      attrs[:employee_id] = task_assignment.employee_id
-      attrs[:task_id] = task_assignment.task_id
-      attrs[:project_id] = task_assignment.project_id
+      attrs = @task_assignment[task_assignment[:id]]
+      attrs[:employee_id] = task_assignment[:employee_id]
+      attrs[:task_id] = task_assignment[:task_id]
+      attrs[:project_id] = task_assignment[:project_id]
     end
 
     def destroy_task_assignment(id)
