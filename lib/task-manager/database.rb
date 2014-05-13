@@ -163,6 +163,13 @@ class TM::DB
     @employees.delete(eid)
   end
 
+  def list_employees
+    puts "ID\tEmployee Name"
+    @employees.each do|x,y|
+      puts "#{y[:eid]}\t#{y[:name]}"
+    end
+  end
+
   # Can add multiple employees to a project and add multiple projects
   def give_emp_proj(pid, eid)
     if @employees_projects.has_key?(pid)

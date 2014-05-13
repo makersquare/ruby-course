@@ -115,6 +115,9 @@ class TM::TerminalClient
   end
 
   def list_employees
+    TM::DB.db.list_employees
+    @command = gets.chomp
+    self.call_methods(@command)
   end
 
   def add_emp_to_proj
