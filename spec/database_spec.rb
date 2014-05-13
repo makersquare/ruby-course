@@ -4,6 +4,7 @@ describe 'Database' do
 
   let(:db) { TM::DB.new }
   let(:proj1) { db.create_project({id: 1, name: "Project 1"}) }
+  let(:proj2) { db.create_project({id: 2, name: "Project 2"}) }
   let(:task1) { db.create_task({pid: 1, desc: "Task 1", pnum: 1, duedate: "2014 1 1"}) }
   let(:task2) { db.create_task({pid: 1, desc: "Task 2", pnum: 2, duedate: "2014 6 6"}) }
   let(:emp1) { db.create_employee({eid: 1, name: "Katrina"}) }
@@ -151,9 +152,12 @@ describe 'Database' do
       emp1
       emp2
       proj1
+      proj2
       db.give_employees_projects(proj1.pid, emp1.eid)
       db.give_employees_projects(proj1.pid, emp2.eid)
       expect(db.employees_projects).to eq(1 => {1=>true,2=>true})
+      db.give_employees_projects(proj2.pid, emp2.eid)
+      expect(db.employees_projects).to eq(1 => {1=>true,2=>true}, 2=>{2=>true})
     end
   end
 
