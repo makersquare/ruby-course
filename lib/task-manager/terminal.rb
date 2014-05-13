@@ -121,6 +121,13 @@ class TM::TerminalClient
   end
 
   def add_emp_to_proj
+    puts "Please enter the project id."
+    pid = gets.chomp
+    puts "Please enter the employee id."
+    eid = gets.chomp
+    TM::DB.db.give_emp_proj(pid.to_i,eid.to_i)
+    @command = gets.chomp
+    self.call_methods(@command)
   end
 
   def add_emp_to_task

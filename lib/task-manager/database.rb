@@ -177,6 +177,7 @@ class TM::DB
     else
       @employees_projects[pid] = {eid => true}
     end
+    puts "#{@employees[eid][:name]} has been added to the project #{@projects[pid][:name]}."
   end
 
   # Can assign only one employee to task, but employees can have multiple tasks
