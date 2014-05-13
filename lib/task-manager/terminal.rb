@@ -41,12 +41,7 @@ class TM::TerminalClient
   end
 
   def list
-    projects = TM::DB.db.projects
-    puts "ID\tProject Name\t% Done \t% Over Due"
-    projects.each do|x,y|
-      percentage = TM::DB.db.projects_tasks(x)
-      puts "#{y[:pid]}\t#{y[:name]}\t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
-    end
+    TM::DB.db.list_projects
     @command = gets.chomp
     self.call_methods(@command)
   end
@@ -78,24 +73,7 @@ class TM::TerminalClient
   def show
     puts "Please enter a project ID."
     projectid = gets.chomp
-    projects = TM::DB.db.projects
-    puts "Project Name\t% Done \t% Over Due"
-    projects.each do|x,y|
-      if x == projectid.to_i
-        percentage = TM::DB.db.projects_tasks(x)
-        puts "#{y[:name]}\t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
-      end
-    end
-    puts " Priority\tID Description\tDue Date\tOver Due?"
-    t = Time.now
-    today = "#{t.year} #{t.month} #{t.day}"
-    TM::DB.db.tasks.each do |x,y|
-      if !y[:complete]
-        overdue = 'No'
-        overdue = 'Yes' if y[:duedate] < today
-        puts "\t#{y[:pnum]}\t#{y[:tid]}  #{y[:desc]}\t#{y[:duedate]}\t#{overdue}"
-      end
-    end
+    TM::DB.db.remaining_tasks(projectid)
     @command = gets.chomp
     self.call_methods(@command)
   end
@@ -103,20 +81,7 @@ class TM::TerminalClient
   def history
     puts "Please enter a project ID."
     projectid = gets.chomp
-    projects = TM::DB.db.projects
-    puts "Project Name\t% Done \t% Over Due"
-    projects.each do|x,y|
-      if x == projectid.to_i
-        percentage = TM::DB.db.projects_tasks(x)
-        puts "#{y[:pid]}\t#{y[:name]}\t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
-      end
-    end
-    puts " Priority\tID Description\tDue Date"
-    TM::DB.db.tasks.each do |x,y|
-      if y[:complete] && y[:pid] == projectid.to_i
-        puts "\t#{y[:pnum]}\t#{y[:tid]}  #{y[:desc]}\t#{y[:duedate]}"
-      end
-    end
+    TM::DB.db.project_history(projectid)
     @command = gets.chomp
     self.call_methods(@command)
   end

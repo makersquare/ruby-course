@@ -56,6 +56,50 @@ class TM::DB
     return {done: done, not_done: not_done, over: over, percent_done: percent_done, percent_over: percent_overdue}
   end
 
+  def list_projects
+    puts "ID\tProject Name\t% Done \t% Over Due"
+    @projects.each do|x,y|
+      percentage = TM::DB.db.projects_tasks(x)
+      puts "#{x}\t#{y[:name]}\t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
+    end
+  end
+
+  def remaining_tasks(pid)
+    puts "Project Name\t% Done \t% Over Due"
+    @projects.each do|x,y|
+      if x == pid.to_i
+        percentage = TM::DB.db.projects_tasks(x)
+        puts "#{y[:name]}\t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
+      end
+    end
+    puts "Priority\tID Description\tDue Date\tOver Due?"
+    t = Time.now
+    today = "#{t.year} #{t.month} #{t.day}"
+    @tasks.each do |x,y|
+      if !y[:complete]
+        overdue = 'No'
+        overdue = 'Yes' if y[:duedate] < today
+        puts "#{y[:pnum]}\t\t#{y[:tid]}  #{y[:desc]}\t#{y[:duedate]}\t#{overdue}"
+      end
+    end
+  end
+
+  def project_history(pid)
+  puts "Project Name\t% Done \t% Over Due"
+    projects.each do|x,y|
+      if x == pid.to_i
+        percentage = TM::DB.db.projects_tasks(x)
+        puts "#{y[:name]}\t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
+      end
+    end
+    puts "Priority\tID Description\tDue Date"
+    TM::DB.db.tasks.each do |x,y|
+      if y[:complete] && y[:pid] == projectid.to_i
+        puts "#{y[:pnum]}\t\t#{y[:tid]}  #{y[:desc]}\t#{y[:duedate]}"
+      end
+    end
+  end
+
   def self.build_project(data)
     TM::Project.new(data[:name], data[:id])
   end
