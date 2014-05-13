@@ -103,6 +103,11 @@ class TM::TerminalClient
   end
 
   def projects_employees
+    puts "Please enter the project\'s id."
+    pid = gets.chomp
+    TM::DB.db.projs_emps(pid.to_i)
+    @command = gets.chomp
+    self.call_methods(@command)
   end
 
   def create_employee

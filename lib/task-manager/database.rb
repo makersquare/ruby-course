@@ -11,6 +11,7 @@ class TM::DB
     @employees = {}
     @employee_count = 0
     @employees_projects = {}
+    @emp_proj_count = 0
     # @employees_projects = {1 => {1=>true, 2=>true}, 2=>...}
     # The projects id is the key. The employee id is the key with a value of true.
   end
@@ -139,6 +140,15 @@ class TM::DB
     TM::Task.new(data[:pid], data[:tid], data[:desc], data[:pnum], data[:duedate], data[:date], data[:complete])
   end
 
+  # Can assign only one employee to task, but employees can have multiple tasks
+  def add_emp_to_task(tid, eid)
+    old_data = @tasks[tid]
+    if old_data[:eid].nil?
+      old_data[:eid] = eid
+      return TM::DB.build_task(old_data)
+    end
+  end
+
 # Employees ---------------------------------------
 
   def create_employee(data)
@@ -172,39 +182,51 @@ class TM::DB
     end
   end
 
-  # Can add multiple employees to a project and add multiple projects
-  def give_emp_proj(pid, eid)
-    if @employees_projects.has_key?(pid)
-      @employees_projects[pid][eid] = true
-    else
-      @employees_projects[pid] = {eid => true}
-    end
-    puts "#{@employees[eid][:name]} has been added to the project #{@projects[pid][:name]}."
+  def self.build_employee(data)
+    TM::Employee.new(data[:name], data[:eid])
   end
 
-  # Can assign only one employee to task, but employees can have multiple tasks
-  def add_emp_to_task(tid, eid)
-    old_data = @tasks[tid]
-    if old_data[:eid].nil?
-      old_data[:eid] = eid
-      return TM::DB.build_task(old_data)
-    end
+# Employees_Projects ---------------------------------------
+
+  def create_proj_emp(data)
+    @emp_proj_count += 1
+    data[:id] = @emp_proj_count
+    @employees_projects[data[:id]] = data
+    puts "#{@employees[data[:eid]][:name]} has been added to the project #{@projects[data[:pid]][:name]}."
   end
 
-  def emps_projs(eid)
+  # List projects for an employee
+  def get_proj_by_emp(eid)
+    puts "ID\tEmployee Name"
+    puts "#{@employees[eid][:eid]}\t#{@employees[eid][:name]}"
+    puts "ID\tProject Name\t% Done \t% Over Due"
     @employees_projects.each do |x,y|
-      if y[eid]
-        puts "ID\tEmployee Name"
-        puts "#{@employees[eid][:eid]}\t#{@employees[eid][:name]}"
-        puts "ID\tProject Name\t% Done \t% Over Due"
-        percentage = TM::DB.db.projects_tasks(x)
-        puts "#{x}\t#{@projects[x][:name]}\t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
+      if y[:eid] == eid
+        percentage = TM::DB.db.projects_tasks(y[:pid])
+        puts "#{y[:pid]}\t#{@projects[y[:pid]][:name]} \t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
       end
     end
   end
 
-  def self.build_employee(data)
-    TM::Employee.new(data[:name], data[:eid])
+  # List employees for a project
+  def get_emp_by_proj(pid)
+    puts "ID\tProject Name\t% Done \t% Over Due"
+    percentage = TM::DB.db.projects_tasks(pid)
+    puts "#{pid}\t#{@projects[pid][:name]} \t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
+    puts "ID\tEmployee Name"
+    @employees_projects.each do |x,y|
+      if y[:pid] == pid
+        puts "#{y[:eid]}\t#{@employees[y[:eid]][:name]}"
+      end
+    end
+  end
+
+  def destroy_proj_emp(pid, eid)
+    @employees_projects.each do |x,y|
+      if y[:eid] == eid && y[:pid] == pid
+        @employees_projects.delete(x)
+      end
+    end
   end
 
   def self.db

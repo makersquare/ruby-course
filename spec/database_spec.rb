@@ -111,6 +111,21 @@ describe 'Database' do
     end
   end
 
+  describe '#add_employee_to_task' do
+    it 'should be able to assign an employee to a task' do
+      emp1
+      emp2
+      task1
+      task2
+      db.add_emp_to_task(1,1)
+      expect(db.tasks[2][:eid]).to eq(nil)
+      db.add_emp_to_task(2,1)
+      db.add_emp_to_task(2,2)
+      expect(db.tasks[1][:eid]).to eq(1)
+      expect(db.tasks[2][:eid]).to eq(1)
+    end
+  end
+
   describe '#create_employee' do
     it 'should return an instance of the TM::Employee class' do
       expect(emp1.eid).to eq(1)
@@ -147,32 +162,27 @@ describe 'Database' do
     end
   end
 
-  describe '#give_employees_projects' do
+  describe '#create_proj_emp' do
     it 'should be able to add employees to projects and projects to employees in the employees_projects hash' do
       emp1
       emp2
       proj1
       proj2
-      db.give_emp_proj(proj1.pid, emp1.eid)
-      db.give_emp_proj(proj1.pid, emp2.eid)
-      expect(db.employees_projects).to eq(1 => {1=>true,2=>true})
-      db.give_emp_proj(proj2.pid, emp2.eid)
-      expect(db.employees_projects).to eq(1 => {1=>true,2=>true}, 2=>{2=>true})
+      db.create_proj_emp(:pid => proj1.pid, :eid => emp1.eid)
+      db.create_proj_emp(:pid => proj1.pid, :eid => emp2.eid)
+      expect(db.employees_projects).to eq(1 => {:id => 1, :pid => 1, :eid => 1}, 2 => {:id => 2, :pid => 1, :eid => 2})
+      db.create_proj_emp(:pid => proj2.pid, :eid => emp2.eid)
+      expect(db.employees_projects).to eq(1 => {:id => 1, :pid => 1, :eid => 1}, 2 => {:id => 2, :pid => 1, :eid => 2}, 3 => {:id => 3, :pid => 2, :eid => 2})
     end
   end
 
-  describe '#add_employee_to_task' do
-    it 'should be able to assign an employee to a task' do
-      emp1
-      emp2
-      task1
-      task2
-      db.add_emp_to_task(1,1)
-      expect(db.tasks[2][:eid]).to eq(nil)
-      db.add_emp_to_task(2,1)
-      db.add_emp_to_task(2,2)
-      expect(db.tasks[1][:eid]).to eq(1)
-      expect(db.tasks[2][:eid]).to eq(1)
+  describe '#get_proj_by_emp' do
+    xit 'should list projects for an employee' do
+    end
+  end
+
+  describe '#get_emp_by_proj' do
+    xit 'should list all employees for a project' do
     end
   end
 
