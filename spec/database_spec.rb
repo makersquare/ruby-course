@@ -153,10 +153,10 @@ describe 'Database' do
       emp2
       proj1
       proj2
-      db.give_employees_projects(proj1.pid, emp1.eid)
-      db.give_employees_projects(proj1.pid, emp2.eid)
+      db.give_emp_proj(proj1.pid, emp1.eid)
+      db.give_emp_proj(proj1.pid, emp2.eid)
       expect(db.employees_projects).to eq(1 => {1=>true,2=>true})
-      db.give_employees_projects(proj2.pid, emp2.eid)
+      db.give_emp_proj(proj2.pid, emp2.eid)
       expect(db.employees_projects).to eq(1 => {1=>true,2=>true}, 2=>{2=>true})
     end
   end
@@ -164,9 +164,14 @@ describe 'Database' do
   describe '#add_employee_to_task' do
     it 'should be able to assign an employee to a task' do
       emp1
+      emp2
       task1
-      db.add_employee_to_task(1,1)
+      task2
+      db.add_emp_to_task(1,1)
+      db.add_emp_to_task(2,1)
+      db.add_emp_to_task(2,2)
       expect(db.tasks[1][:eid]).to eq(1)
+      expect(db.tasks[2][:eid]).to eq(1)
     end
   end
 

@@ -13,6 +13,8 @@ class TM::DB
     @employees_projects = {}
   end
 
+# Projects ---------------------------------------
+
   def create_project(data)
     @project_count += 1
     data[:id] = @project_count
@@ -58,6 +60,8 @@ class TM::DB
     TM::Project.new(data[:name], data[:id])
   end
 
+# Tasks ---------------------------------------
+
   def create_task(data) #pid, des, pnum, duedate
     @task_count += 1
     data[:tid] = @task_count
@@ -89,6 +93,8 @@ class TM::DB
     TM::Task.new(data[:pid], data[:tid], data[:desc], data[:pnum], data[:duedate], data[:date], data[:complete])
   end
 
+# Employees ---------------------------------------
+
   def create_employee(data)
     @employee_count += 1
     data[:eid] = @employee_count
@@ -113,7 +119,8 @@ class TM::DB
     @employees.delete(eid)
   end
 
-  def give_employees_projects(pid, eid)
+  # Can add multiple employees to a project and add multiple projects
+  def give_emp_proj(pid, eid)
     if @employees_projects.has_key?(pid)
       @employees_projects[pid][eid] = true
     else
@@ -121,10 +128,13 @@ class TM::DB
     end
   end
 
-  def add_employee_to_task(tid, eid)
+
+  def add_emp_to_task(tid, eid)
     old_data = @tasks[tid]
-    old_data.merge!(eid: eid)
-    return TM::DB.build_task(old_data)
+    if old_data[:eid].nil?
+      old_data[:eid] = eid
+      return TM::DB.build_task(old_data)
+    end
   end
 
   def self.build_employee(data)
