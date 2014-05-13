@@ -16,7 +16,7 @@ class TM::DB
   def create_project(data)
     @project_count += 1
     data[:id] = @project_count
-    @projects[@project_count] = data
+    @projects[data[:id]] = data
     return TM::DB.build_project(data)
   end
 
@@ -26,8 +26,9 @@ class TM::DB
   end
 
   def update_project(id, data)
-    data.map {|x,y| @projects[id][x] = data[x]}
-    return TM::DB.build_project(data)
+    old_data = @projects[id]
+    old_data.merge!(data)
+    return TM::DB.build_project(old_data)
   end
 
   def destroy_project(id)
@@ -38,8 +39,8 @@ class TM::DB
   end
 
   def projects_tasks(pid)
-    done = @tasks.select{|x,y| @tasks[x][:pid] == pid && @tasks[x][:complete] == true}
-    not_done = @tasks.select{|x,y| @tasks[x][:pid] == pid && @tasks[x][:complete] == false}
+    done = @tasks.select{|x,y| @tasks[x][:pid] == pid && @tasks[x][:complete]}
+    not_done = @tasks.select{|x,y| @tasks[x][:pid] == pid && !@tasks[x][:complete]}
     total = done.length + not_done.length
     percent_done = 0
     percent_overdue = 0
@@ -66,13 +67,16 @@ class TM::DB
   end
 
   def get_task(tid)
-    data = tasks[tid]
-    return TM::DB.build_task(data)
+    data = @tasks[tid]
+    if !data.nil?
+      return TM::DB.build_task(data)
+    end
   end
 
   def update_task(id, data)
-    data.map {|x,y| @tasks[id][x] = y}
-    return TM::DB.build_task(data)
+    old_data = @tasks[id]
+    old_data.merge!(data)
+    return TM::DB.build_task(old_data)
   end
 
   def destroy_task(id)
@@ -84,15 +88,31 @@ class TM::DB
   end
 
   def create_employee(data)
+    @employee_count += 1
+    data[:eid] = @employee_count
+    @employees[@employee_count] = data
+    return TM::DB.build_employee(data)
+  end
+
+  def get_employee(eid)
+  end
+
+  def update_employee(eid, data)
+  end
+
+  def destroy_employee(eid)
   end
 
   def add_project(data)
+
   end
 
   def add_task(data)
+
   end
 
   def self.build_employee(data)
+    TM::Employee.new(data[:name], data[:eid])
   end
 
   def self.db

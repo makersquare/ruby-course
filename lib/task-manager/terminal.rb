@@ -81,7 +81,7 @@ class TM::TerminalClient
     projects = TM::DB.db.projects
     puts "Project Name\t% Done \t% Over Due"
     projects.each do|x,y|
-      if y[:pid] == projectid
+      if x == projectid.to_i
         percentage = TM::DB.db.projects_tasks(x)
         puts "#{y[:name]}\t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
       end
@@ -90,9 +90,11 @@ class TM::TerminalClient
     t = Time.now
     today = "#{t.year} #{t.month} #{t.day}"
     TM::DB.db.tasks.each do |x,y|
-      overdue = 'No'
-      overdue = 'Yes' if y[:duedate] < today
-      puts "\t#{y[:pnum]}\t#{y[:tid]}  #{y[:desc]}\t#{y[:duedate]}\t#{overdue}"
+      if !y[:complete]
+        overdue = 'No'
+        overdue = 'Yes' if y[:duedate] < today
+        puts "\t#{y[:pnum]}\t#{y[:tid]}  #{y[:desc]}\t#{y[:duedate]}\t#{overdue}"
+      end
     end
     @command = gets.chomp
     self.call_methods(@command)
@@ -104,14 +106,14 @@ class TM::TerminalClient
     projects = TM::DB.db.projects
     puts "Project Name\t% Done \t% Over Due"
     projects.each do|x,y|
-      if y[:pid] == projectid
+      if x == projectid.to_i
         percentage = TM::DB.db.projects_tasks(x)
         puts "#{y[:pid]}\t#{y[:name]}\t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
       end
     end
     puts " Priority\tID Description\tDue Date"
     TM::DB.db.tasks.each do |x,y|
-      if y[:complete] && y[:pid] == projectid
+      if y[:complete] && y[:pid] == projectid.to_i
         puts "\t#{y[:pnum]}\t#{y[:tid]}  #{y[:desc]}\t#{y[:duedate]}"
       end
     end
@@ -122,7 +124,9 @@ class TM::TerminalClient
   def mark_task
     puts "Please enter the task ID."
     taskid = gets.chomp
-    TM::DB.db.update_task(taskid, complete: true)
+    TM::DB.db.update_task(taskid.to_i, complete: true)
+    task = TM::DB.db.tasks[taskid.to_i]
+    puts "Task with id #{task[:id]} and description \"#{task[:desc]}\" has been marked complete!"
     @command = gets.chomp
     self.call_methods(@command)
   end
