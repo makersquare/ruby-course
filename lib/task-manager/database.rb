@@ -118,7 +118,9 @@ class TM::DB
   end
 
   def add_employee_to_task(tid, eid)
-
+    old_data = @tasks[tid]
+    old_data.merge!(eid: eid)
+    return TM::DB.build_task(old_data)
   end
 
   def self.build_employee(data)
