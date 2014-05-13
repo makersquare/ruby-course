@@ -135,22 +135,24 @@ module TM
 
     def get_all_tasks_for_employee(employee_id)
       all_tasks_by_employee_hash = @task_assignment.select {|x,y| y[:employee_id] == employee_id}
-      #all_task_object = all_tasks_hash.each {|x,y| build_task(y)}
+      all_task_object = all_tasks_by_employee_hash.each {|x,y| build_task(@tasks[y[:task_id]])}
     end
 
     def get_all_incomplete_tasks_for_employee(employee_id)
-      all_incomplete_tasks_by_ employee_hash = @task_assignment.select {|x,y| y[:employee_id] == employee_id}.select {|k,v| @tasks[v[:task_id]].status == 'incomplete'}
-      all_incomplete_task_object = all_incomplete_tasks_by_employee_hash.each {|x,y|  p build_task(@tasks[y[:task_id]])}
+      all_incomplete_tasks_by_employee_hash = @task_assignment.select {|x,y| y[:employee_id] == employee_id}.select {|k,v| @tasks[v[:task_id]][:status] == 'incomplete'}
+      all_incomplete_task_object = all_incomplete_tasks_by_employee_hash.each {|x,y| build_task(@tasks[y[:task_id]])}
     end
 
     def get_all_completed_tasks_for_employee(employee_id)
-      all_complete_tasks_by_employee_hash = @tasks.select {|x,y| y[:employee_id] == employee_id}.select {|k,v| @tasks[v[:task_id]].status == 'complete'}
+      all_complete_tasks_by_employee_hash = @task_assignment.select {|x,y| y[:employee_id] == employee_id}.select {|k,v| @tasks[v[:task_id]][:status] == 'complete'}
       all_complete_task_by_employee_object = all_complete_tasks_by_employee_hash.each {|x,y|  p build_task(@tasks[y[:task_id]])}
     end
 
     def get_all_projects_for_employee(employee_id)
       all_tasks_by_employee_hash = @task_assignment.select {|x,y| y[:employee_id] == employee_id}
-      all_task_object = all_tasks_hash.each {|x,y| build_project(@projects[y[:project_id]])}
+      all_task_object = []
+      all_tasks_by_employee_hash.each {|x,y| all_task_object<<build_project(@projects[y[:project_id]])}
+      all_task_object.uniq {|s| s.id}
     end
 
   end

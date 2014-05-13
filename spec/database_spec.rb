@@ -240,15 +240,71 @@ describe TM::DB do
   end
 
   it 'gets all tasks for given employee' do
+    db = TM::DB.new
+    db.create_project(name: 'test')
+    db.create_task(name: 'pancake', project_id: 0, description: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.create_task(name: 'waffle', project_id: 0, description: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.create_task(name: 'eggs', project_id: 0, description: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    test_task = db.get_task(0)
+    test_task.status = 'complete'
+    db.update_task(test_task)
+    db.create_employee(name: 'john jay')
+    db.create_task_assignment(employee_id: 0, project_id: 0, task_id: 2)
+    db.create_task_assignment(employee_id: 0, project_id: 0, task_id: 1)
+    task_list = db.get_all_tasks_for_employee(0)
+    p task_list
+    expect(task_list.length).to eq(2)
   end
 
   it 'gets all incomplete tasks for given employee' do
+    db = TM::DB.new
+    db.create_project(name: 'test')
+    db.create_task(name: 'pancake', project_id: 0, description: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.create_task(name: 'waffle', project_id: 0, description: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.create_task(name: 'eggs', project_id: 0, description: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    test_task = db.get_task(0)
+    test_task.status = 'complete'
+    db.update_task(test_task)
+    db.create_employee(name: 'john jay')
+    db.create_task_assignment(employee_id: 0, project_id: 0, task_id: 2)
+    db.create_task_assignment(employee_id: 0, project_id: 0, task_id: 0)
+    task_list = db.get_all_incomplete_tasks_for_employee(0)
+    p task_list
+    expect(task_list.length).to eq(1)
   end
 
   it 'gets all completed tasks for given employee' do
+    db = TM::DB.new
+    db.create_project(name: 'test')
+    db.create_task(name: 'pancake', project_id: 0, description: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.create_task(name: 'waffle', project_id: 0, description: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.create_task(name: 'eggs', project_id: 0, description: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    test_task = db.get_task(0)
+    test_task.status = 'complete'
+    db.update_task(test_task)
+    db.create_employee(name: 'john jay')
+    db.create_task_assignment(employee_id: 0, project_id: 0, task_id: 2)
+    db.create_task_assignment(employee_id: 0, project_id: 0, task_id: 0)
+    task_list = db.get_all_completed_tasks_for_employee(0)
+    p task_list
+    expect(task_list.length).to eq(1)
   end
 
   it 'gets all projects for given employees' do
+    db = TM::DB.new
+    db.create_project(name: 'test')
+    db.create_task(name: 'pancake', project_id: 0, description: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.create_task(name: 'waffle', project_id: 0, description: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    db.create_task(name: 'eggs', project_id: 0, description: "learn to pan the cake", status: 'incomplete', priority: 12, due_date: "Oct 1,2014")
+    test_task = db.get_task(0)
+    test_task.status = 'complete'
+    db.update_task(test_task)
+    db.create_employee(name: 'john jay')
+    db.create_task_assignment(employee_id: 0, project_id: 0, task_id: 2)
+    db.create_task_assignment(employee_id: 0, project_id: 0, task_id: 0)
+    task_list = db.get_all_projects_for_employee(0)
+    p task_list
+    expect(task_list.length).to eq(1)
   end
 
 end
