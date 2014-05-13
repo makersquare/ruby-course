@@ -50,7 +50,7 @@ describe 'Task' do
       @task.assign_employee(1)
       expect(@db.get_task(1).eid).to eq(false)
 
-      @db.get_employee(1).assign_project(1)
+      @db.add_employee_to_project(eid: 1, pid: 1)
       @task.assign_employee(1)
       expect(@db.get_task(1).eid).to eq(1)
 

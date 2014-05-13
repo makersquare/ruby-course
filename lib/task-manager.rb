@@ -151,6 +151,19 @@ module TM
       employees_array
     end
 
+    def employee_task(id, status)
+      return false if !@employees[id]
+      task = []
+      @task.each do |key, value|
+        if status[:completed]
+          task << build_task(value) if value[:eid] == id && value[:completed] == true
+        else
+          task << build_task(value) if value[:eid] == id
+        end
+      end
+      task
+    end
+
   # Project Membership Methods
 
   def create_membership(id)
@@ -161,11 +174,11 @@ module TM
     @project_membership[id]
   end
 
-  def update_membership(params)
-    if params[:add]
-      @project_membership[params[:pid]][params[:eid]] = true
+  def update_membership(data)
+    if data[:add]
+      @project_membership[data[:pid]][data[:eid]] = true
     else
-      @project_membership[params[:pid]].delete(params[:eid])
+      @project_membership[data[:pid]].delete(data[:eid])
     end
   end
 
@@ -173,6 +186,23 @@ module TM
     @project_membership[id] ? @project_membership.delete(id) : false
   end
 
+  #Project Membership Add and remove methods
+
+    def add_employee_to_project(data)
+      if @employees[data[:eid]] && @projects[data[:pid]]
+        update_membership(eid: data[:eid], pid: data[:pid], add: true)
+      else
+        false
+      end
+    end
+
+    def remove_employee_from_project(data)
+      if @employees[data[:eid]] && @projects[data[:pid]] && @project_membership[data[:pid]][data[:eid]]
+        update_membership(eid: data[:eid], pid: data[:pid])
+      else
+        false
+      end
+    end
 
   end
 

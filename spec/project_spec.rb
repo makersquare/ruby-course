@@ -66,4 +66,22 @@ describe 'Project' do
       expect(@new_project.completed_task.first.description).to eq("First Task")
     end
   end
+
+  context 'a project is created and employees are assigned to it' do
+
+    it 'can show all employes on a project' do
+      @db = TM.db
+      @db.create_project(name: "Pizza Party Planning")
+      project = @db.get_project(1)
+      expect(project.show_employees.count).to eq(0)
+
+      @db.create_employee(name: "Jason")
+      @db.create_employee(name: "Jacoub")
+      @db.add_employee_to_project(pid: 1, eid: 1)
+      @db.add_employee_to_project(pid: 1, eid: 2)
+
+      expect(project.show_employees.count).to eq(2)
+    end
+  end
+
 end

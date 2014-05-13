@@ -12,6 +12,11 @@ describe "TaskManager::Database" do
   end
 
   context 'it is initialized' do
+    let(:employee1) { @db.create_employee(name: "Johnny") }
+    let(:employee2) { @db.create_employee(name: "Jacoub") }
+    let(:project1) { @db.create_project(name: "New Project") }
+    let(:project2) { @db.create_project(name: "Second Project") }
+
 
     it 'creates an empty projects hash' do
       expect(@db.projects).to eq({})
@@ -30,15 +35,40 @@ describe "TaskManager::Database" do
     end
 
     it 'can list all employees' do
-      @db.create_employee(name: "Johnny")
+      employee1
       expect(@db.all_employees.first.name).to eq("Johnny")
     end
 
     it 'can list all projects' do
-      @db.create_project(name: "New Project")
-      @db.create_project(name: "Second Project")
+      project1
+      project2
       expect(@db.all_projects.last.name).to eq("Second Project")
       expect(@db.all_projects.first.id).to eq(1)
+    end
+
+    it 'can create assign employees to a project' do
+      employee1; employee2; project1; project2
+      @db.add_employee_to_project(pid: 1, eid: 1)
+      @db.add_employee_to_project(pid: 1, eid: 2)
+      @db.add_employee_to_project(pid: 2, eid: 2)
+      expect(@db.project_membership[1][1]).to eq(true)
+      expect(@db.project_membership[1][2]).to eq(true)
+      expect(@db.project_membership[2][2]).to eq(true)
+      expect(@db.project_membership[2][1]).to eq(nil)
+    end
+
+    it 'can remove an employees from a project' do
+      employee1; employee2; project1; project2
+      @db.add_employee_to_project(pid: 1, eid: 1)
+      @db.add_employee_to_project(pid: 1, eid: 2)
+      @db.add_employee_to_project(pid: 2, eid: 2)
+
+      @db.remove_employee_from_project(eid: 1, pid: 1)
+      @db.remove_employee_from_project(eid: 2, pid: 2)
+      expect(@db.remove_employee_from_project(eid: 1, pid: 2)).to eq(false)
+      expect(@db.project_membership[1][1]).to eq(nil)
+      expect(@db.project_membership[1][2]).to eq(true)
+      expect(@db.project_membership[2][2]).to eq(nil)
     end
 
   end

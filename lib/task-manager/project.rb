@@ -5,10 +5,10 @@ class TM::Project
   attr_reader :name, :id
   # attr_accessor :task
 
-  def initialize(params)
-    @name = params[:name]
-    @id = params[:id]
-    @completed = params[:completed]
+  def initialize(project_data)
+    @name = project_data[:name]
+    @id = project_data[:id]
+    @completed = project_data[:completed]
   end
 
   def complete_project
@@ -39,6 +39,14 @@ class TM::Project
 
   def destroy
     TM.db.destroy_project(@id)
+  end
+
+  def show_employees
+    employees = []
+    TM.db.project_membership[@id].each do |eid, value|
+      employees << TM.db.get_employee(eid)
+    end
+    employees
   end
 
 end

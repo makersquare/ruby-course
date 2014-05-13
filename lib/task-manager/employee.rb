@@ -9,21 +9,21 @@ class TM::Employee
     @id = params[:id]
   end
 
-  def assign_project(pid)
-    if TM.db.projects[pid]
-      TM.db.update_membership(pid: pid, eid: @id, add: true)
-    else
-      return false
-    end
-  end
+  # def assign_project(pid)
+  #   if TM.db.projects[pid]
+  #     TM.db.update_membership(pid: pid, eid: @id, add: true)
+  #   else
+  #     return false
+  #   end
+  # end
 
-  def remove_project(pid)
-    if TM.db.projects[pid]
-      TM.db.update_membership(pid: pid, eid: @id)
-    else
-      false
-    end
-  end
+  # def remove_project(pid)
+  #   if TM.db.projects[pid]
+  #     TM.db.update_membership(pid: pid, eid: @id)
+  #   else
+  #     false
+  #   end
+  # end
 
 
 end
