@@ -11,8 +11,11 @@ class TM::DB
     @employees = {}
     @employee_count = 0
     @employees_projects = {}
-    @emp_proj_count = 0
     # @employees_projects = {1 => {id: 1, pid: 1, eid: 2}, 2=>...}
+    @emp_proj_count = 0
+    @employees_tasks = {}
+    # @employees_tasks = {1 => {id: 1, tid: 1, eid: 2}, 2=>...}
+    @emp_task_count = 0
   end
 
 # Projects ---------------------------------------
@@ -183,7 +186,7 @@ class TM::DB
     return {name: @employees[data[:eid]][:name],project: @projects[data[:pid]][:name]}
   end
 
-  # List projects for an employee
+  # Lists projects for an employee
   def get_proj_by_emp(eid)
     data = []
     @employees_projects.each do |x,y|
@@ -195,7 +198,7 @@ class TM::DB
     data
   end
 
-  # List employees for a project
+  # Lists employees for a project
   def get_emp_by_proj(pid)
     data = []
     @employees_projects.each do |x,y|
@@ -213,6 +216,58 @@ class TM::DB
       end
     end
   end
+
+# Employees_Tasks ---------------------------------------
+
+  def create_task_emp(data)
+    @emp_task_count += 1
+    data[:id] = @emp_task_count
+    @employees_tasks[data[:id]] = data
+    return {name: @employees[data[:eid]][:name],task: @tasks[data[:tid]][:desc]}
+  end
+
+  # Lists incomplete tasks for an employee
+  def get_inctask_by_emp(eid)
+    data = []
+    @employees_tasks.each do |x,y|
+      if y[:eid] == eid && !@tasks[y[:tid]][:complete]
+        data << {tid: y[:tid], desc: @tasks[y[:tid][:desc]], duedate: @tasks[y[:tid]][:duedate], pnum: @tasks[y[:tid]][:pnum]}
+      end
+    end
+    data
+  end
+
+  # Lists complete tasks for an employee
+  def get_comptask_by_emp(eid)
+    data = []
+    @employees_tasks.each do |x,y|
+      if y[:eid] == eid && @tasks[y[:tid]][:complete]
+        data << {tid: y[:tid], desc: @tasks[y[:tid]][:desc], date: @tasks[y[:tid]][:date]}
+      end
+    end
+    data
+  end
+
+  # Lists employees for a task
+  def get_emp_by_task(tid)
+    data = []
+    @employees_tasks.each do |x,y|
+      if y[:tid] == tid
+        data << {eid: y[:eid], name: y[:name]}
+      end
+    end
+    data
+  end
+
+  def destroy_task_emp(tid, eid)
+    @employees_tasks.each do |x,y|
+      if y[:eid] == eid && y[:tid] == tid
+        @employees_tasks.delete(x)
+      end
+    end
+  end
+
+# Create Class instance -----------------------------
 
   def self.db
     @__db_instance ||= TM::DB.new
