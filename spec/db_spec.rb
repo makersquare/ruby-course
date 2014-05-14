@@ -47,27 +47,56 @@ describe "db" do
   end
 
   describe "text_quacks in db" do
-    describe '.create_text_quack' do
-      it "stores the content in the db" do
-        data = {
+    let(:tq) do
+      data = {
           content: "testing",
           tags: ["tag1", "tag2"]
         }
-        tq = Quack.db.create_text_quack(data)
+      tq = Quack.db.create_text_quack(data)
+    end
+    let(:tag1) { Quack.db.get_or_create_tag(tag:"tag1") }
+    let(:tag2) { Quack.db.get_or_create_tag(tag:"tag2") }
+    describe '.create_text_quack' do
+      it "stores the content in the db" do
         expect(tq).to be_a(TextQuack)
         expect(tq.content).to eq("testing")
         expect(tq.id).to be_a(Fixnum)
         expect(Quack.db.text_quacks[tq.id]).to eq({
           content: "testing",
-          id: tq.id
+          id: tq.id,
         })
+      end
+
+      it "also calls get_or_create_tag" do
+        # Quack.db.get_or_create_tag({tag: "tag1"})
+        expect(Quack.db).to receive(:get_or_create_tag).with({tag: "tag1"}).
+        and_call_original
+        expect(Quack.db).to receive(:get_or_create_tag).with({tag: "tag2"}).
+        and_call_original
+        # We have to call tq after the tests so that the expectations 
+        # are fulfilled. Rspec remembers the expectations and then checks
+        # them when tq is run.
+        # If we call it before the tests, rspec forgets that it did stuff.
+        
+        tq
+      end
+
+      it "creates a relationship between text_quack and tag" do
+        tq
+
+        # TODO: We need some sort of way to grab the text_quack_tag ID instead
+        # of hard-coding it in as 0 and 1
+        expect(Quack::db.text_quack_tags.values).to include(
+          {tq_id:tq.id, tag_id:tag1.id, id:0})
+        expect(Quack::db.text_quack_tags.values).to include(
+          {tq_id:tq.id, tag_id:tag2.id, id:1})
       end
     end
   end
 
   describe "text_quack_tags in db" do
     describe '.create_text_quack_tag' do
-      it "stores a text_quack id and a tag_id in a hash"
+      it "stores a text_quack id and a tag_id in a hash" do
         tq_id = 1
         tag_id = 2
         result = Quack.db.create_text_quack_tag(tq_id, tag_id)
@@ -77,6 +106,7 @@ describe "db" do
           tag_id: 2,
           id: result
           })
+      end
     end
   end
 end
