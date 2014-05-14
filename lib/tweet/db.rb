@@ -27,8 +27,20 @@ class Tweet::DB
 
     data.delete(:tags)
     @text_tweets[data[:id]] = data
-    TextTweet.new(data[:content], nil, data[:id])
-    
+    build_text_tweet(data)
+  end
+
+  def build_text_tweet(data)
+    TextTweet.new(data[:content], data[:tags], data[:id])
+  end
+
+  def get_text_tweets_from_tag(tag)
+    new_array = @text_tweet_tags.values.select { |tag_hash| tag_hash[:tag_id] == tag.id }
+    new_array.map do |data|
+      tt_id = data[:tt_id]
+      tt_data = @text_tweets[tt_id]
+      Tweet.db.build_text_tweet(tt_data)
+    end
   end
 
   def get_or_create_tag(data)

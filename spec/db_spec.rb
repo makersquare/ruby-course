@@ -108,17 +108,25 @@ describe "db" do
     end
 
     describe ".get_text_tweets_from_tag" do
-      xit "returns array of PicTweets linked to the tag" do
+      it "returns array of PicTweets linked to the tag" do
         # Calling all our let block stuff
         tt
         tt2
         tt3
 
-        result = Tweet.db.get_pic_tweets_from_tag(tag1)
+        result = Tweet.db.get_text_tweets_from_tag(tag1)
         # result should inclue tt and tt2
         expect(result).to be_a(Array)
         expect(result.length).to eq(2)
-        expect(result.first).to be_a(TextTweet)
+
+        first_tt = result.find {|t| t.id == tt.id}
+        second_tt = result.find {|t| t.id == tt2.id}
+        
+        expect(first_tt).to be_a(TextTweet)
+        expect(first_tt.id).to eq(tt.id)
+
+        expect(second_tt).to be_a(TextTweet)
+        expect(second_tt.id).to eq(tt2.id)
       end
     end
     
@@ -127,11 +135,15 @@ describe "db" do
         {
           content: "My Text",
           tags: ["my", "text"],
+          id: 5
         }
       end
-      xit "returns a TextTweet" do
+      it "returns a TextTweet" do
         result = Tweet.db.build_text_tweet(data)
         expect(result).to be_a(TextTweet)
+        expect(result.id).to eq(5)
+        expect(result.tags).to eq(["my", "text"])
+        expect(result.content).to eq("My Text")
       end
     end
   end
@@ -235,12 +247,20 @@ describe "db" do
         pt2
         pt3
 
+        # result should have pt and pt2
         tag = Tweet.db.get_or_create_tag({tag:"pic"})
         result = Tweet.db.get_pic_tweets_from_tag(tag)
         expect(result).to be_a(Array)
         expect(result.length).to eq(2)
-        expect(result.first).to be_a(PicTweet)
-        expect(result.first).to eq(pt)
+
+        first_pt = result.find {|p| p.id == pt.id}
+        second_pt = result.find {|p| p.id == pt2.id}
+        
+        expect(first_pt).to be_a(PicTweet)
+        expect(first_pt.id).to eq(pt.id)
+
+        expect(second_pt).to be_a(PicTweet)
+        expect(second_pt.id).to eq(pt2.id)
       end
     end
     
