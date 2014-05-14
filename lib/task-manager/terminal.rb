@@ -57,7 +57,11 @@ class TM::TerminalClient
   end
 
   def list
-    TM::DB.db.list_projects
+    puts "ID\tProject Name\t% Done \t% Over Due"
+    data = TM::DB.db.list_projects
+    data.each do |x|
+      puts "#{x[:pid]}\t#{x[:name]}\t#{x[:percent_done]}\t#{x[:percent_over]}"
+    end
     @command = gets.chomp
     self.call_methods(@command)
   end

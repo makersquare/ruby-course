@@ -44,64 +44,100 @@ class TM::DB
     end
   end
 
-  def projects_tasks(pid)
-    done = @tasks.select{|x,y| @tasks[x][:pid] == pid && @tasks[x][:complete]}
-    not_done = @tasks.select{|x,y| @tasks[x][:pid] == pid && !@tasks[x][:complete]}
-    total = done.length + not_done.length
-    percent_done = 0
-    percent_overdue = 0
-    percent_done = done.length/total*100 if done.length > 0
-    t = Time.now
-    today = "#{t.year} #{t.month} #{t.day}"
-    over = not_done.select{|x,y| not_done[x][:duedate] < today}
-    percent_overdue = over.length/total*100 if over.length > 0
-    return {done: done, not_done: not_done, over: over, percent_done: percent_done, percent_over: percent_overdue}
+  # Hash of complete tasks sorted by date created
+  def complete_tasks(pid)
+    complete = @tasks.select{|x,y| @tasks[y][:pid] == pid && @tasks[y][:complete]}
+    complete = complete.sort_by {|k,v| v[:date]}
+    complete
   end
+
+  # Hash of incomplete tasks sorted by priority number and then duedate
+  def incomplete_tasks(pid)
+    incomplete = @tasks.select{|x,y| @tasks[y][:pid] == pid && @tasks[y][:complete] == false}
+    incomplete = incomplete.sort_by {|k,v| [v[:pnum],v[:duedate]]}
+    incomplete
+  end
+
+  # Don't need to sort overdue tasks, only use for percentage
+  def overdue_tasks(pid)
+    overdue = @tasks.select{|x,y| @tasks[y][:pid] == pid && @tasks[y][:complete] == false && @tasks[y][:duedate] < today}
+    overdue
+  end
+
+  def percent_done(pid)
+    complete = TM::DB.db.complete_tasks(pid)
+    incomplete = TM::DB.db.incomplete_tasks(pid)
+    percent_complete = 0
+    percent_complete = complete.length/(complete.length+incomplete.length)*100 if complete.length != 0
+    percent_complete
+  end
+
+  def percent_overdue(pid)
+    over = TM::DB.db.overdue_tasks(pid)
+    incomplete = TM::DB.db.incomplete_tasks(pid)
+    percent_overdue = 0
+    percent_overdue = (overdue.length/incomplete.length)*100 if incomplete.length != 0 && overdue.length != 0
+    percent_overdue
+  end
+
+  # def projects_tasks(pid)
+  #   done = @tasks.select{|x,y| @tasks[x][:pid] == pid && @tasks[x][:complete]}
+  #   not_done = @tasks.select{|x,y| @tasks[x][:pid] == pid && !@tasks[x][:complete]}
+  #   total = done.length + not_done.length
+  #   percent_done = 0
+  #   percent_overdue = 0
+  #   percent_done = done.length/total*100 if done.length > 0
+  #   t = Time.now
+  #   today = "#{t.year} #{t.month} #{t.day}"
+  #   over = not_done.select{|x,y| not_done[x][:duedate] < today}
+  #   percent_overdue = over.length/total*100 if over.length > 0
+  #   return {done: done, not_done: not_done, over: over, percent_done: percent_done, percent_over: percent_overdue}
+  # end
+
+  # def remaining_tasks(pid)
+  #   puts "Project Name\t% Done \t% Over Due"
+  #   @projects.each do|x,y|
+  #     if x == pid.to_i
+  #       percentage = TM::DB.db.projects_tasks(x)
+  #       puts "#{y[:name]}\t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
+  #     end
+  #   end
+  #   puts "Priority\tID Description\tDue Date\tOver Due?"
+  #   t = Time.now
+  #   today = "#{t.year} #{t.month} #{t.day}"
+  #   @tasks.each do |x,y|
+  #     if !y[:complete]
+  #       overdue = 'No'
+  #       overdue = 'Yes' if y[:duedate] < today
+  #       puts "#{y[:pnum]}\t\t#{y[:tid]}  #{y[:desc]}\t#{y[:duedate]}\t#{overdue}"
+  #     end
+  #   end
+  # end
+
+  # def project_history(pid)
+  # puts "Project Name\t% Done \t% Over Due"
+  #   projects.each do|x,y|
+  #     if x == pid.to_i
+  #       percentage = TM::DB.db.projects_tasks(x)
+  #       puts "#{y[:name]}\t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
+  #     end
+  #   end
+  #   puts "Priority\tID Description\tDue Date"
+  #   TM::DB.db.tasks.each do |x,y|
+  #     if y[:complete] && y[:pid] == pid.to_i
+  #       puts "#{y[:pnum]}\t\t#{y[:tid]}  #{y[:desc]}\t#{y[:duedate]}"
+  #     end
+  #   end
+  # end
 
   def list_projects
-    # puts "ID\tProject Name\t% Done \t% Over Due"
     array = []
     @projects.each do|x,y|
-      percentage = TM::DB.db.projects_tasks(x)
-      array << {pid: y[:pid],name: y[:name],percent_done: percentage[:percent_done],percent_over: percentage[:percent_over]}
-      # puts "#{x}\t#{y[:name]}\t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
+      percent_done = TM::DB.db.percent_done(x)
+      percent_overdue = TM::DB.db.percent_overdue(x)
+      array << {pid: y[:pid],name: y[:name],percent_done: percent_done,percent_over: percent_overdue}
     end
-  end
-
-  def remaining_tasks(pid)
-    puts "Project Name\t% Done \t% Over Due"
-    @projects.each do|x,y|
-      if x == pid.to_i
-        percentage = TM::DB.db.projects_tasks(x)
-        puts "#{y[:name]}\t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
-      end
-    end
-    puts "Priority\tID Description\tDue Date\tOver Due?"
-    t = Time.now
-    today = "#{t.year} #{t.month} #{t.day}"
-    @tasks.each do |x,y|
-      if !y[:complete]
-        overdue = 'No'
-        overdue = 'Yes' if y[:duedate] < today
-        puts "#{y[:pnum]}\t\t#{y[:tid]}  #{y[:desc]}\t#{y[:duedate]}\t#{overdue}"
-      end
-    end
-  end
-
-  def project_history(pid)
-  puts "Project Name\t% Done \t% Over Due"
-    projects.each do|x,y|
-      if x == pid.to_i
-        percentage = TM::DB.db.projects_tasks(x)
-        puts "#{y[:name]}\t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
-      end
-    end
-    puts "Priority\tID Description\tDue Date"
-    TM::DB.db.tasks.each do |x,y|
-      if y[:complete] && y[:pid] == pid.to_i
-        puts "#{y[:pnum]}\t\t#{y[:tid]}  #{y[:desc]}\t#{y[:duedate]}"
-      end
-    end
+    array
   end
 
   def self.build_project(data)
