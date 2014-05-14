@@ -161,9 +161,64 @@ class TM::TerminalClient
         puts " #{task.pid} \t\  #{task.id} \t\ #{task.description}"
       end
     else
-      fasle
+      false
     end
   end
+
+  def error_return
+    puts "I'm sorry that was not a valid entery"
+  end
+
+  def project_helper(input)
+    case input[1]
+    when "list"
+      list_projects
+    when "create"
+      # binding.pry
+      input[2..-1].empty? ? error_return : create_project(name: input[2..-1].join(" "))
+    when "show"
+      project_remaining_task(id: input[2].to_i)
+    when "history"
+      project_completed_task(id: input[2].to_i)
+    when "employees"
+      project_employees(id: input[2].to_i)
+    when "recruit"
+      assign_project_employee(pid: input[2].to_i, eid: input[3].to_i)
+    else
+      puts "I'm sorry that is not a valid command"
+    end
+  end
+
+  def task_helper(input)
+    case input[1]
+    when "create"
+      create_task(pid: input[2].to_i, priority: input[3], description: input[4..-1].join(" "))
+    when "assign"
+      assign_task_employee(tid: input[2].to_i, eid: input[3].to_i)
+    when "mark"
+      mark_task_complete(tid: input[2].to_i)
+    else
+      puts "I'm sorry that is not a valid command"
+    end
+  end
+
+  def employee_helper(input)
+    case input[1]
+    when "list"
+      show_all_employees
+    when "create"
+      create_employee(name: input[2..-1].join(" "))
+    when "show"
+      show_projects_employee(id: input[2].to_i)
+    when "details"
+      remaining_task_employee(id: input[2].to_i)
+    when "history"
+      completed_task_employee(id: input[2].to_i)
+    else
+      puts "I'm sorry that is not a valid command"
+    end
+  end
+
 
   def list_commands
     puts "Available Commands:"
@@ -191,20 +246,24 @@ class TM::TerminalClient
     @exit = false
     until @exit
       input = gets.chomp
-      input = input.downcase.split(" ")
+      input = input.split(" ")
 
-      case input[0]
+      case input[0].downcase
       when "project"
-        if input[1] = "list"
-          list_projects
-        end
+        project_helper(input)
+      when "task"
+        task_helper(input)
+      when "emp"
+        employee_helper(input)
       when "exit"
         @exit = true
       end
+      puts
+      puts "Please enter a command:"
     end
   end
 
-  def prompt_user
+  def prompt_us
 
   end
 

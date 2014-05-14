@@ -22,7 +22,7 @@ class TM::Project
   def incomplete_task
     incomplete = TM.db.project_task(@id, completed: false)
     if incomplete
-      incomplete.sort_by { |task| [task.creation_date, task.priority, task.id] }
+      incomplete.sort_by { |task| [task.priority, task.creation_date, task.id] }
     else
       false
     end

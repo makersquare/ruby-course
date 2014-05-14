@@ -27,10 +27,14 @@ module TM
     #  Project Methods
 
     def create_project(data)
-      @projects_counter += 1
-      data[:id] = @projects_counter
-      data[:completed] = false
-      @projects[data[:id]] = data
+      if data[:name]
+        @projects_counter += 1
+        data[:id] = @projects_counter
+        data[:completed] = false
+        @projects[data[:id]] = data
+      else
+        false
+      end
     end
 
     def get_project(id)
@@ -62,12 +66,12 @@ module TM
           task = []
           @task.each do |key, value|
             if status[:completed]
-              task << build_task(value) if value[:pid] == id && value[:completed] == status[:completed]
+              task << build_task(value) if value[:pid] == id && value[:completed] == true
             else
-              task << build_task(value) if value[:pid] == id
+              task << build_task(value) if value[:pid] == id && value[:completed] == false
             end
           end
-          task.sort_by { |task_hash| task_hash.creation_date }
+          task.sort_by { |task_properity| task_properity.priority }.reverse
         else
           false
         end
@@ -249,11 +253,11 @@ require_relative 'task-manager/terminal2.rb'
 
 t = TM::TerminalClient.new
 t.run
-# t.create_project(name: "My first project")
-# t.create_project(name: "Second Project")
+t.create_project(name: "My first project")
+t.create_project(name: "Second Project")
 # t.list_projects
-# t.create_task(priority: 1, description: "Task 1", pid: 1)
-# t.create_task(description: "Task 2", pid: 1, priority: 2)
+t.create_task(priority: 1, description: "Task 1", pid: 1)
+t.create_task(description: "Task 2", pid: 1, priority: 2)
 # t.create_employee(name: "Jacoub")
 # t.assign_project_employee(eid: 1, pid: 1)
 # t.assign_task_employee(eid: 1, tid: 1)
