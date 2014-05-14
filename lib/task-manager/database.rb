@@ -191,8 +191,9 @@ class TM::DB
     data = []
     @employees_projects.each do |x,y|
       if y[:eid] == eid
-        percentage = TM::DB.db.projects_tasks(y[:pid])
-        data << {pid: y[:pid], name: @projects[y[:pid][:name]], percent_done: percentage[:percent_done], percent_over: percentage[:percent_over]}
+        percent_done = TM::DB.db.percent_done(y[:pid])
+        percent_over = TM::DB.db.percent_overdue(y[:pid])
+        data << {pid: y[:pid], name: @projects[y[:pid]][:name], percent_done: percent_done, percent_over: percent_over}
       end
     end
     data
