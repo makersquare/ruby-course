@@ -3,8 +3,8 @@ require 'spec_helper'
 describe 'Database' do
 
   let(:db) { TM::DB.new }
-  let(:proj1) { db.create_project({id: 1, name: "Project 1"}) }
-  let(:proj2) { db.create_project({id: 2, name: "Project 2"}) }
+  let(:proj1) { db.create_project({name: "Project 1"}) }
+  let(:proj2) { db.create_project({name: "Project 2"}) }
   let(:task1) { db.create_task({pid: 1, desc: "Task 1", pnum: 1, duedate: "2014 1 1"}) }
   let(:task2) { db.create_task({pid: 1, desc: "Task 2", pnum: 2, duedate: "2014 6 6"}) }
   let(:task3) { db.create_task({pid: 1, desc: "Task 3", pnum: 2, duedate: "2014 3 1"}) }
@@ -21,7 +21,7 @@ describe 'Database' do
 
     it 'should create a project in a project hash' do
       proj1
-      expect(db.projects).to eq(1=>{:id=>1, :name=>"Project 1"})
+      expect(db.projects).to eq(1=>{:pid=>1, :name=>"Project 1"})
     end
   end
 
@@ -89,7 +89,9 @@ describe 'Database' do
 
   describe '#list_projects' do
     it 'should return an array with a hash of each project' do
-
+      proj1
+      proj2
+      expect(db.list_projects).to eq([{pid: 1, name: "Project 1"},{pid: 2, name: "Project 2"}])
     end
   end
 

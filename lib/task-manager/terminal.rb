@@ -27,6 +27,7 @@ class TM::TerminalClient
     puts "\tmark task - Mark a task as complete"
     puts "\temployees tasks - Show remaining tasks for an employee"
     puts "\temployees complete - Show completed tasks for an employee"
+    puts "\ttask employees - Show employees for a task"
     puts "\texit - Exits the program"
     @command = gets.chomp
     self.call_methods(@command)
@@ -47,6 +48,7 @@ class TM::TerminalClient
     self.mark_task if @command == 'mark task'
     self.emp_remaining_tasks if @command == 'employees tasks'
     self.emp_comp_tasks if @command == 'employees complete'
+    self.task_employees if @command == 'task employees'
     self.command_list if  @command == 'help'
     if @command == 'exit'
     else
@@ -162,13 +164,21 @@ class TM::TerminalClient
     pid = gets.chomp
     puts "Please enter the employee id."
     eid = gets.chomp
-    data = TM::DB.db.give_emp_proj(pid.to_i,eid.to_i)
+    data = TM::DB.db.create_proj_emp(pid.to_i,eid.to_i)
     puts "#{data[:name]} has been added to the project #{data[:project]}."
     @command = gets.chomp
     self.call_methods(@command)
   end
 
   def add_emp_to_task
+    puts "Please enter the task id."
+    tid = gets.chomp
+    puts "Please enter the employee id."
+    eid = gets.chomp
+    data = TM::DB.db.create_emp_task(tid.to_i,eid.to_i)
+    puts "#{data[:name]} has been added to the task #{data[:task]}."
+    @command = gets.chomp
+    self.call_methods(@command)
   end
 
   def mark_task
@@ -196,9 +206,51 @@ class TM::TerminalClient
   end
 
   def emp_remaining_tasks
+    puts "Please enter the employee\'s id."
+    eid = gets.chomp
+    puts "ID\tEmployee Name"
+    puts "#{TM::DB.db.employees[eid][:eid]}\t#{TM::DB.db.employees[eid][:name]}"
+    puts "Priority\tID Description\tDue Date\tOver Due?"
+    data = TM::DB.db.get_inctask_by_emp(eid.to_i)
+    t = Time.now
+    today = "#{t.year} #{t.month} #{t.day}"
+    data.each do |x|
+      overdue = 'No'
+      overdue = 'Yes' if data[:duedate] < today
+      puts "#{data[:pnum]}\t\t#{data[:tid]}  #{data[:desc]}\t#{data[:duedate]}\t#{overdue}"
+    end
+    @command = gets.chomp
+    self.call_methods(@command)
   end
 
   def emp_comp_tasks
+    puts "Please enter the employee\'s id."
+    eid = gets.chomp
+    puts "ID\tEmployee Name"
+    puts "#{TM::DB.db.employees[eid][:eid]}\t#{TM::DB.db.employees[eid][:name]}"
+    puts "Priority\tID Description\tDate Created"
+    data = TM::DB.db.get_comptask_by_emp(eid.to_i)
+    data.each do |x|
+      puts "#{data[:pnum]}\t\t#{data[:tid]}  #{data[:desc]}\t#{data[:date]}"
+    end
+    @command = gets.chomp
+    self.call_methods(@command)
+  end
+
+  def task_employees
+    puts "Please enter the task id."
+    tid = gets.chomp
+    puts "Priority\tID Description\tComplete?\tDue Date"
+    complete = false
+    complete = true if TM::DB.db.tasks[tid][:complete]
+    puts "#{TM::DB.db.tasks[tid][:pnum]}\t\t#{TM::DB.db.tasks[tid][:tid]}  #{TM::DB.db.tasks[tid][:desc]}\t#{complete}\t#{TM::DB.db.tasks[tid][:duedate]}"
+    data = TM::DB.db.get_comptask_by_emp(tid.to_i)
+    puts "ID\tEmployee Name"
+    data.each do |x|
+      puts "#{data[:eid]}\t#{data[:name]}"
+    end
+    @command = gets.chomp
+    self.call_methods(@command)
   end
 
 end
