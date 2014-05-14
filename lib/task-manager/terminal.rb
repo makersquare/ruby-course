@@ -57,10 +57,10 @@ class TM::TerminalClient
   end
 
   def list
-    puts "ID\tProject Name\t% Done \t% Over Due"
+    puts "ID\tProject Name"
     data = TM::DB.db.list_projects
     data.each do |x|
-      puts "#{x[:pid]}\t#{x[:name]}\t#{x[:percent_done]}\t#{x[:percent_over]}"
+      puts "#{x[:pid]}\t#{x[:name]}"
     end
     @command = gets.chomp
     self.call_methods(@command)
@@ -94,11 +94,9 @@ class TM::TerminalClient
     puts "Please enter a project ID."
     projectid = gets.chomp
     tasks = TM::DB.db.incomplete_tasks(projectid.to_i)
-    puts "ID\tProject Name\t% Done \t% Over Due"
+    puts "ID\tProject Name"
     project = TM::DB.db.get_project(projectid.to_i)
-    percent_done = TM::DB.db.percent_done(projectid.to_i)
-    percent_over = TM::DB.db.percent_overdue(projectid.to_i)
-    puts "#{project.pid}\t#{project.name}\t#{percent_done}% \t#{percent_over}%"
+    puts "#{project.pid}\t#{project.name}"
     puts "Priority\tID Description\tDue Date\tOver Due?"
     t = Time.now
     today = "#{t.year} #{t.month} #{t.day}"
@@ -115,11 +113,9 @@ class TM::TerminalClient
     puts "Please enter a project ID."
     projectid = gets.chomp
     tasks = TM::DB.db.complete_tasks(projectid.to_i)
-    puts "ID\tProject Name\t% Done \t% Over Due"
+    puts "ID\tProject Name"
     project = TM::DB.db.get_project(projectid.to_i)
-    percent_done = TM::DB.db.percent_done(projectid.to_i)
-    percent_over = TM::DB.db.percent_overdue(projectid.to_i)
-    puts "#{project.pid}\t#{project.name}\t#{percent_done}% \t#{percent_over}%"
+    puts "#{project.pid}\t#{project.name}"
     puts "Priority\tID Description\tDue Date"
     tasks.each do |x,y|
       puts "#{y[:pnum]}\t\t#{y[:tid]}  #{y[:desc]}\t#{y[:duedate]}"
@@ -131,9 +127,8 @@ class TM::TerminalClient
   def projects_employees
     puts "Please enter the project\'s id."
     pid = gets.chomp
-    puts "ID\tProject Name\t% Done \t% Over Due"
-    percentage = TM::DB.db.projects_tasks(y[:pid])
-    puts "#{TM::DB.db.projects[pid.to_i][:pid]}\t#{TM::DB.db.projects[pid.to_i][:name]} \t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
+    puts "ID\tProject Name"
+    puts "#{TM::DB.db.projects[pid.to_i][:pid]}\t#{TM::DB.db.projects[pid.to_i][:name]}"
     data = TM::DB.db.get_emp_by_proj(pid.to_i)
     puts "ID\tEmployee Name"
     data.each do |x|
@@ -191,10 +186,10 @@ class TM::TerminalClient
     eid = gets.chomp
     puts "ID\tEmployee Name"
     puts "#{TM::DB.db.employees[eid][:eid]}\t#{TM::DB.db.employees[eid][:name]}"
-    puts "ID\tProject Name\t% Done \t% Over Due"
+    puts "ID\tProject Name"
     data = TM::DB.db.get_proj_by_emp(eid.to_i)
     data.each do |x|
-      puts "#{x[:pid]}\t#{x[:name]} \t#{x[:percent_done]}\t#{x[:percent_over]}"
+      puts "#{x[:pid]}\t#{x[:name]}"
     end
     @command = gets.chomp
     self.call_methods(@command)
