@@ -221,14 +221,14 @@ describe 'Database' do
     end
   end
 
-  describe '#get_intask_by_emp' do
-    it 'should list tasks for an employee' do
-      task1
-      task2
+  describe '#get_proj_by_emp' do
+    it 'should list projects for an employee' do
+      proj1
+      proj2
       emp1
-      db.create_task_emp(:tid => task1.tid, :eid => emp1.eid)
-      db.create_task_emp(:tid => task2.tid, :eid => emp1.eid)
-      expect(db.get_inctask_by_emp(emp1.eid)).to eq([{:tid=>1, :desc=>"Task 1", :duedate=>"2014 1 1", :pnum=>1}, {:tid=>2, :desc=>"Task 2", :duedate=>"2014 6 6", :pnum=>2}])
+      db.create_proj_emp(:pid => proj1.pid, :eid => emp1.eid)
+      db.create_proj_emp(:pid => proj2.pid, :eid => emp1.eid)
+      expect(db.get_proj_by_emp(emp1.eid)).to eq([{pid: 1, name: "Project 1", percent_done: 0, percent_over: 0},{pid: 2, name: "Project 2", percent_done: 0, percent_over: 0}])
     end
   end
 
@@ -270,14 +270,26 @@ describe '#create_task_emp' do
   end
 end
 
-describe '#get_proj_by_emp' do
-  xit 'should list projects for an employee' do
-    proj1
-    proj2
+describe '#get_intask_by_emp' do
+  it 'should list tasks for an employee' do
+    task1
+    task2
     emp1
-    db.create_proj_emp(:pid => proj1.pid, :eid => emp1.eid)
-    db.create_proj_emp(:pid => proj2.pid, :eid => emp1.eid)
-    expect(db.get_proj_by_emp(emp1.eid)).to eq([{pid: 1, name: "Project 1", percent_done: 0, percent_over: 0},{pid: 2, name: "Project 2", percent_done: 0, percent_over: 0}])
+    db.create_task_emp(:tid => task1.tid, :eid => emp1.eid)
+    db.create_task_emp(:tid => task2.tid, :eid => emp1.eid)
+    expect(db.get_inctask_by_emp(emp1.eid)).to eq([{:tid=>1, :desc=>"Task 1", :duedate=>"2014 1 1", :pnum=>1}, {:tid=>2, :desc=>"Task 2", :duedate=>"2014 6 6", :pnum=>2}])
+  end
+end
+
+describe '#get_comptask_by_emp' do
+  it 'should list complete tasks for an employee' do
+    task1
+    task2
+    emp1
+    db.update_task(task1.tid, complete: true)
+    db.create_task_emp(:tid => task1.tid, :eid => emp1.eid)
+    db.create_task_emp(:tid => task2.tid, :eid => emp1.eid)
+    expect(db.get_inctask_by_emp(emp1.eid)).to eq([{:tid=>2, :desc=>"Task 2", :duedate=>"2014 6 6", :pnum=>2}])
   end
 end
 
