@@ -56,8 +56,8 @@ class TM::DB
 
   # Hash of incomplete tasks sorted by priority number and then duedate
   def incomplete_tasks(pid)
-    incomplete = @tasks.select{|x,y| @tasks[y][:pid] == pid && @tasks[y][:complete] == false}
-    incomplete = incomplete.sort_by {|k,v| [v[:pnum],v[:duedate]]}
+    incomplete = @tasks.select{|x,y| @tasks[x][:pid] == pid && @tasks[x][:complete] == false}.values
+    incomplete = incomplete.sort_by {|k,v| [k[:pnum],k[:duedate]]}
     incomplete
   end
 

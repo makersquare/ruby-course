@@ -7,7 +7,7 @@ describe 'Database' do
   let(:proj2) { db.create_project({id: 2, name: "Project 2"}) }
   let(:task1) { db.create_task({pid: 1, desc: "Task 1", pnum: 1, duedate: "2014 1 1"}) }
   let(:task2) { db.create_task({pid: 1, desc: "Task 2", pnum: 2, duedate: "2014 6 6"}) }
-  let(:task3) { db.create_task({pid: 1, desc: "Task 2", pnum: 2, duedate: "2014 3 1"}) }
+  let(:task3) { db.create_task({pid: 1, desc: "Task 3", pnum: 2, duedate: "2014 3 1"}) }
   let(:emp1) { db.create_employee({eid: 1, name: "Katrina"}) }
   let(:emp2) { db.create_employee({eid: 2, name: "Alex"}) }
 
@@ -61,19 +61,21 @@ describe 'Database' do
   end
 
   describe '#complete_tasks' do
-    it 'should return a hash of complete tasks sorted by date created' do
-      proj1
-      task3
+    it 'should return an array of hashes of complete tasks sorted by date created' do
+      task1
       task2
-      db.update_task(task1.tid, complete: true, date: "2014 1 1")
-      db.update_task(task2.tid, complete: true, date: "2014 3 1")
-      expect(db.complete_tasks(proj1.pid)).to eq([{:pid=>1, :desc=>"Task 1", :pnum=>1, :duedate=>"2014 1 1", :tid=>3, :complete=>true, :date=>"2014 1 1"}, {:pid=>1, :desc=>"Task 2", :pnum=>2, :duedate=>"2014 6 6", :tid=>2, :complete=>true, :date=>"2014 3 1"}])
+      db.update_task(task2.tid, complete: true, date: "2014 1 1")
+      db.update_task(task1.tid, complete: true, date: "2014 3 1")
+      expect(db.complete_tasks(proj1.pid)).to eq([{:pid=>1, :desc=>"Task 2", :pnum=>2, :duedate=>"2014 6 6", :tid=>2, :complete=>true, :date=>"2014 1 1"}, {:pid=>1, :desc=>"Task 1", :pnum=>1, :duedate=>"2014 1 1", :tid=>1, :complete=>true, :date=>"2014 3 1"}])
     end
   end
 
   describe '#incomplete_tasks' do
-    xit 'should return a hash of incomplete tasks sorted by priority number and then duedate' do
-
+    it 'should return an array of hashes of incomplete tasks sorted by priority number and then duedate' do
+      task1
+      task2
+      task3
+      expect(db.incomplete_tasks(proj1.pid)).to eq([{:pid=>1, :desc=>"Task 1", :pnum=>1, :duedate=>"2014 1 1", :tid=>1, :complete=>false, :date=>"2014 5 14"}, {:pid=>1, :desc=>"Task 3", :pnum=>2, :duedate=>"2014 3 1", :tid=>3, :complete=>false, :date=>"2014 5 14"}, {:pid=>1, :desc=>"Task 2", :pnum=>2, :duedate=>"2014 6 6", :tid=>2, :complete=>false, :date=>"2014 5 14"}])
     end
   end
 
