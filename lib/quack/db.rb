@@ -1,3 +1,4 @@
+
 class Quack::DB
   attr_reader :text_quacks, :tags, :text_quack_tags
 
@@ -13,13 +14,24 @@ class Quack::DB
   def create_text_quack(data)
     data[:id] = @next_tq_id
     @next_tq_id += 1
+
+    # Runs get_or_create_tag on each tag passed in
+    data[:tags].each do |tag|
+      tag_obj = get_or_create_tag({tag: tag})
+      # binding.pry
+      create_text_quack_tag(data[:id], tag_obj.id)
+    end
+
     data.delete(:tags)
     @text_quacks[data[:id]] = data
     TextQuack.new(data[:content], nil, data[:id])
+    
   end
 
   def get_or_create_tag(data)
+    # binding.pry
     existing_tag = tags.select {|id, tag| tag[:tag] == data[:tag]}.first
+    # binding.pry
     if existing_tag
       data = existing_tag.last
     else
