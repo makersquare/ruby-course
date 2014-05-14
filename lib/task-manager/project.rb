@@ -43,8 +43,10 @@ class TM::Project
 
   def show_employees
     employees = []
-    TM.db.project_membership[@id].each do |eid, value|
-      employees << TM.db.get_employee(eid)
+    TM.db.employee_projects.each do |key, value|
+      if value[:pid] == @id
+        employees << TM.db.get_employee(value[:eid])
+      end
     end
     employees
   end

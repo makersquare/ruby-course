@@ -26,7 +26,7 @@ class TM::Task
   end
 
   def assign_employee(employee_data)
-    TM.db.update_task(@id, eid: employee_data[:eid]) if TM.db.get_membership(@pid)[employee_data[:eid]]
+    TM.db.update_task(@id, eid: employee_data[:eid]) if TM.db.get_membership(@pid).include?(employee_data[:eid])
   end
 
   def remove_employee

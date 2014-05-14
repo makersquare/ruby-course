@@ -48,27 +48,32 @@ describe "TaskManager::Database" do
 
     it 'can create assign employees to a project' do
       employee1; employee2; project1; project2
-      @db.add_employee_to_project(pid: 1, eid: 1)
-      @db.add_employee_to_project(pid: 1, eid: 2)
-      @db.add_employee_to_project(pid: 2, eid: 2)
-      expect(@db.project_membership[1][1]).to eq(true)
-      expect(@db.project_membership[1][2]).to eq(true)
-      expect(@db.project_membership[2][2]).to eq(true)
-      expect(@db.project_membership[2][1]).to eq(nil)
+      @db.create_membership(pid: 1, eid: 1)
+      @db.create_membership(pid: 1, eid: 2)
+      @db.create_membership(pid: 2, eid: 2)
+
+      # binding.pry
+
+      expect(@db.employee_projects[1][:eid]).to eq(1)
+      expect(@db.employee_projects[2][:eid]).to eq(2)
+      expect(@db.employee_projects[3][:eid]).to eq(2)
+      expect(@db.employee_projects[4]).to eq(nil)
     end
 
     it 'can remove an employees from a project' do
       employee1; employee2; project1; project2
-      @db.add_employee_to_project(pid: 1, eid: 1)
-      @db.add_employee_to_project(pid: 1, eid: 2)
-      @db.add_employee_to_project(pid: 2, eid: 2)
+      @db.create_membership(pid: 1, eid: 1)
+      @db.create_membership(pid: 1, eid: 2)
+      @db.create_membership(pid: 2, eid: 2)
 
-      @db.remove_employee_from_project(eid: 1, pid: 1)
-      @db.remove_employee_from_project(eid: 2, pid: 2)
-      expect(@db.remove_employee_from_project(eid: 1, pid: 2)).to eq(false)
-      expect(@db.project_membership[1][1]).to eq(nil)
-      expect(@db.project_membership[1][2]).to eq(true)
-      expect(@db.project_membership[2][2]).to eq(nil)
+      @db.destroy_membership(eid: 1, pid: 1)
+      @db.destroy_membership(eid: 2, pid: 2)
+
+      # binding.pry
+      expect(@db.destroy_membership(eid: 1, pid: 3)).to eq(false)
+      expect(@db.employee_projects[1]).to eq(nil)
+      expect(@db.employee_projects[2][:eid]).to eq(2)
+      expect(@db.employee_projects[3]).to eq(nil)
     end
 
   end
@@ -112,7 +117,7 @@ describe "TaskManager::Database" do
     end
 
     it 'has a uinquie employee id' do
-      expect(@new_task[:eid]).to eq(false)
+      expect(@new_task[:eid]).to eq(nil)
     end
 
     it 'can add new task' do
@@ -172,7 +177,7 @@ describe "TaskManager::Database" do
 
   end
 
-  context 'project membership is defined' do
+  context 'employee_projects is defined' do
 
     before(:each) do
       @new_project = @db.create_project({ :name => "Pizza Party Planning" })
@@ -182,29 +187,25 @@ describe "TaskManager::Database" do
       @employee2 = @db.create_employee( {name: "Rogger" })
     end
 
-    it 'is initialized when a project is created' do
-      expect(@db.project_membership[1]).to eq({})
-    end
-
     it 'updates when an employee is assigned to a project' do
       @db.update_membership(pid: 1, eid: 1, add: true)
-      expect(@db.project_membership[1]).to eq({1 =>true})
+      expect(@db.employee_projects[1]).to eq({eid: 1, id: 1, pid: 1 })
     end
 
     it 'can remove an employee from a project' do
       @db.update_membership(pid: 1, eid: 1, add: true)
       @db.update_membership(pid: 1, eid: 1)
-      expect(@db.project_membership[1]).to eq({})
+      expect(@db.employee_projects[1]).to eq(nil)
     end
 
     it 'can retrieve a membership hash' do
       @db.update_membership(pid: 1, eid: 1, add: true)
-      expect(@db.get_membership(1)).to eq({ 1 => true })
+      expect(@db.get_membership(1)).to eq([1])
     end
 
     it 'can destroy a membership' do
       @db.destroy_membership(1)
-      expect(@db.get_membership(1)).to eq(nil)
+      expect(@db.get_membership(1)).to eq([])
     end
 
 

@@ -15,8 +15,8 @@ describe 'Employee' do
   end
 
   it 'can show all projects an employee is on' do
-    @db.add_employee_to_project(pid: 1, eid: 1)
-    @db.add_employee_to_project(pid: 2, eid: 1)
+    @db.create_membership(pid: 1, eid: 1)
+    @db.create_membership(pid: 2, eid: 1)
 
     expect(@employee1.show_projects.count).to eq(2)
     expect(@employee1.show_projects.first.name).to eq("New Project")
@@ -26,8 +26,8 @@ describe 'Employee' do
   it 'can show all remaining task and project ID' do
     @db.create_task(description: "Task 1", priority: 1, pid: 2)
     @db.create_task(description: "Task 2", priority: 2, pid: 1)
-    @db.add_employee_to_project(eid: 1, pid: 1)
-    @db.add_employee_to_project(eid: 1, pid: 2)
+    @db.create_membership(eid: 1, pid: 1)
+    @db.create_membership(eid: 1, pid: 2)
     @db.get_task(1).assign_employee(:eid => 1)
     @db.get_task(2).assign_employee(:eid => 1)
     # binding.pry
@@ -39,13 +39,13 @@ describe 'Employee' do
   it 'can show all completed task' do
     @db.create_task(description: "Task 1", priority: 1, pid: 2)
     @db.create_task(description: "Task 2", priority: 2, pid: 1)
-    @db.add_employee_to_project(eid: 1, pid: 1)
-    @db.add_employee_to_project(eid: 1, pid: 2)
+    @db.create_membership(eid: 1, pid: 1)
+    @db.create_membership(eid: 1, pid: 2)
     @db.get_task(1).assign_employee(:eid => 1)
     @db.get_task(2).assign_employee(:eid => 1)
     @db.get_task(1).complete_task
 
-    binding.pry
+    # binding.pry
     expect(@employee1.show_task(completed: true).first.pid).to eq(2)
   end
 

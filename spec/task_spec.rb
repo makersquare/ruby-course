@@ -48,10 +48,11 @@ describe 'Task' do
       @db.create_project(name: "New Project")
 
       @task.assign_employee(eid: 1)
-      expect(@db.get_task(1).eid).to eq(false)
+      expect(@db.get_task(1).eid).to eq(nil)
 
-      @db.add_employee_to_project(eid: 1, pid: 1)
+      @db.create_membership(eid: 1, pid: 1)
       @task.assign_employee(eid: 1)
+      # binding.pry
       expect(@db.get_task(1).eid).to eq(1)
 
       @db.get_task(1).remove_employee

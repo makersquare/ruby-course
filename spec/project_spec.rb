@@ -77,8 +77,8 @@ describe 'Project' do
 
       @db.create_employee(name: "Jason")
       @db.create_employee(name: "Jacoub")
-      @db.add_employee_to_project(pid: 1, eid: 1)
-      @db.add_employee_to_project(pid: 1, eid: 2)
+      @db.create_membership(pid: 1, eid: 1)
+      @db.create_membership(pid: 1, eid: 2)
 
       expect(project.show_employees.count).to eq(2)
     end
