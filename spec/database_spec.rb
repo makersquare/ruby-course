@@ -304,14 +304,14 @@ describe '#get_emp_by_task' do
   end
 end
 
-describe '#destroy_proj_emp' do
-  xit 'should delete a project/employee hash in the employees_projects hash' do
+describe '#destroy_task_emp' do
+  it 'should delete a task/employee hash in the employees_tasks hash' do
     emp1
-    proj1
-    db.create_proj_emp(:pid => proj1.pid, :eid => emp1.eid)
-    expect(db.employees_projects).to eq(1 => {:id => 1, :pid => 1, :eid => 1})
-    db.destroy_proj_emp(proj1.pid, emp1.eid)
-    expect(db.employees_projects).to eq({})
+    task1
+    db.create_task_emp(:tid => task1.tid, :eid => emp1.eid)
+    expect(db.employees_tasks).to eq(1 => {:id => 1, :tid => 1, :eid => 1})
+    db.destroy_task_emp(task1.tid, emp1.eid)
+    expect(db.employees_tasks).to eq({})
   end
 end
 
