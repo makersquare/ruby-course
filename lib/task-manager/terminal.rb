@@ -52,25 +52,29 @@ class TM::Terminal
         menu(@choice)
       when 'show'
         puts "What project would you like to see the remaining tasks for?"
-        project1 = gets.chomp
-        for i in 0...@db.projects.length
-          if @db.projects[i][:name] == project1
-            @db.get_all_incomplete_tasks_for_project(@db.projects[i][:project_id])
-          end
+        project1 = gets.chomp.to_i
+        # for i in 0...@db.projects.length
+        #   if @db.projects[i][:name] == project1
+        #      list = @db.get_all_incomplete_tasks_for_project(@db.projects[i][:project_id])
+        #      p list
+          # end
+        p @db.get_all_incomplete_tasks_for_project(project1)
           # puts TM:.projects[i].incomplete_tasks().each {|x| puts x.description}
-          p @db.get_all_incomplete_tasks_for_project(@db.projects[i][:project_id])
-        end
+          # p @db.get_all_incomplete_tasks_for_project(@db.projects[i][:project_id])
+        # end
         @choice = gets.chomp.downcase
         menu(@choice)
       when 'history'
         puts "What project would you like to see the completed tasks for?"
-        project1 = gets.chomp
-        for i in 0...TM::Project.projects.length
-          if TM::Project.projects[i].name == project1
-            TM::Project.projects[i].completed_tasks()
-          end
-          puts TM::Project.projects[i].completed_tasks().each {|x| puts x.description}
-        end
+        project1 = gets.chomp.to_i
+        # for i in 0...@db.projects.length
+        #   if @db.projects[i][:name] == project1
+        #     @db.get_all_completed_tasks_for_project(@db.projects[i][:project_id])
+        #   end
+        #   p @db.get_all_completed_tasks_for_project(@db.projects[i][:project_id])
+        # end
+
+        p @db.get_all_completed_tasks_for_project(project1)
         @choice = gets.chomp.downcase
         menu(@choice)
       when 'add'
@@ -78,33 +82,41 @@ class TM::Terminal
         project_task = gets.chomp
         puts "What is the project id of the new task?"
         task_id = gets.chomp.to_i
+        puts "What is the name of the task?"
+        task_name = gets.chomp
         puts "What is the task description?"
         task_description = gets.chomp
         puts "what is the priority of the task?"
         task_priority = gets.chomp.to_i
         puts "Do you want to assign a due date to this task?"
         task_due_date = gets.chomp
-        for i in 0...TM::Project.projects.length
-          if TM::Project.projects[i].name == project_task
-            TM::Project.projects[i].create_task(task_id,task_description,task_priority,task_due_date)
+        for i in 0...@db.projects.length
+          if @db.projects[i][:name] == project_task
+            # TM::Project.projects[i].create_task(task_id,task_description,task_priority,task_due_date)
+            @db.create_task(name: task_name, project_id: task_id, description: task_description, priority: task_priority, status: 'incomplete' , due_date: task_due_date)
           end
-          TM::Project.projects[i].create_task(task_id,task_description,task_priority, task_due_date)
-          puts TM::Project.projects[i].incomplete_tasks().each {|x| puts x.description}
+          # TM::Project.projects[i].create_task(task_id,task_description,task_priority, task_due_date)
+          # @db.create_task(name: task_name, project_id: task_id, description: task_description, priority: task_priority, status: 'incomplete' , due_date: task_due_date)
+          # puts TM::Project.projects[i].incomplete_tasks().each {|x| puts x.description}
+          p @db.get_all_incomplete_tasks_for_project(task_id)
         end
         @choice = gets.chomp.downcase
         menu(@choice)
       when 'mark'
-        puts "What is the project in which you would like to mark a task as complete?"
-        project_task_complete = gets.chomp
+        # puts "What is the project in which you would like to mark a task as complete?"
+        # project_task_complete = gets.chomp.to_i
         puts "What is the task id that you want to mark as complete?"
         task_id_complete = gets.chomp.to_i
-        for i in 0...TM::Project.projects.length
-          if TM::Project.projects[i].name == project_task_complete
-            TM::Project.projects[i].mark_complete(task_id_complete)
-          end
-          TM::Project.projects[i].mark_complete(task_id_complete)
-          puts TM::Project.projects[i].completed_tasks().each {|x| puts x.description}
-        end
+        test_task = @db.get_task(task_id_complete)
+        test_task.status = 'complete'
+        @db.update_task(test_task)
+        # for i in 0...TM::Project.projects.length
+        #   if TM::Project.projects[i].name == project_task_complete
+        #     TM::Project.projects[i].mark_complete(task_id_complete)
+        #   end
+        #   TM::Project.projects[i].mark_complete(task_id_complete)
+        #   puts TM::Project.projects[i].completed_tasks().each {|x| puts x.description}
+        # end
         @choice = gets.chomp.downcase
         menu(@choice)
       else

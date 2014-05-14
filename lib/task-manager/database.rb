@@ -63,17 +63,24 @@ module TM
 
     def get_all_tasks_for_project(project_id)
       all_tasks_hash = @tasks.select {|x,y| y[:project_id] == project_id}
-      all_task_object = all_tasks_hash.each {|x,y| build_task(y)}
+      list = []
+      all_task_object = all_tasks_hash.each {|x,y| list << build_task(y)}
+      list
+      # all_task_object = all_tasks_hash.each {|x,y| build_task(y)}
     end
 
     def get_all_incomplete_tasks_for_project(project_id)
       all_incomplete_tasks_hash = @tasks.select {|x,y| y[:status] == 'incomplete'}.select {|k,v| v[:project_id] == project_id}
-      all_incomplete_task_object = all_incomplete_tasks_hash.each {|x,y| build_task(y)}
+      list = []
+      all_incomplete_tasks_hash.each {|x,y| list << build_task(y)}
+      list
     end
 
     def get_all_completed_tasks_for_project(project_id)
       all_complete_tasks_hash = @tasks.select {|x,y| y[:project_id] == project_id}.select {|k,v| v[:status] == 'complete'}
-      all_complete_task_object = all_complete_tasks_hash.each {|x,y|  p build_task(y)}
+      list = []
+      all_complete_tasks_hash.each {|x,y|  list << build_task(y)}
+      list
     end
 
     def build_task(data)
