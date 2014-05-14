@@ -75,13 +75,15 @@ describe 'Database' do
       task1
       task2
       task3
-      expect(db.incomplete_tasks(proj1.pid)).to eq([{:pid=>1, :desc=>"Task 1", :pnum=>1, :duedate=>"2014 1 1", :tid=>1, :complete=>false, :date=>"2014 5 14"}, {:pid=>1, :desc=>"Task 3", :pnum=>2, :duedate=>"2014 3 1", :tid=>3, :complete=>false, :date=>"2014 5 14"}, {:pid=>1, :desc=>"Task 2", :pnum=>2, :duedate=>"2014 6 6", :tid=>2, :complete=>false, :date=>"2014 5 14"}])
+      expect(db.incomplete_tasks(1)).to eq([{:pid=>1, :desc=>"Task 1", :pnum=>1, :duedate=>"2014 1 1", :tid=>1, :complete=>false, :date=>"2014 5 14"}, {:pid=>1, :desc=>"Task 3", :pnum=>2, :duedate=>"2014 3 1", :tid=>3, :complete=>false, :date=>"2014 5 14"}, {:pid=>1, :desc=>"Task 2", :pnum=>2, :duedate=>"2014 6 6", :tid=>2, :complete=>false, :date=>"2014 5 14"}])
     end
   end
 
   describe '#overdue_tasks' do
-    xit 'should return a hash of overdue tasks' do
-
+    it 'should return a hash of overdue tasks' do
+      task1
+      task3
+      expect(db.overdue_tasks(1,)).to eq([{:pid=>1, :desc=>"Task 1", :pnum=>1, :duedate=>"2014 1 1", :tid=>1, :complete=>false, :date=>"2014 5 14"}, {:pid=>1, :desc=>"Task 3", :pnum=>2, :duedate=>"2014 3 1", :tid=>2, :complete=>false, :date=>"2014 5 14"}])
     end
   end
 

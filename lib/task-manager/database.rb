@@ -63,7 +63,9 @@ class TM::DB
 
   # Don't need to sort overdue tasks, only use for percentage
   def overdue_tasks(pid)
-    overdue = @tasks.select{|x,y| @tasks[y][:pid] == pid && @tasks[y][:complete] == false && @tasks[y][:duedate] < today}
+    t = Time.now
+    today = "#{t.year} #{t.month} #{t.day}"
+    overdue = @tasks.select{|x,y| @tasks[x][:pid] == pid && @tasks[x][:complete] == false && @tasks[x][:duedate] < today}.values
     overdue
   end
 
