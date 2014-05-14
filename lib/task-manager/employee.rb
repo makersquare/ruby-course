@@ -14,7 +14,7 @@ class TM::Employee
   end
 
   def show_task(status)
-    TM.db.employee_task(eid: @id, status: status[:completed])
+    TM.db.employee_task(eid: @id, completed: status[:completed])
   end
 
 

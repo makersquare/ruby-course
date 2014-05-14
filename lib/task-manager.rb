@@ -13,7 +13,7 @@ module TM
 
       # Project relationships
       @employee_projects = {}
-      @employee_projects_counter = 0
+      @ep_counter = 0
 
       # Task specs
       @task = {}
@@ -89,6 +89,7 @@ module TM
       data[:completed] = false
       data[:eid] = nil
       data[:creation_date] = Time.now
+      # binding.pry
       @task[data[:id]] = data
     end
 
@@ -157,11 +158,12 @@ module TM
         # binding.pry
         @task.each do |key, value|
           if query_data[:completed]
-            task << build_task(value) if value[:eid] == query_data[:eid]
+            task << build_task(value) if value[:eid] == query_data[:eid] && value[:completed]
           else
-            task << build_task(value) if value[:eid] == query_data[:eid]
+            task << build_task(value) if value[:eid] == query_data[:eid] && !value[:completed]
           end
         end
+        # binding.pry
         task
       end
 
@@ -169,11 +171,11 @@ module TM
 
     def create_membership(membership_data)
       if @employees[membership_data[:eid]] && @projects[membership_data[:pid]]
-        @employee_projects_counter += 1
-        @employee_projects[@employee_projects_counter] = {}
-        @employee_projects[@employee_projects_counter][:id] = @employee_projects_counter
-        @employee_projects[@employee_projects_counter][:pid] = membership_data[:pid]
-        @employee_projects[@employee_projects_counter][:eid] = membership_data[:eid]
+        @ep_counter += 1
+        @employee_projects[@ep_counter] = {}
+        @employee_projects[@ep_counter][:id] = @ep_counter
+        @employee_projects[@ep_counter][:pid] = membership_data[:pid]
+        @employee_projects[@ep_counter][:eid] = membership_data[:eid]
       end
     end
 
@@ -220,24 +222,7 @@ module TM
       end
     end
 
-
     #Project Membership Add and remove methods
-
-      # def add_employee_to_project(data)
-      #   if @employees[data[:eid]] && @projects[data[:pid]]
-      #     update_membership(eid: data[:eid], pid: data[:pid], add: true)
-      #   else
-      #     false
-      #   end
-      # end
-
-      # def remove_employee_from_project(data)
-      #   if @employees[data[:eid]] && @projects[data[:pid]]
-      #     update_membership(eid: data[:eid], pid: data[:pid])
-      #   else
-      #     false
-      #   end
-      # end
 
       def projects_for_employee(employee_data)
         projects = []
@@ -263,10 +248,21 @@ require_relative 'task-manager/employeeprojects.rb'
 require_relative 'task-manager/terminal2.rb'
 
 t = TM::TerminalClient.new
-t.create_project(name: "My first project")
-t.create_project(name: "Second Project")
-t.list_projects
-t.create_task(desc: "Task 1", pid: 1)
-t.create_employee(name: "Jacoub")
+t.run
+# t.create_project(name: "My first project")
+# t.create_project(name: "Second Project")
+# t.list_projects
+# t.create_task(priority: 1, description: "Task 1", pid: 1)
+# t.create_task(description: "Task 2", pid: 1, priority: 2)
+# t.create_employee(name: "Jacoub")
 # t.assign_project_employee(eid: 1, pid: 1)
+# t.assign_task_employee(eid: 1, tid: 1)
+# t.project_remaining_task(id: 1)
+# t.mark_task_complete(tid: 1)
+# t.project_completed_task(id: 1)
+# t.project_employees(id: 1)
+# t.show_all_employees
+# t.show_projects_employee(id: 1)
+# t.remaining_task_employee(id: 1)
+# t.completed_task_employee(id: 1)
 
