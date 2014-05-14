@@ -59,7 +59,7 @@ class TM::DB
     incomplete
   end
 
-  # Don't need to sort overdue tasks, only use for percentage
+  # Don't need to sort overdue tasks
   def overdue_tasks(pid)
     t = Time.now
     today = "#{t.year} #{t.month} #{t.day}"
@@ -67,28 +67,10 @@ class TM::DB
     overdue
   end
 
-  def percent_done(pid)
-    complete = TM::DB.db.complete_tasks(pid).length
-    incomplete = TM::DB.db.incomplete_tasks(pid).length
-    percent_complete = 0
-    percent_complete = complete/(complete+incomplete)*100 if complete != 0
-    percent_complete
-  end
-
-  def percent_overdue(pid)
-    over = TM::DB.db.overdue_tasks(pid).length
-    incomplete = TM::DB.db.incomplete_tasks(pid).length
-    percent_overdue = 0
-    percent_overdue = (overdue/incomplete)*100 if incomplete != 0 && overdue != 0
-    percent_overdue
-  end
-
   def list_projects
     array = []
     @projects.each do|x,y|
-      percent_done = TM::DB.db.percent_done(x)
-      percent_overdue = TM::DB.db.percent_overdue(x)
-      array << {pid: y[:pid],name: y[:name],percent_done: percent_done,percent_over: percent_overdue}
+      array << {pid: y[:pid],name: y[:name]}
     end
     array
   end
@@ -182,9 +164,7 @@ class TM::DB
     data = []
     @employees_projects.each do |x,y|
       if y[:eid] == eid
-        percent_done = TM::DB.db.percent_done(y[:pid])
-        percent_over = TM::DB.db.percent_overdue(y[:pid])
-        data << {pid: y[:pid], name: @projects[y[:pid]][:name], percent_done: percent_done, percent_over: percent_over}
+        data << {pid: y[:pid], name: @projects[y[:pid]][:name]}
       end
     end
     data

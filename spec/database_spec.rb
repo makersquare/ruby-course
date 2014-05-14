@@ -87,25 +87,8 @@ describe 'Database' do
     end
   end
 
-  describe '#percent_done' do
-    xit 'should return a number that is the percent of done tasks for a project' do
-      task1
-      task2
-      db.update_task(task1.tid, complete: true)
-      expect(db.percent_done(1)).to eq(50)
-    end
-  end
-
-  describe '#percent_overdue' do
-    xit 'should return a number that is the percent of overdue tasks for a project' do
-        task2
-        task3
-        expect(db.percent_overdue(1)).to eq(50)
-    end
-  end
-
   describe '#list_projects' do
-    xit 'should return an array with a hash of each project' do
+    it 'should return an array with a hash of each project' do
 
     end
   end
@@ -236,7 +219,7 @@ describe 'Database' do
       emp1
       db.create_proj_emp(:pid => proj1.pid, :eid => emp1.eid)
       db.create_proj_emp(:pid => proj2.pid, :eid => emp1.eid)
-      expect(db.get_proj_by_emp(emp1.eid)).to eq([{pid: 1, name: "Project 1", percent_done: 0, percent_over: 0},{pid: 2, name: "Project 2", percent_done: 0, percent_over: 0}])
+      expect(db.get_proj_by_emp(emp1.eid)).to eq([{pid: 1, name: "Project 1"},{pid: 2, name: "Project 2"}])
     end
   end
 
