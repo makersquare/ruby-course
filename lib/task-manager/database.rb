@@ -204,7 +204,7 @@ class TM::DB
     data = []
     @employees_projects.each do |x,y|
       if y[:pid] == pid
-        data << {eid: y[:eid], name: y[:name]}
+        data << {eid: y[:eid], name: @employees[y[:eid]][:name]}
       end
     end
     data

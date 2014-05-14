@@ -188,7 +188,13 @@ describe 'Database' do
   end
 
   describe '#get_emp_by_proj' do
-    xit 'should list all employees for a project' do
+    it 'should list all employees for a project' do
+      proj1
+      emp1
+      emp2
+      db.create_proj_emp(:pid => proj1.pid, :eid => emp1.eid)
+      db.create_proj_emp(:pid => proj1.pid, :eid => emp2.eid)
+      expect(db.get_emp_by_proj(proj1.pid)).to eq([{eid: 1, name: "Katrina"},{eid: 2, name: "Alex"}])
     end
   end
 
