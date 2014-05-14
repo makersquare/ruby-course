@@ -1,4 +1,4 @@
-class Quack::TextQuack
+class Tweet::TextTweet
   attr_reader :content, :tags, :id
   def initialize(content, tags, id)
     @content = content

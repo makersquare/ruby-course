@@ -1,4 +1,4 @@
-class Quack::PicQuack
+class Tweet::PicTweet
   attr_reader :content, :tags, :pic_url, :id
 
   def initialize(content, pic_url, tags, id)

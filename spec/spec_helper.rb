@@ -1,9 +1,9 @@
 require 'pry'
-require './lib/quack.rb'
-include Quack
+require './lib/tweet.rb'
+include Tweet
 
 RSpec.configure do |config|
   config.before(:each) do
-    Quack.instance_variable_set(:@__db_instance, nil)
+    Tweet.instance_variable_set(:@__db_instance, nil)
   end
 end
