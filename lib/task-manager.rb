@@ -247,17 +247,16 @@ end
 require_relative 'task-manager/task.rb'
 require_relative 'task-manager/project.rb'
 require_relative 'task-manager/employee.rb'
-require_relative 'task-manager/projectsmanager.rb'
 require_relative 'task-manager/employeeprojects.rb'
-require_relative 'task-manager/terminal2.rb'
+require_relative 'task-manager/terminal.rb'
 
 t = TM::TerminalClient.new
-t.run
-t.create_project(name: "My first project")
-t.create_project(name: "Second Project")
+# t.run
+# t.create_project(name: "My first project")
+# t.create_project(name: "Second Project")
 # t.list_projects
-t.create_task(priority: 1, description: "Task 1", pid: 1)
-t.create_task(description: "Task 2", pid: 1, priority: 2)
+# t.create_task(priority: 1, description: "Task 1", pid: 1)
+# t.create_task(description: "Task 2", pid: 1, priority: 2)
 # t.create_employee(name: "Jacoub")
 # t.assign_project_employee(eid: 1, pid: 1)
 # t.assign_task_employee(eid: 1, tid: 1)
