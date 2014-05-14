@@ -110,8 +110,8 @@ class TM::TerminalClient
     puts "#{TM::DB.db.projects[pid.to_i][:pid]}\t#{TM::DB.db.projects[pid.to_i][:name]} \t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
     data = TM::DB.db.get_emp_by_proj(pid.to_i)
     puts "ID\tEmployee Name"
-    data.ead do |x,y|
-      puts "#{y[:eid]}\t#{y[:name]}"
+    data.each do |x|
+      puts "#{x[:eid]}\t#{x[:name]}"
     end
     @command = gets.chomp
     self.call_methods(@command)
@@ -127,7 +127,11 @@ class TM::TerminalClient
   end
 
   def list_employees
-    TM::DB.db.list_employees
+    puts "ID\tEmployee Name"
+    data = TM::DB.db.list_employees
+    data.each do |x|
+      puts "#{x[:eid]}\t#{x[:name]}"
+    end
     @command = gets.chomp
     self.call_methods(@command)
   end
@@ -163,7 +167,9 @@ class TM::TerminalClient
     puts "#{TM::DB.db.employees[eid][:eid]}\t#{TM::DB.db.employees[eid][:name]}"
     puts "ID\tProject Name\t% Done \t% Over Due"
     data = TM::DB.db.get_proj_by_emp(eid.to_i)
-    puts "#{data[:pid]}\t#{data[:name]} \t#{data[:percent_done]}\t#{data[:percent_over]}"
+    data.each do |x|
+      puts "#{x[:pid]}\t#{x[:name]} \t#{x[:percent_done]}\t#{x[:percent_over]}"
+    end
     @command = gets.chomp
     self.call_methods(@command)
   end

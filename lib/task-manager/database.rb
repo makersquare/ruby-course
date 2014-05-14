@@ -177,11 +177,11 @@ class TM::DB
   end
 
   def list_employees
-    puts "ID\tEmployee Name"
     array = []
     @employees.each do|x,y|
       array << {eid: y[:eid],name: y[:name]}
     end
+    array
   end
 
   def self.build_employee(data)
