@@ -5,6 +5,8 @@ class TM::Terminal
   attr_accessor :choice
 
   def initialize
+    @db = TM::DB.new
+    @k = 0
     puts "Welcome to Project Manager Pro®. What can I do for you today?"
     puts "Available Commands:
               help - Show these commands again
@@ -33,21 +35,33 @@ class TM::Terminal
         @choice = gets.chomp.downcase
         menu(@choice)
       when 'list'
-        TM::Project.projects.each {|x| puts x.name}
+        if @db.projects.length == 0
+          puts "There are no projects currently"
+        else
+          @db.projects.each {|x,y| puts y[:name]}
+        end
+        @choice = gets.chomp.downcase
+        menu(@choice)
       when 'create'
         puts "What would you like to name the new project?"
         title = gets.chomp
-        title = TM::Project.new(title)
-        puts "Congratulations! #{title.name} project has been created."
+        @db.create_project(name: title)
+        puts "Congratulations! #{@db.projects[@k][:name]} project has been created."
+        @k+=1
+        @choice = gets.chomp.downcase
+        menu(@choice)
       when 'show'
         puts "What project would you like to see the remaining tasks for?"
         project1 = gets.chomp
-        for i in 0...TM::Project.projects.length
-          if TM::Project.projects[i].name == project1
-            TM::Project.projects[i].incomplete_tasks()
+        for i in 0...@db.projects.length
+          if @db.projects[i][:name] == project1
+            @db.get_all_incomplete_tasks_for_project(@db.projects[i][:project_id])
           end
-          puts TM::Project.projects[i].incomplete_tasks().each {|x| puts x.description}
+          # puts TM:.projects[i].incomplete_tasks().each {|x| puts x.description}
+          p @db.get_all_incomplete_tasks_for_project(@db.projects[i][:project_id])
         end
+        @choice = gets.chomp.downcase
+        menu(@choice)
       when 'history'
         puts "What project would you like to see the completed tasks for?"
         project1 = gets.chomp
@@ -57,6 +71,8 @@ class TM::Terminal
           end
           puts TM::Project.projects[i].completed_tasks().each {|x| puts x.description}
         end
+        @choice = gets.chomp.downcase
+        menu(@choice)
       when 'add'
         puts "What is the project you would like to add a task to?"
         project_task = gets.chomp
@@ -75,6 +91,8 @@ class TM::Terminal
           TM::Project.projects[i].create_task(task_id,task_description,task_priority, task_due_date)
           puts TM::Project.projects[i].incomplete_tasks().each {|x| puts x.description}
         end
+        @choice = gets.chomp.downcase
+        menu(@choice)
       when 'mark'
         puts "What is the project in which you would like to mark a task as complete?"
         project_task_complete = gets.chomp
@@ -87,6 +105,8 @@ class TM::Terminal
           TM::Project.projects[i].mark_complete(task_id_complete)
           puts TM::Project.projects[i].completed_tasks().each {|x| puts x.description}
         end
+        @choice = gets.chomp.downcase
+        menu(@choice)
       else
         puts "Rock on King Kong"
       end

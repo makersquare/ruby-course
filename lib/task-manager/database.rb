@@ -109,9 +109,13 @@ module TM
 
 #@task-assignment ={assignment_id => {emplo_id; task_id; project_id}
     def create_task_assignment(data)
-      id = @task_assignment_count
-      @task_assignment[id] = {id: id, employee_id: data[:employee_id], task_id: data[:task_id], project_id: data[:project_id]}
-      @task_assignment_count +=1
+      if data[:project_id] != nil
+        id = @task_assignment_count
+        @task_assignment[id] = {id: id, employee_id: data[:employee_id], task_id: data[:task_id], project_id: data[:project_id]}
+        @task_assignment_count +=1
+      else
+        puts "You need to include a project id to assign a task"
+      end
     end
 
     def get_task_assignment(id)
