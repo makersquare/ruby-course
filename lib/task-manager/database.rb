@@ -2,7 +2,7 @@ require 'pry-debugger'
 
 class TM::DB
 
-  attr_reader :tasks, :projects, :project_count, :task_count, :employees, :employee_count, :employees_projects
+  attr_reader :tasks, :projects, :project_count, :task_count, :employees, :employee_count, :employees_projects, :employees_tasks, :emp_task_count
   def initialize
     @projects = {}
     @project_count = 0
@@ -11,10 +11,8 @@ class TM::DB
     @employees = {}
     @employee_count = 0
     @employees_projects = {}
-    # @employees_projects = {1 => {id: 1, pid: 1, eid: 2}, 2=>...}
     @emp_proj_count = 0
     @employees_tasks = {}
-    # @employees_tasks = {1 => {id: 1, tid: 1, eid: 2}, 2=>...}
     @emp_task_count = 0
   end
 
@@ -70,18 +68,18 @@ class TM::DB
   end
 
   def percent_done(pid)
-    complete = TM::DB.db.complete_tasks(pid)
-    incomplete = TM::DB.db.incomplete_tasks(pid)
+    complete = TM::DB.db.complete_tasks(pid).length
+    incomplete = TM::DB.db.incomplete_tasks(pid).length
     percent_complete = 0
-    percent_complete = complete.length/(complete.length+incomplete.length)*100 if complete.length != 0
+    percent_complete = complete/(complete+incomplete)*100 if complete != 0
     percent_complete
   end
 
   def percent_overdue(pid)
-    over = TM::DB.db.overdue_tasks(pid)
-    incomplete = TM::DB.db.incomplete_tasks(pid)
+    over = TM::DB.db.overdue_tasks(pid).length
+    incomplete = TM::DB.db.incomplete_tasks(pid).length
     percent_overdue = 0
-    percent_overdue = (overdue.length/incomplete.length)*100 if incomplete.length != 0 && overdue.length != 0
+    percent_overdue = (overdue/incomplete)*100 if incomplete != 0 && overdue != 0
     percent_overdue
   end
 
@@ -225,7 +223,7 @@ class TM::DB
     data = []
     @employees_tasks.each do |x,y|
       if y[:eid] == eid && !@tasks[y[:tid]][:complete]
-        data << {tid: y[:tid], desc: @tasks[y[:tid][:desc]], duedate: @tasks[y[:tid]][:duedate], pnum: @tasks[y[:tid]][:pnum]}
+        data << {tid: y[:tid], desc: @tasks[y[:tid]][:desc], duedate: @tasks[y[:tid]][:duedate], pnum: @tasks[y[:tid]][:pnum]}
       end
     end
     data

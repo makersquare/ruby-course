@@ -80,22 +80,27 @@ describe 'Database' do
   end
 
   describe '#overdue_tasks' do
-    it 'should return a hash of overdue tasks' do
+    it 'should return an array of hashes of overdue tasks' do
       task1
       task3
-      expect(db.overdue_tasks(1,)).to eq([{:pid=>1, :desc=>"Task 1", :pnum=>1, :duedate=>"2014 1 1", :tid=>1, :complete=>false, :date=>"2014 5 14"}, {:pid=>1, :desc=>"Task 3", :pnum=>2, :duedate=>"2014 3 1", :tid=>2, :complete=>false, :date=>"2014 5 14"}])
+      expect(db.overdue_tasks(1)).to eq([{:pid=>1, :desc=>"Task 1", :pnum=>1, :duedate=>"2014 1 1", :tid=>1, :complete=>false, :date=>"2014 5 14"}, {:pid=>1, :desc=>"Task 3", :pnum=>2, :duedate=>"2014 3 1", :tid=>2, :complete=>false, :date=>"2014 5 14"}])
     end
   end
 
   describe '#percent_done' do
     xit 'should return a number that is the percent of done tasks for a project' do
-
+      task1
+      task2
+      db.update_task(task1.tid, complete: true)
+      expect(db.percent_done(1)).to eq(50)
     end
   end
 
   describe '#percent_overdue' do
     xit 'should return a number that is the percent of overdue tasks for a project' do
-
+        task2
+        task3
+        expect(db.percent_overdue(1)).to eq(50)
     end
   end
 
@@ -216,14 +221,14 @@ describe 'Database' do
     end
   end
 
-  describe '#get_proj_by_emp' do
-    it 'should list projects for an employee' do
-      proj1
-      proj2
+  describe '#get_intask_by_emp' do
+    it 'should list tasks for an employee' do
+      task1
+      task2
       emp1
-      db.create_proj_emp(:pid => proj1.pid, :eid => emp1.eid)
-      db.create_proj_emp(:pid => proj2.pid, :eid => emp1.eid)
-      expect(db.get_proj_by_emp(emp1.eid)).to eq([{pid: 1, name: "Project 1", percent_done: 0, percent_over: 0},{pid: 2, name: "Project 2", percent_done: 0, percent_over: 0}])
+      db.create_task_emp(:tid => task1.tid, :eid => emp1.eid)
+      db.create_task_emp(:tid => task2.tid, :eid => emp1.eid)
+      expect(db.get_inctask_by_emp(emp1.eid)).to eq([{:tid=>1, :desc=>"Task 1", :duedate=>"2014 1 1", :pnum=>1}, {:tid=>2, :desc=>"Task 2", :duedate=>"2014 6 6", :pnum=>2}])
     end
   end
 
@@ -250,5 +255,52 @@ describe 'Database' do
   end
 
 # Employees_Tasks ---------------------------------------
+
+describe '#create_task_emp' do
+  it 'should be able to add employees to tasks and tasks to employees in the employees_tasks hash' do
+    emp1
+    emp2
+    task1
+    task2
+    db.create_task_emp(:tid => task1.tid, :eid => emp1.eid)
+    db.create_task_emp(:tid => task1.tid, :eid => emp2.eid)
+    expect(db.employees_tasks).to eq(1 => {:id => 1, :tid => 1, :eid => 1}, 2 => {:id => 2, :tid => 1, :eid => 2})
+    db.create_task_emp(:tid => task2.tid, :eid => emp2.eid)
+    expect(db.employees_tasks).to eq(1 => {:id => 1, :tid => 1, :eid => 1}, 2 => {:id => 2, :tid => 1, :eid => 2}, 3 => {:id => 3, :tid => 2, :eid => 2})
+  end
+end
+
+describe '#get_proj_by_emp' do
+  xit 'should list projects for an employee' do
+    proj1
+    proj2
+    emp1
+    db.create_proj_emp(:pid => proj1.pid, :eid => emp1.eid)
+    db.create_proj_emp(:pid => proj2.pid, :eid => emp1.eid)
+    expect(db.get_proj_by_emp(emp1.eid)).to eq([{pid: 1, name: "Project 1", percent_done: 0, percent_over: 0},{pid: 2, name: "Project 2", percent_done: 0, percent_over: 0}])
+  end
+end
+
+describe '#get_emp_by_proj' do
+  xit 'should list all employees for a project' do
+    proj1
+    emp1
+    emp2
+    db.create_proj_emp(:pid => proj1.pid, :eid => emp1.eid)
+    db.create_proj_emp(:pid => proj1.pid, :eid => emp2.eid)
+    expect(db.get_emp_by_proj(proj1.pid)).to eq([{eid: 1, name: "Katrina"},{eid: 2, name: "Alex"}])
+  end
+end
+
+describe '#destroy_proj_emp' do
+  xit 'should delete a project/employee hash in the employees_projects hash' do
+    emp1
+    proj1
+    db.create_proj_emp(:pid => proj1.pid, :eid => emp1.eid)
+    expect(db.employees_projects).to eq(1 => {:id => 1, :pid => 1, :eid => 1})
+    db.destroy_proj_emp(proj1.pid, emp1.eid)
+    expect(db.employees_projects).to eq({})
+  end
+end
 
 end
