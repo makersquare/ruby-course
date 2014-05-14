@@ -1,3 +1,4 @@
+require 'pry'
 require './lib/quack.rb'
 include Quack
 
