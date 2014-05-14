@@ -293,14 +293,14 @@ describe '#get_comptask_by_emp' do
   end
 end
 
-describe '#get_emp_by_proj' do
-  xit 'should list all employees for a project' do
-    proj1
+describe '#get_emp_by_task' do
+  it 'should list all employees for a task' do
+    task1
     emp1
     emp2
-    db.create_proj_emp(:pid => proj1.pid, :eid => emp1.eid)
-    db.create_proj_emp(:pid => proj1.pid, :eid => emp2.eid)
-    expect(db.get_emp_by_proj(proj1.pid)).to eq([{eid: 1, name: "Katrina"},{eid: 2, name: "Alex"}])
+    db.create_task_emp(:tid => task1.tid, :eid => emp1.eid)
+    db.create_task_emp(:tid => task1.tid, :eid => emp2.eid)
+    expect(db.get_emp_by_task(task1.tid)).to eq([{eid: 1, name: "Katrina"},{eid: 2, name: "Alex"}])
   end
 end
 
