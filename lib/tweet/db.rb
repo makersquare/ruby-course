@@ -72,6 +72,8 @@ class Tweet::DB
       create_pic_tweet_tag(data[:id], tag_obj.id)
     end
 
+    @pic_tweets[data[:id]] = data
+    
     PicTweet.new(data[:content], data[:pic_url], data[:tags], data[:id])
   end
 
@@ -87,7 +89,11 @@ class Tweet::DB
   # Output: an array of PicTweets with the given tag
   def get_pic_tweets_from_tag(tag)
     new_array = @pic_tweet_tags.values.select { |tag_hash| tag_hash[:tag_id] == tag.id }
-    new_array.map { |data| Tweet.db.build_pic_tweet(data) }
+    new_array.map do |data|
+      pt_id = data[:pt_id]
+      pt_data = @pic_tweets[pt_id]
+      Tweet.db.build_pic_tweet(pt_data)
+    end
   end
 
   # Build a PicTweet out of a data hash

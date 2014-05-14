@@ -54,6 +54,20 @@ describe "db" do
         }
       tt = Tweet.db.create_text_tweet(data)
     end
+    let(:tt2) do
+      data = {
+          content: "testing2",
+          tags: ["tag1"]
+        }
+      tt = Tweet.db.create_text_tweet(data)
+    end
+    let(:tt3) do
+      data = {
+          content: "testing3",
+          tags: ["tag2"]
+        }
+      tt = Tweet.db.create_text_tweet(data)
+    end
     let(:tag1) { Tweet.db.get_or_create_tag(tag:"tag1") }
     let(:tag2) { Tweet.db.get_or_create_tag(tag:"tag2") }
     describe '.create_text_tweet' do
@@ -90,6 +104,34 @@ describe "db" do
           {tt_id:tt.id, tag_id:tag1.id, id:0})
         expect(Tweet::db.text_tweet_tags.values).to include(
           {tt_id:tt.id, tag_id:tag2.id, id:1})
+      end
+    end
+
+    describe ".get_text_tweets_from_tag" do
+      xit "returns array of PicTweets linked to the tag" do
+        # Calling all our let block stuff
+        tt
+        tt2
+        tt3
+
+        result = Tweet.db.get_pic_tweets_from_tag(tag1)
+        # result should inclue tt and tt2
+        expect(result).to be_a(Array)
+        expect(result.length).to eq(2)
+        expect(result.first).to be_a(TextTweet)
+      end
+    end
+    
+    describe ".build_text_tweet" do
+      let(:data) do 
+        {
+          content: "My Text",
+          tags: ["my", "text"],
+        }
+      end
+      xit "returns a TextTweet" do
+        result = Tweet.db.build_text_tweet(data)
+        expect(result).to be_a(TextTweet)
       end
     end
   end
@@ -150,6 +192,16 @@ describe "db" do
         # TODO: test pt.tags
       end
 
+      it "adds the created pic_tweet to @pic_tweets" do
+        pt
+        expect(Tweet.db.pic_tweets[pt.id]).to eq({
+          :content=>"My pic",
+          :pic_url=>"my_pic.jpg",
+          :tags=>["my", "pic"],
+          :id=>pt.id
+        })
+      end
+
       it "also calls get_or_create_tag" do
         # Tweet.db.get_or_create_tag({tag: "tag1"})
         expect(Tweet.db).to receive(:get_or_create_tag).with({tag: "my"}).
@@ -188,6 +240,7 @@ describe "db" do
         expect(result).to be_a(Array)
         expect(result.length).to eq(2)
         expect(result.first).to be_a(PicTweet)
+        expect(result.first).to eq(pt)
       end
     end
     
@@ -202,6 +255,9 @@ describe "db" do
       it "returns a PicTweet" do
         result = Tweet.db.build_pic_tweet(data)
         expect(result).to be_a(PicTweet)
+        expect(result.content).to eq("My Pic")
+        expect(result.pic_url).to eq("my_pic.jpg")
+        expect(result.tags).to eq(["my", "pic"])
       end
     end
   end
