@@ -49,8 +49,8 @@ class TM::DB
 
   # Hash of complete tasks sorted by date created
   def complete_tasks(pid)
-    complete = @tasks.select{|x,y| @tasks[y][:pid] == pid && @tasks[y][:complete]}
-    complete = complete.sort_by {|k,v| v[:date]}
+    complete = @tasks.select{|x,y| @tasks[x][:pid] == pid && @tasks[x][:complete]}.values
+    complete = complete.sort_by {|k,v| k[:date]}
     complete
   end
 
@@ -128,15 +128,6 @@ class TM::DB
 
   def self.build_task(data)
     TM::Task.new(data[:pid], data[:tid], data[:desc], data[:pnum], data[:duedate], data[:date], data[:complete])
-  end
-
-  # Can assign only one employee to task, but employees can have multiple tasks
-  def add_emp_to_task(tid, eid)
-    old_data = @tasks[tid]
-    if old_data[:eid].nil?
-      old_data[:eid] = eid
-      return TM::DB.build_task(old_data)
-    end
   end
 
 # Employees ---------------------------------------

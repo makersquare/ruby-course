@@ -7,8 +7,11 @@ describe 'Database' do
   let(:proj2) { db.create_project({id: 2, name: "Project 2"}) }
   let(:task1) { db.create_task({pid: 1, desc: "Task 1", pnum: 1, duedate: "2014 1 1"}) }
   let(:task2) { db.create_task({pid: 1, desc: "Task 2", pnum: 2, duedate: "2014 6 6"}) }
+  let(:task3) { db.create_task({pid: 1, desc: "Task 2", pnum: 2, duedate: "2014 3 1"}) }
   let(:emp1) { db.create_employee({eid: 1, name: "Katrina"}) }
   let(:emp2) { db.create_employee({eid: 2, name: "Alex"}) }
+
+# Projects ---------------------------------------
 
   describe '#create_project' do
     it 'should return an instance of the TM::Project class' do
@@ -57,6 +60,49 @@ describe 'Database' do
     end
   end
 
+  describe '#complete_tasks' do
+    it 'should return a hash of complete tasks sorted by date created' do
+      proj1
+      task3
+      task2
+      db.update_task(task1.tid, complete: true, date: "2014 1 1")
+      db.update_task(task2.tid, complete: true, date: "2014 3 1")
+      expect(db.complete_tasks(proj1.pid)).to eq([{:pid=>1, :desc=>"Task 1", :pnum=>1, :duedate=>"2014 1 1", :tid=>3, :complete=>true, :date=>"2014 1 1"}, {:pid=>1, :desc=>"Task 2", :pnum=>2, :duedate=>"2014 6 6", :tid=>2, :complete=>true, :date=>"2014 3 1"}])
+    end
+  end
+
+  describe '#incomplete_tasks' do
+    xit 'should return a hash of incomplete tasks sorted by priority number and then duedate' do
+
+    end
+  end
+
+  describe '#overdue_tasks' do
+    xit 'should return a hash of overdue tasks' do
+
+    end
+  end
+
+  describe '#percent_done' do
+    xit 'should return a number that is the percent of done tasks for a project' do
+
+    end
+  end
+
+  describe '#percent_overdue' do
+    xit 'should return a number that is the percent of overdue tasks for a project' do
+
+    end
+  end
+
+  describe '#list_projects' do
+    xit 'should return an array with a hash of each project' do
+
+    end
+  end
+
+# Tasks ---------------------------------------
+
   describe '#create_task' do
     it 'should return an instance of the TM::Task class' do
       task1
@@ -97,9 +143,10 @@ describe 'Database' do
       task1
       task2
       db.update_task(task2.tid, complete: true)
-      db.update_task(task1.tid, desc: "new description")
+      db.update_task(task1.tid, desc: "new description", complete: true)
       expect(db.tasks[2][:complete]).to eq(true)
       expect(db.tasks[1][:desc]).to eq("new description")
+      expect(db.tasks[1][:complete]).to eq(true)
     end
   end
 
@@ -111,20 +158,7 @@ describe 'Database' do
     end
   end
 
-  describe '#add_employee_to_task' do
-    it 'should be able to assign an employee to a task' do
-      emp1
-      emp2
-      task1
-      task2
-      db.add_emp_to_task(1,1)
-      expect(db.tasks[2][:eid]).to eq(nil)
-      db.add_emp_to_task(2,1)
-      db.add_emp_to_task(2,2)
-      expect(db.tasks[1][:eid]).to eq(1)
-      expect(db.tasks[2][:eid]).to eq(1)
-    end
-  end
+# Employees ---------------------------------------
 
   describe '#create_employee' do
     it 'should return an instance of the TM::Employee class' do
@@ -161,6 +195,8 @@ describe 'Database' do
       expect(db.employees).to eq({})
     end
   end
+
+# Employees_Projects ---------------------------------------
 
   describe '#create_proj_emp' do
     it 'should be able to add employees to projects and projects to employees in the employees_projects hash' do
@@ -208,5 +244,7 @@ describe 'Database' do
       expect(db.employees_projects).to eq({})
     end
   end
+
+# Employees_Tasks ---------------------------------------
 
 end
