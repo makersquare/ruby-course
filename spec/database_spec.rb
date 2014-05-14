@@ -205,6 +205,14 @@ describe 'Database' do
     end
   end
 
+  describe '#list_employees' do
+    it 'should return an array of all of the employees' do
+      emp1
+      emp2
+      expect(db.list_employees).to eq([{eid: 1, name: "Katrina"},{eid: 2, name: "Alex"}])
+    end
+  end
+
 # Employees_Projects ---------------------------------------
 
   describe '#create_proj_emp' do
