@@ -105,7 +105,14 @@ class TM::TerminalClient
   def projects_employees
     puts "Please enter the project\'s id."
     pid = gets.chomp
-    TM::DB.db.projs_emps(pid.to_i)
+    puts "ID\tProject Name\t% Done \t% Over Due"
+    percentage = TM::DB.db.projects_tasks(y[:pid])
+    puts "#{TM::DB.db.projects[pid.to_i][:pid]}\t#{TM::DB.db.projects[pid.to_i][:name]} \t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
+    data = TM::DB.db.get_emp_by_proj(pid.to_i)
+    puts "ID\tEmployee Name"
+    data.ead do |x,y|
+      puts "#{y[:eid]}\t#{y[:name]}"
+    end
     @command = gets.chomp
     self.call_methods(@command)
   end
@@ -130,7 +137,8 @@ class TM::TerminalClient
     pid = gets.chomp
     puts "Please enter the employee id."
     eid = gets.chomp
-    TM::DB.db.give_emp_proj(pid.to_i,eid.to_i)
+    data = TM::DB.db.give_emp_proj(pid.to_i,eid.to_i)
+    puts "#{data[:name]} has been added to the project #{data[:project]}."
     @command = gets.chomp
     self.call_methods(@command)
   end
@@ -151,7 +159,11 @@ class TM::TerminalClient
   def employees_projects
     puts "Please enter the employee\'s id."
     eid = gets.chomp
-    TM::DB.db.emps_projs(eid.to_i)
+    puts "ID\tEmployee Name"
+    puts "#{TM::DB.db.employees[eid][:eid]}\t#{TM::DB.db.employees[eid][:name]}"
+    puts "ID\tProject Name\t% Done \t% Over Due"
+    data = TM::DB.db.get_proj_by_emp(eid.to_i)
+    puts "#{data[:pid]}\t#{data[:name]} \t#{data[:percent_done]}\t#{data[:percent_over]}"
     @command = gets.chomp
     self.call_methods(@command)
   end

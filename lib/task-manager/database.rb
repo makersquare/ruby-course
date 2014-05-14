@@ -195,33 +195,29 @@ class TM::DB
     data[:id] = @emp_proj_count
     @employees_projects[data[:id]] = data
     return {name: @employees[data[:eid]][:name],project: @projects[data[:pid]][:name]}
-    # puts "#{@employees[data[:eid]][:name]} has been added to the project #{@projects[data[:pid]][:name]}."
   end
 
   # List projects for an employee
   def get_proj_by_emp(eid)
-    puts "ID\tEmployee Name"
-    puts "#{@employees[eid][:eid]}\t#{@employees[eid][:name]}"
-    puts "ID\tProject Name\t% Done \t% Over Due"
+    data = []
     @employees_projects.each do |x,y|
       if y[:eid] == eid
         percentage = TM::DB.db.projects_tasks(y[:pid])
-        puts "#{y[:pid]}\t#{@projects[y[:pid]][:name]} \t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
+        data << {pid: y[:pid], name: @projects[y[:pid][:name]], percent_done: percentage[:percent_done], percent_over: percentage[:percent_over]}
       end
     end
+    data
   end
 
   # List employees for a project
   def get_emp_by_proj(pid)
-    puts "ID\tProject Name\t% Done \t% Over Due"
-    percentage = TM::DB.db.projects_tasks(pid)
-    puts "#{pid}\t#{@projects[pid][:name]} \t#{percentage[:percent_done]}\t#{percentage[:percent_over]}"
-    puts "ID\tEmployee Name"
+    data = []
     @employees_projects.each do |x,y|
       if y[:pid] == pid
-        puts "#{y[:eid]}\t#{@employees[y[:eid]][:name]}"
+        data << {eid: y[:eid], name: y[:name]}
       end
     end
+    data
   end
 
   def destroy_proj_emp(pid, eid)
