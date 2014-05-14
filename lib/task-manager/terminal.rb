@@ -93,7 +93,20 @@ class TM::TerminalClient
   def show
     puts "Please enter a project ID."
     projectid = gets.chomp
-    TM::DB.db.remaining_tasks(projectid)
+    tasks = TM::DB.db.incomplete_tasks(projectid.to_i)
+    puts "ID\tProject Name\t% Done \t% Over Due"
+    project = TM::DB.db.get_project(projectid.to_i)
+    percent_done = TM::DB.db.percent_done(projectid.to_i)
+    percent_over = TM::DB.db.percent_overdue(projectid.to_i)
+    puts "#{project.pid}\t#{project.name}\t#{percent_done}% \t#{percent_over}%"
+    puts "Priority\tID Description\tDue Date\tOver Due?"
+    t = Time.now
+    today = "#{t.year} #{t.month} #{t.day}"
+    tasks.each do |x,y|
+      overdue = 'No'
+      overdue = 'Yes' if y[:duedate] < today
+      puts "#{y[:pnum]}\t\t#{y[:tid]}  #{y[:desc]}\t#{y[:duedate]}\t#{overdue}"
+    end
     @command = gets.chomp
     self.call_methods(@command)
   end
@@ -101,7 +114,16 @@ class TM::TerminalClient
   def history
     puts "Please enter a project ID."
     projectid = gets.chomp
-    TM::DB.db.project_history(projectid)
+    tasks = TM::DB.db.complete_tasks(projectid.to_i)
+    puts "ID\tProject Name\t% Done \t% Over Due"
+    project = TM::DB.db.get_project(projectid.to_i)
+    percent_done = TM::DB.db.percent_done(projectid.to_i)
+    percent_over = TM::DB.db.percent_overdue(projectid.to_i)
+    puts "#{project.pid}\t#{project.name}\t#{percent_done}% \t#{percent_over}%"
+    puts "Priority\tID Description\tDue Date"
+    tasks.each do |x,y|
+      puts "#{y[:pnum]}\t\t#{y[:tid]}  #{y[:desc]}\t#{y[:duedate]}"
+    end
     @command = gets.chomp
     self.call_methods(@command)
   end
