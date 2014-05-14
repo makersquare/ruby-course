@@ -65,6 +65,18 @@ describe "db" do
     end
   end
 
-  describe "text_quacks to tags" do
+  describe "text_quack_tags in db" do
+    describe '.create_text_quack_tag' do
+      it "stores a text_quack id and a tag_id in a hash"
+        tq_id = 1
+        tag_id = 2
+        result = Quack.db.create_text_quack_tag(tq_id, tag_id)
+        expect(Quack.db.text_quack_tags[result]).to eq(
+        {
+          tq_id: 1,
+          tag_id: 2,
+          id: result
+          })
+    end
   end
 end
