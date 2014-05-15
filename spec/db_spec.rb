@@ -15,7 +15,7 @@ describe "db" do
     expect(db1).to be(db2)
   end
 
-  describe "tags" do
+  describe "tags in db" do
     describe "get_or_create" do
       it "puts a tag in the database" do
         t = Tweet.db.get_or_create_tag(tag: "this")
@@ -35,7 +35,9 @@ describe "db" do
         count = Tweet.db.tags.count {|id, tag| tag[:tag] == "this"}
         expect(count).to eq(1)
       end
+    end 
 
+    describe ".get_tag" do
       it "retreives a tag by it's id" do
         t = Tweet.db.get_or_create_tag(tag: "this")
         t2 = Tweet.db.get_tag(t.id)
@@ -54,22 +56,7 @@ describe "db" do
         }
       tt = Tweet.db.create_text_tweet(data)
     end
-    let(:tt2) do
-      data = {
-          content: "testing2",
-          tags: ["tag1"]
-        }
-      tt = Tweet.db.create_text_tweet(data)
-    end
-    let(:tt3) do
-      data = {
-          content: "testing3",
-          tags: ["tag2"]
-        }
-      tt = Tweet.db.create_text_tweet(data)
-    end
-    let(:tag1) { Tweet.db.get_or_create_tag(tag:"tag1") }
-    let(:tag2) { Tweet.db.get_or_create_tag(tag:"tag2") }
+    
     describe '.create_text_tweet' do
       it "stores the content in the db" do
         expect(tt).to be_a(TextTweet)
@@ -94,7 +81,35 @@ describe "db" do
         
         tt
       end
+    end
+  end
 
+  describe "TextTweet to Tags relationship" do
+    let(:tt) do
+      data = {
+          content: "testing",
+          tags: ["tag1", "tag2"]
+        }
+      tt = Tweet.db.create_text_tweet(data)
+    end
+    let(:tt2) do
+      data = {
+          content: "testing2",
+          tags: ["tag1"]
+        }
+      tt = Tweet.db.create_text_tweet(data)
+    end
+    let(:tt3) do
+      data = {
+          content: "testing3",
+          tags: ["tag2"]
+        }
+      tt = Tweet.db.create_text_tweet(data)
+    end
+    let(:tag1) { Tweet.db.get_or_create_tag(tag:"tag1") }
+    let(:tag2) { Tweet.db.get_or_create_tag(tag:"tag2") }
+
+    describe ".create_text_tweet_tag" do
       it "creates a relationship between text_tweet and tag" do
         tt
 
@@ -174,26 +189,22 @@ describe "db" do
       Tweet.db.create_pic_tweet(data)
     end
 
-    let(:pt2) do
-      data = {
-        content: "My pic2",
-        pic_url: "my_pic2.jpg",
-        tags: ["my", "pic"]
-      }
-      Tweet.db.create_pic_tweet(data)
+    describe ".build_pic_tweet" do
+      let(:data) do 
+        {
+          content: "My Pic",
+          tags: ["my", "pic"],
+          pic_url: "my_pic.jpg"
+        }
+      end
+      it "returns a PicTweet" do
+        result = Tweet.db.build_pic_tweet(data)
+        expect(result).to be_a(PicTweet)
+        expect(result.content).to eq("My Pic")
+        expect(result.pic_url).to eq("my_pic.jpg")
+        expect(result.tags).to eq(["my", "pic"])
+      end
     end
-
-    let(:pt3) do
-      data = {
-        content: "My pic3",
-        pic_url: "my_pic3.jpg",
-        tags: ["my"]
-      }
-      Tweet.db.create_pic_tweet(data)
-    end
-
-    let(:tag1) { Tweet.db.get_or_create_tag(tag:"my") }
-    let(:tag2) { Tweet.db.get_or_create_tag(tag:"pic") }
 
     describe ".create_pic_tweet" do
       it "returns a PicTweet" do
@@ -227,10 +238,43 @@ describe "db" do
         
         pt
       end
+    end
+  end
 
+  describe "PicTweet to Tag relationship" do
+    let(:pt) do
+      data = {
+        content: "My pic",
+        pic_url: "my_pic.jpg",
+        tags: ["my", "pic"]
+      }
+      Tweet.db.create_pic_tweet(data)
+    end
+
+    let(:pt2) do
+      data = {
+        content: "My pic2",
+        pic_url: "my_pic2.jpg",
+        tags: ["my", "pic"]
+      }
+      Tweet.db.create_pic_tweet(data)
+    end
+
+    let(:pt3) do
+      data = {
+        content: "My pic3",
+        pic_url: "my_pic3.jpg",
+        tags: ["my"]
+      }
+      Tweet.db.create_pic_tweet(data)
+    end
+
+    let(:tag1) { Tweet.db.get_or_create_tag(tag:"my") }
+    let(:tag2) { Tweet.db.get_or_create_tag(tag:"pic") }
+
+    describe ".create_pic_tweet_tag" do
       it "creates a relationship between pic_tweet and tag" do
         pt
-
         # TODO: We need some sort of way to grab the text_tweet_tag ID instead
         # of hard-coding it in as 0 and x1
         expect(Tweet::db.pic_tweet_tags.values).to include(
@@ -261,23 +305,6 @@ describe "db" do
 
         expect(second_pt).to be_a(PicTweet)
         expect(second_pt.id).to eq(pt2.id)
-      end
-    end
-    
-    describe ".build_pic_tweet" do
-      let(:data) do 
-        {
-          content: "My Pic",
-          tags: ["my", "pic"],
-          pic_url: "my_pic.jpg"
-        }
-      end
-      it "returns a PicTweet" do
-        result = Tweet.db.build_pic_tweet(data)
-        expect(result).to be_a(PicTweet)
-        expect(result.content).to eq("My Pic")
-        expect(result.pic_url).to eq("my_pic.jpg")
-        expect(result.tags).to eq(["my", "pic"])
       end
     end
   end

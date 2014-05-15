@@ -14,6 +14,14 @@ class Tweet::DB
     @pic_tweet_tags_counter = 0
   end
 
+  #########
+  # Methods related to creating Text Tweet in DB
+  #########
+
+  def build_text_tweet(data)
+    TextTweet.new(data[:content], data[:tags], data[:id])
+  end
+
   def create_text_tweet(data)
     data[:id] = @next_tt_id
     @next_tt_id += 1
@@ -30,18 +38,9 @@ class Tweet::DB
     build_text_tweet(data)
   end
 
-  def build_text_tweet(data)
-    TextTweet.new(data[:content], data[:tags], data[:id])
-  end
-
-  def get_text_tweets_from_tag(tag)
-    new_array = @text_tweet_tags.values.select { |tag_hash| tag_hash[:tag_id] == tag.id }
-    new_array.map do |data|
-      tt_id = data[:tt_id]
-      tt_data = @text_tweets[tt_id]
-      Tweet.db.build_text_tweet(tt_data)
-    end
-  end
+  #########
+  # Methods related to creating Tags in DB
+  #########
 
   def get_or_create_tag(data)
     existing_tag = tags.select {|id, tag| tag[:tag] == data[:tag]}.first
@@ -60,6 +59,10 @@ class Tweet::DB
     Tag.new(data[:tag], data[:id])
   end
 
+  #########
+  # Methods related to the TextTweet to Tag relationship
+  #########
+
   # For creating a text_tweet_tag
   # Expects two inputs: tt_id and tag_id representing the ids of the tweet and 
   # the tag
@@ -74,7 +77,23 @@ class Tweet::DB
     return id
   end
 
-  # Methods related to PicTweets
+  def get_text_tweets_from_tag(tag)
+    new_array = @text_tweet_tags.values.select { |tag_hash| tag_hash[:tag_id] == tag.id }
+    new_array.map do |data|
+      tt_id = data[:tt_id]
+      tt_data = @text_tweets[tt_id]
+      Tweet.db.build_text_tweet(tt_data)
+    end
+  end
+
+  def get_tags_from_text_tweet(text_tweet)
+    # TODO: Implement this
+  end
+
+  #########
+  # Methods related to creating PicTweets
+  #########
+
   def create_pic_tweet(data)
     data[:id] = @pic_tweet_counter
     @pic_tweet_counter += 1
@@ -86,8 +105,19 @@ class Tweet::DB
 
     @pic_tweets[data[:id]] = data
     
+    build_pic_tweet(data)
+  end
+
+  # Build a PicTweet out of a data hash
+  # Input: A hash
+  # Output: A PicTweet object
+  def build_pic_tweet(data)
     PicTweet.new(data[:content], data[:pic_url], data[:tags], data[:id])
   end
+
+  #########
+  # Methods related to the PicTweet to Tag relationship
+  #########
 
   def create_pic_tweet_tag(pt_id, tag_id)
     id = @pic_tweet_tags_counter
@@ -107,16 +137,7 @@ class Tweet::DB
       Tweet.db.build_pic_tweet(pt_data)
     end
   end
-
-  # Build a PicTweet out of a data hash
-  # Input: A hash
-  # Output: A PicTweet object
-  def build_pic_tweet(data)
-    PicTweet.new(data[:content], data[:pic_url], data[:tags], data[:id])
-  end
 end
-
-
 
 module Tweet
   def self.db
