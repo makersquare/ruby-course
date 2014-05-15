@@ -67,20 +67,6 @@ describe "db" do
           id: tt.id,
         })
       end
-
-      it "also calls get_or_create_tag" do
-        # Tweet.db.get_or_create_tag({tag: "tag1"})
-        expect(Tweet.db).to receive(:get_or_create_tag).with({tag: "tag1"}).
-        and_call_original
-        expect(Tweet.db).to receive(:get_or_create_tag).with({tag: "tag2"}).
-        and_call_original
-        # We have to call tt after the tests so that the expectations 
-        # are fulfilled. Rspec remembers the expectations and then checks
-        # them when tt is run.
-        # If we call it before the tests, rspec forgets that it did stuff.
-        
-        tt
-      end
     end
   end
 

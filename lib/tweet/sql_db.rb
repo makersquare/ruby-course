@@ -2,6 +2,9 @@ class Tweet::SQLDB
 
   def initialize
     @db = SQLite3::Database.new "test.db"
+    text_tweets
+    # Create the TextTweet table
+    # Create the PicTweet
   end
 
   def build_text_tweet(data)

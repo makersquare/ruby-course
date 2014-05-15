@@ -23,17 +23,9 @@ class Tweet::DB
   end
 
   def create_text_tweet(data)
+    # Create a text tweet in the db
     data[:id] = @next_tt_id
     @next_tt_id += 1
-
-    # Runs get_or_create_tag on each tag passed in
-    data[:tags].each do |tag|
-      tag_obj = get_or_create_tag({tag: tag})
-      # binding.pry
-      create_text_tweet_tag(data[:id], tag_obj.id)
-    end
-
-    data.delete(:tags)
     @text_tweets[data[:id]] = data
     build_text_tweet(data)
   end
