@@ -165,6 +165,7 @@ class TM::DB
     @employees_projects.each do |x,y|
       if y[:eid] == eid
         data << {pid: y[:pid], name: @projects[y[:pid]][:name]}
+        # data << build_project(@projects[y[:pid]])
       end
     end
     data
@@ -192,10 +193,15 @@ class TM::DB
 # Employees_Tasks ---------------------------------------
 
   def create_task_emp(data)
-    @emp_task_count += 1
-    data[:id] = @emp_task_count
-    @employees_tasks[data[:id]] = data
-    return {name: @employees[data[:eid]][:name],task: @tasks[data[:tid]][:desc]}
+    tid = data[:tid]
+    pid = @tasks[tid][:pid]
+    emp_proj = TM::DB.db.get_emp_by_proj(pid)
+    if emp_proj
+      @emp_task_count += 1
+      data[:id] = @emp_task_count
+      @employees_tasks[data[:id]] = data
+      return {name: @employees[data[:eid]][:name],task: @tasks[data[:tid]][:desc]}
+    end
   end
 
   # Lists incomplete tasks for an employee

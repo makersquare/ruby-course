@@ -8,6 +8,7 @@ describe 'Database' do
   let(:task1) { db.create_task({pid: 1, desc: "Task 1", pnum: 1, duedate: "2014 1 1"}) }
   let(:task2) { db.create_task({pid: 1, desc: "Task 2", pnum: 2, duedate: "2014 6 6"}) }
   let(:task3) { db.create_task({pid: 1, desc: "Task 3", pnum: 2, duedate: "2014 3 1"}) }
+  let(:task4) { db.create_task({pid: 2, desc: "Task 4", pnum: 1, duedate: "2014 5 1"})}
   let(:emp1) { db.create_employee({eid: 1, name: "Katrina"}) }
   let(:emp2) { db.create_employee({eid: 2, name: "Alex"}) }
 
@@ -255,6 +256,12 @@ describe '#create_task_emp' do
     emp2
     task1
     task2
+    task4
+    proj1
+    proj2
+    db.create_proj_emp(:pid => proj1.id, :eid => emp1.eid)
+    db.create_task_emp(:tid => task4.id, :eid => emp1.eid)
+    expect(db.employees_tasks).to eq({})
     db.create_task_emp(:tid => task1.tid, :eid => emp1.eid)
     db.create_task_emp(:tid => task1.tid, :eid => emp2.eid)
     expect(db.employees_tasks).to eq(1 => {:id => 1, :tid => 1, :eid => 1}, 2 => {:id => 2, :tid => 1, :eid => 2})

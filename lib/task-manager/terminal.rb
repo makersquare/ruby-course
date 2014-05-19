@@ -102,7 +102,7 @@ class TM::TerminalClient
     puts "Priority\tID Description\tDue Date\tOver Due?"
     t = Time.now
     today = "#{t.year} #{t.month} #{t.day}"
-    tasks.each do |x,y|
+    tasks.each do |y|
       overdue = 'No'
       overdue = 'Yes' if y[:duedate] < today
       puts "#{y[:pnum]}\t\t#{y[:tid]}  #{y[:desc]}\t#{y[:duedate]}\t#{overdue}"
@@ -119,7 +119,7 @@ class TM::TerminalClient
     project = TM::DB.db.get_project(projectid.to_i)
     puts "#{project.pid}\t#{project.name}"
     puts "Priority\tID Description\tDue Date"
-    tasks.each do |x,y|
+    tasks.each do |y|
       puts "#{y[:pnum]}\t\t#{y[:tid]}  #{y[:desc]}\t#{y[:duedate]}"
     end
     @command = gets.chomp
@@ -186,7 +186,7 @@ class TM::TerminalClient
     taskid = gets.chomp
     TM::DB.db.update_task(taskid.to_i, complete: true)
     task = TM::DB.db.tasks[taskid.to_i]
-    puts "Task with id #{task[:id]} and description \"#{task[:desc]}\" has been marked complete!"
+    puts "Task with id #{task[:tid]} and description \"#{task[:desc]}\" has been marked complete!"
     @command = gets.chomp
     self.call_methods(@command)
   end
