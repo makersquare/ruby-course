@@ -5,6 +5,8 @@ describe DoubleDog::Database::InMemory do
 
   it "creates an item" do
     item = db.create_item(:name => 'hot dog', :price => 5)
+    expect(item).to be_a DoubleDog::Item
+
     expect(item.id).to_not be_nil
     expect(item.name).to eq 'hot dog'
     expect(item.price).to eq 5
@@ -12,7 +14,9 @@ describe DoubleDog::Database::InMemory do
 
   it "retrieves an item" do
     item = db.create_item(:name => 'hot dog', :price => 5)
+
     retrieved_item = db.get_item(item.id)
+    expect(retrieved_item).to be_a DoubleDog::Item
     expect(retrieved_item.name).to eq 'hot dog'
     expect(retrieved_item.price).to eq 5
   end
@@ -24,6 +28,8 @@ describe DoubleDog::Database::InMemory do
 
     items = db.all_items
     expect(items.count).to eq 3
+    expect(items.first).to be_a DoubleDog::Item
+
     expect(items.map &:name).to include('fries', 'pickle', 'potato')
     expect(items.map &:price).to include(3, 4, 8)
   end
