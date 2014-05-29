@@ -17,4 +17,16 @@ describe DoubleDog::User do
       expect(result).to eq true
     end
   end
+
+  describe '#admin?' do
+    it "returns false if not an admin" do
+      user = DoubleDog::User.new(nil, 'Earl', '333')
+      expect(user.admin?).to eq false
+    end
+
+    it "returns true if admin" do
+      user = DoubleDog::User.new(nil, 'Earl', '333', true)
+      expect(user.admin?).to eq true
+    end
+  end
 end
