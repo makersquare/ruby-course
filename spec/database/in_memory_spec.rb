@@ -17,6 +17,20 @@ describe DoubleDog::Database::InMemory do
     expect(retrieved_user.has_password? 'pass2').to eq true
   end
 
+  it "creates a session and returns its id" do
+    session_id = db.create_session(:user_id => 8)
+    expect(session_id).to_not be_a Hash
+  end
+
+  it "retrieves a user by session id" do
+    user = db.create_user(:username => 'sally', :password => 'seashells')
+    session_id = db.create_session(:user_id => user.id)
+
+    retrieved_user = db.get_user_by_session_id(session_id)
+    expect(retrieved_user.username).to eq 'sally'
+    expect(retrieved_user.has_password? 'seashells').to eq true
+  end
+
   it "creates an item" do
     item = db.create_item(:name => 'hot dog', :price => 5)
     expect(item).to be_a DoubleDog::Item
