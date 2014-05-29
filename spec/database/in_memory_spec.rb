@@ -3,6 +3,20 @@ require 'spec_helper'
 describe DoubleDog::Database::InMemory do
   let(:db) { described_class.new }
 
+  it "creates a user" do
+    user = db.create_user(:username => 'alice', :password => 'pass1')
+    expect(user.id).to_not be_nil
+    expect(user.username).to eq 'alice'
+    expect(user.has_password? 'pass1').to eq true
+  end
+
+  it "retrieves a user" do
+    user = db.create_user(:username => 'bob', :password => 'pass2')
+    retrieved_user = db.get_user(user.id)
+    expect(retrieved_user.username).to eq 'bob'
+    expect(retrieved_user.has_password? 'pass2').to eq true
+  end
+
   it "creates an item" do
     item = db.create_item(:name => 'hot dog', :price => 5)
     expect(item).to be_a DoubleDog::Item

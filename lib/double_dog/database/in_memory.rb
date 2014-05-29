@@ -3,8 +3,22 @@ module DoubleDog
     class InMemory
 
       def initialize
+        @users = {}
+        @users_id_counter = 100
         @items = {}
-        @item_id_counter = 100
+        @item_id_counter = 500
+      end
+
+      def create_user(attrs)
+        new_id = (@item_id_counter += 1)
+        @users[new_id] = attrs
+        attrs[:id] = new_id
+        User.new(attrs[:id], attrs[:username], attrs[:password])
+      end
+
+      def get_user(id)
+        attrs = @users[id]
+        User.new(attrs[:id], attrs[:username], attrs[:password])
       end
 
       def create_item(attrs)
