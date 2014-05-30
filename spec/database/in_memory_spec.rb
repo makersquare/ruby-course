@@ -22,6 +22,14 @@ describe DoubleDog::Database::InMemory do
     expect(session_id).to_not be_a Hash
   end
 
+  it "retrieves a user by username" do
+    user = db.create_user(:username => 'pim', :password => 'cookies')
+    retrieved_user = db.get_user_by_username(user.username)
+
+    expect(retrieved_user.username).to eq('pim')
+    expect(retrieved_user.has_password? 'cookies').to eq true
+  end
+
   it "retrieves a user by session id" do
     user = db.create_user(:username => 'sally', :password => 'seashells')
     session_id = db.create_session(:user_id => user.id)

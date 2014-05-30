@@ -36,6 +36,12 @@ module DoubleDog
         User.new(user_attrs[:id], user_attrs[:username], user_attrs[:password])
       end
 
+      def get_user_by_username(username)
+        user_attrs = @users.values.find { |attrs| attrs[:username] == username }
+        return nil if user_attrs.nil?
+        User.new(user_attrs[:id], user_attrs[:username], user_attrs[:password])
+      end
+
       def create_item(attrs)
         new_id = (@item_id_counter += 1)
         @items[new_id] = attrs

@@ -1,3 +1,4 @@
+require 'pry-debugger'
 
 module DoubleDog
   def self.db
