@@ -15,12 +15,12 @@ module DoubleDog
         new_id = (@item_id_counter += 1)
         @users[new_id] = attrs
         attrs[:id] = new_id
-        User.new(attrs[:id], attrs[:username], attrs[:password])
+        User.new(attrs[:id], attrs[:username], attrs[:password], attrs[:admin])
       end
 
       def get_user(id)
         attrs = @users[id]
-        User.new(attrs[:id], attrs[:username], attrs[:password])
+        User.new(attrs[:id], attrs[:username], attrs[:password], attrs[:admin])
       end
 
       def create_session(attrs)

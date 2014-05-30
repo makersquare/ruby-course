@@ -8,6 +8,15 @@ describe DoubleDog::Database::InMemory do
     expect(user.id).to_not be_nil
     expect(user.username).to eq 'alice'
     expect(user.has_password? 'pass1').to eq true
+    expect(user.admin?).to eq false
+  end
+
+  it "creates an admin user" do
+    user = db.create_user(:username => 'alice', :password => 'pass1', :admin => true)
+    expect(user.id).to_not be_nil
+    expect(user.username).to eq 'alice'
+    expect(user.has_password? 'pass1').to eq true
+    expect(user.admin?).to eq true
   end
 
   it "retrieves a user" do
