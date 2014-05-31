@@ -1,6 +1,6 @@
 # Double Dog PoS
 
-A Point of Sales system built for Double Dog.
+A Point of Sales system built for Double Dog Hot Dogs.
 
 ----
 ## User Stories
