@@ -8,5 +8,8 @@ module DoubleDog
       @items = items
     end
 
+    def total
+      items.reduce(0) {|sum, item| sum + item.price }
+    end
   end
 end
