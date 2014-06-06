@@ -21,16 +21,13 @@ describe Lucky do
       expect(response).to be true
     end
 
-    it 'should return :error if string contains non-digits' do
+    it 'should raise an error if string contains non-digits' do
       str = '9a7s7d33'
-      response = Lucky.check(str)
-      expect(response).to eq(:error)
+      expect { Lucky.check(str) }.to raise_error
     end
 
-    it 'should return :error if string is empty' do
-      str = ''
-      response = Lucky.check(str)
-      expect(response).to eq(:error)
+    it 'should raise an error if string is empty' do
+      expect { Lucky.check('') }.to raise_error
     end
   end
 end
