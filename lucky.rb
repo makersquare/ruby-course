@@ -18,3 +18,5 @@
 # Credit to SundaySalsa on codewars.com for coming
 # up with this problem.
 
+class Lucky
+end
