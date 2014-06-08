@@ -26,7 +26,13 @@ class Bar
   end
 
   def happy_discount=(discount)
+    if discount > 1
+      @happy_discount = 1
+    elsif discount < 0
+      @happy_discount = 0
+    else
       @happy_discount = discount
+    end
   end
 end
 
@@ -38,10 +44,3 @@ class Menu_item
     @price = price
   end
 end
-
-
-
-      # if @happy_discount > 1
-      #   @happy_discount = 1
-      # elsif @happy_discount < 0
-      #   @happy_discount = 0
