@@ -14,12 +14,19 @@ class Bar
     @menu_items << item
   end
 
+  def happy_hour?
+  end
+
   def happy_discount
-    @happy_discount
+    if happy_hour?
+      @happy_discount
+    else
+      0
+    end
   end
 
   def happy_discount=(discount)
-    @happy_discount = discount
+      @happy_discount = discount
   end
 end
 

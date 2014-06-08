@@ -45,7 +45,7 @@ describe Bar do
     expect { @bar.happy_discount = 0.5 }.to_not raise_error
   end
 
-  xit "only returns a discount when it's happy hour" do
+  it "only returns a discount when it's happy hour" do
     @bar.happy_discount = 0.5
     # HINT: You need to write your own getter
 
@@ -57,13 +57,13 @@ describe Bar do
     expect(@bar).to receive(:happy_hour?).and_return(true)
     expect(@bar.happy_discount).to eq 0.5
 
-    # # Take 2
-    # @bar.happy_discount = 0.3
-    # expect(@bar).to receive(:happy_hour?).and_return(false)
-    # expect(@bar.happy_discount).to eq 0
+    # Take 2
+    @bar.happy_discount = 0.3
+    expect(@bar).to receive(:happy_hour?).and_return(false)
+    expect(@bar.happy_discount).to eq 0
 
-    # expect(@bar).to receive(:happy_hour?).and_return(true)
-    # expect(@bar.happy_discount).to eq 0.3
+    expect(@bar).to receive(:happy_hour?).and_return(true)
+    expect(@bar.happy_discount).to eq 0.3
   end
 
   xit "constrains its happy hour discount to between zero and one" do
