@@ -84,7 +84,7 @@ module Exercises
   def self.ex9(time)
     if time%4 == 0 and time%100 != 0
       return true
-    elsif (time%100 == 0 and time%400 == 0)
+    elsif time%100 == 0 and time%400 == 0
       return true
     else
       return false
