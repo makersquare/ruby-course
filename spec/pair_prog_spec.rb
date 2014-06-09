@@ -49,6 +49,13 @@ describe "Exercise 5" do
 	it "iterates through an array and puts each element" do
 		array=[1,2,3]
 		# Exercises.ex5(array).should_receive(:puts).with("1", "2", "3")
-		expect(Exercises.ex5(array)).to include
+		expect(STDOUT).to receive(:puts).with(1)
+		expect(STDOUT).to receive(:puts).with(2)
+		expect(STDOUT).to receive(:puts).with(3)
+		Exercises.ex5(array)
 	end
 end
+
+# describe "Exercise 6" do
+# 	it ""
+# 	end
