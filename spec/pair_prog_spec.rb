@@ -96,6 +96,30 @@ describe "Exercise 9" do
 	end
 end
 
+describe "RPS" do
+  it "initializes with two player names" do
+  	rps = RPS.new("Rui", "Joseph")
+    expect(rps.player1).to eq("Rui")
+    expect(rps.player2).to eq("Joseph")
+  end
+
+  it "correctly figures out the winner" do
+  	rps = RPS.new("Rui", "Joseph")
+  	expect(STDOUT).to receive(:puts).with("Joseph wins!")
+  	rps.play("rock", "paper")
+  	expect(STDOUT).to receive(:puts).with("Tie")
+  	rps.play("paper", "paper")
+  end
+
+  it "correctly determines if a player wins 2 of 3 games" do
+  	rps = RPS.new("Rui", "Joseph")
+  	rps.play("rock", "rock")
+  	rps.play("rock", "paper")
+  	expect(STDOUT).to receive(:puts).with("Joseph wins!")
+  	expect(STDOUT).to receive(:puts).with("Joseph wins the game")
+  	rps.play("rock", "paper")
+  end
+end
 
 
 

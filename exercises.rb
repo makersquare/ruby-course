@@ -106,6 +106,66 @@ class RPS
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
+  attr_reader :player1, :player2, :player1win, :player2win, :total
+  def initialize (player1, player2)
+    @player1 = player1
+    @player2 = player2
+    @player1win = 0
+    @player2win = 0
+    @total = 0
+  end
+
+  def play (move1, move2)
+    if move1 == 'rock' && move2 == 'paper'
+      puts player2 + ' wins!'
+      @player2win += 1
+      @total += 1
+    elsif move1 == 'rock' && move2 == 'scissors'
+      puts player1 + ' wins!'
+      @player1win += 1
+      @total += 1
+    elsif move1 == 'paper' && move2 == 'rock'
+      puts player1 + ' wins!'
+      @player1win += 1
+      @total += 1
+    elsif move1 == 'paper' && move2 == 'scissors'
+      puts player2 + ' wins!'
+      @player2win += 1
+      @total += 1
+    elsif move1 == 'scissors' && move2 == 'rock'
+      puts player2 + ' wins!'
+      @player2win += 1
+      @total += 1
+    elsif move1 == 'scissors' && move2 == 'paper'
+      puts player1 + ' wins!'
+      @player1win += 1
+      @total += 1
+    else
+      puts "Tie"
+    end
+
+    if @total >= 3 and player1win >=2
+      puts player1 + " wins the game"
+      @player1win = 0
+      @player2win = 0
+      @total = 0
+    elsif @total >=3 and player2win >=2
+      puts player2 + " wins the game"
+      @player1win = 0
+      @player2win = 0
+      @total = 0
+    elsif @total == 2 and player1win == 2
+      puts player1 + " wins the game"
+      @player1win = 0
+      @player2win = 0
+      @total = 0
+    elsif @total == 2 and player2win == 2
+      puts player2 + " wins the game"
+      @player1win = 0
+      @player2win = 0
+      @total = 0
+    end
+  end
 end
 
 
