@@ -48,7 +48,13 @@ module Exercises
   #  - If the last item is already 'panda', update
   #    it to 'GODZILLA' instead
   def self.ex6(array)
-    # TODO
+    if array.last == 'panda'
+      array.pop
+      array << 'GODZILLA'
+    else
+      array.pop
+      array << 'panda'
+    end
   end
 
   # Exercise 7

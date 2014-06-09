@@ -56,6 +56,14 @@ describe "Exercise 5" do
 	end
 end
 
-# describe "Exercise 6" do
-# 	it ""
-# 	end
+describe "Exercise 6" do
+	it "updates last item in array to 'panda'" do
+		array = [1,2,3]
+		expect(Exercises.ex6(array).last).to eq('panda')
+	end
+
+	it "if last already 'panda', update to 'GODZILLA' instead" do
+		array2 = [1,2,'panda']
+		expect(Exercises.ex6(array2).last).to eq('GODZILLA')
+	end
+end
