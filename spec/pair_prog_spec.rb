@@ -77,3 +77,49 @@ describe "Exercise 7" do
 		expect(Exercises.ex7(array2, str)).to eq([1,2])
 	end
 end
+
+describe "Exercise 8" do
+	xit "iterate through 'people' and print out their name and occupation" do
+		people = [{ :name => 'Bob', :occupation => 'Builder' }, { :name => 'Joey', :occupation => 'burger flipper'}]
+		expect(STDOUT).to receive(:print).with('Bob''Builder')
+	end
+end
+
+describe "Exercise 9" do
+	it "return 'true' if given time is in leap year, otherwise return 'false'" do
+		time = 2012
+		time2 = 1800
+		expect(Exercises.ex9(time)).to eq(true)
+		expect(Exercises.ex9(time2)).to eq(false)
+	end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
