@@ -120,7 +120,7 @@ describe "RPS" do
   	rps.play("rock", "paper")
   end
 
-  it "resets game counts"
+  it "resets game counts" do
     rps = RPS.new("Rui", "Joseph")
   	rps.play("rock", "rock")
   	rps.play("rock", "paper")
