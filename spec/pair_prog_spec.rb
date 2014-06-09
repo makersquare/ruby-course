@@ -79,9 +79,11 @@ describe "Exercise 7" do
 end
 
 describe "Exercise 8" do
-	xit "iterate through 'people' and print out their name and occupation" do
+	it "iterate through 'people' and print out their name and occupation" do
 		people = [{ :name => 'Bob', :occupation => 'Builder' }, { :name => 'Joey', :occupation => 'burger flipper'}]
-		expect(STDOUT).to receive(:print).with('Bob''Builder')
+		expect(STDOUT).to receive(:puts).with('Bob: Builder')
+		expect(STDOUT).to receive(:puts).with('Joey: burger flipper')
+		Exercises.ex8(people)
 	end
 end
 

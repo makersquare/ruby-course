@@ -72,9 +72,9 @@ module Exercises
   # Exercise 8
   #  - `people` is an array of hashes. Each hash is like the following:
   #    { :name => 'Bob', :occupation => 'Builder' }
-  #    Iterate through `people` and print out their name and occupation.
+  #    Iterate through `people` and puts out their name and occupation.
   def self.ex8(people)
-    # TODO
+    people.each{ |hash| puts "#{hash[:name]}: #{hash[:occupation]}"}
   end
 
   # Exercise 9
