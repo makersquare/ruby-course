@@ -119,6 +119,16 @@ describe "RPS" do
   	expect(STDOUT).to receive(:puts).with("Joseph wins the game")
   	rps.play("rock", "paper")
   end
+
+  it "resets game counts"
+    rps = RPS.new("Rui", "Joseph")
+  	rps.play("rock", "rock")
+  	rps.play("rock", "paper")
+  	rps.play("rock", "paper")
+  	expect(rps.total).to eq(0)
+  	expect(rps.player1win).to eq(0)
+  	expect(rps.player2win).to eq(0)
+  end
 end
 
 
