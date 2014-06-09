@@ -39,6 +39,21 @@ class Bar
       @happy_discount = discount
     end
   end
+
+  def get_price(name)
+    if happy_hour?
+      @happy_discount = 0.5
+      @menu_items.find do |item| 
+        item.name == name
+        return item.price = item.price * @happy_discount
+      end
+    else
+      @menu_items.find do |item| 
+        item.name == name
+        return item.price
+      end
+    end
+  end
 end
 
 class Menu_item
