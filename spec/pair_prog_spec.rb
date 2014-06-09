@@ -43,3 +43,12 @@ describe "Exercise 4" do
 		expect(Exercises.ex4(array)).to eq(3)
 	end
 end
+
+
+describe "Exercise 5" do
+	it "iterates through an array and puts each element" do
+		array=[1,2,3]
+		# Exercises.ex5(array).should_receive(:puts).with("1", "2", "3")
+		expect(Exercises.ex5(array)).to include
+	end
+end
