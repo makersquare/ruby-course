@@ -8,4 +8,9 @@ class TM::Project
     @project_id = self.object_id * -1
     @tasks = []
   end
+
+  def add_task(task)
+    @tasks << task
+  end
+
 end

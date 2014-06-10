@@ -10,13 +10,11 @@ describe 'Project' do
 
   describe '#initialize' do
     it "is a Project" do
-      # binding.pry
       expect(project1).to be_a(TM::Project)
     end
     it "creates a unique project id" do
       expect(project1.project_id.to_s.length).to eq(9)
       expect(project2.project_id).not_to eq(project1.project_id)
-      # binding.pry2
     end
     it "accepts a name argument" do
       expect(project1.name).to eq("Portfolio")
@@ -26,6 +24,16 @@ describe 'Project' do
     end
     it "the array is empty" do
       expect(project1.tasks.count).to eq(0)
+    end
+  end
+
+  describe '#add_task' do
+    it "adds a task to the tasks array" do
+      wireframe = TM::Task.new("Design a wireframe", 5, 123456789)
+      project1.add_task(wireframe)
+      binding.pry
+
+      expect(project1.tasks.count).to eq(1)
     end
   end
 
