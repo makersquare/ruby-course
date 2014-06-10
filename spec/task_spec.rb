@@ -1,20 +1,25 @@
 require 'spec_helper'
 
 describe 'Task' do
-  let(:klass      ) { TM::Task }
-  let(:project_id ) { 1 }
+  let(:project    ) { TM::Project.new('Test Project') }
   let(:description) { 'My Task' }
   let(:priority   ) { 1 }
-  let(:task       ) { klass.new(description, priority, project_id) }
+  let(:task       ) { TM::Task.new(description, priority, project.id) }
 
   it "exists" do
-    expect(klass).to be_a(Class)
+    expect(TM::Task).to be_a(Class)
+  end
+
+  it "class responds to tasks_for given a project_id" do
+    project.new_task(description, priority)
+
+    expect(TM::Task.tasks_for(project.id).first.project_id).to eq(task.project_id)
   end
 
   it "can be created with a project_id, description, and priority" do
     expect(task.description).to eq(description)
     expect(task.priority).to eq(priority)
-    expect(task.project_id).to eq(project_id)
+    expect(task.project_id).to eq(project.id)
   end
 
   it "is given a default ID and created_at time" do

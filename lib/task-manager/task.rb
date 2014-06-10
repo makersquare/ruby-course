@@ -13,7 +13,11 @@ class TM::Task
     tasks.select do |task|
       task.complete? == complete && task.project_id == project_id
     end.sort_by do |task|
-      [task.priority, task.created_at]
+      if complete
+        task.created_at
+      else
+        [task.priority, task.created_at]
+      end
     end
   end
 
@@ -32,5 +36,6 @@ class TM::Task
 
   def complete
     @complete = true
+    self
   end
 end

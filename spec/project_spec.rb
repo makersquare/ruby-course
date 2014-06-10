@@ -1,12 +1,11 @@
 require 'spec_helper'
 
 describe 'Project' do
-  let(:klass    ) { TM::Project }
-  let(:name     ) { 'Blah' }
-  let(:project  ) { klass.new(name) }
+  let(:name   ) { 'Blah' }
+  let(:project) { TM::Project.new(name) }
 
   it "exists" do
-    expect(klass).to be_a(Class)
+    expect(TM::Project).to be_a(Class)
   end
 
   it "must have a name" do
@@ -23,6 +22,7 @@ describe 'Project' do
     #                       :project_id  => project.id)
 
     expect( project.new_task('new task', 1) ).to be_a(TM::Task)
+    expect( project.incompleted_tasks.first.description).to eq('new task')
   end
 
   it "retrieves a list of completed tasks sorted by priority" do
@@ -33,14 +33,11 @@ describe 'Project' do
 
     # expect(project.completed_tasks).to eq(completed)
 
-    task1 = project.new_task('new task', 1)
-    task1.complete
-    task2 = project.new_task('new task', 2)
-    task2.complete
+    task1 = project.new_task('new task', 1).complete
+    task2 = project.new_task('new task', 2).complete
 
     task_array = project.completed_tasks
     expect(task_array).to be_a(Array)
-
     expect(task_array.first).to be_a(TM::Task)
     expect(task_array.first.priority).to be < task_array.last.priority
   end
@@ -59,7 +56,6 @@ describe 'Project' do
 
       task_array = project.incompleted_tasks
       expect(task_array).to be_a(Array)
-
       expect(task_array.first).to be_a(TM::Task)
       expect(task_array.first.priority).to be < task_array.last.priority
     end
@@ -74,7 +70,6 @@ describe 'Project' do
 
         task_array = project.incompleted_tasks
         expect(task_array).to be_a(Array)
-
         expect(task_array.first).to be_a(TM::Task)
         expect(task_array.first.description).to eq('older')
       end
