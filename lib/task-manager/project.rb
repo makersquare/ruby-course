@@ -10,7 +10,6 @@ class TM::Project
   end
 
   def add_task(description,priority)
-
     @tasks<<TM::Task.new(@id,description,priority,@tasks.length)
     @tasks.length-1
   end

@@ -44,10 +44,58 @@ describe 'Project' do
       end
     end
     context 'when called with 1 completed tasks' do
-      it 'returns an empty array' do
+      it 'returns an array containing that task' do
         id=test.add_task("new task",1)
         test.complete_task(id)
         expect(test.list_complete_tasks.length).to eq(1)
+        expect(test.list_complete_tasks[0]).to be_a(TM::Task)
+      end
+    end
+    context 'when called with several completed tasks and several incompleted tasks' do
+      it 'returns an array with the completed tasks' do
+        id=test.add_task("new task",1)
+        id1=test.add_task("new task",2)
+        id2=test.add_task("new task",300)
+        id3=test.add_task("new task",1)
+        id4=test.add_task("new task",3)
+        test.complete_task(id)
+        test.complete_task(id2)
+        expect(test.list_complete_tasks.length).to eq(2)
+        expect(test.list_complete_tasks[0]).to be_a(TM::Task)
+      end
+    end
+  end
+  describe '#list_incomplete_tasks' do
+    context 'when called with no tasks' do
+      it 'returns an empty array' do
+        expect(test.list_complete_tasks).to eq([])
+      end
+    end
+    context 'when called with 1 incompleted tasks' do
+      it 'returns an array containing that task' do
+        test.add_task("new task",1)
+        expect(test.list_incomplete_tasks.length).to eq(1)
+        expect(test.list_incomplete_tasks[0]).to be_a(TM::Task)
+      end
+    end
+    context 'when called with 1 completed tasks' do
+      it 'returns an empty array' do
+        id=test.add_task("new task",1)
+        test.complete_task(id)
+        expect(test.list_incomplete_tasks).to eq([])
+      end
+    end
+    context 'when called with several completed tasks and several uncompleted tasks' do
+      it 'returns an array with the incompleted tasks' do
+        id=test.add_task("new task",1)
+        id1=test.add_task("new task",2)
+        id2=test.add_task("new task",300)
+        id3=test.add_task("new task",1)
+        id4=test.add_task("new task",3)
+        test.complete_task(id)
+        test.complete_task(id2)
+        expect(test.list_incomplete_tasks.length).to eq(3)
+        expect(test.list_incomplete_tasks[0]).to be_a(TM::Task)
       end
     end
   end
