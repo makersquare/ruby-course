@@ -63,8 +63,20 @@ describe 'Project' do
         expect(test.list_complete_tasks.length).to eq(2)
         expect(test.list_complete_tasks[0]).to be_a(TM::Task)
       end
+      it 'also returns tasks in order of creation date' do
+        id=test.add_task("new task",1)
+        id1=test.add_task("new task",2)
+        id2=test.add_task("new task",300)
+        id3=test.add_task("new task",1)
+        id4=test.add_task("new task",3)
+        test.complete_task(id)
+        test.complete_task(id2)
+        new_date=test.list_complete_tasks[0].date<test.list_complete_tasks[1].date
+        expect(new_date).to be_true
+      end
     end
   end
+
   describe '#list_incomplete_tasks' do
     context 'when called with no tasks' do
       it 'returns an empty array' do
@@ -97,6 +109,22 @@ describe 'Project' do
         expect(test.list_incomplete_tasks.length).to eq(3)
         expect(test.list_incomplete_tasks[0]).to be_a(TM::Task)
       end
+      it 'in order of priority' do
+        id=test.add_task("new task",1)
+        id1=test.add_task("new task",2)
+        id2=test.add_task("new task",300)
+        id3=test.add_task("new task",1)
+        id4=test.add_task("new task",3)
+        test.complete_task(id)
+        test.complete_task(id2)
+        prior=test.list_incomplete_tasks[0].priority<test.list_incomplete_tasks[1].priority
+        expect(prior).to be_true
+        prior=test.list_incomplete_tasks[-1].priority<test.list_incomplete_tasks[0].priority
+        expect(prior).to be_false
+        prior=test.list_incomplete_tasks[-1].priority<test.list_incomplete_tasks[0].priority
+        expect(prior).to be_false
+      end
+
     end
   end
 end

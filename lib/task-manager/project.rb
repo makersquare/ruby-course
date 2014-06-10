@@ -17,10 +17,12 @@ class TM::Project
     @tasks[id].change_status
   end
   def list_complete_tasks
-    complete=@tasks.select{|arg| arg.completed}
+    @tasks.select{|arg| arg.completed}.sort{|arg1,arg2| arg1.date<=>arg2.date}
   end
   def list_incomplete_tasks
-    incomplete=@tasks.select{|arg| !arg.completed}
+    @tasks.select{|arg| !arg.completed}.sort{|arg1,arg2| arg1.date<=>arg2.date}.sort{|arg1,arg2| arg1.priority<=>arg2.priority}
+
+
   end
 
 end
