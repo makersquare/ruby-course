@@ -19,12 +19,12 @@ class TM::Project
   def incompleted_tasks
     tasks = @tasks.select {|task| task.complete? == false}
 
-    tasks.sort_by { |task| task.priority }
+    tasks.sort_by! { |task| [task.priority, task.created_at] }
   end
 
   def completed_tasks
     tasks = @tasks.select {|task| task.complete? == true}
 
-    tasks.sort_by { |task| task.priority }
+    tasks.sort_by! { |task| [task.priority, task.created_at] }
   end
 end
