@@ -15,9 +15,29 @@ describe 'Project' do
     expect(project.id).to eq("Project 1")
   end
 
-  xit "can retrieve a list of completed tasks"
+  it "can retrieve a list of incomplete tasks" do
   end
 
-  xit "can retrieve a list of incomplete tasks"
+
+  it "can change a task to completed by task id" do
+    project_1 = TM::Project.new("Project 1")
+    task_1 = TM::Task.new(1, "Find clients", 5)
+    expect(project_1.complete(1)).to eq("completed")
+  end
+
+  it "can retrieve a list of completed tasks" do
+   project = TM::Project.new("Project 1")
+   task_1 = TM::Task.new(0, "Find clients", 5)
+   task_2 = TM::Task.new(0, "Sell books", 5)
   end
 end
+
+
+
+# project can retrieve
+
+#   list of complete tasks
+#     sort by creation date
+
+#   list of incomplete tests
+#     sort by priority number
