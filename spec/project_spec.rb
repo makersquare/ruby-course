@@ -23,4 +23,11 @@ describe 'Project' do
       expect(test.tasks.count).to eq(2)
     end
   end
+  describe '#complete_task' do
+    it 'marks a task complete' do
+      id=test.add_task("new task",1)
+
+    end
+  end
+
 end

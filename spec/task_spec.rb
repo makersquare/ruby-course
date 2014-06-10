@@ -17,7 +17,7 @@ describe 'Task' do
         expect(task.priority).to eq(1)
       end
       it 'has a default status of uncompleted' do
-        expect(task.status).to eq("uncompleted")
+        expect(task.status).to eq(false)
       end
       it 'has an id number' do
         expect(task.id).to eq(0)
@@ -28,12 +28,10 @@ describe 'Task' do
     end
   end
   describe '#change_status' do
-    context 'task can be marked as complete by' do
-      it 'has a status of complete' do
-        task1=TM::Task.new(0,"new task",1,0)
-        task1.change_status
-        expect(task1.status).to eq('completed')
-      end
+    it 'marks a task complete' do
+      task1=TM::Task.new(0,"new task",1,0)
+      task1.change_status
+      expect(task1.status).to eq(true)
     end
   end
 end
