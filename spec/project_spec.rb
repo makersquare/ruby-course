@@ -26,12 +26,24 @@ describe 'Project' do
   end
 
   it "retrieves a list of completed tasks sorted by priority" do
-    task1 = double('Task', :status => :complete, :priority => 1)
-    task2 = double('Task', :status => :complete, :priority => 2)
-    completed = [task1, task2]
-    allow(project).to receive(:completed_tasks).and_return(completed)
+    # task1 = double('Task', :status => :complete, :priority => 1)
+    # task2 = double('Task', :status => :complete, :priority => 2)
+    # completed = [task1, task2]
+    # allow(project).to receive(:completed_tasks).and_return(completed)
 
-    expect(project.completed_tasks).to eq(completed)
+    # expect(project.completed_tasks).to eq(completed)
+    task1 = project.new_task('new task', 1)
+    task1.complete
+    task2 = project.new_task('new task', 2)
+    task2.complete
+
+    task_array = project.completed_tasks
+    expect(task_array).to be_a(Array)
+# require 'pry'
+# binding.pry
+
+    expect(task_array.first).to be_a(TM::Task)
+    expect(task_array.first.priority).to be < task_array.last.priority
   end
 
   describe "it retrieves a list of incompleted tasks sorted by priortiy" do

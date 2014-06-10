@@ -1,19 +1,30 @@
 
 class TM::Project
-  attr_reader :name, :id, :incompleted_tasks, :completed_tasks
+  attr_reader :name, :id
 
   @@counter = 0
 
   def initialize name
-    @name = name
-    @id   = @@counter += 1
-    @incompleted_tasks = [ ]
-    @completed_tasks   = [ ]
+    @name  = name
+    @id    = @@counter += 1
+    @tasks = [ ]
   end
 
   def new_task(description, priority)
     task = TM::Task.new(description, priority, id)
-    incompleted_tasks << task
+    @tasks << task
     task
+  end
+
+  def incompleted_tasks
+    tasks = @tasks.select {|task| task.complete? == false}
+
+    tasks.sort_by { |task| task.priority }
+  end
+
+  def completed_tasks
+    tasks = @tasks.select {|task| task.complete? == true}
+
+    tasks.sort_by { |task| task.priority }
   end
 end
