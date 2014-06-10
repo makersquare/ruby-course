@@ -124,7 +124,17 @@ describe 'Project' do
         prior=test.list_incomplete_tasks[-1].priority<test.list_incomplete_tasks[0].priority
         expect(prior).to be_false
       end
-
+      it 'and if they have the same priority then the older of the two gets gets priority' do
+        id=test.add_task("new task",1)
+        id1=test.add_task("new task",2)
+        id2=test.add_task("new task",300)
+        id3=test.add_task("new task",1)
+        id4=test.add_task("new task",3)
+        test.complete_task(id2)
+        # binding.pry
+        prior=test.list_incomplete_tasks[0].date<test.list_incomplete_tasks[1].date
+        expect(prior).to be_true
+      end
     end
   end
 end
