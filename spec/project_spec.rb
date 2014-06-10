@@ -26,7 +26,7 @@ describe 'Project' do
   describe '#complete_task' do
     it 'marks a task complete' do
       id=test.add_task("new task",1)
-
+      complete_task(id)
     end
   end
 

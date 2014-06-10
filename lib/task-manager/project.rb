@@ -17,8 +17,10 @@ class TM::Project
     @tasks[id].change_status
   end
   def list_complete_tasks
+    complete=@tasks.select{|arg| arg.complete?}
   end
   def list_incomplete_tasks
+    incomplete=@tasks.select{|arg| !arg.complete?}
   end
 
 end

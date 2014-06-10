@@ -5,7 +5,7 @@ class TM::Task
     @project_id = project_id
     @description = task_description
     @priority = priority
-    @id=id
+    @id = id
     @date = Time.now
     @completed? = false
   end
