@@ -9,9 +9,13 @@ class TM::Project
     @@counter += 1
   end
 
+  def retrieve_incomplete_tasks
+  end
+
   def retrieve_completed_tasks
   end
 
-  def retrieve_incomplete_tasks
+  def complete(task_id)
   end
+
 end
