@@ -9,8 +9,8 @@ describe 'Task' do
   before do
     project_1 = TM::Project.new("Project 1")
     project_2 = TM::Project.new("Project 2")
-    task_1 = TM::Task.new(0, "Find clients", 5)
-    task_2 = TM::Task.new(0, "Sell books", 5)
+    task_1 = TM::Task.new(0, "Find clients", 9)
+    task_2 = TM::Task.new(0, "Sell books", 6)
   end
 
   it "has a task id" do
@@ -34,7 +34,7 @@ describe 'Task' do
   end
 
   it "can be marked as complete specified by task id" do
-    project_1.complete(1)
+    project_1.complete(0)
     expect(task_1.status).to eq("completed")    
   end
 
