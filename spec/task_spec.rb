@@ -1,14 +1,14 @@
 require 'spec_helper'
 
 describe 'Task' do
-  let(:task){TM::Task.new(0,"new task")}
   it "exists" do
     expect(TM::Task).to be_a(Class)
   end
   describe '#initialize' do
-    context 'new task is created with a project id a description and a priority number'do
+    let(:task){TM::Task.new(0,"new task",1,0)}
+    context 'new task is created with a project id a description and a priority number' do
       it 'has the project id' do
-        expect(task.project_id).to eq(1)
+        expect(task.project_id).to eq(0)
       end
       it 'has a description' do
         expect(task.description).to eq("new task")
@@ -30,9 +30,9 @@ describe 'Task' do
   describe '#change_status' do
     context 'task can be marked as complete by' do
       it 'has a status of complete' do
-        task1=TM::Task.new(0,"new task")
+        task1=TM::Task.new(0,"new task",1,0)
         task1.change_status
-        expect(task1.status).to eq('complete')
+        expect(task1.status).to eq('completed')
       end
     end
   end
