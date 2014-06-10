@@ -27,22 +27,32 @@ describe 'Project' do
     end
   end
 
+
+
   describe '#add_task' do
     it "adds a task to the tasks array" do
-      wireframe = TM::Task.new("Design a wireframe", 5, 123456789)
-      project1.add_task(wireframe)
-      binding.pry
+      project1.add_task("Design a wireframe", 5, 123456789)
 
       expect(project1.tasks.count).to eq(1)
     end
   end
 
   describe '#list_complete' do
-    it "returns list of tasks sorted by creation date"
+    context "when all tasks are complete" do
+      it "returns list of tasks sorted by creation date" do
+        project1.add_task("Use foundation for framework", 4, 987654321)
+        project1.add_task("Design a wireframe", 5, 123456789)
+        project1.list_complete
+
+        expect(project1.tasks.first.description).to eq("Use foundation for framework")
+      end
+    end
   end
 
   describe '#list_incomplete' do
-    it "returns a list of incomplete tasks sorted by priority"
+    it "returns a list of incomplete tasks sorted by priority" do
+
+    end
   end
 
 end
