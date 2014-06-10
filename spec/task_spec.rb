@@ -17,13 +17,13 @@ describe 'Task' do
         expect(task.priority).to eq(1)
       end
       it 'has a default status of uncompleted' do
-        expect(task.status).to eq(false)
+        expect(task.completed).to eq(false)
       end
       it 'has an id number' do
         expect(task.id).to eq(0)
       end
       it 'has a creation date' do
-        expect(task.date).should be_a(Time)
+        expect(task.date).to be_a(Time)
       end
     end
   end
@@ -31,7 +31,7 @@ describe 'Task' do
     it 'marks a task complete' do
       task1=TM::Task.new(0,"new task",1,0)
       task1.change_status
-      expect(task1.status).to eq(true)
+      expect(task1.completed).to be_true
     end
   end
 end

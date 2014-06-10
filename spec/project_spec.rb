@@ -18,16 +18,37 @@ describe 'Project' do
   context 'create a new task' do
     it 'adds a task to the tasks array' do
       test.add_task("new task",1)
-      expect(test.tasks.count).to eq(1)
+      expect(test.tasks.length).to eq(1)
       test.add_task("new task",2)
-      expect(test.tasks.count).to eq(2)
+      expect(test.tasks.length).to eq(2)
     end
   end
   describe '#complete_task' do
     it 'marks a task complete' do
       id=test.add_task("new task",1)
-      complete_task(id)
+      # binding.pry
+      test.complete_task(id)
+      expect(test.tasks[id].completed).to be_true
     end
   end
-
+  describe '#list_complete_tasks' do
+    context 'when called with no tasks' do
+      it 'returns an empty array' do
+        expect(test.list_complete_tasks).to eq([])
+      end
+    end
+    context 'when called with no completed tasks' do
+      it 'returns an empty array' do
+        test.add_task("new task",1)
+        expect(test.list_complete_tasks).to eq([])
+      end
+    end
+    context 'when called with 1 completed tasks' do
+      it 'returns an empty array' do
+        id=test.add_task("new task",1)
+        test.complete_task(id)
+        expect(test.list_complete_tasks.length).to eq(1)
+      end
+    end
+  end
 end
