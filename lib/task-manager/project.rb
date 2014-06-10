@@ -1,13 +1,14 @@
 
 class TM::Project
   attr_reader :name
-  attr_accessor :project_id, :tasks, :completed_tasks
+  attr_accessor :project_id, :tasks, :completed_tasks, :incompleted_tasks
 
   def initialize(name)
     @name = name
     @project_id = self.object_id * -1
     @tasks = []
     @completed_tasks = []
+    @incompleted_tasks = []
   end
 
   def add_task(description, priority, id = @project_id)
@@ -17,6 +18,11 @@ class TM::Project
   def list_complete
     @completed_tasks = @tasks.select { |task| task.complete == true }
     @completed_tasks.sort_by! { |task| task.creation_time }
+  end
+
+  def list_incomplete
+    @incompleted_tasks = @tasks.select { |task| task.complete == false }
+    @incompleted_tasks.sort_by! { |task| task.priority && task.creation_time }
   end
 
 end

@@ -39,19 +39,27 @@ describe 'Project' do
 
   describe '#list_complete' do
     context "when all tasks are complete" do
-      it "returns list of tasks sorted by creation date" do
+      it "sorts by creation time" do
         project1.add_task("Use foundation for framework", 4, 987654321)
         project1.add_task("Design a wireframe", 5, 123456789)
+        project1.tasks.select { |task| task.complete = true }
         project1.list_complete
 
-        expect(project1.tasks.first.description).to eq("Use foundation for framework")
+        expect(project1.completed_tasks.first.description).to eq("Use foundation for framework")
       end
     end
   end
 
   describe '#list_incomplete' do
-    it "returns a list of incomplete tasks sorted by priority" do
+    context "when all tasks are incomplete" do
+      it "sorts by priority & creation time" do
+        project1.add_task("Use foundation for framework", 4, 987654321)
+        project1.add_task("Design a wireframe", 5, 123456789)
+        project1.add_task("Begin building", 5, 123453429)
+        project1.list_incomplete
 
+        expect(project1.incompleted_tasks.first.description).to eq("Use foundation for framework")
+      end
     end
   end
 
