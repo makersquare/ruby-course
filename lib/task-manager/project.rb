@@ -2,9 +2,9 @@
 class TM::Project
   attr_reader :name, :id
   def initialize(name)
-  @@ids={}
+  @@ids=[]
   @name=name
   @id=@@ids.count
-  @@ids[@id]=self
+  @@ids<<self
   end
 end
