@@ -31,4 +31,12 @@ class TM::Project
     end
   end
 
+  def retrieve_completed_tasks
+    completed_tasks = []
+    @task_list.each do |task|
+      completed_tasks << task if task.status == true
+    end
+    return completed_tasks
+  end
+
 end
