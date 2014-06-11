@@ -9,6 +9,10 @@ class TM::Project
     @@projects
   end
 
+  def self.find(project_id)
+    @@projects.find {|p| p.id == project_id}
+  end
+
   def initialize name
     @name = name
     @id   = @@counter += 1
@@ -16,10 +20,8 @@ class TM::Project
     @@projects << self
   end
 
-  def new_task(description, priority)
-    task = TM::Task.new(description, priority, id)
-    TM::Task.tasks << task
-    task
+  def new_task(priority, description)
+    TM::Task.new(id, priority, description)
   end
 
   def incompleted_tasks
