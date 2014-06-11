@@ -5,12 +5,16 @@ class TM::Task
   @@tasks   = [ ]
   @@counter = 0
 
-  def self.tasks
+  def self.all
     @@tasks
   end
 
+  def self.find(task_id)
+    @@tasks.find {|t| t.id == task_id}
+  end
+
   def self.tasks_for(project_id, complete = false)
-    tasks.select do |task|
+    all.select do |task|
       task.complete? == complete && task.project_id == project_id
     end.sort_by do |task|
       if complete
@@ -21,13 +25,20 @@ class TM::Task
     end
   end
 
-  def initialize description, priority, project_id
+  def self.set_complete(task_id)
+    task = find(task_id)
+    task.complete
+  end
+
+  def initialize project_id, priority, description
     @id          = @@counter += 1
     @description = description
     @priority    = priority
     @project_id  = project_id
     @complete    = false
     @created_at  = Time.now
+
+    @@tasks << self
   end
 
   def complete?
