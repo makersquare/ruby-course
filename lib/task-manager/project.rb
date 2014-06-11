@@ -5,7 +5,7 @@ class TM::Project
   @@projects = [ ]
   @@counter  = 0
 
-  def self.projects
+  def self.all
     @@projects
   end
 
