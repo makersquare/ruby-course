@@ -10,12 +10,11 @@ class TM::Project
   end
 
   def retrieve_incomplete_tasks
+
   end
 
   def retrieve_completed_tasks
-  end
 
-  def complete(task_id)
   end
 
 end
