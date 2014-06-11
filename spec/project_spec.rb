@@ -20,8 +20,6 @@ describe 'Project' do
     it 'creates a new task' do
       project1 = TM::Project.new("project1")
 
-      # binding.pry
-
       expect(project1.tasks.size).to eq(0)
       project1.create_task("task1", 3)
 
@@ -32,18 +30,25 @@ describe 'Project' do
     end
   end
 
-
-  it 'sorts tasks by priority number' do
+  context "sort tasks" do
+    it 'by priority number' do
+    end
   end
 
-  it 'sorts tasks by completion date' do
+  context 'sort tasks' do
+    it 'sorts tasks by completion date' do
+    end
   end
 
-  it 'retrieves a list of all completed tasks' do
+  context 'retrieves list' do
+    it 'of completed tasks' do
+    end
   end
 
+  context 'retrives list'
   it 'retrives a list of all incomplete tasks' do
   end
+end
 
   it 'sorts the tasks in an incomplete list by priorty number' do
   end

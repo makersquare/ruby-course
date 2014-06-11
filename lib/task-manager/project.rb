@@ -1,36 +1,33 @@
 
 class TM::Project
 
-  @@id_hello = 0
+  @@class_id = 0
 
   attr_reader :name
   attr_accessor :id, :tasks
 
   def initialize(name)
     @name = name
-    @id = @@id_hello +=1
-    # @tasks = {}
-    @tasks = [{}, {}]
+    @id = @@class_id +=1
+    @tasks = []
   end
 
   def create_task(name, priority_number, description = nil)
-    task = TM::Task.new(name, priority_number, description)
-    @tasks[0][task] = @id
+    task = TM::Task.new(name, priority_number, description, @id)
+    @tasks << task
   end
 
-  def sort_tasks_priority
-
-  end
-
-  def sort_tasks_date
-  end
-
-  def complete_tasks
-    #how to search for tasks within the hash
-    @tasks[1]
+  def retrieve_completed_tasks
 
   end
 
-  def incomplete_tasks
+  def retrieve_incomplete_tasks
+  end
+
+  def sort_creation_date
+
+  end
+
+  def sort_priority
   end
 end
