@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe 'Project' do
+  # before block to reset id_generator
   it "exists" do
     expect(TM::Project).to be_a(Class)
   end
@@ -12,9 +13,9 @@ describe 'Project' do
     it "is a Project" do
       expect(project1).to be_a(TM::Project)
     end
-    it "creates a unique project id" do
-      expect(project1.project_id.to_s.length).to eq(9)
-      expect(project2.project_id).not_to eq(project1.project_id)
+    it "creates a unique project id" do # reset class variablo for all tests
+      expect(project1.project_id).to eq(1)
+      expect(project2.project_id).to eq(2)
     end
     it "accepts a name argument" do
       expect(project1.name).to eq("Portfolio")
@@ -27,7 +28,11 @@ describe 'Project' do
     end
   end
 
-
+  describe '.list_projects' do
+    it "lists all projects" do
+      expect(TM::Project.list_projects.count).to eq(6)
+    end
+  end
 
   describe '#add_task' do
     it "adds a task to the tasks array" do
@@ -53,10 +58,11 @@ describe 'Project' do
   describe '#list_incomplete' do
     context "when all tasks are incomplete" do
       it "sorts by priority & creation time" do
-        project1.add_task("Use foundation for framework", 4, 987654321)
-        project1.add_task("Design a wireframe", 5, 123456789)
-        project1.add_task("Begin building", 5, 123453429)
+        project1.add_task("Use foundation for framework", 4, 0)
+        project1.add_task("Design a wireframe", 5, 0)
+        project1.add_task("Begin building", 5, 0)
         project1.list_incomplete
+        binding.pry
 
         expect(project1.incompleted_tasks.first.description).to eq("Use foundation for framework")
       end

@@ -5,14 +5,14 @@ describe 'Task' do
     expect(TM::Task).to be_a(Class)
   end
 
-  let(:task) {TM::Task.new("Design a wireframe", 5, 123456789)}
+  let(:task) {TM::Task.new("Design a wireframe", 5, 1)}
 
   describe '#initialize' do
     it "is a Task" do
       expect(task).to be_a(TM::Task)
     end
     it "inherits the project id" do
-      expect(task.project_id).to eq(123456789)
+      expect(task.project_id).to eq(1)
     end
     it "has a description" do
       expect(task.description).to eq("Design a wireframe")
@@ -26,8 +26,13 @@ describe 'Task' do
     it "has a creation date" do
       expect(task.creation_time).not_to eq(nil)
     end
+    # binding.pry
   end
 
   describe '#change_complete_status'
-    it "marks the task as incomplete if it's complete"
+    it "marks the task as complete" do
+      task.complete_task
+
+      expect(task.complete).to eq(true)
+    end
 end

@@ -11,4 +11,8 @@ class TM::Task
     @creation_time = Time.now
   end
 
+  def complete_task
+    @complete = true
+  end
+
 end
