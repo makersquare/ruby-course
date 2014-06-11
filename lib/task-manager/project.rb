@@ -1,28 +1,38 @@
 
 class TM::Project
   attr_reader :name, :id, :tasks
-  @@ids=[]
+
+  @@library=[]
+
   def initialize(name)
-  @name=name
-  @@ids<<self
-  @id=@@ids.length
-  @tasks=[]
+    @name = name
+    @@library << self
+    @id = @@library.length - 1
+    @tasks = []
   end
 
-  def add_task(description,priority)
-    @tasks<<TM::Task.new(@id,description,priority,@tasks.length)
-    @tasks.length-1
+  def self.library
+    @@library
   end
-  def complete_task(id)
-    @tasks[id].change_status
+
+  def add_task(task_description,task_priority)
+    @tasks<<TM::Task.new(@id, task_description, task_priority, @tasks.length)
+    # we return @tasks.length-1 for purposes of setting the task id
+    @tasks.length - 1
   end
+
+  def complete_task(task_id)
+    @tasks[task_id].change_status
+  end
+
   def list_complete_tasks
-    complete = @tasks.select{|arg| arg.completed}
-    complete.sort!{|arg1,arg2| arg1.date<=>arg2.date}
+    complete = @tasks.select{|task| task.task_is_completed}
+    complete.sort!{ |task1, task2| task1.creation_date <=> task2.creation_date }
   end
+
   def list_incomplete_tasks
-    incomplete = @tasks.select{|arg| !arg.completed}
-    incomplete.sort!{|arg1,arg2| arg1.date<=>arg2.date}
-    incomplete.sort!{|arg1,arg2| arg1.priority<=>arg2.priority}
+    incomplete = @tasks.select{|task| !task.task_is_completed}
+    incomplete.sort!{ |task1, task2| task1.creation_date <=> task2.creation_date }
+    incomplete.sort!{ |task1, task2| task1.priority <=> task2.priority }
   end
 end

@@ -28,7 +28,7 @@ describe 'Project' do
       id=test.add_task("new task",1)
       # binding.pry
       test.complete_task(id)
-      expect(test.tasks[id].completed).to be_true
+      expect(test.tasks[id].task_is_completed).to be_true
     end
   end
   describe '#list_complete_tasks' do
@@ -71,7 +71,7 @@ describe 'Project' do
         id4=test.add_task("new task",3)
         test.complete_task(id)
         test.complete_task(id2)
-        new_date=test.list_complete_tasks[0].date<test.list_complete_tasks[1].date
+        new_date=test.list_complete_tasks[0].creation_date<test.list_complete_tasks[1].creation_date
         expect(new_date).to be_true
       end
     end
@@ -132,7 +132,7 @@ describe 'Project' do
         id4=test.add_task("new task",3)
         test.complete_task(id2)
         # binding.pry
-        prior=test.list_incomplete_tasks[0].date<test.list_incomplete_tasks[1].date
+        prior=test.list_incomplete_tasks[0].creation_date<test.list_incomplete_tasks[1].creation_date
         expect(prior).to be_true
       end
     end
