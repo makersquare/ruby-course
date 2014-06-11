@@ -2,10 +2,10 @@
 class TM::Task
 
   attr_accessor :name, :status, :creation_date, :description, :task_id
-  attr_reader :priority_number
+  attr_reader :priority_number, :project_id
 
   @@class_task_id = 0
-  def initialize(name, priority_number,description=nil, project_id)
+  def initialize(name, priority_number,description=nil)
     @name = name
     @status = "incomplete"
     @creation_date = Time.now

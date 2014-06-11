@@ -40,7 +40,7 @@ describe 'Task' do
     end
   end
 
-  it "marks a task as complete" do
+  xit "marks a task as complete" do
     task1 = TM::Task.new("task1",5)
     # THIS IS NOT REAL, JUST AN EXAMPLE OF STUBBING
     # allow(task1).to receive(:mark_complete).and_return("complete")
@@ -49,10 +49,20 @@ describe 'Task' do
     expect(task1.status).to eq("complete")
   end
 
+  it "marks a task as complete" do
+    task1 = TM::Task.new("task1",5)
+    task1.task_id = 2
+    task1.mark_complete(2)
 
+    expect(task1.status).to eq("complete")
+  end
+
+#REVIEW
   it "marks a task as incomplete" do
     task1 = TM::Task.new("task1",5)
+    allow(task1).to receive(:mark_complete).and_return("complete")
     task1.mark_complete
+    allow(task1).to receive(:mark_incomplete).and_return("incomplete")
     task1.mark_incomplete
 
     expect(task1.status).to eq("incomplete")
