@@ -14,8 +14,9 @@ describe 'Task' do
       expect(task1.name).to eq("task1")
     end
 
-    it "has a creation date" do
+    xit "has a creation date" do
       task1 = TM::Task.new("task1",5)
+      expect(task1.creation_date).to eq
     end
 
     it "has a priority number" do
@@ -25,7 +26,7 @@ describe 'Task' do
 
     it "has a status of available" do
       task1 = TM::Task.new("task1",5)
-      expect(task1.status).to eq("available")
+      expect(task1.status).to eq("incomplete")
     end
 
     it "will return a nil description if nothing provided" do
@@ -38,4 +39,23 @@ describe 'Task' do
       expect(task1.priority_number).to eq(nil)
     end
   end
+
+  it "marks a task as complete" do
+    task1 = TM::Task.new("task1",5)
+    # THIS IS NOT REAL, JUST AN EXAMPLE OF STUBBING
+    # allow(task1).to receive(:mark_complete).and_return("complete")
+    task1.mark_complete
+
+    expect(task1.status).to eq("complete")
+  end
+
+
+  it "marks a task as incomplete" do
+    task1 = TM::Task.new("task1",5)
+    task1.mark_complete
+    task1.mark_incomplete
+
+    expect(task1.status).to eq("incomplete")
+  end
+
 end
