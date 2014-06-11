@@ -9,29 +9,9 @@ class TM::Client
 
   def self.process_command(cmd)
     args = Array(cmd)
-    command = args.shift
+    command = args.shift.to_sym
 
-    case(command)
-      when "help"
-        help
-      when "list"
-        list TM::Project.all
-      when "create"
-        create args.first
-      when "show"
-        show args.first
-      when "history"
-        history args.first
-      when "add"
-        add args[0], args[1], args[2]
-      when "mark"
-        mark args.first
-      when "exit"
-        puts "exiting"
-        @@run = false
-      else
-        invalid
-    end
+    self.send(command, args)
   end
 
   def self.running?
@@ -39,6 +19,13 @@ class TM::Client
   end
 
   private
+
+  def self.method_missing method, *args, &block
+    puts "Invalid command."
+    puts
+
+    help
+  end
 
   def self.cmd_list
     [ '  help - Show these commands again',
@@ -51,42 +38,91 @@ class TM::Client
       '  mark TID - Mark task with id=TID as complete' ]
   end
 
-  def self.help
+  def self.help args = []
     str = "Available Commands:\n"
     str += cmd_list.join("\n")
     puts str
   end
 
-  def self.list project_array
-    puts "All Projects:"
+  def self.list args = []
+    projects = TM::Project.all
+    if projects.empty?
+      puts "No Projects"
+    else
+      puts "All Projects:"
+      puts
 
-    project_array.each do |project|
-      puts "ID: #{project.id} - Name: #{project.name}"
+      show_projects projects
     end
   end
 
-  def self.create name
-
+  def self.show_projects project_array
+      projects.each do |project|
+        puts "ID: #{project.id} - Name: #{project.name}"
+      end
   end
 
-  def self.show project_id
+  def self.create args
+    name = args.first
 
+    project = TM::Project.new name
+    show_projects [ project ]
   end
 
-  def self.history project_id
+  def self.show args
+    project_id = args.first.to_i
 
+    project = TM::Project.find(project_id)
+
+    task_array = project.incompleted_tasks
+
+    puts "Showing Project: #{project.name}"
+    puts
+
+    show_tasks task_array
   end
 
-  def self.add project_id, priority, description
-
+  def self.show_tasks task_array
+    task_array.each do |task|
+      puts "ID: #{task.id} - Priority: #{task.priority} - Name: #{task.description}"
+    end
   end
 
-  def self.mark task_id
+  def self.history args
+    project_id = args.first.to_i
 
+    project = TM::Project.find(project_id)
+
+    task_array = project.completed_tasks
+
+    puts "Showing Project: #{project.name}"
+    puts
+
+    show_tasks task_array
   end
 
-  def self.invalid
-    puts "Invalid command."
-    help
+  def self.add args
+    project_id  = args[0].to_i
+    priority    = args[1].to_i
+    description = args[2..-1].join(' ')
+
+    task = TM::Task.new project_id, priority, description
+
+    show_tasks [ task ]
+  end
+
+  def self.mark args
+    task_id = args.first.to_i
+
+    task = TM::Task.find(task_id)
+
+    task.complete
+
+    show_tasks [ task ]
+  end
+
+  def self.exit args = []
+    puts "exiting"
+    @@run = false
   end
 end
