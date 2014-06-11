@@ -1,14 +1,14 @@
 
 class TM::Task
-  attr_reader :task_id, :project_id, :creation_time
+  attr_reader :task_id, :project_id, :creation_time, :priority
   attr_accessor :status
   @@counter = 0
   @@tasks_list = []
 
-  def initialize project_id, description, priority_number
+  def initialize project_id, description, priority
     @project_id = project_id
     @description = description
-    @priority_number = priority_number
+    @priority = priority
     @task_id = @@counter
     @@counter += 1
     @creation_time = Date.today
