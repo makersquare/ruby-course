@@ -12,6 +12,8 @@ class TM::Project
 		@@Project_counter +=1
 		@id = @@Project_counter
 		@@Projects << self
+		# puts 'project created!'
+		# @@Projects.each {|p| puts " project #{p.name} id: #{p.id}"}
 	end
 
 	def completed_tasks(array)
@@ -26,11 +28,29 @@ class TM::Project
 
 	end
 
-	def incomplete_tasks(array)
+	def incomplete_tasks(array, id=nil)
 		return nil if array.nil?
 
 		incomplete = Array.new
-		array.each{|t| incomplete << t if !t.state_complete && t.p_id == @id}
+		if id.nil?
+			array.each{|t| incomplete << t if !t.state_complete}
+			# puts "c1"
+			# puts incomplete.size
+		else
+			array.each do |t|
+				# puts t.p_id
+				# puts id
+				# e1 = !t.state_complete
+				# e2 = (t.p_id == id)
+				# puts "e1: " + e1.to_s
+				# puts "e2: " + e2.to_s
+				# aux = !t.state_complete && t.p_id == id
+				# puts aux
+				incomplete << t if !t.state_complete && t.p_id == id
+			end
+			# puts "c2"
+			# puts incomplete.size
+		end
 
 		incomplete.sort! do |x,y|
 			comp = x.priority <=> y.priority 
@@ -43,14 +63,18 @@ class TM::Project
 	end
 
 	def self.list_proyects
-		@@Projects.each { |p| puts "Proyect #{id} - #{name}"}
+		@@Projects.each { |p| puts "Proyect id: #{p.id} - Name: #{p.name}"}
 	end
 
 	def self.show_remaining(id)
 		
 		index = @@Projects.index {|x| x.id == id}
-		list = @@Projects[index].incomplete_tasks(TM::Task.list_task)
-		puts list
+		# puts index
+		# puts id
+		# puts TM::Task.list_task
+		list = @@Projects[index].incomplete_tasks(TM::Task.list_task,id)
+		list.each {|t| puts "task_id: #{t.id} task_proj: #{t.p_id} creation: #{t.creation_date}"}
+
 	end
 
 
