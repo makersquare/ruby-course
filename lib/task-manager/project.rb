@@ -13,7 +13,7 @@ class TM::Project
     @@projects.find {|p| p.id == project_id}
   end
 
-  def initialize name
+  def initialize(name)
     @name = name
     @id   = @@counter += 1
 

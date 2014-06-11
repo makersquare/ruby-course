@@ -7,8 +7,8 @@ class TM::Client
     help
   end
 
-  def self.process_command(cmd)
-    args = Array(cmd)
+  def self.process_command(args)
+    # args = Array(cmd)
     command = args.shift.to_sym
 
     self.send(command, args)
@@ -23,8 +23,6 @@ class TM::Client
   def self.method_missing method, *args, &block
     puts "Invalid command."
     puts
-
-    help
   end
 
   def self.cmd_list
@@ -57,72 +55,92 @@ class TM::Client
   end
 
   def self.show_projects project_array
-      projects.each do |project|
+      project_array.each do |project|
         puts "ID: #{project.id} - Name: #{project.name}"
       end
   end
 
   def self.create args
-    name = args.first
+    if valid(args)
+      name = args.join(' ')
 
-    project = TM::Project.new name
-    show_projects [ project ]
+      project = TM::Project.new(name)
+
+      show_projects [ project ]
+    end
   end
 
   def self.show args
-    project_id = args.first.to_i
+    if valid(args)
+      project_id = args.first.to_i
 
-    project = TM::Project.find(project_id)
+      project = TM::Project.find(project_id)
 
-    task_array = project.incompleted_tasks
+      task_array = project.incompleted_tasks
 
-    puts "Showing Project: #{project.name}"
-    puts
+      puts "Showing Project: #{project.name}"
+      puts
 
-    show_tasks task_array
+      show_tasks task_array
+    end
   end
 
   def self.show_tasks task_array
     task_array.each do |task|
-      puts "ID: #{task.id} - Priority: #{task.priority} - Name: #{task.description}"
+      puts "ID: #{task.id} - Priority: #{task.priority} - Description: #{task.description}"
     end
   end
 
   def self.history args
-    project_id = args.first.to_i
+    if valid(args)
+      project_id = args.first.to_i
 
-    project = TM::Project.find(project_id)
+      project = TM::Project.find(project_id)
 
-    task_array = project.completed_tasks
+      task_array = project.completed_tasks
 
-    puts "Showing Project: #{project.name}"
-    puts
+      puts "Showing Project: #{project.name}"
+      puts
 
-    show_tasks task_array
+      show_tasks task_array
+    end
   end
 
   def self.add args
-    project_id  = args[0].to_i
-    priority    = args[1].to_i
-    description = args[2..-1].join(' ')
+    if valid(args)
+      project_id  = args[0].to_i
+      priority    = args[1].to_i
+      description = args[2..-1].join(' ')
 
-    task = TM::Task.new project_id, priority, description
+      task = TM::Task.new project_id, priority, description
 
-    show_tasks [ task ]
+      show_tasks [ task ]
+    end
   end
 
   def self.mark args
-    task_id = args.first.to_i
+    if valid(args)
+      task_id = args.first.to_i
 
-    task = TM::Task.find(task_id)
+      task = TM::Task.find(task_id)
 
-    task.complete
+      task.complete
 
-    show_tasks [ task ]
+      show_tasks [ task ]
+    end
   end
 
   def self.exit args = []
     puts "exiting"
     @@run = false
+  end
+
+  def self.valid args
+    if args.empty?
+      puts "Invalid arguments"
+      false
+    else
+      true
+    end
   end
 end
