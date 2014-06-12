@@ -1,5 +1,5 @@
 require "./library.rb"
-# require 'pry-debugger'
+require 'pry-byebug'
 
 describe Book do
   it "has a title and author, and nil id" do
