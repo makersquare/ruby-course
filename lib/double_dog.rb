@@ -1,4 +1,4 @@
-require 'pry-debugger'
+require 'pry-byebug'
 
 module DoubleDog
   def self.db
