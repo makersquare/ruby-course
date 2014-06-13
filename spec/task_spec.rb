@@ -1,71 +1,53 @@
 require 'spec_helper'
+require 'time'
+
 
 describe 'Task' do
   it "exists" do
     expect(TM::Task).to be_a(Class)
   end
 
-  context 'when initialized' do
+  describe '#initialize' do
     # before(:each) do
-    #   task1 = TM::Task.new("task1",5)
+    #   task1 = TM::Task.new("task1",5, "description", 1)
     # end
     it "has a name" do
-      task1 = TM::Task.new("task1",5)
+      task1 = TM::Task.new("task1",5, "description", 1)
       expect(task1.name).to eq("task1")
     end
 
-    xit "has a creation date" do
-      task1 = TM::Task.new("task1",5)
-      expect(task1.creation_date).to eq
+    it "has a creation date" do
+      task1 = TM::Task.new("task1",5, "description", 1)
+      # allow(Time).to receive(:now).and_return(Time.parse(#look up date)
+      # expect(task1.creation_date).to eq(#whatever date)
     end
 
     it "has a priority number" do
-      task1 = TM::Task.new("task1",5)
+      task1 = TM::Task.new("task1",5, "description", 1)
       expect(task1.priority_number).to eq(5)
     end
 
     it "has a status of available" do
-      task1 = TM::Task.new("task1",5)
+      task1 = TM::Task.new("task1",5, "description", 1)
       expect(task1.status).to eq("incomplete")
     end
 
-    it "will return a nil description if nothing provided" do
-      task1 = TM::Task.new("task1",5)
-      expect(task1.description).to eq(nil)
-    end
-
     xit "will return nil if the priority number is not inclusive of 1..5" do
-      task1 = TM::Task.new("task1",6)
+      task1 = TM::Task.new("task1",6, "description", 1)
       expect(task1.priority_number).to eq(nil)
     end
   end
 
-  xit "marks a task as complete" do
-    task1 = TM::Task.new("task1",5)
-    # THIS IS NOT REAL, JUST AN EXAMPLE OF STUBBING
-    # allow(task1).to receive(:mark_complete).and_return("complete")
-    task1.mark_complete
+  describe '#mark_complete and #mark_incomplete'
+    it "marks a task as complete and then back to incomplete" do
+      task1 = TM::Task.new("task1",5, "description", 1)
+      expect(task1.status).to eq("incomplete")
 
-    expect(task1.status).to eq("complete")
+      task1.mark_complete
+      expect(task1.status).to eq("complete")
+
+      task1.mark_incomplete
+      expect(task1.status).to eq("incomplete")
+    end
   end
-
-  it "marks a task as complete" do
-    task1 = TM::Task.new("task1",5)
-    task1.task_id = 2
-    task1.mark_complete(2)
-
-    expect(task1.status).to eq("complete")
-  end
-
-#REVIEW
-  it "marks a task as incomplete" do
-    task1 = TM::Task.new("task1",5)
-    allow(task1).to receive(:mark_complete).and_return("complete")
-    task1.mark_complete
-    allow(task1).to receive(:mark_incomplete).and_return("incomplete")
-    task1.mark_incomplete
-
-    expect(task1.status).to eq("incomplete")
-  end
-
 end

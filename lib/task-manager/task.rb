@@ -5,7 +5,7 @@ class TM::Task
   attr_reader :priority_number, :project_id
 
   @@class_task_id = 0
-  def initialize(name, priority_number,description=nil)
+  def initialize(name, priority_number,description=nil, project_id)
     @name = name
     @status = "incomplete"
     @creation_date = Time.now
@@ -25,14 +25,14 @@ class TM::Task
     end
   end
 
-  def mark_complete(id)
-    if @task_id == id && @status == "incomplete"
+  def mark_complete
+    if @status == "incomplete"
       @status = "complete"
     end
   end
 
-  def mark_incomplete(id)
-    if @task_id == id && @status == "complete"
+  def mark_incomplete
+    if @status == "complete"
       @status = "incomplete"
     end
   end
