@@ -12,6 +12,8 @@ describe 'Task' do
       expect(task1.desc).to eq('lunch')
       expect(task2.key).to eq(10)
       expect(task3.done).to eq(false)
+      # test ids are unique
+      # task1.id != task2.id
     end
   end
   it 'completes tasks' do
