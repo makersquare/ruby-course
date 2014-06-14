@@ -1,4 +1,3 @@
-
 class TM::Task
 
   attr_accessor :name, :status, :creation_date, :description, :task_id
@@ -22,18 +21,6 @@ class TM::Task
       priority_number = 0
     else
       priority_number = number
-    end
-  end
-
-  def mark_complete
-    if @status == "incomplete"
-      @status = "complete"
-    end
-  end
-
-  def mark_incomplete
-    if @status == "complete"
-      @status = "incomplete"
     end
   end
 
