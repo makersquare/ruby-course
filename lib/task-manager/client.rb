@@ -30,7 +30,11 @@ class TM::TerminalClient
       TM::Project.projects_list.each do |project|
         puts project.name
       end
-    # when "create"
+    when "create"
+      TM::Project.new split_input
+      TM::Project.projects_list.each do |project|
+        puts project.name
+      end
     # when "show"
     # when "history"
     # when "add"
