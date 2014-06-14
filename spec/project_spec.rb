@@ -38,22 +38,26 @@ describe 'Project' do
   end
 
   describe '#mark_complete and #retrieve_completed_tasks' do
-    xit 'mark a task as completed by id and return a list of completed tasks' do
+    it 'mark a task as completed by id and return a list of completed tasks' do
       project1 = TM::Project.new("project1")
 
       project1.create_task("task1", 3)
       allow(project1.tasks[0]).to receive(:task_id).and_return(1)
-      project1.mark_complete(1)
+      project1.project_mark_complete(1)
+
+      expect(project1.tasks[0].status).to eq("complete")
 
       project1.create_task("task2", 4)
-      allow(project1.tasks[1]).to receive(:task_id).and_return(2)
-      project1.mark_complete(2)
+      allow(project1.tasks[1]).to receive(:task_id).and_return(3)
+      project1.project_mark_complete(3)
+
+      expect(project1.tasks[1].status).to eq("complete")
 
       project1.create_task("task3", 4)
 
       expect(project1.tasks.size).to eq(3)
 
-      binding.pry
+      # binding.pry
 
       expect(project1.retrieve_completed_tasks.size).to eq(2)
     end
@@ -75,10 +79,6 @@ describe 'Project' do
     end
   end
 
-  describe '#mark_incomplete' do
-    xit 'tasks marked incomplete by id' do
-    end
-  end
 end
 
 

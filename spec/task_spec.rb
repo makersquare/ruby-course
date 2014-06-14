@@ -32,13 +32,19 @@ describe 'Task' do
       expect(task1.status).to eq("incomplete")
     end
 
+    it "has a creation date" do
+      task1 = TM::Task.new("task1",5, "description", 1)
+      allow(task1).to receive(:creation_date).and_return("Today")
+      expect(task1.creation_date).to eq("Today")
+    end
+
     xit "will return nil if the priority number is not inclusive of 1..5" do
       task1 = TM::Task.new("task1",6, "description", 1)
-      expect(task1.priority_number).to eq(nil)
+      expect(task1.priority_number).to eq(5)
     end
   end
 
-  describe '#mark_complete and #mark_incomplete'
+  describe '#mark_complete and #mark_incomplete' do
     it "marks a task as complete and then back to incomplete" do
       task1 = TM::Task.new("task1",5, "description", 1)
       expect(task1.status).to eq("incomplete")

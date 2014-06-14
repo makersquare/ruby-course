@@ -9,7 +9,7 @@ class TM::Task
     @name = name
     @status = "incomplete"
     @creation_date = Time.now
-    @priority_number = priority_number
+    @priority_number = priority_number #remove @ and change to p_number?
     @description = description
     @task_id = @@class_task_id += 1
     @project_id = project_id
@@ -17,11 +17,11 @@ class TM::Task
 
   def priority_number=(number)
     if number > 5
-      @priority_number = 5
+      priority_number = 5
     elsif number < 0
-      @priority_number = 0
+      priority_number = 0
     else
-      @priority_number = number
+      priority_number = number
     end
   end
 

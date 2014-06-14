@@ -17,18 +17,43 @@ class TM::Project
     @tasks << task
   end
 
-  def retrieve_completed_tasks
-    sorted_tasks = @tasks.map {|x| x.status = "complete"}
+  def sort_creation_date
+    @tasks.sort {|x,y| y.creation_date <=> x.creation_date}
+  end
 
-    sorted_tasks.sort {|x,y| x.creation_date <=> y.creation_date} #return a list of sorted tasks by creation date
-    # sorted_tasks.sort {|x| x.creation_date}
+  def project_mark_complete(id)
+    @tasks.map do |x|
+      if x.task_id == id && x.status == "incomplete"
+        x.status = "complete"
+        x
+      end
+    end
+  end
+
+  def retrieve_completed_tasks
+    sorted = @tasks.map do |x|
+      if x.status == "complete"
+        x
+      end
+    end
+    sorted.compact.sort do |x,y| #returns nil value run compact on sorted
+      x.creation_date <=> y.creation_date
+    end
+  end
+
+  def mark_incomplete(id)
+    sorted = @tasks.map do |x|
+      if x.task_id == id
+        x.mark_incomplete
+      end
+    end
   end
 
   def retrieve_incomplete_tasks
     #sorted by priority
     #if priorities are equal
     #sort by creation date (oldest first)
-    sorted_tasks = @tasks.map {|x| x.status = "incomplete"}
+    sorted_tasks = @tasks.map {|x| x.status == "incomplete"}
     sorted_tasks.sort {|x, y|
     if x.priority_number > y.priority_number
       return 1
@@ -39,24 +64,5 @@ class TM::Project
     end
     }
   end
-
-  def mark_complete(id)
-    sorted = @tasks.map {|x|
-      x.task_id == id
-      x
-    }
-    sorted.each do |task|
-      task.mark_complete
-    end
-  end
-
-  def mark_incomplete(id)
-    sorted = @tasks.map {|x|
-      x.task_id == id
-      x
-    }
-    sorted.each do |task|
-      task.mark_incomplete
-    end
-  end
 end
+
