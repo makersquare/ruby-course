@@ -23,7 +23,7 @@ describe 'Project' do
     expect(@project_1.project_id).to eq(0)
   end
 
-  xit "can retrieve a list of incomplete tasks sorted by priority, then the age (older first)" do
+  it "can retrieve a list of incomplete tasks sorted by priority, then the age (older first)" do
     task_1 = TM::Task.new(0, "Find clients", 8)
     task_2 = TM::Task.new(0, "Sell books", 6)
     task_3 = TM::Task.new(0, "Sell books", 8)
