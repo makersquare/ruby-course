@@ -8,6 +8,7 @@ class TM::Project
     @name = name
     @project_id = @@counter
     @@counter += 1
+    @@projects_list << self
   end
 
   def retrieve_incomplete_tasks
