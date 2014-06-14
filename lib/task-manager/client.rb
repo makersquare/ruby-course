@@ -25,22 +25,31 @@ class TM::TerminalClient
       puts "history" 
       puts "complete a task" 
       puts "exit the terminal"
+      puts ""
     when "list"
-      TM::Project.new "Eat healthy"
       TM::Project.projects_list.each do |project|
         puts project.name
       end
+      puts ""
     when "create"
-      TM::Project.new split_input
+      TM::Project.new split_input[1]
       TM::Project.projects_list.each do |project|
         puts project.name
       end
-    # when "show"
+      puts ""
+    when "show"
+      # TM::Project.projects_list.each do |task|
+      #   task.project_id == XXXXXXXXXXXXX.project_id && task.status == :incomplete
+      # end
+
     # when "history"
     # when "add"
     # when "complete"
-    # else 
-    #   puts "That is not a command. Please, enter a command from the available list."
+    when "exit"
+      return 
+    else 
+      puts "That is not a command. Please, enter a command from the available list."
     end
+    run
   end
 end
