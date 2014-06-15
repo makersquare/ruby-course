@@ -1,4 +1,3 @@
-
 # Create our module. This is so other files can start using it immediately
 module TM
 end
@@ -6,3 +5,8 @@ end
 # Require all of our project files
 require_relative 'task-manager/task.rb'
 require_relative 'task-manager/project.rb'
+require_relative 'task-manager/client.rb'
+
+
+terminal = TM::TerminalClient.new
+terminal.run
