@@ -29,11 +29,15 @@ class TM::Project
   end
 
   def add_task(desc, priority)
+    # TODO
+    # Test this method!
     new_task = TM::Task.new(@pid, desc, priority)
     @project_tasks << new_task
   end
 
   def completed_tasks
+    # TODO
+    # TEST THIS METHOD
     completed = @tasks.select {|tsk| tsk.complete}
     completed.sort {|a, b| b.creation_time <=> a.creation_time}
   end

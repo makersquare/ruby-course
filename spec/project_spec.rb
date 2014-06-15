@@ -33,11 +33,13 @@ describe 'Project' do
   end
 
   describe "#completed_tasks" do
-
+    # TODO
+    # Test this method
   end
 
   describe "#incomplete_tasks" do
-
+    # TODO
+    # Test this method
   end
 
 end
