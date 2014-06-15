@@ -17,22 +17,22 @@ class TM::TerminalClient
       puts ""
       puts "You can use these commands:"
       puts ""
-      puts "help -- Show these commands again"
-      puts "list -- List all projects"
-      puts "add NAME -- Add a new project with a name"
-      puts "create PID, DESCRIPTION, PRIORITY -- Create a task with the given attributes"
-      puts "show PID -- Show remaining tasks for a given project by PID"
-      puts "history PID -- Show completed tasks for a given project, by PID" 
-      puts "complete TID -- Mark a task as complete by TID" 
-      puts "exit -- Leave the terminal"
+      puts "help ------------------ Show these commands again"
+      puts "list ------------------ List all projects"
+      puts "add NAME -------------- Add a new project with a name"
+      puts "create PID, DESC, PRI-- Create a task with the given attributes"
+      puts "show PID -------------- Show remaining tasks for a given project by PID"
+      puts "history PID ----------- Show completed tasks for a given project, by PID" 
+      puts "complete TID ---------- Mark a task as complete by TID" 
+      puts "exit ------------------ Leave the terminal"
       puts ""
     when "list"
       TM::Project.projects_list.each do |project|
         puts project.name
       end
       puts ""
-    when "create"
-      TM::Project.new split_input[1]
+    when "add"
+      TM::Project.new split_input[1..-1].join(' ')
       TM::Project.projects_list.each do |project|
         puts project.name
       end
