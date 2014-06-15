@@ -11,8 +11,8 @@ describe 'Task' do
     it "is a Task" do
       expect(task).to be_a(TM::Task)
     end
-    it "inherits the project id" do
-      expect(task.project_id).to eq(1)
+    it "create a task id" do
+      expect(task.task_id).to eq(1)
     end
     it "has a description" do
       expect(task.description).to eq("Design a wireframe")
@@ -26,13 +26,6 @@ describe 'Task' do
     it "has a creation date" do
       expect(task.creation_time).not_to eq(nil)
     end
-    # binding.pry
   end
 
-  describe '#change_complete_status'
-    it "marks the task as complete" do
-      task.complete_task
-
-      expect(task.complete).to eq(true)
-    end
 end

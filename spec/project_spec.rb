@@ -36,7 +36,7 @@ describe 'Project' do
 
   describe '#add_task' do
     it "adds a task to the tasks array" do
-      project1.add_task("Design a wireframe", 5, 123456789)
+      project1.add_task("Design a wireframe", 5)
 
       expect(project1.tasks.count).to eq(1)
     end
@@ -62,10 +62,20 @@ describe 'Project' do
         project1.add_task("Design a wireframe", 5, 0)
         project1.add_task("Begin building", 5, 0)
         project1.list_incomplete
-        binding.pry
 
         expect(project1.incompleted_tasks.first.description).to eq("Use foundation for framework")
       end
+    end
+  end
+
+  describe '.mark task' do
+    it "marks a task as complete" do
+      project_test = TM::Project.list_projects.first
+      project_test.add_task("This is a description", 5)
+      project_test.add_task("This is another description", 4)
+      TM::Project.complete_task(0, 0)
+
+      expect(project_test.tasks[0].complete).to eq(true)
     end
   end
 
