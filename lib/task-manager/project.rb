@@ -1,32 +1,37 @@
 require 'time'
 
 class TM::Project
-  attr_accessor :name, :id, :tasks
-  @@id = 0
+  attr_accessor :name, :pid, :tasks
+  @@projects = []
 
   def initialize(name=nil)
     @name = name
-    @id = @@id + 1
-    @@id += 1
+    @pid = @@projects.size
     @tasks = []
+    @@projects << self
   end
 
-  def add_task(description, priority)
-    task = TM::Task.new(description, priority)
+  def add_task(priority, description)
+    task = TM::Task.new(priority, description)
     @tasks << task
   end
 
   def list_all_tasks
-    @tasks.each_with_index { |i,v| puts "Task ID #{v}: #{i.description}" }
+    puts @tasks.map { |i| puts "TID #{i.tid}: Priority #{i.priority}, #{i.description}" }
   end
 
   def list_completed_tasks
-    @tasks.select { |i| i if i.status == "complete" }.sort_by { |i| i.creation_date }
-    #maybe use a "puts" here
+    @tasks.sort_by! { |i| i.creation_date }
+    @tasks.select { |i| puts "TID #{i.tid}: #{i.description}" if i.status == 'complete' }
   end
 
   def list_incomplete_tasks
-    @tasks.select { |i| i if i.status == "incomplete" }.sort_by { |i| i.priority }
+    @tasks.sort_by! { |i| [i.priority, i.creation_date] }
+    @tasks.select { |i| puts "TID #{i.tid}: Priority #{i.priority}, #{i.description}" if i.status == 'incomplete' }
+  end
+
+  def list_projs
+    @@projects.each_with_index { |i,idx| puts "PID #{idx}: #{i.name}" }
   end
 
 end

@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe 'Task' do
 
-  let(:task) {TM::Task.new('something to do', 1)}
+  let(:task) {TM::Task.new(1, 'something to do')}
 
   it "exists" do
     expect(TM::Task).to be_a(Class)

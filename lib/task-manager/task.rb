@@ -1,16 +1,16 @@
-class TM::Task
-  attr_accessor :id, :description, :priority, :status, :creation_date
+require 'time'
 
-  def initialize(description, priority)
+class TM::Task
+  attr_accessor :tid, :description, :priority, :status, :creation_date
+  @@tasks = []
+
+  def initialize(priority, description)
     @description = description
     @priority = priority
-    @id = 0
+    @tid = @@tasks.size
+    @@tasks << self
     @status = "incomplete"
     @creation_date = Time.now
-  end
-
-  def generate_id
-    @id += 1
   end
 
   def mark_complete
