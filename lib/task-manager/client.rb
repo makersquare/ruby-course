@@ -45,16 +45,15 @@ class TM::TerminalClient
         puts task.priority
         puts ""
       end
+    when "show"
+      TM::Task.tasks_list.each do |task|
+        if task.project_id == split_input[1] && task.status == :incomplete
+          puts task.project_id
+          puts task.description
+          puts task.priority
+        end
+      end
       puts ""
-
-
-
-
-
-    # when "show"
-      # TM::Project.projects_list.each do |task|
-      #   task.project_id == XXXXXXXXXXXXX.project_id && task.status == :incomplete
-      # end
 
     # when "history"
     # when "add"
