@@ -24,8 +24,8 @@ describe 'Task' do
     expect(@task_1.project_id).to eq(0)
   end
 
-  xit "has a time stamp" do
-    expect(@task_1.creation_time).to eq(Time.now)
+  it "has a time stamp" do
+    expect(@task_1.creation_time).to be_a(Time)
   end
 
   it "has a default completion status of :incomplete" do
