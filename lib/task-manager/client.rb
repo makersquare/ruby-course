@@ -27,54 +27,60 @@ class TM::TerminalClient
       puts "exit ------------------ Leave the terminal"
       puts ""
     when "list"
+      puts ""
+      puts "Projects in the database:"
       TM::Project.projects_list.each do |project|
         puts project.name
       end
       puts ""
     when "add"
-      TM::Project.new split_input[1..-1].join(' ')
-      TM::Project.projects_list.each do |project|
-        puts project.name
-      end
+      puts ""
+      project_name = split_input[1..-1].join(' ')
+      TM::Project.new project_name
+      puts ""
+      puts "The following project has been added to the database: #{project_name}"
       puts ""
     when "create"
-      TM::Task.new split_input[1], split_input[2..-2].join(' '), split_input[-1]
-      TM::Task.tasks_list.each do |task|
-        puts task.project_id
-        puts task.description
-        puts task.priority
-        puts task.task_id
-      end
+      puts ""
+      project_id = split_input[1]
+      task_description = split_input[2..-2].join(' ')
+      task_priority = split_input[-1]
+      TM::Task.new project_id, task_description, task_priority
+      puts "The following task has been added to the database:"
+      puts "Project ID: #{project_id}"
+      puts "Task description: #{task_description}"
+      puts "Task priority: #{task_priority}"
       puts ""
     when "show"
+      puts ""
+      project_id = split_input[1]
+      puts "The following tasks are incomplete for project #{project_id}:"
       TM::Task.tasks_list.each do |task|
         if task.project_id == split_input[1] && task.status == :incomplete
-          puts task.project_id
           puts task.description
-          puts task.priority
         end
       end
       puts ""
     when "history"
+      puts ""
+      project_id = split_input[1]
+      puts "The following tasks are complete for project #{project_id}:"
       TM::Task.tasks_list.each do |task|
         if task.project_id == split_input[1] && task.status == :complete
-          puts task.project_id
           puts task.description
-          puts task.priority
         end
       end
       puts ""
     when "complete"
-      TM::Task.mark_complete split_input[1]
-      # TM::Task.tasks_list.each do |task|
-      #   if task.task_id == split_input[1]
-      #     puts task.status
-      #   end
-      # end
+      puts ""
+      task_id = split_input[1]
+      TM::Task.mark_complete task_id
+      puts "The following task has been marked complete in the database: #{task_id}"
       puts ""
     when "exit"
       return 
-    else 
+    else
+      puts ""
       puts "That is not a command. Please, enter a command from the available list."
       puts ""
     end
