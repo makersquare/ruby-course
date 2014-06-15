@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'pry-debugger'
 
-describe 'Project' do
+describe 'TM::Project' do
 
   it "exists" do
     expect(TM::Project).to be_a(Class)

@@ -4,7 +4,7 @@ class TM::Task
   attr_reader :priority_number, :project_id, :status
 
   @@class_task_id = 0
-  @@tasks = {}
+  @@task_list = {}
 
   def initialize(name, p_number,description=nil, project_id)
     @name = name
@@ -14,7 +14,7 @@ class TM::Task
     @description = description
     @task_id = @@class_task_id += 1
     @project_id = project_id
-    @@tasks[@task_id] = self
+    @@task_list[@task_id] = self
   end
 
   def priority_number=(number)

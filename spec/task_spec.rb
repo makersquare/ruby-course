@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 
-describe 'Task' do
+describe 'TM::Task' do
   it "exists" do
     expect(TM::Task).to be_a(Class)
   end
