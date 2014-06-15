@@ -1,6 +1,6 @@
 
 class TM::Task
-  attr_reader :task_id, :project_id, :creation_time, :priority
+  attr_reader :task_id, :project_id, :creation_time, :description, :priority
   attr_accessor :status
   @@counter = 0
   @@tasks_list = []
@@ -11,7 +11,7 @@ class TM::Task
     @priority = priority
     @task_id = @@counter
     @@counter += 1
-    @creation_time = Date.today
+    @creation_time = Time.now
     @status = :incomplete
     @@tasks_list << self
   end

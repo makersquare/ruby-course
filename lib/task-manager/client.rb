@@ -37,7 +37,21 @@ class TM::TerminalClient
         puts project.name
       end
       puts ""
-    when "show"
+    when "create"
+      TM::Task.new split_input[1], split_input[2..-2].join(' '), split_input[-1]
+      TM::Task.tasks_list.each do |task|
+        puts task.project_id
+        puts task.description
+        puts task.priority
+        puts ""
+      end
+      puts ""
+
+
+
+
+
+    # when "show"
       # TM::Project.projects_list.each do |task|
       #   task.project_id == XXXXXXXXXXXXX.project_id && task.status == :incomplete
       # end
