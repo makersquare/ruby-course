@@ -1,6 +1,6 @@
 
 class TM::Task
-  attr_reader :description, :priority_number, :project_id, :task_id, :status
+  attr_reader :description, :priority_number, :project_id, :task_id, :status, :creation_date
 
   def initialize(description, priority_number, project_id, task_id)
     @description = description
@@ -8,13 +8,10 @@ class TM::Task
     @project_id = project_id
     @task_id = task_id
     @status = false
+    @creation_date = Time.now
   end
 
   def change_status
-    if @status == false
-      @status = true
-    else
-      @status = false
-    end
+    @status = !@status
   end
 end

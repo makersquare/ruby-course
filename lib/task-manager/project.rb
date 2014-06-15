@@ -6,8 +6,8 @@ class TM::Project
 
   def initialize(name)
     @name = name
-    @@project_list << self
     @id = @@project_list.count
+    @@project_list << self
     @task_list = []
   end
 
@@ -31,12 +31,15 @@ class TM::Project
     end
   end
 
-  def retrieve_completed_tasks
-    completed_tasks = []
-    @task_list.each do |task|
-      completed_tasks << task if task.status == true
-    end
-    return completed_tasks
+  def get_completed_tasks
+    completed_tasks = @task_list.select { |task| task.status == true }
+    completed_tasks.sort_by! { |task| task.creation_date }
+  end
+
+  def get_incomplete_tasks
+    incomplete_tasks = @task_list.select { |task| task.status == false }
+    # incomplete_tasks.sort_by! { |a, b| (a.priority_number <=> b.priority_number) == 0 ? (a.creation_date <=> b.creation_date) : (a.priority_number <=> b.priority_number) }
+    incomplete_tasks.sort_by! { |a| [-a.priority_number, a.creation_date] }
   end
 
 end
