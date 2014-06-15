@@ -43,8 +43,9 @@ class TM::TerminalClient
         puts task.project_id
         puts task.description
         puts task.priority
-        puts ""
+        puts task.task_id
       end
+      puts ""
     when "show"
       TM::Task.tasks_list.each do |task|
         if task.project_id == split_input[1] && task.status == :incomplete
@@ -54,15 +55,30 @@ class TM::TerminalClient
         end
       end
       puts ""
-
-    # when "history"
-    # when "add"
-    # when "complete"
+    when "history"
+      TM::Task.tasks_list.each do |task|
+        if task.project_id == split_input[1] && task.status == :complete
+          puts task.project_id
+          puts task.description
+          puts task.priority
+        end
+      end
+      puts ""
+    when "complete"
+      TM::Task.mark_complete split_input[1]
+      # TM::Task.tasks_list.each do |task|
+      #   if task.task_id == split_input[1]
+      #     puts task.status
+      #   end
+      # end
+      puts ""
     when "exit"
       return 
     else 
       puts "That is not a command. Please, enter a command from the available list."
+      puts ""
     end
+
     run
   end
 end

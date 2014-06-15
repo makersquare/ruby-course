@@ -21,6 +21,7 @@ class TM::Task
   end
 
   def self.mark_complete(task_id)
+    task_id = task_id.to_i
     task = @@tasks_list.find do |task|
       task.task_id == task_id
     end
