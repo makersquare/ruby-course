@@ -1,6 +1,7 @@
 class TM::Project
 
   @@class_id = 0
+  @@project_list = {}
 
   attr_reader :name
   attr_accessor :id, :tasks
@@ -9,11 +10,13 @@ class TM::Project
     @name = name
     @id = @@class_id +=1
     @tasks = []
+    @@project_list[@id] = self
   end
 
   def create_task(name, priority_number, description = nil)
     task = TM::Task.new(name, priority_number, description, @id)
     @tasks << task
+    task
   end
 
   # def sort_creation_date
@@ -23,7 +26,8 @@ class TM::Project
   def project_mark_complete(id)
     @tasks.map do |x|
       if x.task_id == id && x.status == "incomplete"
-        x.status = "complete"
+        # x.status = "complete"
+        x.mark_complete
         x
       end
     end
@@ -56,6 +60,10 @@ class TM::Project
         x.creation_date <=> y.creation_date
       end
     end
+  end
+
+  def self.project_list
+    @@project_list
   end
 end
 

@@ -33,9 +33,9 @@ describe 'Task' do
   end
 
   describe "#priority_number" do
-    xit "will return nil if the priority number is not inclusive of 1..5" do
-      # task1 = TM::Task.new("task1",6, "description", 1)
-      expect(@task1.priority_number).to eq(5)
+    it "will return nil if the priority number is not inclusive of 1..5" do
+      task1 = TM::Task.new("task1",6, "description", 1)
+      expect(task1.priority_number).to eq(5)
     end
   end
 
