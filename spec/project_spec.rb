@@ -57,13 +57,13 @@ describe 'Project' do
 
   describe '#list_incomplete' do
     context "when all tasks are incomplete" do
-      it "sorts by priority & creation time" do
+      it "sorts by priority" do
         project1.add_task("Use foundation for framework", 4, 0)
-        project1.add_task("Design a wireframe", 5, 0)
+        project1.add_task("Design a wireframe", 3, 0)
         project1.add_task("Begin building", 5, 0)
         project1.list_incomplete
 
-        expect(project1.incompleted_tasks.first.description).to eq("Use foundation for framework")
+        expect(project1.incompleted_tasks.first.description).to eq("Begin building")
       end
     end
   end

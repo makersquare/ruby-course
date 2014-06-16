@@ -52,8 +52,8 @@ class TM::Project
 
   def list_incomplete
     @incompleted_tasks = @tasks.select { |task| task.complete == false }
-    @incompleted_tasks.sort_by! { |task| task.priority && task.creation_time }
+    @incompleted_tasks.sort_by! { |task| task.priority }
+    @incompleted_tasks.reverse!
   end
-
 
 end

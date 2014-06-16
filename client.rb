@@ -116,5 +116,4 @@ TM::TerminalClient.help
 TM::TerminalClient.start
 
 # TO DO:
-# Refactor input/split
 # Fix list_incomplete sorting (by date + priority)
