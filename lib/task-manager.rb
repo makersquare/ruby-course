@@ -47,15 +47,15 @@ module TM
         puts "Created Task #{new_task.task_id}"
       when 'tasks'
         pid = Integer(user_input[1])
-        project = Project.project_list[pid]
+        project = TM::Project.project_list[pid]
         project.tasks.each {|x| puts "Task: #{x.task_id}"}
       when 'complete'
         pid = Integer(user_input[1])
-        project = Project.project_list[pid]
+        project = TM::Project.project_list[pid]
         project.retrieve_completed_tasks
       when 'incomplete'
         pid = Integer(user_input[1])
-        project = Project.project_list[pid]
+        project = TM::Project.project_list[pid]
         project.retrieve_incomplete_tasks
       when 'task_list'
         TM::Task.task_list.keys.each {|x| puts "TID: #{x}"}
