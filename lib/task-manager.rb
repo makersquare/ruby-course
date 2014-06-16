@@ -69,6 +69,8 @@ module TM
       else
         puts 'Invalid Command'
       end
+
+      #make method for each command instead of keeping within case statement
     end
   end
 end
