@@ -2,7 +2,7 @@
 # Create our module. This is so other files can start using it immediately
 module TM
 
-def self.run
+  def self.run
     @active = true
     TM.start_message
     TM.help
@@ -154,7 +154,6 @@ def self.run
 #
 # End Status Messages
 #
-
 end
 
 # Require all of our project files
