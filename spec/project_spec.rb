@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe 'Project' do
+
   RSpec::Mocks::setup(self)
+
   it "exists" do
     expect(TM::Project).to be_a(Class)
   end
@@ -34,17 +36,18 @@ describe 'Project' do
   end
 
   describe "#completed_tasks" do
-    proj = TM::Project.new("test")
-    proj.add_task("test1", "desc", 4)
-    sleep(1000)
-    proj.add_task("test2", "desc", 6)
-    sleep(1000)
-    proj.add_task("test3", "desc", 4)
-    sleep(1000)
-    proj.add_task("test4", "desc", 2)
-    sleep(1000)
-    proj.add_task("test5", "desc", 8)
+    # proj = TM::Project.new("test")
+    # proj.add_task("desc1", 5)
+    # sleep(0.50)
+    # proj.add_task("desc2", 4)
+    # sleep(0.50)
+    # proj.add_task("desc3", 3)
+    # sleep(0.50)
+    # proj.add_task("desc4", 5)
+    # sleep(0.50)
+    # proj.add_task("desc5", 1)
 
+    end
     # Test this method
   end
 
