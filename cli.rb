@@ -1,4 +1,4 @@
-require_relative '../task-manager.rb'
+require_relative 'lib/task-manager.rb'
 require 'pry-debugger'
 
 class TerminalClient
