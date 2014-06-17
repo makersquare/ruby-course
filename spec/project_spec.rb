@@ -13,6 +13,7 @@ describe 'Project' do
   context 'starting a new project' do
     it 'has an id number' do
       expect(test.id).to be_a(Fixnum)
+      # Test to make sure you have unique id
     end
   end
   context 'create a new task' do
@@ -26,6 +27,9 @@ describe 'Project' do
   describe '#complete_task' do
     it 'marks a task complete' do
       id=test.add_task("new task",1)
+      # task = test.add_task("new task", 1)
+      # test.complete_task(task.id)
+      # expect(task.task_is_completed).to be_true
       # binding.pry
       test.complete_task(id)
       expect(test.tasks[id].task_is_completed).to be_true
@@ -71,6 +75,9 @@ describe 'Project' do
         id4=test.add_task("new task",3)
         test.complete_task(id)
         test.complete_task(id2)
+        t1 = test.get_task(id)
+        t2 = test.get_task(id2)
+        test.list_complete_tasks == [t1, t2]
         new_date=test.list_complete_tasks[0].creation_date<test.list_complete_tasks[1].creation_date
         expect(new_date).to be_true
       end

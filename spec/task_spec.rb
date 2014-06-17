@@ -24,6 +24,7 @@ describe 'Task' do
       end
       it 'has a creation date' do
         expect(task.creation_date).to be_a(Time)
+        #stub time to make sure its st properly
       end
     end
   end
