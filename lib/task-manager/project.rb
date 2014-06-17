@@ -34,16 +34,12 @@ class TM::Project
   end
 
   def completed_tasks
-    # TODO
-    # TEST THIS METHOD
-    completed = @tasks.select {|tsk| tsk.complete}
-    completed.sort {|a, b| b.creation_time <=> a.creation_time}
+    completed = @project_tasks.select {|tsk| tsk.complete}
+    completed.sort {|a, b| a.creation_time <=> b.creation_time}
   end
 
   def incomplete_tasks
-    # TODO
-    # Test this method!
-    incomplete = @tasks.select {|tsk| !tsk.complete}
-    incomplete.sort {|a,b| (b.priority <=> a.priority) == 0 ? (b.creation_time <=> a.creation_time) : (b.priority <=> a.priority)}
+    incomplete = @project_tasks.select {|tsk| !tsk.complete}
+    incomplete.sort {|a,b| (b.priority <=> a.priority) == 0 ? (a.creation_time <=> b.creation_time) : (b.priority <=> a.priority)}
   end
 end
