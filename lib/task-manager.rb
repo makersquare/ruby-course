@@ -1,24 +1,26 @@
+require 'pry-debugger'
 
-# Create our module. This is so other files can start using it immediately
 module TM
-  #terminal method: here is where I call the method
 
-  #while active? and then a deactivate method?
+  def self.print_menu
+    puts "Welcome to Project Manager.  What would you like to do?"
+    puts "Available Commands:"
+    puts "--Type 'list' to list all projects"
+    puts "--Type 'new NAME' to create a new project"
+    puts "--Type 'add PID NAME PRIORITY_NUMBER DESCRIPTION' to add a task for project id = PID"
+    puts "--Type 'tasks PID' to show all tasks for project id = PID"
+    puts "--Type 'complete PID' to show all complete tasks for project id = PID"
+    puts "--Type 'incomplete PID' to show all incomplete tasks for project id = PID"
+    puts "--Type 'task_list' to list all tasks in all projects"
+    puts "--Type 'mark TID' to mark a task with id =TID as complete"
+    puts "--Type 'quit' to exit"
+  end
+
   def self.run
+    print_menu
     while true
-      puts "Welcome to Project Manager.  What would you like to do?"
-      puts "Available Commands:"
-      puts "--Type 'help' to show these commands again"
-      puts "--Type 'list' to list all projects"
-      puts "--Type 'new NAME' to create a new project"
-      puts "--Type 'add PID NAME PRIORITY_NUMBER DESCRIPTION' to add a task for project id = PID"
-      puts "--Type 'tasks PID' to show all tasks for project id = PID"
-      puts "--Type 'complete PID' to show all incomplete tasks for project id = PID"
-      puts "--Type 'incomplete PID' to show all incomplete tasks for project id = PID"
-      puts "--Type 'task_list' to list all tasks in all projects"
-      puts "--Type 'mark TID' to mark a task with id =TID as complete"
-      puts "--Type 'quit' to exit"
 
+      puts "--Type your command or type 'help' for the menu"
       user_input = gets.downcase.split
 
       if user_input.length == 0
@@ -28,13 +30,13 @@ module TM
 
       case user_input[0]
       when 'help'
-        next
+        print_menu
       when 'list'
         TM::Project.project_list.keys.each {|x| puts "PID: #{x}"}
       when 'new'
         name = user_input[1]
         new_project = TM::Project.new(name)
-        puts "Created Project #{new_project.id}"
+        puts "Created #{new_project.name} with PID: #{new_project.id}"
       when 'add'
         pid = Integer(user_input[1])
         name = user_input[2]
@@ -48,7 +50,7 @@ module TM
       when 'tasks'
         pid = Integer(user_input[1])
         project = TM::Project.project_list[pid]
-        project.tasks.each {|x| puts "Task: #{x.task_id}"}
+        project.tasks.each {|x| puts "Task ID: #{x.task_id}"}
       when 'complete'
         pid = Integer(user_input[1])
         project = TM::Project.project_list[pid]

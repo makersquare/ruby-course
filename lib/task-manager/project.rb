@@ -19,10 +19,9 @@ class TM::Project
     task
   end
 
-  def project_mark_complete(id)
+  def project_mark_complete(task_id)
     @tasks.map do |x|
       if x.task_id == id && x.status == "incomplete"
-        # x.status = "complete"
         x.mark_complete
         x
       end
@@ -38,7 +37,6 @@ class TM::Project
     sorted.compact.sort do |x,y| #returns nil value run compact on sorted
       x.creation_date <=> y.creation_date
     end
-    #return statement?
   end
 
   def retrieve_incomplete_tasks

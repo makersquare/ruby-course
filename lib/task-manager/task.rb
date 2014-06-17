@@ -32,4 +32,9 @@ class TM::Task
       @status = "complete"
     end
   end
+
+  def self.task_list
+    @@task_list
+  end
+
 end
