@@ -4,6 +4,7 @@ module TM
 
   def self.run
     @active = true
+    @history = []
     TM.start_message
     TM.help
     while @active
@@ -15,12 +16,14 @@ module TM
   def self.parse_command
     print "$: "
     # partition only partitions up to the first instance
-    command = gets.chomp
-    # input = gets
-    # input = input.strip.partition(" ")
-    # command = input.first
-    # # split the remaining argument up
-    # args = input.last.split(" ")
+    input = gets.chomp
+    @history << input
+    input = input.strip.partition(" ")
+    command = input.first
+    # split the remaining argument up
+    args = input.last.split(" ")
+
+    puts args
 
     case command
       when "mark"
@@ -48,9 +51,6 @@ module TM
 # Begin Commands
 #
   def self.cmd_mark(args)
-    # TODO
-    # Takes one argument
-    # TID
     if args.count != 1
       TM::PMTerminal.invalid_args("arg count")
       return nil
@@ -63,10 +63,7 @@ module TM
   end
 
   def self.cmd_add(args)
-    # TODO:
-    # Takes three arguments
-    # PID, PRIORITY and DESC
-    # add a new task to a project
+
     if args.count < 3
       TM::PMTerminal.invalid_args("arg count")
       return nil
@@ -83,12 +80,12 @@ module TM
     project = TM::Project.get_project(project_id)
     if project == nil
       puts "project does not exist"
-      return
+      return nil
     end
     desc = args[2..-1].join(" ")
     project.add_task(desc, priority)
     puts "Created task in #{project.name}"
-    puts "-- DESCRIPTION: #{description}"
+    puts "-- DESCRIPTION: #{desc}"
   end
 
   def self.cmd_history(arg)
@@ -104,22 +101,26 @@ module TM
     # Takes one argument
     # PID
     # show the remaining tasks for project id
+
   end
 
-  def self.cmd_create(arg)
-    # TODO
-    # Takes one argument
-    # project name
-    # creates a new project
+  def self.cmd_create(args)
+    if args.count != 1
+      puts "Wrong number of arguments."
+      return nil
+    end
+    name = args[0]
+    TM::Project.new(name)
+    puts "New project created named: #{name}"
   end
 
   def self.cmd_list
-    projects = TM::Project.get_all_projects
+    projects = TM::Project.get_projects
     if projects.empty?
       puts "You have no projects to list"
     else
       projects.each do |project|
-        puts "ID: #{project.id} NAME: #{project.name}"
+        puts "ID: #{project.pid} - NAME: #{project.name}"
       end
     end
   end
@@ -159,3 +160,6 @@ end
 # Require all of our project files
 require_relative 'task-manager/task.rb'
 require_relative 'task-manager/project.rb'
+
+TM::run
+
