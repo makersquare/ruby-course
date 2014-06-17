@@ -7,12 +7,6 @@ describe 'Project' do
     it "exists" do
       expect(TM::Project).to be_a(Class)
     end
-    it 'assigns id based on proj count && gives names to projs' do
-      proj1 = TM::Project.new(1)
-      proj2 = TM::Project.new(2)
-      expect(proj2.id).to not_eq(proj1.id)
-      expect(proj2.id).to eq(1)
-    end
   end
   context 'tasks' do
     it 'adds instances of task class' do
@@ -51,7 +45,7 @@ describe 'Project' do
         important_events << task.desc
       end
       #least to greatest
-      expect(important_events).to eq(['workout', 'future_completedamily', 'walk'])
+      expect(important_events).to eq(['workout', 'family', 'walk'])
     end
   end
 end
