@@ -52,9 +52,9 @@ class TM::TerminalClient
     puts "  list - List all projects"
     puts "  create - Create a new project"
     puts "  show - Show remaining tasks for project"
-    puts "  history PID - Show completed tasks for project with id = PID"
-    puts "  add PID PRIORITY DESC - Add a new task to project with id = PID"
-    puts "  mark TID - Mark task with id = TID as complete"
+    puts "  history - Show completed tasks for project with id = PID"
+    puts "  add - Add a new task to project with id = PID"
+    puts "  mark - Mark task with id = TID as complete"
     puts "  exit - Exit the program.\n\n"
 
     user_choice(gets.chomp.downcase)
@@ -84,6 +84,7 @@ class TM::TerminalClient
   def show(project_id)
     puts "\nProject '#{TM::Project.project_list[project_id].name}' has the following tasks remaining:"
     puts "\nTasks ID:                Description"
+    puts "-------------------------------------"
     TM::Project.project_list[project_id].get_incomplete_tasks.each do |task|
       puts "#{task.task_id}                        #{task.description}"
     end
@@ -92,6 +93,8 @@ class TM::TerminalClient
 
   def history(project_id)
     puts "The following tasks have been completed in Project '#{TM::Project.project_list[project_id].name}'."
+    puts "\nTasks ID:                Description"
+    puts "-------------------------------------"
     TM::Project.project_list[project_id].get_completed_tasks.each do |task|
       puts "#{task.task_id}                        #{task.description}"
     end

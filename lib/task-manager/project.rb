@@ -38,7 +38,6 @@ class TM::Project
 
   def get_incomplete_tasks
     incomplete_tasks = @task_list.select { |task| task.status == false }
-    # incomplete_tasks.sort_by! { |a, b| (a.priority_number <=> b.priority_number) == 0 ? (a.creation_date <=> b.creation_date) : (a.priority_number <=> b.priority_number) }
     incomplete_tasks.sort_by! { |a| [-a.priority_number, a.creation_date] }
   end
 
