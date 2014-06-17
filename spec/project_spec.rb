@@ -33,6 +33,8 @@ describe 'Project' do
   end
 
   describe "#completed_tasks" do
+    card1 = stub(:creation_time => Time.new(), :priority => 4)
+
     # TODO
     # Test this method
   end
