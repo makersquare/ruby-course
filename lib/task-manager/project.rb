@@ -43,7 +43,7 @@ class TM::Project
   def incomplete_tasks
     # TODO
     # Test this method!
-    incomplete = @tasks.select {|ts| !tsk.complete}
+    incomplete = @tasks.select {|tsk| !tsk.complete}
     incomplete.sort {|a,b| (b.priority <=> a.priority) == 0 ? (b.creation_time <=> a.creation_time) : (b.priority <=> a.priority)}
   end
 end
