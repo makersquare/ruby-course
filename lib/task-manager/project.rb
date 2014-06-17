@@ -29,8 +29,6 @@ class TM::Project
   end
 
   def add_task(desc, priority)
-    # TODO
-    # Test this method!
     new_task = TM::Task.new(@pid, desc, priority)
     @project_tasks << new_task
   end
@@ -43,6 +41,8 @@ class TM::Project
   end
 
   def incomplete_tasks
+    # TODO
+    # Test this method!
     incomplete = @tasks.select {|ts| !tsk.complete}
     incomplete.sort {|a,b| (b.priority <=> a.priority) == 0 ? (b.creation_time <=> a.creation_time) : (b.priority <=> a.priority)}
   end
