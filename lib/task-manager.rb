@@ -10,7 +10,6 @@ module TM
     while @active
       TM.parse_command
     end
-
   end
 
   def self.parse_command
@@ -22,9 +21,8 @@ module TM
     command = input.first
     # split the remaining argument up
     args = input.last.split(" ")
-
     puts args
-
+    puts args.count
     case command
       when "mark"
         TM.cmd_mark(args)
@@ -88,19 +86,45 @@ module TM
     puts "-- DESCRIPTION: #{desc}"
   end
 
-  def self.cmd_history(arg)
+  def self.cmd_history(args)
     # TODO:
     # Takes one argument
     # PID
-    # show remaining tasks for project id
+    # show completed tasks for project id
+    if args.count != 1
+      puts "Wrong number of arguments."
+      return nil
+    end
 
   end
 
-  def self.cmd_show(arg)
+  def self.cmd_show(args)
     # TODO
     # Takes one argument
     # PID
     # show the remaining tasks for project id
+    if args.count != 1
+      puts "Wrong number of arguments."
+      return nil
+    end
+    puts "ARGUMENTS NUMBER: #{args.count}"
+    puts args
+    pid = Integer(args[0])
+    project = TM::Project.get_project(pid)
+
+    project.incomplete_tasks.each do |tk|
+      priority = tk.priority
+      pid = tk.pid
+      desc = tk.desc
+      tim = tk.creation_time
+      tid = tk.task_id
+
+      puts
+      "Priority -- Task ID -- Creation Time
+         #{priority} -- #{tid}  -- #{tim}
+          Description: #{desc}"
+    end
+
 
   end
 
@@ -161,5 +185,5 @@ end
 require_relative 'task-manager/task.rb'
 require_relative 'task-manager/project.rb'
 
-# TM::run
+TM::run
 
