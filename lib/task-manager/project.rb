@@ -1,9 +1,9 @@
 
 class TM::Project
-  attr_reader :name, :id
+  attr_reader :id, :name, :completed, :created_at
 
   @@projects = [ ]
-  @@counter  = 0
+  # @@counter  = 0
 
   def self.all
     @@projects
@@ -14,8 +14,9 @@ class TM::Project
   end
 
   def initialize(name)
-    @name = name
-    @id   = @@counter += 1
+    # @id   = @@counter += 1
+    @name      = name
+    @completed = false
 
     @@projects << self
   end
@@ -29,6 +30,14 @@ class TM::Project
   end
 
   def completed_tasks
-    TM::Task.tasks_for(id, complete = true)
+    TM::Task.tasks_for(id, completed = true)
   end
+
+  def create
+    args = TM.db.create_project( [ @name, @completed ] )
+    @id         = args[:id]
+    @created_at = args[:created_at]
+    self
+  end
+
 end
