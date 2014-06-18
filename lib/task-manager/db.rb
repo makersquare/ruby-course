@@ -1,3 +1,5 @@
+require 'pg'
+
 module TM
   class DB
     def initialize
@@ -13,12 +15,12 @@ module TM
       # - complete (true or false)
       # - created_at (auto date/time)
 
-      result = @db.exec(
-        %Q[ INSERT INTO tasks (priority, description, project_id, employee_id, completed)
-            VALUES (?,?,?,?,?)
-            returning *;
-          ], data
-      )
+      # TODO: Need to escape quotes inside the command string.
+      command = %Q[ INSERT INTO tasks (priority, description, project_id, employee_id, completed)
+                    VALUES (#{data[0]},#{data[1]},#{data[2]},#{data[3]},#{data[4]})
+                    returning *; ]
+
+      result = @db.exec( command )
 
       values = result.values
       args = { id:          values[0],
