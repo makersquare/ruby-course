@@ -13,8 +13,8 @@ describe 'Task' do
     klass.class_variable_set :@@tasks, [ ]
 
     @project = TM::Project.new("Test Project")
-    @task1 = klass.new(@project.id, 1, "Task 1").complete
-    @task2 = klass.new(@project.id, 2, "Task 2").complete
+    @task1 = klass.new(@project.id, 1, "Task 1").mark_complete
+    @task2 = klass.new(@project.id, 2, "Task 2").mark_complete
     @task3 = klass.new(@project.id, 3, "Task 3")
     @task4 = klass.new(@project.id, 4, "Task 4")
   end
@@ -58,8 +58,13 @@ describe 'Task' do
     expect(@task1.created_at).to be_a(Time)
   end
 
-  it "responds to set_complete given a task_id by setting the task to complete" do
+  it "Class responds to set_complete given a task_id by setting the task to completed" do
     expect( @task3.complete? ).to eq(false)
     expect(klass.set_complete(@task3.id).complete?).to eq(true)
+  end
+
+  it "instance responds to mark_complete by setting the task to completed" do
+    expect( @task3.complete? ).to eq(false)
+    expect(@task3.mark_complete.complete?).to eq(true)
   end
 end
