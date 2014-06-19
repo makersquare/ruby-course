@@ -1,12 +1,14 @@
 require 'pg'
-
+require 'pry-byebug'
 module TM
   class DB
     def initialize
       @db = PG.connect(host: 'localhost', dbname: 'task-manager')
     end
 
-    def create_employee(data)
+    ### Employee ###
+
+    def create_employee(args) # {'name' => 'joe', 'email' => 'joe@email.com'}
       # - id (auto)
       # - name
       # - email
@@ -15,12 +17,60 @@ module TM
                     VALUES ($1, $2)
                     returning *; ]
 
+      data = [ args['name'], args['email'] ]
+      # binding.pry
       results = @db.exec_params( command, data )
 
-      new_results = parse_the(results)
+      new_results = parse_the(results).first
 
-      new_results.first
+      TM::Employee.new( new_results )
     end
+
+    def get_employee(id)
+      command = %Q[ SELECT * FROM employees
+                    WHERE id = $1; ]
+
+      data = [id]
+
+      results = @db.exec_params( command, data )
+
+      new_results = parse_the(results).first
+
+      TM::Employee.new( new_results )
+    end
+
+    def update_employee(id, args) # {'name' => 'joe', 'email' => 'joe@email.com'}
+      command = %Q[ UPDATE employees
+                    SET ($1) = ($2)
+                    WHERE id = $3; ]
+
+      keys   = args.keys.join(", ")
+      values = args.values.map { |s| "'#{s}'" }.join(', ')
+
+      data = [keys, values, id]
+      binding.pry
+      results = @db.exec_params( command, data )
+
+      new_results = parse_the(results).first
+
+      TM::Employee.new( new_results )
+    end
+
+    def delete_employee(id)
+      command = %Q[ DELETE FROM employees
+                    WHERE id = $1
+                    returning *; ]
+
+      data = [id]
+
+      results = @db.exec_params( command, data )
+
+      new_results = parse_the(results).first
+
+      TM::Employee.new( new_results )
+    end
+
+    ### Project ###
 
     def create_project(data)
       # - id (auto)
@@ -38,6 +88,8 @@ module TM
 
       new_results.first
     end
+
+    ### Task ###
 
     def create_task(data)
       # - id (auto)
@@ -74,14 +126,14 @@ module TM
       results.each do |result|
         presult = result.inject({}){|hash,(k,v)| hash[k.to_sym] = v; hash}
 
-        presult[:id         ] = result[:id         ].to_i
-        presult[:priority   ] = result[:priority   ].to_i if result[:priority]
-        presult[:project_id ] = result[:project_id ].to_i if result[:project_id]
-        presult[:employee_id] = result[:employee_id].to_i if result[:employee_id]
-        if result[:completed]
-          presult[:completed] = (result[:completed] == 'f' ? false : true)
+        presult[:id         ] = presult[:id         ].to_i
+        presult[:priority   ] = presult[:priority   ].to_i if presult[:priority]
+        presult[:project_id ] = presult[:project_id ].to_i if presult[:project_id]
+        presult[:employee_id] = presult[:employee_id].to_i if presult[:employee_id]
+        if presult[:completed]
+          presult[:completed] = (presult[:completed] == 'f' ? false : true)
         end
-        presult[:created_at ] = Time.parse( result[:created_at] ) if result[:created_at]
+        presult[:created_at ] = Time.parse( presult[:created_at] ) if presult[:created_at]
 
         presults << presult
       end
