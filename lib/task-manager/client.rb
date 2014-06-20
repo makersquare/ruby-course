@@ -10,7 +10,8 @@ class TM::Client
   def self.process_command(args)
     # args = Array(cmd)
     command = args.shift.to_sym
-
+    # sklass = args.shift.to_sym
+    # self.send(command, sklass, args)
     self.send(command, args)
   end
 
@@ -26,6 +27,8 @@ class TM::Client
   end
 
   def self.cmd_list
+    # list [projects | employees]
+    # list tasks project_id
     [ '  help - Show these commands again',
       '  exit - Exit this application',
       '  list - List all projects',
@@ -41,6 +44,18 @@ class TM::Client
     str += cmd_list.join("\n")
     puts str
   end
+
+  # def self.list(sklass, args = [])
+  #   results = TM.db.list(sklass, args)
+  #   if results.empty?
+  #     puts "No #{sklass}"
+  #   else
+  #     puts "All #{sklass}:"
+  #     puts
+  #
+  #     self.send("show_#{sklass}", results)
+  #   end
+  # end
 
   def self.list args = []
     projects = TM::Project.all
