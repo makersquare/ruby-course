@@ -8,106 +8,70 @@ module TM
 
     ### CREATE ###
 
-    def create_employee(args)
-      create(args, TM::Employee)
-    end
-
-    def create_project(args)
-      create(args, TM::Project)
-    end
-
-    def create_task(args)
-      create(args, TM::Task)
-    end
-
-    def create(args, klass)
+    def create(sklass, args)
       keys   = args.keys.join(", ")
       values = args.values.map { |s| "'#{s}'" }.join(', ')
 
-      command = %Q[ INSERT INTO #{klass.table_name} (#{keys})
+      command = %Q[ INSERT INTO #{sklass} (#{keys})
                     VALUES (#{values})
                     returning *; ]
 
-      execute_the(command, klass)
+      execute_the(command, sklass)
     end
 
     ### READ ###
 
-    def get_employee(id)
-      get(id, TM::Employee)
-    end
-
-    def get_project(id)
-      get(id, TM::Project)
-    end
-
-    def get_task(id)
-      get(id, TM::Task)
-    end
-
-    def get(id, klass)
-      command = %Q[ SELECT * FROM #{klass.table_name}
+    def get(sklass, id)
+      command = %Q[ SELECT * FROM #{sklass}
                     WHERE id = #{id}; ]
 
-      execute_the(command, klass)
+      execute_the(command, sklass)
     end
 
     ### UPDATE ###
 
-    def update_employee(id, args)
-      update(id, args, TM::Employee)
-    end
-
-    def update_project(id, args)
-      update(id, args, TM::Project)
-    end
-
-    def update_task(id, args)
-      update(id, args, TM::Task)
-    end
-
-    def update(id, args, klass)
+    def update(sklass, id, args)
       keys   = args.keys.join(", ")
       values = args.values.map { |s| "'#{s}'" }.join(', ')
 
-      command = %Q[ UPDATE #{klass.table_name}
+      command = %Q[ UPDATE #{sklass}
                     SET (#{keys}) = (#{values})
                     WHERE id = #{id}
                     returning *; ]
 
-      execute_the(command, klass)
+      execute_the(command, sklass)
     end
 
     ### DELETE ###
 
-    def delete_employee(id)
-      delete(id, TM::Employee)
-    end
-
-    def delete_project(id)
-      delete(id, TM::Project)
-    end
-
-    def delete_task(id)
-      delete(id, TM::Task)
-    end
-
-    def delete(id, klass)
-      command = %Q[ DELETE FROM #{klass.table_name}
+    def delete(sklass, id)
+      command = %Q[ DELETE FROM #{sklass}
                     WHERE id = #{id}
                     returning *; ]
 
-      execute_the(command, klass)
+      execute_the(command, sklass)
     end
 
     private
 
-    def execute_the(command, klass)
+    def get_klass(sklass)
+      {projects:  TM::Project,
+       employees: TM::Employee,
+       tasks:     TM::Task }[sklass.to_sym]
+    end
+
+    def execute_the(command, sklass)
+      klass = get_klass(sklass)
+
       results = @db.exec(command)
 
       new_results = parse_the(results).first
 
-      klass.new( new_results )
+      begin
+        klass.new( new_results )
+      rescue
+        nil
+      end
     end
 
     def parse_the(results)
