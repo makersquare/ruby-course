@@ -2,6 +2,10 @@
 class TM::Project
   attr_reader :id, :name, :completed, :created_at
 
+  def self.table_name
+    'projects'
+  end
+
   def initialize(args)
     @id         = args[:id]
     @name       = args[:name]
