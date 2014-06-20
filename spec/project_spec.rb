@@ -1,23 +1,24 @@
 require 'pry-debugger'
 require 'spec_helper'
 
+
 describe 'Project' do
-  before(:each) {TM::Project.class_variable_set :@@projects, []}
-  before(:each) {TM::Task.class_variable_set :@@tasks, []}
+  # before(:each) {TM::Project.class_variable_set :@@projects, []}
+  # before(:each) {TM::Task.class_variable_set :@@tasks, []}
 
   let!(:proj1) {TM::Project.new('proj1')}
-  let!(:proj2) {TM::Project.new('proj2')}
-  let!(:task0) {proj1.add_task(3, 'proj 1 tid 0')}
-  let!(:task1) {proj1.add_task(1, 'proj 1 tid 1')}
-  let!(:task2) {proj1.add_task(1, 'proj 1 tid 2')}
-  let!(:task3) {proj2.add_task(3, 'proj 2 tid 3')}
-  let!(:task4) {proj2.add_task(2, 'proj 2 tid 4')}
-  let!(:task5) {proj2.add_task(2, 'proj 2 tid 5')}
+  # let!(:proj2) {TM::Project.new('proj2')}
+  # let!(:task0) {proj1.add_task(3, 'proj 1 tid 0')}
+  # let!(:task1) {proj1.add_task(1, 'proj 1 tid 1')}
+  # let!(:task2) {proj1.add_task(1, 'proj 1 tid 2')}
+  # let!(:task3) {proj2.add_task(3, 'proj 2 tid 3')}
+  # let!(:task4) {proj2.add_task(2, 'proj 2 tid 4')}
+  # let!(:task5) {proj2.add_task(2, 'proj 2 tid 5')}
 
   describe '.initialize' do
 
-    it "creates a new project with a name" do
-      expect(proj1.name).to eq('proj1')
+    it "adds the project tables" do
+      expect(proj1.eid).to be(nil)
     end
 
     it "automatically generates and assigns the project a unique id" do
