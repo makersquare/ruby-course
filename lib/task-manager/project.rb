@@ -42,8 +42,8 @@ class TM::Project
     TM.orm.list_project_staffing(pid)
   end
 
-  def self.update_employee(pid, eid)
-    TM.orm.recruit_employee(pid, eid)
+  def self.update_employee_project(pid, eid)
+    TM.orm.update_employee(pid, eid)
   end
 
   def self.add_task(priority, description, pid)
@@ -54,8 +54,8 @@ class TM::Project
   #   new_project = TM.orm.add_project(name)
   #   ###puts project added...
   # end
-  def self.add_employee_task(eid, pid, tid)
-    TM.orm.assign_task(eid, pid, tid)
+  def self.update_employee_task(eid, tid)
+    # TM.orm.update_employee_task(eid, tid)
   end
 
   def self.update_complete(pid, tid)

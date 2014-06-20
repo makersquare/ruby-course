@@ -15,7 +15,7 @@ class TM::Task
     @creation_date = creation_date
   end
 
-  def mark_complete
+  def update_complete
     @status = "complete"
   end
 end
