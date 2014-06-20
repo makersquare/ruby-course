@@ -3,10 +3,6 @@ class TM::Task
   attr_reader :id, :description, :priority,
               :project_id, :employee_id, :completed, :created_at
 
-  def self.table_name
-    'tasks'
-  end
-
   # @@tasks   = [ ]
   # @@counter = 0
 
@@ -44,6 +40,10 @@ class TM::Task
     @completed   = args[:completed]
     @created_at  = args[:created_at]
   end
+
+  # def save!
+  #   TM.db.create('tasks', create_args)
+  # end
 
   # def create
   #   args = TM.db.create_task( [ @priority, @description, @project_id, @employee_id, @completed ] )
