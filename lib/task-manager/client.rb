@@ -9,8 +9,14 @@ class TM::Client
 
   def self.process_command(args)
     command = args.shift.to_sym
-    sklass = args.shift.to_sym
-    self.send(command, sklass, args)
+
+    if args.empty?
+      self.send(command)
+    else
+      sklass  = args.shift.to_sym
+      # self.send(command, sklass, args)
+      self.send("#{command}_#{sklass}", sklass, args)
+    end
   end
 
   def self.running?
@@ -27,29 +33,29 @@ class TM::Client
   def self.cmd_list
     [ '  help - Show these commands again',
       '  exit - Exit this application',
-      '\n',
-      '  create employees NAME EMAIL - Create a new employee',
+      '  ',
+      '  create employees NAME - Create a new employee',
       '  create projects NAME - Create a new project',
       '  create tasks PID EID PRIORITY DESC - Add a new task to project PID',
-      '\n',
+      '  ',
       '  show employees - Show all employees',
-      '  show employees EID - Show employee EID and all participating projects',
+      '  show employees EID - Show employee EID and assigned project',
       '  show employees EID COMPLETED - Show completed tasks for employee EID',
       '  show employees EID INCOMPLETE - Show remaining tasks and associated projects for employee EID',
-      '\n',
+      '  ',
       '  show projects - Show all projects',
       '  show projects PID - Show project PID and incomplete tasks',
       '  show projects PID COMPLETED - Show project PID and completed tasks',
       '  show projects PID EMPLOYEES - Show employees participating in this project',
-      '\n',
+      '  ',
       '  show tasks TID - Show task TID',
-      '\n',
+      '  ',
       '  recruit projects PID EID - Add employee EID to project PID',
       '  assign tasks TID EID - Assign task TID to employee EID',
-      '\n',
-      '  update tasks TID [PRIORITY=VALUE DESC=VALUE COMPLETED=VALUE] - Updates task TID with any or all of the supplied values',
-      '  update employees EID [NAME=VALUE EMAIL=VALUE] - Updates employee EID with the supplied values',
-      '  update projects PID [NAME=VALUE COMPLETED=VALUE] - Updates project PID with the supplied values'
+      '  ',
+      '  update tasks TID [PRIORITY=VALUE COMPLETED=VALUE DESC=VALUE] - Updates task TID with any or all of the supplied values',
+      '  update employees EID NAME=VALUE - Updates employee EID with the supplied values',
+      '  update projects PID COMPLETED=VALUE NAME=VALUE - Updates project PID with the supplied values'
     ]
   end
 
@@ -62,52 +68,32 @@ class TM::Client
   def self.create_employees(sklass, args = [])
     create_args = {}
 
-    create_args['name' ] = args[0]
-    create_args['email'] = args[1] if args[1]
+    create_args['name'] = args.join(' ')
 
-    result = TM.db.create(sklass, create_args)
-    display [ result ]
+    results = TM.db.create(sklass, create_args)
+    display results
   end
 
   def self.create_projects(sklass, args = [])
     create_args = {}
 
-    create_args['name'] = args[0]
+    create_args['name'] = args.join(' ')
 
-    result = TM.db.create(sklass, create_args)
-    display [ result ]
+    results = TM.db.create(sklass, create_args)
+    display results
   end
 
   def self.create_tasks(sklass, args = [])
     create_args = {}
 
-    create_args['project_id' ] = args[0]
-    create_args['employee_id'] = args[1]
-    create_args['priority'   ] = args[2]
-    create_args['description'] = args[3]
+    create_args['project_id' ] = args.shift
+    create_args['employee_id'] = args.shift
+    create_args['priority'   ] = args.shift
+    create_args['description'] = args.join(' ')
 
-    result = TM.db.create(sklass, create_args)
-    display [ result ]
+    results = TM.db.create(sklass, create_args)
+    display results
   end
-
-  # def self.create(sklass, args = [])
-  #   create_args = {}
-
-  #   case sklass
-  #   when 'employees', 'projects'
-  #     create_args['name' ] = args[0]
-  #     create_args['email'] = args[1] if args[1]
-  #   when 'tasks'
-  #     create_args['project_id' ] = args[0]
-  #     create_args['employee_id'] = args[1]
-  #     create_args['priority'   ] = args[2]
-  #     create_args['description'] = args[3]
-  #   end
-
-  #   result = TM.db.create(sklass, create_args)
-
-  #   display [ result ]
-  # end
 
   def self.show_employees(sklass, args = [])
     employee_id = args[0]
@@ -117,8 +103,10 @@ class TM::Client
       employees = TM.db.find(sklass, {})
       display employees
     else
-      employee = TM.db.show(sklass, employee_id)
-      display [ employee ]
+      employees = TM.db.find(sklass, {'id' => employee_id})
+      display employees
+
+      type = type.upcase if type
 
       case type
       when 'COMPLETED'
@@ -128,7 +116,8 @@ class TM::Client
         tasks = TM.db.find('tasks', {'employee_id' => employee_id, 'completed' => false})
         display tasks
       else
-        projects = TM.db.find('projects', {'employee_id' => employee_id})
+        project_id = employees.first.send(:project_id)
+        projects = TM.db.find('projects', {'id' => project_id})
         display projects
       end
     end
@@ -142,16 +131,17 @@ class TM::Client
       projects = TM.db.find(sklass, {})
       display projects
     else
-      project = TM.db.show(sklass, project_id)
-      display [ project ]
+      projects = TM.db.find(sklass, {'id' => project_id})
+      display projects
+
+      type = type.upcase if type
 
       case type
       when 'COMPLETED'
         tasks = TM.db.find('tasks', {'project_id' => project_id, 'completed' => true})
         display tasks
       when 'EMPLOYEES'
-        # TODO Not sure how to construct this SQL
-        # employees = TM.db.find('employees', {'project_id' => project_id})
+        employees = TM.db.find('employees', {'project_id' => project_id})
         display employees
       else
         tasks = TM.db.find('tasks', {'project_id' => project_id, 'completed' => false})
@@ -163,215 +153,156 @@ class TM::Client
   def self.show_tasks(sklass, args = [])
     task_id = args[0]
 
-    task = TM.db.show(sklass, task_id)
-    display [ task ]
+    tasks = TM.db.find(sklass, {'id' => task_id})
+    display tasks
   end
-
-  # def self.show(sklass, args = [])
-  #   case sklass
-  #   when 'employees'
-  #     employee_id = args[0]
-  #     type        = args[1]
-
-  #     case type
-  #     when 'COMPLETED'
-  #     when 'INCOMPLETE'
-  #     end
-  #   when 'projects'
-  #     project_id = args[0]
-  #     type       = args[1]
-  #   when 'tasks'
-  #     task_id = args[0]
-  #   end
-
-  #   result = TM.db.create(sklass, create_args)
-
-  #   display [ result ]
-  # end
 
   def self.recruit_projects(sklass, args = [])
     project_id  = args[0]
     employee_id = args[1]
 
-    result = TM.db.recruit(sklass, {'project_id' => project_id, 'employee_id' => employee_id})
-# TODO this is not finished
-    # show projects PID EMPLOYEES (display employees associated with this project)
-    display [ result ]
+    employee = TM.db.update('employees', employee_id, {'project_id' => project_id})
+
+    self.show_projects('projects', [project_id, 'EMPLOYEES'])
   end
 
   def self.update_tasks(sklass, args = [])
     task_id = args.shift
     update_args = {}
+    valid = true
 
     args.each do |arg|
+      args.shift
       match = /^(.+)[=](.+)/.match(arg)
-      key   = match[1]
-      value = match[2]
 
-      case key.upcase
-      when 'EID'
-        update_args['employee_id'] = value.to_i
-      when 'PRIORITY'
-        update_args['priority'] = value.to_i
-      when 'DESC'
-        update_args['description'] = value
-      when 'COMPLETED'
-        update_args['completed'] = value
+      if match.nil?
+        puts "Invalid arguments"
+        valid = false
+      else
+        key   = match[1]
+        value = match[2]
+
+        key = key.upcase if key
+
+        case key
+        when 'EID'
+          update_args['employee_id'] = value.to_i
+        when 'PRIORITY'
+          update_args['priority'] = value.to_i
+        when 'COMPLETED'
+          update_args['completed'] = value
+        when 'DESC'
+          update_args['description'] = value + " " + args.join(' ')
+        end
       end
     end
 
-    result = TM.db.update(sklass, task_id, update_args)
-    display [ result ]
+    if valid
+      results = TM.db.update(sklass, task_id, update_args)
+      display results
+    end
   end
 
   def self.update_employees(sklass, args = [])
     employee_id = args.shift
     update_args = {}
+    valid = true
 
     args.each do |arg|
+      args.shift
       match = /^(.+)[=](.+)/.match(arg)
-      key   = match[1]
-      value = match[2]
 
-      case key.upcase
-      when 'NAME'
-        update_args['name'] = value
-      when 'EMAIL'
-        update_args['email'] = value
+      if match.nil?
+        puts "Invalid arguments"
+        valid = false
+      else
+        key   = match[1]
+        value = match[2]
+
+        key = key.upcase if key
+
+        case key
+        when 'NAME'
+          update_args['name'] = value + " #{args.join(' ')}"
+        end
       end
     end
 
-    result = TM.db.update(sklass, employee_id, update_args)
-    display [ result ]
+    if valid
+      results = TM.db.update(sklass, employee_id, update_args)
+      display results
+    end
   end
 
   def self.update_projects(sklass, args = [])
     project_id = args.shift
     update_args = {}
+    valid = true
 
     args.each do |arg|
+      args.shift
       match = /^(.+)[=](.+)/.match(arg)
-      key   = match[1]
-      value = match[2]
 
-      case key.upcase
-      when 'NAME'
-        update_args['name'] = value
-      when 'COMPLETED'
-        update_args['completed'] = value
+      if match.nil?
+        puts "Invalid arguments"
+        valid = false
+      else
+        key   = match[1]
+        value = match[2]
+
+        key = key.upcase if key
+
+        case key
+        when 'COMPLETED'
+          update_args['completed'] = value
+        when 'NAME'
+          update_args['name'] = value + " #{args.join(' ')}"
+        end
       end
     end
 
-    result = TM.db.update(sklass, project_id, update_args)
-    display [ result ]
+    if valid
+      results = TM.db.update(sklass, project_id, update_args)
+      display results
+    end
   end
-
-  # '  assign tasks TID EID - Assign task TID to employee EID',
-  # def self.assign_task(sklass, args = [])
-  #   task_id     = args[0]
-  #   employee_id = args[1]
-  # end
 
   def self.display(result_array)
+    respond_to_ary = []
+    [:id, :name, :email, :description, :project_id,
+     :employee_id, :priority, :completed, :created_at].each do |attrib|
+      if result_array.first.respond_to?(attrib)
+        respond_to_ary.push(attrib)
+        # print "  #{attrib}"
+        case attrib
+        when :id, :project_id, :employee_id, :priority
+          printf("%-12s", attrib)
+        when :name, :email
+          printf("%-20s", attrib)
+        when :completed
+          printf("%-12s", attrib)
+        else
+          printf("%-30s", attrib)
+        end
+      end
+    end
+    puts
+
     result_array.each do |result|
-      string_array = [ ]
-      [:id, :name, :email, :description, :project_id,
-       :employee_id, :priority, :completed, :created_at].each do |attrib|
-        string_array.push("#{attrib}: #{result.call(attrib)}") if result.respond_to?(attrib)
+      respond_to_ary.each do |attrib|
+        # print "  #{result.send(attrib)}"
+        case attrib
+        when :id, :project_id, :employee_id, :priority
+          printf("%-12s", result.send(attrib))
+        when :name, :email
+          printf("%-20s", result.send(attrib))
+        when :completed
+          printf("%-12s", result.send(attrib))
+        else
+          printf("%-30s", result.send(attrib))
+        end
       end
-
-      string = string_array.join(" - ")
-      puts string
-    end
-  end
-
-#########################
-
-  def self.list args = []
-    projects = TM::Project.all
-    if projects.empty?
-      puts "No Projects"
-    else
-      puts "All Projects:"
       puts
-
-      show_projects projects
-    end
-  end
-
-  def self.show_projects project_array
-      project_array.each do |project|
-        puts "ID: #{project.id} - Name: #{project.name}"
-      end
-  end
-
-  def self.create args
-    if valid(args)
-      name = args.join(' ')
-
-      project = TM::Project.new(name)
-
-      show_projects [ project ]
-    end
-  end
-
-  def self.show args
-    if valid(args)
-      project_id = args.first.to_i
-
-      project = TM::Project.find(project_id)
-
-      task_array = project.incompleted_tasks
-
-      puts "Showing Project: #{project.name}"
-      puts
-
-      show_tasks task_array
-    end
-  end
-
-  def self.show_tasks task_array
-    task_array.each do |task|
-      puts "ID: #{task.id} - Priority: #{task.priority} - Description: #{task.description}"
-    end
-  end
-
-  def self.history args
-    if valid(args)
-      project_id = args.first.to_i
-
-      project = TM::Project.find(project_id)
-
-      task_array = project.completed_tasks
-
-      puts "Showing Project: #{project.name}"
-      puts
-
-      show_tasks task_array
-    end
-  end
-
-  def self.add args
-    if valid(args)
-      project_id  = args[0].to_i
-      priority    = args[1].to_i
-      description = args[2..-1].join(' ')
-
-      task = TM::Task.new project_id, priority, description
-
-      show_tasks [ task ]
-    end
-  end
-
-  def self.mark args
-    if valid(args)
-      task_id = args.first.to_i
-
-      task = TM::Task.find(task_id)
-
-      task.complete
-
-      show_tasks [ task ]
     end
   end
 

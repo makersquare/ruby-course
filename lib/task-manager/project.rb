@@ -1,12 +1,10 @@
 
 class TM::Project
-  attr_reader :id, :name, :completed, :created_at
+  attr_reader :id, :name
 
   def initialize(args)
-    @id         = args[:id]
-    @name       = args[:name]
-    @completed  = args[:completed]
-    @created_at = args[:created_at]
+    @id   = args[:id]
+    @name = args[:name]
   end
 
   # def new_task(priority, description)

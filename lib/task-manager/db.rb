@@ -1,9 +1,37 @@
 require 'pg'
+require 'time'
 require 'pry-byebug'
 module TM
   class DB
-    def initialize
-      @db = PG.connect(host: 'localhost', dbname: 'task-manager')
+    def initialize(dbname = 'task-manager-test')
+      @db = PG.connect(host: 'localhost', dbname: dbname)
+      build_tables
+    end
+
+    def build_tables
+      @db.exec(%Q[
+        CREATE TABLE IF NOT EXISTS projects(
+          id serial NOT NULL PRIMARY KEY,
+          name text
+        )])
+
+      @db.exec(%Q[
+        CREATE TABLE IF NOT EXISTS employees(
+          id serial NOT NULL PRIMARY KEY,
+          project_id integer REFERENCES projects(id),
+          name text
+        )])
+
+      @db.exec(%Q[
+        CREATE TABLE IF NOT EXISTS tasks(
+          id serial NOT NULL PRIMARY KEY,
+          project_id integer REFERENCES projects(id),
+          employee_id integer REFERENCES employees(id),
+          priority integer,
+          description text,
+          completed boolean DEFAULT FALSE,
+          created_at timestamp NOT NULL DEFAULT current_timestamp
+        )])
     end
 
     ### CREATE ###
@@ -43,6 +71,14 @@ module TM
       end
 
       command += ";"
+
+      execute_the(command, sklass)
+    end
+
+    def something(sklass, args)
+      command = %Q[ SELECT employees.id, employees.name, employees.email
+                    FROM employees, projects, project_employees
+                    WHERE project_employees.project_id = #{args[:project_id]}]
 
       execute_the(command, sklass)
     end
@@ -97,10 +133,15 @@ module TM
 
       results = @db.exec(command)
 
-      new_results = parse_the(results).first
+      new_results = parse_the(results)
 
       begin
-        klass.new( new_results )
+        return_objects = [ ]
+        new_results.each do |result|
+          return_objects.push( klass.new(result) )
+        end
+
+        return_objects
       rescue
         nil
       end
