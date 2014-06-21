@@ -28,6 +28,25 @@ module TM
       execute_the(command, sklass)
     end
 
+    ### FIND ###
+    def find(sklass, args)
+      command = "SELECT * FROM #{sklass}"
+
+      unless args.empty?
+        command += " WHERE "
+        args_ary = [ ]
+        args.each do |k,v|
+          args_ary.push("#{k} = #{v}")
+        end
+
+        command += args_ary.join(" AND ")
+      end
+
+      command += ";"
+
+      execute_the(command, sklass)
+    end
+
     ### UPDATE ###
 
     def update(sklass, id, args)
@@ -37,6 +56,19 @@ module TM
       command = %Q[ UPDATE #{sklass}
                     SET (#{keys}) = (#{values})
                     WHERE id = #{id}
+                    returning *; ]
+
+      execute_the(command, sklass)
+    end
+
+# TODO this is not complete
+    # recruit(sklass, {'project_id' => project_id, 'employee_id' => employee_id})
+    def recruit(sklass, args)
+      keys   = args.keys.join(", ")
+      values = args.values.map { |s| "'#{s}'" }.join(', ')
+
+      command = %Q[ INSERT INTO #{sklass} (#{keys})
+                    VALUES (#{values})
                     returning *; ]
 
       execute_the(command, sklass)
