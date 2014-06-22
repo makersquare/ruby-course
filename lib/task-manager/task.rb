@@ -1,7 +1,7 @@
 require 'time'
 
 class TM::Task
-  attr_accessor :tid, :description, :priority, :eid, :status, :creation_date
+  attr_reader :tid, :description, :priority, :eid, :status, :creation_date
 
   def initialize(priority, description, pid, eid=1, status='incomplete', creation_date=nil)
     task = TM.orm.show_task

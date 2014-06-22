@@ -14,9 +14,9 @@ describe 'ORM' do
     TM.orm.add_tables
   end
 
-  # after(:all) do
-  #   TM.orm.delete_tables
-  # end
+  after(:all) do
+    TM.orm.delete_tables
+  end
 
   it "should be an ORM" do
     expect(TM.orm).to be_a(TM::ORM)

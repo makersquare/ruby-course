@@ -14,6 +14,10 @@ describe 'Task' do
     TM.orm.add_tables
   end
 
+  after(:all) do
+    TM.orm.delete_tables
+  end
+
   it "exists" do
     expect(TM::Task).to be_a(Class)
   end

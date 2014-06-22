@@ -137,10 +137,6 @@ module TM
       TM::Task.new(result[0][1], result[0][2], result[0][3], result[0][4], result[0][5], result[0][6])
     end
 
-    def show_task
-      list_tasks.last
-    end
-
     def update_employee_task(tid, eid)
       check_employee_project(tid, eid)
 
@@ -231,6 +227,18 @@ module TM
       list_employee_tasks(eid).select { |i| i if i[5] == 'complete'}
     end
 
+    # Helper methods for setting instance variables
+    def show_task
+      list_tasks.last
+    end
+
+    def show_project
+      list_projects.last
+    end
+
+    def show_employee
+      list_employees.last
+    end
   end
 
   def self.orm
