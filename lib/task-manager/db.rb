@@ -47,16 +47,7 @@ module TM
       execute_the(command, sklass)
     end
 
-    ### READ ###
-
-    # def get(sklass, id)
-    #   command = %Q[ SELECT * FROM #{sklass}
-    #                 WHERE id = #{id}; ]
-
-    #   execute_the(command, sklass)
-    # end
-
-    ### FIND ###
+    ### READ / FIND ###
     def find(sklass, args)
       command = "SELECT * FROM #{sklass}"
 
@@ -75,14 +66,6 @@ module TM
       execute_the(command, sklass)
     end
 
-    # def something(sklass, args)
-    #   command = %Q[ SELECT employees.id, employees.name, employees.email
-    #                 FROM employees, projects, project_employees
-    #                 WHERE project_employees.project_id = #{args[:project_id]}]
-
-    #   execute_the(command, sklass)
-    # end
-
     ### UPDATE ###
 
     def update(sklass, id, args)
@@ -96,19 +79,6 @@ module TM
 
       execute_the(command, sklass)
     end
-
-
-    # recruit(sklass, {'project_id' => project_id, 'employee_id' => employee_id})
-    # def recruit(sklass, args)
-    #   keys   = args.keys.join(", ")
-    #   values = args.values.map { |s| "'#{s}'" }.join(', ')
-
-    #   command = %Q[ INSERT INTO #{sklass} (#{keys})
-    #                 VALUES (#{values})
-    #                 returning *; ]
-
-    #   execute_the(command, sklass)
-    # end
 
     ### DELETE ###
 
