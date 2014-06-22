@@ -3,16 +3,20 @@ require 'pry-byebug'
 
 describe 'TM::DB' do
 
-  before(:all) do
-    @conn = PG.connect(host: 'localhost', dbname: 'task-manager-test')
-    @db = TM::DB.new
-    @db.send(:db=, @conn)
-  end
+  let(:dbname) { 'task-manager-test' }
+  let(:db    ) { TM::DB.new(dbname)  }
+  let(:klass ) { TM::DB }
 
-  let(:klass) { TM::DB }
+  before(:all) do
+    db.send(:conn).exec('TRUNCATE TABLE employees RESTART IDENTITY CASCADE')
+  end
 
   it "exists" do
     expect(klass).to be_a(Class)
+  end
+
+  it "initialize accepts an optional argument for the database name" do
+    expect( TM::DB.new(dbname).send(:conn).db ).to eq(dbname)
   end
 
   it "TM module responds to db by returning the DB singleton class" do
@@ -25,153 +29,44 @@ describe 'TM::DB' do
     expect(klass.new).not_to eq(db)
   end
 
-  context "Employees" do
-    before(:all) do
-      @conn.exec('TRUNCATE TABLE employees RESTART IDENTITY CASCADE')
-    end
+  it "responds to 'create' given a table name as a string and args hash by returning the created object" do
+    result_array = db.create('employees', {'name' => 'Joe Smith'})
+    expect(result_array).to be_a(Array)
 
-    let(:sklass) { 'employees' }
-    let(:klass ) { TM::Employee }
-    let(:args  ) { {'name' => 'Sam', 'email' => 'sam@email.com'} }
-    let(:update_args) { {'name' => 'Joe', 'email' => 'joe@email.com'} }
-
-    it ".create accepts a klass as string and argument hash and returns the created object" do
-      result = @db.create(sklass, args)
-      expect( result  ).to be_a(klass)
-      expect(result.id).to be_a(Integer)
-    end
-
-    it ".get accepts a klass as string and an id and returns the object" do
-      object = @db.create(sklass, args)
-      result = @db.get(sklass, object.id)
-      expect( result  ).to be_a(klass)
-      expect(result.id).to be_a(Integer)
-      expect(result.id).to eq(object.id)
-    end
-
-    it ".update accepts a klass as string and an id and args hash and returns the updated object" do
-      object = @db.create(sklass, args)
-      result = @db.update(sklass, object.id, update_args)
-      expect( result  ).to be_a(klass)
-      expect(result.id).to be_a(Integer)
-      expect(result.id).to eq(object.id)
-
-      expect(result.name).to eq(update_args['name'])
-      expect(result.email).to eq(update_args['email'])
-    end
-
-    it ".delete accepts a klass as string and an id and returns the deleted object" do
-      object = @db.create(sklass, args)
-      result = @db.delete(sklass, object.id)
-      expect( result  ).to be_a(klass)
-      expect(result.id).to be_a(Integer)
-      expect(result.id).to eq(object.id)
-
-      expect(@db.get(sklass, object.id)).to eq(nil)
-    end
+    result = result_array.first
+    expect(result).to be_a(TM::Employee)
+    expect(result.id).to be_a(Integer)
+    expect(result.name).to eq('Joe Smith')
   end
 
-  context "Projects" do
-    before(:all) do
-      @conn.exec('TRUNCATE TABLE projects RESTART IDENTITY CASCADE')
-    end
+  it "responds to 'find' given a table name as a string and args hash by returning the found object" do
+    result_array = db.find('employees', {'id' => 1})
+    expect(result_array).to be_a(Array)
 
-    let(:sklass) { 'projects' }
-    let(:klass ) { TM::Project }
-    let(:args  ) { {'name' => 'Test Project', 'completed' => false} }
-    let(:update_args) { {'name' => 'Project Test', 'completed' => true} }
-
-    it ".create accepts a klass as string and argument hash and returns the created object" do
-      result = @db.create(sklass, args)
-      expect( result  ).to be_a(klass)
-      expect(result.id).to be_a(Integer)
-    end
-
-    it ".get accepts a klass as string and an id and returns the object" do
-      object = @db.create(sklass, args)
-      result = @db.get(sklass, object.id)
-      expect( result  ).to be_a(klass)
-      expect(result.id).to be_a(Integer)
-      expect(result.id).to eq(object.id)
-    end
-
-    it ".update accepts a klass as string and an id and args hash and returns the updated object" do
-      object = @db.create(sklass, args)
-      result = @db.update(sklass, object.id, update_args)
-      expect( result  ).to be_a(klass)
-      expect(result.id).to be_a(Integer)
-      expect(result.id).to eq(object.id)
-
-      expect(result.name).to eq(update_args['name'])
-      expect(result.completed).to eq(update_args['completed'])
-    end
-
-    it ".delete accepts a klass as string and an id and returns the deleted object" do
-      object = @db.create(sklass, args)
-      result = @db.delete(sklass, object.id)
-      expect( result  ).to be_a(klass)
-      expect(result.id).to be_a(Integer)
-      expect(result.id).to eq(object.id)
-
-      expect(@db.get(sklass, object.id)).to eq(nil)
-    end
+    result = result_array.first
+    expect(result).to be_a(TM::Employee)
+    expect(result.id).to be(1)
+    expect(result.name).to eq('Joe Smith')
   end
 
-  context "Tasks" do
-    before(:all) do
-      @conn.exec('TRUNCATE TABLE tasks RESTART IDENTITY CASCADE')
-      @employee = @db.create( 'employees', {'name' => 'Joe', 'email' => 'joe@email.com'} )
-      @project  = @db.create( 'projects', {'name' => 'Write Code', 'completed' => false } )
-    end
+  it "responds to 'update' given a table name as a string, id and args hash by returning the updated object" do
+    result_array = db.update('employees', 1, {'name' => 'Bill Jones'})
+    expect(result_array).to be_a(Array)
 
-    let(:sklass) { 'tasks' }
-    let(:klass ) { TM::Task }
-    let(:args  ) {
-      {'priority' => 1, 'description' => 'Test Task',
-       'project_id' => @project.id, 'employee_id' => @employee.id,
-       'completed' => false}
-    }
-    let(:update_args) {
-      {'priority' => 3, 'description' => 'Task Test', 'completed' => true}
-    }
+    result = result_array.first
+    expect(result).to be_a(TM::Employee)
+    expect(result.id).to be(1)
+    expect(result.name).to eq('Bill Jones')
+  end
 
-    it ".create accepts a klass as string and argument hash and returns the created object" do
-      result = @db.create(sklass, args)
-      expect( result  ).to be_a(klass)
-      expect(result.id).to be_a(Integer)
+  it "responds to 'delete' given a table name as a string and id by returning the deleted object" do
+    result_array = db.delete('employees', 1)
+    expect(result_array).to be_a(Array)
 
-      expect(result.project_id).to eq(@project.id)
-      expect(result.employee_id).to eq(@employee.id)
-      expect(result.created_at).to be_a(Time)
-    end
-
-    it ".get accepts a klass as string and an id and returns the object" do
-      object = @db.create(sklass, args)
-      result = @db.get(sklass, object.id)
-      expect( result  ).to be_a(klass)
-      expect(result.id).to be_a(Integer)
-      expect(result.id).to eq(object.id)
-    end
-
-    it ".update accepts a klass as string and an id and args hash and returns the updated object" do
-      object = @db.create(sklass, args)
-      result = @db.update(sklass, object.id, update_args)
-      expect( result  ).to be_a(klass)
-      expect(result.id).to be_a(Integer)
-      expect(result.id).to eq(object.id)
-
-      expect(result.description).to eq(update_args['description'])
-      expect(result.completed).to eq(update_args['completed'])
-    end
-
-    it ".delete accepts a klass as string and an id and returns the deleted object" do
-      object = @db.create(sklass, args)
-      result = @db.delete(sklass, object.id)
-      expect( result  ).to be_a(klass)
-      expect(result.id).to be_a(Integer)
-      expect(result.id).to eq(object.id)
-
-      expect(@db.get(sklass, object.id)).to eq(nil)
-    end
+    result = result_array.first
+    expect(result).to be_a(TM::Employee)
+    expect(result.id).to be(1)
+    expect(result.name).to eq('Bill Jones')
+    expect(db.find('employees', {'id' => 1})).to eq([])
   end
 end

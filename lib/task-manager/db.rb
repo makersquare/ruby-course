@@ -3,26 +3,26 @@ require 'time'
 require 'pry-byebug'
 module TM
   class DB
-    def initialize(dbname = 'task-manager-test')
-      @db = PG.connect(host: 'localhost', dbname: dbname)
+    def initialize(dbname = 'task-manager')
+      @conn = PG.connect(host: 'localhost', dbname: dbname)
       build_tables
     end
 
     def build_tables
-      @db.exec(%Q[
+      @conn.exec(%Q[
         CREATE TABLE IF NOT EXISTS projects(
           id serial NOT NULL PRIMARY KEY,
           name text
         )])
 
-      @db.exec(%Q[
+      @conn.exec(%Q[
         CREATE TABLE IF NOT EXISTS employees(
           id serial NOT NULL PRIMARY KEY,
           project_id integer REFERENCES projects(id),
           name text
         )])
 
-      @db.exec(%Q[
+      @conn.exec(%Q[
         CREATE TABLE IF NOT EXISTS tasks(
           id serial NOT NULL PRIMARY KEY,
           project_id integer REFERENCES projects(id),
@@ -49,12 +49,12 @@ module TM
 
     ### READ ###
 
-    def get(sklass, id)
-      command = %Q[ SELECT * FROM #{sklass}
-                    WHERE id = #{id}; ]
+    # def get(sklass, id)
+    #   command = %Q[ SELECT * FROM #{sklass}
+    #                 WHERE id = #{id}; ]
 
-      execute_the(command, sklass)
-    end
+    #   execute_the(command, sklass)
+    # end
 
     ### FIND ###
     def find(sklass, args)
@@ -75,13 +75,13 @@ module TM
       execute_the(command, sklass)
     end
 
-    def something(sklass, args)
-      command = %Q[ SELECT employees.id, employees.name, employees.email
-                    FROM employees, projects, project_employees
-                    WHERE project_employees.project_id = #{args[:project_id]}]
+    # def something(sklass, args)
+    #   command = %Q[ SELECT employees.id, employees.name, employees.email
+    #                 FROM employees, projects, project_employees
+    #                 WHERE project_employees.project_id = #{args[:project_id]}]
 
-      execute_the(command, sklass)
-    end
+    #   execute_the(command, sklass)
+    # end
 
     ### UPDATE ###
 
@@ -97,18 +97,18 @@ module TM
       execute_the(command, sklass)
     end
 
-# TODO this is not complete
+
     # recruit(sklass, {'project_id' => project_id, 'employee_id' => employee_id})
-    def recruit(sklass, args)
-      keys   = args.keys.join(", ")
-      values = args.values.map { |s| "'#{s}'" }.join(', ')
+    # def recruit(sklass, args)
+    #   keys   = args.keys.join(", ")
+    #   values = args.values.map { |s| "'#{s}'" }.join(', ')
 
-      command = %Q[ INSERT INTO #{sklass} (#{keys})
-                    VALUES (#{values})
-                    returning *; ]
+    #   command = %Q[ INSERT INTO #{sklass} (#{keys})
+    #                 VALUES (#{values})
+    #                 returning *; ]
 
-      execute_the(command, sklass)
-    end
+    #   execute_the(command, sklass)
+    # end
 
     ### DELETE ###
 
@@ -131,7 +131,7 @@ module TM
     def execute_the(command, sklass)
       klass = get_klass(sklass)
 
-      results = @db.exec(command)
+      results = @conn.exec(command)
 
       new_results = parse_the(results)
 
@@ -170,8 +170,12 @@ module TM
 
     private
 
-    def db=(db)
-      @db = db
+    def conn
+      @conn
+    end
+
+    def conn=(conn)
+      @conn = conn
     end
   end
 
