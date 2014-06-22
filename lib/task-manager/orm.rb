@@ -111,17 +111,7 @@ module TM
         ON e.eid = jpe.eid
       SQL
       result = @db_adaptor.exec(selection)
-      # binding.pry
       result.values.select { |i| i[0][0] == pid.to_s }
-
-        #     selection = <<-SQL
-        # SELECT *
-        # FROM tasks t, projects p
-        # JOIN join_projects_employees jpe
-        # ON p.pid = jpe.pid
-        # JOIN employees e
-        # ON e.eid = '#{eid}'
-        # SQL
     end
 
     def update_employee_project(pid, eid)
@@ -145,6 +135,10 @@ module TM
       SQL
       result = @db_adaptor.exec(add)
       TM::Task.new(result[0][1], result[0][2], result[0][3], result[0][4], result[0][5], result[0][6])
+    end
+
+    def show_task
+      list_tasks.last
     end
 
     def update_employee_task(tid, eid)
@@ -186,7 +180,7 @@ module TM
         RETURNING *;
       SQL
       result = @db_adaptor.exec(update)
-      result.values[0][5]
+      result.values
     end
 
     def list_employees
@@ -234,7 +228,6 @@ module TM
     end
 
     def list_employee_history(eid)
-      # binding.pry
       list_employee_tasks(eid).select { |i| i if i[5] == 'complete'}
     end
 

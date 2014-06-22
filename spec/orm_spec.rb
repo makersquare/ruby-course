@@ -142,6 +142,21 @@ describe 'ORM' do
     end
   end
 
+  describe 'show_task' do
+    it 'shows a specific task by TID' do
+      proj1 = TM.orm.add_project('proj1')
+      proj2 = TM.orm.add_project('proj2')
+
+      emp1 = TM.orm.add_employee('name1')
+      emp2 = TM.orm.add_employee('name2')
+
+      task1 = TM.orm.add_task('1', 'first task, highest priority', '1')
+      task2 = TM.orm.add_task('2', 'first task, highest priority', '2')
+
+      expect(TM.orm.show_task[0]).to eq('2')
+    end
+  end
+
   describe 'update_employee_project' do
     it 'assigns a project to an employee by PID and EID' do
       proj1 = TM.orm.add_project('proj1')
@@ -170,9 +185,9 @@ describe 'ORM' do
       task5 = TM.orm.add_task('8', 'fifth task, lowest priority', '2')
       task6 = TM.orm.add_task('1', 'sixth task, highest priority', '2')
 
-      TM.orm.update_complete(2,4)
+      update = TM.orm.update_complete(2,4)
 
-      expect(task4.update_complete).to eq('complete')
+      expect(update[0][5]).to eq('complete')
     end
   end
 

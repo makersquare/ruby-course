@@ -1,21 +1,21 @@
 require 'time'
 
 class TM::Task
-  attr_accessor :tid, :description, :priority, :status, :creation_date
-  # @@tasks = []
+  attr_accessor :tid, :description, :priority, :eid, :status, :creation_date
 
-  def initialize(priority, description, pid, eid=nil, status, creation_date)
-    @description = description
-    @priority = priority
-    @pid = pid
-    @eid = eid
-    @tid = tid
-    # @@tasks << self
-    @status = "incomplete"
-    @creation_date = creation_date
+  def initialize(priority, description, pid, eid=1, status='incomplete', creation_date=nil)
+    task = TM.orm.show_task
+    @tid = task[0]
+    @priority = task[1]
+    @description = task[2]
+    @pid = task[3]
+    @eid = task[4]
+    @status = task[5]
+    @creation_date = task[6]
   end
 
   def update_complete
-    @status = "complete"
+    TM.orm.update_complete(@pid, @tid)
+    @status = 'complete'
   end
 end
