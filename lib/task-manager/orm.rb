@@ -223,17 +223,18 @@ module TM
     def list_employee_tasks(eid)
       selection = <<-SQL
         SELECT *
-        FROM tasks t, projects p
-        JOIN join_projects_employees jpe
-        ON p.pid = jpe.pid
-        JOIN employees e
-        ON e.eid = '#{eid}'
-        SQL
+        FROM tasks
+        JOIN projects
+          ON projects.pid = tasks.pid
+        JOIN employees
+          ON employees.eid = tasks.eid
+      SQL
       result = @db_adaptor.exec(selection)
-      result.values
+      result.values.select { |i| i[4] == eid.to_s }
     end
 
     def list_employee_history(eid)
+      # binding.pry
       list_employee_tasks(eid).select { |i| i if i[5] == 'complete'}
     end
 
