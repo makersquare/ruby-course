@@ -2,28 +2,25 @@ require 'time'
 require 'pg'
 
 class TM::Project
-  attr_accessor :name, :pid, :tasks
+  attr_accessor :name, :pid
 
-  # @@projects = []
-
-  def initialize(name=nil)
-    # TM.orm
-    @name = name
-    @pid = pid
-    @tasks = tasks
-    # @tasks = TM.orm.list_all_tasks
-    # @projects = TM.orm.list_projects
-    # @employees = TM.orm.list_all_employees
+  def initialize(pid=nil, name=nil, creation_date=nil)
+    project = TM.orm.show_project
+    @pid = project[0]
+    @name = project[1]
+    @creation_date = project[2]
   end
 
   def self.list_projects
     TM.orm.list_projects
-    # @@projects.each_with_index { |i,idx| puts "PID #{idx}: #{i.name}" }
   end
 
   def self.add_project(name)
-    new_project = TM.orm.add_project(name)
-    ###puts project added...
+    TM.orm.add_project(name)
+  end
+
+  def self.list_project_tasks(pid)
+    TM.orm.list_project_tasks(pid)
   end
 
   def self.list_incomplete_tasks

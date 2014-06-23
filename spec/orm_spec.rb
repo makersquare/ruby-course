@@ -66,6 +66,26 @@ describe 'ORM' do
     end
   end
 
+  describe 'list_project_tasks' do
+    it 'lists all tasks in the database for a particular project by PID' do
+      proj1 = TM.orm.add_project('proj1')
+      proj2 = TM.orm.add_project('proj2')
+
+      emp1 = TM.orm.add_employee('name1')
+      emp2 = TM.orm.add_employee('name2')
+
+      task1 = TM.orm.add_task('1', 'first task, highest priority', '1')
+      task2 = TM.orm.add_task('2', 'second task, high priority', '1')
+      task3 = TM.orm.add_task('3', 'third task, medium priority', '1')
+      task4 = TM.orm.add_task('6', 'fourth task, low priority', '2')
+      task5 = TM.orm.add_task('8', 'fifth task, lowest priority', '2')
+      task6 = TM.orm.add_task('1', 'sixth task, highest priority', '2')
+
+      project_tasks = TM.orm.list_project_tasks(2).map { |i| i[2] }
+      expect(project_tasks.length).to eq(3)
+    end
+  end
+
   describe 'list_incomplete_tasks' do
     it 'lists tasks marked as incomplete for a given project' do
       proj1 = TM.orm.add_project('proj1')
@@ -151,9 +171,34 @@ describe 'ORM' do
       emp2 = TM.orm.add_employee('name2')
 
       task1 = TM.orm.add_task('1', 'first task, highest priority', '1')
-      task2 = TM.orm.add_task('2', 'first task, highest priority', '2')
+      expect(task1.tid).to eq('1')
 
-      expect(TM.orm.show_task[0]).to eq('2')
+      task2 = TM.orm.add_task('2', 'first task, highest priority', '2')
+      expect(task2.tid).to eq('2')
+    end
+  end
+
+  describe 'show_project' do
+    it 'shows a specific task by TID' do
+      proj1 = TM.orm.add_project('proj1')
+      proj2 = TM.orm.add_project('proj2')
+
+      emp1 = TM.orm.add_employee('name1')
+      emp2 = TM.orm.add_employee('name2')
+
+      expect(TM.orm.show_project[0]).to eq('2')
+    end
+  end
+
+  describe 'show_employee' do
+    it 'shows a specific task by TID' do
+      proj1 = TM.orm.add_project('proj1')
+      proj2 = TM.orm.add_project('proj2')
+
+      emp1 = TM.orm.add_employee('name1')
+      emp2 = TM.orm.add_employee('name2')
+
+      expect(TM.orm.show_employee[0]).to eq('2')
     end
   end
 

@@ -81,6 +81,16 @@ module TM
       result.values
     end
 
+    def list_project_tasks(pid)
+      selection = <<-SQL
+        SELECT * FROM tasks
+        WHERE pid = '#{pid}'
+        ORDER BY creation_date ASC;
+      SQL
+      result = @db_adaptor.exec(selection)
+      result.values
+    end
+
     def list_completed_tasks(pid)
       selection = <<-SQL
         SELECT * FROM tasks
@@ -229,6 +239,7 @@ module TM
 
     # Helper methods for setting instance variables
     def show_task
+      # binding.pry
       list_tasks.last
     end
 

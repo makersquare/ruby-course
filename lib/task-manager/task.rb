@@ -14,6 +14,10 @@ class TM::Task
     @creation_date = task[6]
   end
 
+  def show_task
+    TM.orm.show_task
+  end
+
   def update_complete
     TM.orm.update_complete(@pid, @tid)
     @status = 'complete'
