@@ -4,7 +4,7 @@ require 'pg'
 class TM::Project
   attr_accessor :name, :pid
 
-  def initialize(pid=nil, name=nil, creation_date=nil)
+  def initialize(name, creation_date=nil)
     project = TM.orm.show_project
     @pid = project[0]
     @name = project[1]
@@ -52,8 +52,8 @@ class TM::Project
     TM.orm.update_employee_task(eid, tid)
   end
 
-  def self.update_complete(pid, tid)
-    TM.orm.update_complete(pid, tid)
+  def self.update_complete(tid)
+    TM.orm.update_complete(tid)
   end
 
   def self.list_employees

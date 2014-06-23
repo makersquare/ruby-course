@@ -1,4 +1,4 @@
-require 'pry-debugger'
+# require 'pry-debugger'
 require 'spec_helper'
 
 
@@ -98,7 +98,7 @@ describe 'Project' do
       task2 = TM.orm.add_task('2', 'second task, high priority', '1')
       task3 = TM.orm.add_task('3', 'third task, medium priority', '1')
 
-      TM.orm.update_complete(1,1)
+      TM.orm.update_complete(1)
 
       expect(TM::Project.list_completed_tasks(1).length).to eq(1)
     end
@@ -197,7 +197,7 @@ describe 'Project' do
       task5 = TM.orm.add_task('8', 'fifth task, lowest priority', '2')
       task6 = TM.orm.add_task('1', 'sixth task, highest priority', '2')
 
-      update = TM::Project.update_complete(2,4)
+      update = TM::Project.update_complete(4)
 
       expect(update[0][5]).to eq('complete')
     end
@@ -282,9 +282,9 @@ describe 'Project' do
       task6 = TM.orm.add_task('1', 'sixth task, highest priority', '2')
 
       update = TM.orm.update_employee_task(2,2)
-      TM.orm.update_complete(1,2)
+      TM.orm.update_complete(2)
 
-      complete = TM.orm.list_employee_history(2)
+      complete = TM::Project.list_employee_history(2)
 
       expect(complete[0][5]).to eq('complete')
     end

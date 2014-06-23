@@ -1,6 +1,6 @@
 require 'pg'
 require 'time'
-require 'pry-debugger'
+# require 'pry-debugger'
 
 module TM
   class ORM
@@ -178,11 +178,11 @@ module TM
       update_employee_project(task_pid, eid)
     end
 
-    def update_complete(pid, tid)
+    def update_complete(tid)
       update = <<-SQL
         UPDATE tasks
         SET status='complete'
-        WHERE pid='#{pid}' AND tid='#{tid}'
+        WHERE tid='#{tid}'
         RETURNING *;
       SQL
       result = @db_adaptor.exec(update)
@@ -239,7 +239,6 @@ module TM
 
     # Helper methods for setting instance variables
     def show_task
-      # binding.pry
       list_tasks.last
     end
 

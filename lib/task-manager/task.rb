@@ -19,7 +19,7 @@ class TM::Task
   end
 
   def update_complete
-    TM.orm.update_complete(@pid, @tid)
+    TM.orm.update_complete(@tid)
     @status = 'complete'
   end
 end

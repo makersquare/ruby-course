@@ -1,4 +1,4 @@
-require 'pry-debugger'
+# require 'pry-debugger'
 require 'spec_helper'
 
 describe 'Task' do

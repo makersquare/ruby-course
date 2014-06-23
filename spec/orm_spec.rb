@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'pry-debugger'
+# require 'pry-debugger'
 
 describe 'ORM' do
 
@@ -120,8 +120,8 @@ describe 'ORM' do
       task5 = TM.orm.add_task('8', 'fifth task, lowest priority', '2')
       task6 = TM.orm.add_task('1', 'sixth task, highest priority', '2')
 
-      TM.orm.update_complete(2,4)
-      expect(TM.orm.list_completed_tasks(2).length).to eq(1)
+      TM.orm.update_complete(2)
+      expect(TM.orm.list_completed_tasks(1).length).to eq(1)
     end
   end
 
@@ -230,7 +230,7 @@ describe 'ORM' do
       task5 = TM.orm.add_task('8', 'fifth task, lowest priority', '2')
       task6 = TM.orm.add_task('1', 'sixth task, highest priority', '2')
 
-      update = TM.orm.update_complete(2,4)
+      update = TM.orm.update_complete(2)
 
       expect(update[0][5]).to eq('complete')
     end
@@ -338,7 +338,7 @@ describe 'ORM' do
       task6 = TM.orm.add_task('1', 'sixth task, highest priority', '2')
 
       update = TM.orm.update_employee_task(2,2)
-      TM.orm.update_complete(1,2)
+      TM.orm.update_complete(2)
 
       complete = TM.orm.list_employee_history(2)
 
