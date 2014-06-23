@@ -225,16 +225,27 @@ module TM
         SELECT *
         FROM tasks
         JOIN projects
-          ON projects.pid = tasks.pid
+        ON projects.pid = tasks.pid
         JOIN employees
-          ON employees.eid = tasks.eid
+        ON employees.eid = tasks.eid
+        ORDER BY tasks.priority, tasks.tid ASC
       SQL
       result = @db_adaptor.exec(selection)
-      result.values.select { |i| i[4] == eid.to_s }
+      result.values.select { |i| i[4] == eid.to_s }.select { |i| i[5] == 'incomplete' }
     end
 
     def list_employee_history(eid)
-      list_employee_tasks(eid).select { |i| i if i[5] == 'complete'}
+      selection = <<-SQL
+        SELECT *
+        FROM tasks
+        JOIN projects
+        ON projects.pid = tasks.pid
+        JOIN employees
+        ON employees.eid = tasks.eid
+        ORDER BY tasks.priority, tasks.tid ASC
+      SQL
+      result = @db_adaptor.exec(selection)
+      result.values.select { |i| i[4] == eid.to_s }.select { |i| i[5] == 'complete' }
     end
 
     # Helper methods for setting instance variables

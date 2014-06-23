@@ -84,8 +84,8 @@ class Task_io
                 #NO DUPLICATES?
                 rows = []
                 employees = TM::Project.list_project_staffing(input[2])
-                employees.map { |i| rows << [i[0], i[1]] }
-                table = Terminal::Table.new :headings => ['EID', 'Name'], :rows => rows
+                employees.map { |i| rows << [i[0], i[1], i[6]] }
+                table = Terminal::Table.new :headings => ['PID', 'Project Name', 'EID'], :rows => rows
                 puts table
                 self.start
             when 'recruit'
@@ -119,24 +119,37 @@ class Task_io
         when 'emp'
             case command_type
             when 'list'
-                #puts "  emp list - List all employees"
-                puts TM::Project.list_employees
+                rows = []
+                employees = TM::Project.list_employees
+                employees.map { |i| rows << [i[0], i[1]] }
+                table = Terminal::Table.new :headings => ['EID', 'Employee Name'], :rows => rows
+                puts table
                 self.start
             when 'create'
                 new_employee = TM::Project.add_employee(input[2])
                 puts "Employee #{input[2]} has been added with EID #{new_employee.eid}"
                 self.start
             when 'show'
-                #puts "  emp show EID - Show employee EID and all participating projects"
-                puts TM::Project.list_employee_projects(input[2])
+                #DUPLICATES
+                rows = []
+                employee_projects = TM::Project.list_employee_projects(input[2])
+                employee_projects.map { |i| rows << [i[0], i[1], i[5], i[7]] }
+                table = Terminal::Table.new :headings => ['PID', 'Project Name', 'EID', 'Employee Name'], :rows => rows
+                puts table
                 self.start
             when 'details'
-                #puts "  emp details EID - Show all remaining tasks assigned to employee EID, along with the project name next to each task"
-                puts TM::Project.list_employee_tasks(input[2])
+                rows = []
+                employee_tasks = TM::Project.list_employee_tasks(input[2])
+                employee_tasks.map { |i| rows << [i[3], i[8], i[0], i[1], i[2], i[5], i[4]] }
+                table = Terminal::Table.new :headings => ['PID', 'Project Name', 'TID', 'Priority', 'Description', 'Status', 'EID'], :rows => rows
+                puts table
                 self.start
             when 'history'
-                #puts "  emp history EID - Show completed tasks for employee with id=EID"
-                puts TM::Project.list_employee_history(input[2])
+                rows = []
+                employee_tasks = TM::Project.list_employee_history(input[2])
+                employee_tasks.map { |i| rows << [i[3], i[8], i[0], i[1], i[2], i[5], i[4]] }
+                table = Terminal::Table.new :headings => ['PID', 'Project Name', 'TID', 'Priority', 'Description', 'Status', 'EID'], :rows => rows
+                puts table
                 self.start
             else
                 puts "Invalid request, please try again"
