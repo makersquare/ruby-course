@@ -74,6 +74,72 @@ describe 'Project' do
     end
   end
 
+  describe '.list_incomplete_tasks' do
+    it 'lists all incomplete tasks for a project by PID' do
+      proj1 = TM.orm.add_project('proj1')
+
+      emp1 = TM.orm.add_employee('name1')
+
+      task1 = TM.orm.add_task('1', 'first task, highest priority', '1')
+      task2 = TM.orm.add_task('2', 'second task, high priority', '1')
+      task3 = TM.orm.add_task('3', 'third task, medium priority', '1')
+
+      expect(TM::Project.list_incomplete_tasks(1).length).to eq(3)
+    end
+  end
+
+  describe '.list_completed_tasks' do
+    it 'lists all complete tasks for a project by PID' do
+      proj1 = TM.orm.add_project('proj1')
+
+      emp1 = TM.orm.add_employee('name1')
+
+      task1 = TM.orm.add_task('1', 'first task, highest priority', '1')
+      task2 = TM.orm.add_task('2', 'second task, high priority', '1')
+      task3 = TM.orm.add_task('3', 'third task, medium priority', '1')
+
+      TM.orm.update_complete(1,1)
+
+      expect(TM::Project.list_completed_tasks(1).length).to eq(1)
+    end
+  end
+
+  describe '.list_project_staffing' do
+    it 'lists employees assigned to a project by PID' do
+      proj1 = TM.orm.add_project('proj1')
+      proj2 = TM.orm.add_project('proj2')
+
+      emp1 = TM.orm.add_employee('name1')
+      emp2 = TM.orm.add_employee('name2')
+
+      task1 = TM.orm.add_task('1', 'first task, highest priority', '1')
+      task2 = TM.orm.add_task('2', 'second task, high priority', '1')
+      task3 = TM.orm.add_task('3', 'third task, medium priority', '1')
+      task4 = TM.orm.add_task('6', 'fourth task, low priority', '2')
+      task5 = TM.orm.add_task('8', 'fifth task, lowest priority', '2')
+      task6 = TM.orm.add_task('1', 'sixth task, highest priority', '2')
+
+      TM.orm.update_employee_project(2,1)
+      TM.orm.update_employee_project(2,2)
+      staff = TM::Project.list_project_staffing(2)
+
+      expect(staff[0][0]).to eq('2')
+    end
+  end
+
+  describe '.update_employee_project' do
+    it 'assigns an employee to a project by PID and EID' do
+      proj1 = TM.orm.add_project('proj1')
+      proj2 = TM.orm.add_project('proj2')
+
+      emp1 = TM.orm.add_employee('name1')
+      emp2 = TM.orm.add_employee('name2')
+
+      expect(TM::Project.update_employee_project(1,2)[0][2]).to eq('2')
+      expect(TM::Project.update_employee_project(2,2)[0][2]).to eq('2')
+    end
+  end
+
   describe '.add_task' do
     it 'allows user to add tasks' do
       proj1 = TM::Project.add_project('proj1')
@@ -94,81 +160,133 @@ describe 'Project' do
     end
   end
 
-  describe '.list_all_tasks' do
-      before do
-        $stdout = StringIO.new
-      end
+  describe '.update_employee_task' do
+    it 'assigns an employee to a task by EID and TID' do
+      proj1 = TM.orm.add_project('proj1')
+      proj2 = TM.orm.add_project('proj2')
 
-      after(:all) do
-        $stdout = STDOUT
-      end
+      emp1 = TM.orm.add_employee('name1')
+      emp2 = TM.orm.add_employee('name2')
 
-    it "lists all tasks and their associated IDs" do
-      proj1.list_all_tasks
-      expect($stdout.string).to match('TID 0: Priority 3, proj 1 tid 0\nTID 1: Priority 1, proj 1 tid 1\nTID 2: Priority 1, proj 1 tid 2')
+      task1 = TM.orm.add_task('1', 'first task, highest priority', '1')
+      task2 = TM.orm.add_task('2', 'second task, high priority', '1')
+      task3 = TM.orm.add_task('3', 'third task, medium priority', '1')
+      task4 = TM.orm.add_task('6', 'fourth task, low priority', '2')
+      task5 = TM.orm.add_task('8', 'fifth task, lowest priority', '2')
+      task6 = TM.orm.add_task('1', 'sixth task, highest priority', '2')
+
+      update = TM::Project.update_employee_task(2,2)
+
+      expect(update[0]).to eq('2')
+      expect(TM.orm.list_employee_projects(2).length).to eq(1)
     end
   end
 
-  # describe '.list_completed_tasks' do
-  #   before do
-  #     $stdout = StringIO.new
-  #   end
+  describe 'update_complete' do
+    it 'changes the status of a task to complete by PID and TID' do
+      proj1 = TM.orm.add_project('proj1')
+      proj2 = TM.orm.add_project('proj2')
 
-  #   after(:all) do
-  #     $stdout = STDOUT
-  #   end
+      emp1 = TM.orm.add_employee('name1')
+      emp2 = TM.orm.add_employee('name2')
 
-  #   it "can retrieve a list of complete tasks sorted by creation date" do
+      task1 = TM.orm.add_task('1', 'first task, highest priority', '1')
+      task2 = TM.orm.add_task('2', 'second task, high priority', '1')
+      task3 = TM.orm.add_task('3', 'third task, medium priority', '1')
+      task4 = TM.orm.add_task('6', 'fourth task, low priority', '2')
+      task5 = TM.orm.add_task('8', 'fifth task, lowest priority', '2')
+      task6 = TM.orm.add_task('1', 'sixth task, highest priority', '2')
 
-  #     time1 = Time.parse("12:00")
-  #     time2 = Time.parse("15:00")
-  #     Time.stub(:now).and_return(time1)
-  #     Time.stub(:now).and_return(time2)
+      update = TM::Project.update_complete(2,4)
 
-  #     proj1.tasks[1].creation_date = time2
-  #     proj1.tasks[2].creation_date = time1
+      expect(update[0][5]).to eq('complete')
+    end
+  end
 
-  #     proj1.tasks[1].mark_complete
-  #     proj1.tasks[2].mark_complete
-  #     proj1.list_completed_tasks
-  #     expect($stdout.string).to match('TID 2: proj 1 tid 2\nTID 1: proj 1 tid 1')
-  #   end
-  # end
+  describe 'list_employees' do
+    it 'lists all employees in the database' do
+      emp1 = TM.orm.add_employee('name1')
+      emp2 = TM.orm.add_employee('name2')
 
-  # describe '.list_incomplete_tasks' do
-  #   before do
-  #     $stdout = StringIO.new
-  #   end
+      employees = TM::Project.list_employees.map { |i| i }
+      expect(employees.length).to eq(2)
+    end
+  end
 
-  #   after(:all) do
-  #     $stdout = STDOUT
-  #   end
+  describe 'add_employee' do
+    it 'creates an employee as an Employee object' do
+      emp1 = TM::Project.add_employee('name1')
 
-  #   it "can retrieve a list of incomplete tasks sorted by priority, prioritizing older tasks if two are tied" do
-  #     time1 = Time.parse("12:00")
-  #     time2 = Time.parse("15:00")
-  #     Time.stub(:now).and_return(time1)
-  #     Time.stub(:now).and_return(time2)
+      expect(emp1).to be_a(TM::Employee)
+    end
+  end
 
-  #     proj2.tasks[1].creation_date = time2
-  #     proj2.tasks[2].creation_date = time1
-  #     proj2.list_incomplete_tasks
-  #     expect($stdout.string).to match('TID 5: Priority 2, proj 2 tid 5\nTID 4: Priority 2, proj 2 tid 4\nTID 3: Priority 3, proj 2 tid 3')
-  #   end
-  # end
+  describe 'list_employee_projects' do
+    it 'lists all projects assigned to a particular employee' do
+      proj1 = TM.orm.add_project('proj1')
+      proj2 = TM.orm.add_project('proj2')
 
-  # describe 'list_projs' do
-  #   before do
-  #     $stdout = StringIO.new
-  #   end
+      emp1 = TM.orm.add_employee('name1')
+      emp2 = TM.orm.add_employee('name2')
 
-  #   after(:all) do
-  #     $stdout = STDOUT
-  #   end
+      task1 = TM.orm.add_task('1', 'first task, highest priority', '1')
+      task2 = TM.orm.add_task('2', 'second task, high priority', '1')
+      task3 = TM.orm.add_task('3', 'third task, medium priority', '1')
+      task4 = TM.orm.add_task('6', 'fourth task, low priority', '2')
+      task5 = TM.orm.add_task('8', 'fifth task, lowest priority', '2')
+      task6 = TM.orm.add_task('1', 'sixth task, highest priority', '2')
 
-  #   it "lists all projects and associated ids" do
-  #     proj1.list_projs
-  #     expect($stdout.string).to match('PID 0: proj1\nPID 1: proj2')
-  #   end
-  # end
+      TM.orm.update_employee_project(2,2)
+
+      employee_projects = TM::Project.list_employee_projects(2).map { |i| i }
+      expect(employee_projects.length).to eq(1)
+    end
+  end
+
+  describe 'list_employee_tasks' do
+    it 'lists all tasks assigned to a particular employee' do
+      proj1 = TM.orm.add_project('proj1')
+      proj2 = TM.orm.add_project('proj2')
+
+      emp1 = TM.orm.add_employee('name1')
+      emp2 = TM.orm.add_employee('name2')
+      task1 = TM.orm.add_task('1', 'first task, highest priority', '1')
+      task2 = TM.orm.add_task('2', 'second task, high priority', '1')
+      task3 = TM.orm.add_task('3', 'third task, medium priority', '1')
+      task4 = TM.orm.add_task('6', 'fourth task, low priority', '2')
+      task5 = TM.orm.add_task('8', 'fifth task, lowest priority', '2')
+      task6 = TM.orm.add_task('1', 'sixth task, highest priority', '2')
+
+      TM.orm.update_employee_task(2,2)
+      TM.orm.update_employee_task(4,2)
+
+      employee_tasks = TM::Project.list_employee_tasks(2)
+
+      expect(employee_tasks.length).to eq(2)
+    end
+  end
+
+  describe 'list_employee_history' do
+    it 'shows completed tasks for employee by EID' do
+      proj1 = TM.orm.add_project('proj1')
+      proj2 = TM.orm.add_project('proj2')
+
+      emp1 = TM.orm.add_employee('name1')
+      emp2 = TM.orm.add_employee('name2')
+
+      task1 = TM.orm.add_task('1', 'first task, highest priority', '1')
+      task2 = TM.orm.add_task('2', 'second task, high priority', '1')
+      task3 = TM.orm.add_task('3', 'third task, medium priority', '1')
+      task4 = TM.orm.add_task('6', 'fourth task, low priority', '2')
+      task5 = TM.orm.add_task('8', 'fifth task, lowest priority', '2')
+      task6 = TM.orm.add_task('1', 'sixth task, highest priority', '2')
+
+      update = TM.orm.update_employee_task(2,2)
+      TM.orm.update_complete(1,2)
+
+      complete = TM.orm.list_employee_history(2)
+
+      expect(complete[0][5]).to eq('complete')
+    end
+  end
 end
