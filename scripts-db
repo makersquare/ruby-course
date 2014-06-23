@@ -1,0 +1,14 @@
+create table projects( id  serial, name text, primary key(id));
+
+create table tasks(description text, priority varchar(20), state_complete boolean, creation date, id serial, primary key(id), p_id integer references projects(id));
+
+create table tasks_projects (p_id integer references projects(id), t_id integer references tasks(id), primary key(p_id,t_id));
+
+create table employees( id  serial, name text, primary key(id));
+
+create table employees_projects (p_id integer references projects(id), e_id integer references employees(id), primary key(p_id,e_id));
+
+create table employees_tasks (t_id integer references tasks(id), e_id integer references employees(id), primary key(t_id,e_id));
+
+
+

@@ -10,13 +10,20 @@ class TM::Task
 		@state_complete = false
 		@creation_date = Time.now
 		@@task_counter +=1
-		@id = @@task_counter
+		@id = nil
 		@@list_task << self
-		@@list_task.each {|t| puts " task id: #{t.p_id} priority: #{t.priority} D: #{t.desc}" }
+		# @@list_task.each {|t| puts " task id: #{t.p_id} priority: 
+		#{t.priority} D: #{t.desc}" }
+		return self
 	end
 
 	def state_complete!
 		@state_complete = true
+	end
+
+	def save!(id)
+		@id = id if @id.nil?
+		
 	end
 
 	def self.list_task

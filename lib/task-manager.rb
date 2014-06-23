@@ -9,7 +9,8 @@ end
 require_relative 'task-manager/task.rb'
 require_relative 'task-manager/project.rb'
 require_relative 'task-manager/terminal-client.rb'
-
+require_relative 'task-manager/persistence.rb'
+require_relative 'task-manager/employee.rb'
 
 
 

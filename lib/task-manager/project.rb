@@ -1,4 +1,5 @@
 
+
 class TM::Project
 	@@Project_counter = 0
 	@@Projects = []
@@ -10,10 +11,16 @@ class TM::Project
 	def initialize(name="unnamed")
 		@name=name
 		@@Project_counter +=1
-		@id = @@Project_counter
+		@id = nil
 		@@Projects << self
-		# puts 'project created!'
-		# @@Projects.each {|p| puts " project #{p.name} id: #{p.id}"}
+		return self
+	end
+
+	def save!(id)
+		if @id == nil
+			@id = id
+			
+		end
 	end
 
 	def completed_tasks(array)
@@ -28,55 +35,40 @@ class TM::Project
 
 	end
 
-	def incomplete_tasks(array, id=nil)
-		return nil if array.nil?
+	def self.incomplete_tasks(pending_task)
+		return nil if pending_task.nil?
 
-		incomplete = Array.new
-		if id.nil?
-			array.each{|t| incomplete << t if !t.state_complete}
-			# puts "c1"
-			# puts incomplete.size
-		else
-			array.each do |t|
-				# puts t.p_id
-				# puts id
-				# e1 = !t.state_complete
-				# e2 = (t.p_id == id)
-				# puts "e1: " + e1.to_s
-				# puts "e2: " + e2.to_s
-				# aux = !t.state_complete && t.p_id == id
-				# puts aux
-				incomplete << t if !t.state_complete && t.p_id == id
-			end
-			# puts "c2"
-			# puts incomplete.size
-		end
+		# incomplete = Array.new
 
-		incomplete.sort! do |x,y|
-			comp = x.priority <=> y.priority 
-			comp == 0 ? x.creation_date <=> y.creation_date : comp
+		# if id.nil?
+		# 	array.each{|t| incomplete << t if !t.state_complete}
+		# 	# puts "c1"
+		# 	# puts incomplete.size
+		# else
+		# 	array.each do |t|
+		# 		incomplete << t if !t.state_complete && t.p_id == id
+		# 	end
+		# end
+
+		pending_task.sort! do |x,y|
+			comp = x['priority'] <=> y['priority'] 
+			comp == 0 ? x['creation'] <=> y['creation'] : comp
 			
 		end
 
-		return incomplete
+		return pending_task
 
 	end
 
-	def self.list_proyects
-		@@Projects.each { |p| puts "Proyect id: #{p.id} - Name: #{p.name}"}
-	end
-
-	def self.show_remaining(id)
+	def self.list_proyects(pending_task)
+		pending_task.each { |p| puts "Proyect id: #{p['id']} - Name: #{p['name']}"}
 		
-		index = @@Projects.index {|x| x.id == id}
-		# puts index
-		# puts id
-		# puts TM::Task.list_task
-		list = @@Projects[index].incomplete_tasks(TM::Task.list_task,id)
-		list.each {|t| puts "task_id: #{t.id} task_proj: #{t.p_id} creation: #{t.creation_date}"}
-
 	end
 
+	def self.show_remaining(pending_task)
+		
+		# list = incomplete_tasks(pending_task)
+		pending_task.each {|t| puts "task_id: #{t['id']} task_proj: #{t['p_id']} creation: #{t['creation']}"}
 
-
+	end
 end
