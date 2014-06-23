@@ -11,6 +11,7 @@ GEM
     rspec-expectations (2.14.5)
       diff-lcs (>= 1.1.3, < 2.0)
     rspec-mocks (2.14.6)
+    terminal-table (1.4.5)
 
 PLATFORMS
   ruby
@@ -18,3 +19,4 @@ PLATFORMS
 DEPENDENCIES
   pg
   rspec (~> 2.14.1)
+  terminal-table

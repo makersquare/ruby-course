@@ -56,24 +56,37 @@ class Task_io
         when 'project'
             case command_type
             when 'list'
-                #FORMATTING
-                puts TM::Project.list_projects
+                rows = []
+                projects = TM::Project.list_projects
+                projects.map { |i| rows << [i[0], i[1], i[2]] }
+                table = Terminal::Table.new :headings => ['PID', 'Name', 'Creation date'], :rows => rows
+                puts table
                 self.start
             when 'create'
                 new_proj = TM::Project.add_project(input[2])
                 puts "Project #{new_proj.name} was created with PID #{new_proj.pid}"
                 self.start
             when 'show'
-                #puts "  project show PID - Show remaining tasks for a project with id=PID"
-                puts TM::Project.list_incomplete_tasks(input[2])
+                rows = []
+                incomplete_tasks = TM::Project.list_incomplete_tasks(input[2])
+                incomplete_tasks.map { |i| rows << [i[0], i[1], i[2], i[6], i[5], i[3]] }
+                table = Terminal::Table.new :headings => ['TID', 'Priority', 'Description', 'Creation date', 'Status', 'PID'], :rows => rows
+                puts table
                 self.start
             when 'history'
-                #puts "  project history PID - Show completed tasks for project with id=PID"
-                puts TM::Project.list_completed_tasks(input[2])
+                rows = []
+                completed_tasks = TM::Project.list_completed_tasks(input[2])
+                completed_tasks.map { |i| rows << [i[0], i[1], i[2], i[6], i[5], i[3]] }
+                table = Terminal::Table.new :headings => ['TID', 'Priority', 'Description', 'Creation date', 'Status', 'PID'], :rows => rows
+                puts table
                 self.start
             when 'employees'
-                #puts "  project employees PID - Show employees participating in the project"
-                puts TM::Project.list_project_staffing(input[2])
+                #NO DUPLICATES?
+                rows = []
+                employees = TM::Project.list_project_staffing(input[2])
+                employees.map { |i| rows << [i[0], i[1]] }
+                table = Terminal::Table.new :headings => ['EID', 'Name'], :rows => rows
+                puts table
                 self.start
             when 'recruit'
                 TM::Project.update_employee_project(input[2], input[3])
