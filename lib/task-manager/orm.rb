@@ -56,7 +56,8 @@ module TM
 
     def list_projects
       list = <<-SQL
-      SELECT * FROM projects;
+      SELECT DISTINCT * FROM projects
+      ORDER BY creation_date;
       SQL
       result = @db_adaptor.exec(list)
       result.values
@@ -75,7 +76,8 @@ module TM
 
     def list_tasks
       list = <<-SQL
-      SELECT * FROM tasks;
+      SELECT DISTINCE * FROM tasks
+      ORDER BY creation_date;
       SQL
       result = @db_adaptor.exec(list)
       result.values
@@ -209,7 +211,7 @@ module TM
 
     def list_employee_projects(eid)
       list_join = <<-SQL
-        SELECT *
+        SELECT DISTINCT *
         FROM projects p
         JOIN join_projects_employees jpe
         ON p.pid = jpe.pid
