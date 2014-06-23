@@ -36,7 +36,7 @@ class TM::Client
       '  ',
       '  create employees NAME - Create a new employee',
       '  create projects NAME - Create a new project',
-      '  create tasks PID EID PRIORITY DESC - Add a new task to project PID',
+      '  create tasks PID PRIORITY DESC - Add a new task to project PID',
       '  ',
       '  show employees - Show all employees',
       '  show employees EID - Show employee EID and assigned project',
@@ -71,7 +71,7 @@ class TM::Client
     create_args['name'] = args.join(' ')
 
     results = TM.db.create(sklass, create_args)
-    display results
+    display(sklass, results)
   end
 
   def self.create_projects(sklass, args = [])
@@ -80,19 +80,20 @@ class TM::Client
     create_args['name'] = args.join(' ')
 
     results = TM.db.create(sklass, create_args)
-    display results
+    display(sklass, results)
   end
 
+  # create tasks PID EID PRIORITY DESC - Add a new task to project PID',
   def self.create_tasks(sklass, args = [])
     create_args = {}
 
     create_args['project_id' ] = args.shift
-    create_args['employee_id'] = args.shift
+    # create_args['employee_id'] = args.shift
     create_args['priority'   ] = args.shift
     create_args['description'] = args.join(' ')
 
     results = TM.db.create(sklass, create_args)
-    display results
+    display(sklass, results)
   end
 
   def self.show_employees(sklass, args = [])
@@ -100,25 +101,25 @@ class TM::Client
     type        = args[1]
 
     if employee_id.nil?
-      employees = TM.db.find(sklass, {})
-      display employees
+      results = TM.db.find(sklass, {})
+      display(sklass, results)
     else
-      employees = TM.db.find(sklass, {'id' => employee_id})
-      display employees
+      results = TM.db.find(sklass, {'id' => employee_id})
+      display(sklass, results)
 
       type = type.upcase if type
 
       case type
       when 'COMPLETED'
-        tasks = TM.db.find('tasks', {'employee_id' => employee_id, 'completed' => true})
-        display tasks
+        results = TM.db.find('tasks', {'employee_id' => employee_id, 'completed' => true})
+        display('tasks', results)
       when 'INCOMPLETE'
-        tasks = TM.db.find('tasks', {'employee_id' => employee_id, 'completed' => false})
-        display tasks
+        results = TM.db.find('tasks', {'employee_id' => employee_id, 'completed' => false})
+        display('tasks', results)
       else
         project_id = employees.first.send(:project_id)
-        projects = TM.db.find('projects', {'id' => project_id})
-        display projects
+        results = TM.db.find('projects', {'id' => project_id})
+        display('projects', results)
       end
     end
   end
@@ -128,24 +129,24 @@ class TM::Client
     type       = args[1]
 
     if project_id.nil?
-      projects = TM.db.find(sklass, {})
-      display projects
+      results = TM.db.find(sklass, {})
+      display(sklass, results)
     else
-      projects = TM.db.find(sklass, {'id' => project_id})
-      display projects
+      results = TM.db.find(sklass, {'id' => project_id})
+      display(sklass, results)
 
       type = type.upcase if type
 
       case type
       when 'COMPLETED'
-        tasks = TM.db.find('tasks', {'project_id' => project_id, 'completed' => true})
-        display tasks
+        results = TM.db.find('tasks', {'project_id' => project_id, 'completed' => true})
+        display('tasks', results)
       when 'EMPLOYEES'
-        employees = TM.db.find('employees', {'project_id' => project_id})
-        display employees
+        results = TM.db.find('employees', {'project_id' => project_id})
+        display('employees', results)
       else
-        tasks = TM.db.find('tasks', {'project_id' => project_id, 'completed' => false})
-        display tasks
+        results = TM.db.find('tasks', {'project_id' => project_id, 'completed' => false})
+        display('tasks', results)
       end
     end
   end
@@ -153,8 +154,8 @@ class TM::Client
   def self.show_tasks(sklass, args = [])
     task_id = args[0]
 
-    tasks = TM.db.find(sklass, {'id' => task_id})
-    display tasks
+    results = TM.db.find(sklass, {'id' => task_id})
+    display(sklass, results)
   end
 
   def self.recruit_projects(sklass, args = [])
@@ -164,6 +165,22 @@ class TM::Client
     employee = TM.db.update('employees', employee_id, {'project_id' => project_id})
 
     self.show_projects('projects', [project_id, 'EMPLOYEES'])
+  end
+
+  # assign tasks TID EID - Assign task TID to employee EID
+  def self.assign_tasks(sklass, args = [])
+    task_id = args[0]
+    employee_id = args[1]
+
+    task = TM.db.find(sklass, {'id' => task_id}).first
+    employee = TM.db.find('employees', {'id' => employee_id}).first
+
+    if employee.project_id == task.project_id
+      results = TM.db.update(sklass, task_id, {'employee_id' => employee_id})
+      display(sklass, results)
+    else
+      display_error "Employee #{employee_id} is not assigned to project #{task.project_id}"
+    end
   end
 
   def self.update_tasks(sklass, args = [])
@@ -199,7 +216,7 @@ class TM::Client
 
     if valid
       results = TM.db.update(sklass, task_id, update_args)
-      display results
+      display(sklass, results)
     end
   end
 
@@ -230,7 +247,7 @@ class TM::Client
 
     if valid
       results = TM.db.update(sklass, employee_id, update_args)
-      display results
+      display(sklass, results)
     end
   end
 
@@ -263,11 +280,16 @@ class TM::Client
 
     if valid
       results = TM.db.update(sklass, project_id, update_args)
-      display results
+      display(sklass, results)
     end
   end
 
-  def self.display(result_array)
+  def self.display_error(error)
+    puts error
+  end
+
+  def self.display(sklass, result_array)
+    puts sklass.upcase
     respond_to_ary = []
     [:id, :name, :email, :description, :project_id,
      :employee_id, :priority, :completed, :created_at].each do |attrib|
@@ -276,13 +298,13 @@ class TM::Client
         # print "  #{attrib}"
         case attrib
         when :id, :project_id, :employee_id, :priority
-          printf("%-12s", attrib)
+          printf("%-12s", attrib.upcase)
         when :name, :email
-          printf("%-20s", attrib)
+          printf("%-20s", attrib.upcase)
         when :completed
-          printf("%-12s", attrib)
+          printf("%-12s", attrib.upcase)
         else
-          printf("%-30s", attrib)
+          printf("%-30s", attrib.upcase)
         end
       end
     end

@@ -6,14 +6,14 @@
 
 #   describe "Available Commands" do
 #     it "'help' prints out the command list" do
-#       expect()
+#       expect(klass.send(:help)).to be_a(String)
 #     end
 
 #       # '  exit - Exit this application',
 #       # '  ',
 #       # '  create employees NAME - Create a new employee',
 #       # '  create projects NAME - Create a new project',
-#       # '  create tasks PID EID PRIORITY DESC - Add a new task to project PID',
+#       # '  create tasks PID PRIORITY DESC - Add a new task to project PID',
 #       # '  ',
 #       # '  show employees - Show all employees',
 #       # '  show employees EID - Show employee EID and assigned project',

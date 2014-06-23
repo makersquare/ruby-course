@@ -18,5 +18,6 @@ describe 'Employee' do
   it "initialize accepts an arg hash with id, project_id and name" do
     expect(employee.id).to eq(1)
     expect(employee.name).to eq('Joe Smith')
+    expect(employee.project_id).to eq(1)
   end
 end
