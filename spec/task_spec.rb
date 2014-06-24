@@ -7,8 +7,6 @@ describe 'Task' do
     :id          => 1,
     :description => 'Test Task',
     :priority    => 1,
-    :project_id  => 1,
-    :employee_id => 1,
     :completed   => false,
     :created_at  => Time.now
   } }
@@ -23,8 +21,6 @@ describe 'Task' do
     expect(task.id).to eq(1)
     expect(task.description).to eq('Test Task')
     expect(task.priority).to eq(1)
-    expect(task.project_id).to eq(1)
-    expect(task.employee_id).to eq(1)
     expect(task.completed).to eq(false)
     expect(task.created_at).to be_a(Time)
   end
