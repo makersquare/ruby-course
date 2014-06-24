@@ -16,7 +16,7 @@ describe Honker::Databases::InMemory do
   end
 
   describe "users" do
-    it "gets and creates" do
+    it "persists and gets" do
       user = Honker::User.new(nil, "bob", "digest")
       db.persist_user(user)
       expect(user.id).to_not be_nil

@@ -1,5 +1,9 @@
 module Honker
   class SignIn
-    # TODO
+
+    def self.run(params)
+      # TODO
+    end
+
   end
 end
