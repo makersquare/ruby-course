@@ -15,6 +15,15 @@ describe Honker::CreateHonk do
     expect(result[:error]).to eq :not_signed_in
   end
 
+  it "requires content to be present" do
+    # Stub the database methods; we're testing this TxS, not the database code
+    expect(Honker.db).to receive(:get_user_by_session_id).and_return(@user)
+
+    result = Honker::CreateHonk.run(:session_id => "doesn't matter", :content => "")
+    expect(result[:success?]).to eq false
+    expect(result[:error]).to eq :invalid_content
+  end
+
   it "creates a honk" do
     # Stub databases methods; we're testing this TxS, not the database code
     expect(Honker.db).to receive(:get_user_by_session_id).and_return(@user)
