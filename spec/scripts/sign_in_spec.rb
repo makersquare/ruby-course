@@ -18,4 +18,10 @@ describe Honker::SignIn, :pending => "Implement password hashing first" do
     expect(result[:session_id]).to eq "my session id"
   end
 
+  it "requires the correct password" do
+    result = Honker::SignIn.run(:username => "alice", :password => "diff password")
+    expect(result[:success?]).to eq false
+    expect(result[:error]).to eq :invalid_password
+  end
+
 end
