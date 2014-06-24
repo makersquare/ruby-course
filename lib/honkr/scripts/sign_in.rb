@@ -1,4 +1,4 @@
-module Honker
+module Honkr
   class SignIn
 
     def self.run(params)

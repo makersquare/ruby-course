@@ -1,4 +1,4 @@
-module Honker
+module Honkr
   class Honk
 
     attr_reader :id, :user_id, :content

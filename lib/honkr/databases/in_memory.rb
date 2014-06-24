@@ -1,4 +1,4 @@
-module Honker
+module Honkr
   module Databases
     class InMemory
 

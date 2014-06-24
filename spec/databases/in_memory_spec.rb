@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe Honker::Databases::InMemory do
+describe Honkr::Databases::InMemory do
 
   let(:db) { described_class.new }
 
   describe "honks" do
     it "persists and gets" do
-      honk = Honker::Honk.new(nil, 75, "beep!")
+      honk = Honkr::Honk.new(nil, 75, "beep!")
       db.persist_honk(honk)
       expect(honk.id).to_not be_nil
 
@@ -17,7 +17,7 @@ describe Honker::Databases::InMemory do
 
   describe "users" do
     it "persists and gets" do
-      user = Honker::User.new(nil, "bob", "digest")
+      user = Honkr::User.new(nil, "bob", "digest")
       db.persist_user(user)
       expect(user.id).to_not be_nil
 

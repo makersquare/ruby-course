@@ -1,4 +1,4 @@
-module Honker
+module Honkr
   class User
 
     attr_reader :id, :username, :password_digest
