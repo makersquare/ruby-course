@@ -29,14 +29,14 @@ describe 'TM::DB' do
     expect(klass.new).not_to eq(db)
   end
 
-  it "responds to 'create' given a table name as a string and args hash by returning the created object" do
+  it "responds to 'create' given a table name as a string and args hash by returning the created object attributes" do
     result_array = db.create('employees', {'name' => 'Joe Smith'})
     expect(result_array).to be_a(Array)
 
     result = result_array.first
-    expect(result).to be_a(TM::Employee)
-    expect(result.id).to be_a(Integer)
-    expect(result.name).to eq('Joe Smith')
+    expect(result).to be_a(Hash)
+    expect(result[:id]).to be_a(Integer)
+    expect(result[:name]).to eq('Joe Smith')
   end
 
   it "responds to 'find' given a table name as a string and args hash by returning the found object" do
@@ -44,9 +44,9 @@ describe 'TM::DB' do
     expect(result_array).to be_a(Array)
 
     result = result_array.first
-    expect(result).to be_a(TM::Employee)
-    expect(result.id).to be(1)
-    expect(result.name).to eq('Joe Smith')
+    expect(result).to be_a(Hash)
+    expect(result[:id]).to be(1)
+    expect(result[:name]).to eq('Joe Smith')
   end
 
   it "responds to 'update' given a table name as a string, id and args hash by returning the updated object" do
@@ -54,9 +54,9 @@ describe 'TM::DB' do
     expect(result_array).to be_a(Array)
 
     result = result_array.first
-    expect(result).to be_a(TM::Employee)
-    expect(result.id).to be(1)
-    expect(result.name).to eq('Bill Jones')
+    expect(result).to be_a(Hash)
+    expect(result[:id]).to be(1)
+    expect(result[:name]).to eq('Bill Jones')
   end
 
   it "responds to 'delete' given a table name as a string and id by returning the deleted object" do
@@ -64,9 +64,9 @@ describe 'TM::DB' do
     expect(result_array).to be_a(Array)
 
     result = result_array.first
-    expect(result).to be_a(TM::Employee)
-    expect(result.id).to be(1)
-    expect(result.name).to eq('Bill Jones')
+    expect(result).to be_a(Hash)
+    expect(result[:id]).to be(1)
+    expect(result[:name]).to eq('Bill Jones')
     expect(db.find('employees', {'id' => 1})).to eq([])
   end
 end
