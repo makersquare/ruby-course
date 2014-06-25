@@ -5,6 +5,8 @@ module Honkr
   end
 end
 
+require 'digest'
+
 require_relative './honkr/databases/in_memory.rb'
 
 require_relative './honkr/entities/user.rb'
