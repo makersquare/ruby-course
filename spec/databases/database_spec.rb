@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Honkr::Databases::InMemory do
+shared_examples 'a database' do
 
   let(:db) { described_class.new }
 
@@ -27,4 +27,12 @@ describe Honkr::Databases::InMemory do
     end
   end
 
+end
+
+describe Honkr::Databases::InMemory do
+  it_behaves_like 'a database'
+end
+
+describe Honkr::Databases::SQL do
+  it_behaves_like 'a database'
 end
