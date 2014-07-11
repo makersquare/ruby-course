@@ -1,27 +1,22 @@
-#require 'task'
-require 'pry-debugger'
-
 class TM::Project
   attr_reader :name, :id
 
-  @@counter = 0
-  @@project_list = {}
-
-  def initialize(name)
+  def initialize(name, id=nil)
     @name = name
-    @@counter += 1
-    @id = @@counter
-    @@project_list[@id] = self
+    @id = id
   end
 
-  def get_complete_tasks
-    project_tasks = TM::Task.task_list.values.select { |t| t.project == @id && t.complete == true }
+  def save!
+    @id = TM.db.create_project(@name)
+  end
+
+  def self.get_complete_tasks
+    project_tasks = TM.db.get_tasks({"pid"=>@id, "complete"=>true})
     project_tasks.sort_by { |t| t.created }
   end
 
-  def get_incomplete_tasks
-    project_tasks = TM::Task.task_list.values.select { |t| t.project == @id && t.complete == false }
+  def self.get_incomplete_tasks
+    project_tasks = TM.db.get_tasks({"pid"=>@id, "complete"=>false})
     project_tasks.sort_by { |t| [(t.priority * -1), t.created] }
   end
-
 end

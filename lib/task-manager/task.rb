@@ -1,27 +1,21 @@
-
 class TM::Task
-  attr_reader :project, :description, :priority, :created, :complete, :id
+  attr_reader :pid, :detail, :priority, :created, :complete, :id
 
-  @@counter=0
-  @@task_list={}
-
-  def self.task_list
-    @@task_list
-  end
-
-  def initialize(project_id, description, priority=5)
-    @@counter += 1
-    @id = "P#{project_id}_T#{@@counter}".to_sym
-    @project = project_id
+  def initialize(pid, detail, priority=5, complete=false, id=nil, created=nil)
+    @id = id
+    @pid = pid
     @priority = priority
-    @description = description
-    @created = Time.now()
-    @complete = false
-    @@task_list[@id] = self
+    @detail = detail
+    @created = created
+    @complete = complete
   end
 
-  def done
+  def complete!
     @complete = true
+    TM.db.update_task(@id, {"complete" => @complete})
   end
 
+  def save!
+    @id, @created = TM.db.add_task(@pid, @priority, @detail, @complete)
+  end
 end
