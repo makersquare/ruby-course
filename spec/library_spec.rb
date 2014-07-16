@@ -144,7 +144,7 @@ describe Library do
     expect(book.status).to eq 'available'
   end
 
-  xit "does not allow a Borrower to check out more than one Book at any given time" do
+  xit "does not allow a Borrower to check out more than two Books at any given time" do
     # yeah it's a stingy library
     lib = Library.new
     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
@@ -214,7 +214,7 @@ describe Library do
     expect(lib.borrowed_books.count).to eq(0)
 
     kors = Borrower.new("Michael Kors")
-    book = lib.check_out_book(lib.borrowed_books.first.id, kors)
+    book = lib.check_out_book(lib.books.first.id, kors)
 
     # But now there should be one checked out book
     expect(lib.borrowed_books.count).to eq(1)
