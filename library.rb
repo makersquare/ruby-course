@@ -72,6 +72,7 @@ class Library
       return nil
     elsif hold.check_out
       @checkouts[book_id] = borrower
+      @books.drop(book_id)
       hold
     end
   end
@@ -82,13 +83,17 @@ class Library
 
   def check_in_book(book)
     book.check_in
+    @books << book
     @checkouts.delete_if{|k,v| k == book.id}
   end
 
   def available_books
+    available_books = @books.delete_if{ |x| @checkouts.has_key?(x.id) }
+    available_books
   end
 
   def borrowed_books
-    @checkouts.find{|k,v| v == borrower}
+    borrowed_books = @books.select{ |x| @checkouts.has_key?(x.id) }
+    borrowed_books
   end
 end
