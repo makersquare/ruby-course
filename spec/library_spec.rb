@@ -183,6 +183,26 @@ describe Library do
       # The book should now be marked as available!
       expect(book.status).to eq :available
     end
+
+    it "after a book it returned, it can be checked out again" do
+      lib = Library.new("Pink Library")
+      lib.register_new_book("Harry Potter", "J. K. Rowling")
+      book_id = lib.books.first.id
+
+      # First, we check out the book
+      vick = Borrower.new("Michael Vick")
+      book = lib.check_out_book(book_id, vick)
+      expect( lib.get_borrower(book_id) ).to eq 'Michael Vick'
+
+      # When we check in a book, the Library does not care who checks it in
+      lib.check_in_book(book)
+
+      # Another person should be able to check the book out
+      schumacher = Borrower.new("Michael Schumacher")
+      book = lib.check_out_book(book_id, schumacher)
+      expect( lib.get_borrower(book_id) ).to eq 'Michael Schumacher'
+    end
+
   end
 
   describe "#available_books" do
@@ -202,25 +222,9 @@ describe Library do
     end
   end
 
-  xit "after a book it returned, it can be checked out again" do
-    lib = Library.new
-    lib.register_new_book("Harry Potter", "J. K. Rowling")
-    book_id = lib.books.first.id
+  
 
-    # First, we check out the book
-    vick = Borrower.new("Michael Vick")
-    book = lib.check_out_book(book_id, vick)
-    expect( lib.get_borrower(book_id) ).to eq 'Michael Vick'
-
-    # When we check in a book, the Library does not care who checks it in
-    lib.check_in_book(book)
-
-    # Another person should be able to check the book out
-    schumacher = Borrower.new("Michael Schumacher")
-    book = lib.check_out_book(book_id, schumacher)
-    expect( lib.get_borrower(book_id) ).to eq 'Michael Schumacher'
-  end
-
+  # describe 
   xit "returns borrowed books" do
     lib = Library.new
     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
