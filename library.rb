@@ -1,13 +1,14 @@
 
 class Book
   attr_reader :author, :title, :id
-  attr_accessor :status
+  attr_accessor :status, :borrower
 
   def initialize(title, author, id = nil, status = 'available')
     @title = title
     @author = author
     @id = id
     @status = status
+    @borrower = :no_one
   end
 
   def check_out
@@ -59,17 +60,25 @@ class Library
     @books.find do |x|
       if x.id == book_id && x.status == "available"
         x.status = "checked_out"
+        #borrower.books.push(x.book_id)
+        x.borrower = borrower.name
         x
       elsif x.id == book_id && x.status == "checked_out"
-        puts "Can't check it out, it's already gone dude!"
+        nil
       else
         puts "Don't have that"
       end
     end
+  end
 
+  def get_borrower(book_id)
+    dude = @books.find {|x| x.id == book_id}
+    dude.borrower
   end
 
   def check_in_book(book)
+    book.status = 'available'
+    book.borrower = :no_one
   end
 
   def available_books
