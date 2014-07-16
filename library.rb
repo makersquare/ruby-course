@@ -44,8 +44,8 @@ class Library
   end
 
   def check_out_book(book_id, borrower)
-    this_book = @books.find {|x| x.id == book_id}
-    if @checkouts.select{|k,v| v==borrower}.size >= 2
+    this_book = @books.find { |x| x.id == book_id }
+    if @checkouts.select{ |k,v| v == borrower }.size >= 2
       return nil
     end
     if this_book.check_out
@@ -54,21 +54,22 @@ class Library
     end
   end
 
-  def get_borrower (book_id)
+  def get_borrower(book_id)
     @checkouts[book_id].name
   end
 
   def check_in_book(book)
     book.check_in
-    @checkouts.delete_if {|key, value| key == book.id}
+    @checkouts.delete_if { |key, value| key == book.id }
   end
 
   def available_books
-    available_books = @books.delete_if{|x| @checkouts.has_key?(x.id)}
+    available_books = @books.delete_if{ |x| @checkouts.has_key?(x.id) }
     available_books
   end
 
   def borrowed_books
-    borrowed_books = @checkouts.has_key?
+    borrowed_books = @books.select{ |x| @checkouts.has_key?(x.id) }
+    borrowed_books
   end
 end

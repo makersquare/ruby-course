@@ -9,9 +9,6 @@ describe Book do
   describe ".initialize" do
     it "has a title and author, id, and default status of available" do
       book = Book.new("The Stranger", "Albert Camus")
-
-      # binding.pry
-
       expect(book.title).to eq "The Stranger"
       expect(book.author).to eq "Albert Camus"
       expect(book.id).to be_an_instance_of(Fixnum)
@@ -206,7 +203,7 @@ describe Library do
   end
 
   describe "#available_books" do
-    it "returns available books" do
+    it "returns a list of available books" do
       lib = Library.new("Austin Public Library")
       lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
       lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
@@ -222,23 +219,23 @@ describe Library do
     end
   end
 
-  
+  describe "#borrowed_books" do
+    it "returns a list of borrowed books" do
+      lib = Library.new("Purple Library")
+      lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
+      lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
+      lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
 
-  # describe 
-  xit "returns borrowed books" do
-    lib = Library.new
-    lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
-    lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
-    lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
+      # At first, no books are checked out
+      expect(lib.borrowed_books.count).to eq(0)
+      expect(lib.available_books.count).to eq(3)
 
-    # At first, no books are checked out
-    expect(lib.borrowed_books.count).to eq(0)
+      kors = Borrower.new("Michael Kors")
+      book = lib.check_out_book(lib.available_books.first.id, kors)
 
-    kors = Borrower.new("Michael Kors")
-    book = lib.check_out_book(lib.borrowed_books.first.id, kors)
-
-    # But now there should be one checked out book
-    expect(lib.borrowed_books.count).to eq(1)
-    expect(lib.borrowed_books.first).to be_a(Book)
+      # But now there should be one checked out book
+      expect(lib.borrowed_books.count).to eq(1)
+      expect(lib.borrowed_books.first).to be_a(Book)
+    end
   end
 end
