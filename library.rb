@@ -46,6 +46,7 @@ class Library
   def initialize(name)
     @name = name
     @books = []
+    @borrowed = []
   end
 
   def books
@@ -53,10 +54,21 @@ class Library
   end
 
   def add_book(title, author)
-    @books << Book.new(title,author)
+    id = 111111 + Random.rand(1000000)
+    @books << Book.new(title,author,id)
   end
 
   def check_out_book(book_id, borrower)
+    @books.each do |book|
+      if book_id == book.id
+        @borrowed.push({ 
+          name:borrower.name,
+          book: book
+        })
+        book.check_out
+        return book
+      end
+    end
   end
 
   def check_in_book(book)

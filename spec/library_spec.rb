@@ -68,23 +68,24 @@ describe Library do
     expect(created_book.id).to_not be_nil
   end
 
-  xit "can add multiple books" do
-    lib = Library.new
-    lib.register_new_book("One", "Bob")
-    lib.register_new_book("Two", "Bob")
-    lib.register_new_book("Three", "Bob")
+  it "can add multiple books" do
+    lib = Library.new('City Library')
+    lib.add_book("One", "Bob")
+    lib.add_book("Two", "Bob")
+    lib.add_book("Three", "Bob")
 
     expect(lib.books.count).to eq(3)
   end
 
-  xit "allows a Borrower to check out a book by its id" do
-    lib = Library.new
-    lib.register_new_book("Green Eggs and Ham", "Dr. Seuss")
+  it "allows a Borrower to check out a book by its id" do
+    lib = Library.new('City Library')
+    lib.add_book("Green Eggs and Ham", "Dr. Seuss")
     book_id = lib.books.first.id
 
     # Sam wants to check out Green Eggs and Ham
     sam = Borrower.new('Sam-I-am')
     book = lib.check_out_book(book_id, sam)
+    puts book.class
 
     # The checkout should return the book
     expect(book).to be_a(Book)
