@@ -2,6 +2,7 @@ require "./library.rb"
 require 'pry-byebug'
 
 describe Book do
+  
   it "has a title and author, and nil id" do
     book = Book.new("The Stranger", "Albert Camus")
 
