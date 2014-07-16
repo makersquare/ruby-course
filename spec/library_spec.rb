@@ -53,13 +53,13 @@ end
 describe Library do
 
   it "starts with an empty array of books" do
-    lib = Library.new
+    lib = Library.new('City Library')
     expect(lib.books.count).to eq(0)
   end
 
-  xit "add new books and assigns it an id" do
-    lib = Library.new
-    lib.register_new_book("Nausea", "Jean-Paul Sartre")
+  it "add new books and assigns it an id" do
+    lib = Library.new('City Library')
+    lib.add_book("Nausea", "Jean-Paul Sartre")
     expect(lib.books.count).to eq(1)
 
     created_book = lib.books.first

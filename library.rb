@@ -31,24 +31,29 @@ class Book
 end
 
 class Borrower
+
   attr_reader :name
 
   def initialize(name)
     @name = name
   end
+
 end
 
 class Library
-  attr_reader :books
+  attr_reader :name
 
-  def initialize #name
+  def initialize(name)
+    @name = name
     @books = []
   end
 
   def books
+    @books
   end
 
   def add_book(title, author)
+    @books << Book.new(title,author)
   end
 
   def check_out_book(book_id, borrower)
