@@ -20,24 +20,26 @@ describe Book do
     end
   end
 
-  xit "can be checked out" do
-    book = Book.new
-    did_it_work = book.check_out
-    expect(did_it_work).to be_true
-    expect(book.status).to eq 'checked_out'
+  describe "#check_out" do
+    it "can be checked out" do
+      book = Book.new("Big Book", "Tiny Author")
+      did_it_work = book.check_out
+      expect(did_it_work).to be true
+      expect(book.status).to eq :checked_out
+    end
+  
+    it "can't be checked out twice in a row" do
+      book = Book.new("Little Book", "Big Author")
+      did_it_work = book.check_out
+      expect(did_it_work).to be true
+
+      did_it_work_again = book.check_out
+      expect(did_it_work_again).to be false
+
+      expect(book.status).to eq :checked_out
+    end
   end
-
-  xit "can't be checked out twice in a row" do
-    book = Book.new
-    did_it_work = book.check_out
-    expect(did_it_work).to eq(true)
-
-    did_it_work_again = book.check_out
-    expect(did_it_work_again).to eq(false)
-
-    expect(book.status).to eq 'checked_out'
-  end
-
+  
   xit "can be checked in" do
     book = Book.new
     book.check_out

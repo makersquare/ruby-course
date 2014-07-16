@@ -9,6 +9,14 @@ class Book
     @status = :available
   end
 
+  def check_out
+    if @status == :available
+      @status = :checked_out
+      true
+    elsif @status == :checked_out
+      false
+    end
+  end
 end
 
 class Borrower
