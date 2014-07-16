@@ -1,9 +1,22 @@
 
 class Book
-  attr_reader :author
+  attr_reader :author, :title, :id
+  attr_accessor :status
 
-  def initialize(title, author)
+  def initialize(title, author, id = nil, status = 'available')
+    @title = title
     @author = author
+    @id = id
+    @status = status
+  end
+
+  def check_out
+    if @status == 'available'
+      @status = 'checked_out'
+      true
+    else
+      false
+    end
   end
 end
 
@@ -15,6 +28,7 @@ end
 class Library
   def initialize(name)
     @books = []
+    @name = name
   end
 
   def books
