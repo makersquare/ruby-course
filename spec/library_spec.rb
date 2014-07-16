@@ -113,7 +113,7 @@ describe Library do
     book_id = lib.books.first.id
 
     # Leslie Nielsen wants to double check on that
-    nielsen = Borrower.new('Leslie Nielsen')
+    nielsen = Borrower.new('Justin Beuck')
     book = lib.check_out_book(book_id, nielsen)
 
     # The first time should be successful

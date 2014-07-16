@@ -52,7 +52,7 @@ class Borrower
   end
 end
 
-class Library
+class Library #testing code
   attr_writer :register_new_book
   def initialize(name)
     @books = []
