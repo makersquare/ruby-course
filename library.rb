@@ -64,8 +64,11 @@ class Library
   end
 
   def available_books
+    available_books = @books.delete_if{|x| @checkouts.has_key?(x.id)}
+    available_books
   end
 
   def borrowed_books
+    borrowed_books = @checkouts.has_key?
   end
 end
