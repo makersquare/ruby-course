@@ -1,5 +1,6 @@
 
 class Book
+
   attr_reader :author, :title, :id, :status
 
   def initialize(title, author,id=nil, status='available')
@@ -8,15 +9,39 @@ class Book
     @id = id
     @status = status
   end
+
+  def check_out
+    if @status == 'available'
+      @status.gsub!(/\bavailable\b/,'checked_out')
+      true
+    else
+      false
+    end
+  end
+
+  def check_in
+    if @status == 'checked_out'
+      @status.gsub!(/\bchecked_out\b/,'available')
+      true
+    else
+      false
+    end
+  end
+
 end
 
 class Borrower
+  attr_reader :name
+
   def initialize(name)
+    @name = name
   end
 end
 
 class Library
-  def initialize(name)
+  attr_reader :books
+
+  def initialize #name
     @books = []
   end
 
