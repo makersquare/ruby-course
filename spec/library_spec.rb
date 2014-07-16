@@ -146,7 +146,7 @@ describe Library do
 
   xit "does not allow a Borrower to check out more than one Book at any given time" do
     # yeah it's a stingy library
-    lib = Library.new
+    lib = Library.new("City of Buena Park")
     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
     lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
     lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")

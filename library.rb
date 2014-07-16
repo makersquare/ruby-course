@@ -84,9 +84,6 @@ class Library
     @checkouts.delete(book)
   end
 
-  def available_books
-  end
-
   def borrowed_books
   end
 end
