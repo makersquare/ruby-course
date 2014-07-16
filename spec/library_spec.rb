@@ -129,7 +129,7 @@ describe Library do
   end
 
   it "allows a Borrower to check a book back in" do
-    lib = Library.new("City of Austin")
+    lib = Library.new("City of Boston")
     lib.register_new_book("Finnegans Wake", "James Joyce", 3)
     book_id = lib.books.first.id
 
