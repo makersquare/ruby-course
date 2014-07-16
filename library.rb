@@ -25,22 +25,27 @@ class Book
 end
 
 class Borrower
-  attr_reader :name
+  attr_reader :name, :borrowed
 
   def initialize(name)
     @name = name
+    @borrowed = []
   end
 end
 
 class Library
-  attr_reader :name, :books
+  attr_reader :name, :books, :borrowed_books, :available_books
 
   def initialize(name)
     @name = name
     @books = []
+    @available_books = []
+    @borrowed_books = []
   end
 
-  def register_new_book(title, author, id)
+  def register_new_book(title, author, id=rand(500))
+    new_book = Book.new(title, author, id)
+    @books << new_book
   end
 
   # def books
@@ -50,10 +55,20 @@ class Library
   end
 
   def check_out_book(book_id, borrower)
+    book = @books.find{|b| b.id == book_id}
+    return nil if book.status == "checked_out"
+    @borrowed_books << {book_id => borrower.name}
+    book.check_out
+    borrower.borrowed << book
+    book
+  end
+
+  def get_borrower(book_id)
+    @borrowed_books.find{|h| h[book_id]}[book_id]
   end
 
   def check_in_book(book)
-  end
+  end 
 
   def available_books
   end
