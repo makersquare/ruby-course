@@ -45,6 +45,9 @@ class Library
 
   def check_out_book(book_id, borrower)
     this_book = @books.find {|x| x.id == book_id}
+    if @checkouts.select{|k,v| v==borrower}.size >= 2
+      return nil
+    end
     if this_book.check_out
       @checkouts[book_id] = borrower
       this_book

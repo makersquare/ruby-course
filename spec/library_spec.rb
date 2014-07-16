@@ -127,7 +127,7 @@ describe Library do
       expect(book_again).to be_nil
     end
 
-    xit "does not allow a Borrower to check out more than one Book at any given time" do
+    it "does not allow a Borrower to check out more than two books at any given time" do
       # yeah it's a stingy library
       lib = Library.new("Big Box Library")
       lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
