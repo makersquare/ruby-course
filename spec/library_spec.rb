@@ -105,6 +105,51 @@ describe Library do
       # The book should now be marked as checked out
       expect(book.status).to eq :checked_out
     end
+
+    it "does not allow a book to be checked out twice in a row" do
+      lib = Library.new("The Technicolor Downtown San Antonio Library")
+      lib.register_new_book("Surely You're Joking Mr. Feynman", "Richard Feynman")
+      book_id = lib.books.first.id
+
+      # Leslie Nielsen wants to double check on that
+      nielsen = Borrower.new('Leslie Nielsen')
+      book = lib.check_out_book(book_id, nielsen)
+
+      # The first time should be successful
+      expect(book).to be_a(Book)
+
+      # However, you can't check out the same book twice!
+      book_again = lib.check_out_book(book_id, nielsen)
+      expect(book_again).to be_nil
+
+      son = Borrower.new('Leslie Nielsen the 2nd')
+      book_again = lib.check_out_book(book_id, son)
+      expect(book_again).to be_nil
+    end
+
+    xit "does not allow a Borrower to check out more than one Book at any given time" do
+      # yeah it's a stingy library
+      lib = Library.new("Big Box Library")
+      lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
+      lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
+      lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
+
+      jackson = Borrower.new("Michael Jackson")
+      book_1 = lib.books[0]
+      book_2 = lib.books[1]
+      book_3 = lib.books[2]
+
+      # The first two books should check out fine
+      book = lib.check_out_book(book_1.id, jackson)
+      expect(book.title).to eq "Eloquent JavaScript"
+
+      book = lib.check_out_book(book_2.id, jackson)
+      expect(book.title).to eq "Essential JavaScript Design Patterns"
+
+      # However, the third should return nil
+      book = lib.check_out_book(book_3.id, jackson)
+      expect(book).to be_nil
+    end
   end
   
   describe "#get_borrower" do  
@@ -122,69 +167,25 @@ describe Library do
     end
   end
   
+  describe "#check_in_book" do
+    it "allows a Borrower to check a book back in" do
+      lib = Library.new("Super Duper Library")
+      lib.register_new_book("Finnegans Wake", "James Joyce")
+      book_id = lib.books.first.id
 
+      # Bob wants to check out Finnegans Wake
+      bob = Borrower.new('Bob Bobber')
+      book = lib.check_out_book(book_id, bob)
 
+      # o wait he changed his mind
+      lib.check_in_book(book)
 
-  xit "does not allow a book to be checked out twice in a row" do
-    lib = Library.new
-    lib.register_new_book = Book.new("Surely You're Joking Mr. Feynman", "Richard Feynman")
-    book_id = lib.books.first.id
-
-    # Leslie Nielsen wants to double check on that
-    nielsen = Borrower.new('Leslie Nielsen')
-    book = lib.check_out_book(book_id, nielsen)
-
-    # The first time should be successful
-    expect(book).to be_a(Book)
-
-    # However, you can't check out the same book twice!
-    book_again = lib.check_out_book(book_id, nielsen)
-    expect(book_again).to be_nil
-
-    son = Borrower.new('Leslie Nielsen the 2nd')
-    book_again = lib.check_out_book(book_id, son)
-    expect(book_again).to be_nil
+      # The book should now be marked as available!
+      expect(book.status).to eq :available
+    end
   end
 
-  xit "allows a Borrower to check a book back in" do
-    lib = Library.new
-    lib.register_new_book("Finnegans Wake", "James Joyce")
-    book_id = lib.books.first.id
 
-    # Bob wants to check out Finnegans Wake
-    bob = Borrower.new('Bob Bobber')
-    book = lib.check_out_book(book_id, bob)
-
-    # o wait he changed his mind
-    lib.check_in_book(book)
-
-    # The book should now be marked as available!
-    expect(book.status).to eq 'available'
-  end
-
-  xit "does not allow a Borrower to check out more than one Book at any given time" do
-    # yeah it's a stingy library
-    lib = Library.new
-    lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
-    lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
-    lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
-
-    jackson = Borrower.new("Michael Jackson")
-    book_1 = lib.books[0]
-    book_2 = lib.books[1]
-    book_3 = lib.books[2]
-
-    # The first two books should check out fine
-    book = lib.check_out_book(book_1.id, jackson)
-    expect(book.title).to eq "Eloquent JavaScript"
-
-    book = lib.check_out_book(book_2.id, jackson)
-    expect(book.title).to eq "Essential JavaScript Design Patterns"
-
-    # However, the third should return nil
-    book = lib.check_out_book(book_3.id, jackson)
-    expect(book).to be_nil
-  end
 
   xit "returns available books" do
     lib = Library.new

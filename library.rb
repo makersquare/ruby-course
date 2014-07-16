@@ -56,6 +56,8 @@ class Library
   end
 
   def check_in_book(book)
+    book.check_in
+    @checkouts.delete_if {|key, value| key == book.id}
   end
 
   def available_books
