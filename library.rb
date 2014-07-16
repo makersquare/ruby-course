@@ -37,8 +37,6 @@ class Library
   end
 
   def register_new_book(title, author)
-    @title = title
-    @author = author
     @books << Book.new(title, author, @id = (books.count + 1))
   end
 
