@@ -33,13 +33,14 @@ class Borrower
 end
 
 class Library
-  attr_reader :name, :books, :book_id
+  attr_reader :name, :books, :book_id, :borrower_hash
   attr_accessor :book_id_counter
 
   def initialize(name)
     @name = name
     @books = []
     @book_id_counter = 0
+    @borrower_hash = {}
   end
 
   # def books
@@ -56,8 +57,12 @@ class Library
   def check_out_book(book_id, borrower)
     selected_book = @books.select {|book| book.id == book_id}.pop
     return nil if selected_book.status == "checked_out"
-    selected_book.check_out
-    @borrower_hash = {book_id => borrower}
+    if @borrower_hash.select{|k,v| v == borrower}.count == 2
+      return nil
+    else
+      selected_book.check_out
+      @borrower_hash[book_id] = borrower
+    end
     return selected_book
   end
 
@@ -70,6 +75,7 @@ class Library
   end
 
   def available_books
+    
   end
 
   def borrowed_books
