@@ -63,11 +63,22 @@ class Library
       if book_id == book.id
         @borrowed.push({ 
           name:borrower.name,
-          book: book
+          id: book_id
         })
-        book.check_out
-        return book
+        test = book.check_out
+        if test
+          return book
+        else
+          return nil
+        end
       end
+    end
+  end
+
+  def get_borrower(book_id)
+    @borrowed.find do 
+      |book| book[:id] == book_id
+      return book[:name]
     end
   end
 
