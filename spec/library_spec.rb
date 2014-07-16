@@ -2,19 +2,22 @@ require "./library.rb"
 require 'pry-byebug'
 
 describe Book do
-  it "has a title and author, and nil id" do
-    book = Book.new("The Stranger", "Albert Camus")
-
-    # binding.pry
-
-    expect(book.title).to eq "The Stranger"
-    expect(book.author).to eq "Albert Camus"
-    expect(book.id).to be_nil
+  it "exists" do
+    expect(Book).to be_a(Class)
   end
 
-  xit "has a default status of available" do
-    book = Book.new
-    expect(book.status).to eq 'available'
+  describe ".initialize" do
+    it "has a title and author, id, and default status of available" do
+      book = Book.new("The Stranger", "Albert Camus")
+
+      # binding.pry
+
+      expect(book.title).to eq "The Stranger"
+      expect(book.author).to eq "Albert Camus"
+      expect(book.id).to be_an_instance_of(Fixnum)
+      expect(book.status).to eq :available
+
+    end
   end
 
   xit "can be checked out" do
