@@ -1,5 +1,5 @@
 class Car
-  attr_reader :color, :wheel_count
+  attr_reader :color, :wheel_count, :honk
 
   def initialize(color, wheel_count=4)
     @color = color
@@ -12,4 +12,19 @@ class Car
 end
 
 class BigRig < Car
+  def initialize (color, wheel_count=18)
+    super
+    @wheel_count=wheel_count
+  end
+  def honk
+    @honk= 'BBBBBRRRRRRAAAAAWWWHHHHH'
+  end
+end
+
+class Motorcycle < Car
+  def initialize
+    super('red', 2)
+    @wheel_count=wheel_count
+    @color=color
+  end
 end
