@@ -23,33 +23,40 @@ describe Bar do
     it "initializes with an empty menu" do
       expect(@bar.menu_items.count).to eq(0)
     end
+
+    it "has a default happy hour discount of zero" do
+      expect(@bar.happy_discount).to eq 0
+    end
+
+    it "can set its happy hour discount" do
+      expect { @bar.happy_discount = 0.5 }.to_not raise_error
+    end
+  end
+
+  describe '#add_menu_item' do
+    it "can add menu items" do
+      @bar.add_menu_item('Cosmo', 5.40)
+      @bar.add_menu_item('Salty Dog', 7.80)
+
+      expect(@bar.menu_items.count).to eq(2)
+    end
+
+    it "can retrieve menu items" do
+      @bar.add_menu_item('Little Johnny', 9.95)
+      item = @bar.menu_items.first
+      expect(item.name).to eq 'Little Johnny'
+      expect(item.price).to eq 9.95
+    end
+
   end
 
 
 
 
 
-  xit "can add menu items" do
-    @bar.add_menu_item('Cosmo', 5.40)
-    @bar.add_menu_item('Salty Dog', 7.80)
 
-    expect(@bar.menu_items.count).to eq(2)
-  end
 
-  xit "can retrieve menu items" do
-    @bar.add_menu_item('Little Johnny', 9.95)
-    item = @bar.menu_items.first
-    expect(item.name).to eq 'Little Johnny'
-    expect(item.price).to eq 9.95
-  end
 
-  xit "has a default happy hour discount of zero" do
-    expect(@bar.happy_discount).to eq 0
-  end
-
-  xit "can set its happy hour discount" do
-    expect { @bar.happy_discount = 0.5 }.to_not raise_error
-  end
 
   xit "only returns a discount when it's happy hour" do
     @bar.happy_discount = 0.5
