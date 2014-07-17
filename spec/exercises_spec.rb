@@ -1,4 +1,5 @@
-require 'spec_helper'
+require 'pry-byebug'
+require './exercises.rb'
 
 describe 'Exercise 0' do
   it "triples the length of a string" do
@@ -10,4 +11,6 @@ describe 'Exercise 0' do
     result = Exercises.ex0("wishes")
     expect(result).to eq("nope")
   end
+
+
 end

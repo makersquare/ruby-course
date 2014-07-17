@@ -6,7 +6,7 @@ module Exercises
   def self.ex0(str)
     if str == "wishes"
       "nope"
-    else 3.times "str"
+    else "#{str}#{str}#{str}"
     end
   end
 
