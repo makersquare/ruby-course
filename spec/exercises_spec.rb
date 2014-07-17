@@ -44,9 +44,12 @@ describe 'Exercises' do
   end
 
   context "Exercise 5" do  
-    xit "Iterates through an array and `puts` each element" do
-      result = Exercises.ex5(array)
-      expect(result).to be(array.count)
+    it "Iterates through an array and `puts` each element" do
+      expect(STDOUT).to receive(:puts).and_return("1")
+      expect(STDOUT).to receive(:puts).and_return("2")
+      expect(STDOUT).to receive(:puts).and_return("3")
+      expect(STDOUT).to receive(:puts).and_return("4")
+      Exercises.ex5([1,2,3,4])
     end
   end
 
