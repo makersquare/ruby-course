@@ -9,15 +9,19 @@ class Bar
     @menu_items = []
   end
 
-  def add_menu_item(item, price)
-    newfood = Food.new(item, price)
+  def add_menu_item(name, price)
+    newfood = Food.new(name, price)
     @menu_items.push(newfood)
   end
+
+  # def get_menu_item(item)
+  #   @menu_items.find { |x| x.menu_items }
+  # end
 end
 
 class Food
 
-  attr_reader :item, :price
+  attr_reader :name, :price
 
   def initialize(name, price)
     @name = name
