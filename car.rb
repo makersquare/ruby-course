@@ -12,4 +12,12 @@ class Car
 end
 
 class BigRig < Car
+
+  def initialize(color)
+    super(color)
+  end
+
+  def honk
+    'BBBBBRRRRRRAAAAAWWWHHHHH'
+  end
 end

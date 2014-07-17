@@ -24,7 +24,7 @@ describe 'Car' do
 end
 
 
-describe 'BigRig', :pending => true do
+describe 'BigRig' do
 
   before do
     @truck = BigRig.new('gray')
@@ -38,7 +38,7 @@ describe 'BigRig', :pending => true do
     expect(@truck.honk).to eq 'BBBBBRRRRRRAAAAAWWWHHHHH'
   end
 
-  it "has 18 wheels" do
+  xit "has 18 wheels" do
     expect(@truck.wheel_count).to eq(18)
   end
 end
