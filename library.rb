@@ -1,27 +1,11 @@
 
 class Book
-
-  def initialize(title, author, id=nil, status="available")
+    attr_accessor :title, :author, :id, :status
+  def initialize(title, author)
     @title = title
     @author = author
-    @id = id
-    @status = status
-  end
-
-  def author
-    @author
-  end
-
-  def title
-    @title
-  end
-
-  def id
-    @id
-  end
-
-  def status
-    @status
+    @id = nil
+    @status = "available"
   end
 
   def check_out
@@ -43,47 +27,51 @@ class Book
 end
 
 class Borrower
+  attr_reader :name
   def initialize(name)
     @name = name
   end
 
-  def name
-    @name
-  end
+  
 end
 
 class Library 
-  attr_writer :register_new_book
+  attr_reader :books
   def initialize(name)
     @books = []
     @checkouts = {}
   end
 
-  def books
-    @books
-  end
-
-  def register_new_book(title, author, id=nil)
-    @books << Book.new(title, author, id)
+  def register_new_book(title, author)
+    new_book = Book.new(title, author)
+    new_book.id = rand(1000) * Time.now.to_i
+    @books << new_book
   end
 
     def check_out_book(book_id, borrower)
-    check = @books.find{|x| x.id == book_id}
-      if check.check_out
+        check = @books.find{|x| x.id == book_id}
+      if @checkouts.find_all{|k,v| v == borrower}.count >= 2
+        return nil
+      elsif check.check_out
         @checkouts[book_id] = borrower
         check
       end
-  end
+    end    
 
   def get_borrower(book_id)
     @checkouts[book_id].name
   end
 
   def check_in_book(book)
-    book.check_in
     @checkouts.delete(book)
+    book.check_in
+  end
+
+  def available_books
+    @books.select {|x| x.status == "available"}
   end
 
   def borrowed_books
+    @books.select {|book| book.status == "checked_out"}
   end
 end
