@@ -14,6 +14,8 @@ class Bar
   end
 
   def happy_discount=(x)
+    x = 0 if x < 0
+    x = 1 if x > 1
     @happy_discount = x
   end
   def happy_discount
