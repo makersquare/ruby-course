@@ -13,6 +13,10 @@ class Bar
     happy_hour? ? apply_happy_discount : @menu_items
   end
 
+  def get_price(drink_name)
+    show_menu.select {|item| item.name == drink_name}.pop.price
+  end
+
   def add_menu_item(name, price)
     menu_items << Item.new(name: name, price: price)
   end
