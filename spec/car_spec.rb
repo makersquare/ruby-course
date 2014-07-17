@@ -24,7 +24,7 @@ describe 'Car' do
 end
 
 
-describe 'BigRig', :pending => true do
+describe 'BigRig', :pending => false do
 
   before do
     @truck = BigRig.new('gray')

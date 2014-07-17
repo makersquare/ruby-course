@@ -12,4 +12,10 @@ class Car
 end
 
 class BigRig < Car
+  def honk
+    'BBBBBRRRRRRAAAAAWWWHHHHH'
+  end
+  def wheel_count
+    @wheel_count =18
+  end
 end
