@@ -9,24 +9,20 @@ class Car
   def honk
     'meep'
   end
-
 end
 
 class BigRig < Car
+  def initialize(color)
+    super
+    @wheel_count = 18
+  end
 
-	def initialize(color)
-		super
-		@wheel_count = 18
-	end
-
-	def honk
+  def honk
       'BBBBBRRRRRRAAAAAWWWHHHHH'
     end
-
 end
 
 class Motorcycle < Car
-
   def initialize(color = "red", wheel_count = 2)
     super
   end
