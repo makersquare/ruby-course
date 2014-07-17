@@ -68,9 +68,16 @@ describe 'Exercises' do
   end
 
   context "Exercise 7" do  
-    xit "" do
+    it "If the string `str` exists in the array, add `str` to the end of the array" do
       result = Exercises.ex7(array)
-      expect(result).to be(array.count)
+      expect(result.last).to be('str')
+    end
+  end
+
+  context "Exercise 7" do  
+    it "If the string `str` does not exists in the array, return 'later'" do
+      result = Exercises.ex7(array)
+      expect(result.last).to be('later')
     end
   end
 
