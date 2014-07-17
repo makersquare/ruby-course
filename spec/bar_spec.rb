@@ -89,16 +89,28 @@ describe Bar do
     end
 
     it "is not happy hour otherwise" do
-      # TODO: CONTROL TIME
+      allow(Time).to receive(:now).and_return(Time.parse('2014-07-17 14:30:43 -0500'))
       expect(@bar.happy_hour?).to eq(false)
     end
   end
 
   context "During normal hours" do
+    it "Knows not to discount during normal hours" do
     # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+    allow(Time).to receive(:now).and_return(Time.parse('2014-07-17 14:30:43 -0500'))
+    expect(@bar.happy_discount).to eq(0)
+    end
   end
 
   context "During happy hours" do
-    # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
+    it "Knows to discount differently on mon, wed" do
+    allow(Time).to receive(:now).and_return(Time.parse('2014-07-16 15:30:43 -0500'))
+    expect(@bar.happy_discount).to eq(0.5)
+    end
+  
+    it "Knows to discount differently busy days" do
+    allow(Time).to receive(:now).and_return(Time.parse('2014-07-17 15:30:43 -0500'))
+    expect(@bar.happy_discount).to eq(0.25)
+  end
   end
 end

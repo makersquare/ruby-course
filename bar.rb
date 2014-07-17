@@ -11,6 +11,10 @@ class Bar
   def happy_hour?
     t=Time.now
     if t.hour == 15
+      if t.wednesday? || t.monday?
+        @happy_discount=0.5
+      else @happy_discount=0.25
+      end
       true
     else false
     end
@@ -34,6 +38,15 @@ class Bar
     else @happy_discount=discount
     end
   end
+
+  # def get_price(food)
+  #   temp_price=0.0
+  #   @menu_items.each do |fooditem|
+  #     if food==fooditem.name
+  #       return fooditem.price
+  #     end
+  #   end
+  # end
         
 
 end
