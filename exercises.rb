@@ -44,6 +44,7 @@ module Exercises
   #  - Iterates through an array and `puts` each element
   def self.ex5(array)
     # TODO
+    array.each {|x| puts x}
   end
 
   # Exercise 6
@@ -52,6 +53,11 @@ module Exercises
   #    it to 'GODZILLA' instead
   def self.ex6(array)
     # TODO
+    if array[-1] != 'panda'
+      array[-1] = 'panda'
+    else
+      array[-1] = 'GODZILLA'
+    end
   end
 
   # Exercise 7
@@ -59,6 +65,7 @@ module Exercises
   #    add `str` to the end of the array
   def self.ex7(array, str)
     # TODO
+    array.push('str') if array.include? str
   end
 
   # Exercise 8
@@ -67,6 +74,11 @@ module Exercises
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
     # TODO
+    people.each do |person|
+      puts person[:name]
+      puts person[:occupation]
+    end
+
   end
 
   # Exercise 9
@@ -75,6 +87,18 @@ module Exercises
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
     # TODO
+    if (time % 100 == 0)
+      if (time%400 == 0)
+        return true
+      else
+        return false
+      end
+    elsif time % 4 == 0
+      return true
+    else
+      return false
+    end
+        
   end
 end
 
