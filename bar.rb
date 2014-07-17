@@ -35,7 +35,13 @@ class Bar
   end
 
   def happy_hour?
-
+    start = Time.now
+    if start.hour == 15
+      true
+    else
+      false
+    end
+    
   end
 end
 
