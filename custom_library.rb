@@ -20,13 +20,22 @@ class Library
 
   def check_out_book(book_id, borrower)
     selected_book = books.select {|book| book_id == book.id}.pop
-    return nil if borrowed_books.keys.include?(selected_book)
-    return nil if borrowed_books.values.map {|v| v[0] }.count(borrower) >= 2
-    return nil if borrowed_books.values.select {|v| v[0] == borrower}.any? {|v| v[1] < Time.now}
+    return nil if deny_check_out?(selected_book, borrower)
     selected_book.check_out
+    add_book_to_borrowed_list(selected_book, borrower)
+    selected_book
+  end
+
+  def add_book_to_borrowed_list(selected_book, borrower)
     due_date = Time.now + 60*10080
     borrowed_books[selected_book] = [borrower, due_date]
-    selected_book
+  end
+
+  def deny_check_out?(selected_book, borrower)
+    return true if borrowed_books.keys.include?(selected_book)
+    return true if borrowed_books.values.map {|v| v[0] }.count(borrower) >= 2
+    return true if borrowed_books.values.select {|v| v[0] == borrower}.any? {|v| v[1] < Time.now}
+    false
   end
 
   def schedule_check_out(book_id, borrower)
