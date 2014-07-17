@@ -65,36 +65,19 @@ class Library
     end
   end
 
-
-
-
-
-    # return nil if @books[book_id].status == 'checked_out'
-    # @pointer = 0
-    # @names.select do |name|
-    #   @pointer += 1 if name == borrower.name
-    # end
-    # if @pointer < 2
-      
-    #   @books[book_id].check_out
-    #   @books_checked[book_id] = borrower.name
-    #   @borrowers[borrower.name] = @books[book_id]
-    # else
-    #   return nil
-    # end
-
-
   def get_borrower(book_id)
     @borrowers.key(@books[book_id])
   end
 
   def check_in_book(book)
+    bg = get_borrower(book.id)
+    @borrowers.delete_if {|name, book| book == book }
+    @names.delete_at(@names.index(bg))
     book.check_in
   end
 
   def available_books
-    @books.select { |book| book.status == 'available'}
-    
+    @books.select { |book| book.status == 'available'}  
   end
 
   def borrowed_books
