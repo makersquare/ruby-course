@@ -26,7 +26,7 @@ end
 class Motorcycle < Car
 
   def initialize
-    super(color= "red")
+    super(color= "red", wheel_count=2)
   end
     
 end

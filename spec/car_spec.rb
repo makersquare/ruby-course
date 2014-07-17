@@ -54,7 +54,7 @@ describe 'Motorcycle' do
     expect(@bike.color).to eq 'red'
   end
 
-  xit "has 2 wheels" do
+  it "has 2 wheels" do
     expect(@bike.wheel_count).to eq(2)
   end
 end
