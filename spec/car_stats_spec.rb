@@ -1,6 +1,7 @@
 require 'spec_helper'
+require 'pry-byebug'
 
-describe CarStats, :pending => true do
+describe CarStats do
 
   before do
     @cars = []
