@@ -120,7 +120,7 @@ describe Bar do
       @happy_hour = Time.parse('3:35 pm')
       Time.stub(:now).and_return(@happy_hour)
     end
-    
+
     it"should return discounted price for an item" do
       @bar.add_menu_item('martini', 12)
       @bar.happy_discount = 0.5

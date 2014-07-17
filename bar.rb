@@ -24,12 +24,18 @@ class Bar
 
   def happy_discount
     hedge_discount
+    daily_discount
     happy_hour? ? @happy_discount : 0
+  end
+
+  def daily_discount
+    today = DateTime.now
+    today.monday? || today.wednesday? ? (@happy_discount = 0.5) : (@happy_discount = 0.25)
   end
 
   def apply_happy_discount
     menu_items.map do |item|
-      Item.new(name: item.name, price: item.price * happy_discount.to_f)
+      Item.new(name: item.name, price: item.price - (item.price * happy_discount.to_f))
     end
   end
 
