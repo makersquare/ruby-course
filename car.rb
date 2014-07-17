@@ -21,7 +21,7 @@ class BigRig < Car
 end
 
 class Motorcycle < Car
-  def initialize(color="red", wheel_count=2)
-    super
+  def initialize
+    super("red", 2)
   end
 end
