@@ -46,6 +46,8 @@ module Exercises
   #  - If the last item is already 'panda', update
   #    it to 'GODZILLA' instead
   def self.ex6(array)
+    array.last == "panda" ? array[-1] = "GODZILLA" : array[-1] = "panda"
+    array
   end
 
   # Exercise 7

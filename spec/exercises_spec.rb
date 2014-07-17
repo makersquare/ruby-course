@@ -53,3 +53,17 @@ describe 'Exercise 5' do
     result = Exercises.ex5(array)
   end
 end
+
+describe 'Exercise 6' do
+  it "changes the last item of the array to 'panda'" do
+    array = %w(big brown bear)
+    result = Exercises.ex6(array)
+    expect(result).to eq(["big", "brown", "panda"])
+  end
+
+  it "changes the last item to 'GODZILLA' if it's 'panda'" do
+    array = %w(big brown panda)
+    result = Exercises.ex6(array)
+    expect(result).to eq(["big", "brown", "GODZILLA"])
+  end
+end
