@@ -4,7 +4,10 @@ module Exercises
   #  - Triples a given string `str`
   #  - Returns "nope" if `str` is "wishes"
   def self.ex0(str)
-    # TODO
+    if str == "wishes"
+      "nope"
+    else 3.times "str"
+    end
   end
 
   # Exercise 1
