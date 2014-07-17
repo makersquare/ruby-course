@@ -44,3 +44,12 @@ describe 'Exercise 4' do
   end
 end
 
+describe 'Exercise 5' do
+  it "puts each element of an array on it's own line" do
+    array = [1, 2, 3]
+    STDOUT.should_receive(:puts).with(1)
+    STDOUT.should_receive(:puts).with(2)
+    STDOUT.should_receive(:puts).with(3)
+    result = Exercises.ex5(array)
+  end
+end
