@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CarStats, :pending => true do
+describe CarStats do
 
   before do
     @cars = []
