@@ -1,0 +1,14 @@
+<h1>Team: <%= @team.name %></h1>
+
+<% @events.each do |event| %>
+<p><%= event.name %></p>
+<% end %>
+
+<%= form_tag("/events/create", method: "post") do %>
+	<%= label_tag(:name, "Event name") %>
+	<%= text_field_tag (:name) %>
+	<%= label_tag(:user_id, "User ID") %>
+	<%= text_field_tag (:user_id) %>
+	<%= hidden_field_tag(:team_id, @team.id) %>
+	<%= submit_tag("Submit new event") %>
+<% end %>

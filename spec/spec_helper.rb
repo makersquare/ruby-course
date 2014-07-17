@@ -1,5 +1,8 @@
 require 'timeline'
 require 'timecop'
+require 'timeline/database/in_memory.rb'
+require 'timeline/database/activerecord.rb'
+require 'use_case.rb'
 
 RSpec.configure do |config|
   # Auto-generated
