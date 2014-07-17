@@ -1,3 +1,16 @@
 class CarStats
-  # TODO
+  def self.calc_top_color(car_array)
+    color_of_cars = car_array.map { |x| x.color }
+    colors = color_of_cars.uniq
+    
+    color_stats = {}
+    colors.each do |x| 
+      y = color_of_cars.count(x)  
+      color_stats[x] = y
+    end
+    
+    color_stats.key(color_stats.values.max)
+
+  
+  end
 end
