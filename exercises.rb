@@ -4,37 +4,46 @@ module Exercises
   #  - Triples a given string `str`
   #  - Returns "nope" if `str` is "wishes"
   def self.ex0(str)
-    # TODO
+    if str == "wishes"
+      return 'nope'
+    end
+    str*3
   end
 
   # Exercise 1
   #  - Returns the number of elements in the array
   def self.ex1(array)
-    # TODO
+    array.size
   end
 
   # Exercise 2
   #  - Returns the second element of an array
   def self.ex2(array)
-    # TODO
+    array[1]
   end
 
   # Exercise 3
   #  - Returns the sum of the given array of numbers
   def self.ex3(array)
-    # TODO
+    array.inject(:+)
   end
 
   # Exercise 4
   #  - Returns the max number of the given array
   def self.ex4(array)
-    # TODO
+    max = array.first
+    array.each do |x|
+      if x > max
+        max = x
+      end
+    end
+    max
   end
 
   # Exercise 5
   #  - Iterates through an array and `puts` each element
   def self.ex5(array)
-    # TODO
+    array.each { |e| puts e }
   end
 
   # Exercise 6
@@ -42,14 +51,20 @@ module Exercises
   #  - If the last item is already 'panda', update
   #    it to 'GODZILLA' instead
   def self.ex6(array)
-    # TODO
+    if array[-1] == "panda"
+      array[-1] = "GODZILLA"
+    else
+      array[-1] = "panda"
+    end
+    array
   end
 
   # Exercise 7
   #  - If the string `str` exists in the array,
   #    add `str` to the end of the array
   def self.ex7(array, str)
-    # TODO
+    array << str if array.include?(str)
+    array
   end
 
   # Exercise 8
@@ -57,7 +72,7 @@ module Exercises
   #    { :name => 'Bob', :occupation => 'Builder' }
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
-    # TODO
+    people.each {|p| puts "#{p[:name]} #{p[:occupation]}" }
   end
 
   # Exercise 9
@@ -65,7 +80,7 @@ module Exercises
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
-    # TODO
+    return time.year % 4 == 0
   end
 end
 
@@ -83,6 +98,62 @@ class RPS
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
+  attr_reader :player1, :player2, :score
+  def initialize(name1, name2)
+    @player1 = name1
+    @player2 = name2
+    @score = {name1 => 0, name2 => 0}
+  end
+
+  def find_winner(move1, move2)
+    if move1 == "rock"
+      if move2 == "paper"
+        winner = player2
+      else
+        winner = player1
+      end
+    elsif move1 == "paper"
+      if move2 == "rock"
+        winner = player1
+      else
+        winner = player2
+      end
+    elsif move1 == "scissors"
+      if move2 == "rock"
+        winner = player2
+      else
+        winner = player1
+      end
+    end
+  end
+  
+  def play(move1, move2)
+    if game_over?
+      return "Game is already over"
+    end
+
+    return "Tie game" if move1 == move2
+
+    winner = find_winner(move1, move2)
+
+    @score[winner] += 1
+    "#{winner} wins"
+  end
+
+  def winner
+    if @score[@player1] == 2
+      return @player1
+    elsif @score[@player2] == 2
+      return @player2
+    else
+      nil
+    end
+  end
+
+  def game_over?
+    winner != nil
+  end
+
 end
 
 
@@ -101,6 +172,24 @@ class RPSPlayer
   def start
 
     # TODO
+    puts "What is player 1's name?"
+    p1 = gets.chomp
+    puts "What is player 2's name?"
+    p2 = gets.chomp
+    rps = RPS.new p1, p2
+
+    while !rps.game_over?
+      puts "#{rps.player1}, what is your move?"
+      m1 = STDIN.noecho(&:gets).chomp
+      puts "#{rps.player2}, what is your move?"
+      m2 = STDIN.noecho(&:gets).chomp
+
+      result = rps.play(m1, m2)
+      puts result
+    end
+
+    puts "Game Over!"
+    puts "#{rps.winner} wins the round"
 
     # PRO TIP: Instead of using plain `gets` for grabbing a player's
     #          move, this line does the same thing but does NOT show
