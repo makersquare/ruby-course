@@ -8,8 +8,10 @@ describe Bar do
     @bar = Bar.new "The Irish Yodel"
   end
 
-  it "initializes with a name" do
-    expect(@bar.name).to eq("The Irish Yodel")
+  describe '.initialize' do
+    it "initializes with a name" do
+      expect(@bar.name).to eq("The Irish Yodel")
+    end
   end
 
   xit "cannot change its name" do
