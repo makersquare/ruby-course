@@ -20,7 +20,7 @@ class Book
   end
 
   def check_in
-    @status = "available" if @status = "checked_out"
+    @status = "available" if @status == "checked_out"
   end
 end
 
@@ -40,39 +40,44 @@ class Library
     @name = name
     @books = []
     @available_books = []
-    @borrowed_books = []
+    @borrowed_books = {}
   end
 
   def register_new_book(title, author, id=rand(500))
     new_book = Book.new(title, author, id)
+    @available_books << new_book
     @books << new_book
   end
-
-  # def books
-  # end
 
   def add_book(title, author)
   end
 
   def check_out_book(book_id, borrower)
-    book = @books.find{|b| b.id == book_id}
-    return nil if book.status == "checked_out"
-    @borrowed_books << {book_id => borrower.name}
-    book.check_out
-    borrower.borrowed << book
-    book
+    if borrower.borrowed.size <= 1 
+      book = @books.find{|b| b.id == book_id}
+      return nil if book.status == "checked_out"
+      @borrowed_books[book_id] = borrower.name
+      @available_books.delete(book)
+      book.check_out
+      borrower.borrowed << book
+      book
+    else
+      return nil
+    end
   end
 
   def get_borrower(book_id)
-    @borrowed_books.find{|h| h[book_id]}[book_id]
+    @borrowed_books[book_id]
   end
 
   def check_in_book(book)
+    book.check_in
+    @available_books << book
+    @borrowed_books.delete(book.id)
   end 
 
-  def available_books
-  end
-
   def borrowed_books
+    bb = @borrowed_books.select{|k,v| v !=nil}.keys
+    bb.map {|i| @books.first}  
   end
 end
