@@ -19,3 +19,12 @@ describe 'Exercise 1' do
     expect(result).to eq(5)    
   end  
 end
+
+describe 'Exercise 2' do
+  it "returns the second item in an array" do
+    array = %w(wow there is a big dragon)
+    result = Exercises.ex2(array)
+    expect(result).to eq("there")
+  end  
+end
+  
