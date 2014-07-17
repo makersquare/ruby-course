@@ -37,43 +37,43 @@ describe 'Exercises' do
   end
 
   context "Exercise 4" do  
-    xit "Returns the max number of the given array" do
-      result = Exercises.ex1(array)
-      expect(result).to be(array.count)
+    it "Returns the max number of the given array" do
+      result = Exercises.ex4([1,2,3])
+      expect(result).to be(3)
     end
   end
 
   context "Exercise 5" do  
     xit "Iterates through an array and `puts` each element" do
-      result = Exercises.ex1(array)
+      result = Exercises.ex5(array)
       expect(result).to be(array.count)
     end
   end
 
   context "Exercise 6" do  
     xit "Updates the last item in the array to 'panda'; If the last item is already 'panda', update; it to 'GODZILLA' instead" do
-      result = Exercises.ex1(array)
+      result = Exercises.ex6(array)
       expect(result).to be(array.count)
     end
   end
 
   context "Exercise 7" do  
     xit "" do
-      result = Exercises.ex1(array)
+      result = Exercises.ex7(array)
       expect(result).to be(array.count)
     end
   end
 
   context "Exercise 8" do  
     xit "" do
-      result = Exercises.ex1(array)
+      result = Exercises.ex8(array)
       expect(result).to be(array.count)
     end
   end
 
   context "Exercise 9" do  
     xit "" do
-      result = Exercises.ex1(array)
+      result = Exercises.ex9(array)
       expect(result).to be(array.count)
     end
   end
