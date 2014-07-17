@@ -12,3 +12,10 @@ describe 'Exercise 0' do
   end
 end
 
+describe 'Exercise 1' do
+  it "finds the number of elements in an array" do
+    array = %w(big, dog, jogs, all, day)
+    result = Exercises.ex1(array)
+    expect(result).to eq(5)    
+  end  
+end
