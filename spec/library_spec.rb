@@ -28,10 +28,10 @@ describe Book do
   it "can't be checked out twice in a row" do
     book = Book.new("The Stranger", "Albert Camus")
     did_it_work = book.check_out
-    expect(did_it_work).to eq 'checked_out'
+    expect(did_it_work).to eq true
 
     did_it_work_again = book.check_out
-    expect(did_it_work_again).to eq 'checked_out'
+    expect(did_it_work_again).to eq false
 
     expect(book.status).to eq 'checked_out'
   end
@@ -95,7 +95,7 @@ describe Library do
     expect(book.status).to eq 'checked_out'
   end
 
-  xit "knows who borrowed a book" do
+  it "knows who borrowed a book" do
     lib = Library.new
     lib.register_new_book("The Brothers Karamazov", "Fyodor Dostoesvky")
     book_id = lib.books.first.id
