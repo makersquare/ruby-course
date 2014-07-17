@@ -26,33 +26,36 @@ class CarStats
   # 	biggest.first
   # end  
 
-  def self.calc_top_color cars
-  	colors = cars.map { |c| c.color }
-  	histogram = colors.inject(Hash.new(0)) do |h,c|
-  		h[c] += 1
-  		h
-  	end
-  	histogram.max_by { |c, n| n }.first
-  end
-  def self.calc_bottom_color cars
-  	colors = cars.map { |c| c.color }
-  	histogram = colors.inject(Hash.new(0)) do |h,c|
-  		h[c] += 1
-  		h
-  	end
-  	histogram.min_by { |c, n| n }.first
-  end
-
   # def self.calc_top_color cars
-  # 	top = Hash.new(0) # top = {}
-  # 	cars.each do |c|
-  # 		top[c.color] += 1
+  # 	colors = cars.map { |c| c.color }
+  # 	histogram = colors.inject(Hash.new(0)) do |h,c|
+  # 		h[c] += 1
+  # 		h
   # 	end
-  # 	top.max_by { |k,v| v }.first
+  # 	histogram.max_by { |c, n| n }.first
   # end
   # def self.calc_bottom_color cars
-  # 	top = {}
-  # 	cars.each do |c|
-  # 		if top.has_key? 
+  # 	colors = cars.map { |c| c.color }
+  # 	histogram = colors.inject(Hash.new(0)) do |h,c|
+  # 		h[c] += 1
+  # 		h
+  # 	end
+  # 	histogram.min_by { |c, n| n }.first
+  # end
+
+  def self.calc_top_color cars
+  	top = Hash.new(0) # top = {}
+  	cars.each do |c|
+  		top[c.color] += 1
+  	end
+  	top.max_by { |k,v| v }.first
+  end
+  def self.calc_bottom_color cars
+    top = Hash.new(0) # top = {}
+    cars.each do |c|
+      top[c.color] += 1
+    end
+    top.min_by { |k,v| v }.first
+  end
 
 end
