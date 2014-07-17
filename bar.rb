@@ -2,11 +2,13 @@ require 'time' # you're gonna need it
 
 class Bar
 
-  attr_reader :name, :menu_items
+  attr_reader :name, :menu_items, :happy_discount
 
-  def initialize(name="The Irish Yodel")
+  def initialize(name="The Irish Yodel", happy_discount=0)
     @name = name
     @menu_items = []
+    @happy_discount = happy_discount
+
   end
 
   def add_menu_item(name, price)
@@ -14,9 +16,7 @@ class Bar
     @menu_items.push(newfood)
   end
 
-  # def get_menu_item(item)
-  #   @menu_items.find { |x| x.menu_items }
-  # end
+  
 end
 
 class Food
