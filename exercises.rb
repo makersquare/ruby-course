@@ -4,37 +4,39 @@ module Exercises
   #  - Triples a given string `str`
   #  - Returns "nope" if `str` is "wishes"
   def self.ex0(str)
-    # TODO
+    raise ArgumentError unless str.is_a?(String)
+    str != 'wishes' ? str*3 : "nope"
   end
 
   # Exercise 1
   #  - Returns the number of elements in the array
   def self.ex1(array)
-    # TODO
+    array.is_a?(Array) ? array.count : (raise ArgumentError)
   end
 
   # Exercise 2
   #  - Returns the second element of an array
   def self.ex2(array)
-    # TODO
+    array.is_a?(Array) ? array[1] : (raise ArgumentError)
   end
 
   # Exercise 3
   #  - Returns the sum of the given array of numbers
   def self.ex3(array)
-    # TODO
+    array.is_a?(Array) ? array.inject(:+) : (raise ArgumentError)
   end
 
   # Exercise 4
   #  - Returns the max number of the given array
   def self.ex4(array)
-    # TODO
+    raise ArgumentError unless array.is_a?(Array)
+    array.reject {|num| !num.is_a?(Fixnum)}.max
   end
 
   # Exercise 5
   #  - Iterates through an array and `puts` each element
   def self.ex5(array)
-    # TODO
+    array.is_a?(Array) ? array.each {|element| puts element} : (raise ArgumentError)
   end
 
   # Exercise 6
@@ -42,14 +44,16 @@ module Exercises
   #  - If the last item is already 'panda', update
   #    it to 'GODZILLA' instead
   def self.ex6(array)
-    # TODO
+    raise ArgumentError unless array.is_a?(Array)
+    array.last == 'panda' ? (array[-1] = 'GODZILLA') : (array[-1] = 'panda')
   end
 
   # Exercise 7
   #  - If the string `str` exists in the array,
   #    add `str` to the end of the array
   def self.ex7(array, str)
-    # TODO
+    raise ArgumentError unless array.is_a?(Array) && str.is_a?(String)
+    array.push(str) if array.include?(str)
   end
 
   # Exercise 8
