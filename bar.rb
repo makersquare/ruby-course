@@ -3,7 +3,6 @@ require 'time' # you're gonna need it
 class Bar
 
   attr_reader :name, :menu_items
-  attr_accessor :happy_discount
 
   def initialize(name, happy_discount=0)
     @name = name
@@ -25,6 +24,23 @@ class Bar
     # @happy_hour = Time.now
     # return true if Time.parse('3 pm') <= @happy_hour && @happy_hour <= Time.parse('4 pm')
     Time.now.hour == 15
+  end
+
+  def happy_discount
+    return @happy_discount if self.happy_hour? == true
+    0
+  end
+
+  def happy_discount=(happy_discount)
+   #if input is larger than 1, set @happy_discount to 1
+   if happy_discount > 1
+      @happy_discount = 1
+    #if input is smaller than 0, set @happy_discount to 0
+    elsif happy_discount < 0
+      @happy_discount = 0
+    else
+      @happy_discount = happy_discount
+    end
   end
 
 end
