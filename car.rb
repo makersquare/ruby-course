@@ -1,9 +1,11 @@
 class Car
   attr_reader :color, :wheel_count
 
+  @@car_collection = []
   def initialize(color, wheel_count=4)
     @color = color
     @wheel_count = wheel_count
+    @@car_colleciton << color
   end
 
   def honk
