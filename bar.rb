@@ -4,11 +4,10 @@ class Bar
 
   attr_reader :name, :menu_items, :happy_discount
 
-  def initialize(name="The Irish Yodel", happy_discount: 0)
+  def initialize(name)
     @name = name
     @menu_items = []
-    @happy_discount = happy_discount
-
+    @happy_discount =0 
   end
 
   def add_menu_item(name, price)
@@ -17,10 +16,27 @@ class Bar
   end
 
   def happy_discount= (discount)
-    @happy_discount = discount
+    
+    if discount > 1
+      @happy_discount = 1
+    elsif discount < 0
+      @happy_discount = 0
+    else
+      @happy_discount = discount
+    end
   end
 
-  
+  def happy_discount
+    if happy_hour?
+      @happy_discount
+    else
+      0
+    end
+  end
+
+  def happy_hour?
+
+  end
 end
 
 class Food
