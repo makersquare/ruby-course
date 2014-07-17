@@ -94,3 +94,23 @@ describe 'Exercise 8' do
     result = Exercises.ex8(array)
   end
 end
+
+describe 'Exercise 9' do
+  it "returns true if leap year" do
+    time = Time.new(2012)
+    time2 = Time.new(2000)
+    result = Exercises.ex9(time)
+    result2 = Exercises.ex9(time2)
+    expect(result).to be true
+    expect(result2).to be true
+  end  
+
+  it "returns false if not" do
+    time = Time.new(2014)
+    time2 = Time.new(1900)
+    result = Exercises.ex9(time)    
+    result2 = Exercises.ex9(time2)
+    expect(result).to be false
+    expect(result2).to be false
+  end
+end
