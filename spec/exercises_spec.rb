@@ -30,7 +30,7 @@ describe 'Exercises' do
   end
 
   context "Exercise 3" do  
-    xit "Returns the sum of the given array of numbers" do
+    it "Returns the sum of the given array of numbers" do
       result = Exercises.ex3([1,2,3])
       expect(result).to be(6)
     end
