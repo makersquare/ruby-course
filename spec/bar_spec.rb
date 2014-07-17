@@ -98,7 +98,6 @@ describe Bar do
   context "During normal hours" do
     # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
     it "knows not to give happy hour discount" do
-      # @bar.happy_discount = 0.75
       allow(Time).to receive(:now).and_return(Time.parse("2014-07-17 17:00:00 -0500"))
       expect(@bar.happy_discount).to eq 0
     end
