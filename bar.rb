@@ -11,8 +11,8 @@ class Bar
     @slow_day_happy_discount = 0
   end
 
-  def add_menu_item(name, price)
-    @menu_items << MenuItem.new(name, price)
+  def add_menu_item(name, price, hhstatus = false)
+    @menu_items << MenuItem.new(name, price, hhstatus)
   end
 
   def happy_discount=(x)
@@ -32,6 +32,7 @@ class Bar
   end
 
   def get_price(item)
+    return item.price unless item.hhstatus
     (item.price * (1 - happy_discount)).round(2)
   end
 
@@ -44,10 +45,11 @@ class Bar
 end
 
 class MenuItem
-  attr_reader :name, :price
+  attr_reader :name, :price, :hhstatus
   
-  def initialize(name, price)
+  def initialize(name, price, hhstatus = false )
     @name = name
     @price = price
+    @hhstatus = hhstatus
   end
 end

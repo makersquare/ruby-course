@@ -124,7 +124,7 @@ describe Bar do
   describe '#get_price' do 
     it "returns the price of the item correctly discounted during happy hour" do
       @bar.happy_discount = 0.5
-      @bar.add_menu_item("Margarita", 8)
+      @bar.add_menu_item("Margarita", 8, true)
       margarita = @bar.menu_items.first
       my_time = Time.new(2014, 7, 17, 15, 30)
       Time.stub(:now).and_return(my_time)
@@ -133,7 +133,7 @@ describe Bar do
 
     it "returns full price outside of happy hour" do
       @bar.happy_discount = 0.5
-      @bar.add_menu_item("Margarita", 8)
+      @bar.add_menu_item("Margarita", 8, true)
       margarita = @bar.menu_items.first
       my_time = Time.new(2014, 7, 17, 16, 30)
       Time.stub(:now).and_return(my_time)
@@ -144,12 +144,22 @@ describe Bar do
       it "applies a different discount on slow days" do
         @bar.happy_discount = 0.5
         @bar.slow_day_happy_discount = 0.8
-        @bar.add_menu_item("Margarita", 8)
+        @bar.add_menu_item("Margarita", 8, true)
         margarita = @bar.menu_items.first
         my_time = Time.new(2014, 7, 16, 15, 30) #7/16 is Weds - SLOW DAY
         Time.stub(:now).and_return(my_time)
         expect(@bar.get_price(margarita)).to eq(1.6)        
       end      
+    end
+
+    it "does not apply discount when item is not included in HH" do 
+      @bar.happy_discount = 0.5
+      @bar.add_menu_item("McAllen 18", 20, false)
+      top_shelf = @bar.menu_items.first
+      my_time = Time.new(2014, 7, 17, 15, 30)
+      Time.stub(:now).and_return(my_time)
+      expect(@bar.happy_hour?).to eq(true)
+      expect(@bar.get_price(top_shelf)).to eq(20)    
     end
   end
 end
