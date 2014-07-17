@@ -1,3 +1,4 @@
+
 module Timeline
   module Database
     class InMemory
