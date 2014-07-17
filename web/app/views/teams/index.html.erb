@@ -1,0 +1,6 @@
+<h3>There are <%= @teams.count %> teams.</h3>
+<ul>
+<% @teams.each do |team| %>
+  <h3><a href="/teams/show?team_id=<%= team.id %>&team_name=<%= team.name %>"> <%= team.name %></a></h3>  
+<% end %>
+</ul>

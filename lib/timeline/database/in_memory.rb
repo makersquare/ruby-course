@@ -70,7 +70,6 @@ module Timeline
       def get_events_by_team(team_id)
         @events.select {|id,event| event.team_id == team_id }.values.sort_by {|e| e.created_at }
       end
-
     end
   end
 end
