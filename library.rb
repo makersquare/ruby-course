@@ -37,7 +37,7 @@ end
 
 
 class Library
-  attr_reader :books, :name, :id
+  attr_reader :books
   def initialize
     @id_tab = 0
     @books = []
@@ -51,7 +51,7 @@ class Library
     @id_tab += 1
   end
 
-  def check_out_book(book_id, borrower, count=0)
+  def check_out_book(book_id, borrower)
     pointer = 0
     @names.select { |name| pointer += 1 if name == borrower.name }
     book = @books.find { |book| book.id == book_id }
