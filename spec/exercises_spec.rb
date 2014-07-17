@@ -83,3 +83,14 @@ describe 'Exercise 7' do
     expect(result).to eq([1, 2, "blue", "red", 5])
   end
 end
+
+describe 'Exercise 8' do
+  it "prints names and jobs from hash" do
+    bob = { name: "Bob", job: "Builder" }
+    joe = { name: "Joe", job: "Jammer" }
+    array = Array.new.push(bob, joe)
+    expect(STDOUT).to receive(:puts).and_return("Bob Builder")
+    expect(STDOUT).to receive(:puts).and_return("Joe Jammer")
+    result = Exercises.ex8(array)
+  end
+end
