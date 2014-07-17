@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Car' do
 
   before do
-    @car = Car.new('black')
+    @car = Car.new(color: 'black')
   end
 
   it "initializes with a color" do
@@ -24,10 +24,10 @@ describe 'Car' do
 end
 
 
-describe 'BigRig', :pending => true do
+describe 'BigRig' do
 
   before do
-    @truck = BigRig.new('gray')
+    @truck = BigRig.new(color: 'gray')
   end
 
   it "initializes with a color" do
@@ -44,7 +44,7 @@ describe 'BigRig', :pending => true do
 end
 
 
-describe 'Motorcycle', :pending => true do
+describe 'Motorcycle' do
 
   before do
     @bike = Motorcycle.new
