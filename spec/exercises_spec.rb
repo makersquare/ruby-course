@@ -26,4 +26,8 @@ describe Exercises do
   it 'returns the sum of the given array of numbers' do
     Exercises.ex3(@arr).should eq(6)
   end
+
+  it 'returns the max number in a given array' do
+    Exercises.ex4(@arr).should eq(3)
+  end
 end
