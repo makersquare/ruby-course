@@ -12,40 +12,40 @@ describe Bar do
     expect(@bar.name).to eq("The Irish Yodel")
   end
 
-  xit "cannot change its name" do
+  it "cannot change its name" do
     # That would require a lengthy marketing meeting
     expect {
       @bar.name = 'lolcat cave'
     }.to raise_error
   end
 
-  xit "initializes with an empty menu" do
+  it "initializes with an empty menu" do
     expect(@bar.menu_items.count).to eq(0)
   end
 
-  xit "can add menu items" do
+  it "can add menu items" do
     @bar.add_menu_item('Cosmo', 5.40)
     @bar.add_menu_item('Salty Dog', 7.80)
 
     expect(@bar.menu_items.count).to eq(2)
   end
 
-  xit "can retrieve menu items" do
+  it "can retrieve menu items" do
     @bar.add_menu_item('Little Johnny', 9.95)
     item = @bar.menu_items.first
     expect(item.name).to eq 'Little Johnny'
     expect(item.price).to eq 9.95
   end
 
-  xit "has a default happy hour discount of zero" do
+  it "has a default happy hour discount of zero" do
     expect(@bar.happy_discount).to eq 0
   end
 
-  xit "can set its happy hour discount" do
+  it "can set its happy hour discount" do
     expect { @bar.happy_discount = 0.5 }.to_not raise_error
   end
 
-  xit "only returns a discount when it's happy hour" do
+  it "only returns a discount when it's happy hour" do
     @bar.happy_discount = 0.5
     # HINT: You need to write your own getter
 
@@ -66,7 +66,7 @@ describe Bar do
     expect(@bar.happy_discount).to eq 0.3
   end
 
-  xit "constrains its happy hour discount to between zero and one" do
+  it "constrains its happy hour discount to between zero and one" do
     expect(@bar).to receive(:happy_hour?).twice.and_return(true)
 
     # HINT: You need to write your own setter
@@ -80,24 +80,133 @@ describe Bar do
 # # # # # # # # # # # # # # # # # # # # # #
   # DO NOT CHANGE SPECS ABOVE THIS LINE #
 # # # # # # # # # # # # # # # # # # # # # #
+   it "records drink purchases" do
+      @bar.add_menu_item('Cosmo', 5.40)
+      @bar.add_menu_item('Salty Dog', 7.80)
+      @bar.make_purchase('Cosmo', @bar.happy_hour?)
 
-  describe '#happy_hour?', :pending => true do
+      expect(@bar.purchased_drinks.length).to eq(1)
+
+      #Testing for additional drink purchases
+      allow(Time).to receive(:now).and_return(Time.parse("1:30pm"))
+      @bar.make_purchase('Cosmo', @bar.happy_hour?)
+      @bar.make_purchase("Salty Dog", @bar.happy_hour?)
+      expect(@bar.purchased_drinks.length).to eq(2)
+    end
+
+    it "returns most popular drinks during happy hour and not during happy hour" do
+      @bar.add_menu_item('Cosmo', 5.40)
+      @bar.add_menu_item('Salty Dog', 7.80)
+      allow(Time).to receive(:now).and_return(Time.parse("1:30pm"))
+      @bar.make_purchase('Cosmo', @bar.happy_hour?)
+      @bar.make_purchase('Cosmo', @bar.happy_hour?)
+      @bar.make_purchase("Salty Dog", @bar.happy_hour?)
+
+      allow(Time).to receive(:now).and_return(Time.parse("1:30pm"))
+      expect(@bar.most_popular_drink(false)).to eq("Cosmo")
+
+      allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+      @bar.make_purchase('Cosmo', @bar.happy_hour?)
+      @bar.make_purchase('Salty Dog', @bar.happy_hour?)
+      @bar.make_purchase("Salty Dog", @bar.happy_hour?)
+      expect(@bar.most_popular_drink(true)).to eq("Salty Dog")
+    end
+
+  describe '#happy_hour?' do
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
       # TODO: CONTROL TIME
+      allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
       expect(@bar.happy_hour?).to eq(true)
     end
 
     it "is not happy hour otherwise" do
       # TODO: CONTROL TIME
+      allow(Time).to receive(:now).and_return(Time.parse("1pm"))
       expect(@bar.happy_hour?).to eq(false)
+    end
+
+    it "can exempt certain drinks from happy hour" do
+      @bar.add_menu_item('Cosmo', 5.40)
+      @bar.add_menu_item('Salty Dog', 7.80)
+      @bar.add_menu_item('Margarita', 8.10)
+
+      @bar.exempt_drink("Cosmo")
+      @bar.exempt_drink("Margarita")
+
+      expect(@bar.exempted_drinks.count).to eq(2)
+    end
+
+    it "knows which drinks are exempted from the happy hour discount" do
+      @bar.add_menu_item('Cosmo', 5.40)
+      @bar.add_menu_item('Salty Dog', 7.80)
+      @bar.exempt_drink("Cosmo")
+      date = Date.today
+
+      allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+      expect(@bar.get_price("Cosmo", @bar.happy_hour?, date)).to eq(5.40)
     end
   end
 
   context "During normal hours" do
     # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+    it "Knows not to discount during normal hours" do
+      @bar.happy_discount = 0.5
+      allow(Time).to receive(:now).and_return(Time.parse("1pm"))
+      expect(@bar.happy_discount).to eq(0)
+    end
   end
 
   context "During happy hours" do
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
+    it "Knows to discount during normal hours" do
+      @bar.happy_discount = 0.5
+      allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+      expect(@bar.happy_discount).to eq(0.5)
+    end
+
+    it "returns the regular price for a drink" do
+      @bar.add_menu_item('Cosmo', 5.40)
+      @bar.add_menu_item('Salty Dog', 7.80)
+      date = Date.parse("28th Apr 2014")
+
+      allow(Time).to receive(:now).and_return(Time.parse("1pm"))
+      expect(@bar.get_price('Cosmo', @bar.happy_hour?, date)).to eq(5.4)
+    end
+
+    it "returns 50% discount on Mondays and Wednesdays" do
+      @bar.add_menu_item('Cosmo', 5.40)
+      @bar.add_menu_item('Salty Dog', 7.80)
+      date = Date.parse("28th Apr 2014")
+      allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+      expect(@bar.get_price('Cosmo', @bar.happy_hour?, date)).to eq(2.7)
+
+      date = Date.parse("30th Apr 2014")
+      allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+      expect(@bar.get_price('Cosmo', @bar.happy_hour?, date)).to eq(2.7)
+    end
+
+    it "returns 25% discount on all days except Monday and Wednesday" do
+      @bar.add_menu_item('Cosmo', 5.40)
+      @bar.add_menu_item('Salty Dog', 7.80)
+      date = Date.parse("29th Apr 2014")
+
+      allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+      expect(@bar.get_price('Cosmo', @bar.happy_hour?, date)).to eq(4.05)
+    end
+
+    it "keeps a record of number of drinks purchased during happy hour" do
+      @bar.add_menu_item('Cosmo', 5.40)
+      @bar.add_menu_item('Salty Dog', 7.80)
+
+      allow(Time).to receive(:now).and_return(Time.parse("1:30pm"))
+      @bar.make_purchase("Cosmo", @bar.happy_hour?)
+
+      allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+      @bar.make_purchase("Cosmo", @bar.happy_hour?)
+      @bar.make_purchase("Salty Dog", @bar.happy_hour?)
+
+      expect(@bar.hh_drinks_bought.length).to eq(2)
+    end
   end
+
 end
