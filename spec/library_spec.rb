@@ -40,6 +40,13 @@ describe Book do
     book.check_in
     expect(book.status).to eq 'available'
   end
+
+  it "let's users leave reviews" do
+    book = Book.new(author: 'Aldous Huxley', title: 'Island')
+    austin = Borrower.new(name: 'Austin')
+    review = book.review(austin, 5, "Huxley's best novel yet!")
+    expect(review).to eq "Austin gave Island 5 stars. Huxley's best novel yet!"
+  end
 end
 
 describe Borrower do
@@ -218,5 +225,37 @@ describe Library do
     # But now there should be one checked out book
     expect(lib.borrowed_books.count).to eq(1)
     expect(lib.borrowed_books.keys.first).to be_a(Book)
+  end
+
+  it "returns a list of borowed books with due dates" do
+    lib = Library.new
+    lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
+    lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
+    lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
+
+    # At first, no books are checked out
+    expect(lib.borrowed_books.count).to eq(0)
+
+    kors = Borrower.new(name: "Michael Kors")
+    book = lib.check_out_book(lib.books.first.id, kors)
+
+    expect(lib.borrowed_books.values.first[1]).to be_an_instance_of(Time)
+  end
+
+  it "returns a list of overdue books" do
+    lib = Library.new
+    lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
+    lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
+    lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
+
+    austin = Borrower.new(name: 'Austin')
+    lib.check_out_book(lib.books.first.id, austin)
+    lib.check_out_book(lib.books.last.id, austin)
+
+    two_weeks_later = Time.now + 60*20160
+    Time.stub(:now).and_return(two_weeks_later)
+
+
+    expect(lib.overdue_books.size).to eq(2)
   end
 end
