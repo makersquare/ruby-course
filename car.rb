@@ -21,6 +21,12 @@ class BigRig < Car
   def honk
     'BBBBBRRRRRRAAAAAWWWHHHHH'
   end
+end
 
+class Motorcycle < Car
 
+  def initialize
+    super(color= "red")
+  end
+    
 end

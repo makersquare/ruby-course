@@ -44,7 +44,7 @@ describe 'BigRig' do
 end
 
 
-describe 'Motorcycle', :pending => true do
+describe 'Motorcycle' do
 
   before do
     @bike = Motorcycle.new
@@ -54,7 +54,7 @@ describe 'Motorcycle', :pending => true do
     expect(@bike.color).to eq 'red'
   end
 
-  it "has 2 wheels" do
+  xit "has 2 wheels" do
     expect(@bike.wheel_count).to eq(2)
   end
 end
