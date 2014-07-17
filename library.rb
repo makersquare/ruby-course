@@ -59,8 +59,14 @@ class Library
   end
 
   def check_out_book(book_id, borrower)
-    @books.each do |book|
+     @books.each do |book|
       if book_id == book.id
+        @borrowed.each do |info|
+          if info[:id] == book_id || info[:name] == borrower.name
+            return nil
+          end
+        end
+
         @borrowed.push({ 
           name:borrower.name,
           id: book_id
@@ -76,18 +82,38 @@ class Library
   end
 
   def get_borrower(book_id)
-    @borrowed.find do 
-      |book| book[:id] == book_id
+    @borrowed.find do |book| 
+      book[:id] == book_id
       return book[:name]
     end
   end
 
   def check_in_book(book)
+    book.check_in
+    @borrowed.find.with_index do |b, i|
+      if book.id == b[:id]
+       @borrowed.delete_at(i)
+      end
+    end
   end
 
   def available_books
+  avail_books = []
+  @books.each do |book| 
+          if book.status == 'available' 
+           avail_books << book
+         end
+      end
+    avail_books
   end
 
   def borrowed_books
+    temp_borrow = []
+    @books.each do |book|
+      if book.status == 'checked_out'
+        temp_borrow << book
+      end
+    end
+    temp_borrow
   end
 end
