@@ -1,7 +1,7 @@
 
 class Book
   attr_reader :title, :author, :id, :status
-
+  
   def initialize(title, author, id=nil)
     @title = title
     @author = author
@@ -30,14 +30,15 @@ end
 
 class Borrower
   attr_reader :name
+
   def initialize(name)
     @name = name
   end
 end
 
-
 class Library
   attr_reader :books
+
   def initialize
     @id_tab = 0
     @books = []
@@ -83,4 +84,5 @@ class Library
   def borrowed_books
     @books.select { |book| book.status == 'checked_out'}
   end
+  
 end
