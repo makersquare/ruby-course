@@ -33,7 +33,7 @@ class Borrower
 end
 
 class Library
-  attr_reader :name, :books, :book_id, :borrower_hash
+  attr_reader :name, :books, :book_id, :borrower_hash, :available_books
   attr_accessor :book_id_counter
 
   def initialize(name)
@@ -41,6 +41,7 @@ class Library
     @books = []
     @book_id_counter = 0
     @borrower_hash = {}
+    @available_books = []
   end
 
   # def books
@@ -49,6 +50,7 @@ class Library
     @book_id_counter += 1
     book = Book.new(title, author, book_id_counter)
     @books << book
+    @available_books << book
   end
 
   # def add_book(title, author)
@@ -62,6 +64,7 @@ class Library
     else
       selected_book.check_out
       @borrower_hash[book_id] = borrower
+      @available_books.delete(selected_book)
     end
     return selected_book
   end
@@ -75,7 +78,7 @@ class Library
   end
 
   def available_books
-    
+    @available_books
   end
 
   def borrowed_books

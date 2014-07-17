@@ -185,7 +185,7 @@ describe Library do
     expect(lib.available_books.count).to eq(2)
   end
 
-  xit "after a book it returned, it can be checked out again" do
+  it "after a book is returned, it can be checked out again" do
     lib = Library.new("Austin Library")
     lib.register_new_book("Harry Potter", "J. K. Rowling")
     book_id = lib.books.first.id
