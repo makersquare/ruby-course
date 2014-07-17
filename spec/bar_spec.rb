@@ -12,40 +12,40 @@ describe Bar do
     expect(@bar.name).to eq("The Irish Yodel")
   end
 
-  xit "cannot change its name" do
+  it "cannot change its name" do
     # That would require a lengthy marketing meeting
     expect {
       @bar.name = 'lolcat cave'
     }.to raise_error
   end
 
-  xit "initializes with an empty menu" do
+  it "initializes with an empty menu" do
     expect(@bar.menu_items.count).to eq(0)
   end
 
-  xit "can add menu items" do
+  it "can add menu items" do
     @bar.add_menu_item('Cosmo', 5.40)
     @bar.add_menu_item('Salty Dog', 7.80)
 
     expect(@bar.menu_items.count).to eq(2)
   end
 
-  xit "can retrieve menu items" do
+  it "can retrieve menu items" do
     @bar.add_menu_item('Little Johnny', 9.95)
     item = @bar.menu_items.first
     expect(item.name).to eq 'Little Johnny'
     expect(item.price).to eq 9.95
   end
 
-  xit "has a default happy hour discount of zero" do
+  it "has a default happy hour discount of zero" do
     expect(@bar.happy_discount).to eq 0
   end
 
-  xit "can set its happy hour discount" do
+  it "can set its happy hour discount" do
     expect { @bar.happy_discount = 0.5 }.to_not raise_error
   end
 
-  xit "only returns a discount when it's happy hour" do
+  it "only returns a discount when it's happy hour" do
     @bar.happy_discount = 0.5
     # HINT: You need to write your own getter
 
@@ -66,7 +66,7 @@ describe Bar do
     expect(@bar.happy_discount).to eq 0.3
   end
 
-  xit "constrains its happy hour discount to between zero and one" do
+  it "constrains its happy hour discount to between zero and one" do
     expect(@bar).to receive(:happy_hour?).twice.and_return(true)
 
     # HINT: You need to write your own setter
@@ -81,23 +81,204 @@ describe Bar do
   # DO NOT CHANGE SPECS ABOVE THIS LINE #
 # # # # # # # # # # # # # # # # # # # # # #
 
-  describe '#happy_hour?', :pending => true do
+  describe '#happy_hour?' do
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
-      # TODO: CONTROL TIME
+      allow(Time).to receive(:now).and_return(Time.parse("3pm"))
       expect(@bar.happy_hour?).to eq(true)
     end
 
     it "is not happy hour otherwise" do
-      # TODO: CONTROL TIME
+      allow(Time).to receive(:now).and_return(Time.parse("8am"))
       expect(@bar.happy_hour?).to eq(false)
     end
   end
 
   context "During normal hours" do
-    # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+    it "returns regular price during normal hours" do
+      @bar.add_menu_item('Little Johnny', 9.95)
+      allow(Time).to receive(:now).and_return(Time.parse("1pm"))
+      expect(@bar.get_price('Little Johnny')).to eq(9.95)
+    end
   end
 
-  context "During happy hours" do
-    # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
+  context "During happy hours on Monday or Wednesday" do
+    it "returns full discounted price during happy hour" do
+      @bar.add_menu_item('Little Johnny', 9.95)
+      allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+      allow(Date).to receive(:today).and_return(Date.parse("wednesday"))
+      expect(@bar.get_price('Little Johnny')).to eq((9.95 * 0.5).round(2))
+    end
+  end
+
+  context "During happy hours not on Monday or Wednesday" do
+    it "returns partial discounted price" do
+      @bar.add_menu_item('Little Johnny', 9.95)
+      allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+      allow(Date).to receive(:today).and_return(Date.parse("tuesday"))
+      expect(@bar.get_price('Little Johnny')).to eq((9.95 * 0.25).round(2))
+    end
+  end
+
+  context "Some drinks are exempt from happy hour" do
+    it "returns normal price for exempt drink during happy hour" do
+      @bar.add_menu_item('Little Johnny', 9.95)
+      # binding.pry
+      @bar.exempt_drink('Little Johnny')
+      allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+      allow(Date).to receive(:today).and_return(Date.parse("tuesday"))
+      expect(@bar.get_price('Little Johnny')).to eq(9.95)
+    end
+  end
+
+  describe "discount for specific day" do
+
+    context "given a day for the discount" do
+      it "returns the right discount" do
+        expect(@bar.discount_for_day(Date.parse("tuesday").wday)).to eq(0.25)
+      end
+    end
+
+    context "can update the discount" do
+      it "receives a day and discount and updates correctly" do
+        @bar.add_menu_item('Little Johnny', 9.95)
+        @bar.update_discount("Friday", 0.35)
+        allow(Date).to receive(:today).and_return(Date.parse("friday"))
+        allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+        expect(@bar.get_price('Little Johnny')).to eq((9.95 * 0.35).round(2))
+      end
+    end
+  end
+
+  describe "discount for specific item" do
+
+    context "a drink is ordered during happy our" do
+      it "has a unique discount" do
+        @bar.add_menu_item('Little Johnny', 9.95)
+        allow(Date).to receive(:today).and_return(Date.parse("monday"))
+        allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+        @bar.unique_discount('Little Johnny', 0.75)
+
+        expect(@bar.get_price('Little Johnny')).to eq((9.95 * 0.75).round(2))
+      end
+    end
+  end
+
+  describe "#order_track" do
+
+    it "knows how many drinks are purchased" do
+      @bar.add_menu_item('Little Johnny', 9.95)
+      @bar.add_menu_item('JayJay', 9.95)
+      @bar.add_menu_item('Texas Tea', 9.95)
+      @bar.purchase('Texas Tea')
+      @bar.purchase('Texas Tea')
+      @bar.purchase('Texas Tea')
+      @bar.purchase('JayJay')
+      @bar.purchase('JayJay')
+      @bar.purchase('Little Johnny')
+
+      expect(@bar.total_purchases).to eq(6)
+    end
+
+    it "list the most popular drinks" do
+      @bar.add_menu_item('Little Johnny', 9.95)
+      @bar.add_menu_item('JayJay', 9.95)
+      @bar.add_menu_item('Texas Tea', 9.95)
+      @bar.purchase('Texas Tea')
+      @bar.purchase('Texas Tea')
+      @bar.purchase('Texas Tea')
+      @bar.purchase('JayJay')
+      @bar.purchase('JayJay')
+      @bar.purchase('Little Johnny')
+
+      expect(@bar.most_popular(:total)).to eq(["Texas Tea: 3", "JayJay: 2", "Little Johnny: 1"])
+    end
+
+    context "a drink is ordered during happy hour" do
+      it "keeps count of drinks during happy hour" do
+        @bar.add_menu_item('Little Johnny', 9.95)
+        @bar.add_menu_item('JayJay', 9.95)
+        @bar.add_menu_item('Texas Tea', 9.95)
+
+        allow(Date).to receive(:today).and_return(Date.parse("monday"))
+        allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+
+        @bar.purchase('Texas Tea')
+        @bar.purchase('Texas Tea')
+        @bar.purchase('Texas Tea')
+        @bar.purchase('JayJay')
+        @bar.purchase('JayJay')
+        @bar.purchase('Little Johnny')
+
+
+        expect(@bar.happy_hour_purchases).to eq(6)
+      end
+
+      it "keeps track of the most popular drinks" do
+        @bar.add_menu_item('Little Johnny', 9.95)
+        @bar.add_menu_item('JayJay', 9.95)
+        @bar.add_menu_item('Texas Tea', 9.95)
+
+        allow(Date).to receive(:today).and_return(Date.parse("monday"))
+        allow(Time).to receive(:now).and_return(Time.parse("3:30pm"))
+
+        @bar.purchase('Texas Tea')
+        @bar.purchase('Texas Tea')
+        @bar.purchase('JayJay')
+        @bar.purchase('JayJay')
+        @bar.purchase('JayJay')
+        @bar.purchase('JayJay')
+        @bar.purchase('JayJay')
+        @bar.purchase('Little Johnny')
+
+        allow(Date).to receive(:today).and_return(Date.parse("monday"))
+        allow(Time).to receive(:now).and_return(Time.parse("7pm"))
+
+        @bar.purchase('JayJay')
+        @bar.purchase('JayJay')
+        @bar.purchase('Little Johnny')
+
+        # binding.pry
+
+        expect(@bar.most_popular(:happy_hour)).to eq([
+        "JayJay: 5", "Texas Tea: 2", "Little Johnny: 1"])
+      end
+    end
+  end
+
+  context "a drink is purchases outside of happy hour" do
+    it "increases the regular purchases count" do
+      @bar.add_menu_item('Little Johnny', 9.95)
+      @bar.add_menu_item('JayJay', 9.95)
+      @bar.add_menu_item('Texas Tea', 9.95)
+
+      allow(Date).to receive(:today).and_return(Date.parse("monday"))
+      allow(Time).to receive(:now).and_return(Time.parse("5:30pm"))
+
+      @bar.purchase('Texas Tea')
+      @bar.purchase('Texas Tea')
+      @bar.purchase('JayJay')
+
+      expect(@bar.regular_purchases).to eq(3)
+    end
+
+    it "increases most popular drinks purchased in regular times" do
+      @bar.add_menu_item('Little Johnny', 9.95)
+      @bar.add_menu_item('JayJay', 9.95)
+      @bar.add_menu_item('Texas Tea', 9.95)
+
+      allow(Date).to receive(:today).and_return(Date.parse("monday"))
+      allow(Time).to receive(:now).and_return(Time.parse("5:30pm"))
+
+      @bar.purchase('Texas Tea')
+      @bar.purchase('Texas Tea')
+      @bar.purchase('JayJay')
+
+      expect(@bar.most_popular(:regular)).to eq([
+          "Texas Tea: 2", "JayJay: 1"
+        ])
+    end
   end
 end
+
+
+
