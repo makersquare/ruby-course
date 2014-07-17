@@ -132,7 +132,7 @@ describe Library do
     expect(book_again).to be_nil
   end
 
-  xit "allows a Borrower to check a book back in" do
+  it "allows a Borrower to check a book back in" do
     lib = Library.new
     lib.add_book("Finnegans Wake", "James Joyce")
     book_id = lib.books.first.id
@@ -148,7 +148,7 @@ describe Library do
     expect(book.status).to eq 'available'
   end
 
-  xit "does not allow a Borrower to check out more than one Book at any given time" do
+  it "does not allow a Borrower to check out more than one Book at any given time" do
     # yeah it's a stingy library
     lib = Library.new
     lib.add_book("Eloquent JavaScript", "Marijn Haverbeke")
@@ -172,7 +172,7 @@ describe Library do
     expect(book).to be_nil
   end
 
-  xit "returns available books" do
+  it "returns available books" do
     lib = Library.new
     lib.add_book("Eloquent JavaScript", "Marijn Haverbeke")
     lib.add_book("Essential JavaScript Design Patterns", "Addy Osmani")
@@ -189,7 +189,7 @@ describe Library do
     expect(lib.available_books.count).to eq(2)
   end
 
-  xit "after a book it returned, it can be checked out again" do
+  it "after a book it returned, it can be checked out again" do
     lib = Library.new
     lib.add_book("Harry Potter", "J. K. Rowling")
     book_id = lib.books.first.id
@@ -208,7 +208,7 @@ describe Library do
     expect( lib.get_borrower(book_id) ).to eq 'Michael Schumacher'
   end
 
-  xit "returns borrowed books" do
+  it "returns borrowed books" do
     lib = Library.new
     lib.add_book("Eloquent JavaScript", "Marijn Haverbeke")
     lib.add_book("Essential JavaScript Design Patterns", "Addy Osmani")
@@ -218,7 +218,7 @@ describe Library do
     expect(lib.borrowed_books.count).to eq(0)
 
     kors = Borrower.new("Michael Kors")
-    book = lib.check_out_book(lib.borrowed_books.first.id, kors)
+    book = lib.check_out_book(lib.available_books.first.id, kors)
 
     # But now there should be one checked out book
     expect(lib.borrowed_books.count).to eq(1)

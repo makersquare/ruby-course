@@ -23,9 +23,10 @@ class Book
 end
 
 class Borrower
-  attr_accessor :name
+  attr_accessor :name, :current_books
   def initialize(name)
     @name=name
+    current_books= []
   end
 end
 
@@ -49,38 +50,27 @@ class Library
   end
 
   def check_out_book(book_id, borrower)
-    book= @books.find { |book| book.id=book_id}
-    # @books.each do |book|
-    #   if book.id == book_id
-    #     book.check_out
-    #     return book
-    #   end
-    # end
-   borrowed= @borrowers.group_by {|key, value| value }[borrower] || []
-    if book.status == "available" && borrowed.length < 2
-      book.check_out
-      @borrowers[book_id] = borrower
-    else
+    newbook= @books.find {|book| book.id == book_id}
+    if @borrowers.select{|key, value| value == borrower}.size >=2
       return nil
     end
-    book
+    if newbook.check_out
+       @borrowers[book_id]= borrower
+       newbook
+    end
   end
 
   def check_in_book(book)
+    book.status="available"
   end
   def get_borrower(book_id)
     @borrowers[book_id].name
   end
   def available_books
-    # @books.each do |book|
-    #   if book.status=='available'
-    #     puts book
-    #   end
-    # end
-     @books.select { |book| book.status == "available" }
+    @books.select { |book| book.status == "available" }
   end
 
   def borrowed_books
-     @books.select{ |book| book.status == "checked_out"}
+    @books.select{ |book| book.status == "checked_out"}
   end
 end
