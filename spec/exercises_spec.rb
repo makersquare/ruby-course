@@ -67,3 +67,19 @@ describe 'Exercise 6' do
     expect(result).to eq(["big", "brown", "GODZILLA"])
   end
 end
+
+describe 'Exercise 7' do
+  it "adds string to the end of array if preexisting" do
+    array = [1, 2, "blue", "red", 5]
+    str = "blue"
+    result = Exercises.ex7(array, str)
+    expect(result).to eq([1, 2, "blue", "red", 5, "blue"])
+  end
+
+  it "leaves array unchanged if sting not present" do
+    array = [1, 2, "blue", "red", 5]
+    str = "purple"
+    result = Exercises.ex7(array, str)
+    expect(result).to eq([1, 2, "blue", "red", 5])
+  end
+end
