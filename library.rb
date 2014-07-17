@@ -1,4 +1,4 @@
-
+# I COMMENTED THIS VERY POORLY. Sorry.
 class Book
   attr_reader :author, :title, :id, :status, :borrower
 
@@ -48,7 +48,7 @@ class Library
   end
 
   def register_new_book(title, author)
-    @books << Book.new(title, author, id =(@books.count + 1))
+    @books.push(Book.new(title, author, id =(@books.count + 1)))
   end
 
   def get_borrower(req_id)
@@ -79,9 +79,11 @@ class Library
   end
 
   def available_books
-
+    @books.select {|x| x.status == 'available'}
   end
 
   def borrowed_books
+    @books.select {|x| x.status == 'checked_out'}
   end
+
 end
