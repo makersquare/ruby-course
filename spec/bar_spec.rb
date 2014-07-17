@@ -37,7 +37,7 @@ describe Bar do
     expect(item.price).to eq 9.95
   end
 
-  xit "has a default happy hour discount of zero" do
+  it "has a default happy hour discount of zero" do
     expect(@bar.happy_discount).to eq 0
   end
 
@@ -81,14 +81,18 @@ describe Bar do
   # DO NOT CHANGE SPECS ABOVE THIS LINE #
 # # # # # # # # # # # # # # # # # # # # # #
 
-  describe '#happy_hour?', :pending => true do
+  describe '#happy_hour?' do
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
       # TODO: CONTROL TIME
+      captured_time = Time.parse('3:30 pm')
+      Time.stub(:now).and_return(captured_time)
       expect(@bar.happy_hour?).to eq(true)
     end
 
     it "is not happy hour otherwise" do
       # TODO: CONTROL TIME
+      late_time = Time.parse('7 PM')
+      Time.stub(:now).and_return(late_time)
       expect(@bar.happy_hour?).to eq(false)
     end
   end
