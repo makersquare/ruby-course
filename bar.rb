@@ -40,7 +40,6 @@ class Bar
       @discount = 0
     end
   end
-
   def get_price(item_name)
     item_price = @menu_items.find {|item| item.name == item_name}.price
     if happy_hour?
