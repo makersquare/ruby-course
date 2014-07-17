@@ -39,14 +39,14 @@ class Bar
     end
   end
 
-  # def get_price(food)
-  #   temp_price=0.0
-  #   @menu_items.each do |fooditem|
-  #     if food==fooditem.name
-  #       return fooditem.price
-  #     end
-  #   end
-  # end
+  def get_price(food)
+    temp_price=0.0
+    @menu_items.each do |fooditem|
+      if food==fooditem.name
+        return fooditem.price
+      end
+    end
+  end
         
 
 end
