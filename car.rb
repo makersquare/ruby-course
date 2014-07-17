@@ -7,15 +7,14 @@ class Car
   end
 
   def honk
-    'meep'
+      'meep'
   end
 end
 
 class BigRig < Car
 
   def initialize(color,wheel_count=18)
-    @color = color
-    @wheel_count = wheel_count
+    super
   end
 
   def honk
@@ -23,13 +22,12 @@ class BigRig < Car
   end
 end
 
-class Motorcycle
+class Motorcycle < Car
 
   attr_reader :color, :wheel_count
   
   def initialize(color="red", wheel_count=2)
-    @color = color
-    @wheel_count = wheel_count
+    super
   end
 
 end
