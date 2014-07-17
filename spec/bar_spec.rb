@@ -66,7 +66,7 @@ describe Bar do
     expect(@bar.happy_discount).to eq 0.3
   end
 
-  xit "constrains its happy hour discount to between zero and one" do
+  it "constrains its happy hour discount to between zero and one" do
     expect(@bar).to receive(:happy_hour?).twice.and_return(true)
 
     # HINT: You need to write your own setter
