@@ -35,8 +35,11 @@ class Library
     selected_book
   end
 
+  def due_date
+    Time.now + 60*10080
+  end
+
   def add_book_to_borrowed_list(selected_book, borrower)
-    due_date = Time.now + 60*10080
     borrowed_books[selected_book] = [borrower, due_date]
   end
 
@@ -68,8 +71,7 @@ class Library
   end
 
   def get_borrower(book_id)
-    selected_book = find_book(book_id)
-    borrowed_books[selected_book][0].name
+    borrowed_books[find_book(book_id)][0].name
   end
 
 end
