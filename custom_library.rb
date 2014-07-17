@@ -7,7 +7,7 @@ class Library
   end
 
   def available_books
-    books.select {|book| book.status == 'available'}
+    books.select {|book| book.available?}
   end
 
   def overdue_books
@@ -15,12 +15,17 @@ class Library
   end
 
   def register_new_book(title, author)
-    books << Book.new(title: title, author: author, id: @@book_id += 1 )
+    books << Book.new(title: title, author: author, id: generate_book_id )
+  end
+
+  def generate_book_id
+    @@book_id += 1
   end
 
   def check_out_book(book_id, borrower)
     selected_book = books.select {|book| book_id == book.id}.pop
     return nil if deny_check_out?(selected_book, borrower)
+
     selected_book.check_out
     add_book_to_borrowed_list(selected_book, borrower)
     selected_book
@@ -32,10 +37,19 @@ class Library
   end
 
   def deny_check_out?(selected_book, borrower)
-    return true if borrowed_books.keys.include?(selected_book)
-    return true if borrowed_books.values.map {|v| v[0] }.count(borrower) >= 2
-    return true if borrowed_books.values.select {|v| v[0] == borrower}.any? {|v| v[1] < Time.now}
-    false
+    return checked_out?(selected_book) || ineligible?(borrower) || overdue?(borrower)
+  end
+
+  def checked_out?(selected_book)
+    borrowed_books.keys.include?(selected_book)
+  end
+
+  def overdue?(borrower)
+    borrowed_books.values.select {|v| v[0] == borrower}.any? {|v| v[1] < Time.now}
+  end
+
+  def ineligible?(borrower)
+    borrowed_books.values.map {|v| v[0] }.count(borrower) >= 2
   end
 
   def schedule_check_out(book_id, borrower)
@@ -68,6 +82,10 @@ class Book
     @edition = args[:edition] || nil
   end
 
+  def available?
+    @status == 'available'
+  end
+
   def check_out
     @status == 'available' ? (@status = 'checked_out'; true) : false
   end
@@ -79,6 +97,7 @@ class Book
   def review(borrower, rating, review=nil)
     "#{borrower.name} gave #{title} #{rating} stars. #{review}"
   end
+
 end
 
 class Borrower
