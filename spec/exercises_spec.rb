@@ -54,9 +54,16 @@ describe 'Exercises' do
   end
 
   context "Exercise 6" do  
-    xit "Updates the last item in the array to 'panda'; If the last item is already 'panda', update; it to 'GODZILLA' instead" do
-      result = Exercises.ex6(array)
-      expect(result).to be(array.count)
+    it "Updates the last item in the array to 'panda'" do
+      result = Exercises.ex6([1,2,3])
+      expect(result.last).to eq('panda')
+    end
+  end
+
+  context "Exercise 6 Part 2" do  
+    it "Updates the last item in the array to 'panda'; If the last item is already 'panda', update; it to 'GODZILLA' instead" do
+      result = Exercises.ex6([1,2,'panda'])
+      expect(result.last).to eq('GODZILLA')
     end
   end
 
@@ -80,7 +87,5 @@ describe 'Exercises' do
       expect(result).to be(array.count)
     end
   end
-
-
 
 end
