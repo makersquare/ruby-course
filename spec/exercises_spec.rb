@@ -79,3 +79,15 @@ describe "Exercise 6" do
     expect {Exercises.ex6(7)}.to raise_error
   end
 end
+
+describe "Exercise 7" do
+  it "adds given string to end of given array if array includes string" do
+    result = Exercises.ex7([8,5,'test',4], 'test')
+    result.last.should eq 'test'
+  end
+
+  it "doesn't add given string to end of array if array doesn't include string" do
+    result = Exercises.ex7([8,5,4], 'test')
+    result.should eq [8,5,4]
+  end
+end

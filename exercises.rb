@@ -53,7 +53,7 @@ module Exercises
   #    add `str` to the end of the array
   def self.ex7(array, str)
     raise ArgumentError unless array.is_a?(Array) && str.is_a?(String)
-    array.push(str) if array.include?(str)
+    array.include?(str) ? array.push(str) : array
   end
 
   # Exercise 8
