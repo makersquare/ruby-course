@@ -84,33 +84,72 @@ describe Bar do
     end
   end
 
-
-
-
-
-
-
 # # # # # # # # # # # # # # # # # # # # # #
   # DO NOT CHANGE SPECS ABOVE THIS LINE #
 # # # # # # # # # # # # # # # # # # # # # #
 
-  describe '#happy_hour?', :pending => true do
+  describe '#happy_hour?' do
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
-      # TODO: CONTROL TIME
+      my_time = Time.new(2014, 7, 17, 15, 30)  #7/17 is Thursday - REGULAR DAY
+      allow(Time).to receive(:now).and_return(my_time)
       expect(@bar.happy_hour?).to eq(true)
     end
 
     it "is not happy hour otherwise" do
-      # TODO: CONTROL TIME
+      my_time = Time.new(2014, 7, 17, 16, 30)
+      allow(Time).to receive(:now).and_return(my_time)
       expect(@bar.happy_hour?).to eq(false)
     end
   end
 
   context "During normal hours" do
-    # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+    it "normal hours = no discount" do
+      @bar.happy_discount = 0.5
+      my_time = Time.new(2014, 7, 17, 16, 30)
+      allow(Time).to receive(:now).and_return(my_time)
+      expect(@bar.happy_discount).to eq(0)
+    end
   end
 
   context "During happy hours" do
-    # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
+    it "happy hour = discount" do
+      @bar.happy_discount = 0.5
+      my_time = Time.new(2014, 7, 17, 15, 30)
+      allow(Time).to receive(:now).and_return(my_time)
+      expect(@bar.happy_discount).to eq(0.5)
+    end  
+  end
+
+  
+  describe '#get_price' do 
+    it "returns the price of the item correctly discounted during happy hour" do
+      @bar.happy_discount = 0.5
+      @bar.add_menu_item("Margarita", 8)
+      margarita = @bar.menu_items.first
+      my_time = Time.new(2014, 7, 17, 15, 30)
+      Time.stub(:now).and_return(my_time)
+      expect(@bar.get_price(margarita)).to eq(4)
+    end
+
+    it "returns full price outside of happy hour" do
+      @bar.happy_discount = 0.5
+      @bar.add_menu_item("Margarita", 8)
+      margarita = @bar.menu_items.first
+      my_time = Time.new(2014, 7, 17, 16, 30)
+      Time.stub(:now).and_return(my_time)
+      expect(@bar.get_price(margarita)).to eq(8)
+    end
+
+    context "slow days" do
+      it "applies a different discount on slow days" do
+        @bar.happy_discount = 0.5
+        @bar.slow_day_happy_discount = 0.8
+        @bar.add_menu_item("Margarita", 8)
+        margarita = @bar.menu_items.first
+        my_time = Time.new(2014, 7, 16, 15, 30) #7/16 is Weds - SLOW DAY
+        Time.stub(:now).and_return(my_time)
+        expect(@bar.get_price(margarita)).to eq(1.6)        
+      end      
+    end
   end
 end
