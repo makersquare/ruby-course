@@ -24,7 +24,7 @@ describe 'Car' do
 end
 
 
-describe 'BigRig', :pending => true do
+describe 'BigRig' do
 
   before do
     @truck = BigRig.new('gray')
@@ -44,7 +44,7 @@ describe 'BigRig', :pending => true do
 end
 
 
-describe 'Motorcycle', :pending => true do
+describe 'Motorcycle' do
 
   before do
     @bike = Motorcycle.new
