@@ -50,34 +50,36 @@ describe Bar do
 
   end
 
+  describe '#happy_discount & #happy_discount=' do
+    it "only returns a discount when it's happy hour" do
+      @bar.happy_discount = 0.5
+      # HINT: You need to write your own getter
 
+      # We are STUBBING `happy_hour?` to return a specified value.
+      # Because of this, you don't have to write a happy_hour? method (yet)
+      expect(@bar).to receive(:happy_hour?).and_return(false)
+      expect(@bar.happy_discount).to eq 0
 
+      expect(@bar).to receive(:happy_hour?).and_return(true)
+      expect(@bar.happy_discount).to eq 0.5
 
+      # Take 2
+      @bar.happy_discount = 0.3
+      expect(@bar).to receive(:happy_hour?).and_return(false)
+      expect(@bar.happy_discount).to eq 0
 
-
-
-
-
-  xit "only returns a discount when it's happy hour" do
-    @bar.happy_discount = 0.5
-    # HINT: You need to write your own getter
-
-    # We are STUBBING `happy_hour?` to return a specified value.
-    # Because of this, you don't have to write a happy_hour? method (yet)
-    expect(@bar).to receive(:happy_hour?).and_return(false)
-    expect(@bar.happy_discount).to eq 0
-
-    expect(@bar).to receive(:happy_hour?).and_return(true)
-    expect(@bar.happy_discount).to eq 0.5
-
-    # Take 2
-    @bar.happy_discount = 0.3
-    expect(@bar).to receive(:happy_hour?).and_return(false)
-    expect(@bar.happy_discount).to eq 0
-
-    expect(@bar).to receive(:happy_hour?).and_return(true)
-    expect(@bar.happy_discount).to eq 0.3
+      expect(@bar).to receive(:happy_hour?).and_return(true)
+      expect(@bar.happy_discount).to eq 0.3
+    end
   end
+
+
+
+
+
+
+
+
 
   xit "constrains its happy hour discount to between zero and one" do
     expect(@bar).to receive(:happy_hour?).twice.and_return(true)
