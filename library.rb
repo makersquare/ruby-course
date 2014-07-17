@@ -45,7 +45,9 @@ class Library
     @books = []
     @id_tab = 0
     @borrowers = {}
-    @book_tracker = {}
+    @books_checked = {}
+    @names = []
+
 
   end
 # @@ people << { name: name, id: @@person_counter }
@@ -62,17 +64,39 @@ class Library
   end
 
   def check_out_book(book_id, borrower, count=0)
-   # if @borrowers.key
-
     if @books[book_id].status == 'checked_out'
       return nil
     else
-      @books[book_id].status = 'checked_out'
-      @borrowers[borrower.name] = @books[book_id]
-    end
+      @names << @books_checked.values #setting array equal to values in @books_checked {  }
+      @pointer = 0
+      @names.select do |name|
+        if name == borrower.name
+          @pointer += 1
+        end
+      end
+      if @pointer < 2
+        @books[book_id].check_out
+        @books_checked[book_id] = borrower
+        @borrowers[borrower.name] = @books[book_id]
+      else
+        return nil
+      end
 
+    end
     #id => borrower
     #sam => id
+    # books_checked = 0
+    # @books.each do |x|
+    #   if x.status == 'checked_out'
+    #     return nil
+    #   elsif x.borrower
+    #     books_checked += 1
+    #       return nil if books_checked >= 2
+    #   else
+    #     x.check_out(borrower)
+    #     return x
+    #   end
+    # end
   end
 
   def get_borrower(book_id)
