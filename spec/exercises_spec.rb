@@ -35,3 +35,12 @@ describe 'Exercise 3' do
     expect(result).to eq(15)
   end
 end
+
+describe 'Exercise 4' do
+  it "returns the largest number in the array" do
+    array = [1, 100, 4, 3.5, 99, 47.1]
+    result = Exercises.ex4(array)
+    expect(result).to eq(100)
+  end
+end
+
