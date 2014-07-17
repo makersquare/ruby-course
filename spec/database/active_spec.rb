@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe Timeline::Database::InMemory do
+describe Timeline::Database::Active do
   it_behaves_like "database"
 end

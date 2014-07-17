@@ -1,0 +1,19 @@
+<h1> Events </h1>
+<ul>
+  <%=  @events.each do |event| %>
+  <li><%= event.name %></li>
+  <%- end %>
+</ul>
+
+
+
+<% if @error %>
+  "there was an error" <%= @error   %>
+<% end %>
+
+<%= form_tag '../../events/create', :method=> 'post' do %>
+  <%=text_field_tag :name %>
+  <%=hidden_field_tag :team_id, @events.first.team_id %>
+  <%=hidden_field_tag :user_id, @events.first.user_id %>
+<% end %>
+
