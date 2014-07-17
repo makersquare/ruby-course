@@ -15,6 +15,3 @@ class CarStats
     freq.min_by{ |k,v| v }.first
   end
 end
-
-
-#arr.max_by { |v| freq[v] }
