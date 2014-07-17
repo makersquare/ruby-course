@@ -20,3 +20,11 @@ class BigRig < Car
     @honk= 'BBBBBRRRRRRAAAAAWWWHHHHH'
   end
 end
+
+class Motorcycle < Car
+  def initialize
+    super('red', 2)
+    @wheel_count=wheel_count
+    @color=color
+  end
+end
