@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe CarStats do
-  
+
   before do
     @cars = []
-    3.times { @cars << Car.new('black') }
-    5.times { @cars << Car.new('silver') }
-    2.times { @cars << Car.new('white') }
+    3.times { @cars << Car.new(color: 'black') }
+    5.times { @cars << Car.new(color: 'silver') }
+    2.times { @cars << Car.new(color: 'white') }
   end
 
   it "calculates the most popular car color" do
