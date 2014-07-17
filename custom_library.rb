@@ -22,8 +22,12 @@ class Library
     @@book_id += 1
   end
 
+  def find_book(book_id)
+    books.select {|book| book_id == book.id}.pop
+  end
+
   def check_out_book(book_id, borrower)
-    selected_book = books.select {|book| book_id == book.id}.pop
+    selected_book = find_book(book_id)
     return nil if deny_check_out?(selected_book, borrower)
 
     selected_book.check_out
@@ -53,7 +57,7 @@ class Library
   end
 
   def schedule_check_out(book_id, borrower)
-    selected_book = books.select {|book| book_id == book.id}.pop
+    selected_book = find_book(book_id)
     check_out_date = borrowed_books.fetch(selected_book)[1]
     check_out_book(book_id, borrower) if Time.now == check_out_date
   end
@@ -64,7 +68,7 @@ class Library
   end
 
   def get_borrower(book_id)
-    selected_book = books.select {|book| book_id == book.id}.pop
+    selected_book = find_book(book_id)
     borrowed_books[selected_book][0].name
   end
 
