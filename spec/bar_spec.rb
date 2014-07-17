@@ -83,23 +83,25 @@ describe Bar do
 
   describe '#happy_hour?' do
 
-    it "knows when it is happy hour (3:00pm to 4:00pm)" do
+    it "knows when it is not happy hour (3:00pm to 4:00pm)" do
       # TODO: CONTROL TIME
-      @bar.curr_time = 16
+      Time.stub(:now).and_return(Time.parse("2014-01-01 16:00:00"))
       expect(@bar.happy_hour?).to eq(false)
     end
 
-    it "is not happy hour otherwise" do
+    it "is happy hour otherwise" do
       # TODO: CONTROL TIME
-      @bar.curr_time = 15
+      Time.stub(:now).and_return(Time.parse("2014-01-01 15:00:00"))
       expect(@bar.happy_hour?).to eq(true)
     end
 
   end
 
   context "During normal hours" do
-    @bar = Bar.new("Videology")
-    @bar.curr_time = 16
+    before(:each) do
+      @bar = Bar.new("Videology")
+      Time.stub(:now).and_return(Time.parse("2014-01-01 16:00:00"))
+    end
     # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
     it "is not happy hour" do
       @bar.happy_hour?.should be_false
@@ -114,7 +116,8 @@ describe Bar do
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
     before(:each) do
       @bar = Bar.new("Videology")
-      @bar.curr_time = 15
+      Time.stub(:now).and_return(Time.parse("2014-01-01 15:00:00"))
+      @bar.add_menu_item('G&T', 6)
       @bar.happy_discount = 0.6
     end
 
@@ -124,7 +127,11 @@ describe Bar do
 
     it "has a discount of 0.6" do
       @bar.happy_discount.should eq(0.6)
-    end 
+    end
+
+    it "should cost $2.40 for a G&T" do
+      @bar.get_price('G&T').should eq(2.40)
+    end
 
   end
 end
