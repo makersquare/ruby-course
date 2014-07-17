@@ -10,7 +10,7 @@ class Bar
   end
 
   def happy_discount
-    if self.happy_hour? == true
+    if happy_hour? == true
       @happy_discount
     else
       0
