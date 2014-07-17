@@ -2,15 +2,12 @@ require 'time' # you're gonna need it
 
 class Bar
   attr_reader :name, :menu_items
-  attr_accessor :curr_time
 
   def initialize(name)
     @name = name
     @menu_items = []
     @happy_discount = 0
     @discount = 0
-    @happy_hour = false
-    @curr_time = Time.now.hour
   end
 
   def add_menu_item(name, price)
@@ -27,7 +24,7 @@ class Bar
   end
 
   def happy_hour?
-    if @curr_time == 15 
+    if Time.now.hour == 15 
       @happy_hour = true
     else
       @happy_hour = false
@@ -41,6 +38,15 @@ class Bar
       @discount = 1
     else
       @discount = 0
+    end
+  end
+
+  def get_price(item_name)
+    item_price = @menu_items.find {|item| item.name == item_name}.price
+    if happy_hour?
+      (item_price - item_price * @discount).round(2)
+    else
+      @item_price
     end
   end
 end
