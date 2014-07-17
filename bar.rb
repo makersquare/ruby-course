@@ -44,8 +44,6 @@ class Bar
     item_price = @menu_items.find {|item| item.name == item_name}.price
     if happy_hour?
       (item_price - item_price * @discount).round(2)
-    else
-      @item_price
     end
   end
 end
