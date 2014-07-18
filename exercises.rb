@@ -79,20 +79,65 @@ module Exercises
   end
 end
 
-
+# Rock, Paper, Scissors
+# Make a 2-player game of rock paper scissors. It should have the following:
+#
+# It is initialized with two strings (player names).
+# It has a `play` method that takes two strings:
+#   - Each string reperesents a player's move (rock, paper, or scissors)
+#   - The method returns the winner (player one or player two)
+#   - If the game is over, it returns a string stating that the game is already over
+# It ends after a player wins 2 of 3 games
+#
+# You will be using this class in the following class, which will let players play
+# RPS through the terminal.
 class RPS
-  # Rock, Paper, Scissors
-  # Make a 2-player game of rock paper scissors. It should have the following:
-  #
-  # It is initialized with two strings (player names).
-  # It has a `play` method that takes two strings:
-  #   - Each string reperesents a player's move (rock, paper, or scissors)
-  #   - The method returns the winner (player one or player two)
-  #   - If the game is over, it returns a string stating that the game is already over
-  # It ends after a player wins 2 of 3 games
-  #
-  # You will be using this class in the following class, which will let players play
-  # RPS through the terminal.
+  attr_reader :player1, :player2, :p1score, :p2score
+
+  def initialize (player1, player2)
+    @player1 = player1
+    @p1score = 0
+    @player2 = player2
+    @p2score = 0
+  end
+
+  def play (player1choice, player2choice)
+    if player1choice == "rock"
+      if player2choice == "scissors"
+        increment(@player1)
+      elsif player2choice == "paper"
+        increment(@player2)
+      end
+    elsif player1choice == "scissors"
+      if player2choice == "rock"
+        increment(@player2)
+      elsif player2choice == "paper"
+        increment(@player1)
+      end
+    elsif player1choice == "paper"
+      if player2choice == "rock"
+        increment(@player1)
+      elsif player2choice == "scissors"
+        increment(@player2)
+      end
+    else
+      nil
+    end
+  end
+
+  def increment(player)
+    if player == @player1
+      @p1score += 1
+      check_scores(@p1score, @player1)
+    elsif player == @player2
+      @p2score += 1
+      check_scores(@p2score, @player2)
+    end
+  end
+
+  def check_scores(x, player)
+    x == 2 ? "Game Over! #{player} won 2 games!" : player
+  end
 end
 
 

@@ -114,3 +114,56 @@ describe 'Exercise 9' do
     expect(result2).to be false
   end
 end
+
+describe 'RPS' do
+  before do
+    @g1 = RPS.new("Joe", "Bob")
+  end
+  
+  describe ".initialize" do
+    it "makes a new game with two players whose names are strings" do
+      expect(@g1.player1).to eq("Joe")
+      expect(@g1.player2).to eq("Bob")
+    end
+
+    it "starts the game with scores of 0" do
+      expect(@g1.p1score).to eq(0)
+      expect(@g1.p2score).to eq(0)
+    end
+  end
+
+  describe "#play" do
+    it "increases one score and leaves the other the same" do
+      @g1.play("scissors", "paper")
+      expect(@g1.p1score).to eq(1)
+      expect(@g1.p2score).to eq(0)
+      @g1.play("rock", "paper")    
+      expect(@g1.p1score).to eq(1)
+      expect(@g1.p2score).to eq(1)
+    end
+
+    it "returns nil for tied games or incorrect entries" do
+      result = @g1.play("scissors", "scissors")
+      expect(result).to be nil
+      result2 = @g1.play("a", "b")
+      expect(result2).to be nil
+    end
+
+    it "returns the player's name when they score 1st point" do
+      result = @g1.play("scissors", "paper")
+      expect(@g1.p1score).to eq(1)
+      expect(result).to eq("Joe")
+    end
+
+    it "returns string of Game Over when game is won - 2 of 3" do
+      @g1.play("scissors", "paper")
+      result = @g1.play("scissors", "paper")
+      expect(@g1.p1score).to eq(2)
+      expect(result).to eq("Game Over! Joe won 2 games!")
+    end
+  end
+end
+
+
+
+
