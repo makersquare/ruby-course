@@ -26,7 +26,7 @@ module Exercises
   # Exercise 3
   #  - Returns the sum of the given array of numbers
   def self.ex3(array)
-    array.inject(0){|element, result| element + result}
+    array.inject(0){|result, element| result + element}
   end
 
   # Exercise 4
@@ -63,7 +63,7 @@ module Exercises
   def self.ex7(array, str)
     if array.include?(str) 
       array << str
-      return array
+      array
     else
       array
     end
@@ -110,8 +110,8 @@ class RPS
   def initialize (player1, player2)
     @player1 = player1
     @player2 = player2
-    @player1win = 0
-    @player2win = 0
+    # @player1win = 0
+    # @player2win = 0
     @total = 0
   end
 
@@ -202,8 +202,6 @@ class RPSPlayer
     p2_wins = 0
   end
 
-
-
   def self.start
     puts "Player 1 Name: "
     player1 = gets.chomp
@@ -240,7 +238,7 @@ class RPSPlayer
   end
 end
 
-module Extensions
+# module Extensions
   # Extension Exercise
   #  - Takes an `array` of strings. Returns a hash with two keys:
   #    :most => the string(s) that occures the most # of times as its value.
@@ -251,7 +249,17 @@ module Extensions
   #   result = Extensions.extremes(['x', 'x', 'y', 'z'])
   #   expect(result).to eq({ :most => 'x', :least => ['y', 'z'] })
   #
-  def self.extremes(array)
-    # TODO
-  end
-end
+#   def self.extremes(array)
+#     counts = Hash.new(0)
+#     result = {}
+#     array.each do |letter|
+#       counts[letter] += 1
+#     end
+
+#     most << count.max_by{|k,v| v}.first
+#     least << count.min_by{|k,v| v}.first
+
+#     if most
+
+#   end
+# end
