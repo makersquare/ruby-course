@@ -16,6 +16,9 @@ module GettersSetters
       @skill = "bedside manners"
     end
     # TODO: Write a setter method for @skill
+    def skill=(new_skill)
+      @skill = new_skill
+    end
   end
 
 end
@@ -28,6 +31,7 @@ class HashProblems
 
   def self.update_top_compartment_item(wardrobe_hash)
     # TODO: Complete this method by writing A SINGLE LINE
+    wardrobe_hash.values[0][:item] = "fake beard"
   end
 
 end
@@ -41,6 +45,7 @@ class ArrayProblems
 
   def self.add_cat_to_array(array)
     # TODO: Complete this method
+    array.push(:cat => 'Pogo')
   end
 
   # # # # # # #
@@ -49,6 +54,7 @@ class ArrayProblems
 
   def self.list_wardrobe_item_sizes(array)
     # TODO: Use the map method to create an array of wardrobe item sizes
+    array.map{ |x| x[:size] }
   end
 
   # # # # # # #
@@ -57,6 +63,7 @@ class ArrayProblems
 
   def self.tell_me_the_weather(array)
     # TODO: Use the map method to create an array of weather descriptions
+    array.map{ |x| "It is #{x}" }
   end
 
   # # # # # # #
@@ -65,6 +72,7 @@ class ArrayProblems
 
   def self.list_my_hats(array)
     # TODO: Use the map method to create an array of sized hats
+    array.map{ |x| x.values.join(" ") }
   end
 end
 
@@ -76,14 +84,14 @@ class MethodReturns
     #       or not the search_item exists in the array.
     array.each do |elem|
       if elem == search_item
-        true
+        return true
       end
     end
-    false
+    return false
   end
 
   def self.get_name
-    puts "Bob"
+    "Bob"
   end
 
 end
@@ -92,9 +100,11 @@ end
 module Scopes
 
   class Person
+    attr_reader :jump_height
+
     def jump(height)
-      jump_height = height
-      "I can jump #{jump_height} inches!"
+      @jump_height = height
+      "I can jump #{@jump_height} inches!"
     end
 
     def last_jump_height
@@ -110,11 +120,9 @@ module Scopes
     def find_first(salary)
       @people.each do |person|
         if person[:salary] == salary
-          found = person
+          found = person[:name]
         end
       end
-
-      found
     end
   end
 
