@@ -100,4 +100,35 @@ describe 'self.ex9' do
   end
 end
 
+describe 'RPS' do
+
+  it "has two player names" do
+    rps = RPS.new("Brian", "John")
+    expect(rps.player1).to eq("Brian")
+    expect(rps.player2).to eq("John")
+  end
+
+  it "only accepts 'rock', 'paper' or 'scissors'" do
+    rps = RPS.new("Brian", "John")
+    play = rps.play("john", "scissors")
+
+    expect(play).to eq(nil)
+  end
+
+  it "returns the winner" do
+    rps = RPS.new("Brian", "John")
+    play = rps.play("rock", "scissors")
+
+    expect(play).to eq("Brian")
+  end
+  
+  it "returns 'Game Over' when it ends" do
+    rps = RPS.new("Brian", "John")
+    expect(STDOUT).to receive(:puts).and_return("Brian wins!")
+
+    rps.play("rock", "scissors")
+    rps.play("rock", "scissors")
+  end
+
+end
 

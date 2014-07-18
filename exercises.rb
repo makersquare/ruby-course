@@ -100,6 +100,44 @@ class RPS
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
+  attr_reader :player1, :player2, :player1_wins, :player2_wins
+  def initialize(player1, player2)
+    @player1 = player1
+    @player2 = player2
+    @player1_wins = 0
+    @player2_wins = 0
+    @hands = ["rock", "paper", "scissors"]
+  end
+
+  def play(player1_hand, player2_hand)
+    if(player1_hand == "rock" && player2_hand == "scissors")
+      @player1_wins += 1
+      puts "#{@player1} wins!" if @player1_wins == 2
+      @player1    
+    elsif(player1_hand == "scissors" && player2_hand == "paper")
+      @player1_wins += 1
+      puts "#{@player1} wins!" if @player1_wins == 2
+      @player1 
+    elsif(player1_hand == "paper" && player2_hand == "rock")
+      @player1_wins += 1
+      puts "#{@player1} wins!" if @player1_wins == 2
+      @player1 
+    elsif(player1_hand == "rock" && player2_hand == "paper")
+      @player2_wins += 1
+      puts "#{@player2} wins!" if @player2_wins == 2
+      @player2    
+    elsif(player1_hand == "scissors" && player2_hand == "rock")
+      @player2_wins += 1
+      puts "#{@player2} wins!" if @player2_wins == 2
+      @player2
+    elsif(player1_hand == "paper" && player2_hand == "scissors")
+      @player2_wins += 1
+      puts "#{@player2} wins!" if @player2_wins == 2
+      @player2
+    else
+      nil
+    end      
+  end
 end
 
 
@@ -116,6 +154,37 @@ class RPSPlayer
   #
   # When the game ends, ask if the player wants to play again.
   def start
+    p1score = 0
+    p2score = 0
+    puts "Player 1:"
+    player1 = STDIN.noecho(&:gets)
+    puts "Player 2:"
+    player2 = STDIN.noecho(&:gets)
+    game = RPS.new(player1, player2)
+
+    while (p1score < 2 && p2score < 2)
+      puts "Enter rock, paper, or scissors for player 1"
+      player1_move = gets.chomp
+      puts "Enter rock, paper, or scissors for player 2"
+      player2_move =  gets.chomp
+      winner = game.play(player1_move, player2_move)
+      if (winner == player1)
+        p1score += 1
+      elsif(winner == player2)
+        p2score += 1
+      end
+    end
+    if p1score > p2score
+      puts "Player1 wins!"
+    else
+      puts "Player2 wins!"
+    end
+    puts "Do you want to play again?"
+    decision = gets.chomp
+    if decision == 'yes'
+      start
+    end
+
 
     # TODO
 
