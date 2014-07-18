@@ -116,21 +116,26 @@ describe Bar do
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
     before(:each) do
       @bar = Bar.new("Videology")
-      Time.stub(:now).and_return(Time.parse("2014-01-01 15:00:00"))
+      Time.stub(:now).and_return(Time.parse("2014-07-14 15:00:00"))
       @bar.add_menu_item('G&T', 6)
-      @bar.happy_discount = 0.6
+      @bar.happy_discount = 0.5
     end
 
     it "is happy_hour" do
       @bar.happy_hour?.should be_true
     end
 
-    it "has a discount of 0.6" do
-      @bar.happy_discount.should eq(0.6)
+    it "has a discount of 0.5" do
+      @bar.happy_discount.should eq(0.5)
     end
 
-    it "should cost $2.40 for a G&T" do
-      @bar.get_price('G&T').should eq(2.40)
+    it "should cost $3 for a G&T if it's Monday or Wednesday" do
+      @bar.get_price('G&T').should eq(3.0)
+    end
+
+    it "should cost $4.50 for a G&T other days" do
+      Time.stub(:now).and_return(Time.parse("2014-07-15 15:00:00"))
+      @bar.get_price('G&T').should eq(4.5)
     end
 
   end
