@@ -1,13 +1,15 @@
 require 'time' # you're gonna need it
 
 class Bar
-  attr_reader :name, :menu_items
+  attr_reader :name, :menu_items, :purchases
 
   def initialize(name)
     @name = name
     @menu_items = []
     @happy_discount = 0
     @discount = 0
+    @exempt = []
+    @purchases = {}
   end
 
   def add_menu_item(name, price)
@@ -40,11 +42,50 @@ class Bar
       @discount = 0
     end
   end
+  def exempt(drink)
+    @exempt << drink
+  end
   def get_price(item_name)
-    item_price = @menu_items.find {|item| item.name == item_name}.price
-    if happy_hour?
-      (item_price - item_price * @discount).round(2)
+    item = @menu_items.find {|item| item.name == item_name}
+    if (happy_hour? && (Time.now.monday? || Time.now.wednesday?) && !(@exempt.include? item))
+      (item.price - item.price * @discount).round(2)
+    elsif (happy_hour? && !(@exempt.include? item))
+      (item.price - item.price * (@discount/2)).round(2)
+    else
+      item.price
     end
+  end
+
+  def purchase
+    choice = show_menu
+    item = @menu_items[(choice.to_i - 1)].name
+    puts "\nHere's your #{item}!\n\n"
+    if @purchases.keys.include? item
+      @purchases["#{item}"] += 1
+    else
+      @purchases["#{item}"] = 1
+    end
+  end
+
+  def show_menu
+    @count = 1 
+    @menu_items.each do |x|
+      price = get_price(x.name)
+      puts "#{@count}. #{x.name} $%.2f" % x.price
+      @count += 1
+    end
+    puts "Which would you like? (use number)"
+    @choice = gets.chomp
+    items = @menu_items.count
+    while !((1..items).to_a.include?(@choice.to_i))
+      puts "Invalid choice. Try again."
+      @choice = gets.chomp
+    end
+    @choice
+  end
+
+  def most_popular
+    puts "The most popular drink is the #{@purchases.key(@purchases.values.max)} which has been purchased #{@purchases.values.max} times."
   end
 end
 
@@ -55,3 +96,14 @@ class MenuItem
     @price = price
   end
 end
+
+bar = Bar.new("Videology")
+bar.add_menu_item('Cosmo', 5.40)
+bar.add_menu_item('Salty Dog', 7.80)
+bar.add_menu_item('Gin and Tonic', 6)
+bar.add_menu_item('Whiskey Sour', 8)
+bar.purchase
+bar.purchase
+bar.purchase
+puts bar.purchases
+puts bar.most_popular
