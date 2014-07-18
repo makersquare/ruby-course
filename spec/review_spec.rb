@@ -1,4 +1,5 @@
 require 'spec_helper.rb'
+require 'pry-byebug'
 
 # Note: In these tests we've aliased `you` to the method `it`. This
 # is to make the tests easier to read :)
@@ -19,7 +20,7 @@ describe "Ruby Review: You" do
 
   describe "Your knowledge of Hashes" do
 
-    xyou "know how to change a value in a hash" do
+    you "know how to change a value in a hash" do
       wardrobe = {
           "top compartment" => {
             :item => "neck tie"
@@ -38,7 +39,7 @@ describe "Ruby Review: You" do
 
   describe "Your knowledge of Arrays" do
 
-    xyou "know how to add a hash to an array" do
+    you "know how to add a hash to an array" do
       pets = [{ :dog => 'Lucky'}, { :parrot => 'Polly'}]
       ArrayProblems.add_cat_to_array(pets)
       expect(pets).to eq [{ :dog => 'Lucky'}, { :parrot => 'Polly'}, { :cat => 'Pogo'}]
@@ -49,7 +50,7 @@ describe "Ruby Review: You" do
       expect(pets).to eq [{ :chipmunk => 'Joel'}, { :snake => 'Monty'}, { :cat => 'Pogo'}]
     end
 
-    xyou "know how to use the map method part 1" do
+    you "know how to use the map method part 1" do
       wardrobe_items = [
         { :name => "coat", :size => "medium" },
         { :name => "hat", :size =>  "large" }
@@ -61,7 +62,7 @@ describe "Ruby Review: You" do
       expect(@source).to include_code(:map).in_class_method(:ArrayProblems, :list_wardrobe_item_sizes)
     end
 
-    xyou "know how to use the map method part 2" do
+    you "know how to use the map method part 2" do
       weather = [
         "drizzly",
         "cold"
@@ -73,7 +74,7 @@ describe "Ruby Review: You" do
       expect(@source).to include_code(:map).in_class_method(:ArrayProblems, :tell_me_the_weather)
     end
 
-    xyou "know how to use the map method part 3" do
+    you "know how to use the map method part 3" do
       hat_collection = [
         { :size => "medium", :style => "cap"},
         { :size => "small", :style => "fedora"} ]
@@ -88,7 +89,7 @@ describe "Ruby Review: You" do
 
   describe "Your knowledge of implicit returns" do
 
-    xyou "know how to explicitly return a statement" do
+    you "know how to explicitly return a statement" do
       numbers_array = [4,5,2]
       result = MethodReturns.include?(numbers_array, 2)
       expect(result).to eq(true)
@@ -100,7 +101,7 @@ describe "Ruby Review: You" do
       expect(result).to eq(false)
     end
 
-    xyou "know what puts returns" do
+    you "know what puts returns" do
       result = MethodReturns.get_name
       expect(result).to eq "Bob"
     end
@@ -110,7 +111,7 @@ describe "Ruby Review: You" do
 
   describe "Your knowledge of scope in Ruby" do
 
-    xyou "know about method scope" do
+    you "know about method scope" do
       bob = Scopes::Person.new
       expect(bob.jump(10)).to eq "I can jump 10 inches!"
       expect(bob.last_jump_height).to eq "I last jumped 10 inches."
@@ -119,7 +120,7 @@ describe "Ruby Review: You" do
       expect(bob.last_jump_height).to eq "I last jumped 2 inches."
     end
 
-    xyou "know about block scope" do
+    you "know about block scope" do
       data = [
         { :name => "Joe", :salary => 100 },
         { :name => "Sally", :salary => 1000 }
