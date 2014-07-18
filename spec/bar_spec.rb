@@ -118,6 +118,8 @@ describe Bar do
       @bar = Bar.new("Videology")
       Time.stub(:now).and_return(Time.parse("2014-07-14 15:00:00"))
       @bar.add_menu_item('G&T', 6)
+      @bar.add_menu_item('Rum and Coke', 5)
+      @bar.custom_discount('Rum and Coke', 0.3)
       @bar.happy_discount = 0.5
     end
 
@@ -138,5 +140,8 @@ describe Bar do
       @bar.get_price('G&T').should eq(4.5)
     end
 
+    it "should cost $3.50 for a Rum and Coke" do
+      @bar.get_price('Rum and Coke').should eq(3.50)
+    end
   end
 end
