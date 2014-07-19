@@ -35,3 +35,4 @@ describe 'Exercise 3' do
     expect(result).to eq(15)
   end
 end
+
