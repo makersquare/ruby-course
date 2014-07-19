@@ -18,5 +18,12 @@ describe 'Exercise 1' do
     result = Exercises.ex1([1, 2, "cats", 5.1])
     expect(result).to eq 4
   end
+end
 
+describe 'Exercise 2' do
+  
+  it "returns the second element of an array" do
+    result = Exercises.ex2([1, "block", 3, 4.9, "win"])
+    expect(result).to eq('block')
+  end
 end
