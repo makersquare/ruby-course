@@ -15,7 +15,7 @@ end
 describe 'Exercise 1' do
 
   it "returns the number of elements in the array" do
-    result = [1, 2, "cats", 5.1]
+    result = Exercises.ex1([1, 2, "cats", 5.1])
     expect(result).to eq 4
   end
 
