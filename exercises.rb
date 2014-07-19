@@ -40,6 +40,7 @@ module Exercises
   #  - Returns the max number of the given array
   def self.ex4(array)
     # TODO
+    array.max
   end
 
   # Exercise 5
