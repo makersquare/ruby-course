@@ -1,5 +1,5 @@
 class Bar
-  attr_reader :name, :menu_items
+  attr_reader :name, :menu_items, :special_discounts
   attr_accessor :slow_day_happy_discount
 
   def initialize(name)
@@ -25,9 +25,13 @@ class Bar
     x
   end
 
-  def happy_discount
+  def happy_discount(item=nil)
     return 0 unless happy_hour?
+    if @special_discounts.has_key?(item)
+      return @special_discounts[item]
+    end
     slow_day? ? @slow_day_happy_discount : @happy_discount
+  
   end
 
   def happy_hour?
@@ -43,7 +47,7 @@ class Bar
 
   def get_price(item)
     return item.price unless item.hhstatus
-    (item.price * (1 - happy_discount)).round(2)
+    (item.price * (1 - happy_discount(item))).round(2)
   end
 
   def slow_day?

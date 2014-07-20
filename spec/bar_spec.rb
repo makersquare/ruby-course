@@ -191,11 +191,13 @@ describe Bar do
       @bar.set_special_discount(@margarita, 0.25)
     end
 
-    it "applies a different hh discount to select items" do
+    it "sets a different hh discount to select items" do
       expect(@bar.special_discounts[@margarita]).to eq(0.25)
     end
 
     it "applies the special discount to the price charged" do
+      my_time = Time.new(2014, 7, 17, 15, 30)
+      Time.stub(:now).and_return(my_time)
       expect(@bar.get_price(@margarita)).to eq(6)
     end
 
