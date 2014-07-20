@@ -105,34 +105,41 @@ end
 
 describe 'Rock, Paper, Sissors' do
 
-  before do
-    new_game = RPS.new('Fry', 'Leela')
-  end
-
   it "each player initializes with a name" do
+    new_game = RPS.new('Fry', 'Leela')
     expect(new_game.player1).to eq("Fry")
     expect(new_game.player2).to eq("Leela")
   end
 
   it "ensure that 'rock', 'paper', and 'sissors' are the only valid choices" do
+    new_game = RPS.new('Fry', 'Leela')
     expect {new_game.play('rock', 'shotgun')}.to raise_error
     expect {new_game.play('paper', 'sissors')}.to_not raise_error
   end
 
+  it "check for a tie" do
+    new_game = RPS.new('Fry', 'Leela')
+    expect {new_game.play('rock', 'rock')}.to raise_error
+  end
 
   it "ensure that the winner of 2 out of 3 games is returned" do
+    new_game = RPS.new('Fry', 'Leela')
     new_game.play('paper', 'sissors')
-    expect {new_game.play('rock', 'paper')}.to eq('The winner is Leela!')
+    expect {new_game.play('rock', 'paper')}.to eq('Leela')
   end
 
   it "ensure that 3 games can be played if needed" do
+    new_game = RPS.new('Fry', 'Leela')
     new_game.play('paper', 'sissors')
     new_game.play('sissors', 'paper')
-    expect {new_game.play('rock', 'paper')}.to eq('The winner is Leela!')
+    expect {new_game.play('rock', 'paper')}.to eq('Leela')
   end
 
-    it "ensure that, once the game is won, new rounds cannot be played" do
-    expect {new_game.play('paper', 'sissors')}.to eq('Sorry, this game is over. Leela was the winner.')
+  it "ensure that, once the game is won, new rounds cannot be played" do
+    new_game = RPS.new('Fry', 'Leela')
+    new_game.play('paper', 'sissors')
+    new_game.play('rock', 'paper')
+    expect {new_game.play('paper', 'sissors')}.to raise_error
   end
 
 end

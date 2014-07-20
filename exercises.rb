@@ -110,44 +110,55 @@ class RPS
     @player1_wins = 0
     @player2_wins = 0
     @valid = ["rock", "paper", "sissors"]
-    @outcome1 = "Rock beats sissors."
-    @outcome2 = "Sissors beats paper."
-    @outcome3 = "Paper beats rock."
+    @winner = nil
   end
 
   def play(choice1,choice2)
 
+    #check if choices are valid
+    raise "Invalid choice. Try 'rock', 'pape', or 'sissors'." unless @valid.include?(choice1) && @valid.include?(choice2)
 
     case
+      # check if game is over
       when @player1_wins >= 2 || @player2_wins >= 2
-        return "Sorry, this game is over. #{@winner} was the winner."
+        raise "Sorry, this game is over. #{@winner} was the winner of the game."
 
       # when choices match
       when choice1 == choice2 
-        return "The result is a tie! Play again!"
+        raise "The result is a tie! Play again!"
 
       # when player 1 wins
       when choice1 == "rock" && choice2 == "sissors"
         @player1_wins += 1
-        return "#{@outcome1}. #{@player1} wins!"
+        puts "Rock beats sissors. #{@player1} wins the round!"
       when choice1 == "sissors" && choice2 == "paper"
         @player1_wins += 1
-        return "#{@outcome2}. #{@player1} wins!"
+        puts "Sissors beats paper. #{@player1} wins the round!"
       when choice1 == "paper" && choice2 == "rock"
         @player1_wins += 1
-        return "#{@outcome3}. #{@player1} wins!"
+        puts "Paper beats rock. #{@player1} wins the round!"
 
       #when player 2 wins
       when choice1 == "sissors" && choice2 == "rock"
         @player2_wins += 1
-        return "#{@outcome1}. #{@player2} wins!"
+        puts "Rock beats sissors. #{@player2} wins the round!"
       when choice1 == "paper" && choice2 == "sissors"
         @player2_wins += 1
-        return "#{@outcome2}. #{@player2} wins!"
+        puts "Sissors beats paper. #{@player2} wins the round!"
       when choice1 == "rock" && choice2 == "paper"
         @player2_wins += 1
-        return "#{@outcome3}. #{@player2} wins!"
+        puts "Paper beats rock. #{@player2} wins the round!"
     end
+
+    if @player1_wins >= 2
+      puts "The winner of the game is #{@player1}!"
+      @winner = @player1
+    elsif @player2_wins >= 2
+      puts "The winner of the game is #{@player2}!"
+      @winner = @player2
+    end
+
+    @winner
 
   end
 
@@ -165,6 +176,7 @@ class RPSPlayer
   # lets both players play the game.
   #
   # When the game ends, ask if the player wants to play again.
+  def initialize
   def start
 
     # TODO
