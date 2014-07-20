@@ -119,4 +119,22 @@ describe Bar do
       expect(@bar.happy_discount).to eq(0.5)
     end
   end
+
+  describe '#get_price' do
+    it "returns discounted price at happy hour" do
+      true_happy_hour = Time.parse('3 pm')
+      Time.stub(:now).and_return(true_happy_hour)
+      @bar.happy_discount = 0.5
+
+      expect(@bar.get_price(MenuItem.new('drink', 10))).to eq(5)
+    end
+
+    it "returns regular price at non happy hour time" do
+      false_happy_hour = Time.parse('5 pm')
+      Time.stub(:now).and_return(false_happy_hour)
+
+      expect(@bar.get_price(MenuItem.new('drink', 10))).to eq(10)
+    end
+  end
+
 end
