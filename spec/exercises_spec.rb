@@ -43,3 +43,75 @@ describe 'Exercise 4' do
     expect(result).to eq(75)
   end
 end
+
+describe 'Exercise 5' do
+
+  it "Iterates through an array and 'puts' each element" do
+    result = Exercises.ex5([1, 2, 3])
+    expect(STDOUT).to receive(:puts).with(1)
+    expect(STDOUT).to receive(:puts).with(2)
+    expect(STDOUT).to receive(:puts).with(3)
+    Exercises.ex5(result)
+  end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
