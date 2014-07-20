@@ -145,6 +145,15 @@ describe 'RPS' do
     expect(game1.play("paper", "rock")).to eq("Chris wins the game!")
   end
 
+  it 'ends the game if player 2 wins two games' do
+    game1 = RPS.new("Chris", "Zach")
+    game1.play("paper", "scissors")
+    game1.play("paper", "scissors")
+
+    expect(game1.play("paper", "scissors")).to eq("Zach wins the game!")
+
+  end
+
 end
 
 
