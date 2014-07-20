@@ -91,3 +91,82 @@ describe "Exercise 7" do
     result.should eq [8,5,4]
   end
 end
+
+describe "Exercise 8" do
+  xit "prints person's name and occupation" do
+    result = Exercises.ex8({'Austin' => 'copywriter'})
+    expect(result).to eq "Austin, copywriter"
+  end
+
+  xit "only accepts hash objects as parameter" do
+    expect {Exercises.ex8(78)}.to raise_error
+  end
+end
+
+describe "Exercise 9" do
+  it "should return true if the year is a leap year" do
+    leap_year = DateTime.new(2012,2,3)
+    date = DateTime.stub(:now).and_return(leap_year)
+    expect(Exercises.ex9(date)).to be_true
+  end
+
+  it "should return false if the year is not a leap year" do
+    not_leap_year = DateTime.new(2014, 2, 3)
+    date = DateTime.stub(:now).and_return(not_leap_year)
+    expect(Exercises.ex9(date)).to be_false
+  end
+end
+
+describe RPS do
+  before do
+    @rps = RPS.new(player1: 'player1', player2: 'player2')
+  end
+
+  it "initializes with the names of two players" do
+    @rps.player1.should eq 'player1'
+    @rps.player2.should eq 'player2'
+  end
+
+  it "initializes with an empty winner array" do
+    @rps.winner_array.should eq []
+  end
+
+  it "returns the name of the winner after a single round" do
+    @rps.play('rock', 'paper').should eq 'player2'
+    @rps.play('scissors', 'paper').should eq 'player1'
+  end
+
+  it "returns the ultimate winner after 3 rounds" do
+    @rps.play('rock', 'paper')
+    @rps.play('paper', 'rock')
+    @rps.play('rock', 'paper').should eq "player2"
+  end
+
+  it "resets the winner_array after complete round" do
+    2.times {@rps.play('rock', 'paper')}
+    expect(@rps.winner_array).to eq []
+  end
+
+  it "returns 'tie' in event of tie" do
+    @rps.play('rock', 'rock').should eq 'tie'
+  end
+
+  it "plays more than three rounds if ties are involved" do
+    @rps.play('rock', 'rock')
+    @rps.play('paper', 'paper')
+    @rps.play('rock', 'paper')
+    @rps.play('scissors', 'paper')
+    @rps.winner_array.should eq ['tie', 'tie', 'player2', 'player1']
+  end
+
+  it 'ignores ties in final winner count' do
+    4.times {@rps.play('rock', 'rock')}
+    @rps.play('paper', 'scissors')
+    @rps.play('paper', 'scissors').should eq 'player2'
+  end
+
+  it "outputs the winner of each round" do
+    expect(STDOUT).to receive(:puts).and_return("player1 wins this round")
+    @rps.play('rock', 'scissors')
+  end
+end

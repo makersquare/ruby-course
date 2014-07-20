@@ -61,7 +61,7 @@ module Exercises
   #    { :name => 'Bob', :occupation => 'Builder' }
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
-    # TODO
+    people.is_a?(Array) ? people.map {|k,v| "#{k}, #{v}"}.join : (raise ArgumentError)
   end
 
   # Exercise 9
@@ -69,7 +69,7 @@ module Exercises
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
-    # TODO
+    Date.leap?(DateTime.now.year)
   end
 end
 
@@ -87,6 +87,47 @@ class RPS
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
+  attr_reader :player1, :player2
+  attr_accessor :winner_array, :game_over
+  def initialize(args={})
+    @player1 = args[:player1]
+    @player2 = args[:player2]
+    @winner_array = []
+    @game_over = false
+  end
+
+  def play(player1_move, player2_move)
+    @game_over = false
+    return 'invalid move' unless player1_move.match(/rock|paper|scissors/) || player2_move.match(/rock|paper|scissors/)
+    winner_array << winning_move(player1_move, player2_move)
+    if winner_array.count(player1) == 2 || winner_array.count(player2) == 2
+      winner = final_winner(winner_array)
+      puts "#{winner} is the ultimate champion!"
+      @winner_array = []
+      play_again
+      winner
+    else
+      puts "#{winning_move(player1_move, player2_move)} wins this round!"
+      winning_move(player1_move, player2_move)
+    end
+  end
+
+  def play_again
+    puts "Do you want to play again? (y/n)"
+    answer = gets.chomp
+    answer == 'y' ?  (@game_over = false) : (@game_over = true)
+  end
+
+  def winning_move(move1, move2)
+    return 'tie' if move1 == move2
+    (move1 == 'rock' && move2 == 'paper') || (move1 == 'scissors' && move2 == 'rock') ||
+    (move1 == 'paper' && move2 == 'scissors') ? player2 : player1
+  end
+
+  def final_winner(array)
+    array.delete('tie')
+    array.inject(Hash.new(0)) {|res, elem| res[elem] += 1; res }.max_by {|k,v| v}.first
+  end
 end
 
 
@@ -102,7 +143,7 @@ class RPSPlayer
   # lets both players play the game.
   #
   # When the game ends, ask if the player wants to play again.
-  def start
+  def self.start
 
     # TODO
 
@@ -111,8 +152,17 @@ class RPSPlayer
     #          what the player is typing! :D
     # This is also why we needed to require 'io/console'
     # move = STDIN.noecho(&:gets)
+    new_game = RPS.new(player1: 'player1', player2: 'player2')
+    until new_game.game_over
+      puts "#{new_game.player1}, select a move!"
+      move1 = STDIN.noecho(&:gets).chomp
+      puts "#{new_game.player2}, select a move!"
+      move2 = STDIN.noecho(&:gets).chomp
+      new_game.play(move1, move2)
+    end
   end
 end
+
 
 
 module Extensions
