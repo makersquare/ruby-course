@@ -88,22 +88,70 @@ module Exercises
   end
 end
 
-
-class RPS
   # Rock, Paper, Scissors
   # Make a 2-player game of rock paper scissors. It should have the following:
   #
   # It is initialized with two strings (player names).
   # It has a `play` method that takes two strings:
-  #   - Each string reperesents a player's move (rock, paper, or scissors)
+  #   - Each string represents a player's move (rock, paper, or scissors)
   #   - The method returns the winner (player one or player two)
   #   - If the game is over, it returns a string stating that the game is already over
   # It ends after a player wins 2 of 3 games
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
-end
 
+class RPS
+  attr_reader :player1, :player2
+
+  def initialize(name1, name2)
+    @player1 = name1
+    @player2 = name2
+    @player1_wins = 0
+    @player2_wins = 0
+    @valid = ["rock", "paper", "sissors"]
+    @outcome1 = "Rock beats sissors."
+    @outcome2 = "Sissors beats paper."
+    @outcome3 = "Paper beats rock."
+  end
+
+  def play(choice1,choice2)
+
+
+    case
+      when @player1_wins >= 2 || @player2_wins >= 2
+        return "Sorry, this game is over. #{@winner} was the winner."
+
+      # when choices match
+      when choice1 == choice2 
+        return "The result is a tie! Play again!"
+
+      # when player 1 wins
+      when choice1 == "rock" && choice2 == "sissors"
+        @player1_wins += 1
+        return "#{@outcome1}. #{@player1} wins!"
+      when choice1 == "sissors" && choice2 == "paper"
+        @player1_wins += 1
+        return "#{@outcome2}. #{@player1} wins!"
+      when choice1 == "paper" && choice2 == "rock"
+        @player1_wins += 1
+        return "#{@outcome3}. #{@player1} wins!"
+
+      #when player 2 wins
+      when choice1 == "sissors" && choice2 == "rock"
+        @player2_wins += 1
+        return "#{@outcome1}. #{@player2} wins!"
+      when choice1 == "paper" && choice2 == "sissors"
+        @player2_wins += 1
+        return "#{@outcome2}. #{@player2} wins!"
+      when choice1 == "rock" && choice2 == "paper"
+        @player2_wins += 1
+        return "#{@outcome3}. #{@player2} wins!"
+    end
+
+  end
+
+end
 
 require 'io/console'
 class RPSPlayer
