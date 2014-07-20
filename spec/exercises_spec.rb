@@ -125,14 +125,16 @@ describe 'Rock, Paper, Sissors' do
   it "ensure that the winner of 2 out of 3 games is returned" do
     new_game = RPS.new('Fry', 'Leela')
     new_game.play('paper', 'sissors')
-    expect {new_game.play('rock', 'paper')}.to eq('Leela')
+    winner = new_game.play('rock', 'paper')
+    expect(winner).to eq('Leela')
   end
 
   it "ensure that 3 games can be played if needed" do
     new_game = RPS.new('Fry', 'Leela')
     new_game.play('paper', 'sissors')
     new_game.play('sissors', 'paper')
-    expect {new_game.play('rock', 'paper')}.to eq('Leela')
+    winner = new_game.play('rock', 'paper')
+    expect(winner).to eq('Leela')
   end
 
   it "ensure that, once the game is won, new rounds cannot be played" do
