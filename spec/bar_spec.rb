@@ -185,14 +185,27 @@ describe Bar do
       expect(sorted_array.last).to eq(@top_shelf)
     end
   end
+end
+
+describe MenuItem do
+  before do
+    @bar = Bar.new "The Irish Yodel"
+    @bar.happy_discount = 0.5
+    @bar.slow_day_happy_discount = 0.8
+    
+    @bar.add_menu_item("Margarita", 8, true)
+    @margarita = @bar.menu_items.first
+    @margarita.special_discount = 0.25
+
+    @bar.add_menu_item("Rum and Coke", 5, true)
+    @rc = @bar.menu_items.last
+  end
+
 
   describe "#set_special_discount and #remove_special_discount" do
-    before do
-      @bar.set_special_discount(@margarita, 0.25)
-    end
-
     it "sets a different hh discount to select items" do
-      expect(@bar.special_discounts[@margarita]).to eq(0.25)
+      expect(@margarita.special_discount).to eq(0.25)
+      expect(@rc.special_discount).to eq(nil)
     end
 
     it "applies the special discount to the price charged" do
@@ -207,7 +220,5 @@ describe Bar do
       expect(@bar.get_price(@margarita)).to eq(4)
     end
   end
-
-
 
 end

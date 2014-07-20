@@ -15,23 +15,17 @@ class Bar
   end
 
   def happy_discount=(x)
-    x = check_discount_format(x)
+    x = Discount.check_discount_format(x)
     @happy_discount = x
-  end
-
-  def check_discount_format(x)
-    x = 0 if x < 0
-    x = 1 if x > 1
-    x
   end
 
   def happy_discount(item=nil)
     return 0 unless happy_hour?
-    if @special_discounts.has_key?(item)
-      return @special_discounts[item]
+    if item.nil? || item.special_discount.nil?
+      slow_day? ? @slow_day_happy_discount : @happy_discount
+    else
+      item.special_discount
     end
-    slow_day? ? @slow_day_happy_discount : @happy_discount
-  
   end
 
   def happy_hour?
@@ -65,22 +59,25 @@ class Bar
   end
 
   def set_special_discount(item, discount)
-    x = check_discount_format(discount)
-    @special_discounts[item] = x
+
   end
-
-
 
 end
 
 class MenuItem
-  attr_reader :name, :price, :hhstatus, :purchases
+  attr_reader :name, :price, :hhstatus, :purchases, :special_discount
   
   def initialize(name, price, hhstatus = false)
     @name = name
     @price = price
     @hhstatus = hhstatus
     @purchases = []
+    @special_discount = nil
+  end
+
+  def special_discount=(x)
+    x = Discount.check_discount_format(x)
+    @special_discount = x
   end
 end
 
@@ -91,5 +88,13 @@ class Purchase
     @item = item
     @price = bar.get_price(item)
     @time = Time.now
+  end
+end
+
+module Discount
+  def self.check_discount_format(x)
+    x = 0 if x < 0
+    x = 1 if x > 1
+    x
   end
 end
