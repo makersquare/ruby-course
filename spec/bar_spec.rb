@@ -179,7 +179,7 @@ describe Bar do
   end
 
   describe "#analyze_popular_drinks" do
-    it "provides a list of drinks and times purchased" do
+    it "provides a list of drinks and times it " do
       @bar.add_menu_item("Margarita", 8, true)
       @bar.add_menu_item("Coffee", 2)
       @bar.add_menu_item("Rum and Coke", 5, true)
@@ -192,10 +192,10 @@ describe Bar do
       2.times {@bar.purchase(coffee)}
       8.times{@bar.purchase(rc)}
 
-      @bar.analyze_popular_drinks
+      sorted_array = @bar.analyze_drink_popularity
 
-      expect(@bar.menu_items.first).to eq(coffee)
-      expect(@bar.menu_items.last).to eq(rc)
+      expect(sorted_array.first).to eq(coffee)
+      expect(sorted_array.last).to eq(rc)
     end
   end
 

@@ -50,9 +50,11 @@ class Bar
      item.purchases << Purchase.new(item, self)
   end
 
-  def analyze_popular_drinks
-    @menu_items.sort { |x| x.purchases }
+  def analyze_drink_popularity
+    @menu_items.sort_by { |x| x.purchases.count }
   end
+
+
 
 end
 
