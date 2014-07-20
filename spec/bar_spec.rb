@@ -162,4 +162,13 @@ describe Bar do
       expect(@bar.get_price(top_shelf)).to eq(20)    
     end
   end
+
+  describe "#purchase" do
+    it "records a purchase of an item" do
+      @bar.add_menu_item("Margarita", 8, true)
+      margarita = @bar.menu_items.first
+      @bar.purchase(margarita)
+    end
+  end
+
 end

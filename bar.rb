@@ -48,14 +48,24 @@ class Bar
     false
   end
 
+  def purchase(item)
+    item.increment_purchase
+  end
+
 end
 
 class MenuItem
-  attr_reader :name, :price, :hhstatus
+  attr_reader :name, :price, :hhstatus, :number_of_purchases
   
   def initialize(name, price, hhstatus = false )
     @name = name
     @price = price
     @hhstatus = hhstatus
+    @number_of_purchases = 0
   end
+
+  def increment_purchase
+    @number_of_purchases += 1
+  end
+
 end
