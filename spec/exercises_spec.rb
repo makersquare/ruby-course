@@ -1,6 +1,11 @@
 require './exercises.rb'
 
 describe 'Exercise 0' do
+
+  before do
+    @result = [1, 2, "win", "James", 8]
+  end
+
   it "triples the length of a string" do
     result = Exercises.ex0("ha")
     expect(result).to eq("hahaha")
@@ -55,7 +60,25 @@ describe 'Exercise 5' do
   end
 end
 
+describe 'Exercise 6' do
 
+  before do
+      @result = Exercises.ex6(["joe", "rabbit", "mikey", 'bike'])
+    end
+
+  it "Updates the last item in the array to 'panda'." do
+    result1 = @result[-1]
+    expect(result1).to eq 'panda'
+  end
+
+  xit "If the last item is already 'panda', update it to 'GODZILLA' instead" do
+    result2 = @result[-1]
+    # expect(result2).to eq 'GODZILLA'
+    expect(result2).to receive(:ex6)
+    expect(result2).to eq 'GODZILLA'
+  end
+
+end
 
 
 
