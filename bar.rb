@@ -51,7 +51,7 @@ class Bar
   end
 
   def analyze_drink_popularity
-    @menu_items.sort_by { |x| x.purchases.count }
+    @menu_items.sort_by { |x| x.purchases.count }.reverse
   end
 
 
@@ -61,7 +61,7 @@ end
 class MenuItem
   attr_reader :name, :price, :hhstatus, :purchases
   
-  def initialize(name, price, hhstatus = false )
+  def initialize(name, price, hhstatus: false, special_discount: nil )
     @name = name
     @price = price
     @hhstatus = hhstatus

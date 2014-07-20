@@ -83,10 +83,35 @@ describe Bar do
       expect(@bar.happy_discount).to eq 0
     end
   end
+end
 
 # # # # # # # # # # # # # # # # # # # # # #
   # DO NOT CHANGE SPECS ABOVE THIS LINE #
 # # # # # # # # # # # # # # # # # # # # # #
+
+describe Bar do
+  
+  before do
+    @bar = Bar.new "The Irish Yodel"
+    @bar.happy_discount = 0.5
+    @bar.slow_day_happy_discount = 0.8
+    
+    @bar.add_menu_item("Margarita", 8, hhstatus: true)
+    @margarita = @bar.menu_items.first
+
+    @bar.add_menu_item("McAllen 18", 20)
+    @top_shelf = @bar.menu_items.last
+
+    @bar.add_menu_item("Coffee", 2)
+    @coffee = @bar.menu_items.last
+
+    @bar.add_menu_item("Rum and Coke", 5, hhstatus: true)
+    @rc = @bar.menu_items.last
+
+    5.times { @bar.purchase(@margarita) }
+    2.times { @bar.purchase(@coffee) }
+    8.times { @bar.purchase(@rc) }
+  end
 
   describe '#happy_hour?' do
     it "knows when it is happy hour (3:00pm to 4:00pm)" do
@@ -104,7 +129,6 @@ describe Bar do
 
   context "During normal hours" do
     it "normal hours = no discount" do
-      @bar.happy_discount = 0.5
       my_time = Time.new(2014, 7, 17, 16, 30)
       allow(Time).to receive(:now).and_return(my_time)
       expect(@bar.happy_discount).to eq(0)
@@ -113,89 +137,52 @@ describe Bar do
 
   context "During happy hours" do
     it "happy hour = discount" do
-      @bar.happy_discount = 0.5
       my_time = Time.new(2014, 7, 17, 15, 30)
       allow(Time).to receive(:now).and_return(my_time)
       expect(@bar.happy_discount).to eq(0.5)
     end  
   end
 
-  
   describe '#get_price' do 
     it "returns the price of the item correctly discounted during happy hour" do
-      @bar.happy_discount = 0.5
-      @bar.add_menu_item("Margarita", 8, true)
-      margarita = @bar.menu_items.first
       my_time = Time.new(2014, 7, 17, 15, 30)
       Time.stub(:now).and_return(my_time)
-      expect(@bar.get_price(margarita)).to eq(4)
+      expect(@bar.get_price(@margarita)).to eq(4)
     end
 
     it "returns full price outside of happy hour" do
-      @bar.happy_discount = 0.5
-      @bar.add_menu_item("Margarita", 8, true)
-      margarita = @bar.menu_items.first
       my_time = Time.new(2014, 7, 17, 16, 30)
       Time.stub(:now).and_return(my_time)
-      expect(@bar.get_price(margarita)).to eq(8)
+      expect(@bar.get_price(@margarita)).to eq(8)
     end
 
     context "slow days" do
       it "applies a different discount on slow days" do
-        @bar.happy_discount = 0.5
-        @bar.slow_day_happy_discount = 0.8
-        @bar.add_menu_item("Margarita", 8, true)
-        margarita = @bar.menu_items.first
         my_time = Time.new(2014, 7, 16, 15, 30) #7/16 is Weds - SLOW DAY
         Time.stub(:now).and_return(my_time)
-        expect(@bar.get_price(margarita)).to eq(1.6)        
+        expect(@bar.get_price(@margarita)).to eq(1.6)        
       end      
     end
 
     it "does not apply discount when item is not included in HH" do 
-      @bar.happy_discount = 0.5
-      @bar.add_menu_item("McAllen 18", 20, false)
-      top_shelf = @bar.menu_items.first
       my_time = Time.new(2014, 7, 17, 15, 30)
       Time.stub(:now).and_return(my_time)
       expect(@bar.happy_hour?).to eq(true)
-      expect(@bar.get_price(top_shelf)).to eq(20)    
+      expect(@bar.get_price(@top_shelf)).to eq(20)    
     end
   end
 
   describe "#purchase" do
     it "records a purchase of an item" do
-      @bar.add_menu_item("Margarita", 8, true)
-      @bar.add_menu_item("Coffee", 2)
-
-      margarita = @bar.menu_items.first
-      coffee = @bar.menu_items.last
-
-      @bar.purchase(coffee)
-      3.times { @bar.purchase(margarita) }
-      
-      expect(margarita.purchases.length).to eq(3)
+      expect(@margarita.purchases.length).to eq(5)
     end
   end
 
   describe "#analyze_popular_drinks" do
-    it "provides a list of drinks and times it " do
-      @bar.add_menu_item("Margarita", 8, true)
-      @bar.add_menu_item("Coffee", 2)
-      @bar.add_menu_item("Rum and Coke", 5, true)
-      
-      margarita = @bar.menu_items.first
-      coffee = @bar.menu_items[1]
-      rc = @bar.menu_items[2]
-      
-      5.times {@bar.purchase(margarita)}
-      2.times {@bar.purchase(coffee)}
-      8.times{@bar.purchase(rc)}
-
+    it "sorts drinks from most popular to least" do
       sorted_array = @bar.analyze_drink_popularity
-
-      expect(sorted_array.first).to eq(coffee)
-      expect(sorted_array.last).to eq(rc)
+      expect(sorted_array.first).to eq(@rc)
+      expect(sorted_array.last).to eq(@top_shelf)
     end
   end
 
