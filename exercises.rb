@@ -4,37 +4,41 @@ module Exercises
   #  - Triples a given string `str`
   #  - Returns "nope" if `str` is "wishes"
   def self.ex0(str)
-    # TODO
+    if str == 'wishes'
+      'nope'
+    else
+      str+str+str
+    end
   end
 
   # Exercise 1
   #  - Returns the number of elements in the array
   def self.ex1(array)
-    # TODO
+    array.count
   end
 
   # Exercise 2
   #  - Returns the second element of an array
   def self.ex2(array)
-    # TODO
+    array[1]
   end
 
   # Exercise 3
   #  - Returns the sum of the given array of numbers
   def self.ex3(array)
-    # TODO
+    array.inject(:+)
   end
 
   # Exercise 4
   #  - Returns the max number of the given array
   def self.ex4(array)
-    # TODO
+    array.max
   end
 
   # Exercise 5
   #  - Iterates through an array and `puts` each element
   def self.ex5(array)
-    # TODO
+    array.each {|x| puts x}
   end
 
   # Exercise 6
@@ -42,14 +46,20 @@ module Exercises
   #  - If the last item is already 'panda', update
   #    it to 'GODZILLA' instead
   def self.ex6(array)
-    # TODO
+    if array[-1] == 'panda'
+      array[-1] = 'GODZILLA'
+    else
+      array[-1] = 'panda'
+    end
+    array
   end
 
   # Exercise 7
   #  - If the string `str` exists in the array,
   #    add `str` to the end of the array
   def self.ex7(array, str)
-    # TODO
+    array.push(str) if array.include?(str)
+    array
   end
 
   # Exercise 8
@@ -57,7 +67,10 @@ module Exercises
   #    { :name => 'Bob', :occupation => 'Builder' }
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
-    # TODO
+    people.each do |x|
+      puts x[:name]
+      puts x[:occupation]
+    end
   end
 
   # Exercise 9
@@ -65,29 +78,92 @@ module Exercises
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
-    # TODO
+    if (time % 400) != 0 && (time % 100) == 0
+      false
+    elsif (time % 4) == 0
+      true
+    else
+      false
+    end
   end
 end
 
-
-class RPS
   # Rock, Paper, Scissors
   # Make a 2-player game of rock paper scissors. It should have the following:
   #
   # It is initialized with two strings (player names).
   # It has a `play` method that takes two strings:
-  #   - Each string reperesents a player's move (rock, paper, or scissors)
+  #   - Each string represents a player's move (rock, paper, or scissors)
   #   - The method returns the winner (player one or player two)
   #   - If the game is over, it returns a string stating that the game is already over
   # It ends after a player wins 2 of 3 games
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
+
+class RPS
+  attr_reader :player1, :player2, :winner
+
+  def initialize(name1, name2)
+    @player1 = name1
+    @player2 = name2
+    @player1_wins = 0
+    @player2_wins = 0
+    @valid = ["rock", "paper", "sissors"]
+    @winner = nil
+  end
+
+  def play(choice1,choice2)
+
+    #check if choices are valid
+    raise "Invalid choice. Try 'rock', 'paper', or 'sissors'." unless @valid.include?(choice1) && @valid.include?(choice2)
+
+    case
+      # check if game is over
+      when @player1_wins >= 2 || @player2_wins >= 2
+        raise "Sorry, this game is over. #{@winner} was the winner of the game."
+
+      # when choices match
+      when choice1 == choice2 
+        raise "The result is a tie! Play again!"
+
+      # when player 1 wins
+      when choice1 == "rock" && choice2 == "sissors"
+        @player1_wins += 1
+        puts "Rock beats sissors. #{@player1} wins the round!"
+      when choice1 == "sissors" && choice2 == "paper"
+        @player1_wins += 1
+        puts "Sissors beats paper. #{@player1} wins the round!"
+      when choice1 == "paper" && choice2 == "rock"
+        @player1_wins += 1
+        puts "Paper beats rock. #{@player1} wins the round!"
+
+      #when player 2 wins
+      when choice1 == "sissors" && choice2 == "rock"
+        @player2_wins += 1
+        puts "Rock beats sissors. #{@player2} wins the round!"
+      when choice1 == "paper" && choice2 == "sissors"
+        @player2_wins += 1
+        puts "Sissors beats paper. #{@player2} wins the round!"
+      when choice1 == "rock" && choice2 == "paper"
+        @player2_wins += 1
+        puts "Paper beats rock. #{@player2} wins the round!"
+    end
+
+    if @player1_wins >= 2
+      puts "The winner of the game is #{@player1}!"
+      @winner = @player1
+    elsif @player2_wins >= 2
+      puts "The winner of the game is #{@player2}!"
+      @winner = @player2
+    end
+
+    @winner
+
+  end
+
 end
 
-
-require 'io/console'
-class RPSPlayer
   # (No specs are required for RPSPlayer)
   #
   # Complete the `start` method so that it uses your RPS class to present
@@ -98,15 +174,54 @@ class RPSPlayer
   # lets both players play the game.
   #
   # When the game ends, ask if the player wants to play again.
+
+  # PRO TIP: Instead of using plain `gets` for grabbing a player's
+  #          move, this line does the same thing but does NOT show
+  #          what the player is typing! :D
+  # This is also why we needed to require 'io/console'
+  # move = STDIN.noecho(&:gets)
+
+require 'io/console'
+class RPSPlayer
+  attr_reader :player1, :player2
+
+  def initialize
+    # prompt for player names
+    puts "Player 1, please enter your name:"
+    @player1 = gets.chomp
+    puts "Player 2, please enter your name:"
+    @player2 = gets.chomp
+  end
+
   def start
 
-    # TODO
+    # start game
+    puts "Let's play!"
+    new_game = RPS.new(player1, player2)
 
-    # PRO TIP: Instead of using plain `gets` for grabbing a player's
-    #          move, this line does the same thing but does NOT show
-    #          what the player is typing! :D
-    # This is also why we needed to require 'io/console'
-    # move = STDIN.noecho(&:gets)
+    # until the winner variable from the RPS class is set to a value that is not nil,
+    # ask for player choices and play hands of RPS
+    while new_game.winner.nil?
+      puts "#{player1}, please enter your choice (rock/paper/sissors):"
+      choice1 = STDIN.noecho(&:gets)
+      choice1.chomp!
+
+      puts "#{player2}, please enter your choice (rock/paper/sissors):"
+      choice2 = STDIN.noecho(&:gets)
+      choice2.chomp!
+
+      new_game.play(choice1, choice2)
+    end
+
+    if new_game.winner
+      puts "The winner was #{new_game.winner}! Would you like to play again? (y/n):"
+      answer = gets.chomp
+      if answer == "y"
+        start
+      else puts "Thanks for playing!"
+      end
+    end
+
   end
 end
 
