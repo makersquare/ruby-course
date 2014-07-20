@@ -125,15 +125,17 @@ describe Bar do
       true_happy_hour = Time.parse('3 pm')
       Time.stub(:now).and_return(true_happy_hour)
       @bar.happy_discount = 0.5
+      @bar.add_menu_item('drink', 10)
 
-      expect(@bar.get_price(MenuItem.new('drink', 10))).to eq(5)
+      expect(@bar.get_price('drink')).to eq(5)
     end
 
     it "returns regular price at non happy hour time" do
       false_happy_hour = Time.parse('5 pm')
       Time.stub(:now).and_return(false_happy_hour)
+      @bar.add_menu_item('drink', 10)
 
-      expect(@bar.get_price(MenuItem.new('drink', 10))).to eq(10)
+      expect(@bar.get_price('drink')).to eq(10)
     end
   end
 

@@ -35,12 +35,12 @@ class Bar
     @menu_items << MenuItem.new(name, price)
   end
 
-  def get_price(menu_item)
+  def get_price(name)
     # binding.pry
-    if happy hour? == true
-      @menu_items.find {|item| item.name == menu_item.name}.price * @happy_discount
+    if happy_hour? == true
+      @menu_items.find {|item| item.name == name}.price * @happy_discount
     else
-      @menu_items.find {|item| item.name == menu_item.name}.price
+      @menu_items.find {|item| item.name == name}.price
     end
   end
 end
