@@ -135,8 +135,10 @@ class RPS
       move2 => @player2
     }
 
-    if @winner_array.count(@player1) > 1 || @winner_array.count(@player2) > 1
-      return "#{@winner_array.sort[0]} wins the game!"
+    if @winner_array.count(@player1) > 1
+      return "#{@player1} wins the game!"
+    elsif @winner_array.count(@player2) > 1
+      return "#{@player2} wins the game!"
     else
       if move1 == move2
         "Tie game, play again.."
