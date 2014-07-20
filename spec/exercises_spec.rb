@@ -115,5 +115,29 @@ describe 'Exercise 9' do
   end
 end
 
+describe 'RPS' do
+  it 'returns player 1 name if player 1 wins' do
+    game1 = RPS.new("Chris", "Zach")
+    result = game1.play("rock", "scissors")
+
+    expect(result).to eq("Chris wins!")
+  end
+
+  it 'returns player 2 name if player 2 wins' do
+    game1 = RPS.new("Chris", "Zach")
+    result = game1.play("paper", "scissors")
+
+    expect(result).to eq("Zach wins!")
+  end
+
+  it 'returns tie if it is a tie' do
+    game1 = RPS.new("Chris", "Zach")
+    result = game1.play("paper", "paper")
+
+    expect(result).to eq("Tie game")
+  end
+
+end
+
 
 

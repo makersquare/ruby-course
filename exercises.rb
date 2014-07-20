@@ -104,6 +104,7 @@ end
 
 
 class RPS
+  attr_reader :player1, :player2, :move1, :move2, :rules
   # Rock, Paper, Scissors
   # Make a 2-player game of rock paper scissors. It should have the following:
   #
@@ -116,6 +117,31 @@ class RPS
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
+  def initialize(player1, player2)
+    @player1 = player1
+    @player2 = player2
+    @rules = {
+      :rock => ["rock", "scissors"],
+      :paper => ["paper", "rock"],
+      :scissors => ["paper", "scissors"]
+      }
+  end
+
+  def play(move1, move2)
+    # binding.pry
+    hash = {
+      move1 => @player1,
+      move2 => @player2
+    }
+
+    if move1 == move2
+      "Tie game"
+    else
+      winner = @rules.find {|k,v| v == [move1, move2].sort}[0].to_s
+      "#{hash[winner]} wins!"
+    end
+
+  end
 end
 
 
@@ -159,3 +185,4 @@ module Extensions
     # TODO
   end
 end
+
