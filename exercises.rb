@@ -135,19 +135,19 @@ class RPS
       move2 => @player2
     }
 
-    if @winner_array.count(@player1) > 1
-      return "#{@player1} wins the game!"
-    elsif @winner_array.count(@player2) > 1
-      return "#{@player2} wins the game!"
-    else
-      if move1 == move2
-        "Tie game, play again.."
-      else
-        winner = @rules.find {|k,v| v == [move1, move2].sort}[0].to_s
-        @winner_array << hash[winner]
-        "#{hash[winner]} wins the round, play again.."
-      end
-    end
+        if @winner_array.count(@player1) > 1
+          return "#{@player1} wins the game!"
+        elsif @winner_array.count(@player2) > 1
+          return "#{@player2} wins the game!"
+        else
+          if move1 == move2
+            "Tie game, play again.."
+          else
+            winner = @rules.find {|k,v| v == [move1, move2].sort}[0].to_s
+            @winner_array << hash[winner]
+            "#{hash[winner]} wins the round, play again.."
+          end
+        end
   end
 end
 
@@ -164,8 +164,24 @@ class RPSPlayer
   # lets both players play the game.
   #
   # When the game ends, ask if the player wants to play again.
-  def start
 
+  def start
+    puts "Player1 name:"
+    player1 = gets.chomp
+
+    puts "Player1 name:"
+    player2 = gets.chomp
+
+    game = RPS.new(player1, player2)
+
+    
+      puts "#{player1}'s move:"
+      move1 = gets.chomp
+
+      puts "#{player2}'s move:"
+      move2 = gets.chomp
+
+      game.play(move1, move2)
     # TODO
 
     # PRO TIP: Instead of using plain `gets` for grabbing a player's
@@ -174,6 +190,7 @@ class RPSPlayer
     # This is also why we needed to require 'io/console'
     # move = STDIN.noecho(&:gets)
   end
+
 end
 
 
