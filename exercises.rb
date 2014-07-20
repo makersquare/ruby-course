@@ -104,7 +104,7 @@ end
 
 
 class RPS
-  attr_reader :player1, :player2, :move1, :move2, :rules
+  attr_reader :player1, :player2, :move1, :move2, :rules, :winner_array
   # Rock, Paper, Scissors
   # Make a 2-player game of rock paper scissors. It should have the following:
   #
@@ -125,6 +125,7 @@ class RPS
       :paper => ["paper", "rock"],
       :scissors => ["paper", "scissors"]
       }
+    @winner_array = []
   end
 
   def play(move1, move2)
@@ -134,13 +135,17 @@ class RPS
       move2 => @player2
     }
 
-    if move1 == move2
-      "Tie game"
+    if @winner_array.count(@player1) > 1 || @winner_array.count(@player2) > 1
+      return "#{@winner_array.sort[0]} wins the game!"
     else
-      winner = @rules.find {|k,v| v == [move1, move2].sort}[0].to_s
-      "#{hash[winner]} wins!"
+      if move1 == move2
+        "Tie game, play again.."
+      else
+        winner = @rules.find {|k,v| v == [move1, move2].sort}[0].to_s
+        @winner_array << hash[winner]
+        "#{hash[winner]} wins the round, play again.."
+      end
     end
-
   end
 end
 
