@@ -54,14 +54,17 @@ class Bar
      item.purchases << Purchase.new(item, self)
   end
 
-  def analyze_drink_popularity
+  def most_popular_drinks
     @menu_items.sort_by { |x| x.purchases.count }.reverse
   end
 
-  def set_special_discount(item, discount)
+  def most_popular_hh_drinks
 
   end
 
+  def most_popular_drinks_outside_of_hh
+    
+  end
 end
 
 class MenuItem

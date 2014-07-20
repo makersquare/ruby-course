@@ -177,14 +177,6 @@ describe Bar do
       expect(@margarita.purchases.length).to eq(5)
     end
   end
-
-  describe "#analyze_popular_drinks" do
-    it "sorts drinks from most popular to least" do
-      sorted_array = @bar.analyze_drink_popularity
-      expect(sorted_array.first).to eq(@rc)
-      expect(sorted_array.last).to eq(@top_shelf)
-    end
-  end
 end
 
 describe MenuItem do
@@ -222,5 +214,64 @@ describe MenuItem do
       expect(@bar.get_price(@margarita)).to eq(4)
     end
   end
+end
 
+describe Bar do
+  context "finding popular drinks in and out of HH" do
+    before do
+      @bar = Bar.new "The Irish Yodel"
+      @bar.happy_discount = 0.5
+      
+      @bar.add_menu_item("Margarita", 8, true)
+      @margarita = @bar.menu_items.first
+
+      @bar.add_menu_item("McAllen 18", 20)
+      @top_shelf = @bar.menu_items.last
+
+      @bar.add_menu_item("Coffee", 2)
+      @coffee = @bar.menu_items.last
+
+      @bar.add_menu_item("Rum and Coke", 5, true)
+      @rc = @bar.menu_items.last
+
+      my_time = Time.new(2014, 7, 17, 15, 30)
+      Time.stub(:now).and_return(my_time)
+      2.times { @bar.purchase(@rc) }
+      8.times { @bar.purchase(@coffee) }
+      5.times { @bar.purchase(@margarita) }
+
+      my_time = Time.new(2014, 7, 17, 16, 30)
+      Time.stub(:now).and_return(my_time)
+      2.times { @bar.purchase(@rc) }
+      4.times { @bar.purchase(@margarita) }
+      1.times { @bar.purchase(@top_shelf) }
+    end
+
+    describe "#most_popular_drinks" do
+      it "sorts drinks from most popular to least" do
+        sorted_array = @bar.most_popular_drinks
+        expect(sorted_array.first).to eq(@margarita)
+        expect(sorted_array.last).to eq(@top_shelf)
+      end
+    end
+
+    describe "#most_popular_hh_drinks" do
+      it "orders the purchases of drinks during hh by popularity" do
+        sorted_array = @bar.most_popular_hh_drinks
+        expect(sorted_array.first).to eq(@coffee)
+        expect(sorted_array.last).to eq(@rc)
+      end
+    end
+
+    describe "#most_popular_drinks_outside_of_hh" do
+      it "orders the purchases of drinks outside of hh by popularity" do
+        sorted_array = @bar.most_popular_drinks_outside_of_hh
+        expect(sorted_array.first).to eq(@margarita)
+        expect(sorted_array.last).to eq(@top_shelf)
+      end
+    end
+
+
+
+  end
 end
