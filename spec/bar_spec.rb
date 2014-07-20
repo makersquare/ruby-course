@@ -166,9 +166,15 @@ describe Bar do
   describe "#purchase" do
     it "records a purchase of an item" do
       @bar.add_menu_item("Margarita", 8, true)
+      @bar.add_menu_item("Coffee", 2)
+
       margarita = @bar.menu_items.first
-      @bar.purchase(margarita)
-      expect(margarita.number_of_purchases).to eq(1)
+      coffee = @bar.menu_items.last
+
+      @bar.purchase(coffee)
+      3.times { @bar.purchase(margarita) }
+      
+      expect(margarita.purchases.length).to eq(3)
     end
   end
 
@@ -192,6 +198,7 @@ describe Bar do
       expect(@bar.menu_items.last).to eq(rc)
     end
   end
+
 
 
 

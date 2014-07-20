@@ -1,5 +1,3 @@
-require 'time' # you're gonna need it
-
 class Bar
   attr_reader :name, :menu_items
   attr_accessor :slow_day_happy_discount
@@ -49,27 +47,32 @@ class Bar
   end
 
   def purchase(item)
-    item.increment_purchase
+     item.purchases << Purchase.new(item, self)
   end
 
   def analyze_popular_drinks
-    @menu_items.sort_by { |x| x.number_of_purchases }
+    @menu_items.sort { |x| x.purchases }
   end
 
 end
 
 class MenuItem
-  attr_reader :name, :price, :hhstatus, :number_of_purchases
+  attr_reader :name, :price, :hhstatus, :purchases
   
   def initialize(name, price, hhstatus = false )
     @name = name
     @price = price
     @hhstatus = hhstatus
-    @number_of_purchases = 0
+    @purchases = []
   end
+end
 
-  def increment_purchase
-    @number_of_purchases += 1
+class Purchase
+  attr_reader :item, :price, :time
+  
+  def initialize(item, bar)
+    @item = item
+    @price = bar.get_price(item)
+    @time = Time.now
   end
-
 end
