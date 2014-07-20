@@ -16,6 +16,9 @@ module GettersSetters
       @skill = "bedside manners"
     end
     # TODO: Write a setter method for @skill
+    def skill=(new_skill)
+      @skill = new_skill
+    end
   end
 
 end
@@ -28,10 +31,10 @@ class HashProblems
 
   def self.update_top_compartment_item(wardrobe_hash)
     # TODO: Complete this method by writing A SINGLE LINE
+    wardrobe_hash["top compartment"][:item]
   end
 
 end
-
 
 class ArrayProblems
 
@@ -41,6 +44,7 @@ class ArrayProblems
 
   def self.add_cat_to_array(array)
     # TODO: Complete this method
+    array << {:cat => 'Pogo'}
   end
 
   # # # # # # #
@@ -49,6 +53,7 @@ class ArrayProblems
 
   def self.list_wardrobe_item_sizes(array)
     # TODO: Use the map method to create an array of wardrobe item sizes
+    array.map {|x| x = x[:size]}
   end
 
   # # # # # # #
@@ -57,6 +62,7 @@ class ArrayProblems
 
   def self.tell_me_the_weather(array)
     # TODO: Use the map method to create an array of weather descriptions
+    array.map {|x| x = "It is #{x}"}
   end
 
   # # # # # # #
@@ -65,6 +71,7 @@ class ArrayProblems
 
   def self.list_my_hats(array)
     # TODO: Use the map method to create an array of sized hats
+    array.map {|x| x = x[:size]+" "+x[:style]}
   end
 end
 
@@ -76,7 +83,7 @@ class MethodReturns
     #       or not the search_item exists in the array.
     array.each do |elem|
       if elem == search_item
-        true
+        return true
       end
     end
     false
@@ -92,13 +99,16 @@ end
 module Scopes
 
   class Person
+    def initialize
+      @jump_height = 0
+    end
     def jump(height)
-      jump_height = height
-      "I can jump #{jump_height} inches!"
+      @jump_height = height
+      "I can jump #{@jump_height} inches!"
     end
 
     def last_jump_height
-      "I last jumped #{jump_height} inches."
+      "I last jumped #{@jump_height} inches."
     end
   end
 
@@ -108,13 +118,14 @@ module Scopes
     end
 
     def find_first(salary)
+      @found = nil
       @people.each do |person|
         if person[:salary] == salary
-          found = person
+          @found = person
         end
       end
 
-      found
+      @found
     end
   end
 
