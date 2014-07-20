@@ -215,8 +215,10 @@ describe MenuItem do
     end
 
     it "removes the special discount and goes back to normal HH discount" do
-      @bar.remove_special_discount(@margarita)
-      expect(@bar.special_discounts[@margarita]).to eq(nil)
+      @margarita.remove_special_discount
+      my_time = Time.new(2014, 7, 17, 15, 30)
+      Time.stub(:now).and_return(my_time)
+      expect(@margarita.special_discount).to eq(nil)
       expect(@bar.get_price(@margarita)).to eq(4)
     end
   end

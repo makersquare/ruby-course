@@ -79,6 +79,10 @@ class MenuItem
     x = Discount.check_discount_format(x)
     @special_discount = x
   end
+
+  def remove_special_discount
+    @special_discount = nil
+  end
 end
 
 class Purchase
