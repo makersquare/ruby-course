@@ -168,7 +168,31 @@ describe Bar do
       @bar.add_menu_item("Margarita", 8, true)
       margarita = @bar.menu_items.first
       @bar.purchase(margarita)
+      expect(margarita.number_of_purchases).to eq(1)
     end
   end
+
+  describe "#analyze_popular_drinks" do
+    it "provides a list of drinks and times purchased" do
+      @bar.add_menu_item("Margarita", 8, true)
+      @bar.add_menu_item("Coffee", 2)
+      @bar.add_menu_item("Rum and Coke", 5, true)
+      
+      margarita = @bar.menu_items.first
+      coffee = @bar.menu_items[1]
+      rc = @bar.menu_items[2]
+      
+      5.times {@bar.purchase(margarita)}
+      2.times {@bar.purchase(coffee)}
+      8.times{@bar.purchase(rc)}
+
+      @bar.analyze_popular_drinks
+
+      expect(@bar.menu_items.first).to eq(coffee)
+      expect(@bar.menu_items.last).to eq(rc)
+    end
+  end
+
+
 
 end

@@ -52,6 +52,10 @@ class Bar
     item.increment_purchase
   end
 
+  def analyze_popular_drinks
+    @menu_items.sort_by { |x| x.number_of_purchases }
+  end
+
 end
 
 class MenuItem
