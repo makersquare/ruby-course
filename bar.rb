@@ -7,6 +7,7 @@ class Bar
     @menu_items = []
     @happy_discount = 0
     @slow_day_happy_discount = 0
+    @special_discounts = {}
   end
 
   def add_menu_item(name, price, hhstatus = false)
@@ -14,9 +15,14 @@ class Bar
   end
 
   def happy_discount=(x)
+    x = check_discount_format(x)
+    @happy_discount = x
+  end
+
+  def check_discount_format(x)
     x = 0 if x < 0
     x = 1 if x > 1
-    @happy_discount = x
+    x
   end
 
   def happy_discount
@@ -54,6 +60,11 @@ class Bar
     @menu_items.sort_by { |x| x.purchases.count }.reverse
   end
 
+  def set_special_discount(item, discount)
+    x = check_discount_format(discount)
+    @special_discounts[item] = x
+  end
+
 
 
 end
@@ -61,7 +72,7 @@ end
 class MenuItem
   attr_reader :name, :price, :hhstatus, :purchases
   
-  def initialize(name, price, hhstatus: false, special_discount: nil )
+  def initialize(name, price, hhstatus = false)
     @name = name
     @price = price
     @hhstatus = hhstatus

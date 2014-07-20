@@ -96,7 +96,7 @@ describe Bar do
     @bar.happy_discount = 0.5
     @bar.slow_day_happy_discount = 0.8
     
-    @bar.add_menu_item("Margarita", 8, hhstatus: true)
+    @bar.add_menu_item("Margarita", 8, true)
     @margarita = @bar.menu_items.first
 
     @bar.add_menu_item("McAllen 18", 20)
@@ -105,7 +105,7 @@ describe Bar do
     @bar.add_menu_item("Coffee", 2)
     @coffee = @bar.menu_items.last
 
-    @bar.add_menu_item("Rum and Coke", 5, hhstatus: true)
+    @bar.add_menu_item("Rum and Coke", 5, true)
     @rc = @bar.menu_items.last
 
     5.times { @bar.purchase(@margarita) }
@@ -186,6 +186,25 @@ describe Bar do
     end
   end
 
+  describe "#set_special_discount and #remove_special_discount" do
+    before do
+      @bar.set_special_discount(@margarita, 0.25)
+    end
+
+    it "applies a different hh discount to select items" do
+      expect(@bar.special_discounts[@margarita]).to eq(0.25)
+    end
+
+    it "applies the special discount to the price charged" do
+      expect(@bar.get_price(@margarita)).to eq(6)
+    end
+
+    it "removes the special discount and goes back to normal HH discount" do
+      @bar.remove_special_discount(@margarita)
+      expect(@bar.special_discounts[@margarita]).to eq(nil)
+      expect(@bar.get_price(@margarita)).to eq(4)
+    end
+  end
 
 
 
