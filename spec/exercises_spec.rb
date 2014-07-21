@@ -79,5 +79,32 @@ describe Exercises do
   it "should return false if the given year is not a leap year" do
     Exercises.ex9(2401).should be_false
   end
+end
+describe RPS do
+
+  before(:each) do
+    @game = RPS.new('Bill', 'Bob')
+  end
+
+  it "should return Bob wins!" do
+    expect(STDOUT).to receive(:puts).and_return("Bob wins!")
+    @game.play('rock','paper')
+  end
+
+  it 'should return an invalid notice if given bad moves' do
+    expect(STDOUT).to receive(:puts).and_return('One or both players are using invalid moves.')
+    @game.play('boulder','axe')
+  end
+
+  it "should return game over if the game has already been played 3 times" do
+    expect(STDOUT).to receive(:puts).and_return("Bob wins!")
+    expect(STDOUT).to receive(:puts).and_return("Bob wins!")
+    expect(STDOUT).to receive(:puts).and_return("Bob wins!")
+    expect(STDOUT).to receive(:puts).and_return('Game is already over.')
+    @game.play('rock','paper')
+    @game.play('rock','paper')
+    @game.play('rock','paper')
+    @game.play('rock','paper')
+  end
 
 end
