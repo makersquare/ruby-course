@@ -259,7 +259,7 @@ describe Bar do
       it "orders the purchases of drinks during hh by popularity" do
         sorted_array = @bar.most_popular_hh_drinks
         expect(sorted_array.first).to eq(@coffee)
-        expect(sorted_array.last).to eq(@rc)
+        expect(sorted_array.last).to eq(@top_shelf)
       end
     end
 

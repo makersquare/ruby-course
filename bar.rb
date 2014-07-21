@@ -59,17 +59,22 @@ class Bar
   end
 
   def most_popular_hh_drinks
-
+    hh_purchases = @menu_items.each do |x|
+      x.purchases = x.purchases.keep_if do |y|
+        y.during_hh
+      end
+    end
+    hh_purchases.sort_by { |z| z.purchases.count }.reverse
   end
 
   def most_popular_drinks_outside_of_hh
-    
+
   end
 end
 
 class MenuItem
   attr_reader :name, :price, :hhstatus, :purchases, :special_discount
-  
+  attr_accessor :purchases
   def initialize(name, price, hhstatus = false)
     @name = name
     @price = price
@@ -89,11 +94,11 @@ class MenuItem
 end
 
 class Purchase
-  attr_reader :item, :price, :time
+  attr_reader :price, :time, :during_hh
   
   def initialize(item, bar)
-    @item = item
     @price = bar.get_price(item)
+    @during_hh = bar.happy_hour?
     @time = Time.now
   end
 end
