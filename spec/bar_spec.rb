@@ -117,8 +117,12 @@ describe Bar do
     before(:each) do
       @bar = Bar.new("Videology")
       Time.stub(:now).and_return(Time.parse("2014-07-14 15:00:00"))
-      @bar.add_menu_item('G&T', 6)
-      @bar.add_menu_item('Rum and Coke', 5)
+      bar.add_menu_item('G&T', 6)
+      bar.add_menu_item('Rum and Coke', 5)
+      bar.add_menu_item('Blue Moon', 3)
+      bar.add_menu_item('Whiskey Sour', 7)
+      bar.add_menu_item('Cosmo', 5.40)
+      bar.add_menu_item('Salty Dog', 7.80)
       @bar.custom_discount('Rum and Coke', 0.3)
       @bar.happy_discount = 0.5
     end
