@@ -134,14 +134,10 @@ class RPS
       move1 => @player1,
       move2 => @player2
     }
-    # binding.pry
     if move1 == move2
         puts "Tie game, play again.."
     else
-      # binding.pry
       winner = @rules.find {|k,v| v == [move1, move2].sort}[0].to_s
-      puts winner
-      puts player_hash[winner]
       @winner_array << player_hash[winner]
       puts "#{player_hash[winner]} wins the round.."
     end
@@ -151,10 +147,11 @@ class RPS
     elsif @winner_array.count(@player2) == 2
       return "#{@player2} wins the game!"
     else
+      @player_hash = {}
       puts "#{@player1}'s move:"
       move1 = gets.chomp
       puts "#{@player2}'s move:"
-      move1 = gets.chomp
+      move2 = gets.chomp
       self.play(move1, move2)
     end
 
