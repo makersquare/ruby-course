@@ -70,7 +70,6 @@ module Exercises
   def self.ex7(array, str)
     # TODO
     if array.find do |x|
-      x.str
       x<<str
     end
     end

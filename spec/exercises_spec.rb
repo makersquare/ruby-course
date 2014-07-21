@@ -77,24 +77,24 @@ describe 'Exercise 6' do
   end
 end
 
-# describe 'Exercise 7' do
+describe 'Exercise 7' do
   
-#   it "Adds a string 'word' to the end of the array if it exists in the array" do
-#     array = ["joe", "rabbit", "mikey", 'bike']
-#     string = "word"
-#     result = Exercises.ex7(["joe", "rabbit", "mikey", 'bike'], "word")
-#     expect(result.ex7(array, str)).to eq(["joe", "rabbit", "mikey", "bike"])
-#     # expect(@result).to eq()
-#   end
-# end
+  it "Adds a string 'word' to the end of the array if it exists in the array" do
+    array = ["joe", "rabbit", "mikey", 'bike']
+    string = "word"
+    result = Exercises.ex7(["joe", "rabbit", "mikey", 'bike'], "word")
+    expect(result).to eq(["joe", "rabbit", "mikey", "bike"])
+    # expect(@result).to eq()
+  end
+end
 
-# describe 'Exercise 8' do
+describe 'Exercise 8' do
 
-#   it "Iterates through the people and prints out their name and occupation" do
-#     people = Exercises.ex8([{:name=>"Bob", :occupation=>"Builder"}])
-#     expect(people).to eq("Bob is a Builder")
-#   end
-# end
+  it "Iterates through the people and prints out their name and occupation" do
+    people = Exercises.ex8([{:name=>"Bob", :occupation=>"Builder"}])
+    expect(people).to eq("Bob is a Builder")
+  end
+end
 
 
 
