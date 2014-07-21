@@ -62,45 +62,39 @@ end
 
 describe 'Exercise 6' do
 
-  before do
-      @result = Exercises.ex6(["joe", "rabbit", "mikey", 'bike'])
-    end
-
   it "Updates the last item in the array to 'panda'." do
-    result1 = @result[-1]
-    expect(result1).to eq 'panda'
+    array = ["joe", "rabbit", "mikey", 'bike']
+    result = Exercises.ex6(array)
+    expect(result[-1]).to eq('panda')
   end
-
-  xit "If the last item is already 'panda', update it to 'GODZILLA' instead" do
-    result2 = @result[-1]
-    # expect(result2).to eq 'GODZILLA'
-    expect(result2).to receive(:ex6)
-    expect(result2).to eq 'GODZILLA'
-  end
-end
-
-describe 'Exercise 7' do
-  before do
-      @result = Exercises.ex7(["joe", "rabbit", "mikey", 'bike'])
-      string= "word"
-    end
-
-  xit "Adds a string 'word' to the end of the array if it exists in the array" do
-    result = Exercises.ex7(["joe", "rabbit", "mikey", 'bike'], "word")
-    expect(result.ex7(array, str)).to eq(["joe", "rabbit", "mikey", "bike"])
-    # expect(@result).to eq()
+  
+  it "Updates the last item in the array to 'GODZILLA'." do
+    array = ["joe", "rabbit", "mikey", 'bike']
+    result = Exercises.ex6(array)
+    expect(result[-1]).to eq('panda')
+    result = Exercises.ex6(array)
+    expect(result[-1]).to eq('GODZILLA')
   end
 end
 
-describe 'Exercise 8' do
-  before do 
-    @people = Exercises.ex8([{:name=>"Bob", :occupation=>"Builder"}])
-  end
+# describe 'Exercise 7' do
+  
+#   it "Adds a string 'word' to the end of the array if it exists in the array" do
+#     array = ["joe", "rabbit", "mikey", 'bike']
+#     string = "word"
+#     result = Exercises.ex7(["joe", "rabbit", "mikey", 'bike'], "word")
+#     expect(result.ex7(array, str)).to eq(["joe", "rabbit", "mikey", "bike"])
+#     # expect(@result).to eq()
+#   end
+# end
 
-  it "Iterates through the people and prints out their name and occupation" do
-    expect(@people).to eq{"Bob is a Builder"}
-  end
-end
+# describe 'Exercise 8' do
+
+#   it "Iterates through the people and prints out their name and occupation" do
+#     people = Exercises.ex8([{:name=>"Bob", :occupation=>"Builder"}])
+#     expect(people).to eq("Bob is a Builder")
+#   end
+# end
 
 
 
