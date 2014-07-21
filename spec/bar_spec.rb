@@ -5,47 +5,47 @@ require "./bar.rb"
 describe Bar do
 
   before do
-    @bar = Bar.new "The Irish Yodel"
+    @bar = Bar.new("The Irish Yodel")
   end
 
   it "initializes with a name" do
     expect(@bar.name).to eq("The Irish Yodel")
   end
 
-  xit "cannot change its name" do
+  it "cannot change its name" do
     # That would require a lengthy marketing meeting
     expect {
       @bar.name = 'lolcat cave'
     }.to raise_error
   end
 
-  xit "initializes with an empty menu" do
+  it "initializes with an empty menu" do
     expect(@bar.menu_items.count).to eq(0)
   end
 
-  xit "can add menu items" do
+  it "can add menu items" do
     @bar.add_menu_item('Cosmo', 5.40)
     @bar.add_menu_item('Salty Dog', 7.80)
 
     expect(@bar.menu_items.count).to eq(2)
   end
 
-  xit "can retrieve menu items" do
+  it "can retrieve menu items" do
     @bar.add_menu_item('Little Johnny', 9.95)
     item = @bar.menu_items.first
     expect(item.name).to eq 'Little Johnny'
     expect(item.price).to eq 9.95
   end
 
-  xit "has a default happy hour discount of zero" do
+  it "has a default happy hour discount of zero" do
     expect(@bar.happy_discount).to eq 0
   end
 
-  xit "can set its happy hour discount" do
+  it "can set its happy hour discount" do
     expect { @bar.happy_discount = 0.5 }.to_not raise_error
   end
 
-  xit "only returns a discount when it's happy hour" do
+  it "only returns a discount when it's happy hour" do
     @bar.happy_discount = 0.5
     # HINT: You need to write your own getter
 
@@ -66,7 +66,7 @@ describe Bar do
     expect(@bar.happy_discount).to eq 0.3
   end
 
-  xit "constrains its happy hour discount to between zero and one" do
+  it "constrains its happy hour discount to between zero and one" do
     expect(@bar).to receive(:happy_hour?).twice.and_return(true)
 
     # HINT: You need to write your own setter
@@ -81,23 +81,71 @@ describe Bar do
   # DO NOT CHANGE SPECS ABOVE THIS LINE #
 # # # # # # # # # # # # # # # # # # # # # #
 
-  describe '#happy_hour?', :pending => true do
-    it "knows when it is happy hour (3:00pm to 4:00pm)" do
+  describe '#happy_hour?' do
+
+    it "knows when it is not happy hour (3:00pm to 4:00pm)" do
       # TODO: CONTROL TIME
+      Time.stub(:now).and_return(Time.parse("2014-01-01 16:00:00"))
+      expect(@bar.happy_hour?).to eq(false)
+    end
+
+    it "is happy hour otherwise" do
+      # TODO: CONTROL TIME
+      Time.stub(:now).and_return(Time.parse("2014-01-01 15:00:00"))
       expect(@bar.happy_hour?).to eq(true)
     end
 
-    it "is not happy hour otherwise" do
-      # TODO: CONTROL TIME
-      expect(@bar.happy_hour?).to eq(false)
-    end
   end
 
   context "During normal hours" do
+    before(:each) do
+      @bar = Bar.new("Videology")
+      Time.stub(:now).and_return(Time.parse("2014-01-01 16:00:00"))
+    end
     # TODO: WRITE TESTS TO ENSURE BAR KNOWS NOT TO DISCOUNT
+    it "is not happy hour" do
+      @bar.happy_hour?.should be_false
+    end
+
+    it "has a discount of 0" do
+      @bar.happy_discount.should eq(0)
+    end
   end
 
   context "During happy hours" do
     # TODO: WRITE TESTS TO ENSURE BAR DISCOUNTS DURING HAPPY HOUR
+    before(:each) do
+      @bar = Bar.new("Videology")
+      Time.stub(:now).and_return(Time.parse("2014-07-14 15:00:00"))
+      bar.add_menu_item('G&T', 6)
+      bar.add_menu_item('Rum and Coke', 5)
+      bar.add_menu_item('Blue Moon', 3)
+      bar.add_menu_item('Whiskey Sour', 7)
+      bar.add_menu_item('Cosmo', 5.40)
+      bar.add_menu_item('Salty Dog', 7.80)
+      @bar.custom_discount('Rum and Coke', 0.3)
+      @bar.happy_discount = 0.5
+    end
+
+    it "is happy_hour" do
+      @bar.happy_hour?.should be_true
+    end
+
+    it "has a discount of 0.5" do
+      @bar.happy_discount.should eq(0.5)
+    end
+
+    it "should cost $3 for a G&T if it's Monday or Wednesday" do
+      @bar.get_price('G&T').should eq(3.0)
+    end
+
+    it "should cost $4.50 for a G&T other days" do
+      Time.stub(:now).and_return(Time.parse("2014-07-15 15:00:00"))
+      @bar.get_price('G&T').should eq(4.5)
+    end
+
+    it "should cost $3.50 for a Rum and Coke" do
+      @bar.get_price('Rum and Coke').should eq(3.50)
+    end
   end
 end
