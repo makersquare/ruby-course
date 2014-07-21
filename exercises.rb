@@ -104,7 +104,7 @@ end
 
 
 class RPS
-  attr_reader :player1, :player2, :move1, :move2, :rules, :winner_array
+  attr_reader :player1, :player2, :move1, :move2, :rules, :winner_array, :player_hash
   # Rock, Paper, Scissors
   # Make a 2-player game of rock paper scissors. It should have the following:
   #
@@ -130,24 +130,34 @@ class RPS
 
   def play(move1, move2)
     # binding.pry
-    hash = {
+    @player_hash = {
       move1 => @player1,
       move2 => @player2
     }
+    # binding.pry
+    if move1 == move2
+        puts "Tie game, play again.."
+    else
+      # binding.pry
+      winner = @rules.find {|k,v| v == [move1, move2].sort}[0].to_s
+      puts winner
+      puts player_hash[winner]
+      @winner_array << player_hash[winner]
+      puts "#{player_hash[winner]} wins the round.."
+    end
 
-        if @winner_array.count(@player1) > 1
-          return "#{@player1} wins the game!"
-        elsif @winner_array.count(@player2) > 1
-          return "#{@player2} wins the game!"
-        else
-          if move1 == move2
-            "Tie game, play again.."
-          else
-            winner = @rules.find {|k,v| v == [move1, move2].sort}[0].to_s
-            @winner_array << hash[winner]
-            "#{hash[winner]} wins the round, play again.."
-          end
-        end
+    if @winner_array.count(@player1) == 2
+      return "#{@player1} wins the game!"
+    elsif @winner_array.count(@player2) == 2
+      return "#{@player2} wins the game!"
+    else
+      puts "#{@player1}'s move:"
+      move1 = gets.chomp
+      puts "#{@player2}'s move:"
+      move1 = gets.chomp
+      self.play(move1, move2)
+    end
+
   end
 end
 
@@ -174,14 +184,13 @@ class RPSPlayer
 
     game = RPS.new(player1, player2)
 
-    
-      puts "#{player1}'s move:"
-      move1 = gets.chomp
+    puts "#{player1}'s move:"
+    move1 = gets.chomp
 
-      puts "#{player2}'s move:"
-      move2 = gets.chomp
+    puts "#{player2}'s move:"
+    move2 = gets.chomp
 
-      game.play(move1, move2)
+    game.play(move1, move2)
     # TODO
 
     # PRO TIP: Instead of using plain `gets` for grabbing a player's
