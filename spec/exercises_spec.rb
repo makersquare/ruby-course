@@ -77,7 +77,18 @@ describe 'Exercise 6' do
     expect(result2).to receive(:ex6)
     expect(result2).to eq 'GODZILLA'
   end
+end
 
+describe 'Exercise 7' do
+  before do
+      @result = Exercises.ex7(["joe", "rabbit", "mikey", 'bike'])
+      string= "word"
+    end
+
+  it "Adds a string 'word' to the end of the array if it exists in the array" do
+    expect(@result).to receive(:ex7)
+    expect(@result).to eq(["joe", "rabbit", "mikey", "bike"])
+  end
 end
 
 
