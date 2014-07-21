@@ -68,7 +68,12 @@ class Bar
   end
 
   def most_popular_drinks_outside_of_hh
-
+    not_hh_purchases = @menu_items.each do |x|
+      x.purchases = x.purchases.delete_if do |y|
+        y.during_hh
+      end
+    end
+    not_hh_purchases.sort_by { |z| z.purchases.count }.reverse
   end
 end
 
