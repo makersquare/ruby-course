@@ -85,14 +85,22 @@ describe 'Exercise 7' do
       string= "word"
     end
 
-  it "Adds a string 'word' to the end of the array if it exists in the array" do
-    expect(@result).to receive(:ex7)
-    expect(@result).to eq(["joe", "rabbit", "mikey", "bike"])
+  xit "Adds a string 'word' to the end of the array if it exists in the array" do
+    result = Exercises.ex7(["joe", "rabbit", "mikey", 'bike'], "word")
+    expect(result.ex7(array, str)).to eq(["joe", "rabbit", "mikey", "bike"])
+    # expect(@result).to eq()
   end
 end
 
+describe 'Exercise 8' do
+  before do 
+    @people = Exercises.ex8([{:name=>"Bob", :occupation=>"Builder"}])
+  end
 
-
+  it "Iterates through the people and prints out their name and occupation" do
+    expect(@people).to eq{"Bob is a Builder"}
+  end
+end
 
 
 

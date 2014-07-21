@@ -69,6 +69,11 @@ module Exercises
   #    add `str` to the end of the array
   def self.ex7(array, str)
     # TODO
+    if array.find do |x|
+      x.str
+      x<<str
+    end
+    end
   end
 
   # Exercise 8
