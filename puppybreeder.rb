@@ -13,7 +13,7 @@ end
 
 class Inventory
 
-  attr_reader :po
+  attr_reader :po, :inventory
 
   def initialize
     @inventory = []
