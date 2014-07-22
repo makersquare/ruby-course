@@ -44,9 +44,8 @@ describe Store do
 	end
 
 	it "add a request to request list" do
-		bob = Request.new("Bob", "collie")
 		store = Store.new
-		store.add_request(bob)
+		store.add_request("Bob", "collie")
 		expect(store.requests.count).to eq (1)
 	end
 
@@ -66,12 +65,17 @@ describe Store do
 	end
 
 	it "has customer name, and breed desired" do
-		req1 = Request.new("Bob", "collie")
+		# req1 = Request.new("Bob", "collie")
 		store = Store.new
-		store.add_request(req1)
-		store.puppy_available("collie")
-		expect(store.)
+		store.add_request("Bob", "collie")
+		x = store.puppy_available("collie")
+		expect(x.count).to eq (1)
+	end
 
+	xit "shows list of requests with status" do
+		store = Store.new
+		store.add_request("")
+		store.add_request(bob)
 	end
 end
 
