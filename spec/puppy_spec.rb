@@ -35,8 +35,8 @@ describe 'Request' do
     expect(@my_request.breed).to eq(:collie)
   end
 
-  it 'has a default status of nil' do
-    expect(@my_request.status).to eq(nil)
+  it 'has a default status of :queued' do
+    expect(@my_request.status).to eq(:queued)
   end
 
   describe '#status' do
@@ -48,12 +48,12 @@ describe 'Request' do
   end 
 end
 
-# Store Class Spec
+# Kennel Class Spec
 
-describe 'Store' do
+describe 'Kennel' do
 
   before do
-    @store = Store.new('Puppies-R-Us', 'Nick D.')
+    @kennel = Kennel.new('Kute Kennel', 'Nick D.')
 
     @brodie = Puppy.new('brodie','collie', 4015)
     @leila = Puppy.new('leila', 'collie', 10)
@@ -66,29 +66,77 @@ describe 'Store' do
     @new_puppies = [@brodie, @leila, @penelope, @ajax, @harvey, @maggie]
   end
 
-  it 'initializes with a store name and owner' do
-    expect(@store.name).to eq('Puppies-R-Us')
-    expect(@store.owner).to eq('Nick D.')
+  it 'initializes with a kennel name and owner' do
+    expect(@kennel.name).to eq('Kute Kennel')
+    expect(@kennel.owner).to eq('Nick D.')
   end
 
   it 'adds puppies to a hash of all breeds, with the breed pointing to an array of objects that are that breed' do
-    expect(@store.add_puppy(@skipper)).to eq([@skipper])
-    expect(@store.add_puppy(@brodie)).to eq([@brodie])
-    expect(@store.add_puppy(@leila)).to eq([@brodie, @leila])
+    expect(@kennel.add_puppy(@skipper)).to eq([@skipper])
+    expect(@kennel.add_puppy(@brodie)).to eq([@brodie])
+    expect(@kennel.add_puppy(@leila)).to eq([@brodie, @leila])
   end
 
   it 'returns puppies by breed' do
-    @store.add_puppy(@brodie)
-    @store.add_puppy(@leila)
-    expect(@store.list_puppies('collie')).to eq(['Brodie', 'Leila'])
+    @kennel.add_puppy(@brodie)
+    @kennel.add_puppy(@leila)
+    expect(@kennel.list_puppies('collie')).to eq(['Brodie', 'Leila'])
+  end
+end
+
+describe 'Store' do
+
+  before do
+    @store = Store.new('Kute Kennel', 'Nick D.')
+    @request1 = Request.new('Alli', 'collie')
+    @request2 = Request.new('Alli', 'poodle')
+    @x = [@request1]
+    @y = [@request1, @request2]
   end
 
-  xit 'returns a list of all puppies of a certain breed' do
+  it 'initializes with a name and owner' do
+    expect(@store.name).to eq('Kute Kennel')
+    expect(@store.owner).to eq('Nick D.')
   end
 
-  xit 'keeps track of requests' do
+  it 'adds requests and keeps track of them' do
+    expect(@store.add_request(@request1)).to eq(@x)
+    expect(@store.add_request(@request2)).to eq(@y)
+  end
+
+  xit 'can change request status' do
+  end
+
+  xit 'it returns requests of certain status'do
+  end
+
+  xit 'keeps track of breed price' do
+  end
+
+  xit 'sets a breed price' do
+  end
+
+  xit 'returns price on breeds' do
   end
 
   xit 'returns lists of puppies by their attributes' do
+
   end
+
 end
+
+
+# :boxer => {
+#   :price => num,
+#   :list => [array of puppy ojects]
+# }
+
+
+
+
+
+
+
+
+
+

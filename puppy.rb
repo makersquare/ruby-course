@@ -18,9 +18,10 @@ class Request
   attr_reader :c_name, :breed
   attr_accessor :status
 
-  def initialize(c_name, breed, status=nil)
+  def initialize(c_name, breed, status=:queued)
     @c_name = c_name.capitalize
     @breed = breed.to_sym
+    @status = status
   end
 
   def deny
@@ -36,7 +37,7 @@ class Request
   end
 end
 
-class Store
+class Kennel
 
   attr_accessor :name, :owner, :all_puppies
   # keeps track of all puppies by breeds. breeds are symbols pointing to an array of puppy objects that have the attribute symbol that matches their breed
@@ -62,6 +63,30 @@ class Store
       x.name
     end
   end
+end
+
+class Store
+
+  attr_reader :name, :owner, :requests_by_status, :breed_prices, :all_requests
+
+  def initialize(name, owner)
+    @name = name
+    @owner = owner
+    @requests_by_status = Hash.new(0)
+    @all_requests = Array.new(0)
+    @breed_prices = Hash.new(0)
+  end
+
+  def add_request(request)
+    @all_requests << request
+    if @requests_by_status.has_key?(request.status)
+      @requests_by_status[request.status] << request
+    else
+      @requests_by_status[request.status] = [request]
+    end
+    return @all_requests
+  end
+
 end
 
 
