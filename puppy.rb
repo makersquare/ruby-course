@@ -56,7 +56,13 @@ class Store
     return @all_puppies[puppy.breed]
   end
 
+  def list_puppies(breed)
+    find_breed = breed.to_sym
+    @all_puppies[find_breed].map do |x|
+      x.name
+    end
   end
+end
 
 
 

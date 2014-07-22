@@ -1,6 +1,8 @@
 require 'pry-byebug'
 require "./puppy.rb"
 
+# Puppy Class Spec
+
 describe 'Puppy' do
 
   before do
@@ -21,6 +23,8 @@ describe 'Puppy' do
   end
 end
 
+# Request Class Spec
+
 describe 'Request' do
   before do
     @my_request = Request.new('Alli', 'collie')
@@ -36,7 +40,6 @@ describe 'Request' do
   end
 
   describe '#status' do
-
     it 'can be changed to denied, accepted, or complete' do
       expect(@my_request.deny).to eq(:denied)
       expect(@my_request.accept).to eq(:accepted)
@@ -44,6 +47,8 @@ describe 'Request' do
     end
   end 
 end
+
+# Store Class Spec
 
 describe 'Store' do
 
@@ -66,24 +71,24 @@ describe 'Store' do
     expect(@store.owner).to eq('Nick D.')
   end
 
-  it 'adds puppies to a hash of all breeds, with the breed 
-  pointing to an array of objects that are that breed' do
+  it 'adds puppies to a hash of all breeds, with the breed pointing to an array of objects that are that breed' do
     expect(@store.add_puppy(@skipper)).to eq([@skipper])
     expect(@store.add_puppy(@brodie)).to eq([@brodie])
     expect(@store.add_puppy(@leila)).to eq([@brodie, @leila])
   end
 
-  xit 'keeps track of puppies by breed' do
-  end
-
-  xit 'keeps track of puppies by breed' do
-
+  it 'returns puppies by breed' do
+    @store.add_puppy(@brodie)
+    @store.add_puppy(@leila)
+    expect(@store.list_puppies('collie')).to eq(['Brodie', 'Leila'])
   end
 
   xit 'returns a list of all puppies of a certain breed' do
   end
+
   xit 'keeps track of requests' do
   end
+
   xit 'returns lists of puppies by their attributes' do
   end
 end
