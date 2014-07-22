@@ -1,5 +1,5 @@
 class Puppy
-  attr_reader: :breed, :age, :cost
+  attr_reader :breed, :age, :cost
 
   def initialize(arg)
     @breed = arg[:breed]
