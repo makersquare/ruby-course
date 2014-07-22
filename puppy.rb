@@ -22,8 +22,9 @@ class Request
       chihuahua: 600,
       americanbulldog: 900,
       dingo: 1200,
+      poodle: 1500
     }
-    @price = nil
+    @price = pricing[@breed]
   end
 end
 

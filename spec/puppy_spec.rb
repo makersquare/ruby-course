@@ -31,7 +31,7 @@ describe Request do
       expect(breed).to eq(:poodle)
     end
 
-    it "initializes a new request with nil status, nil price, and nil puppy" do
+    it "initializes a new request with nil status and nil puppy" do
       x = Request.new("Mrs. Robinson", "Poodle")
 
       status = x.status
@@ -39,9 +39,13 @@ describe Request do
 
       puppy = x.puppy
       expect(puppy).to be_nil   
+    end
 
-      price = x.puppy
-      expect(price).to be_nil
+    it "initializes a new request with the price from an array" do
+      x = Request.new("Mrs. Robinson", "Poodle")
+
+      price = x.price
+      expect(price).to eq(1500)
     end
   end
 end
