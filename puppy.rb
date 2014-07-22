@@ -64,4 +64,19 @@ class PuppyStore
     request.puppy = puppy
     PuppyMill.avail_puppies.delete(puppy)
   end
+
+  def self.view_accepted_orders
+    all_requests.select {|x| x.status == :accept}
+  end
+
+  def self.view_denied_orders
+    all_requests.select {|x| x.status == :deny}
+  end
+
+  def self.view_pending_orders
+    all_requests.map {|x| x.status.nil? }
+  end
+
+  def self.view_completed_orders
+  end
 end

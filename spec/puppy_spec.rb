@@ -120,4 +120,47 @@ describe PuppyStore do
       expect(answer).to be false
     end
   end
+
+  describe ".view_accepted_orders" do
+
+    before do
+      @tim = PuppyStore.add_request("Tim Duncan", "Chihuhua").last
+      PuppyStore.accept(@tim)    
+    end
+    
+    it "returns an array of requests that were accepted" do
+      accepted_orders = PuppyStore.view_accepted_orders
+      expect(accepted_orders).to be_an_instance_of(Array)
+      expect(accepted_orders).to include(@tim) #accepted on line 128
+    end
+
+    it "returns an array that doesn't include other orders" do
+      accepted_orders = PuppyStore.view_accepted_orders
+      answer = accepted_orders.include?(@pop) #sold on line 107
+      expect(answer).to be false
+    end
+  end
+
+  describe ".view_denied_orders" do
+    it "returns an array of requests that were denied" do
+      denied_orders = PuppyStore.view_denied_orders
+      expect(denied_orders).to be_an_instance_of(Array)
+      expect(denied_orders).to include(@patty) #denied on line 97
+    end
+
+    it "returns an array that doesn't include other orders" do
+      denied_orders = PuppyStore.view_denied_orders
+      answer = denied_orders.include?(@pop)
+      expect(answer).to be false
+    end
+  end
+  
+  describe ".view_pending_orders" do
+    
+
+  end
+  
+  describe ".view_completed_orders" do
+  end
+
 end
