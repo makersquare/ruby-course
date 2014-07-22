@@ -3,8 +3,8 @@ class Puppy
 
   def initialize(arg)
     @breed = arg[:breed]
-    @age = arg[:age]
-    @cost = arg[:cost]
+    @age = arg[:age] || 0
+    @cost = arg[:cost] || 0
   end
 
 end

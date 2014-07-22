@@ -1,28 +1,29 @@
+require "./puppy.rb"
+
 module PuppCage
 
-    @puppy_list = Hash.new([])  #Allows user to sort puppy objects in hash with breed as key
-    @request_list = Hash.new() #Stores requests in a hash by phone_number=>request object
-    @breed_price = Hash.new()
+    PUPPY_LIST = Hash.new({cost:0, puppies:[]})  #Allows user to sort puppy objects and keys in hash with breed as key
+    REQUEST_LIST = Hash.new() #Stores requests in a hash by phone_number=>request object
 
-    def add_puppy(breed)
-      puppy.new(breed:breed, cost:@breed_price[breed], age:0)
-      @puppy_list[puppy.breed]<<puppy
+    def PuppCage.add_puppy(*puppy)
+      # Puppy.new(breed:breed, cost:PUPPY_LIST[breed][:cost], age:0)
+      puppy.each{ |pupp| PUPPY_LIST[pupp.breed][:puppies]  << pupp }
     end
 
-    def remove_puppy(puppy)
-      @puppy_list[puppy.breed].delete(puppy)
+    def PuppCage.remove_puppy(puppy)
+      PUPPY_LIST[puppy.breed].delete(puppy)
     end
 
-    def add_request(request)
-      @request_list << request
+    def PuppCage.add_request(request)
+      REQUEST_LIST<< request
     end
 
-    def remove_request(request)
-      @request_list.delete(request)
+    def PuppCage.remove_request(request)
+      REQUEST_LIST.delete(request)
     end
 
-    def alter_breed_price(breed, cost)
-      @breed_price[breed]=cost
+    def PuppCage.alter_breed_price(breed, cost)
+      PUPPY_LIST[breed][:cost]=cost
     end
 
 end
