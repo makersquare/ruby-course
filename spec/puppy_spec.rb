@@ -31,7 +31,7 @@ describe Request do
       expect(breed).to eq("Poodle")
     end
 
-    it "initializes a new request with nil status and nil puppy" do
+    it "initializes a new request with nil status, nil price, and nil puppy" do
       x = Request.new("Mrs. Robinson", "Poodle")
 
       status = x.status
@@ -39,6 +39,9 @@ describe Request do
 
       puppy = x.puppy
       expect(puppy).to be_nil   
+
+      price = x.puppy
+      expect(price).to be_nil
     end
   end
 end
@@ -56,6 +59,23 @@ describe PuppyMill do
       expect(@puppyarray).to be_an_instance_of(Array)
       expect(@puppyarray.length).to eq(2)
       expect(@spot).to be_an_instance_of(Puppy)
+    end
+  end
+end
+
+describe PuppyStore do
+  before do
+    PuppyStore.add_request("Coach Pop", "American Bulldog")
+    @requestarray = PuppyStore.add_request("Patty Mills", "Dingo")
+    @pop = @requestarray.first
+    @patty = @requestarray[1]
+  end
+
+  describe ".add_puppy" do
+    it "creates a request and adds it to the request list array" do
+      expect(@requestarray).to be_an_instance_of(Array)
+      expect(@requestarray.length).to eq(2)
+      expect(@pop).to be_an_instance_of(Request)
     end
   end
 end

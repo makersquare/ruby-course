@@ -35,8 +35,12 @@ end
 class PuppyStore
   @requestlist = []
 
-  def self.add_request
+  def self.add_request(customer, breed)
     @requestlist << Request.new(customer, breed)
+  end
+
+  def self.requestlist
+    @requestlist
   end
 
 end
