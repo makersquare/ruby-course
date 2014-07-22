@@ -29,26 +29,26 @@ class Request
 end
 
 class PuppyMill
-  @puppylist = []
+  @avail_puppies = []
 
   def self.add_puppy(name, age, breed)
-    @puppylist << Puppy.new(name, age, breed)
+    @avail_puppies << Puppy.new(name, age, breed)
   end
 
-  def self.puppylist
-    @puppylist
+  def self.avail_puppies
+    @avail_puppies
   end
 end
 
 class PuppyStore
-  @requestlist = []
+  @all_requests = []
 
   def self.add_request(customer, breed)
-    @requestlist << Request.new(customer, breed)
+    @all_requests << Request.new(customer, breed)
   end
 
-  def self.requestlist
-    @requestlist
+  def self.all_requests
+    @all_requests
   end
 
   def self.accept(request)
@@ -57,5 +57,11 @@ class PuppyStore
 
   def self.deny(request)
     request.status = :deny
+  end
+
+  def self.sell (puppy, request)
+    request.status = :sold
+    request.puppy = puppy
+    PuppyMill.avail_puppies.delete(puppy)
   end
 end

@@ -73,6 +73,7 @@ describe PuppyStore do
     @requestarray = PuppyStore.add_request("Patty Mills", "Dingo")
     @pop = @requestarray.first
     @patty = @requestarray[1]
+
   end
 
   describe ".add_puppy" do
@@ -96,6 +97,27 @@ describe PuppyStore do
       PuppyStore.deny(@patty)
       result = @patty.status
       expect(result).to eq(:deny)
+    end
+  end
+
+  describe ".sell" do
+    before do
+      @puppyarray = PuppyMill.add_puppy("Obadiah", 14, "American Bulldog")
+      @obadiah = @puppyarray.last
+      PuppyStore.sell(@obadiah ,@pop)
+    end
+
+    it "records the sale of a puppy by changing status variables of the request" do
+      expect(@pop.status).to eq(:sold)
+    end
+
+    it "records the puppy sold in the puppy variable of the request" do
+      expect(@pop.puppy).to eq(@obadiah)
+    end
+
+    it "deletes the puppy from the array of available puppies" do
+      answer = @puppyarray.include?(@obadiah)
+      expect(answer).to be false
     end
   end
 end
