@@ -122,42 +122,93 @@ describe PuppyStore do
   end
 
   describe ".view_accepted_orders" do
-
-    before do
-      @tim = PuppyStore.add_request("Tim Duncan", "Chihuhua").last
-      PuppyStore.accept(@tim)    
-    end
-    
     it "returns an array of requests that were accepted" do
+      tim = PuppyStore.add_request("Tim Duncan", "Chihuhua").last 
+      PuppyStore.accept(tim)  
+      ginobili = PuppyStore.add_request("Manu Ginobili", "American Bulldog").last 
+      bellinelli = PuppyStore.add_request("Marco Bellinelli", "Poodle").last
+      PuppyStore.sell(@spot, bellinelli)
+      kawhi = PuppyStore.add_request("Kawhi Leonard", "Doberman Pinscher").last
+      PuppyStore.deny(kawhi)
+
       accepted_orders = PuppyStore.view_accepted_orders
       expect(accepted_orders).to be_an_instance_of(Array)
-      expect(accepted_orders).to include(@tim) #accepted on line 128
+      expect(accepted_orders).to include(tim) 
     end
 
     it "returns an array that doesn't include other orders" do
+      tim = PuppyStore.add_request("Tim Duncan", "Chihuhua").last 
+      PuppyStore.accept(tim)  
+      ginobili = PuppyStore.add_request("Manu Ginobili", "American Bulldog").last 
+      bellinelli = PuppyStore.add_request("Marco Bellinelli", "Poodle").last
+      PuppyStore.sell(@spot, bellinelli)
+      kawhi = PuppyStore.add_request("Kawhi Leonard", "Doberman Pinscher").last
+      PuppyStore.deny(kawhi)
+
       accepted_orders = PuppyStore.view_accepted_orders
-      answer = accepted_orders.include?(@pop) #sold on line 107
+      answer = accepted_orders.include?(kawhi) 
       expect(answer).to be false
     end
   end
 
   describe ".view_denied_orders" do
     it "returns an array of requests that were denied" do
+      tim = PuppyStore.add_request("Tim Duncan", "Chihuhua").last 
+      PuppyStore.accept(tim)  
+      ginobili = PuppyStore.add_request("Manu Ginobili", "American Bulldog").last 
+      bellinelli = PuppyStore.add_request("Marco Bellinelli", "Poodle").last
+      PuppyStore.sell(@spot, bellinelli)
+      kawhi = PuppyStore.add_request("Kawhi Leonard", "Doberman Pinscher").last
+      PuppyStore.deny(kawhi)
+
       denied_orders = PuppyStore.view_denied_orders
       expect(denied_orders).to be_an_instance_of(Array)
-      expect(denied_orders).to include(@patty) #denied on line 97
+      expect(denied_orders).to include(kawhi) 
     end
 
     it "returns an array that doesn't include other orders" do
+      tim = PuppyStore.add_request("Tim Duncan", "Chihuhua").last 
+      PuppyStore.accept(tim)  
+      ginobili = PuppyStore.add_request("Manu Ginobili", "American Bulldog").last 
+      bellinelli = PuppyStore.add_request("Marco Bellinelli", "Poodle").last
+      PuppyStore.sell(@spot, bellinelli)
+      kawhi = PuppyStore.add_request("Kawhi Leonard", "Doberman Pinscher").last
+      PuppyStore.deny(kawhi)
+
       denied_orders = PuppyStore.view_denied_orders
-      answer = denied_orders.include?(@pop)
+      answer = denied_orders.include?(ginobili)
       expect(answer).to be false
     end
   end
   
   describe ".view_pending_orders" do
-    
+    it "returns an array of requests that are pending" do
+      tim = PuppyStore.add_request("Tim Duncan", "Chihuhua").last 
+      PuppyStore.accept(tim)  
+      ginobili = PuppyStore.add_request("Manu Ginobili", "American Bulldog").last 
+      bellinelli = PuppyStore.add_request("Marco Bellinelli", "Poodle").last
+      PuppyStore.sell(@spot, bellinelli)
+      kawhi = PuppyStore.add_request("Kawhi Leonard", "Doberman Pinscher").last
+      PuppyStore.deny(kawhi)
 
+      pending_orders = PuppyStore.view_pending_orders
+      expect(pending_orders).to be_an_instance_of(Array)
+      expect(pending_orders).to include(ginobili) #created on line 130
+    end
+
+    it "returns an array that doesn't include other orders" do
+      tim = PuppyStore.add_request("Tim Duncan", "Chihuhua").last 
+      PuppyStore.accept(tim)  
+      ginobili = PuppyStore.add_request("Manu Ginobili", "American Bulldog").last 
+      bellinelli = PuppyStore.add_request("Marco Bellinelli", "Poodle").last
+      PuppyStore.sell(@spot, bellinelli)
+      kawhi = PuppyStore.add_request("Kawhi Leonard", "Doberman Pinscher").last
+      PuppyStore.deny(kawhi)
+
+      pending_orders = PuppyStore.view_pending_orders
+      answer = pending_orders.include?(tim) #accepted on line 128
+      expect(answer).to be false
+    end
   end
   
   describe ".view_completed_orders" do

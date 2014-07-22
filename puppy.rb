@@ -74,7 +74,7 @@ class PuppyStore
   end
 
   def self.view_pending_orders
-    all_requests.map {|x| x.status.nil? }
+    all_requests.select {|x| x.status.nil? }
   end
 
   def self.view_completed_orders
