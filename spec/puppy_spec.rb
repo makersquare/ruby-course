@@ -82,4 +82,20 @@ describe PuppyStore do
       expect(@pop).to be_an_instance_of(Request)
     end
   end
+
+  describe ".accept" do
+    it "changes the status of the request to :accept" do
+      PuppyStore.accept(@pop)
+      result = @pop.status
+      expect(result).to eq(:accept)
+    end
+  end
+
+  describe ".deny" do
+    it "changes the status of the request to :deny" do
+      PuppyStore.deny(@patty)
+      result = @patty.status
+      expect(result).to eq(:deny)
+    end
+  end
 end

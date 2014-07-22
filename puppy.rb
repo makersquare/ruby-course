@@ -9,8 +9,8 @@ class Puppy
 end
 
 class Request
-  attr_reader :customer, :breed
-  attr_accessor  :status, :puppy, :price
+  attr_reader :customer, :breed, :price
+  attr_accessor  :status, :puppy
 
   def initialize (customer, breed)
     @customer = customer
@@ -51,6 +51,11 @@ class PuppyStore
     @requestlist
   end
 
-  def self.update_request_status(request, new_status)
+  def self.accept(request)
+    request.status = :accept
+  end
+
+  def self.deny(request)
+    request.status = :deny
   end
 end
