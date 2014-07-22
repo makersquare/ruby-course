@@ -111,11 +111,13 @@ module Scopes
     end
 
     def find_first(salary)
+      @person = nil
       @people.each do |person|
         if person[:salary] == salary
-          person[:name]
+          @person = person[:name]
         end
       end
+      @person
     end
   end
 
