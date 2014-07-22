@@ -5,7 +5,7 @@ require "./puppy.rb"
 describe Puppy do
   describe ".initialize" do
     it "creates a new puppy with name, age, and breed" do
-      spot = Puppy.new("Spot", 20, "Doberman")
+      spot = Puppy.new("Spot", 20, "Doberman Pinscher")
       
       name = spot.name
       expect(name).to eq("Spot")
@@ -14,7 +14,7 @@ describe Puppy do
       expect(age).to eq(20)
 
       breed = spot.breed
-      expect(breed).to eq("Doberman")
+      expect(breed).to eq(:dobermanpinscher)
     end
   end
 end
@@ -28,7 +28,7 @@ describe Request do
       expect(name).to eq("Mrs. Robinson")
 
       breed = x.breed
-      expect(breed).to eq("Poodle")
+      expect(breed).to eq(:poodle)
     end
 
     it "initializes a new request with nil status, nil price, and nil puppy" do
@@ -48,7 +48,7 @@ end
 
 describe PuppyMill do
   before do
-    PuppyMill.add_puppy("Spot", 20, "Doberman")
+    PuppyMill.add_puppy("Spot", 20, "Doberman Pinscher")
     @puppyarray = PuppyMill.add_puppy("Fluffy", 15, "Chihuahua")
     @spot = @puppyarray.first
     @fuffy = @puppyarray[1]

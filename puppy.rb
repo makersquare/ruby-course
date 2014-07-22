@@ -4,18 +4,25 @@ class Puppy
   def initialize (name, age, breed)
     @name = name
     @age = age
-    @breed = breed
+    @breed = breed.downcase.delete(" ").to_sym
   end
 end
 
 class Request
-  attr_reader :customer, :breed, :status, :puppy, :price
+  attr_reader :customer, :breed
+  attr_accessor  :status, :puppy, :price
 
   def initialize (customer, breed)
     @customer = customer
-    @breed = breed
+    @breed = breed.downcase.delete(" ").to_sym
     @status = nil
     @puppy = nil
+    pricing = {
+      dobermanpinscher: 800,
+      chihuahua: 600,
+      americanbulldog: 900,
+      dingo: 1200,
+    }
     @price = nil
   end
 end
@@ -43,4 +50,6 @@ class PuppyStore
     @requestlist
   end
 
+  def self.update_request_status(request, new_status)
+  end
 end
