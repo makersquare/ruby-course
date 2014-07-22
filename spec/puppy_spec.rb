@@ -193,7 +193,7 @@ describe PuppyStore do
 
       pending_orders = PuppyStore.view_pending_orders
       expect(pending_orders).to be_an_instance_of(Array)
-      expect(pending_orders).to include(ginobili) #created on line 130
+      expect(pending_orders).to include(ginobili) 
     end
 
     it "returns an array that doesn't include other orders" do
@@ -206,12 +206,38 @@ describe PuppyStore do
       PuppyStore.deny(kawhi)
 
       pending_orders = PuppyStore.view_pending_orders
-      answer = pending_orders.include?(tim) #accepted on line 128
+      answer = pending_orders.include?(tim) 
       expect(answer).to be false
     end
   end
   
   describe ".view_completed_orders" do
-  end
+    it "returns an array of requests that are completed" do
+      tim = PuppyStore.add_request("Tim Duncan", "Chihuhua").last 
+      PuppyStore.accept(tim)  
+      ginobili = PuppyStore.add_request("Manu Ginobili", "American Bulldog").last 
+      bellinelli = PuppyStore.add_request("Marco Bellinelli", "Poodle").last
+      PuppyStore.sell(@spot, bellinelli)
+      kawhi = PuppyStore.add_request("Kawhi Leonard", "Doberman Pinscher").last
+      PuppyStore.deny(kawhi)
 
+      completed_orders = PuppyStore.view_completed_orders
+      expect(completed_orders).to be_an_instance_of(Array)
+      expect(completed_orders).to include(bellinelli)
+    end
+
+    it "returns an array that doesn't include other orders" do
+      tim = PuppyStore.add_request("Tim Duncan", "Chihuhua").last 
+      PuppyStore.accept(tim)  
+      ginobili = PuppyStore.add_request("Manu Ginobili", "American Bulldog").last 
+      bellinelli = PuppyStore.add_request("Marco Bellinelli", "Poodle").last
+      PuppyStore.sell(@spot, bellinelli)
+      kawhi = PuppyStore.add_request("Kawhi Leonard", "Doberman Pinscher").last
+      PuppyStore.deny(kawhi)
+
+      completed_orders = PuppyStore.view_completed_orders
+      answer = completed_orders.include?(tim) 
+      expect(answer).to be false
+    end
+  end
 end

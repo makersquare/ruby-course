@@ -78,5 +78,6 @@ class PuppyStore
   end
 
   def self.view_completed_orders
+    all_requests.select {|x| x.status == :sold}
   end
 end
