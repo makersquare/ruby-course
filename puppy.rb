@@ -34,22 +34,35 @@ class PuppyMill
                 pending: [],
                 accept: [],
                 deny: [],
-                sold: []
+                sold: [],
+                hold: []
                   }
 
   def self.add_puppy(name, age, breed)
     breed = breed.downcase.delete(" ").to_sym
     new_puppy = Puppy.new(name, age, breed)
-    if avail_puppies.has_key?(breed) 
-      avail_puppies[breed] << new_puppy
+    if @avail_puppies.has_key?(breed) 
+      @avail_puppies[breed] << new_puppy
     else
-      avail_puppies[breed] = [new_puppy]
+      @avail_puppies[breed] = [new_puppy]
     end
   end
 
   def self.add_request(customer, breed)
     breed = breed.downcase.delete(" ").to_sym
-    @all_requests[:pending] << Request.new(customer, breed)
+    this_request = Request.new(customer, breed)
+    p this_request
+    PuppyMill.set_status(this_request)
+    @all_requests[this_request.status] << this_request
+  end
+
+  def self.set_status(this_request)
+    breed = this_request.breed
+    if @avail_puppies.has_key?(breed) && !@avail_puppies[breed].empty?
+      this_request.status = :pending
+    else
+      this_request.status = :hold
+    end
   end
 
   def self.avail_puppies
