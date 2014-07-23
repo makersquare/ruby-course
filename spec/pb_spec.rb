@@ -17,6 +17,7 @@ describe Inventory do
 
   before {
     @i = Inventory.new
+    @puppy = Puppy.new(breed: "Great Dane", name: "Eleanor", age: 280)
   }
 
   it "creates a new instance of inventory" do
@@ -24,8 +25,14 @@ describe Inventory do
   end
 
   it "creates empty data structures" do
-    expect(@i.inventory).to eq([])
+    expect(@i.inventory).to eq({})
     expect(@i.po).to eq([])
+  end
+
+  it "add a puppy to my inventory hash" do 
+    addition = @i.intake_of_puppies(@puppy)
+    expect(addition).to eq(@i.inventory["Great Dane"])
+
   end
 end
 
@@ -44,13 +51,11 @@ describe PurchaseOrder do
   end
 
   it "Review a Purchase Order" do
-    expect(@purchase.review).should eq("Order for Elizabeth ~~~~> Breed: Great Dane")
+    expect(@purchase.review).to eq("Order for Elizabeth ~~~~> Breed: Great Dane")
   end
 
   it "Add to purchase order to inventory" do
-    
-    expect(@i.po.empty?).should be_true
-    order = @purchase.add(@i)
+    order = @purchase.add_purchase_order(@i)
     expect(order).to eq(@i.po)
   
   end

@@ -21,7 +21,7 @@ class Inventory
   end
 
   def puppy_breed_count
-    @inventory.inject(Hash.new(0)){ |sum,elem| sum[elem]+= 1; sum }
+    @inventory[:breed].inject(Hash.new(0)){ |sum,elem| sum[elem]+= 1; sum }
   end
 
   def intake_of_puppies(puppy)
@@ -53,8 +53,8 @@ class PurchaseOrder
     @breed = args[:breed]
   end
 
-  def add_purchase_order_to(inventory)
-    inventory.po << self
+  def add_purchase_order(inventory_object)
+    inventory_object.po << self
   end
 
   def review
