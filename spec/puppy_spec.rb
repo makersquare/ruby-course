@@ -35,8 +35,8 @@ describe 'Request' do
     expect(@my_request.breed).to eq(:collie)
   end
 
-  it 'has a default status of :queued' do
-    expect(@my_request.status).to eq(:queued)
+  it 'has a default status of :holding' do
+    expect(@my_request.status).to eq(:holding)
   end
 
   describe '#status' do
@@ -74,10 +74,11 @@ describe 'Store' do
 
   end
 
-  it 'adds puppies to a hash of all breeds, with the breed pointing to an array of objects that are that breed' do
-    expect(@store.add_puppy(@skipper)).to eq([@skipper])
-    expect(@store.add_puppy(@brodie)).to eq([@brodie])
-    expect(@store.add_puppy(@leila)).to eq([@brodie, @leila])
+  it 'adds puppies to a hash of all breeds, with the breed pointing to an array of objects that are that breed AND returns a total puppy count' do
+    @store.add_puppy(@skipper)
+    @store.add_puppy(@brodie)
+    @store.add_puppy(@leila)
+    expect(@store.total_puppies).to eq(3)
   end
 
   it 'returns puppies by breed' do
@@ -115,13 +116,14 @@ describe 'Store' do
       expect(@poodle_request.status).to eq(:pending)
     end
 
-    xit 'updates holding requests to pending when new puppy is added that matches request breed' do
-      @store.add_request(@request1)
+    it 'updates holding requests to pending when new puppy is added that matches request breed' do
+      @store.add_request(@request2)
 
-      expect(@request1.status).to eq(:holding)
+      expect(@request2.status).to eq(:holding)
 
       @store.add_puppy(@maggie)
-      expect(@request1.status).to eq(:pending)
+
+      expect(@request2.status).to eq(:pending)
     end
   end
 
@@ -150,8 +152,6 @@ describe 'Store' do
   it 'checks to see if a certain breed is available' do
     @store.add_puppy(@brodie)
     @store.add_puppy(@leila)
-    puts "This is so confusing"
-    puts @store.list_puppies(:pitbull)
 
     expect(@store.check_breed(:collie)).to eq(true)
     expect(@store.check_breed(:pitbull)).to eq(false)
@@ -166,11 +166,6 @@ describe 'Store' do
   #   expect(@store.list_requests(:denied)).to eq([@request1])
   # end
 
-  xit '' do
-  end
-# when new request is added to the store, it checks if breed is available
-# if it is, status = pending
-# if not, status = holding
 end
 
 

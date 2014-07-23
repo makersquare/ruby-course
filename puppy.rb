@@ -18,7 +18,7 @@ class Request
   attr_reader :c_name, :breed
   attr_accessor :status
 
-  def initialize(c_name, breed, status=:queued)
+  def initialize(c_name, breed, status=:holding)
     @c_name = c_name.capitalize
     @breed = breed.to_sym
     @status = status
@@ -62,7 +62,17 @@ class Store
     else
       @all_puppies[puppy.breed] = [puppy]
     end
-    return @all_puppies[puppy.breed]
+
+    # if there is a request for this puppy, it updates the requests to status "pending"
+    @all_requests.each do |request|
+      if request.breed == puppy.breed
+        request.pending
+      end
+    end
+  end
+
+  def total_puppies
+    @all_puppies.values.inject { |a, b|  a.size + b.size }
   end
 
   def list_puppies(breed)
