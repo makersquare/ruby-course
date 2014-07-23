@@ -28,12 +28,16 @@ class Request
     @status = :denied
   end
 
-  def accept
-    @status = :accepted
+  def satisfied
+    @status = :satisfied
   end
 
-  def complete
-    @status = :complete
+  def pending
+    @status = :pending
+  end
+
+  def hold
+    @status = :holding
   end
 end
 
@@ -56,12 +60,9 @@ class Kennel
     end
     return @all_puppies[puppy.breed]
   end
-
+# return an array of puppy objects of a certain breed
   def list_puppies(breed)
-    find_breed = breed.to_sym
-    @all_puppies[find_breed].map do |x|
-      x.name
-    end
+    @all_puppies[breed]
   end
 end
 
@@ -98,11 +99,9 @@ class Store
   end
 
   def list_requests(status)
-    list = []
-    @all_requests.each do |elem|
-      list << elem if elem.status == status
+    @all_requests.select do |elem|
+      elem.status == status
     end
-    return list
   end
   # This update method is for another funday!
   # def update
@@ -119,6 +118,21 @@ class Store
   #   # iterate through @requests_by_status
   #   # and pop them if their status is incorrect
   #   # then moving them to the right one.
+
+  def check_breed(kennel, breed)
+    # Nick says: don't make yo code smelly
+    # !kennel.list_puppies(breed).empty?
+    # check if breed key exists
+    if kennel.all_puppies.has_key?(breed) == true
+    # if is does, check if array is empty or not
+      !kennel.list_puppies(breed).empty?
+    #  if not, return false
+    else
+      false
+    end
+  end
+
+
 end
 
 

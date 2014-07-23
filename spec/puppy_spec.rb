@@ -42,8 +42,9 @@ describe 'Request' do
   describe '#status' do
     it 'can be changed to denied, accepted, or complete' do
       expect(@my_request.deny).to eq(:denied)
-      expect(@my_request.accept).to eq(:accepted)
-      expect(@my_request.complete).to eq(:complete)
+      expect(@my_request.pending).to eq(:pending)
+      expect(@my_request.satisfied).to eq(:satisfied)
+      expect(@my_request.hold).to eq(:holding)
     end
   end 
 end
@@ -80,7 +81,7 @@ describe 'Kennel' do
   it 'returns puppies by breed' do
     @kennel.add_puppy(@brodie)
     @kennel.add_puppy(@leila)
-    expect(@kennel.list_puppies('collie')).to eq(['Brodie', 'Leila'])
+    expect(@kennel.list_puppies(:collie)).to eq([@brodie, @leila])
   end
 end
 
@@ -92,6 +93,11 @@ describe 'Store' do
     @request2 = Request.new('Alli', 'poodle')
     @x = [@request1]
     @y = [@request1, @request2]
+
+    @kennel = Kennel.new('Kute Kennel', 'Nick D.')
+
+    @brodie = Puppy.new('brodie','collie', 4015)
+    @leila = Puppy.new('leila', 'collie', 10)
   end
 
   it 'initializes with a name and owner' do
@@ -126,6 +132,16 @@ describe 'Store' do
     expect(@store.list_requests(:denied)).to eq([@request1])
   end
 
+  it 'checks to see if a certain breed is available' do
+    @kennel.add_puppy(@brodie)
+    @kennel.add_puppy(@leila)
+    puts "This is so confusing"
+    puts @kennel.list_puppies(:pitbull)
+
+    expect(@store.check_breed(@kennel, :collie)).to eq(true)
+    expect(@store.check_breed(@kennel, :pitbull)).to eq(false)
+  end
+
   # This method is for another day
   # it 'updates list if request objects have had status changed' do
   #   @store.add_request(@request1)
@@ -134,6 +150,10 @@ describe 'Store' do
   #   expect(@store.list_requests(:queued)).to eq([])
   #   expect(@store.list_requests(:denied)).to eq([@request1])
   # end
+
+  xit '' do
+  end
+
 end
 
 
