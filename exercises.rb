@@ -5,36 +5,46 @@ module Exercises
   #  - Returns "nope" if `str` is "wishes"
   def self.ex0(str)
     # TODO
+    if str == "wishes"
+      "nope"
+    else
+      str * 3
+    end
   end
 
   # Exercise 1
   #  - Returns the number of elements in the array
   def self.ex1(array)
     # TODO
+    array.count
   end
 
   # Exercise 2
   #  - Returns the second element of an array
   def self.ex2(array)
     # TODO
+    array[1]
   end
 
   # Exercise 3
   #  - Returns the sum of the given array of numbers
   def self.ex3(array)
     # TODO
+    array.inject(:+)
   end
 
   # Exercise 4
   #  - Returns the max number of the given array
   def self.ex4(array)
     # TODO
+    array.max
   end
 
   # Exercise 5
   #  - Iterates through an array and `puts` each element
   def self.ex5(array)
     # TODO
+    array.each {|x| puts x}
   end
 
   # Exercise 6
@@ -43,6 +53,11 @@ module Exercises
   #    it to 'GODZILLA' instead
   def self.ex6(array)
     # TODO
+    if array.last == "panda"
+      array << "GODZILLA"
+    else
+      array << "panda"
+    end
   end
 
   # Exercise 7
@@ -50,6 +65,11 @@ module Exercises
   #    add `str` to the end of the array
   def self.ex7(array, str)
     # TODO
+    if array.include?(str)
+      array << str
+    else
+      array
+    end
   end
 
   # Exercise 8
@@ -58,6 +78,10 @@ module Exercises
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
     # TODO
+    people.each do |person|
+      puts "#{person[:name]} #{person[:occupation]}"
+    end
+
   end
 
   # Exercise 9
@@ -66,11 +90,21 @@ module Exercises
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
     # TODO
+    if time % 4 != 0
+      false
+    elsif time % 100 != 0
+      true
+    elsif time % 400 != 0
+      false
+    else
+      true
+    end
   end
 end
 
 
 class RPS
+  attr_reader :player1, :player2, :move1, :move2, :rules, :winner_array, :player_hash
   # Rock, Paper, Scissors
   # Make a 2-player game of rock paper scissors. It should have the following:
   #
@@ -83,6 +117,45 @@ class RPS
   #
   # You will be using this class in the following class, which will let players play
   # RPS through the terminal.
+  def initialize(player1, player2)
+    @player1 = player1
+    @player2 = player2
+    @rules = {
+      :rock => ["rock", "scissors"],
+      :paper => ["paper", "rock"],
+      :scissors => ["paper", "scissors"]
+      }
+    @winner_array = []
+  end
+
+  def play(move1, move2)
+    # binding.pry
+    @player_hash = {
+      move1 => @player1,
+      move2 => @player2
+    }
+    if move1 == move2
+        puts "Tie game, play again.."
+    else
+      winner = @rules.find {|k,v| v == [move1, move2].sort}[0].to_s
+      @winner_array << player_hash[winner]
+      puts "#{player_hash[winner]} wins the round.."
+    end
+
+    if @winner_array.count(@player1) == 2
+      return "#{@player1} wins the game!"
+    elsif @winner_array.count(@player2) == 2
+      return "#{@player2} wins the game!"
+    else
+      @player_hash = {}
+      puts "#{@player1}'s move:"
+      move1 = gets.chomp
+      puts "#{@player2}'s move:"
+      move2 = gets.chomp
+      self.play(move1, move2)
+    end
+
+  end
 end
 
 
@@ -98,8 +171,23 @@ class RPSPlayer
   # lets both players play the game.
   #
   # When the game ends, ask if the player wants to play again.
-  def start
 
+  def start
+    puts "Player1 name:"
+    player1 = gets.chomp
+
+    puts "Player2 name:"
+    player2 = gets.chomp
+
+    game = RPS.new(player1, player2)
+
+    puts "#{player1}'s move:"
+    move1 = gets.chomp
+
+    puts "#{player2}'s move:"
+    move2 = gets.chomp
+
+    game.play(move1, move2)
     # TODO
 
     # PRO TIP: Instead of using plain `gets` for grabbing a player's
@@ -108,6 +196,7 @@ class RPSPlayer
     # This is also why we needed to require 'io/console'
     # move = STDIN.noecho(&:gets)
   end
+
 end
 
 
@@ -126,3 +215,4 @@ module Extensions
     # TODO
   end
 end
+
