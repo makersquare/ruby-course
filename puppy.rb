@@ -9,8 +9,6 @@ class Request
     @status = status
     @id = 0
     puts "#{customer_name} has requested a #{breed}."
-
-    # if @breed == nil
   end
 
 end

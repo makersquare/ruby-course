@@ -49,69 +49,67 @@ describe Store do
 		expect(store.requests.count).to eq (1)
 	end
 
+	context Store do
+		before do
+			Store.stub(:puts)
+			@store = Store.new
+		  @blake = Puppy.new("Blake", 3, "collie")
+		  @icy = Puppy.new("Icy", 9, "samoyed")
+		  @dot = Puppy.new("Dotcom", 5, "wolf")
+		  @pup1 = @store.amk.add_new_puppy("Blake", 3, "collie")
+		  @pup2 = @store.amk.add_new_puppy("Icy", 9, "samoyed")
+		  @pup3 = @store.amk.add_new_puppy("Dotcom", 5, "wolf")
+		end
+
+		it "show if breed desired is present" do
+			@store.add_request("Bob", "collie")
+			x = @store.puppy_available("collie")
+			expect(x.count).to eq (1)
+		end
+
+		it "shows list of requests with status" do
+			@store.add_request("Bob", "collie")
+			@store.add_request("Stacy", "collie")
+			expect(@store.amk.puppies.count).to eq (3)
+			expect(@store.requests.count).to eq(2)
+		end
+
+		it "auto-change status to 'on-hold' if no breed of choice is available" do
+			@store.add_request("Jon Snow", "direwolf")
+			x = @store.requests.find {|x| x.customer_name == "Jon Snow"}
+			expect(x.status).to eq ("on-hold")
+		end
+
+		xit "confirm true/false if breed is available" do
+			@store.add_request("Bob","collie")
+			expect(@store.puppy_available?("collie")).to eq (true)
+			expect(@store.puppy_available?("samoyed")).to eq (false)
+		end
+
+		it "find purchase request and change status to accepted (if pending)" do
+			@store.add_request("Joey","samoyed")
+			x = @store.requests[0].id
+			expect(@store.change_purchase_request_status(x)).to eq (true)
+		end
+
+		it "show requests for only pending and accepted (no 'on-hold' purchase requests)" do
+			@store.add_request("Bob", "collie")
+			@store.add_request("Joey","samoyed")
+			@store.add_request("Jon Snow", "direwolf")
+			@store.add_request("Bella", "werewolf")
+			expect(@store.requests.count).to eq(4) #all requests, none accepted
+			expect(@store.show_requests.count).to eq(2) #only pending/on-hold
+		end
+	end
 
 end
 
-describe Store do
+describe Request do
 	before do
 		@store = Store.new
 	  @blake = Puppy.new("Blake", 3, "collie")
 	  @icy = Puppy.new("Icy", 9, "samoyed")
-	  @dot = Puppy.new("Dotcom", 5, "wolf")
-	  @pup1 = @store.amk.add_new_puppy("Blake", 3, "collie")
-	  @pup2 = @store.amk.add_new_puppy("Icy", 9, "samoyed")
-	  @pup3 = @store.amk.add_new_puppy("Dotcom", 5, "wolf")
-	end
-
-	it "show if breed desired is present" do
-		@store.add_request("Bob", "collie")
-		x = @store.puppy_available("collie")
-		expect(x.count).to eq (1)
-	end
-
-	it "shows list of requests with status" do
-		@store.add_request("Bob", "collie")
-		@store.add_request("Stacy", "collie")
-		expect(@store.amk.puppies.count).to eq (3)
-		expect(@store.requests.count).to eq(2)
-	end
-
-	it "auto-change status to 'on-hold' if no breed of choice is available" do
-		@store.add_request("Jon Snow", "direwolf")
-		x = @store.requests.find {|x| x.customer_name == "Jon Snow"}
-		expect(x.status).to eq ("on-hold")
-	end
-
-	xit "confirm true/false if breed is available" do
-		@store.add_request("Bob","collie")
-		expect(@store.puppy_available?("collie")).to eq (true)
-		expect(@store.puppy_available?("samoyed")).to eq (false)
-	end
-
-	it "find purchase request and change status to accepted (if pending)" do
-		@store.add_request("Joey","samoyed")
-		x = @store.requests[0].id
-		expect(@store.change_purchase_request_status(x)).to eq (true)
-	end
-
-	it "show requests for only pending and accepted" do
-		@store.add_request("Bob", "collie")
-		@store.add_request("Joey","samoyed")
-		@store.add_request("Jon Snow", "direwolf")
-		@store.add_request("Bella", "werewolf")
-		expect(@store.requests.count).to eq(4) #all requests, none accepted
-		expect(@store.show_requests.count).to eq(2) #only pending/on-hold
-	end
-
-end
-
-
-describe Request do
-	before do
-		store = Store.new
-	  blake = Puppy.new("Blake", 3, "collie")
-	  icy = Puppy.new("Icy", 9, "samoyed")
-	  com = Puppy.new("Dotcom", 5, "wolf")
+	  @com = Puppy.new("Dotcom", 5, "wolf")
 	end
 
 	it "create a purchase request for customer and status is pending" do
