@@ -65,6 +65,8 @@ class Kennel
   end
 end
 
+# This is the Store class. It keeps track of requests, statuses, and breed prices.
+
 class Store
 
   attr_reader :name, :owner, :requests_by_status, :breed_prices, :all_requests
@@ -91,6 +93,10 @@ class Store
     @breed_prices[breed] = price
   end
 
+  def return_breed_price(breed)
+    @breed_prices[breed]
+  end
+
   def list_requests(status)
     list = []
     @all_requests.each do |elem|
@@ -98,7 +104,7 @@ class Store
     end
     return list
   end
-  # This update method is for another day!
+  # This update method is for another funday!
   # def update
   #   @requests_by_status.each do |status_key, arr_of_matching_requests|
   #     arr_of_matching_requests.each do |req_object_elem|

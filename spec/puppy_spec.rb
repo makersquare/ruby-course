@@ -109,6 +109,11 @@ describe 'Store' do
     expect(@store.breed_prices[:collie]).to eq(400)
   end
 
+  it 'returns price for a certain breed' do
+    @store.set_breed_price(:collie, 400)
+    expect(@store.return_breed_price(:collie)).to eq(400)
+  end
+
   # xit 'can move requests in data structure depending on status' do
   # end
 
