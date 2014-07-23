@@ -39,6 +39,7 @@ class PurchaseRequestInventory
         end
     else
       purchase_request.status = "on hold"
+      @request_array << purchase_request
     end
 
   end
@@ -53,7 +54,7 @@ class PurchaseRequestInventory
   end
 
   def view_completed_orders
-    @request_array.find {|request| request.accepted? == true}
+    @request_array.select {|request| request.accepted? == true}
   end
 
 end

@@ -9,21 +9,23 @@ describe 'PurchaseRequests' do
   end
 
   it 'initializes a purchase request with a name' do
-    result = @request.purchaser_name
-
-    expect(result).to eq("Chris")
+    expect(@request.purchaser_name).to eq("Chris")
   end
 
   it 'initializes a purchase request with a breed wanted' do
-    result = @request.breed_wanted
-
-    expect(result).to eq("boxer")
+    expect(@request.breed_wanted).to eq("boxer")
   end
 
-  it 'initializes a purchase request with an accepted default value of false' do
-    result = @request.accepted
+  it 'initializes a purchase request with the current time' do
+    fake_request_time = Time.parse('5 pm')
+    Time.stub(:now).and_return(fake_request_time)  
+    result = PurchaseRequest.new("Aaron", "boxer")
 
-    expect(result).to eq(false)
+    expect(result.request_time).to eq(fake_request_time)
+  end
+
+  it 'initializes a purchase request with a status of "pending"' do
+    expect(@request.status).to eq("pending")
   end
 
 end
@@ -31,8 +33,11 @@ end
 describe 'PurchaseRequestInventory' do
 
   before do
-    @request = PurchaseRequest.new("Chris", "boxer")
     @request_inventory = PurchaseRequestInventory.new
+    @puppy_inventory = PuppyInventory.new
+    @puppy = Puppy.new(:boxer, "bowzer", 10)
+    @puppy_inventory.add_puppy_to_inventory(@puppy)
+    @request = PurchaseRequest.new("Chris", "boxer")
   end
 
   it 'initializes the inventory with an empty array' do
@@ -40,32 +45,39 @@ describe 'PurchaseRequestInventory' do
   end
 
   it 'adds purchase request to request inventory array' do
-    @request_inventory.add_purchase_request(@request)
+    @request_inventory.add_purchase_request(@request, @puppy_inventory)
     
     expect(@request_inventory.request_array[0].purchaser_name).to eq("Chris")
-  end 
+  end
 
   it 'views pending requests' do
-    @request_inventory.add_purchase_request(@request)
-    result = @request_inventory.view_requests
+    @request_inventory.add_purchase_request(@request, @puppy_inventory)
 
-    expect(result).to eq(@request)
+    expect(@request_inventory.view_requests.count).to eq(1)
   end
 
   it 'accepts purchase request' do
-    @request_inventory.add_purchase_request(@request)
-    @request_inventory.accept_purchase_request(@request)
+    @request_inventory.add_purchase_request(@request, @puppy_inventory)
+    @request_inventory.accept_purchase_request(@request, @puppy)
 
-    expect(@request_inventory.request_array[0].accepted).to eq(true)
+    expect(@request_inventory.request_array[0].status).to eq("accepted")
   end
 
   it 'views completed orders' do
-    @request_inventory.add_purchase_request(@request)
-    @request_inventory.accept_purchase_request(@request)
-    result = @request_inventory.view_completed_orders
+    @request_inventory.add_purchase_request(@request, @puppy_inventory)
+    @request_inventory.accept_purchase_request(@request, @puppy)
+    result = @request_inventory.view_completed_orders[0].status
 
-    expect(result).to eq(@request)
+    expect(result).to eq("accepted")
     end
+
+  it 'changes status to "on hold" if puppy is not available' do
+    @request2 = PurchaseRequest.new("Aaron", "lab")
+    @request_inventory.add_purchase_request(@request2, @puppy_inventory)
+
+    expect(@request2.status).to eq("on hold")
+    expect(@request_inventory.request_array[0].status).to eq("on hold")
+  end
 
 end
 
