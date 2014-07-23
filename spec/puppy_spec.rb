@@ -52,14 +52,14 @@ end
 
 describe PuppyMill do
   before do
-    @spot = PuppyMill.add_puppy("Spot", 20, "Doberman Pinscher").first
-    @fluffy = PuppyMill.add_puppy("Fluffy", 15, "Chihuahua").first
+    @spot = PuppyMill.add_puppy("Spot", 20, "Doberman Pinscher")
+    @fluffy = PuppyMill.add_puppy("Fluffy", 15, "Chihuahua")
   end
 
   describe ".add_puppy" do
     it "creates a puppy and adds it to the puppy list hash" do
       expect(PuppyMill.avail_puppies).to be_an_instance_of(Hash)
-      hershey = PuppyMill.add_puppy("Hershey", 55, "Chocolate Lab").last
+      hershey = PuppyMill.add_puppy("Hershey", 55, "Chocolate Lab")
       expect(hershey).to be_an_instance_of(Puppy)
       expect(PuppyMill.avail_puppies[:chocolatelab]).to include(hershey)
     end
@@ -71,11 +71,12 @@ describe PuppyMill do
       expect(shana.status).to eq(:hold)
 
       sukhoi = PuppyMill.add_puppy("Sukhoi", 100, "chow chow")
-
+    
       expect(sean.status).to eq(:pending)
       expect(shana.status).to eq(:pending)
 
-      expect(PuppyMill.all_requests[:hold]).to_not include(sean || shana)
+      expect(PuppyMill.all_requests[:hold]).to_not include(shana)
+      expect(PuppyMill.all_requests[:hold]).to_not include(sean)
       expect(PuppyMill.all_requests[:pending]).to include(sean && shana)
     end
   end
@@ -137,7 +138,7 @@ describe PuppyMill do
 
   describe ".sell" do
     before do
-      @obadiah = PuppyMill.add_puppy("Obadiah", 14, "American Bulldog").first
+      @obadiah = PuppyMill.add_puppy("Obadiah", 14, "American Bulldog")
       PuppyMill.sell(@obadiah ,@pop)
     end
 

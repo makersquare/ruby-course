@@ -38,31 +38,31 @@ class PuppyMill
                 hold: []
                   }
 
-  def self.add_puppy(name, age, breed)
-    breed = breed.downcase.delete(" ").to_sym
-    new_puppy = Puppy.new(name, age, breed)
-    if @avail_puppies.has_key?(breed) 
-      @avail_puppies[breed] << new_puppy
+  def self.add_puppy(name, age, puppy_breed)
+    breed_sym = puppy_breed.downcase.delete(" ").to_sym
+    new_puppy = Puppy.new(name, age, breed_sym)
+    if avail_puppies.has_key?(breed_sym) 
+      avail_puppies[breed_sym] << new_puppy
     else
-      @avail_puppies[breed] = [new_puppy]
+      avail_puppies[breed_sym] = [new_puppy]
     end
+    if avail_puppies[breed_sym].length == 1
+      requests_to_make_pending = all_requests[:hold].select { |x| x.breed == breed_sym }
+      while !requests_to_make_pending.empty?
+        this_request = requests_to_make_pending.pop
+        PuppyMill.pending(this_request) 
+      end
+    end
+    new_puppy
   end
 
   def self.add_request(customer, breed)
     breed = breed.downcase.delete(" ").to_sym
     this_request = Request.new(customer, breed)
-    PuppyMill.set_status(this_request)
-    @all_requests[this_request.status] << this_request
-  end
-
-  #Helper for add_request
-
-  def self.set_status(this_request)
-    breed = this_request.breed
-    if @avail_puppies.has_key?(breed) && !@avail_puppies[breed].empty?
-      this_request.status = :pending
+    if avail_puppies.has_key?(breed) && !@avail_puppies[breed].empty?
+      PuppyMill.status_hash_helper(:pending, this_request)      
     else
-      this_request.status = :hold
+      PuppyMill.status_hash_helper(:hold, this_request)      
     end
   end
 
@@ -80,6 +80,10 @@ class PuppyMill
     PuppyMill.status_hash_helper(:deny, request)
   end
 
+  def self.pending(request) #only used as helper method
+    PuppyMill.status_hash_helper(:pending, request)
+  end
+
   def self.sell (puppy, request)
     PuppyMill.status_hash_helper(:sold, request)
     request.puppy = puppy
@@ -89,8 +93,8 @@ class PuppyMill
   def self.status_hash_helper(new_status, request)
     old_status = request.status
     request.status = new_status
-    @all_requests[old_status].delete(request)
-    @all_requests[new_status].push(request)
+    all_requests[old_status].delete(request)
+    all_requests[new_status].push(request)
   end
 
   # VIEW REQUESTS
