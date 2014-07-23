@@ -110,7 +110,7 @@ describe "Ruby Review: You" do
 
   describe "Your knowledge of scope in Ruby" do
 
-    xyou "know about method scope" do
+    you "know about method scope" do
       bob = Scopes::Person.new
       expect(bob.jump(10)).to eq "I can jump 10 inches!"
       expect(bob.last_jump_height).to eq "I last jumped 10 inches."
@@ -119,7 +119,7 @@ describe "Ruby Review: You" do
       expect(bob.last_jump_height).to eq "I last jumped 2 inches."
     end
 
-    xyou "know about block scope" do
+    you "know about block scope" do
       data = [
         { :name => "Joe", :salary => 100 },
         { :name => "Sally", :salary => 1000 }
