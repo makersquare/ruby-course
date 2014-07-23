@@ -19,7 +19,7 @@ describe "Ruby Review: You" do
 
   describe "Your knowledge of Hashes" do
 
-    xyou "know how to change a value in a hash" do
+    you "know how to change a value in a hash" do
       wardrobe = {
           "top compartment" => {
             :item => "neck tie"
@@ -38,7 +38,7 @@ describe "Ruby Review: You" do
 
   describe "Your knowledge of Arrays" do
 
-    xyou "know how to add a hash to an array" do
+    you "know how to add a hash to an array" do
       pets = [{ :dog => 'Lucky'}, { :parrot => 'Polly'}]
       ArrayProblems.add_cat_to_array(pets)
       expect(pets).to eq [{ :dog => 'Lucky'}, { :parrot => 'Polly'}, { :cat => 'Pogo'}]

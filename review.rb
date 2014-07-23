@@ -30,7 +30,7 @@ class HashProblems
   # # # # # # #
 
   def self.update_top_compartment_item(wardrobe_hash)
-    # TODO: Complete this method by writing A SINGLE LINE
+    wardrobe_hash["top compartment"][:item] = "fake beard"
   end
 
 end
