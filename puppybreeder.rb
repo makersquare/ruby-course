@@ -16,16 +16,24 @@ class Inventory
   attr_reader :po, :inventory
 
   def initialize
-    @inventory = []
+    @inventory = {}
     @po = []
   end
 
-  def puppy_list
-    @inventory.map{ |x| x.breed }.inject(Hash.new(0)){ |sum,elem| sum[elem]+= 1; sum }
+  def puppy_breed_count
+    @inventory.inject(Hash.new(0)){ |sum,elem| sum[elem]+= 1; sum }
   end
 
-  def intake(args)
-    @@inventory << Puppy.new(args)
+  def intake_of_puppies(puppy)
+    if @inventory.has_key?(puppy.breed)
+      @inventory[puppy.breed][:list] << puppy
+    else
+      @inventory[puppy.breed] = {price: nil, list: [puppy]}
+    end
+  end
+
+  def check_inventory(breed)
+    @inventory.has_key?(breed)
   end
 
   def po_list
@@ -45,7 +53,7 @@ class PurchaseOrder
     @breed = args[:breed]
   end
 
-  def add(inventory)
+  def add_purchase_order_to(inventory)
     inventory.po << self
   end
 
