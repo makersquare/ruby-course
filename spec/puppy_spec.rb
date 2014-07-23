@@ -49,12 +49,12 @@ describe 'Request' do
   end 
 end
 
-# Kennel Class Spec
+# Store Class Spec
 
-describe 'Kennel' do
+describe 'Store' do
 
   before do
-    @kennel = Kennel.new('Kute Kennel', 'Nick D.')
+    @store = Store.new('Kute Kennel', 'Nick D.')
 
     @brodie = Puppy.new('brodie','collie', 4015)
     @leila = Puppy.new('leila', 'collie', 10)
@@ -63,42 +63,27 @@ describe 'Kennel' do
     @harvey = Puppy.new('harvey', 'spaniel', 3065)
     @maggie = Puppy.new('maggie', 'poodle', 14)
     @skipper = Puppy.new('skipper', 'stbernard', 10)
+    @moog = Puppy.new('moog', 'pitbull', 4)
 
     @new_puppies = [@brodie, @leila, @penelope, @ajax, @harvey, @maggie]
-  end
-
-  it 'initializes with a kennel name and owner' do
-    expect(@kennel.name).to eq('Kute Kennel')
-    expect(@kennel.owner).to eq('Nick D.')
-  end
-
-  it 'adds puppies to a hash of all breeds, with the breed pointing to an array of objects that are that breed' do
-    expect(@kennel.add_puppy(@skipper)).to eq([@skipper])
-    expect(@kennel.add_puppy(@brodie)).to eq([@brodie])
-    expect(@kennel.add_puppy(@leila)).to eq([@brodie, @leila])
-  end
-
-  it 'returns puppies by breed' do
-    @kennel.add_puppy(@brodie)
-    @kennel.add_puppy(@leila)
-    expect(@kennel.list_puppies(:collie)).to eq([@brodie, @leila])
-  end
-end
-
-describe 'Store' do
-
-  before do
-    @store = Store.new('Kute Kennel', 'Nick D.')
+  
     @request1 = Request.new('Alli', 'collie')
     @request2 = Request.new('Alli', 'poodle')
     @x = [@request1]
     @y = [@request1, @request2]
 
-    @kennel = Kennel.new('Kute Kennel', 'Nick D.')
+  end
 
-    @brodie = Puppy.new('brodie','collie', 4015)
-    @leila = Puppy.new('leila', 'collie', 10)
-    @moog = Puppy.new('moog', 'pitbull', 4)
+  it 'adds puppies to a hash of all breeds, with the breed pointing to an array of objects that are that breed' do
+    expect(@store.add_puppy(@skipper)).to eq([@skipper])
+    expect(@store.add_puppy(@brodie)).to eq([@brodie])
+    expect(@store.add_puppy(@leila)).to eq([@brodie, @leila])
+  end
+
+  it 'returns puppies by breed' do
+    @store.add_puppy(@brodie)
+    @store.add_puppy(@leila)
+    expect(@store.list_puppies(:collie)).to eq([@brodie, @leila])
   end
 
   it 'initializes with a name and owner' do
@@ -108,27 +93,34 @@ describe 'Store' do
 
   describe 'add-request' do
     it 'adds requests and keeps track of them' do
-      expect(@store.add_request(@request1)).to eq(@x)
-      expect(@store.add_request(@request2)).to eq(@y)
+      @store.add_request(@request1)
+
+      expect(@store.all_requests.size).to eq(1)
+
+      @store.add_request(@request2)
+
+      expect(@store.all_requests.size).to eq(2)
     end
 
     it 'sets status to pending or holding depending on breed availability' do
-      @kennel.add_request(@request1)
+      @collie_request = Request.new('Joe', 'collie')
+      @poodle_request = Request.new('Joe', 'poodle')
+      @store.add_request(@collie_request)
 
-      expect(@request1.status).to eq(:holding)
+      expect(@collie_request.status).to eq(:holding)
 
-      @kennel.add_puppy(@brodie)
-      @kennel.add_request(@request2)
+      @store.add_puppy(@maggie)
+      @store.add_request(@poodle_request)
 
-      expect(@request2.status).to eq(:pending)
+      expect(@poodle_request.status).to eq(:pending)
     end
 
     xit 'updates holding requests to pending when new puppy is added that matches request breed' do
-      @kennel.add_request(@request1)
+      @store.add_request(@request1)
 
       expect(@request1.status).to eq(:holding)
 
-      @kennel.add_puppy(@brodie)
+      @store.add_puppy(@maggie)
       expect(@request1.status).to eq(:pending)
     end
   end
@@ -150,19 +142,19 @@ describe 'Store' do
     @store.add_request(@request1)
     @store.add_request(@request2)
     arr = [@request1, @request2]
-    expect(@store.list_requests(:queued)).to eq(arr)
+    expect(@store.list_requests(:holding)).to eq(arr)
     @request1.deny
     expect(@store.list_requests(:denied)).to eq([@request1])
   end
 
   it 'checks to see if a certain breed is available' do
-    @kennel.add_puppy(@brodie)
-    @kennel.add_puppy(@leila)
+    @store.add_puppy(@brodie)
+    @store.add_puppy(@leila)
     puts "This is so confusing"
-    puts @kennel.list_puppies(:pitbull)
+    puts @store.list_puppies(:pitbull)
 
-    expect(@store.check_breed(@kennel, :collie)).to eq(true)
-    expect(@store.check_breed(@kennel, :pitbull)).to eq(false)
+    expect(@store.check_breed(:collie)).to eq(true)
+    expect(@store.check_breed(:pitbull)).to eq(false)
   end
 
   # This method is for another day

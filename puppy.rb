@@ -41,14 +41,18 @@ class Request
   end
 end
 
-class Kennel
+# This is the Store class. It keeps track of requests, statuses, and breed prices.
 
-  attr_accessor :name, :owner, :all_puppies
-  # keeps track of all puppies by breeds. breeds are symbols pointing to an array of puppy objects that have the attribute symbol that matches their breed
+class Store
+  attr_accessor :all_puppies
+  attr_reader :name, :owner, :breed_prices, :all_requests
 
   def initialize(name, owner)
     @name = name
     @owner = owner
+    # @requests_by_status = Hash.new(0)
+    @all_requests = Array.new(0)
+    @breed_prices = Hash.new(0)
     @all_puppies = Hash.new(0)
   end
 
@@ -60,26 +64,11 @@ class Kennel
     end
     return @all_puppies[puppy.breed]
   end
-# return an array of puppy objects of a certain breed
+
   def list_puppies(breed)
     @all_puppies[breed]
   end
-end
-
-# This is the Store class. It keeps track of requests, statuses, and breed prices.
-
-class Store
-
-  attr_reader :name, :owner, :requests_by_status, :breed_prices, :all_requests
-
-  def initialize(name, owner)
-    @name = name
-    @owner = owner
-    # @requests_by_status = Hash.new(0)
-    @all_requests = Array.new(0)
-    @breed_prices = Hash.new(0)
-  end
-# puts a request object into the proper array using its status
+  # puts a request object into the proper array using its status
   def add_request(request)
     @all_requests << request
     # if @requests_by_status.has_key?(request.status)
@@ -88,7 +77,11 @@ class Store
     #   @requests_by_status[request.status] = [request]
     # end
     # return @all_requests
-    if self.check_breed()
+    if self.check_breed(request.breed) == true
+      request.pending
+    elsif self.check_breed(request.breed) == false
+      request.hold
+    end
   end
 
   def set_breed_price(breed, price)
@@ -120,18 +113,19 @@ class Store
   #   # and pop them if their status is incorrect
   #   # then moving them to the right one.
 
-  def check_breed(kennel, breed)
+  def check_breed(breed)
     # Nick says: don't make yo code smelly
     # !kennel.list_puppies(breed).empty?
     # check if breed key exists
-    if kennel.all_puppies.has_key?(breed) == true
+    if @all_puppies.has_key?(breed) == true
     # if is does, check if array is empty or not
-      !kennel.list_puppies(breed).empty?
+      !@all_puppies[breed].empty?
     #  if not, return false
     else
       false
     end
   end
+
 end
 
 
