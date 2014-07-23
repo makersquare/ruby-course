@@ -57,24 +57,50 @@ describe PuppyMill do
   end
 
   describe ".add_puppy" do
-    it "creates a puppy and adds it to the puppy list array" do
+    it "creates a puppy and adds it to the puppy list hash" do
       expect(PuppyMill.avail_puppies).to be_an_instance_of(Hash)
-      expect(PuppyMill.avail_puppies.length).to eq(2)
-      expect(@spot).to be_an_instance_of(Puppy)
+      hershey = PuppyMill.add_puppy("Hershey", 55, "Chocolate Lab").last
+      expect(hershey).to be_an_instance_of(Puppy)
+      expect(PuppyMill.avail_puppies[:chocolatelab]).to include(hershey)
     end
   end
 
   before do
-    PuppyMill.add_request("Coach Pop", "American Bulldog")
-    @requestarray = PuppyMill.add_request("Patty Mills", "Dingo")
-    @pop = @requestarray.first
-    @patty = @requestarray[1]
+    @pop = PuppyMill.add_request("Coach Pop", "American Bulldog").last
+    @patty = PuppyMill.add_request("Patty Mills", "Dingo").last
   end
 
   describe ".add_request" do
     it "creates a request and adds it to the request list array" do
-      expect(@requestarray).to be_an_instance_of(Array)
+      expect(PuppyMill.all_requests).to be_an_instance_of(Hash)
       expect(@pop).to be_an_instance_of(Request)
+    end
+
+    it "automatically assigns a status of :pending if a dog is available" do
+      this_request = PuppyMill.add_request("Tiago Splitter", "Chihuahua").last
+      expect(this_request.status).to eq(:pending)
+    end
+
+    it "puts :pending requests into the correct section of the hash" do
+      this_request = PuppyMill.add_request("Tiago Splitter", "Chihuahua").last
+      expect(PuppyMill.all_requests[:pending]).to include(this_request)
+      expect(PuppyMill.all_requests[:hold]).not_to include(this_request)
+      expect(PuppyMill.all_requests[:sold]).not_to include(this_request)
+      expect(PuppyMill.all_requests[:accept]).not_to include(this_request)
+      expect(PuppyMill.all_requests[:deny]).not_to include(this_request)
+    end
+
+    it "automatically assign a status of :hold if a dog is not available" do
+      expect(@patty.status).to eq(:hold)
+    end
+
+    it "puts :hold requests into the correct section of the hash" do
+      this_request = PuppyMill.add_request("Tiago Splitter", "Chihuahua").last
+      expect(PuppyMill.all_requests[:hold]).to include(@patty)
+      expect(PuppyMill.all_requests[:pending]).not_to include(@patty)
+      expect(PuppyMill.all_requests[:sold]).not_to include(@patty)
+      expect(PuppyMill.all_requests[:accept]).not_to include(@patty)
+      expect(PuppyMill.all_requests[:deny]).not_to include(@patty)
     end
   end
 
