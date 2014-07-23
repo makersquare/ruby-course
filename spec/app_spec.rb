@@ -23,16 +23,17 @@ describe Puppy do
   end
 end
 
-# describe Request do
-  
-#   before do
-#     @req = Request.new( 
-#       breed: "Shephard",
-#       cust_phone_number: 1111111111
-#       )
-#   end
+describe Request do
 
-# end
+  it "has breed and cust_phone_number" do
+    req = Request.new( 
+      breed: "Shephard",
+      cust_phone_number: 1111111111
+      )
+    expect(req.breed).to eq "Shephard"
+    expect(req.cust_phone_number).to eq 1111111111
+  end
+end
   
 describe PuppCage do
   
@@ -67,13 +68,18 @@ describe PuppCage do
     expect(PuppCage::PUPPY_LIST[puppy.breed][:puppies].size).to eq 0    
   end
 
-  it "checks if hash contains breed type" do
-    breed="Cat"
-    expect(PuppCage.breed_type_exists?(breed)).to eq false
-
-    breed="Beagle"
-    expect(PuppCage.breed_type_exists?(breed))
+  it "can add request" do
+    info = "Shephard"
+    cust_phone_number = 1111111111
+    expect(PuppCage::REQUEST_LIST.size).to eq 0
+    PuppCage.add_request(cust_phone_number,info)
+    expect(PuppCage::REQUEST_LIST.size).to eq 1
   end
 
-
+  it "can remove request" do
+    expect(PuppCage::REQUEST_LIST.size).to eq 1
+    PuppCage.remove_request(1111111111)
+    expect(PuppCage::REQUEST_LIST.size).to eq 0
+  end
+  
 end
