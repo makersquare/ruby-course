@@ -63,6 +63,21 @@ describe PuppyMill do
       expect(hershey).to be_an_instance_of(Puppy)
       expect(PuppyMill.avail_puppies[:chocolatelab]).to include(hershey)
     end
+
+    it "checks orders on hold to see if anyone is waiting for a puppy of this breed" do
+      sean = PuppyMill.add_request("Sean", "ChowChow").last
+      shana = PuppyMill.add_request("Shana", "chowchow").last
+      expect(sean.status).to eq(:hold)
+      expect(shana.status).to eq(:hold)
+
+      sukhoi = PuppyMill.add_puppy("Sukhoi", 100, "chow chow")
+
+      expect(sean.status).to eq(:pending)
+      expect(shana.status).to eq(:pending)
+
+      expect(PuppyMill.all_requests[:hold]).to_not include(sean || shana)
+      expect(PuppyMill.all_requests[:pending]).to include(sean && shana)
+    end
   end
 
   before do
