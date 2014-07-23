@@ -51,7 +51,6 @@ class PuppyMill
   def self.add_request(customer, breed)
     breed = breed.downcase.delete(" ").to_sym
     this_request = Request.new(customer, breed)
-    p this_request
     PuppyMill.set_status(this_request)
     @all_requests[this_request.status] << this_request
   end

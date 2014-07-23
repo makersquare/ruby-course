@@ -178,6 +178,7 @@ describe PuppyMill do
     it "returns an array of requests that are pending" do
       tim = PuppyMill.add_request("Tim Duncan", "Chihuhua").last 
       PuppyMill.accept(tim)  
+      bully = PuppyMill.add_puppy("SuperStar", 60, "american bulldog")
       ginobili = PuppyMill.add_request("Manu Ginobili", "American Bulldog").last 
       bellinelli = PuppyMill.add_request("Marco Bellinelli", "Poodle").last
       PuppyMill.sell(@spot, bellinelli)
