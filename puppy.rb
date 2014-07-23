@@ -73,10 +73,8 @@ class Store
       true
     elsif index != nil && @requests[index].status == "on-hold"
       @request[index].status = "pending"
-      true
     else
-      puts "No purchase request for ID #{id}."
-      false
+      "No purchase request for ID #{id}."
     end
   end
 

@@ -95,6 +95,8 @@ describe Store do
 	end
 
 	it "show requests for only pending and accepted" do
+		@store.add_request("Bob", "collie")
+		@store.add_request("Joey","samoyed")
 		@store.add_request("Jon Snow", "direwolf")
 		@store.add_request("Bella", "werewolf")
 		expect(@store.requests.count).to eq(4) #all requests, none accepted
