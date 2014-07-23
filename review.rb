@@ -67,7 +67,7 @@ class ArrayProblems
   # # # # # # #
 
   def self.list_my_hats(array)
-    # TODO: Use the map method to create an array of sized hats
+    array.map { |x| "#{x[:size]} #{x[:style]}" }
   end
 end
 
