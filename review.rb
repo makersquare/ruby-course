@@ -15,7 +15,10 @@ module GettersSetters
     def initialize
       @skill = "bedside manners"
     end
-    # TODO: Write a setter method for @skill
+    
+    def skill=(new_skill)
+      @skill = new_skill
+    end
   end
 
 end
