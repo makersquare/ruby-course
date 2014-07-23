@@ -106,18 +106,20 @@ module Scopes
   end
 
   class Finder
+
+    attr_reader :people
     def initialize(people)
       @people = people
     end
 
     def find_first(salary)
-      @person = nil
+      @found = nil
       @people.each do |person|
-        if person[:salary] == salary
-          @person = person[:name]
-        end
-      end
-      @person
+       if person[:salary] == salary
+         @found = person
+       end
+     end
+     @found
     end
   end
 
