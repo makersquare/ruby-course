@@ -74,8 +74,8 @@ describe Store do
 
 	xit "shows list of requests with status" do
 		store = Store.new
-		store.add_request("")
-		store.add_request(bob)
+		store.add_request("Bob", "collie")
+		store.add_request("Stacy", "collie")
 	end
 end
 
