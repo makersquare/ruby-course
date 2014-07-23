@@ -134,33 +134,38 @@ describe 'RPS' do
 
   describe "#play" do
     it "increases one score and leaves the other the same" do
-      @g1.play("scissors", "paper")
+      @g1.play("s", "p")
       expect(@g1.p1score).to eq(1)
       expect(@g1.p2score).to eq(0)
-      @g1.play("rock", "paper")    
+      @g1.play("r", "p")    
       expect(@g1.p1score).to eq(1)
       expect(@g1.p2score).to eq(1)
     end
 
-    it "returns nil for tied games or incorrect entries" do
-      result = @g1.play("scissors", "scissors")
-      expect(result).to be nil
-      result2 = @g1.play("a", "b")
-      expect(result2).to be nil
+    it "returns :tie for tied games" do
+      result = @g1.play("s", "s")
+      expect(result).to be :tie
     end
 
-    it "returns the player's name when they score 1st point" do
-      result = @g1.play("scissors", "paper")
+    it "returns a symbol denoting who won" do
+      result = @g1.play("s", "p")
       expect(@g1.p1score).to eq(1)
-      expect(result).to eq("Joe")
+      expect(result).to eq(:win1)
     end
 
-    it "returns string of Game Over when game is won - 2 of 3" do
-      @g1.play("scissors", "paper")
-      result = @g1.play("scissors", "paper")
+    it "returns a symbol when game is won - 2 of 3" do
+      @g1.play("s", "p")
+      result = @g1.play("s", "p")
       expect(@g1.p1score).to eq(2)
-      expect(result).to eq("Game Over! Joe won 2 games!")
+      expect(result).to eq(:gameover1)
     end
+  end
+end
+
+describe Extensions do
+  it "returns an array of max and min values" do
+    result = Extensions.extremes(['x', 'x', 'y', 'z'])
+    expect(result).to eq({ :most => 'x', :least => ['y', 'z'] })
   end
 end
 
