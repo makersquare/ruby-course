@@ -5,7 +5,10 @@ class Request
   def initialize(customer_name, breed, status = "pending")
     @customer_name = customer_name
     @breed = breed
-    # @breed.downcase.split(" ").join("_").to_sym
+    if @breed =~ /\s/
+      @breed.downcase.split(" ").join("_").to_sym
+    end
+    
     @status = status
     @id = 0
     puts "#{customer_name} has requested a #{breed}."
