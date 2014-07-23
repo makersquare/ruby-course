@@ -75,52 +75,27 @@ class PuppyInventory
 end
 
 
-request_inventory = PurchaseRequestInventory.new
+# request_inventory = PurchaseRequestInventory.new
 
-puppy_inventory = PuppyInventory.new
+# puppy_inventory = PuppyInventory.new
 
-puppy1 = Puppy.new(:boxer, "box", 10)
-puppy2 = Puppy.new(:boxer, "boxey", 12)
+# puppy1 = Puppy.new(:boxer, "box", 10)
+# puppy2 = Puppy.new(:boxer, "boxey", 12)
 
-puppy_inventory.add_puppy_to_inventory(puppy1)
-puppy_inventory.add_puppy_to_inventory(puppy2)
+# puppy_inventory.add_puppy_to_inventory(puppy1)
+# puppy_inventory.add_puppy_to_inventory(puppy2)
 
-request1 = PurchaseRequest.new("Chris", "boxer")
-request2 = PurchaseRequest.new("Zach", "boxer")
-request3 = PurchaseRequest.new("Aaron", "pit")
+# request1 = PurchaseRequest.new("Chris", "boxer")
+# request2 = PurchaseRequest.new("Zach", "boxer")
+# request3 = PurchaseRequest.new("Aaron", "pit")
 
-request_inventory.add_purchase_request(request1)
-request_inventory.add_purchase_request(request2)
-request_inventory.add_purchase_request(request3)
+# request_inventory.add_purchase_request(request1)
+# request_inventory.add_purchase_request(request2)
+# request_inventory.add_purchase_request(request3)
 
-puppy_inventory.print_puppy_inventory
-
-
+# puppy_inventory.print_puppy_inventory
 
 
-
-
-
-# @puppy_hash = {
-#   :boxer => {
-#     :price => 5000,
-#     :list => [pup1, pup2]
-#   },
-#   :pit => {
-#     :price => 10000,
-#     :list => [pup3, pup4]
-#   }
-# }
-
-# atlas = Puppy.new(:boxer, "atlas", 50)
-
-# #if key exists:
-# @container[:boxer][:list] << atlas
-
-# #if key doesn't exist:
-# def add_puppy_to_inventory(puppy)
-
-# end
 
 
 
