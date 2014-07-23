@@ -88,6 +88,7 @@ class Store
     #   @requests_by_status[request.status] = [request]
     # end
     # return @all_requests
+    if self.check_breed()
   end
 
   def set_breed_price(breed, price)
@@ -131,8 +132,6 @@ class Store
       false
     end
   end
-
-
 end
 
 

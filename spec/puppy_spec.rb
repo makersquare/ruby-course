@@ -98,6 +98,7 @@ describe 'Store' do
 
     @brodie = Puppy.new('brodie','collie', 4015)
     @leila = Puppy.new('leila', 'collie', 10)
+    @moog = Puppy.new('moog', 'pitbull', 4)
   end
 
   it 'initializes with a name and owner' do
@@ -105,9 +106,31 @@ describe 'Store' do
     expect(@store.owner).to eq('Nick D.')
   end
 
-  it 'adds requests and keeps track of them' do
-    expect(@store.add_request(@request1)).to eq(@x)
-    expect(@store.add_request(@request2)).to eq(@y)
+  describe 'add-request' do
+    it 'adds requests and keeps track of them' do
+      expect(@store.add_request(@request1)).to eq(@x)
+      expect(@store.add_request(@request2)).to eq(@y)
+    end
+
+    it 'sets status to pending or holding depending on breed availability' do
+      @kennel.add_request(@request1)
+
+      expect(@request1.status).to eq(:holding)
+
+      @kennel.add_puppy(@brodie)
+      @kennel.add_request(@request2)
+
+      expect(@request2.status).to eq(:pending)
+    end
+
+    xit 'updates holding requests to pending when new puppy is added that matches request breed' do
+      @kennel.add_request(@request1)
+
+      expect(@request1.status).to eq(:holding)
+
+      @kennel.add_puppy(@brodie)
+      expect(@request1.status).to eq(:pending)
+    end
   end
 
   it 'sets breed price' do
@@ -153,7 +176,9 @@ describe 'Store' do
 
   xit '' do
   end
-
+# when new request is added to the store, it checks if breed is available
+# if it is, status = pending
+# if not, status = holding
 end
 
 
