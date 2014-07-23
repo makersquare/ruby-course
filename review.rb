@@ -43,7 +43,7 @@ class ArrayProblems
   # # # # # # #
 
   def self.add_cat_to_array(array)
-    # TODO: Complete this method
+    array << { cat: "Pogo" }
   end
 
   # # # # # # #
