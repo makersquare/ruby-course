@@ -49,7 +49,7 @@ describe "Ruby Review: You" do
       expect(pets).to eq [{ :chipmunk => 'Joel'}, { :snake => 'Monty'}, { :cat => 'Pogo'}]
     end
 
-    xyou "know how to use the map method part 1" do
+    you "know how to use the map method part 1" do
       wardrobe_items = [
         { :name => "coat", :size => "medium" },
         { :name => "hat", :size =>  "large" }
