@@ -112,9 +112,6 @@ describe PuppCage do
     expect(req.status).to eq :accepted
     PuppCage.request_reject(req)
     expect(req.status).to eq :hold
-
-
-
   end
 
 end

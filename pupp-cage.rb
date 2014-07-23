@@ -11,12 +11,14 @@ module PuppCage
 
       breed = pupp.breed
 
-      if PUPPY_LIST[breed].nil? || PUPPY_LIST[breed][:puppies].nil?
+      if PUPPY_LIST[breed].nil?
         PuppCage.alter_breed_price(breed)
         PUPPY_LIST[breed][:puppies] = [pupp]
         PuppCage.check_held_requests(breed)
-      else
-
+      elsif PUPPY_LIST[breed][:puppies].nil?
+        PUPPY_LIST[breed][:puppies] = [pupp]
+        PuppCage.check_held_requests(breed)
+      else        
         if PUPPY_LIST[breed][:puppies].size == 0 
           PuppCage.check_held_requests(breed)
         end
