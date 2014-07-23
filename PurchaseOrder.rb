@@ -1,3 +1,5 @@
+require "file_requirements.rb"
+
 class PurchaseOrder
 
   attr_reader :customer,:breed
@@ -7,8 +9,8 @@ class PurchaseOrder
     @breed = args[:breed]
   end
 
-  def add_purchase_order_to(inventory)
-    inventory.po << self
+  def add_purchase_order(inventory_object)
+    inventory_object.po << self
   end
 
   def review

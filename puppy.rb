@@ -1,3 +1,5 @@
+require "file_requirements.rb"
+
 class Puppy
 
   attr_reader :breed, :name, :age

@@ -1,3 +1,5 @@
+require "file_requirements.rb"
+
 class Inventory
 
   attr_reader :po, :inventory
@@ -8,7 +10,7 @@ class Inventory
   end
 
   def puppy_breed_count
-    @inventory.inject(Hash.new(0)){ |sum,elem| sum[elem]+= 1; sum }
+    @inventory[:breed].inject(Hash.new(0)){ |sum,elem| sum[elem]+= 1; sum }
   end
 
   def intake_of_puppies(puppy)

@@ -1,4 +1,4 @@
-require "./puppybreeder.rb"
+require "file_requirements.rb"
 require "pry-byebug"
 
 describe Puppy, "#new" do
