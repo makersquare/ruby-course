@@ -34,7 +34,9 @@ class PurchaseRequestInventory
   def add_purchase_request(purchase_request, puppy_inventory)
 
     if puppy_inventory.puppy_hash.has_key?(purchase_request.breed_wanted.to_sym)
-      @request_array << purchase_request
+        if puppy_inventory.puppy_hash[purchase_request.breed_wanted.to_sym][:list].map {|x| x.available == true}[0] == true
+          @request_array << purchase_request
+        end
     else
       purchase_request.status = "on hold"
     end
@@ -94,6 +96,9 @@ class PuppyInventory
 end
 
 
+#test
+
+
 request_inventory = PurchaseRequestInventory.new
 
 puppy_inventory = PuppyInventory.new
@@ -122,7 +127,6 @@ request_inventory.view_requests
 
 
   #   need an approval process between puppy being added and accepting request
-  # when a puppy is born, need to automatically make on hold puppies. 
   # time.now attribute for requests. sort by method for time.
 
 
