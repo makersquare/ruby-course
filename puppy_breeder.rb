@@ -75,25 +75,27 @@ class PuppyInventory
 end
 
 
-# request_inventory = PurchaseRequestInventory.new
+request_inventory = PurchaseRequestInventory.new
 
-# puppy_inventory = PuppyInventory.new
+puppy_inventory = PuppyInventory.new
 
-# puppy1 = Puppy.new(:boxer, "box", 10)
-# puppy2 = Puppy.new(:boxer, "boxey", 12)
+puppy1 = Puppy.new(:boxer, "box", 10)
+puppy2 = Puppy.new(:boxer, "boxey", 12)
+puppy3 = Puppy.new(:pit, "pitty", 15)
 
-# puppy_inventory.add_puppy_to_inventory(puppy1)
-# puppy_inventory.add_puppy_to_inventory(puppy2)
+puppy_inventory.add_puppy_to_inventory(puppy1)
+puppy_inventory.add_puppy_to_inventory(puppy2)
+puppy_inventory.add_puppy_to_inventory(puppy3)
 
-# request1 = PurchaseRequest.new("Chris", "boxer")
-# request2 = PurchaseRequest.new("Zach", "boxer")
-# request3 = PurchaseRequest.new("Aaron", "pit")
+request1 = PurchaseRequest.new("Chris", "boxer")
+request2 = PurchaseRequest.new("Zach", "boxer")
+request3 = PurchaseRequest.new("Aaron", "pit")
 
-# request_inventory.add_purchase_request(request1)
-# request_inventory.add_purchase_request(request2)
-# request_inventory.add_purchase_request(request3)
+request_inventory.add_purchase_request(request1)
+request_inventory.add_purchase_request(request2)
+request_inventory.add_purchase_request(request3)
 
-# puppy_inventory.print_puppy_inventory
+puppy_inventory.print_puppy_inventory
 
 
 
