@@ -176,7 +176,7 @@ class RPSPlayer
     puts "Player1 name:"
     player1 = gets.chomp
 
-    puts "Player1 name:"
+    puts "Player2 name:"
     player2 = gets.chomp
 
     game = RPS.new(player1, player2)

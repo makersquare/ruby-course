@@ -120,7 +120,13 @@ describe 'RPS' do
   it 'returns player 1 name if player 1 wins' do
     game1 = RPS.new("Chris", "Zach")
     game1.play("rock", "scissors")
-    expect(STDOUT).to receive(:puts).and_return("Chris wins the round..")
+    expect(:gets).to receive("rock").
+    game1.stub(:gets) {"rock"}
+    game1.stub(:gets) {"scissors"}
+    game1.stub(:gets) {"rock"}
+    game1.stub(:gets) {"scissors"}
+
+    expect(STDOUT).to receive(:puts).and_return("Chris wins the game!")
 
     # expect(result).to eq("Chris wins the round..")
   end
