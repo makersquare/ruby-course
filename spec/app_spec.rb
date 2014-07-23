@@ -36,7 +36,7 @@ describe Request do
 end
   
 describe PuppCage do
-  
+
   it "can add and set BREED_PRICE" do 
     PuppCage.alter_breed_price("Shephard",2000)
     expect(PuppCage::PUPPY_LIST["Shephard"][:cost]).to eq 2000
@@ -70,16 +70,51 @@ describe PuppCage do
 
   it "can add request" do
     info = "Shephard"
-    cust_phone_number = 1111111111
+    cust_phone_number = 2222222222
     expect(PuppCage::REQUEST_LIST.size).to eq 0
     PuppCage.add_request(cust_phone_number,info)
     expect(PuppCage::REQUEST_LIST.size).to eq 1
   end
 
   it "can remove request" do
+    req = PuppCage.add_request(3333333333,"Husky")
+
+    expect(PuppCage::REQUEST_LIST.size).to eq 2
+    PuppCage.remove_request(req)
     expect(PuppCage::REQUEST_LIST.size).to eq 1
-    PuppCage.remove_request(1111111111)
-    expect(PuppCage::REQUEST_LIST.size).to eq 0
   end
-  
+
+  it "updates status when puppies are added" do
+    req = PuppCage.add_request(3333333333,"Husky")
+    expect(req.status).to eq :hold
+    puppy = Puppy.new( 
+      breed: "Husky",
+      age:37
+      ) 
+    PuppCage.add_puppy(puppy)   
+    expect(req.status).to eq :pending
+  end
+
+  it "returns list of pending requests" do
+    expect(PuppCage.pending_requests.size).to eq 2
+  end
+
+  it "can change pending requests" do
+    req = PuppCage.add_request(3333333333,"Cobra")
+    expect(req.status).to eq :hold
+    puppy = Puppy.new( 
+      breed: "Cobra",
+      age:37
+      ) 
+    PuppCage.add_puppy(puppy)   
+    expect(req.status).to eq :pending
+    PuppCage.request_accept(req)
+    expect(req.status).to eq :accepted
+    PuppCage.request_reject(req)
+    expect(req.status).to eq :hold
+
+
+
+  end
+
 end
