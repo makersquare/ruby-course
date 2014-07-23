@@ -8,17 +8,9 @@ class Request
     # @breed.downcase.split(" ").join("_").to_sym
     @status = status
     @id = 0
-    # @price = {
-    #   "german_shepherd" => 300,
-    #   "poodle" => 400,
-    #   "pomenarian" => 700,
-    #   "collie" => 800,
-    #   "samoyed" => 5000,
-    #   "wolf" => 999999,
-    #   "husky" => 3000,
-    #   "chihuahua" => 200
-    # }
     puts "#{customer_name} has requested a #{breed}."
+
+    # if @breed == nil
   end
 
 end
@@ -42,14 +34,14 @@ class Store
     @name = name
     @requests = []
     @price = {
-      "german shepherd" => 300,
-      "poodle" => 400,
-      "pomenarian" => 700,
-      "collie" => 800,
-      "samoyed" => 5000,
-      "wolf" => 999999,
-      "husky" => 3000,
-      "chihuahua" => 200
+      :german_shepherd => 300,
+      :poodle => 400,
+      :pomenarian => 700,
+      :collie => 800,
+      :samoyed => 5000,
+      :wolf => 999999,
+      :husky => 3000,
+      :collie => 5000
     }
     @amk = PuppyGarden.new
   end
@@ -59,16 +51,25 @@ class Store
     new_req.id = rand(10000) + Time.now.to_i
     @requests << new_req
     puts "#{customer_name} has requested #{breed}. Your purchase request id is #{new_req.id}."
+
+    # Auto-change new requests to "on-hold" status if no breed
+    # of desire is available (empty array)
+    if @amk.puppies.select { |x| x.breed == breed } == []
+      y = @requests.find { |x| x.id == new_req.id }
+      y.status = "on-hold"
+    end
+
   end
 
-  # def self.show_requests(request)
-  #   @requests
-  # end
+  def show_requests
+    @requests.select { |x| x.status == "pending" || x.status == "accepted" } 
+  end
+
   def change_purchase_request_status(id)
     index = @requests.find_index { |x| x.id == id}
     if index != nil && @requests[index].status == "pending"
-      @requests[index].status = "accept"
-      puts "Purchase request for #{@requests[index].customer_name} has been changed to 'accept'."
+      @requests[index].status = "accepted"
+      puts "Purchase request for #{@requests[index].customer_name} has been changed to 'accepted'."
       true
     elsif index != nil && @requests[index].status == "on-hold"
       @request[index].status = "pending"
@@ -88,6 +89,7 @@ class Store
     puppy_check = @amk.puppies.select { |x| x.breed == breed }
     if puppy_check.empty?
       puts "No puppies of #{breed} breed available"
+      false
     else
       puppy_check
     end
