@@ -55,6 +55,8 @@ class PuppyMill
     @all_requests[this_request.status] << this_request
   end
 
+  #Helper for add_request
+
   def self.set_status(this_request)
     breed = this_request.breed
     if @avail_puppies.has_key?(breed) && !@avail_puppies[breed].empty?
@@ -107,6 +109,10 @@ class PuppyMill
 
   def self.view_pending_orders
     all_requests[:pending]
+  end
+
+  def self.view_hold_orders
+    all_requests[:hold]
   end
 
   def self.view_completed_orders

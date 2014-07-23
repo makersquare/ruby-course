@@ -140,6 +140,33 @@ describe PuppyMill do
     end
   end
 
+  describe ".view_hold_orders" do
+    it "returns an array of requests that are on hold" do
+      tim = PuppyMill.add_request("Tim Duncan", "Chihuhua").last 
+      PuppyMill.accept(tim)  
+      ginobili = PuppyMill.add_request("Manu Ginobili", "American Bulldog").last 
+      bellinelli = PuppyMill.add_request("Marco Bellinelli", "Poodle").last
+      PuppyMill.sell(@spot, bellinelli)
+      kawhi = PuppyMill.add_request("Kawhi Leonard", "Doberman Pinscher").last
+      PuppyMill.deny(kawhi)
+
+      expect(PuppyMill.view_hold_orders).to be_an_instance_of(Array)
+      expect(PuppyMill.view_hold_orders).to include(ginobili) 
+    end
+
+    it "returns an array that doesn't include other orders" do
+      tim = PuppyMill.add_request("Tim Duncan", "Chihuhua").last 
+      PuppyMill.accept(tim)  
+      ginobili = PuppyMill.add_request("Manu Ginobili", "American Bulldog").last 
+      bellinelli = PuppyMill.add_request("Marco Bellinelli", "Poodle").last
+      PuppyMill.sell(@spot, bellinelli)
+      kawhi = PuppyMill.add_request("Kawhi Leonard", "Doberman Pinscher").last
+      PuppyMill.deny(kawhi)
+
+      expect(PuppyMill.view_hold_orders).to_not include(kawhi && bellinelli && tim)
+    end
+  end
+
   describe ".view_accepted_orders" do
     it "returns an array of requests that were accepted" do
       tim = PuppyMill.add_request("Tim Duncan", "Chihuhua").last 
