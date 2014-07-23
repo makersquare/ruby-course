@@ -22,7 +22,7 @@ class Request
     }
     @customer = customer
     @breed = breed
-    @status = nil
+    @status = :pending
     @puppy = nil
     @price = pricing[@breed]
   end
@@ -30,7 +30,12 @@ end
 
 class PuppyMill
   @avail_puppies = {}
-  @all_requests = []
+  @all_requests = {
+                pending: [],
+                accept: [],
+                deny: [],
+                sold: []
+                  }
 
   def self.add_puppy(name, age, breed)
     breed = breed.downcase.delete(" ").to_sym
@@ -44,7 +49,7 @@ class PuppyMill
 
   def self.add_request(customer, breed)
     breed = breed.downcase.delete(" ").to_sym
-    @all_requests << Request.new(customer, breed)
+    @all_requests[:pending] << Request.new(customer, breed)
   end
 
   def self.avail_puppies
@@ -54,17 +59,24 @@ class PuppyMill
   # CHANGE STATUS
 
   def self.accept(request)
-    request.status = :accept
+    PuppyMill.status_hash_helper(:accept, request)
   end
 
   def self.deny(request)
-    request.status = :deny
+    PuppyMill.status_hash_helper(:deny, request)
   end
 
   def self.sell (puppy, request)
-    request.status = :sold
+    PuppyMill.status_hash_helper(:sold, request)
     request.puppy = puppy
     @avail_puppies[puppy.breed].delete(puppy)
+  end
+
+  def self.status_hash_helper(new_status, request)
+    old_status = request.status
+    request.status = new_status
+    @all_requests[old_status].delete(request)
+    @all_requests[new_status].push(request)
   end
 
   # VIEW REQUESTS
@@ -74,18 +86,18 @@ class PuppyMill
   end
 
   def self.view_accepted_orders
-    all_requests.select {|x| x.status == :accept}
+    all_requests[:accept]
   end
 
   def self.view_denied_orders
-    all_requests.select {|x| x.status == :deny}
+    all_requests[:deny]
   end
 
   def self.view_pending_orders
-    all_requests.select {|x| x.status.nil? }
+    all_requests[:pending]
   end
 
   def self.view_completed_orders
-    all_requests.select {|x| x.status == :sold}
+    all_requests[:sold]
   end
 end

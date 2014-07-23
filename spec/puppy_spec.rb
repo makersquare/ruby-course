@@ -31,11 +31,11 @@ describe Request do
       expect(breed).to eq(:poodle)
     end
 
-    it "initializes a new request with nil status and nil puppy" do
+    it "initializes a new request with :pending status and nil puppy" do
       x = Request.new("Mrs. Robinson", "Poodle")
 
       status = x.status
-      expect(status).to be_nil
+      expect(status).to eq(:pending)
 
       puppy = x.puppy
       expect(puppy).to be_nil   
