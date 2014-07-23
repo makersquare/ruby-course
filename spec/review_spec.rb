@@ -61,7 +61,7 @@ describe "Ruby Review: You" do
       expect(@source).to include_code(:map).in_class_method(:ArrayProblems, :list_wardrobe_item_sizes)
     end
 
-    xyou "know how to use the map method part 2" do
+    you "know how to use the map method part 2" do
       weather = [
         "drizzly",
         "cold"
