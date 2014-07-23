@@ -4,7 +4,7 @@ class Puppy
   def initialize (name, age, breed)
     @name = name
     @age = age
-    @breed = breed.downcase.delete(" ").to_sym
+    @breed = breed
   end
 end
 
@@ -13,10 +13,6 @@ class Request
   attr_accessor  :status, :puppy
 
   def initialize (customer, breed)
-    @customer = customer
-    @breed = breed.downcase.delete(" ").to_sym
-    @status = nil
-    @puppy = nil
     pricing = {
       dobermanpinscher: 800,
       chihuahua: 600,
@@ -24,32 +20,38 @@ class Request
       dingo: 1200,
       poodle: 1500
     }
+    @customer = customer
+    @breed = breed
+    @status = nil
+    @puppy = nil
     @price = pricing[@breed]
   end
 end
 
 class PuppyMill
-  @avail_puppies = []
+  @avail_puppies = {}
+  @all_requests = []
 
   def self.add_puppy(name, age, breed)
-    @avail_puppies << Puppy.new(name, age, breed)
+    breed = breed.downcase.delete(" ").to_sym
+    new_puppy = Puppy.new(name, age, breed)
+    if avail_puppies.has_key?(breed) 
+      avail_puppies[breed] << new_puppy
+    else
+      avail_puppies[breed] = [new_puppy]
+    end
+  end
+
+  def self.add_request(customer, breed)
+    breed = breed.downcase.delete(" ").to_sym
+    @all_requests << Request.new(customer, breed)
   end
 
   def self.avail_puppies
     @avail_puppies
   end
-end
 
-class PuppyStore
-  @all_requests = []
-
-  def self.add_request(customer, breed)
-    @all_requests << Request.new(customer, breed)
-  end
-
-  def self.all_requests
-    @all_requests
-  end
+  # CHANGE STATUS
 
   def self.accept(request)
     request.status = :accept
@@ -62,7 +64,13 @@ class PuppyStore
   def self.sell (puppy, request)
     request.status = :sold
     request.puppy = puppy
-    PuppyMill.avail_puppies.delete(puppy)
+    @avail_puppies[puppy.breed].delete(puppy)
+  end
+
+  # VIEW REQUESTS
+
+  def self.all_requests
+    @all_requests
   end
 
   def self.view_accepted_orders
