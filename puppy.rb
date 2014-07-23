@@ -1,11 +1,11 @@
 class Request
-  attr_reader :customer_name, :breed, :status
+  attr_reader :customer_name, :breed
   attr_accessor :status, :id
 
-  def initialize(customer_name, breed, status = nil)
+  def initialize(customer_name, breed, status = "pending")
     @customer_name = customer_name
     @breed = breed
-    # breed.downcase.split(" ").join("_").to_sym
+    # @breed.downcase.split(" ").join("_").to_sym
     @status = status
     @id = 0
     # @price = {
@@ -35,7 +35,8 @@ class Puppy
 end
 
 class Store
-  attr_reader :name, :requests, :completed_req
+  attr_reader :name, :requests, :completed_req, :amk
+  attr_accessor :status
 
   def initialize(name="Cruel De Villa Puppy Store")
     @name = name
@@ -50,26 +51,41 @@ class Store
       "husky" => 3000,
       "chihuahua" => 200
     }
+    @amk = PuppyGarden.new
   end
 
   def add_request(customer_name, breed)
-    new_req = Request.new(customer_name, breed, status=nil)
+    new_req = Request.new(customer_name, breed, status="pending")
     new_req.id = rand(10000) + Time.now.to_i
     @requests << new_req
+    puts "#{customer_name} has requested #{breed}. Your purchase request id is #{new_req.id}."
   end
 
-  def self.show_requests(request)
-    @requests
+  # def self.show_requests(request)
+  #   @requests
+  # end
+  def change_purchase_request_status(id)
+    index = @requests.find_index { |x| x.id == id}
+    if index != nil && @requests[index].status == "pending"
+      @requests[index].status = "accept"
+      puts "Purchase request for #{@requests[index].customer_name} has been changed to 'accept'."
+      true
+    elsif index != nil && @requests[index].status == "on-hold"
+      @request[index].status = "pending"
+      true
+    else
+      puts "No purchase request for ID #{id}."
+      false
+    end
   end
 
   def puppy_avilable?(breed)
-    pup_list = amk.puppies.select { |x| x.breed == breed }
+    pup_list = @amk.puppies.select { |x| x.breed == breed }
     !pup_list.empty?
   end
 
   def puppy_available(breed)
-    amk = PuppyGarden.new
-    puppy_check = amk.puppies.select { |x| x.breed == breed }
+    puppy_check = @amk.puppies.select { |x| x.breed == breed }
     if puppy_check.empty?
       puts "No puppies of #{breed} breed available"
     else
@@ -95,7 +111,5 @@ class PuppyGarden
     def kill_puppy
       @puppies.pop
     end
-
-
 
 end

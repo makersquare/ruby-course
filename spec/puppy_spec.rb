@@ -54,29 +54,40 @@ end
 
 describe Store do
 	before do
-		store = Store.new
-	  blake = Puppy.new("Blake", 3, "collie")
-	  icy = Puppy.new("Icy", 9, "samoyed")
-	  dot = Puppy.new("Dotcom", 5, "wolf")
-	  amk = PuppyGarden.new
-	  pup1 = amk.add_new_puppy("Blake", 3, "collie")
-	  pup2 = amk.add_new_puppy("Icy", 9, "samoyed")
-	  pup3 = amk.add_new_puppy("Dotcom", 5, "wolf")
+		@store = Store.new
+	  @blake = Puppy.new("Blake", 3, "collie")
+	  @icy = Puppy.new("Icy", 9, "samoyed")
+	  @dot = Puppy.new("Dotcom", 5, "wolf")
+	  @pup1 = @store.amk.add_new_puppy("Blake", 3, "collie")
+	  @pup2 = @store.amk.add_new_puppy("Icy", 9, "samoyed")
+	  @pup3 = @store.amk.add_new_puppy("Dotcom", 5, "wolf")
 	end
 
-	it "has customer name, and breed desired" do
-		# req1 = Request.new("Bob", "collie")
-		store = Store.new
-		store.add_request("Bob", "collie")
-		x = store.puppy_available("collie")
+	it "show if breed desired is present" do
+		@store.add_request("Bob", "collie")
+		x = @store.puppy_available("collie")
 		expect(x.count).to eq (1)
 	end
 
-	xit "shows list of requests with status" do
-		store = Store.new
-		store.add_request("Bob", "collie")
-		store.add_request("Stacy", "collie")
+	it "shows list of requests with status" do
+		@store.add_request("Bob", "collie")
+		@store.add_request("Stacy", "collie")
+		expect(@store.amk.puppies.count).to eq (3)
+		expect(@store.requests.count).to eq(2)
 	end
+
+	it "confirm true/false if breed is available" do
+		@store.add_request("Bob","collie")
+		expect(@store.amk.puppy_available?("collie")).to eq (true)
+		expect(@store.amk.puppy_available?("samoyed")).to eq (false)
+	end
+
+	it "find purchase request and change status to accept (if pending)" do
+		@store.add_request("Joey","samoyed")
+		x = @store.requests[0].id
+		expect(@store.change_purchase_request_status(x)).to eq (true)
+	end
+
 end
 
 
@@ -88,7 +99,8 @@ describe Request do
 	  com = Puppy.new("Dotcom", 5, "wolf")
 	end
 
-	it "create a purchase request for customer" do
+	it "create a purchase request for customer and status is pending" do
 		bob = Request.new("Bob", "collie")
+		expect(bob.status).to eq ("pending")
 	end
 end
