@@ -72,21 +72,47 @@ class Store
   def initialize(name, owner)
     @name = name
     @owner = owner
-    @requests_by_status = Hash.new(0)
+    # @requests_by_status = Hash.new(0)
     @all_requests = Array.new(0)
     @breed_prices = Hash.new(0)
   end
-
+# puts a request object into the proper array using its status
   def add_request(request)
     @all_requests << request
-    if @requests_by_status.has_key?(request.status)
-      @requests_by_status[request.status] << request
-    else
-      @requests_by_status[request.status] = [request]
-    end
-    return @all_requests
+    # if @requests_by_status.has_key?(request.status)
+    #   @requests_by_status[request.status] << request
+    # else
+    #   @requests_by_status[request.status] = [request]
+    # end
+    # return @all_requests
   end
 
+  def set_breed_price(breed, price)
+    @breed_prices[breed] = price
+  end
+
+  def list_requests(status)
+    list = []
+    @all_requests.each do |elem|
+      list << elem if elem.status == status
+    end
+    return list
+  end
+  # This update method is for another day!
+  # def update
+  #   @requests_by_status.each do |status_key, arr_of_matching_requests|
+  #     arr_of_matching_requests.each do |req_object_elem|
+  #       # check among the array to see if the request object's current
+  #       # status matches the key that is pointing to the hash it's in.
+  #       if req_object_elem.status != 
+  #         # pop it out
+
+  #         # put it in the right one
+  #       end
+  #     end
+  #   # iterate through @requests_by_status
+  #   # and pop them if their status is incorrect
+  #   # then moving them to the right one.
 end
 
 

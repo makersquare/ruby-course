@@ -104,32 +104,34 @@ describe 'Store' do
     expect(@store.add_request(@request2)).to eq(@y)
   end
 
-  xit 'can change request status' do
+  it 'sets breed price' do
+    @store.set_breed_price(:collie, 400)
+    expect(@store.breed_prices[:collie]).to eq(400)
   end
 
-  xit 'it returns requests of certain status'do
+  # xit 'can move requests in data structure depending on status' do
+  # end
+
+  it 'it returns requests of certain status' do
+    @store.add_request(@request1)
+    @store.add_request(@request2)
+    arr = [@request1, @request2]
+    expect(@store.list_requests(:queued)).to eq(arr)
+    @request1.deny
+    expect(@store.list_requests(:denied)).to eq([@request1])
   end
 
-  xit 'keeps track of breed price' do
-  end
-
-  xit 'sets a breed price' do
-  end
-
-  xit 'returns price on breeds' do
-  end
-
-  xit 'returns lists of puppies by their attributes' do
-
-  end
-
+  # This method is for another day
+  # it 'updates list if request objects have had status changed' do
+  #   @store.add_request(@request1)
+  #   expect(@store.list_requests(:queued)).to eq([@request1])
+  #   @request1.deny
+  #   expect(@store.list_requests(:queued)).to eq([])
+  #   expect(@store.list_requests(:denied)).to eq([@request1])
+  # end
 end
 
 
-# :boxer => {
-#   :price => num,
-#   :list => [array of puppy ojects]
-# }
 
 
 
