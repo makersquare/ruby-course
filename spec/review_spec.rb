@@ -100,7 +100,7 @@ describe "Ruby Review: You" do
       expect(result).to eq(false)
     end
 
-    xyou "know what puts returns" do
+    you "know what puts returns" do
       result = MethodReturns.get_name
       expect(result).to eq "Bob"
     end

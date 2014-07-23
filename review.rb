@@ -79,7 +79,7 @@ class MethodReturns
   end
 
   def self.get_name
-    puts "Bob"
+    "Bob"
   end
 
 end
