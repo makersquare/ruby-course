@@ -50,7 +50,7 @@ describe Store do
 	end
 
 	context Store do
-		before do
+		before do # before (:all) will accumulate results for entire context
 			@store = Store.new
 		  @blake = Puppy.new("Blake", 3, "collie")
 		  @icy = Puppy.new("Icy", 9, "samoyed")
