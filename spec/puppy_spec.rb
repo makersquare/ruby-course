@@ -1,5 +1,5 @@
 require 'pry-byebug'
-require "./puppy.rb"
+require "./puppy_app.rb"
 
 
 describe Puppy do
