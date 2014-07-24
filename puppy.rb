@@ -29,7 +29,6 @@ module PuppyMill
 
   class PurchaseOrder
     attr_reader :customer_name, :breed, :id
-    attr_accessor :status
     @@id = 0
 
     def initialize(args)
@@ -37,6 +36,46 @@ module PuppyMill
       @breed = args[:breed]
       @status = :pending
       @id = @@id+=1
+    end
+
+    def status
+      @status
+    end
+
+    def status=(new_status)
+      @status = new_status
+    end
+
+    def pend!
+      @status = :pending
+    end
+
+    def pending?
+      @status == :pending
+    end
+
+    def hold!
+      @status = :hold
+    end
+
+    def hold?
+      @status == :hold
+    end
+
+    def accepted?
+      @status == :accepted
+    end
+
+    def accept!
+      @status = :accepted
+    end
+
+    def denied?
+      @status == :denied
+    end
+
+    def deny!
+      @status = :denied
     end
 
     def review
@@ -51,18 +90,36 @@ module PuppyMill
       @orders
     end
 
-    def self.fulfill_order?(klass=PuppyMill::Puppies, order)
-      return true if klass.breed_available?(order.breed)
-    end
-
     def self.add_order(order)
       order.status = :hold unless fulfill_order?(order)
       @orders << order
     end
 
+    def self.accept(accepted_order)
+      @orders = @orders.each {|order| order.accept! if order == accepted_order}
+    end
+
+    def self.deny(denied_order)
+      @orders = @orders.each {|order| order.deny! if order == denied_order}
+    end
+
+    def self.view_all_accepted_orders
+      @orders.select {|order| order.accepted?}
+    end
+
+    def self.view_all_pending_orders
+      @orders.select {|order| order.pending?}.sort_by {|order| order.id}
+    end
+
+    ##### Helper Methods #####
+
+    def self.fulfill_order?(klass=PuppyMill::Puppies, order)
+      return true if klass.breed_available?(order.breed)
+    end
+
     def self.modify_hold_orders(puppy)
       unless @orders.empty?
-        new_pending_orders = @orders.select {|order| puppy.breed == order.breed}.each {|o| o.status = :pending}
+        new_pending_orders = @orders.select {|order| puppy.breed == order.breed}.each {|o| o.pend!}
         delete_old_orders(new_pending_orders)
         prioritize_hold_to_front_of_pending(new_pending_orders)
       end
@@ -74,22 +131,6 @@ module PuppyMill
 
     def self.prioritize_hold_to_front_of_pending(new_pending_orders)
       @orders = (new_pending_orders << @orders).flatten
-    end
-
-    def self.accept(accepted_order)
-      @orders = @orders.each {|order| order.status = :accepted if order == accepted_order}
-    end
-
-    def self.deny(denied_order)
-      @orders = @orders.each {|order| order.status = :denied if order == denied_order}
-    end
-
-    def self.view_all_accepted_orders
-      @orders.select {|order| order.status == :accepted}
-    end
-
-    def self.view_all_pending_orders
-      @orders.select {|order| order.status == :pending}.sort_by {|order| order.id}
     end
   end
 end
