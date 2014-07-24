@@ -51,7 +51,6 @@ describe Store do
 
 	context Store do
 		before do
-			Store.stub(:puts)
 			@store = Store.new
 		  @blake = Puppy.new("Blake", 3, "collie")
 		  @icy = Puppy.new("Icy", 9, "samoyed")
@@ -80,7 +79,7 @@ describe Store do
 			expect(x.status).to eq ("on-hold")
 		end
 
-		xit "confirm true/false if breed is available" do
+		it "confirm true/false if breed is available" do
 			@store.add_request("Bob","collie")
 			expect(@store.puppy_available?("collie")).to eq (true)
 			expect(@store.puppy_available?("samoyed")).to eq (false)

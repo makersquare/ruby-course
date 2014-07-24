@@ -4,7 +4,7 @@ class Request
 
   def initialize(customer_name, breed, status = "pending")
     @customer_name = customer_name
-    @breed = breed
+    @breed = breed.to_sym
     if @breed =~ /\s/
       @breed.downcase.split(" ").join("_").to_sym
     end
@@ -31,7 +31,7 @@ class Store
   attr_reader :name, :requests, :completed_req, :amk
   attr_accessor :status
 
-  def initialize(name="Cruel De Villa Puppy Store")
+  def initialize(name="Cruella de Vil Puppy Store")
     @name = name
     @requests = []
     @price = {
