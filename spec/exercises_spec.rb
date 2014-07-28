@@ -69,29 +69,34 @@ describe 'Exercises' do
 
   context "Exercise 7" do  
     it "If the string `str` exists in the array, add `str` to the end of the array" do
-      result = Exercises.ex7(array)
-      expect(result.last).to be('str')
+      result = Exercises.ex7(["this is crazy", 5, 6, "str", 10 ],'str')
+      expect(result).to eq(["this is crazy", 5, 6, "str", 10, 'str' ])
     end
   end
 
   context "Exercise 7" do  
     it "If the string `str` does not exists in the array, return 'later'" do
-      result = Exercises.ex7(array)
-      expect(result.last).to be('later')
+      result = Exercises.ex7(["this is crazy", 5, 6, 10 ],'str')
+      expect(result).to eq(["this is crazy", 5, 6, 10 ])
     end
   end
 
   context "Exercise 8" do  
-    xit "" do
+    it "Return hash from within array" do
+      array = [{ :name => 'Bob', :occupation => 'Builder' }]
       result = Exercises.ex8(array)
-      expect(result).to be(array.count)
+      expect(result.first).to be(array.first)
     end
   end
 
   context "Exercise 9" do  
-    xit "" do
-      result = Exercises.ex9(array)
-      expect(result).to be(array.count)
+    it 'returns true if the given time is a leap year' do
+      result = Exercises.ex9(2000)
+      expect(result).to eq(true)
+    end
+    it 'returns false if the given time is not a leap year' do
+      result = Exercises.ex9(2001)
+      expect(result).to eq(false)
     end
   end
 

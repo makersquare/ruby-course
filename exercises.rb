@@ -59,7 +59,11 @@ module Exercises
   #  - If the string `str` exists in the array,
   #    add `str` to the end of the array
   def self.ex7(array, str)
-    # TODO
+    if array.include?("str")
+      array << ("str")
+    else
+      array 
+    end
   end
 
   # Exercise 8
@@ -67,7 +71,7 @@ module Exercises
   #    { :name => 'Bob', :occupation => 'Builder' }
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
-    # TODO
+    people.each{|x| x }
   end
 
   # Exercise 9
@@ -75,7 +79,15 @@ module Exercises
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
-    # TODO
+    if time % 4 != 0
+      false
+    elsif time % 100 != 0
+      true
+    elsif time % 400 != 0
+      false
+    else
+      true
+    end
   end
 end
 
