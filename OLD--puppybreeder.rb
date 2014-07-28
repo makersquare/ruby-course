@@ -10,7 +10,6 @@ class Puppy
 end
 
 
-
 class Inventory
 
   attr_reader :po, :inventory
