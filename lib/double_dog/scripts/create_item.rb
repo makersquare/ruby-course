@@ -1,6 +1,8 @@
 module DoubleDog
   class CreateItem < TransactionScript
 
+    include DoubleDog::Mixins::AdminSession
+
     def run(params)
       return failure(:not_admin) unless admin_session?(params[:session_id])
       return failure(:invalid_name) unless valid_name?(params[:name])
@@ -8,11 +10,6 @@ module DoubleDog
 
       item = DoubleDog.db.create_item(:name => params[:name], :price => params[:price])
       return success(:item => item)
-    end
-
-    def admin_session?(session_id)
-      user = DoubleDog.db.get_user_by_session_id(session_id)
-      user && user.admin?
     end
 
     def valid_name?(name)

@@ -13,6 +13,8 @@ require_relative 'double_dog/entities/order.rb'
 require_relative 'double_dog/database/in_memory.rb'
 
 require_relative 'double_dog/transaction_script.rb'
+require_relative 'double_dog/scripts/mixins/sessions.rb'
+
 require_relative 'double_dog/scripts/create_account.rb'
 require_relative 'double_dog/scripts/create_item.rb'
 require_relative 'double_dog/scripts/sign_in.rb'
