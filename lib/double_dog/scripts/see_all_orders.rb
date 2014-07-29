@@ -1,5 +1,6 @@
 module DoubleDog
-  class SeeAllOrders
+  class SeeAllOrders < TransactionScript
+
     def run(params)
       return failure(:not_admin) unless admin_session?(params[:admin_session])
 
@@ -12,14 +13,5 @@ module DoubleDog
       user && user.admin?
     end
 
-  private
-
-    def failure(error_name)
-      return :success? => false, :error => error_name
-    end
-
-    def success(data)
-      return data.merge(:success? => true)
-    end
   end
 end
