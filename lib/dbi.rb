@@ -6,7 +6,7 @@ class DBI
     end
 
     def build_puppy(data)
-      Puppy.new(data["name"], data["breed"], data["dob"], data["status"])
+      Puppy.new(data["name"], data["dob"], data["breed"],  data["id"], data["status"])
     end
     ##when in sinatra, first send info to DB, returning *, then build the object
 
