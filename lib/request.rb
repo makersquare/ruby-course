@@ -1,20 +1,15 @@
 
 class Request
-  attr_reader :customer, :breed, :price
+  attr_reader :customer, :breed
   attr_accessor  :status, :puppy
 
-  def initialize (customer, breed)
-    pricing = {
-      dobermanpinscher: 800,
-      chihuahua: 600,
-      americanbulldog: 900,
-      dingo: 1200,
-      poodle: 1500
-    }
+  def initialize (customer, breed, id, created_at, status = :pending, puppy = nil)
+    @id = id
+    @created_at = created_at
     @customer = customer
     @breed = breed
-    @status = :pending
-    @puppy = nil
-    @price = pricing[@breed]
+    @status = status
+    @puppy = puppy
   end
 end
+

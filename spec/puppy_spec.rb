@@ -4,14 +4,14 @@ require "./puppy_app.rb"
 
 describe Puppy do
   describe ".initialize" do
-    it "creates a new puppy with name, age, and breed" do
-      spot = Puppy.new("Spot", 20, :dobermanpinscher)
+    it "creates a new puppy with name, dob, and breed" do
+      spot = Puppy.new("Spot", "June 26, 2014", :dobermanpinscher, 5)
       
       name = spot.name
       expect(name).to eq("Spot")
 
-      age = spot.age
-      expect(age).to eq(20)
+      dob = spot.dob
+      expect(dob).to eq("June 26, 2014")
 
       breed = spot.breed
       expect(breed).to eq(:dobermanpinscher)
@@ -22,7 +22,7 @@ end
 describe Request do
   describe ".initialize" do
     it "creates a new request with customer and breed" do
-      x = Request.new("Mrs. Robinson", :poodle)
+      x = Request.new("Mrs. Robinson", :poodle, 5, "June26")
 
       name = x.customer
       expect(name).to eq("Mrs. Robinson")
@@ -32,7 +32,7 @@ describe Request do
     end
 
     it "initializes a new request with :pending status and nil puppy" do
-      x = Request.new("Mrs. Robinson", "Poodle")
+      x = Request.new("Mrs. Robinson", :poodle, 5, "June26")
 
       status = x.status
       expect(status).to eq(:pending)
@@ -41,36 +41,33 @@ describe Request do
       expect(puppy).to be_nil   
     end
 
-    it "initializes a new request with the price from an array" do
-      x = Request.new("Mrs. Robinson", :poodle)
-
-      price = x.price
-      expect(price).to eq(1500)
-    end
   end
 end
 
 describe PuppyMill do
-  before do
-    @spot = PuppyMill.add_puppy("Spot", 20, "Doberman Pinscher")
-    @fluffy = PuppyMill.add_puppy("Fluffy", 15, "Chihuahua")
-  end
+  # before do
+  #end
 
   describe ".add_puppy" do
     it "creates a puppy and adds it to the puppy list hash" do
       expect(PuppyMill.avail_puppies).to be_an_instance_of(Hash)
-      hershey = PuppyMill.add_puppy("Hershey", 55, "Chocolate Lab")
+      hershey = Puppy.new("Hershey", 55, :chocolatelab, 12)
+      PuppyMill.add_puppy(hershey)
       expect(hershey).to be_an_instance_of(Puppy)
       expect(PuppyMill.avail_puppies[:chocolatelab]).to include(hershey)
     end
 
     it "checks orders on hold to see if anyone is waiting for a puppy of this breed" do
-      sean = PuppyMill.add_request("Sean", "ChowChow").last
-      shana = PuppyMill.add_request("Shana", "chowchow").last
+      sean = Request.new("Sean", :chowchow, 5, 5)
+      shana = Request.new("Shana", :chowchow, 5, 5)
+      PuppyMill.add_request(sean)
+      PuppyMill.add_request(shana)
+
       expect(sean.status).to eq(:hold)
       expect(shana.status).to eq(:hold)
 
-      sukhoi = PuppyMill.add_puppy("Sukhoi", 100, "chow chow")
+      sukhoi = Puppy.new("Sukhoi", 100, :chowchow, 13)
+      PuppyMill.add_puppy(sukhoi)
     
       expect(sean.status).to eq(:pending)
       expect(shana.status).to eq(:pending)
@@ -82,8 +79,10 @@ describe PuppyMill do
   end
 
   before do
-    @pop = PuppyMill.add_request("Coach Pop", "American Bulldog").last
-    @patty = PuppyMill.add_request("Patty Mills", "Dingo").last
+    @pop = Request.new("Coach Pop", "American Bulldog", 6, 18)
+    PuppyMill.add_request(@pop)
+    @patty = Request.new("Patty Mills", "Dingo", 7, 2014)
+    PuppyMill.add_request(@patty)
   end
 
   describe ".add_request" do
@@ -93,12 +92,23 @@ describe PuppyMill do
     end
 
     it "automatically assigns a status of :pending if a dog is available" do
-      this_request = PuppyMill.add_request("Tiago Splitter", "Chihuahua").last
+      spot = Puppy.new("Spot", 20, :dobermanpinscher, 4)
+      PuppyMill.add_puppy(spot)
+      fluffy = Puppy.new("Fluffy", 15, :chihuahua, 10)
+      PuppyMill.add_puppy(fluffy)
+      this_request = Request.new("Tiago Splitter", :chihuahua, 5, 6)
+      PuppyMill.add_request(this_request)
       expect(this_request.status).to eq(:pending)
     end
 
     it "puts :pending requests into the correct section of the hash" do
-      this_request = PuppyMill.add_request("Tiago Splitter", "Chihuahua").last
+      spot = Puppy.new("Spot", 20, :dobermanpinscher, 4)
+      PuppyMill.add_puppy(spot)
+      fluffy = Puppy.new("Fluffy", 15, :chihuahua, 10)
+      PuppyMill.add_puppy(fluffy)
+
+      this_request = Request.new("Tiago Splitter", :chihuahua, 5, 6)
+      PuppyMill.add_request(this_request)      
       expect(PuppyMill.all_requests[:pending]).to include(this_request)
       expect(PuppyMill.all_requests[:hold]).not_to include(this_request)
       expect(PuppyMill.all_requests[:sold]).not_to include(this_request)
@@ -111,7 +121,8 @@ describe PuppyMill do
     end
 
     it "puts :hold requests into the correct section of the hash" do
-      this_request = PuppyMill.add_request("Tiago Splitter", "Chihuahua").last
+      this_request = Request.new("Tiago Splitter", :chihuahua, 5, 6)
+      PuppyMill.add_request(this_request)      
       expect(PuppyMill.all_requests[:hold]).to include(@patty)
       expect(PuppyMill.all_requests[:pending]).not_to include(@patty)
       expect(PuppyMill.all_requests[:sold]).not_to include(@patty)
@@ -138,7 +149,8 @@ describe PuppyMill do
 
   describe ".sell" do
     before do
-      @obadiah = PuppyMill.add_puppy("Obadiah", 14, "American Bulldog")
+      @obadiah = Puppy.new("Obadiah", 14, :americanbulldog, 5)
+      PuppyMill.add_puppy(@obadiah)
       PuppyMill.sell(@obadiah ,@pop)
     end
 
@@ -158,12 +170,21 @@ describe PuppyMill do
 
   describe ".view_hold_orders" do
     it "returns an array of requests that are on hold" do
-      tim = PuppyMill.add_request("Tim Duncan", "Chihuhua").last 
+      spot = Puppy.new("Spot", 20, :dobermanpinscher, 4)
+      PuppyMill.add_puppy(spot)
+      fluffy = Puppy.new("Fluffy", 15, :chihuahua, 10)
+      PuppyMill.add_puppy(fluffy)
+
+      tim = Request.new("Tim Duncan", :chihuahua, 5, 5)
+      PuppyMill.add_request(tim)
       PuppyMill.accept(tim)  
-      ginobili = PuppyMill.add_request("Manu Ginobili", "American Bulldog").last 
-      bellinelli = PuppyMill.add_request("Marco Bellinelli", "Poodle").last
-      PuppyMill.sell(@spot, bellinelli)
-      kawhi = PuppyMill.add_request("Kawhi Leonard", "Doberman Pinscher").last
+      ginobili = Request.new("Manu Ginobili", :americanbulldog, 5, 5)
+      PuppyMill.add_request(ginobili)
+      bellinelli = Request.new("Marco Bellinelli", :poodle, 5, 5)
+      PuppyMill.add_request(bellinelli)
+      PuppyMill.sell(spot, bellinelli)
+      kawhi = Request.new("Kawhi Leonard", :dobermanpinscher, 5, 5)
+      PuppyMill.add_request(kawhi)
       PuppyMill.deny(kawhi)
 
       expect(PuppyMill.view_hold_orders).to be_an_instance_of(Array)
@@ -171,12 +192,21 @@ describe PuppyMill do
     end
 
     it "returns an array that doesn't include other orders" do
-      tim = PuppyMill.add_request("Tim Duncan", "Chihuhua").last 
+      spot = Puppy.new("Spot", 20, :dobermanpinscher, 4)
+      PuppyMill.add_puppy(spot)
+      fluffy = Puppy.new("Fluffy", 15, :chihuahua, 10)
+      PuppyMill.add_puppy(fluffy)
+
+      tim = Request.new("Tim Duncan", :chihuahua, 5, 5)
+      PuppyMill.add_request(tim)
       PuppyMill.accept(tim)  
-      ginobili = PuppyMill.add_request("Manu Ginobili", "American Bulldog").last 
-      bellinelli = PuppyMill.add_request("Marco Bellinelli", "Poodle").last
-      PuppyMill.sell(@spot, bellinelli)
-      kawhi = PuppyMill.add_request("Kawhi Leonard", "Doberman Pinscher").last
+      ginobili = Request.new("Manu Ginobili", :americanbulldog, 5, 5)
+      PuppyMill.add_request(ginobili)
+      bellinelli = Request.new("Marco Bellinelli", :poodle, 5, 5)
+      PuppyMill.add_request(bellinelli)
+      PuppyMill.sell(spot, bellinelli)
+      kawhi = Request.new("Kawhi Leonard", :dobermanpinscher, 5, 5)
+      PuppyMill.add_request(kawhi)
       PuppyMill.deny(kawhi)
 
       expect(PuppyMill.view_hold_orders).to_not include(kawhi && bellinelli && tim)
@@ -185,12 +215,21 @@ describe PuppyMill do
 
   describe ".view_accepted_orders" do
     it "returns an array of requests that were accepted" do
-      tim = PuppyMill.add_request("Tim Duncan", "Chihuhua").last 
+      spot = Puppy.new("Spot", 20, :dobermanpinscher, 4)
+      PuppyMill.add_puppy(spot)
+      fluffy = Puppy.new("Fluffy", 15, :chihuahua, 10)
+      PuppyMill.add_puppy(fluffy)
+      
+      tim = Request.new("Tim Duncan", :chihuahua, 5, 5)
+      PuppyMill.add_request(tim)
       PuppyMill.accept(tim)  
-      ginobili = PuppyMill.add_request("Manu Ginobili", "American Bulldog").last 
-      bellinelli = PuppyMill.add_request("Marco Bellinelli", "Poodle").last
-      PuppyMill.sell(@spot, bellinelli)
-      kawhi = PuppyMill.add_request("Kawhi Leonard", "Doberman Pinscher").last
+      ginobili = Request.new("Manu Ginobili", :americanbulldog, 5, 5)
+      PuppyMill.add_request(ginobili)
+      bellinelli = Request.new("Marco Bellinelli", :poodle, 5, 5)
+      PuppyMill.add_request(bellinelli)
+      PuppyMill.sell(spot, bellinelli)
+      kawhi = Request.new("Kawhi Leonard", :dobermanpinscher, 5, 5)
+      PuppyMill.add_request(kawhi)
       PuppyMill.deny(kawhi)
 
       accepted_orders = PuppyMill.view_accepted_orders
@@ -199,12 +238,21 @@ describe PuppyMill do
     end
 
     it "returns an array that doesn't include other orders" do
-      tim = PuppyMill.add_request("Tim Duncan", "Chihuhua").last 
+      spot = Puppy.new("Spot", 20, :dobermanpinscher, 4)
+      PuppyMill.add_puppy(spot)
+      fluffy = Puppy.new("Fluffy", 15, :chihuahua, 10)
+      PuppyMill.add_puppy(fluffy)
+
+      tim = Request.new("Tim Duncan", :chihuahua, 5, 5)
+      PuppyMill.add_request(tim)
       PuppyMill.accept(tim)  
-      ginobili = PuppyMill.add_request("Manu Ginobili", "American Bulldog").last 
-      bellinelli = PuppyMill.add_request("Marco Bellinelli", "Poodle").last
-      PuppyMill.sell(@spot, bellinelli)
-      kawhi = PuppyMill.add_request("Kawhi Leonard", "Doberman Pinscher").last
+      ginobili = Request.new("Manu Ginobili", :americanbulldog, 5, 5)
+      PuppyMill.add_request(ginobili)
+      bellinelli = Request.new("Marco Bellinelli", :poodle, 5, 5)
+      PuppyMill.add_request(bellinelli)
+      PuppyMill.sell(spot, bellinelli)
+      kawhi = Request.new("Kawhi Leonard", :dobermanpinscher, 5, 5)
+      PuppyMill.add_request(kawhi)
       PuppyMill.deny(kawhi)
 
       accepted_orders = PuppyMill.view_accepted_orders
@@ -215,12 +263,21 @@ describe PuppyMill do
 
   describe ".view_denied_orders" do
     it "returns an array of requests that were denied" do
-      tim = PuppyMill.add_request("Tim Duncan", "Chihuhua").last 
+      spot = Puppy.new("Spot", 20, :dobermanpinscher, 4)
+      PuppyMill.add_puppy(spot)
+      fluffy = Puppy.new("Fluffy", 15, :chihuahua, 10)
+      PuppyMill.add_puppy(fluffy)      
+
+      tim = Request.new("Tim Duncan", :chihuahua, 5, 5)
+      PuppyMill.add_request(tim)
       PuppyMill.accept(tim)  
-      ginobili = PuppyMill.add_request("Manu Ginobili", "American Bulldog").last 
-      bellinelli = PuppyMill.add_request("Marco Bellinelli", "Poodle").last
-      PuppyMill.sell(@spot, bellinelli)
-      kawhi = PuppyMill.add_request("Kawhi Leonard", "Doberman Pinscher").last
+      ginobili = Request.new("Manu Ginobili", :americanbulldog, 5, 5)
+      PuppyMill.add_request(ginobili)
+      bellinelli = Request.new("Marco Bellinelli", :poodle, 5, 5)
+      PuppyMill.add_request(bellinelli)
+      PuppyMill.sell(spot, bellinelli)
+      kawhi = Request.new("Kawhi Leonard", :dobermanpinscher, 5, 5)
+      PuppyMill.add_request(kawhi)
       PuppyMill.deny(kawhi)
 
       denied_orders = PuppyMill.view_denied_orders
@@ -229,12 +286,21 @@ describe PuppyMill do
     end
 
     it "returns an array that doesn't include other orders" do
-      tim = PuppyMill.add_request("Tim Duncan", "Chihuhua").last 
+      spot = Puppy.new("Spot", 20, :dobermanpinscher, 4)
+      PuppyMill.add_puppy(spot)
+      fluffy = Puppy.new("Fluffy", 15, :chihuahua, 10)
+      PuppyMill.add_puppy(fluffy)
+
+      tim = Request.new("Tim Duncan", :chihuahua, 5, 5)
+      PuppyMill.add_request(tim)
       PuppyMill.accept(tim)  
-      ginobili = PuppyMill.add_request("Manu Ginobili", "American Bulldog").last 
-      bellinelli = PuppyMill.add_request("Marco Bellinelli", "Poodle").last
-      PuppyMill.sell(@spot, bellinelli)
-      kawhi = PuppyMill.add_request("Kawhi Leonard", "Doberman Pinscher").last
+      ginobili = Request.new("Manu Ginobili", :americanbulldog, 5, 5)
+      PuppyMill.add_request(ginobili)
+      bellinelli = Request.new("Marco Bellinelli", :poodle, 5, 5)
+      PuppyMill.add_request(bellinelli)
+      PuppyMill.sell(spot, bellinelli)
+      kawhi = Request.new("Kawhi Leonard", :dobermanpinscher, 5, 5)
+      PuppyMill.add_request(kawhi)
       PuppyMill.deny(kawhi)
 
       denied_orders = PuppyMill.view_denied_orders
@@ -245,27 +311,46 @@ describe PuppyMill do
   
   describe ".view_pending_orders" do
     it "returns an array of requests that are pending" do
-      tim = PuppyMill.add_request("Tim Duncan", "Chihuhua").last 
-      PuppyMill.accept(tim)  
-      bully = PuppyMill.add_puppy("SuperStar", 60, "american bulldog")
-      ginobili = PuppyMill.add_request("Manu Ginobili", "American Bulldog").last 
-      bellinelli = PuppyMill.add_request("Marco Bellinelli", "Poodle").last
-      PuppyMill.sell(@spot, bellinelli)
-      kawhi = PuppyMill.add_request("Kawhi Leonard", "Doberman Pinscher").last
-      PuppyMill.deny(kawhi)
+      spot = Puppy.new("Spot", 20, :dobermanpinscher, 4)
+      PuppyMill.add_puppy(spot)
+      fluffy = Puppy.new("Fluffy", 15, :chihuahua, 10)
+      PuppyMill.add_puppy(fluffy)
 
+      tim = Request.new("Tim Duncan", :chihuahua, 5, 5)
+      PuppyMill.add_request(tim)
+      PuppyMill.accept(tim)  
+      ginobili = Request.new("Manu Ginobili", :americanbulldog, 5, 5)
+      PuppyMill.add_request(ginobili)
+      bellinelli = Request.new("Marco Bellinelli", :poodle, 5, 5)
+      PuppyMill.add_request(bellinelli)
+      PuppyMill.sell(spot, bellinelli)
+      kawhi = Request.new("Kawhi Leonard", :dobermanpinscher, 5, 5)
+      PuppyMill.add_request(kawhi)
+      PuppyMill.deny(kawhi)
+      bully = Puppy.new("SuperStar", 60, :americanbulldog, 12)
+      PuppyMill.add_puppy(bully)
+      
       pending_orders = PuppyMill.view_pending_orders
       expect(pending_orders).to be_an_instance_of(Array)
       expect(pending_orders).to include(ginobili) 
     end
 
     it "returns an array that doesn't include other orders" do
-      tim = PuppyMill.add_request("Tim Duncan", "Chihuhua").last 
+      spot = Puppy.new("Spot", 20, :dobermanpinscher, 4)
+      PuppyMill.add_puppy(spot)
+      fluffy = Puppy.new("Fluffy", 15, :chihuahua, 10)
+      PuppyMill.add_puppy(fluffy)
+
+      tim = Request.new("Tim Duncan", :chihuahua, 5, 5)
+      PuppyMill.add_request(tim)
       PuppyMill.accept(tim)  
-      ginobili = PuppyMill.add_request("Manu Ginobili", "American Bulldog").last 
-      bellinelli = PuppyMill.add_request("Marco Bellinelli", "Poodle").last
-      PuppyMill.sell(@spot, bellinelli)
-      kawhi = PuppyMill.add_request("Kawhi Leonard", "Doberman Pinscher").last
+      ginobili = Request.new("Manu Ginobili", :americanbulldog, 5, 5)
+      PuppyMill.add_request(ginobili)
+      bellinelli = Request.new("Marco Bellinelli", :poodle, 5, 5)
+      PuppyMill.add_request(bellinelli)
+      PuppyMill.sell(spot, bellinelli)
+      kawhi = Request.new("Kawhi Leonard", :dobermanpinscher, 5, 5)
+      PuppyMill.add_request(kawhi)
       PuppyMill.deny(kawhi)
 
       pending_orders = PuppyMill.view_pending_orders
@@ -276,12 +361,21 @@ describe PuppyMill do
   
   describe ".view_completed_orders" do
     it "returns an array of requests that are completed" do
-      tim = PuppyMill.add_request("Tim Duncan", "Chihuhua").last 
+      spot = Puppy.new("Spot", 20, :dobermanpinscher, 4)
+      PuppyMill.add_puppy(spot)
+      fluffy = Puppy.new("Fluffy", 15, :chihuahua, 10)
+      PuppyMill.add_puppy(fluffy)
+      
+      tim = Request.new("Tim Duncan", :chihuahua, 5, 5)
+      PuppyMill.add_request(tim)
       PuppyMill.accept(tim)  
-      ginobili = PuppyMill.add_request("Manu Ginobili", "American Bulldog").last 
-      bellinelli = PuppyMill.add_request("Marco Bellinelli", "Poodle").last
-      PuppyMill.sell(@spot, bellinelli)
-      kawhi = PuppyMill.add_request("Kawhi Leonard", "Doberman Pinscher").last
+      ginobili = Request.new("Manu Ginobili", :americanbulldog, 5, 5)
+      PuppyMill.add_request(ginobili)
+      bellinelli = Request.new("Marco Bellinelli", :poodle, 5, 5)
+      PuppyMill.add_request(bellinelli)
+      PuppyMill.sell(spot, bellinelli)
+      kawhi = Request.new("Kawhi Leonard", :dobermanpinscher, 5, 5)
+      PuppyMill.add_request(kawhi)
       PuppyMill.deny(kawhi)
 
       completed_orders = PuppyMill.view_completed_orders
@@ -290,12 +384,21 @@ describe PuppyMill do
     end
 
     it "returns an array that doesn't include other orders" do
-      tim = PuppyMill.add_request("Tim Duncan", "Chihuhua").last 
+      spot = Puppy.new("Spot", 20, :dobermanpinscher, 4)
+      PuppyMill.add_puppy(spot)
+      fluffy = Puppy.new("Fluffy", 15, :chihuahua, 10)
+      PuppyMill.add_puppy(fluffy)
+
+      tim = Request.new("Tim Duncan", :chihuahua, 5, 5)
+      PuppyMill.add_request(tim)
       PuppyMill.accept(tim)  
-      ginobili = PuppyMill.add_request("Manu Ginobili", "American Bulldog").last 
-      bellinelli = PuppyMill.add_request("Marco Bellinelli", "Poodle").last
-      PuppyMill.sell(@spot, bellinelli)
-      kawhi = PuppyMill.add_request("Kawhi Leonard", "Doberman Pinscher").last
+      ginobili = Request.new("Manu Ginobili", :americanbulldog, 5, 5)
+      PuppyMill.add_request(ginobili)
+      bellinelli = Request.new("Marco Bellinelli", :poodle, 5, 5)
+      PuppyMill.add_request(bellinelli)
+      PuppyMill.sell(spot, bellinelli)
+      kawhi = Request.new("Kawhi Leonard", :dobermanpinscher, 5, 5)
+      PuppyMill.add_request(kawhi)
       PuppyMill.deny(kawhi)
 
       completed_orders = PuppyMill.view_completed_orders

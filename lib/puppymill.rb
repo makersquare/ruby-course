@@ -8,27 +8,25 @@ class PuppyMill
                 hold: []
                   }
 
-  def self.add_puppy(name, age, puppy_breed)
-    breed_sym = puppy_breed.downcase.delete(" ").to_sym
-    new_puppy = Puppy.new(name, age, breed_sym)
-    if avail_puppies.has_key?(breed_sym) 
-      avail_puppies[breed_sym] << new_puppy
+  def self.add_puppy(puppy)
+    breed = puppy.breed
+    if avail_puppies.has_key?(breed) 
+      avail_puppies[breed] << puppy
     else
-      avail_puppies[breed_sym] = [new_puppy]
+      avail_puppies[breed] = [puppy]
     end
-    if avail_puppies[breed_sym].length == 1
-      requests_to_make_pending = all_requests[:hold].select { |x| x.breed == breed_sym }
+    if avail_puppies[breed].length == 1
+      requests_to_make_pending = all_requests[:hold].select { |x| x.breed == breed }
       while !requests_to_make_pending.empty?
         this_request = requests_to_make_pending.pop
         PuppyMill.pending(this_request) 
       end
     end
-    new_puppy
+    puppy
   end
 
-  def self.add_request(customer, breed)
-    breed = breed.downcase.delete(" ").to_sym
-    this_request = Request.new(customer, breed)
+  def self.add_request(this_request)
+    breed = this_request.breed
     if avail_puppies.has_key?(breed) && !@avail_puppies[breed].empty?
       PuppyMill.status_hash_helper(:pending, this_request)      
     else
