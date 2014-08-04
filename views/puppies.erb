@@ -1,9 +1,18 @@
 <div class="row">
+	<div class="colums large-12">
+		<h3>PUPPIES</h3>
+	</div>
+</div>
+<div class="row">
 	<div class="columns large-12">
-		<% @puppies.each do |x| %>
-		<div class="row panel">
-			<%= x.name %>, <%= x.dob %>, <%= x.breed %>, <%= x.status %> 
-		</div>
+		<% if @puppies.empty? %>
+		<div class="row panel">No puppies match this search.</div>
+		<% else %>
+			<% @puppies.each do |x| %>
+			<div class="row panel">
+				PUPPY NAME: <%= x.name %>, DATE OF BIRTH: <%= x.dob %>, BREED: <%= x.breed %>, STATUS: <%= x.status %> 
+			</div>
+			<% end %>
 		<% end %>
 	</div>
 </div>

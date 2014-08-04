@@ -1,6 +1,6 @@
 
 class Request
-  attr_reader :customer, :breed
+  attr_reader :customer, :breed, :created_at
   attr_accessor  :status, :puppy
 
   def initialize (customer, breed, id, created_at, status = :pending, puppy = nil)

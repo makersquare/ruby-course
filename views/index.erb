@@ -15,14 +15,28 @@
 		    		    	<option  name="" value="boxer" />Boxer
 		          			<option  name="" value="dobermanpinscher" />Doberman Pinscher
 		        		</select> </label> 
-						<input type="submit" class="button" value="View All Puppies">
+						<input type="submit" class="button" value="View Puppies">
 					</form>
 				</div>
 				<hr>
 				<div class="row">
 
 					<form action = "/requests">
-
+						<label class="columns large-3">Select Requests By Status
+				        <select name="status" id="">
+				        	<option name="" value="all" />All Requests
+		    		    	<option  name="" value="pending" />Pending Requests
+		          			<option  name="" value="hold" />Hold Requests
+		          			<option  name="" value="sold" />Sold Requests
+		          			<option  name="" value="accept" />Accepted Requests
+		          			<option  name="" value="deny" />Denied Requests
+		        		</select>  </label> 
+						<label class="columns large-3">Select Requests By Breed
+				        <select name="breed" id="">
+				        	<option name="" value="all" />All Breeds
+		    		    	<option  name="" value="boxer" />Boxer
+		          			<option  name="" value="dobermanpinscher" />Doberman Pinscher
+		        		</select> </label> 
 						<input type="submit" class="button" value="View Requests">
 					</form>
 				</div>

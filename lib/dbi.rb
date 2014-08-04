@@ -35,11 +35,26 @@ class DBI
      Request.new(data["customer"], data["breed"], data["id"], data["created_at"], data["status"], data["puppy"])  ####make a new request -- check my syntax! 
     end
     
-    def find_request_by_id(id)
-      response = @db.exec("SELECT.....WHERE id = #{id}")
-      build_request(response.first)
+    def get_requests_by_status(status)
+      response = @db.exec("SELECT * FROM requests WHERE status = '#{status}';")
+      response.map {|row| build_request(row)}
     end
-    
+
+    def get_requests_by_breed(breed)
+      response = @db.exec("SELECT * FROM requests WHERE breed = '#{breed}';")
+      response.map {|row| build_request(row)}
+    end    
+
+    def get_requests_by_status_and_breed(status, breed)
+      response = @db.exec("SELECT * FROM requests WHERE breed = '#{breed}' AND status = '#{status}';")
+      response.map {|row| build_request(row)}
+    end  
+
+    def get_all_requests
+      response = @db.exec("SELECT * FROM requests;")
+      response.map {|row| build_request(row)}
+    end      
+
     def add_puppy_to_db(name, breed, dob)
       @db.exec(%q[
         INSERT INTO puppies (name, breed, dob, status)

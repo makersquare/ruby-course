@@ -27,7 +27,17 @@ get '/puppies' do
 end
 
 get '/requests' do
-  @requests = DBI.dbi.get_all_requests
+  @breed = params[:breed]
+  @status = params[:status]
+  if @breed == 'all' && @status == 'all'
+    @requests = DBI.dbi.get_all_requests
+  elsif @breed == 'all'
+    @requests = DBI.dbi.get_requests_by_status(@status)
+  elsif @status == 'all'
+    @requests = DBI.dbi.get_requests_by_breed(@breed)
+  else
+    @requests = DBI.dbi.get_requests_by_status_and_breed(@status, @breed)
+  end
   erb :requests
 end
 
