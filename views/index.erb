@@ -12,8 +12,9 @@
 						<label class="columns large-3">Select Puppy By Breed
 				        <select name="breed" id="">
 				        	<option name="" value="all" />All Breeds
-		    		    	<option  name="" value="boxer" />Boxer
-		          			<option  name="" value="dobermanpinscher" />Doberman Pinscher
+				        	<% @breeds.each do |x| %>
+		    		    	<option  name="" value="<%= x %>" /><%= x %>
+							<% end %>	
 		        		</select> </label> 
 						<input type="submit" class="button" value="View Puppies">
 					</form>
@@ -34,8 +35,9 @@
 						<label class="columns large-3">Select Requests By Breed
 				        <select name="breed" id="">
 				        	<option name="" value="all" />All Breeds
-		    		    	<option  name="" value="boxer" />Boxer
-		          			<option  name="" value="dobermanpinscher" />Doberman Pinscher
+				        	<% @breeds.each do |x| %>
+		    		    	<option  name="" value="<%= x %>" /><%= x %>
+							<% end %>
 		        		</select> </label> 
 						<input type="submit" class="button" value="View Requests">
 					</form>

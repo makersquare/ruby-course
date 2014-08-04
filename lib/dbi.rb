@@ -55,6 +55,11 @@ class DBI
       response.map {|row| build_request(row)}
     end      
 
+    def get_all_breeds
+      response = @db.exec("SELECT breed FROM breeds;")
+      response.map {|row| row["breed"]}
+    end
+
     def add_puppy_to_db(name, breed, dob)
       @db.exec(%q[
         INSERT INTO puppies (name, breed, dob, status)

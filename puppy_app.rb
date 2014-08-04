@@ -8,6 +8,8 @@ set :bind, '0.0.0.0'
 set :port, 4568
 
 get '/' do
+  @breeds = DBI.dbi.get_all_breeds
+  p @breeds
   erb :index
 end
 
