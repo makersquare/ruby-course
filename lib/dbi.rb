@@ -1,8 +1,8 @@
+require 'pg'
 
 class DBI
 		def initialize #single state instances
 			@db = PG.connect(host: 'localhost', dbname: 'petbreeder')
-			# another line I missed
     end
 
     def build_puppy(data)
@@ -20,6 +20,16 @@ class DBI
       response.map {|row| build_puppy(row)}
     end
 
+    def get_puppies_by_status(this_status)
+      response = @db.exec("SELECT * FROM puppies WHERE status = '#{this_status}';")
+      response.map {|row| build_puppy(row)}
+    end
+
+    def get_puppies_by_status_and_breed(this_status, this_breed)
+      response = @db.exec("SELECT * FROM puppies WHERE status = '#{this_status}' AND breed = '#{this_breed}';")
+      response.map {|row| build_puppy(row)}
+    end
+
 
     def build_request (data)
      Request.new(data["customer"], data["breed"], data["id"], data["created_at"], data["status"], data["puppy"])  ####make a new request -- check my syntax! 
@@ -32,8 +42,8 @@ class DBI
     
     def add_puppy_to_db(name, breed, dob)
       @db.exec(%q[
-        INSERT INTO puppies (name, breed, dob)
-        VALUES (name, breed, dob)
+        INSERT INTO puppies (name, breed, dob, status)
+        VALUES (#{name}, #{breed}, #{dob}, 'available');
         ])
     end
 
@@ -45,4 +55,4 @@ class DBI
 end
 
 #call by
-DBI.dbi.whichever_command_from_this_class
+#DBI.dbi.whichever_command_from_this_class

@@ -1,0 +1,9 @@
+<div class="row">
+	<div class="columns large-12">
+		<% @puppies.each do |x| %>
+		<div class="row panel">
+			<%= x.name %>, <%= x.dob %>, <%= x.breed %>, <%= x.status %> 
+		</div>
+		<% end %>
+	</div>
+</div>
