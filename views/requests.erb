@@ -1,0 +1,21 @@
+<div class="row">
+	<div class="colums large-12">
+		<h3>REQUESTS</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="columns large-12">
+		<% if @requests.empty? %>
+		<div class="row panel">No requests fit this search.</div>
+		<% else %>			
+			<% @requests.each do |x| %>
+			<div class="row panel">
+				CUSTOMER NAME: <%= x.customer %>, REQUESTED BREED: <%= x.breed %>, DATE: <%= x.created_at %>, STATUS: <%= x.status %>
+				<% unless x.puppy.nil? %>
+					, ASSIGNED PUPPY: <%= x.puppy %>
+				<% end %>
+			</div>
+			<% end %>
+		<% end %>
+	</div>
+</div>

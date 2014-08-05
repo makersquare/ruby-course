@@ -1,0 +1,15 @@
+<div class="row">
+	<div class="colums large-12">
+		<h3>BREED PRICING TABLE</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="columns large-12">
+
+			<% @breed_hash.each do |breed, price| %>
+			<div class="row panel">
+				BREED: <%= breed %>, PRICE: <%= price %>
+			</div>
+			<% end %>
+	</div>
+</div>
