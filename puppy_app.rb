@@ -51,6 +51,14 @@ post '/newpuppy' do
   erb :puppies
 end
 
+post '/newrequest' do
+  @breed = params['breed']
+  @dob = params['dob']
+  @name = params['name']
+  @requests = DBI.dbi.add_request_to_db(@name, @breed, @dob)
+  erb :requests
+end
+
 get '/newbreed' do
   @breed = params['breed']
 

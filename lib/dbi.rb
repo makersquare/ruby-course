@@ -69,6 +69,16 @@ class DBI
       response.map {|row| build_puppy(row)}
     end
 
+    def add_request_to_db(name, breed, dob)
+      response = @db.exec("
+        INSERT INTO puppies (name, breed, dob, status)
+        VALUES ('#{name}', '#{breed}', '#{dob}', 'available')
+        RETURNING *;
+        ")
+      response.map {|row| build_puppy(row)}
+      
+    end    
+
     def add_breed(breed)
       response = @db.exec("INSERT INTO breeds (breed) VALUES ('#{breed}');")
       response.map {|row| row["breed"]}

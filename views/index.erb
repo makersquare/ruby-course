@@ -64,6 +64,24 @@
 					</form>
 				</div>
 				<hr>
+				
+				<div class="row">
+					<h4>Add a New Request</h4>
+
+					<form method = "post" action = "/newrequest">
+						<label class="columns large-3">Select Request Breed
+				        <select name="breed" id="">
+				        	<% @breeds.each do |x| %>
+		    		    	<option  name="" value="<%= x %>" /><%= x %>
+							<% end %>
+		        		</select> </label> 
+		        		<label for="" class="columns large-3">Enter Customer Name
+		        			<input name="name" type="text"></label>
+						<input type="submit" class="button" value="Enter New Request">
+					</form>
+				</div>
+				<hr>
+
 				<div class="row">
 					<h4>Add a New Breed</h4>
 
