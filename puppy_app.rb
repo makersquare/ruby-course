@@ -51,10 +51,9 @@ get '/newpuppy' do
   erb :newpuppy
 end
 
-post '/' do
-  puts params
-  @word = params[" "]
-
+get '/newbreed' do
+  @breed = params['breed']
+  
 end
 
 

@@ -66,11 +66,13 @@ class DBI
         VALUES ('#{name}', '#{breed}', '#{dob}', 'available')
         RETURNING *;
         ")
-      p response
       array = response.map {|row| build_puppy(row)}
-      p array
     end
 
+    def add_breed(breed)
+      response = @db.exec("INSERT INTO breeds (breed) VALUES ('#{breed}');")
+      response.map {|row| row["breed"]}
+    end
 
 		#at bottom...SINGLETON
 		def self.dbi
