@@ -61,10 +61,14 @@ class DBI
     end
 
     def add_puppy_to_db(name, breed, dob)
-      @db.exec(%q[
+      response = @db.exec("
         INSERT INTO puppies (name, breed, dob, status)
-        VALUES (#{name}, #{breed}, #{dob}, 'available');
-        ])
+        VALUES ('#{name}', '#{breed}', '#{dob}', 'available')
+        RETURNING *;
+        ")
+      p response
+      array = response.map {|row| build_puppy(row)}
+      p array
     end
 
 

@@ -2,6 +2,7 @@
 		<div class="row">
 			<div class="columns large-12">
 				<div class="row">
+					<h4>View Puppies</h4>
 					<form action = "/puppies">
 						<label class="columns large-3">Select Puppy By Status
 				        <select name="status" id="">
@@ -21,6 +22,7 @@
 				</div>
 				<hr>
 				<div class="row">
+					<h4>View Requests</h4>
 
 					<form action = "/requests">
 						<label class="columns large-3">Select Requests By Status
@@ -40,6 +42,25 @@
 							<% end %>
 		        		</select> </label> 
 						<input type="submit" class="button" value="View Requests">
+					</form>
+				</div>
+				<hr>
+
+				<div class="row">
+					<h4>Add a New Puppy</h4>
+
+					<form action = "/newpuppy">
+						<label class="columns large-3">Select Puppy Breed
+				        <select name="breed" id="">
+				        	<% @breeds.each do |x| %>
+		    		    	<option  name="" value="<%= x %>" /><%= x %>
+							<% end %>
+		        		</select> </label> 
+		        		<label for="" class="columns large-3">Enter Puppy Name
+		        			<input name="name" type="text"></label>
+		        		<label for="" class="columns large-3">Enter Date of Birth
+		        			<input name="dob" type="date"></label>
+						<input type="submit" class="button" value="Enter New Puppy">
 					</form>
 				</div>
 				<hr>
