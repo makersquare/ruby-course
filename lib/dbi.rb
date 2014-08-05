@@ -55,10 +55,7 @@ class DBI
       response.map {|row| build_request(row)}
     end      
 
-    def get_all_breeds
-      response = @db.exec("SELECT breed FROM breeds;")
-      response.map {|row| row["breed"]}
-    end
+
 
     def add_puppy_to_db(name, breed, dob)
       response = @db.exec("
@@ -76,12 +73,26 @@ class DBI
         RETURNING *;
         ")
       response.map {|row| build_request(row)}
-
     end    
 
-    def add_breed(breed)
-      response = @db.exec("INSERT INTO breeds (breed) VALUES ('#{breed}');")
+    def get_all_breed_names
+      response = @db.exec("SELECT breed FROM breeds;")
       response.map {|row| row["breed"]}
+    end
+
+    def make_breed_hash
+      response = @db.exec("SELECT * FROM breeds;")
+      pricing_hash = {}
+      response.each  do |r| 
+        b = r['breed']
+        p = r['price']
+        pricing_hash[b] = p
+      end
+      pricing_hash
+    end
+
+    def add_breed(breed, price)
+      @db.exec("INSERT INTO breeds (breed, price) VALUES ('#{breed}', '#{price}');")
     end
 
 		#at bottom...SINGLETON

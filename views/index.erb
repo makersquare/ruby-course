@@ -85,21 +85,23 @@
 				<div class="row">
 					<h4>Add a New Breed</h4>
 
-					<form action = "/newbreed">
-						<label class="columns large-3">Add Puppy Breed
-				        <select name="breed" id="">
-				        	<% @breeds.each do |x| %>
-		    		    	<option  name="" value="<%= x %>" /><%= x %>
-							<% end %>
-		        		</select> </label> 
-		        		<label for="" class="columns large-3">Enter Puppy Name
-		        			<input name="name" type="text"></label>
-		        		<label for="" class="columns large-3">Enter Date of Birth
-		        			<input name="dob" type="date"></label>
-						<input type="submit" class="button" value="Enter New Puppy">
+					<form method = "post" action = "/breeds">
+		        		<label for="" class="columns large-3">Enter New Breed
+		        			<input name="breed" type="text"></label>
+		        		<label for="" class="columns large-3">Enter Price
+		        			<input name="price" type="text"></label>
+						<input type="submit" class="button alert" value="Enter New Breed">
 					</form>
 				</div>
-				<hr>				
+				<hr>	
+				<div class="row">
+					<h4>View All Breeds and Prices</h4>
+
+					<form method = "get" action = "/breeds">
+						<input type="submit" class="button" value="View All Breeds">
+					</form>
+				</div>
+				<hr>			
 			</div>
 		</div>
         

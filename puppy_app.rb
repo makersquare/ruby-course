@@ -8,8 +8,7 @@ set :bind, '0.0.0.0'
 set :port, 4568
 
 get '/' do
-  @breeds = DBI.dbi.get_all_breeds
-  p @breeds
+  @breeds = DBI.dbi.get_all_breed_names
   erb :index
 end
 
@@ -58,11 +57,16 @@ post '/newrequest' do
   erb :requests
 end
 
-get '/newbreed' do
+post '/breeds' do
   @breed = params['breed']
+  @price = params['price']
+  DBI.dbi.add_breed(@breed, @price)
+  redirect to '/breeds'
+end
 
-
-
+get '/breeds' do
+  @breed_hash = DBI.dbi.make_breed_hash
+  erb :breeds
 end
 
 
