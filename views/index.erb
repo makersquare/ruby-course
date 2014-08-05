@@ -1,0 +1,69 @@
+
+		<div class="row">
+			<div class="columns large-12">
+				<div class="row">
+					<h4>View Puppies</h4>
+					<form action = "/puppies">
+						<label class="columns large-3">Select Puppy By Status
+				        <select name="status" id="">
+				        	<option name="" value="all" />All Puppies
+		    		    	<option  name="" value="available" />Available Puppies
+		          			<option  name="" value="sold" />Sold Puppies
+		        		</select>  </label> 
+						<label class="columns large-3">Select Puppy By Breed
+				        <select name="breed" id="">
+				        	<option name="" value="all" />All Breeds
+				        	<% @breeds.each do |x| %>
+		    		    	<option  name="" value="<%= x %>" /><%= x %>
+							<% end %>	
+		        		</select> </label> 
+						<input type="submit" class="button" value="View Puppies">
+					</form>
+				</div>
+				<hr>
+				<div class="row">
+					<h4>View Requests</h4>
+
+					<form action = "/requests">
+						<label class="columns large-3">Select Requests By Status
+				        <select name="status" id="">
+				        	<option name="" value="all" />All Requests
+		    		    	<option  name="" value="pending" />Pending Requests
+		          			<option  name="" value="hold" />Hold Requests
+		          			<option  name="" value="sold" />Sold Requests
+		          			<option  name="" value="accept" />Accepted Requests
+		          			<option  name="" value="deny" />Denied Requests
+		        		</select>  </label> 
+						<label class="columns large-3">Select Requests By Breed
+				        <select name="breed" id="">
+				        	<option name="" value="all" />All Breeds
+				        	<% @breeds.each do |x| %>
+		    		    	<option  name="" value="<%= x %>" /><%= x %>
+							<% end %>
+		        		</select> </label> 
+						<input type="submit" class="button" value="View Requests">
+					</form>
+				</div>
+				<hr>
+
+				<div class="row">
+					<h4>Add a New Puppy</h4>
+
+					<form action = "/newpuppy">
+						<label class="columns large-3">Select Puppy Breed
+				        <select name="breed" id="">
+				        	<% @breeds.each do |x| %>
+		    		    	<option  name="" value="<%= x %>" /><%= x %>
+							<% end %>
+		        		</select> </label> 
+		        		<label for="" class="columns large-3">Enter Puppy Name
+		        			<input name="name" type="text"></label>
+		        		<label for="" class="columns large-3">Enter Date of Birth
+		        			<input name="dob" type="date"></label>
+						<input type="submit" class="button" value="Enter New Puppy">
+					</form>
+				</div>
+				<hr>
+			</div>
+		</div>
+        
