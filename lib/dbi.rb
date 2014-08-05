@@ -32,7 +32,7 @@ class DBI
 
 
     def build_request (data)
-     Request.new(data["customer"], data["breed"], data["id"], data["created_at"], data["status"], data["puppy"])  ####make a new request -- check my syntax! 
+     Request.new(data["customer"], data["breed"], data["id"], data["timestamp"], data["status"], data["puppy"])  ####make a new request -- check my syntax! 
     end
     
     def get_requests_by_status(status)
@@ -69,14 +69,14 @@ class DBI
       response.map {|row| build_puppy(row)}
     end
 
-    def add_request_to_db(name, breed, dob)
+    def add_request_to_db(name, breed)
       response = @db.exec("
-        INSERT INTO puppies (name, breed, dob, status)
-        VALUES ('#{name}', '#{breed}', '#{dob}', 'available')
+        INSERT INTO requests (customer, breed, status)
+        VALUES ('#{name}', '#{breed}', 'pending')
         RETURNING *;
         ")
-      response.map {|row| build_puppy(row)}
-      
+      response.map {|row| build_request(row)}
+
     end    
 
     def add_breed(breed)

@@ -53,9 +53,8 @@ end
 
 post '/newrequest' do
   @breed = params['breed']
-  @dob = params['dob']
   @name = params['name']
-  @requests = DBI.dbi.add_request_to_db(@name, @breed, @dob)
+  @requests = DBI.dbi.add_request_to_db(@name, @breed)
   erb :requests
 end
 
