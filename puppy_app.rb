@@ -43,18 +43,18 @@ get '/requests' do
   erb :requests
 end
 
-get '/newpuppy' do
+post '/newpuppy' do
   @breed = params['breed']
   @dob = params['dob']
   @name = params['name']
-  @new_puppy = DBI.dbi.add_puppy_to_db(@name, @breed, @dob)
-  erb :newpuppy
+  @puppies = DBI.dbi.add_puppy_to_db(@name, @breed, @dob)
+  erb :puppies
 end
 
 get '/newbreed' do
   @breed = params['breed']
 
-  
+
 
 end
 

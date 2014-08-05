@@ -66,7 +66,7 @@ class DBI
         VALUES ('#{name}', '#{breed}', '#{dob}', 'available')
         RETURNING *;
         ")
-      array = response.map {|row| build_puppy(row)}
+      response.map {|row| build_puppy(row)}
     end
 
     def add_breed(breed)
