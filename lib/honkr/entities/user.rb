@@ -1,3 +1,5 @@
+require 'digest/sha1'
+
 module Honkr
   class User
 
@@ -10,11 +12,11 @@ module Honkr
     end
 
     def update_password(password)
-      # TODO: Hash incoming password and save as password digest
+      @password_digest = Digest::SHA1.hexdigest(password)
     end
 
     def has_password?(password)
-      # TODO: Hash incoming password and compare against own password_digest
+      Digest::SHA1.hexdigest(password) == @password_digest
     end
   end
 end
