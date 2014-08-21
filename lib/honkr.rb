@@ -1,3 +1,4 @@
+require 'digest'
 
 module Honkr
   def self.db
