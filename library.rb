@@ -5,9 +5,14 @@ class Book
     @title = title
     @author = author
     @id = nil
+    @status = 'available'
+  end
+
+  def status
+    @status
   end
 end
-
+  
 class Borrower
   def initialize(name)
   end
