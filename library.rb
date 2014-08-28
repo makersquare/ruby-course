@@ -10,7 +10,12 @@ class Book
   end
   
   def check_out
-    self.status=('checked_out')
+    if @status == 'available'
+      self.status=('checked_out')
+      return true
+    else
+      return false 
+    end
   end
 
 end
