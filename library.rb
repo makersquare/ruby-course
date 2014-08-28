@@ -18,6 +18,10 @@ class Book
     end
   end
 
+  def check_in
+    self.status=('available')
+  end
+
 end
 
 class Borrower
