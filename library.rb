@@ -17,15 +17,19 @@ class Book
       return false
     end
   end
-end
 
-
-
-
-class Borrower
-  def initialize(name)
+  def check_in
+    @status = "available"
   end
 end
+
+class Borrower
+  attr_reader :name
+  def initialize(name)
+    @name = name
+  end
+end
+
 
 class Library
   def initialize(name)
