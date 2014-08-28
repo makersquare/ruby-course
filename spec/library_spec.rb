@@ -14,12 +14,12 @@ describe Book do
 
   it "has a default status of available" do
     book = Book.new("The Stranger", "Albert Camus")
-    
+
     expect(book.status).to eq 'available'
   end
 
-  xit "can be checked out" do
-    book = Book.new
+  it "can be checked out" do
+    book = Book.new("The Stranger", "Albert Camus")
     did_it_work = book.check_out
     expect(did_it_work).to be_true
     expect(book.status).to eq 'checked_out'
