@@ -59,8 +59,24 @@ class Library
   end
 
   def check_out_book(book_id, borrower)
-    found_book = books.bsearch {|x| x.id == book_id}
-    checked_out = found_book.check_out
+
+    found_book = nil
+    books.each do |x|
+      if x.id == book_id
+        found_book = x
+      end
+    end
+    
+    borrowers = book_ids_to_borrowers.values
+
+    if borrowers.include?(borrower)
+      return nil
+    end
+    
+    if found_book != nil
+      checked_out = found_book.check_out
+    end
+    
     if checked_out
         book_ids_to_borrowers.store(found_book.id, borrower)
         return found_book
@@ -71,6 +87,7 @@ class Library
 
 
   def check_in_book(book)
+    book.status = 'available'
   end
 
   def available_books
