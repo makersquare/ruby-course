@@ -14,8 +14,7 @@ end
 class BigRig < Car
 
   def initialize(color, wheel_count=18)
-    super(color)
-    @wheel_count = wheel_count
+    super(color, wheel_count)
   end
 
   def honk
@@ -24,7 +23,7 @@ class BigRig < Car
 end
 
 class Motorcycle < Car
-  def initialize
-    super('red', 2)
+  def initialize(color='red', wheel_count=2)
+    super(color, wheel_count)
   end
 end
