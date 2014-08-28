@@ -40,40 +40,49 @@ class Borrower
   end
 
   def book_that_was_borrowed(book)
-    @book_boorrowed = book
+    @book_borrowed = book
   end
 
 end
 
 class Library
   attr_reader :name
-  attr_accessor :books
+  attr_accessor :books, :available_books, :borrowed_books
 
   def initialize(name)
     @name = name
     @books = []
+    @available_books = []
+    @borrowed_books = []
   end
 
   def register_new_book(title, author)
     book = Book.new(title, author, rand(1000))
     @books << book
+    @available_books << book
   end
 
   # def add_book(title, author)
   # end
 
   def check_out_book(book_id, borrower)
-    new_book = ''
-    self.books.each { |book|
-      if book.id == book_id
-        new_book = book
+    if borrower.book_borrowed == nil
+      new_book = ''
+      self.books.each { |book|
+        if book.id == book_id
+          new_book = book
+        end
+      }
+      if new_book.status == 'available'
+        new_book.check_out
+        borrower.book_that_was_borrowed(new_book)
+        new_book.borrowing_book(borrower)
+        self.available_books.delete(new_book)
+        self.borrowed_books << new_book
+        new_book
+      else
+        return nil
       end
-    }
-    if new_book.status == 'available'
-      new_book.check_out
-      borrower.book_that_was_borrowed(new_book)
-      new_book.borrowing_book(borrower)
-      new_book
     else
       return nil
     end
@@ -91,15 +100,11 @@ class Library
       new_book.borrowed_by.book_borrowed = nil
       new_book.borrowed_by = nil
       new_book.status = 'available'
+      self.available_books << new_book
+      self.borrowed_books.delete(new_book)
     else
       return nil
     end
-  end
-
-  def available_books
-  end
-
-  def borrowed_books
   end
 
   def get_borrower(book_id)
