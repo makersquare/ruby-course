@@ -36,8 +36,11 @@ end
 
 class Borrower
   attr_reader :name
+  attr_accessor :checked_out_books
+
   def initialize(name)
     @name = name
+    @checked_out_books = 0
   end
 end
 
@@ -59,9 +62,10 @@ class Library
 
   def check_out_book(book_id, borrower)
     book = @books.select { |book| book.id == book_id }.first
-    if book.status == "available"
+    if book.status == "available" && borrower.checked_out_books < 2
       book.check_out
-      book.borrower = borrower.name
+      borrower.checked_out_books +=1
+      book.borrower = borrower
       book
     else
     end
@@ -69,11 +73,12 @@ class Library
 
   def get_borrower(book_id)
     book = @books.select { |book| book.id == book_id }.first
-    book.borrower
+    book.borrower.name
   end
 
   def check_in_book(book)
     book.check_in
+    book.borrower.checked_out_books -= 1
   end
 
   def available_books
