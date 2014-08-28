@@ -67,6 +67,14 @@ module Exercises
   def self.ex9(time)
     # TODO
   end
+
+  # Exercise 10
+  #  - Returns "happy hour" if it is between 4 and 6pm
+  #    Otherwise, returns "normal prices"
+  # Hint: Read the "Stubbing" documentation on the Learn app.
+  def self.ex10
+    # TODO
+  end
 end
 
 module Extensions
