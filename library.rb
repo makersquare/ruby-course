@@ -6,7 +6,7 @@ class Book
     @author = author
     @title = title
     @id = id
-    @status = "available"
+    @status = ["available",0]
     @year_published = year
     @edition = edition
     @review = {}
@@ -14,14 +14,15 @@ class Book
   end
 
   def check_out(borrower='')
-    return false if (@status == 'checked_out')
+    return false if (@status[0] == 'checked_out')
     @borrower = borrower
-    @status = 'checked_out'
+    @status[0] = 'checked_out'
+    @status[1] = Time.now
   end
 
   def check_in
-    return false if (@status == 'available')
-    @status = 'available'
+    return false if (@status[0] == 'available')
+    @status[0] = 'available'
     @borrower = 'available'
   end
 end
@@ -32,7 +33,7 @@ class Borrower
     @name = name
   end
 
-  def leave_review(library,book_id,review,rating)
+  def leave_review(library,book_id,review='n/a',rating=10)
     library.books[book_id-1].review[self] = review
     library.books[book_id-1].rating[self] = rating
   end
@@ -52,9 +53,15 @@ class Library
   end
 
   def check_out_book(book_id, borrower)
-    return nil if @books[book_id-1].status == 'checked_out'
+    return nil if @books[book_id-1].status[0] == 'checked_out'
     member = @books.map {|x| x.borrower}
     return nil if member.count(borrower)>=2
+
+    
+      # member.each do |x|
+      # return nil if (x.status[1] - Time.now) > 24*60*24*7*60
+      # end
+
     @books[book_id-1].check_out(borrower)
     @books[book_id-1]
   end
@@ -68,11 +75,11 @@ class Library
   end
 
   def available_books
-    avail = @books.select{|x| x.status == "available"}
+    avail = @books.select{|x| x.status[0] == "available"}
   end
 
   def borrowed_books
-    borr = @books.select{|x| x.status == 'checked_out'}
+    borr = @books.select{|x| x.status[0] == 'checked_out'}
   end
   def register_new_book(title,author)
     @books<< Book.new(title,author,@books.count+1)

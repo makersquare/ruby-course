@@ -14,14 +14,14 @@ describe Book do
 
   it "has a default status of available" do
     book = Book.new
-    expect(book.status).to eq 'available'
+    expect(book.status[0]).to eq 'available'
   end
 
   it "can be checked out" do
     book = Book.new
     did_it_work = book.check_out
     expect(did_it_work).to be_true
-    expect(book.status).to eq 'checked_out'
+    expect(book.status[0]).to eq 'checked_out'
   end
 
   it "can't be checked out twice in a row" do
@@ -32,14 +32,14 @@ describe Book do
     did_it_work_again = book.check_out
     expect(did_it_work_again).to eq(false)
 
-    expect(book.status).to eq 'checked_out'
+    expect(book.status[0]).to eq 'checked_out'
   end
 
   it "can be checked in" do
     book = Book.new
     book.check_out
     book.check_in
-    expect(book.status).to eq 'available'
+    expect(book.status[0]).to eq 'available'
   end
 
   it "Year published defaults to 1800." do
@@ -116,7 +116,7 @@ describe Library do
     expect(book.title).to eq "Green Eggs and Ham"
 
     # The book should now be marked as checked out
-    expect(book.status).to eq 'checked_out'
+    expect(book.status[0]).to eq 'checked_out'
   end
 
   it "knows who borrowed a book" do
@@ -166,7 +166,7 @@ describe Library do
     lib.check_in_book(book)
 
     # The book should now be marked as available!
-    expect(book.status).to eq 'available'
+    expect(book.status[0]).to eq 'available'
   end
 
   it "does not allow a Borrower to check out more than one Book at any given time" do
