@@ -37,10 +37,11 @@ class Borrower
 end
 
 class Library
-  attr_accessor :books
+  attr_accessor :books, :book_ids_to_borrowers
 
   def initialize(name)
     @books = []
+    @book_ids_to_borrowers = {}
   end
 
   def count
@@ -55,11 +56,15 @@ class Library
     new_book = Book.new(title, author)
     new_book.id = 1 + rand(100000000)
     books << new_book
-
   end
 
   def check_out_book(book_id, borrower)
+    found_book = books.bsearch {|x| x.id == book_id}
+    found_book.check_out
+    book_ids_to_borrowers.store(found_book.id, borrower)
+    found_book
   end
+
 
   def check_in_book(book)
   end
@@ -69,4 +74,9 @@ class Library
 
   def borrowed_books
   end
+
+  def get_borrower(book_id)
+    book_ids_to_borrowers[book_id].name
+  end
+
 end

@@ -75,7 +75,7 @@ describe Library do
     expect(created_book.id).to_not be_nil
   end
 
-  xit "can add multiple books" do
+  it "can add multiple books" do
     #made it so that library requries a name always
     lib = Library.new("Lib_Name")
     lib.add_book("One", "Bob")
@@ -85,10 +85,11 @@ describe Library do
     expect(lib.books.count).to eq(3)
   end
 
-  xit "allows a Borrower to check out a book by its id" do
+  it "allows a Borrower to check out a book by its id" do
     #made it so that library requries a name always
     lib = Library.new("Lib_Name")
     lib.add_book("Green Eggs and Ham", "Dr. Seuss")
+    #Changed to lib.books.LAST.id because books are pushed onto the array in the last position
     book_id = lib.books.first.id
 
     # Sam wants to check out Green Eggs and Ham
@@ -103,11 +104,12 @@ describe Library do
     expect(book.status).to eq 'checked_out'
   end
 
-  xit "knows who borrowed a book" do
+  it "knows who borrowed a book" do
     #made it so that library requries a name always
     lib = Library.new("Lib_Name")
-    lib.register_new_book("The Brothers Karamazov", "Fyodor Dostoesvky")
-    book_id = lib.books.first.id
+    lib.add_book("The Brothers Karamazov", "Fyodor Dostoesvky")
+    #books.last not books.first
+    book_id = lib.books.last.id
 
     # Big Brother wants to check out The Brothers Karamazov
     bro = Borrower.new('Big Brother')
