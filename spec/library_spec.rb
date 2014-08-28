@@ -12,12 +12,12 @@ describe Book do
     expect(book.id).to be_nil
   end
 
-  xit "has a default status of available" do
+  it "has a default status of available" do
     book = Book.new
     expect(book.status).to eq 'available'
   end
 
-  xit "can be checked out" do
+  it "can be checked out" do
     book = Book.new
     did_it_work = book.check_out
     expect(did_it_work).to be_true
