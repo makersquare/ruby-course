@@ -35,8 +35,8 @@ describe Book do
     expect(book.status).to eq 'checked_out'
   end
 
-  xit "can be checked in" do
-    book = Book.new
+  it "can be checked in" do
+    book = Book.new("Fun with scorpions", "Dick Manitoba")
     book.check_out
     book.check_in
     expect(book.status).to eq 'available'
