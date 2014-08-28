@@ -48,9 +48,13 @@ class Library
 
   def check_out_book(book_id, borrower)
     book = @books[book_id -1] 
-    book.status = "checked_out"
-    book.borrower = borrower
-    book
+    if book.status == "checked_out"
+      nil
+    else
+      book.borrower = borrower
+      book.status = "checked_out"
+      book
+    end
   end
 
   def get_borrower(book_id)

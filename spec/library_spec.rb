@@ -108,9 +108,9 @@ describe Library do
     expect( lib.get_borrower(book_id) ).to eq 'Big Brother'
   end
 
-  xit "does not allow a book to be checked out twice in a row" do
-    lib = Library.new
-    lib.register_new_book = Book.new("Surely You're Joking Mr. Feynman", "Richard Feynman")
+  it "does not allow a book to be checked out twice in a row" do
+    lib = Library.new("Austin Public Library")
+    lib.register_new_book("Surely You're Joking Mr. Feynman", "Richard Feynman")
     book_id = lib.books.first.id
 
     # Leslie Nielsen wants to double check on that
@@ -130,7 +130,7 @@ describe Library do
   end
 
   xit "allows a Borrower to check a book back in" do
-    lib = Library.new
+    lib = Library.new("Austin Public Library")
     lib.register_new_book("Finnegans Wake", "James Joyce")
     book_id = lib.books.first.id
 
@@ -147,7 +147,7 @@ describe Library do
 
   xit "does not allow a Borrower to check out more than one Book at any given time" do
     # yeah it's a stingy library
-    lib = Library.new
+    lib = Library.new("Austin Public Library")
     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
     lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
     lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
@@ -170,7 +170,7 @@ describe Library do
   end
 
   xit "returns available books" do
-    lib = Library.new
+    lib = Library.new("Austin Public Library")
     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
     lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
     lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
@@ -187,7 +187,7 @@ describe Library do
   end
 
   xit "after a book it returned, it can be checked out again" do
-    lib = Library.new
+    lib = Library.new("Austin Public Library")
     lib.register_new_book("Harry Potter", "J. K. Rowling")
     book_id = lib.books.first.id
 
@@ -206,7 +206,7 @@ describe Library do
   end
 
   xit "returns borrowed books" do
-    lib = Library.new
+    lib = Library.new("Austin Public Library")
     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
     lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
     lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
