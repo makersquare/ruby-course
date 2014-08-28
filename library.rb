@@ -60,9 +60,13 @@ class Library
 
   def check_out_book(book_id, borrower)
     found_book = books.bsearch {|x| x.id == book_id}
-    found_book.check_out
-    book_ids_to_borrowers.store(found_book.id, borrower)
-    found_book
+    checked_out = found_book.check_out
+    if checked_out
+        book_ids_to_borrowers.store(found_book.id, borrower)
+        return found_book
+    else
+      return nil
+    end
   end
 
 
