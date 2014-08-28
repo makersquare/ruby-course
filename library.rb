@@ -41,12 +41,12 @@ class Borrower
 end
 
 class Library
-  def initialize(name)
+  attr_reader :books
+
+  def initialize()
     @books = []
   end
 
-  def books
-  end
 
   def add_book(title, author)
   end
