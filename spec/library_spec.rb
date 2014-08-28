@@ -20,12 +20,12 @@ describe Book do
   it "can be checked out" do
     book = Book.new("The Stranger", "Albert Camus")
     did_it_work = book.check_out
-    expect(did_it_work).to be_true
+    expect(did_it_work).to eq(true)
     expect(book.status).to eq 'checked_out'
   end
 
-  xit "can't be checked out twice in a row" do
-    book = Book.new
+  it "can't be checked out twice in a row" do
+    book = Book.new("The Stranger", "Albert Camus")
     did_it_work = book.check_out
     expect(did_it_work).to eq(true)
 
@@ -35,7 +35,7 @@ describe Book do
     expect(book.status).to eq 'checked_out'
   end
 
-  xit "can be checked in" do
+  it "can be checked in" do
     book = Book.new
     book.check_out
     book.check_in
