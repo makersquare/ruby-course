@@ -24,13 +24,16 @@ class Book
   def check_in
     @status = "available"
     @borrower = nil
+
   end
 end
 
 class Borrower
   attr_reader :name
+  attr_accessor :borrowed
   def initialize(name)
     @name = name
+    @borrowed = 0
   end
 end
 
@@ -60,7 +63,8 @@ class Library
 
   def check_out_book(book_id, borrower)
     checking_out = @books.select {|book| book.id == book_id}.first
-    if checking_out.check_out(borrower)
+    if checking_out.check_out(borrower) && borrower.borrowed < 2
+      borrower.borrowed += 1
       checking_out
     else 
       nil
@@ -69,16 +73,20 @@ class Library
 
   def get_borrower(book_id)
     book_out = @books.select {|book| book.id == book_id}.first
-    book_out.borrower.name
+    book_out.borrower
   end
 
   def check_in_book(book)
+    borrower = get_borrower(book.id)
+    borrower.borrowed -= 1
     book.check_in
   end
 
   def available_books
+    @books.select { |book| book.status == "available" }
   end
 
   def borrowed_books
+    @books.select { |book| book.status == "checked_out" }
   end
 end
