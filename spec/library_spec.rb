@@ -35,8 +35,8 @@ describe Book do
     expect(book.status).to eq 'checked_out'
   end
 
-  xit "can be checked in" do
-    book = Book.new
+  it "can be checked in" do
+    book = Book.new("The Stranger", "Albert Camus")
     book.check_out
     book.check_in
     expect(book.status).to eq 'available'
@@ -44,7 +44,7 @@ describe Book do
 end
 
 describe Borrower do
-  xit "has a name" do
+  it "has a name" do
     borrower = Borrower.new("Mike")
     expect(borrower.name).to eq "Mike"
   end
