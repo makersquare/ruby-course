@@ -8,7 +8,7 @@ class Book
     @author = author
     @id = id
     @status = 'available'
-    @borrwer = borrower
+    @borrower = borrower
   end
 
   def status
@@ -54,15 +54,17 @@ class Library
     @books.push(Book.new(title, author, @@id))
   end
 
-
   def add_book(title, author)
   end
 
   def check_out_book(book_id, borrower)
     book = @books.select { |book| book.id == book_id }.first
-    book.check_out
-    book.borrower = borrower.name
-    book
+    if book.status == "available"
+      book.check_out
+      book.borrower = borrower.name
+      book
+    else
+    end
   end
 
   def get_borrower(book_id)
