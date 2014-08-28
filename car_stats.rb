@@ -16,13 +16,7 @@ class CarStats
   def self.color_count(cars_array)
     colors_array = cars_array.map {|x| x.color }
     @count = Hash.new
-    colors_array.each do |x|
-      if @count[x] == nil
-        @count[x] = 1
-      else
-        @count[x] += 1
-      end
-    end
-    return @count
+    colors_array.each {|x| @count[x] == nil ? @count[x] = 1 : @count[x] += 1}
+    @count
   end
 end
