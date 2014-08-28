@@ -36,7 +36,7 @@ describe Book do
   end
 
   it "can be checked in" do
-    book = Book.new
+    book = Book.new("The Stranger", "Albert Camus")
     book.check_out
     book.check_in
     expect(book.status).to eq 'available'
