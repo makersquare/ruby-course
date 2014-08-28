@@ -19,6 +19,12 @@ class Book
     end
   end
 
+  def check_in
+    if @status == 'checked_out'
+      @status = 'available'
+    end
+  end
+
 end
 
 class Borrower
