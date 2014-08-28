@@ -5,7 +5,7 @@ describe Book do
   it "has a title and author, and nil id" do
     book = Book.new("The Stranger", "Albert Camus")
 
-    # binding.pry
+    #binding.pry
 
     expect(book.title).to eq "The Stranger"
     expect(book.author).to eq "Albert Camus"
@@ -17,8 +17,8 @@ describe Book do
     expect(book.status).to eq('available')
   end
 
-  xit "can be checked out" do
-    book = Book.new
+  it "can be checked out" do
+    book = Book.new("Heaven to Betsy", "Maud Hart Lovelace")
     did_it_work = book.check_out
     expect(did_it_work).to be_true
     expect(book.status).to eq('checked_out')
