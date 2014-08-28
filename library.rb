@@ -1,12 +1,16 @@
 
 class Book
   attr_reader :author, :title, :id, :status, :borrower
-  # @borrower = []
-  def initialize(title='', author='', id=nil)
+  attr_accessor :review, :rating, :edition, :year_published
+  def initialize(title='', author='', id=nil,year=1800, edition=1)
     @author = author
     @title = title
     @id = id
     @status = "available"
+    @year_published = year
+    @edition = edition
+    @review = {}
+    @rating = {}
   end
 
   def check_out(borrower='')
@@ -26,6 +30,11 @@ class Borrower
   attr_reader :name
   def initialize(name)
     @name = name
+  end
+
+  def leave_review(library,book_id,review)
+    library.books[book_id-1].review[self] = review
+    library.books[book_id-1].rating[self] = rating
   end
 end
 

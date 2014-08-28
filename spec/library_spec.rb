@@ -5,7 +5,7 @@ describe Book do
   it "has a title and author, and nil id" do
     book = Book.new("The Stranger", "Albert Camus")
 
-    # binding.pry
+    #binding.pry
 
     expect(book.title).to eq "The Stranger"
     expect(book.author).to eq "Albert Camus"
@@ -40,6 +40,13 @@ describe Book do
     book.check_out
     book.check_in
     expect(book.status).to eq 'available'
+  end
+
+  it "Year published defaults to 1800." do
+    book = Book.new
+    book2 = Book.new('','','',2040)
+    expect(book.year_published).to eq 1800
+    expect(book2.year_published).to eq 2040
   end
 end
 
