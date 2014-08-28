@@ -27,9 +27,11 @@ end
 
 class Borrower
   attr_reader :name
+  attr_accessor :books_checked_out
 
   def initialize(name)
     @name = name
+    @books_checked_out = 0
   end
 end
 
@@ -50,9 +52,12 @@ class Library
     book = @books[book_id -1] 
     if book.status == "checked_out"
       nil
+    elsif borrower.books_checked_out >= 2
+      nil
     else
       book.borrower = borrower
       book.status = "checked_out"
+      borrower.books_checked_out += 1
       book
     end
   end
@@ -66,6 +71,8 @@ class Library
     if book.status == "available"
       nil
     else
+      borrower = book.borrower
+      borrower.books_checked_out -= 1
       book.borrower = nil
       book.status = "available"
     end
