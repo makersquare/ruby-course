@@ -18,6 +18,7 @@ class Book
   def check_in
     return false if (@status == 'available')
     @status = 'available'
+    @borrower = 'available'
   end
 end
 
@@ -43,6 +44,8 @@ class Library
 
   def check_out_book(book_id, borrower)
     return nil if @books[book_id-1].status == 'checked_out'
+    member = @books.map {|x| x.borrower}
+    return nil if member.count(borrower)>=2
     @books[book_id-1].check_out(borrower)
     @books[book_id-1]
   end
@@ -52,12 +55,15 @@ class Library
   end
 
   def check_in_book(book)
+    book.check_in
   end
 
   def available_books
+    avail = @books.select{|x| x.status == "available"}
   end
 
   def borrowed_books
+    borr = @books.select{|x| x.status == 'checked_out'}
   end
   def register_new_book(title,author)
     @books<< Book.new(title,author,@books.count+1)
