@@ -82,6 +82,7 @@ class Library
   end
 
   def available_books
+    available = @books.select { |book| book.status == "available" }
   end
 
   def borrowed_books
