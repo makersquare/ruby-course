@@ -17,14 +17,14 @@ describe Book do
     expect(book.status).to eq 'available'
   end
 
-  xit "can be checked out" do
+  it "can be checked out" do
     book = Book.new
     did_it_work = book.check_out
     expect(did_it_work).to be_true
     expect(book.status).to eq 'checked_out'
   end
 
-  xit "can't be checked out twice in a row" do
+  it "can't be checked out twice in a row" do
     book = Book.new
     did_it_work = book.check_out
     expect(did_it_work).to eq(true)
