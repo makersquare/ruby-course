@@ -12,16 +12,16 @@ describe Book do
     expect(book.id).to be_nil
   end
 
-  xit "has a default status of available" do
-    book = Book.new
-    expect(book.status).to eq 'available'
+  it "has a default status of available" do
+    book = Book.new("Heaven to Betsy", "Maud Hart Lovelace")
+    expect(book.status).to eq('available')
   end
 
   xit "can be checked out" do
     book = Book.new
     did_it_work = book.check_out
     expect(did_it_work).to be_true
-    expect(book.status).to eq 'checked_out'
+    expect(book.status).to eq('checked_out')
   end
 
   xit "can't be checked out twice in a row" do
@@ -65,7 +65,7 @@ describe Library do
     created_book = lib.books.first
     expect(created_book.title).to eq "Nausea"
     expect(created_book.author).to eq "Jean-Paul Sartre"
-    expect(created_book.id).to_not be_nil
+    expect(created_book.id).not_to be_nil
   end
 
   xit "can add multiple books" do
@@ -87,7 +87,7 @@ describe Library do
     book = lib.check_out_book(book_id, sam)
 
     # The checkout should return the book
-    expect(book).to be_a(Book)
+    expect(book).to eq(Book)
     expect(book.title).to eq "Green Eggs and Ham"
 
     # The book should now be marked as checked out
