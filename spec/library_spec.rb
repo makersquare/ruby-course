@@ -129,7 +129,7 @@ describe Library do
     expect(book_again).to be_nil
   end
 
-  xit "allows a Borrower to check a book back in" do
+  it "allows a Borrower to check a book back in" do
     lib = Library.new("Austin Public Library")
     lib.register_new_book("Finnegans Wake", "James Joyce")
     book_id = lib.books.first.id

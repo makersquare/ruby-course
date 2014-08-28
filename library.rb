@@ -8,7 +8,7 @@ class Book
     @title = title
     @id = id
     @status = status
-    @borrower = "none"
+    @borrower = nil
   end
 
   def check_out
@@ -63,6 +63,12 @@ class Library
   end
 
   def check_in_book(book)
+    if book.status == "available"
+      nil
+    else
+      book.borrower = nil
+      book.status = "available"
+    end
   end
 
   def available_books
