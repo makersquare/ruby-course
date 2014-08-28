@@ -1,11 +1,26 @@
 
 class Book
-  attr_reader :author
+  attr_reader :author, :title, :id, :status
 
-  def initialize(title, author)
+  def initialize(title="", author="")
+    @title = title
     @author = author
+    @id = nil
+    @status = "available"
+  end
+
+  def check_out
+    if @status == "available"
+      @status = "checked_out"
+      return true
+    else 
+      return false
+    end
   end
 end
+
+
+
 
 class Borrower
   def initialize(name)
