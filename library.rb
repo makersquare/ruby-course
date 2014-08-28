@@ -36,11 +36,14 @@ class Borrower
 end
 
 class Library
+  attr_accessor :books, :name
+
   def initialize(name)
     @books = []
   end
 
   def books
+    @books
   end
 
   def add_book(title, author)
