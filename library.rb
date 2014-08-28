@@ -42,9 +42,15 @@ end
 
 class Library
   attr_reader :books
+  @@id = 0
 
   def initialize()
     @books = []
+  end
+
+  def register_new_book(title, author)
+    @@id += 1
+    @books.push(Book.new(title, author, @@id))
   end
 
 
