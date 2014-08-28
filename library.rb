@@ -37,13 +37,18 @@ class Library
 
   def initialize(name)
     @books = []
+    @book_id = 1
   end
 
   def register_new_book(title, author)
-    @books << Book.new(title, author)
+    @books << Book.new(title, author, @book_id)
+    @book_id +=1
   end
 
   def check_out_book(book_id, borrower)
+    book = @books[book_id -1] 
+    book.status = "checked_out"
+    book
   end
 
   def check_in_book(book)

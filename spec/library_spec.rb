@@ -53,8 +53,6 @@ describe Library do
   it "starts with an empty array of books" do
     lib = Library.new("Austin Public Library")
 
-    #binding.pry
-
     expect(lib.books.count).to eq(0)
   end
 
@@ -66,10 +64,10 @@ describe Library do
     created_book = lib.books.first
     expect(created_book.title).to eq "Nausea"
     expect(created_book.author).to eq "Jean-Paul Sartre"
-    expect(created_book.id).to be_nil
+    expect(created_book.id).to_not be_nil
   end
 
-  xit "can add multiple books" do
+  it "can add multiple books" do
     lib = Library.new("Austin Public Library")
     lib.register_new_book("One", "Bob")
     lib.register_new_book("Two", "Bob")
@@ -78,7 +76,7 @@ describe Library do
     expect(lib.books.count).to eq(3)
   end
 
-  xit "allows a Borrower to check out a book by its id" do
+  it "allows a Borrower to check out a book by its id" do
     lib = Library.new("Austin Public Library")
     lib.register_new_book("Green Eggs and Ham", "Dr. Seuss")
     book_id = lib.books.first.id
@@ -86,6 +84,8 @@ describe Library do
     # Sam wants to check out Green Eggs and Ham
     sam = Borrower.new('Sam-I-am')
     book = lib.check_out_book(book_id, sam)
+
+    #binding.pry
 
     # The checkout should return the book
     expect(book).to be_a(Book)
