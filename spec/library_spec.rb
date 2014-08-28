@@ -48,6 +48,14 @@ describe Book do
     expect(book.year_published).to eq 1800
     expect(book2.year_published).to eq 2040
   end
+
+  it "Year published defaults to 1800." do
+    book = Book.new
+    book2 = Book.new('','','','','4th')
+    expect(book.edition).to eq '1st'
+    expect(book2.edition).to eq '4th'
+  end
+
 end
 
 describe Borrower do
@@ -55,6 +63,16 @@ describe Borrower do
     borrower = Borrower.new("Mike")
     expect(borrower.name).to eq "Mike"
   end
+
+  it "Borrower can leave a review." do
+    borrower = Borrower.new("Mike")
+    lib = Library.new
+    lib.register_new_book("Nausea", "Jean-Paul Sartre")
+    borrower.leave_review(lib,1,"Loved it!",10)
+    expect(lib.books[0].review[borrower]).to eq "Loved it!"
+    expect(lib.books[0].rating[borrower]).to eq 10
+  end  
+
 end
 
 describe Library do
