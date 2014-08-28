@@ -39,7 +39,8 @@ class Library
     @books = []
   end
 
-  def add_book(title, author)
+  def register_new_book(title, author)
+    @books << Book.new(title, author)
   end
 
   def check_out_book(book_id, borrower)

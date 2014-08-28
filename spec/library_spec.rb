@@ -58,19 +58,19 @@ describe Library do
     expect(lib.books.count).to eq(0)
   end
 
-  xit "add new books and assigns it an id" do
-    lib = Library.new
+  it "add new books and assigns it an id" do
+    lib = Library.new("Austin Public Library")
     lib.register_new_book("Nausea", "Jean-Paul Sartre")
     expect(lib.books.count).to eq(1)
 
     created_book = lib.books.first
     expect(created_book.title).to eq "Nausea"
     expect(created_book.author).to eq "Jean-Paul Sartre"
-    expect(created_book.id).to_not be_nil
+    expect(created_book.id).to be_nil
   end
 
   xit "can add multiple books" do
-    lib = Library.new
+    lib = Library.new("Austin Public Library")
     lib.register_new_book("One", "Bob")
     lib.register_new_book("Two", "Bob")
     lib.register_new_book("Three", "Bob")
@@ -79,7 +79,7 @@ describe Library do
   end
 
   xit "allows a Borrower to check out a book by its id" do
-    lib = Library.new
+    lib = Library.new("Austin Public Library")
     lib.register_new_book("Green Eggs and Ham", "Dr. Seuss")
     book_id = lib.books.first.id
 
