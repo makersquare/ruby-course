@@ -79,6 +79,7 @@ class Library
   def check_in_book(book)
     book.check_in
     book.borrower.checked_out_books -= 1
+    book.borrower = nil
   end
 
   def available_books
