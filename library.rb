@@ -90,10 +90,15 @@ class Library
     book.status = 'available'
   end
 
+  #array of available books
   def available_books
+    ids = book_ids_to_borrowers.keys
+    available_books = books.select {|x| ids.include?(x.id) == false }
   end
 
   def borrowed_books
+    ids = book_ids_to_borrowers.keys
+    borrowed_books = books.select {|x| ids.include?(x.id) == true }
   end
 
   def get_borrower(book_id)
