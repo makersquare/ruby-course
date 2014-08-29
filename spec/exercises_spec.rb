@@ -105,10 +105,19 @@ describe 'Exercise 5' do
 
 end
 
-# describe 'Exercise 6' do
-#   it "triples the length of a string" do
-#   end
-# end
+describe 'Exercise 6' do
+  it "Updates the last item in the array to 'panda'" do
+    array = [1,2,3]
+    Exercises.ex6(array)
+    expect(array).to eq([1,2,'panda'])
+  end
+
+  it "Updates the last item in the array to 'GOZILLA' if already 'panda'" do
+    array = [1,2,'panda']
+    Exercises.ex6(array)
+    expect(array).to eq([1,2,'GODZILLA'])
+  end
+end
 
 # describe 'Exercise 7' do
 #   it "triples the length of a string" do
