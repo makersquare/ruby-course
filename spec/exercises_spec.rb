@@ -41,3 +41,11 @@ describe 'Exercise 4' do
     expect(result).to eq(3)
   end
 end
+
+describe 'Exercise 5' do
+  it "Iterates through an array and `puts` each element" do
+    result = Exercises.ex5([1,2,3])
+    expect(result).to start_with(1)
+    expect(result).to end_with(3)
+  end
+end
