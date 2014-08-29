@@ -125,4 +125,29 @@ describe Exercises do
       expect(res).to be_nil
     end
   end
+
+  describe '.ex8' do
+    it 'puts out the names of people give an array of hashes' do
+      people = [
+          {
+            :name => "Bob",
+            :occupation => "Builder"
+          },
+          {
+            :name => "Yusef",
+            :occupation => "Student"
+          },
+          {
+            :name => "Sam",
+            :occupation => "Fictional person"
+          }
+        ]
+
+      $stdout.should_receive(:puts).with("Bob the Builder")
+      $stdout.should_receive(:puts).with("Yusef the Student")
+      $stdout.should_receive(:puts).with("Sam the Fictional person")
+
+      Exercises.ex8(people)
+    end
+  end
 end
