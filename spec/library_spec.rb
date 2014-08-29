@@ -45,6 +45,21 @@ describe Book do
     expect(book.year_published). to eq 'unknown'
     expect(book.edition). to eq 'unknown'
   end
+
+  it "has a due date attribute that stores as one week from now when checked out" do
+    borrower = Borrower.new("Mike")
+    lib = Library.new("Austin Public Library")
+    lib.register_new_book("Green Eggs and Ham", "Dr. Seuss")
+    book_id = lib.books.first.id
+    book = lib.check_out_book(book_id, borrower)
+    overdue_books = borrower.books_checked_out.any? {|x| x.due_date < Time.now}
+
+    expect(overdue_books).to eq(false)
+
+    overdue_books = borrower.books_checked_out.any? {|x| x.due_date < Time.now + (60 * 60 * 24 * 7 * 1)}
+    
+    expect(overdue_books).to eq(true)
+  end
 end
 
 describe Borrower do
@@ -64,20 +79,6 @@ describe Borrower do
     expect(borrower.reviews[book.title]).to eq([7, ""])
   end
 
-  it "has an overdue attribute that returns true if any books are overdue" do
-    borrower = Borrower.new("Mike")
-    lib = Library.new("Austin Public Library")
-    lib.register_new_book("Green Eggs and Ham", "Dr. Seuss")
-    book_id = lib.books.first.id
-    book = lib.check_out_book(book_id, borrower)
-    overdue_books = borrower.books_checked_out.any? {|x| x.due_date < Time.now}
-
-    expect(overdue_books).to eq(false)
-
-    overdue_books = borrower.books_checked_out.any? {|x| x.due_date < Time.now + (60 * 60 * 24 * 7 * 1)}
-    
-    expect(overdue_books).to eq(true)
-  end
 end
 
 describe Library do
@@ -136,7 +137,6 @@ describe Library do
     (Time.now + (60 * 60 * 24 * 7 * 1) - book.due_date).should be < 1
 
     lib.check_in_book(book)
-
     expect(book.due_date).to eq(nil)
   end
 
@@ -186,6 +186,10 @@ describe Library do
     book.due_date = Time.now - (60 * 60 * 24)
 
     expect(lib.check_out_book(book_id2, nielsen)).to eq(nil)
+
+    lib.check_in_book(book)
+    
+    expect(lib.check_out_book(book_id2, nielsen).class).to eq(Book)
   end
 
   it "allows a Borrower to check a book back in" do
