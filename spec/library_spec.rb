@@ -39,6 +39,12 @@ describe Book do
     book.check_in
     expect(book.status).to eq 'available'
   end
+
+  it "has a default year_publishd and edition of unknown" do
+    book = Book.new("The Stranger", "Albert Camus")
+    expect(book.year_published). to eq 'unknown'
+    expect(book.edition). to eq 'unknown'
+  end
 end
 
 describe Borrower do
