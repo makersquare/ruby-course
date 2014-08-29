@@ -37,11 +37,11 @@ end
 
 class Library
   attr_reader :name, :title, :author, :who_has_book
-  attr_accessor :books, :id_num, :borrower
+  attr_accessor :books, :id_num, :books_out
 
   def initialize(name)
     @name = name
-    @borrower = Hash.new(0)
+    @books_out = Hash.new(0)
     @books = [ ]
     @id_num = 0
   end
@@ -54,7 +54,7 @@ class Library
     @books.each do |b|
       if b.id == book_id && b.status == 'available'
         b.check_out
-        @borrower[book_id] = borrower
+        @books_out[book_id] = borrower
         return b
       else
         return nil
@@ -63,6 +63,8 @@ class Library
   end
 
   def check_in_book(book)
+    @books_out[book.id] = nil
+    book.check_in
   end
 
   def available_books
