@@ -1,6 +1,6 @@
-require 'rubygems'
+# require 'rubygems'
 require 'rspec'
-require 'pry-byebug'
+# require 'pry-byebug'
 require_relative '../exercises.rb'
 
 describe 'Exercise 0' do
@@ -38,10 +38,18 @@ describe 'Exercise 1' do
   end
 end
 
-# describe 'Exercise 2' do
-#   it "triples the length of a string" do
-#   end
-# end
+describe 'Exercise 2' do
+  it "returns the second element of an array" do
+    array = [1, 2, 3]
+    result = Exercises.ex2(array)
+    expect(result).to eq(2)
+  end
+
+  it "returns nil if there's no second element of an array" do
+    result = Exercises.ex2([])
+    expect(result).to be_nil
+  end
+end
 
 # describe 'Exercise 3' do
 #   it "triples the length of a string" do
