@@ -70,8 +70,13 @@ describe Borrower do
     lib.register_new_book("Green Eggs and Ham", "Dr. Seuss")
     book_id = lib.books.first.id
     book = lib.check_out_book(book_id, borrower)
+    overdue_books = borrower.books_checked_out.any? {|x| x.due_date < Time.now}
 
-    expect(borrower.overdue).to eq(false)
+    expect(overdue_books).to eq(false)
+
+    overdue_books = borrower.books_checked_out.any? {|x| x.due_date < Time.now + (60 * 60 * 24 * 7 * 1)}
+    
+    expect(overdue_books).to eq(true)
   end
 end
 

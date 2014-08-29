@@ -37,7 +37,6 @@ class Borrower
     @name = name
     @books_checked_out = []
     @reviews = {}
-    @overdue = false
   end
 
   def review_book(book, rating, review="")
