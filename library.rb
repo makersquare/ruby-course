@@ -50,14 +50,18 @@ class Library
 
 
   def check_out_book(book_id, borrower)
+   bcount = @borrower.select {|k,v| v == borrower}
+   if bcount.length > 1
+    return nil
+  else
     @books.each do |b|
       if b.id == book_id && b.status == "available"
         b.check_out
         @borrower[book_id] = borrower
         return b 
-      else 
-        return nil
+      end
     end
+      return nil
     end
   end
 
@@ -71,10 +75,16 @@ class Library
   end
 
   def available_books
-    @borrower.select {|k, v| v == "available"}
+    available_books = []
+    @books.each do |b|
+      if b.status == "available"
+        available_books.push(b)
+      end
+    end
+    available_books
   end
 
   def borrowed_books
-    @borrower.select {|k, v| v != "available"}
+    # @borrower.select {|k, v| v != "available"}
   end
 end
