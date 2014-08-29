@@ -75,7 +75,7 @@ describe Borrower do
 
     expect(book.reviews.size).to eq(1)
     expect(book.reviews[borrower.name]).to eq([7, ""])
-    #binding.pry
+    
     expect(borrower.reviews[book.title]).to eq([7, ""])
   end
 
@@ -299,17 +299,42 @@ describe Library do
     lib.check_out_book(book_id2, vick)
 
     expect(lib.list_borrowed_books.size).to eq 2
-    expect(lib.list_borrowed_books.first.class).to be_a(Book)
+    expect(lib.list_borrowed_books.first.class).to eq(Book)
+    
+    lib.check_in_book(book1) 
+
+    expect(lib.list_borrowed_books.size).to eq 1
+    expect(lib.list_borrowed_books.first).to eq(book2)   
+  end
+
+  it "provides a list of overdue books and when they were due" do
+    lib = Library.new("Austin Public Library")
+    book1 = lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
+    book2 = lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
+    book_id1 = lib.books.first.id
+    book_id2 = lib.books.last.id
+
+    kors = Borrower.new("Michael Kors")
+    vick = Borrower.new("Michael Vick")
+
+    lib.check_out_book(book_id1, kors)
+    lib.check_out_book(book_id2, vick)
+
+    book1.due_date = Time.now - 1
+    book2.due_date = Time.now - 1
+
+    expect(lib.list_overdue_books.size).to eq 2
+    expect(lib.list_overdue_books.first.class).to eq(Book)
 
     lib.check_in_book(book1) 
 
-    expect(lib.list_borrowed_books.size).to eq 
-    expect(lib.list_borrowed_books.first).to eq(book2)   
+    expect(lib.list_overdue_books.size).to eq 1
+    expect(lib.list_overdue_books.first).to eq(book2)   
   end
 end
 
 
-
+#binding.pry
 
 
 

@@ -60,6 +60,7 @@ class Library
     @books << new_book
     @available_books << new_book
     @book_id +=1
+    new_book
   end
 
   def check_out_book(book_id, borrower)
@@ -100,4 +101,31 @@ class Library
     end
   end
 
+  def list_borrowed_books
+    @borrowed_books.each_index do |index|
+      book = @borrowed_books[index]
+      puts "#{index + 1}. #{book.title}
+        Checked out by: #{book.borrower.name} 
+        Due date: #{book.due_date.month}/#{book.due_date.day}/#{book.due_date.year}"
+    end
+  end
+
+  def list_overdue_books
+    @borrowed_books.each_index do |index|
+      book = @borrowed_books[index]
+      if book.due_date - Time.now < 0
+        puts "#{index + 1}. #{book.title}
+        Checked out by: #{book.borrower.name} 
+        Due date: #{book.due_date.month}/#{book.due_date.day}/#{book.due_date.year}"
+      end
+    end
+  end
+
 end
+
+
+
+
+
+
+
