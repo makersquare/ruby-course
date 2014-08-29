@@ -74,15 +74,27 @@ describe Book do
   it "Allows Borrowers to see available and checked out books in a library" do
     lib = Library.new("Hogwarts Library")
     borrower = Borrower.new("Jimmy")
+    lib.register_new_book("The Old Man and the Sea", "Ernest Hemingway")
+    lib.register_new_book("1984", "George Orwell")
+    lib.register_new_book("Inferno", "Dante")
+
+    lib.check_out_book(lib.available_books[1].id, borrower)
+    lib.borrowed_books.first.due_date -= 61*60*24*7
+    borrower.any_late_books?
+
+    expect(borrower.late_books.empty?).to be_false
+  end
+
+  it "Allows Borrowers to see any overdue books" do 
+    lib = Library.new("Hogwarts Library")
+    borrower = Borrower.new("Jimmy")
     borrower2 = Borrower.new("Alexander")
     lib.register_new_book("The Old Man and the Sea", "Ernest Hemingway")
     lib.register_new_book("1984", "George Orwell")
     lib.register_new_book("Inferno", "Dante")
 
     lib.check_out_book(lib.available_books[1].id, borrower2)
-
-    expect(borrower.books_available(lib)).to eq(lib.available_books)
-    expect(borrower.books_checked_out(lib)).to eq(lib.borrowed_books)
+    lib.borrowed_books.first.due_date -= 61*60*24*7
   end
 end
 

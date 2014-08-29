@@ -93,17 +93,22 @@ class Borrower
     end
   end
 
+  def books_overdue(lib)
+    lib.overdue_books
+  end
+
 end
 
 class Library
   attr_reader :name
-  attr_accessor :books, :available_books, :borrowed_books
+  attr_accessor :books, :available_books, :borrowed_books, :overdue_books
 
   def initialize(name)
     @name = name
     @books = []
     @available_books = []
     @borrowed_books = []
+    @overdue_books = []
   end
 
   def register_new_book(title, author)
@@ -166,6 +171,8 @@ class Library
       end
     end
   end
+
+  def is_book
 
 end
 
