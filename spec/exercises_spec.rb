@@ -31,4 +31,9 @@ describe 'Exercises' do
     expect(Exercises.ex4([9])).to eq(9)
     expect(Exercises.ex4([10,9,8,7,88,6,5,4,15,3,2,1])).to eq(88)
   end
+  it 'Iterates through an array and `puts` each element' do
+    STDOUT.should_receive(:puts).with("string")
+    STDOUT.should_receive(:puts).with('cheese')
+    Exercises.ex5(["string", 'cheese'])
+  end
 end
