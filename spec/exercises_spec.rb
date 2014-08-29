@@ -162,18 +162,20 @@ end
      test3 = Exercises.ex9(2000)
      expect(test).to be_false
      expect(test2).to be_true
-     expect(test3).to be_false
+     expect(test3).to be_true
    end
  end
 
 describe 'Exercise 10' do
   it "Returns 'happy hour' if within 4-6pm" do
-    $stdout.should_receive(:puts).with("happy hour")
-    Exercises.ex10(Time.new(2000, 10, 31, 16, 2, 2))
+    happy = Time.parse("5 pm")
+    Time.stub(:now).and_return(happy)
+    expect(Exercises.ex10).to eq('happy hour')
   end
 
   it "Returns 'normal prices' if outside that time" do
-    $stdout.should_receive(:puts).with("normal prices")
-    Exercises.ex10(Time.new(2000))
+    early = Time.parse("11 am")
+    Time.stub(:now).and_return(early)
+    expect(Exercises.ex10).to eq('normal prices')
   end
 end

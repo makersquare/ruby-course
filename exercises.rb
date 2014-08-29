@@ -76,19 +76,19 @@ module Exercises
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
-    time % 4 == 0 && !(time % 100 == 0 || time % 400 == 0)
+    time % 4 == 0 && !(time % 100 == 0 && !(time % 400 == 0))
   end
 
   # Exercise 10
   #  - Returns "happy hour" if it is between 4 and 6pm
   #    Otherwise, returns "normal prices"
   # Hint: Read the "Stubbing" documentation on the Learn app.
-  def self.ex10(time)
-    time_test = time.to_s.split[1].split(":")[0].to_i 
+  def self.ex10
+    time_test = Time.now.to_s.split[1].split(":")[0].to_i 
     if time_test >= 16 && time_test <= 18
-      puts "happy hour"
+      return "happy hour"
     else
-      puts "normal prices"
+      return "normal prices"
     end
   end
 end
