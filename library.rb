@@ -32,14 +32,17 @@ class Borrower
 
   def initialize(name)
     @name = name
-    @last_id = 0
   end
 end
+
+
+
 
 class Library
 
   def initialize
     @books = []
+    @last_id = 0
   end
 
   def books
@@ -47,12 +50,18 @@ class Library
   end
 
   def register_new_book(title, author)
-    last_id =+ 1
-    @books << Book.new(title, author, id=0)
+    @last_id =+ 1
+    @books << Book.new(title, author, id=@last_id)
 
   end
 
   def check_out_book(book_id, borrower)
+    @books.each do |book|
+      if book.id == book_id
+        book.check_out
+        return book
+      end
+    end
   end
 
   def check_in_book(book)
