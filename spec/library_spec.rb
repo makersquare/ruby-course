@@ -127,7 +127,7 @@ describe Library do
     sam = Borrower.new('Sam-I-am')
     book = lib.check_out_book(book_id, sam)
 
-    expect(book.due_date).to eq()
+    (Time.now + (60 * 60 * 24 * 7 * 1) - book.due_date).should be < 1
   end
 
   it "knows who borrowed a book" do

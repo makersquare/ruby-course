@@ -1,7 +1,7 @@
 
 class Book
   attr_reader :author, :title, :year_published, :edition
-  attr_accessor :id, :status, :borrower, :reviews
+  attr_accessor :id, :status, :borrower, :reviews, :due_date
 
   def initialize(title, author, id=nil, status="available", year_published="unknown", edition="unknown")
     @author = author
@@ -12,6 +12,7 @@ class Book
     @year_published = year_published
     @edition = edition
     @reviews = {}
+    @due_date = nil
   end
 
   def check_out
@@ -72,6 +73,7 @@ class Library
       book_out.borrower = borrower
       book_out.status = "checked_out"
       borrower.books_checked_out += 1
+      book_out.due_date = Time.now + (60 * 60 * 24 * 7 * 1)
       @available_books.delete(book_out)
       @borrowed_books << book_out
       book_out
