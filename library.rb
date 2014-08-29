@@ -37,22 +37,29 @@ end
 
 class Library
   attr_reader :name, :title, :author, :who_has_book
-  attr_accessor :books
+  attr_accessor :books, :id_num, :borrower
 
   def initialize(name)
     @name = name
-    @books = []
+    @borrower = Hash.new(0)
+    @books = [ ]
+    @id_num = 0
   end
 
-  def register_new_book(title, author, id)
-    @books.push(Book.new(title, author, id))
+  def register_new_book(title, author)
+    @books.push(Book.new(title, author, (@id_num += 1)))
   end
 
   def check_out_book(book_id, borrower)
-    # @books.each do |book|
-    #   puts book.id
-    # end
-    # @book.status = 'checked_out'
+    @books.each do |b|
+      if b.id == book_id && b.status == 'available'
+        b.check_out
+        @borrower[book_id] = borrower
+        return b
+      else
+        return nil
+      end
+    end
   end
 
   def check_in_book(book)

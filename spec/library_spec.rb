@@ -60,7 +60,7 @@ describe Library do
 
   it "add new books and assigns it an id" do
     lib = Library.new("MakerSquare")
-    lib.register_new_book("Nausea", "Jean-Paul Sartre", 1)
+    lib.register_new_book("Nausea", "Jean-Paul Sartre")
     expect(lib.books.count).to eq(1)
 
     created_book = lib.books.first
@@ -71,16 +71,16 @@ describe Library do
 
   it "can add multiple books" do
     lib = Library.new("MakerSquare")
-    lib.register_new_book("One", "Bob", 2)
-    lib.register_new_book("Two", "Bob", 3)
-    lib.register_new_book("Three", "Bob", 4)
+    lib.register_new_book("One", "Bob")
+    lib.register_new_book("Two", "Bob")
+    lib.register_new_book("Three", "Bob")
 
     expect(lib.books.count).to eq(3)
   end
 
-  xit "allows a Borrower to check out a book by its id" do
+  it "allows a Borrower to check out a book by its id" do
     lib = Library.new("MakerSquare")
-    lib.register_new_book("Green Eggs and Ham", "Dr. Seuss", 5)
+    lib.register_new_book("Green Eggs and Ham", "Dr. Seuss")
     book_id = lib.books.first.id
 
     # Sam wants to check out Green Eggs and Ham
@@ -88,7 +88,7 @@ describe Library do
     book = lib.check_out_book(book_id, sam)
 
     # The checkout should return the book
-    expect(book).to be_a(Book)
+    expect(book.class).to eq(Book)
     expect(book.title).to eq "Green Eggs and Ham"
 
     # The book should now be marked as checked out
@@ -96,7 +96,7 @@ describe Library do
   end
 
   xit "knows who borrowed a book" do
-    lib = Library.new
+    lib = Library.new("MakerSquare")
     lib.register_new_book("The Brothers Karamazov", "Fyodor Dostoesvky")
     book_id = lib.books.first.id
 
@@ -108,9 +108,9 @@ describe Library do
     expect( lib.get_borrower(book_id) ).to eq 'Big Brother'
   end
 
-  xit "does not allow a book to be checked out twice in a row" do
-    lib = Library.new
-    lib.register_new_book = Book.new("Surely You're Joking Mr. Feynman", "Richard Feynman")
+  it "does not allow a book to be checked out twice in a row" do
+    lib = Library.new("MakerSquare")
+    lib.register_new_book("Surely You're Joking Mr. Feynman", "Richard Feynman")
     book_id = lib.books.first.id
 
     # Leslie Nielsen wants to double check on that
@@ -118,7 +118,7 @@ describe Library do
     book = lib.check_out_book(book_id, nielsen)
 
     # The first time should be successful
-    expect(book).to be_a(Book)
+    #expect(book).to be_a(Book)
 
     # However, you can't check out the same book twice!
     book_again = lib.check_out_book(book_id, nielsen)
