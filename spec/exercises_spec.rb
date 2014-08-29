@@ -54,4 +54,15 @@ describe Exercises do
       expect(Exercises.ex3(array)).to be_nil
     end
   end
+
+  describe '.ex4' do
+    it 'returns the max number of a given array' do
+      array = [2,3,1,59,2,3,-1,32,42,900,2,3,1,0]
+
+      expect(Exercises.ex4(array)).to eq(900)
+    end
+
+    it 'returns nil if array is empty' do
+    end
+  end
 end
