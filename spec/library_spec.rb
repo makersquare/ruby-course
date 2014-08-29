@@ -14,7 +14,6 @@ describe Book do
 
   it "has a default status of available" do
     book = Book.new("The Stranger", "Albert Camus")
-
     expect(book.status).to eq 'available'
   end
 
@@ -88,7 +87,7 @@ describe Library do
     book = lib.check_out_book(book_id, sam)
 
     # The checkout should return the book
-    expect(book.class).to eq(Book)
+    expect(book.class).to be(Book)
     expect(book.title).to eq "Green Eggs and Ham"
 
     # The book should now be marked as checked out
@@ -145,9 +144,9 @@ describe Library do
     expect(book.status).to eq 'available'
   end
 
-  xit "does not allow a Borrower to check out more than one Book at any given time" do
+  it "does not allow a Borrower to check out more than one Book at any given time" do
     # yeah it's a stingy library
-    lib = Library.new
+    lib = Library.new("MakerSquare")
     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
     lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
     lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
@@ -169,15 +168,15 @@ describe Library do
     expect(book).to be_nil
   end
 
-  xit "returns available books" do
-    lib = Library.new
+  it "returns available books" do
+    lib = Library.new("MakerSquare")
     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
     lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
     lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
 
     # At first, all books are available
     expect(lib.available_books.count).to eq(3)
-    expect(lib.available_books.first).to be_a(Book)
+    expect(lib.available_books.first.class).to eq(Book)
 
     jordan = Borrower.new("Michael Jordan")
     book = lib.check_out_book(lib.available_books.first.id, jordan)
