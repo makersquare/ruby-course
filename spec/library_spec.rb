@@ -76,73 +76,75 @@ describe Library do
     expect(lib.books.count).to eq(3)
   end
 
-  # it "allows a Borrower to check out a book by its id" do
-  #   lib = Library.new
-  #   lib.register_new_book("Green Eggs and Ham", "Dr. Seuss")
-  #   book_id = lib.books.first.id
+  it "allows a Borrower to check out a book by its id" do
+    lib = Library.new
+    lib.register_new_book("Green Eggs and Ham", "Dr. Seuss")
+    book_id = lib.books.first.id
 
-  #   # Sam wants to check out Green Eggs and Ham
-  #   sam = Borrower.new('Sam-I-am')
-  #   book = lib.check_out_book(book_id, sam)
+    # Sam wants to check out Green Eggs and Ham
+    sam = Borrower.new('Sam-I-am')
+    book = lib.books[book_id]
+    check_out = lib.check_out_book(book_id, sam)
 
-  #   # The checkout should return the book
-  #   expect(book).to be_a(Book)
-  #   expect(book.title).to eq "Green Eggs and Ham"
+    # The book should now be marked as checked out
+    expect(book.status).to eq 'checked_out'
 
-  #   # The book should now be marked as checked out
-  #   expect(book.status).to eq 'checked_out'
-  # end
+    # The checkout should return the book
+    expect(book).to be_a(Book)
+    expect(book.title).to eq "Green Eggs and Ham"
+  end
 
-  # it "knows who borrowed a book" do
-  #   lib = Library.new
-  #   lib.register_new_book("The Brothers Karamazov", "Fyodor Dostoesvky")
-  #   book_id = lib.books.first.id
-  # 
+  it "knows who borrowed a book" do
+    lib = Library.new
+    lib.register_new_book("The Brothers Karamazov", "Fyodor Dostoesvky")
+    book_id = lib.books.first.id
+  
 
-#     # Big Brother wants to check out The Brothers Karamazov
-#     bro = Borrower.new('Big Brother')
-#     book = lib.check_out_book(book_id, bro)
+    # Big Brother wants to check out The Brothers Karamazov
+    bro = Borrower.new('Big Brother')
+    book = lib.check_out_book(book_id, bro)
 
-#     # The Library should know that he checked out the book
-#     expect( lib.get_borrower(book_id) ).to eq 'Big Brother'
-#   end
+    # The Library should know that he checked out the book
+    expect( lib.get_borrower(book_id) ).to eq 'Big Brother'
+  end
 
-#   xit "does not allow a book to be checked out twice in a row" do
-#     lib = Library.new
-#     lib.register_new_book = Book.new("Surely You're Joking Mr. Feynman", "Richard Feynman")
-#     book_id = lib.books.first.id
+  it "does not allow a book to be checked out twice in a row" do
+    lib = Library.new
+    lib.register_new_book("Surely You're Joking Mr. Feynman", "Richard Feynman")
+    book_id = lib.books.first.id
 
-#     # Leslie Nielsen wants to double check on that
-#     nielsen = Borrower.new('Leslie Nielsen')
-#     book = lib.check_out_book(book_id, nielsen)
+    # Leslie Nielsen wants to double check on that
+    nielsen = Borrower.new('Leslie Nielsen')
+    book = lib.books[book_id]
+    check_out = lib.check_out_book(book_id, nielsen)
 
-#     # The first time should be successful
-#     expect(book).to be_a(Book)
+    # The first time should be successful
+    expect(book).to be_a(Book)
 
-#     # However, you can't check out the same book twice!
-#     book_again = lib.check_out_book(book_id, nielsen)
-#     expect(book_again).to be_nil
+    # However, you can't check out the same book twice!
+    book_again = lib.check_out_book(book_id, nielsen)
+    expect(book_again).to be_nil
 
-#     son = Borrower.new('Leslie Nielsen the 2nd')
-#     book_again = lib.check_out_book(book_id, son)
-#     expect(book_again).to be_nil
-#   end
+    son = Borrower.new('Leslie Nielsen the 2nd')
+    book_again = lib.check_out_book(book_id, son)
+    expect(book_again).to be_nil
+  end
 
-#   xit "allows a Borrower to check a book back in" do
-#     lib = Library.new
-#     lib.register_new_book("Finnegans Wake", "James Joyce")
-#     book_id = lib.books.first.id
+  it "allows a Borrower to check a book back in" do
+    lib = Library.new
+    lib.register_new_book("Finnegans Wake", "James Joyce")
+    book_id = lib.books.first.id
 
-#     # Bob wants to check out Finnegans Wake
-#     bob = Borrower.new('Bob Bobber')
-#     book = lib.check_out_book(book_id, bob)
+    # Bob wants to check out Finnegans Wake
+    bob = Borrower.new('Bob Bobber')
+    book = lib.check_out_book(book_id, bob)
 
-#     # o wait he changed his mind
-#     lib.check_in_book(book)
+    # o wait he changed his mind
+    lib.check_in_book(book)
 
-#     # The book should now be marked as available!
-#     expect(book.status).to eq 'available'
-#   end
+    # The book should now be marked as available!
+    expect(book.status).to eq 'available'
+  end
 
 #   xit "does not allow a Borrower to check out more than one Book at any given time" do
 #     # yeah it's a stingy library
@@ -221,3 +223,5 @@ describe Library do
 #     expect(lib.borrowed_books.first).to be_a(Book)
 #   end
 end
+
+
