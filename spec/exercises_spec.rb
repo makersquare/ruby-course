@@ -38,5 +38,11 @@ describe Exercises do
       expect(Exercises.ex3([100,300])).to eq(400)
     end
   end
+  describe '.ex4' do
+    it 'returns the max number of the given array' do
+
+      expect(Exercises.ex4([3,10,99])).to eq(99)
+    end
+  end
 
 end
