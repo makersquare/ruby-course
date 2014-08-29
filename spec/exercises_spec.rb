@@ -53,12 +53,14 @@ describe 'Exercise 5' do
 end
 
 describe 'Exercise 6' do
-  xit "Updates the last item in the array to 'panda'" do
-    result = Exercises.ex6([1,2,3])
-    expect(result[-1]).to be('panda')
+  it "Updates the last item in the array to 'panda'" do
+    array = [1, 2, 3]
+    result = Exercises.ex6(array)
+    expect(array[-1]).to eq("panda")
   end
-  xit "updates the last item to 'GODZILLA' is the last item is 'panda'" do
-    result = Exercises.ex6([1, 2, 'panda'])
-    expect(resul[-1]).to be('GODZILLA')
+  it "updates the last item to 'GODZILLA' is the last item is 'panda'" do
+    array = [1, 2, 'panda']
+    result = Exercises.ex6(array)
+    expect(array[-1]).to eq('GODZILLA')
   end
 end
