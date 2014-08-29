@@ -1,10 +1,10 @@
 class Book
   attr_reader :author, :title, :id, :status
 
-  def initialize(title, author)
+  def initialize(title, author, id=nil)
     @title = title
     @author = author
-    @id = nil
+    @id = id
     @status = "available"
   end
 
@@ -36,6 +36,7 @@ class Library
   end
 
   def add_book(title, author)
+    @books.unshift(Book.new(title, author, rand(20000).to_s))
   end
 
   def check_out_book(book_id, borrower)
