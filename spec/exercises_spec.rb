@@ -170,14 +170,18 @@ describe Exercises do
 
   describe '.ex10' do
     it 'returns "happy hour" if the time is between 4 and 6pm' do
-      res = Exercises.ex10
+      late = Time.parse("5 pm")
 
+      Time.stub(:now).and_return(late)
+      res = Exercises.ex10
       expect(res).to eq("happy hour")
     end
 
     it 'returns "normal prices" if the time is not between 4 and 6pm' do
-      res = Exercises.ex10
+      early = Time.parse("1 pm")
 
+      Time.stub(:now).and_return(early)
+      res = Exercises.ex10
       expect(res).to eq("normal prices")
     end
   end
