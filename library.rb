@@ -3,11 +3,14 @@ class Book
 
   attr_reader :author, :title, :id, :status
 
+  attr_accessor :checked_out_to
+
   def initialize(title, author, id=nil)
     @author = author
     @title = title
     @id = id
     @status = 'available'
+    @checked_out_to = ''
   end
 
   def check_out
@@ -43,6 +46,7 @@ class Library
   def initialize
     @books = []
     @last_id = 0
+    @borrower_hash = Hash.new([])
   end
 
   def books
@@ -56,15 +60,21 @@ class Library
   end
 
   def check_out_book(book_id, borrower)
-    @books.each do |book|
-      if book.id == book_id
-        book.check_out
+      if @books[book.id].check_out
+        @borrower_hash[:borrower] << @books[book.id]
         return book
       end
     end
   end
 
-  def check_in_book(book)
+  def get_borrower(book_id)
+      @borrower_hash[@books[book.id] == b
+      end
+    end
+  end
+
+
+  def check_in_book(book) 
   end
 
   def available_books
