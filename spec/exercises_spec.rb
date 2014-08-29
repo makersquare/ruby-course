@@ -21,4 +21,9 @@ describe 'Exercise'  do
 		result = Exercises.ex2([1,2,3])
 		expect(result).to eq(2)
 	end
+
+	it "returns the sume of the given array of numbers" do
+		result = Exercises.ex3([1,2,3])
+		expect(result). to eq(6)
+	end
 end
