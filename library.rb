@@ -4,7 +4,7 @@ class Book
   attr_accessor :id, :reviews, :due_in, :on_hold, :overdue
 
 
-  def initialize(title="", author="", year_published=nil, edition=nil)
+  def initialize(title=nil, author=nil, year_published=nil, edition=nil)
     @title = title
     @author = author
     @id = nil
@@ -83,7 +83,7 @@ end
 
 class Library
   attr_accessor :books
-  @@BORROWING_TIME = 10 #7*24*60*60
+  @@BORROWING_TIME = 1 #7*24*60*60
 
   def initialize(name="")
     @name = name
@@ -174,5 +174,34 @@ class Library
     end
     return false
   end
+
+  # ALTERNATES WITH NICK
+
+  # def check_out_book(book_id,borrower)
+  #   if @borrowed_books.values.count(borrower) >= 2 #!! look at what Array#count can do
+  #   book = @books.find do |b|
+  #     b.id == book_id
+  #   end
+
+  #   if book.check_out
+  #     @borrowed_books[book.id] = borrower.name 
+  #     # Class hash to store ID to borrower
+  #     book
+  #   else
+  #     nil
+  #   end
+  # end
+
+  # But you can take out line 181 and put it in a helper method
+  # def check_out_book...
+  #   return nil if ineligible_borrower?
+
+  # def ineligible_borrower?(borrower)
+  #   @borrowed_books.values.count(borrower) >= 2
+  #   # and now we can also see if they have overdue books
+  # end
+
+  # careful of nested ifs!
+
 
 end
