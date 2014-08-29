@@ -150,4 +150,21 @@ describe Exercises do
       Exercises.ex8(people)
     end
   end
+
+  describe '.ex9' do
+    it 'returns false if given time is not a leap year' do
+      time = Time.now
+      res = Exercises.ex9(time)
+
+      expect(res).to be_false
+    end
+
+    it 'returns true if given time is a leap year' do
+      time = Time.now
+      time += 60*60*24*365*6
+      res = Exercises.ex9(time)
+
+      expect(res).to be_true
+    end
+  end
 end
