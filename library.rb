@@ -10,7 +10,6 @@ class Book
     @title = title
     @id = id
     @status = 'available'
-    @checked_out_to = ''
   end
 
   def check_out
@@ -44,9 +43,8 @@ end
 class Library
 
   def initialize
-    @books = []
+    @books = {}
     @last_id = 0
-    @borrower_hash = Hash.new([])
   end
 
   def books
@@ -55,22 +53,17 @@ class Library
 
   def register_new_book(title, author)
     @last_id =+ 1
-    @books << Book.new(title, author, id=@last_id)
+    @books[@last_id] = Book.new(title, author, id=@last_id)
 
   end
 
   def check_out_book(book_id, borrower)
-      if @books[book.id].check_out
-        @borrower_hash[:borrower] << @books[book.id]
-        return book
-      end
-    end
+    @books.each |book|
+
   end
 
   def get_borrower(book_id)
-      @borrower_hash[@books[book.id] == b
-      end
-    end
+    @borrower_hash[id].name
   end
 
 
