@@ -41,6 +41,35 @@ describe Book do
     book.check_in
     expect(book.status).to eq 'available'
   end
+
+  it "gives a due date" do
+    @time_now = Time.parse("Feb 8 1988")
+    Time.stub(:now).and_return(@time_now)
+    
+    lib = Library.new("Hogwarts Library")
+    borrower = Borrower.new("Jimmy")
+    lib.register_new_book("The Old Man and the Sea", "Ernest Hemingway")
+    lib.check_out_book(lib.books.first.id, borrower)
+
+    expect(lib.books.first.due_date).to eq(Time.now + 60*60*24*7)
+  end
+
+  it "restricts borrowers from borrowing a book if they have an overdue book" do
+    @time_now = Time.parse("Feb 8 1988")
+    Time.stub(:now).and_return(@time_now)
+
+    lib = Library.new("Hogwarts Library")
+    borrower = Borrower.new("Jimmy")
+    lib.register_new_book("The Old Man and the Sea", "Ernest Hemingway")
+    lib.check_out_book(lib.books.first.id, borrower)
+
+    expect(borrower.any_late_books?).to eq(false)
+    borrower.books_borrowed.first.due_date -= 61*60*24*7
+    expect(borrower.any_late_books?).to eq(true)
+
+    lib.register_new_book("The Prince", "Machiavelli")
+    expect(lib.check_out_book(lib.books[1].id, borrower)).to be_nil
+  end
 end
 
 describe Borrower do

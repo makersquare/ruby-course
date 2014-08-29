@@ -1,7 +1,7 @@
 
 class Book
   attr_reader :title, :author, :id, :year_published, :edition
-  attr_accessor :status, :borrowed_by, :reviews
+  attr_accessor :status, :borrowed_by, :reviews, :due_date
 
   def initialize(title, author, id=nil, year_published=nil, edition=nil)
     @title = title
@@ -12,11 +12,13 @@ class Book
     @year_published = year_published
     @edition = edition
     @reviews = []
+    @due_date = nil
   end
 
   def check_out
     if @status == 'available'
       @status = 'checked_out'
+      @due_date = Time.now + 60*60*24*7
       return true
     else
       return false
@@ -31,20 +33,31 @@ class Book
     @borrowed_by = borrower
   end
 
+  def is_book_late?
+    if self.due_date > Time.now
+      return true
+    else
+      return false
+    end
+  end
+
 end
 
 class Borrower
   attr_reader :name
-  attr_accessor :book_borrowed, :books_reviewed
+  attr_accessor :book_borrowed, :books_reviewed, :books_borrowed, :late_books
 
   def initialize(name)
     @name = name
     @book_borrowed = nil
+    @books_borrowed = []
     @books_reviewed = []
+    @late_books = []
   end
 
   def book_that_was_borrowed(book)
     @book_borrowed = book
+    @books_borrowed << book
   end
 
   def review_book(book, review, rating=nil)
@@ -56,6 +69,22 @@ class Borrower
                              :review => review,
                              :rating => rating
                            }
+  end
+
+  def any_late_books?
+    self.books_borrowed.each do |book|
+      if book.due_date < Time.now
+        late_books << book
+        return true
+      end
+    end
+    false
+  end
+
+  def books_available(lib)
+  end
+
+  def books_checked_out(lib)
   end
 
 end
@@ -77,24 +106,26 @@ class Library
     @available_books << book
   end
 
-  # def add_book(title, author)
-  # end
-
   def check_out_book(book_id, borrower)
     if borrower.book_borrowed == nil
+      false
       new_book = ''
       self.books.each { |book|
         if book.id == book_id
           new_book = book
         end
       }
-      if new_book.status == 'available'
-        new_book.check_out
-        borrower.book_that_was_borrowed(new_book)
-        new_book.borrowing_book(borrower)
-        self.available_books.delete(new_book)
-        self.borrowed_books << new_book
-        new_book
+      if borrower.any_late_books? == false
+        if new_book.status == 'available'
+          new_book.check_out
+          borrower.book_that_was_borrowed(new_book)
+          new_book.borrowing_book(borrower)
+          self.available_books.delete(new_book)
+          self.borrowed_books << new_book
+          new_book
+        else
+          return nil
+        end
       else
         return nil
       end
