@@ -106,4 +106,23 @@ describe Exercises do
       expect(res).to eq(expectation)
     end
   end
+
+  describe '.ex7' do
+    it 'adds inputted string to end of array if it already exists in array' do
+      str = "string"
+      array = ["str", 2, "string", 3, "abc"]
+      expectation = ["str", 2, "string", 3, "abc", "string"]
+      res = Exercises.ex7(array, str)
+
+      expect(res).to eq(expectation)
+    end
+
+    it "doesn't add the string if it isnt found" do
+      str = "string"
+      array = [1,2,3,4]
+      res = Exercises.ex7(array, str)
+
+      expect(res).to be_nil
+    end
+  end
 end
