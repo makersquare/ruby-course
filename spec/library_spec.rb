@@ -73,6 +73,23 @@ describe Borrower do
   end
 end
 
+describe Time do
+  it "elapses a user-defined number of days" do
+    lib = Library.new
+    lib.register_new_book("Green Eggs and Ham", "Dr. Seuss")
+    book_id = lib.books.first.id
+
+    # Sam wants to check out Green Eggs and Ham
+    sam = Borrower.new('Sam-I-am')
+    book = lib.check_out_book(book_id, sam)
+
+    Time.elapse_days(4, lib)
+    binding.pry
+
+    expect(sam.books[book.title][:days_until_due]).to eq(3)
+  end
+end
+
 describe Library do
 
   it "starts with an empty array of books" do

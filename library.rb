@@ -39,11 +39,18 @@ class Borrower
   def initialize(name)
     @name = name
     @books = {}
-    @book_reviews = {}
   end
 
   def leave_review(book, review)
     @books[book.title][:review] = review
+  end
+end
+
+class Time
+  def self.elapse_days(days, lib)
+    borrowers_books_array = lib.books.select { |book| book.borrower != nil }
+    borrowers_book = borrowers_books_array.each { |book| book }
+    borrowers_book.each { |book| book.borrower.books[book.title][:days_until_due] -= days }
   end
 end
 
