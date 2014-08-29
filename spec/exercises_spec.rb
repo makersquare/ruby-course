@@ -25,4 +25,11 @@ describe Exercises do
     end
   end
 
+  describe '.ex2' do
+    it 'returns the second element of an array' do
+
+      expect(Exercises.ex2([0,3,5])).to eq(3)
+    end
+  end
+
 end
