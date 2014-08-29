@@ -45,7 +45,7 @@ end
 
 class Borrower
   attr_reader :name
-  attr_accessor :book_borrowed, :books_reviewed, :books_borrowed, :late_books
+  attr_accessor :book_borrowed, :books_reviewed, :books_borrowed, :late_books, :reserved_book
 
   def initialize(name)
     @name = name
@@ -95,6 +95,10 @@ class Borrower
 
   def books_overdue(lib)
     lib.overdue_books
+  end
+
+  def reserve_book(book, lib)
+    @reserved_book = book
   end
 
 end
@@ -173,6 +177,7 @@ class Library
   end
 
   def is_book
+  end
 
 end
 

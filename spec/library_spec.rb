@@ -96,9 +96,11 @@ describe Book do
     lib.check_out_book(lib.available_books[1].id, borrower2)
     lib.borrowed_books.first.due_date -= 61*60*24*7
   end
+
 end
 
 describe Borrower do
+
   it "has a name" do
     borrower = Borrower.new("Mike")
     expect(borrower.name).to eq "Mike"
@@ -119,6 +121,28 @@ describe Borrower do
     expect(book.reviews.size).to eq(1)
     expect(borrower.books_reviewed.size).to eq(1)
   end
+
+    it "Allows Borrowers to schedule future checkouts for books that are currently checked out" do
+
+    lib = Library.new("Hogwarts Library")
+    borrower = Borrower.new("Jimmy")
+    borrower2 = Borrower.new("Alexander")
+    lib.register_new_book("The Old Man and the Sea", "Ernest Hemingway")
+    lib.register_new_book("1984", "George Orwell")
+    lib.register_new_book("Inferno", "Dante")
+
+    old_man = lib.books.first
+    nineteen = lib.books[1]
+    inferno = lib.books[2]
+
+    lib.check_out_book(nineteen.id, borrower2)
+
+    expect(lib.check_out_book(nineteen.id, borrower)).to be_nil
+
+    borrower.reserve_book(nineteen, lib)
+    expect(borrower.reserved_book).to eq(nineteen)
+  end
+
 end
 
 describe Library do
