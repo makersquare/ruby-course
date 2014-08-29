@@ -22,8 +22,9 @@ class Book
   def check_in
     @status = 'available'
   end
-
 end
+
+
 
 class Borrower
 
@@ -31,18 +32,24 @@ class Borrower
 
   def initialize(name)
     @name = name
+    @last_id = 0
   end
 end
 
 class Library
-  def initialize(name)
+
+  def initialize
     @books = []
   end
 
   def books
+    @books
   end
 
-  def add_book(title, author)
+  def register_new_book(title, author)
+    last_id =+ 1
+    @books << Book.new(title, author, id=0)
+
   end
 
   def check_out_book(book_id, borrower)
