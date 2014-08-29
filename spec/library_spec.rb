@@ -37,10 +37,11 @@ describe Book do
   end
 
   it "can be checked in" do
-    book = Book.new("Heaven to Betsy", "Maud Hart Lovelace")
+    book = Book.new("Heaven to Betsy", "Maud Hart Lovelace", :year_published => 1952)
     book.check_out
     book.check_in
     expect(book.status).to eq 'available'
+    expect(book.year_published). to eq(1952)
   end
 end
 
@@ -49,6 +50,15 @@ describe Borrower do
     borrower = Borrower.new("Mike")
     expect(borrower.name).to eq "Mike"
   end
+
+  it "allows borrowers review books" do
+    borrower = Borrower.new("Mike")
+    book = Book.new("Libs are the best", "AAJ")
+    borrower.submit_rating(book, 5, "As a library lover, I found this book to be the bomb.com")
+    
+    expect(book.reviews.count).to eq(1)
+  end
+
 end
 
 describe Library do

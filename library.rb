@@ -1,7 +1,7 @@
 
 class Book
   attr_reader :author, :title, :year_published, :edition 
-  attr_accessor :status, :id 
+  attr_accessor :status, :id, :reviews 
 
   def initialize(title, author, options={})
     defaults = {
@@ -12,11 +12,11 @@ class Book
     options = defaults.merge(options)
     @title = title
     @author = author
-    
-    @status = "available"
     @year_published = options[:year_published]
     @edition = options[:edition]
     @id = options[:id]
+    @status = "available"
+    @reviews = []
   end
 
   def check_out
@@ -38,6 +38,11 @@ class Borrower
   def initialize(name)
     @name = name
   end
+
+  def submit_rating(book, rating, written_review="N/A")
+    book.reviews << {rating => [@name, written_review]}
+  end
+
 end
 
 
