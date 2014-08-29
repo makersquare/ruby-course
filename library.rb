@@ -36,12 +36,12 @@ class Borrower
 end
 
 class Library
-  attr_accessor :books, :name
+  attr_accessor :books, :name, :book_id
 
   def initialize(name)
     @books = []
     @book_id = 0
-    #ID help thanks to K izzle
+    #ID help from K izzle
   end
 
   def books
@@ -58,6 +58,9 @@ class Library
   end
 
   def check_out_book(book_id, borrower)
+    book = @books.find {|x| x.id == book_id}
+    book.check_out
+    return book
   end
 
   def check_in_book(book)
@@ -67,5 +70,7 @@ class Library
   end
 
   def borrowed_books
+    
+    
   end
 end
