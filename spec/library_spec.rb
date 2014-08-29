@@ -169,6 +169,20 @@ describe Library do
     expect(book_again).to be_nil
   end
 
+  it "does not allow a borrower with an overdue book to check out another book" do
+    lib = Library.new("Austin Public Library")
+    lib.register_new_book("Surely You're Joking Mr. Feynman", "Richard Feynman")
+    lib.register_new_book("Finnegans Wake", "James Joyce")
+    book_id1 = lib.books.first.id
+    book_id2 = lib.books.last.id
+
+    nielsen = Borrower.new('Leslie Nielsen')
+    book = lib.check_out_book(book_id1, nielsen)
+    book.due_date = Time.now - (60 * 60 * 24)
+
+    expect(lib.check_out_book(book_id2, nielsen)).to eq(nil)
+  end
+
   it "allows a Borrower to check a book back in" do
     lib = Library.new("Austin Public Library")
     lib.register_new_book("Finnegans Wake", "James Joyce")

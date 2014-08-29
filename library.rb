@@ -67,7 +67,9 @@ class Library
     book_out = @books[book_id -1] 
     if book_out.status == "checked_out"
       nil
-    elsif borrower.books_checked_out.size >= 2 || 
+    elsif borrower.books_checked_out.size >= 2
+      nil
+    elsif borrower.books_checked_out.any? {|x| x.due_date < Time.now}
       nil
     else
       book_out.borrower = borrower
