@@ -1,7 +1,7 @@
 
 class Book
-  attr_reader :author, :title, :id 
-  attr_accessor :status
+  attr_reader :author, :title 
+  attr_accessor :status, :id 
 
   def initialize(title, author, id=nil)
     @title = title
@@ -33,7 +33,7 @@ end
 
 
 class Library
-  attr_accessor :books, :borrower, :idnum
+  attr_accessor :books, :borrower, :idnum, :borrowed_books
   def initialize(name)
     @books = []
     @idnum = 0
@@ -84,7 +84,13 @@ class Library
     available_books
   end
 
-  def borrowed_books
-    # @borrower.select {|k, v| v != "available"}
+  def borrowed_books 
+  borrowed_books = []
+    @books.each do |b|
+      if b.status != "available" 
+        borrowed_books.push(b)
+      end
+    end
+    borrowed_books
   end
 end
