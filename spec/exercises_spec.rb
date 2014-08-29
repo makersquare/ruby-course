@@ -5,14 +5,16 @@ describe Exercises do
   describe '.ex0' do
     it 'returns "nope" if the string passed in is "wishes"' do
       string = "wishes"
+      res = Exercises.ex0(string)
 
-      expect(Exercises.ex0(string)).to eq("nope")
+      expect(res).to eq("nope")
     end
 
     it 'triples a string otherwise' do
       string = "triple"
+      res = Exercises.ex0(string)
 
-      expect(Exercises.ex0(string)).to eq("tripletripletriple")
+      expect(res).to eq("tripletripletriple")
     end
   end
 
@@ -20,23 +22,27 @@ describe Exercises do
     it 'returns the number of elements inside of array' do
       array1 = [1,2,3]
       array2 = []
+      res1 = Exercises.ex1(array1)
+      res2 = Exercises.ex1(array2)
 
-      expect(Exercises.ex1(array1)).to eq(3)
-      expect(Exercises.ex1(array2)).to eq(0)
+      expect(res1).to eq(3)
+      expect(res2).to eq(0)
     end
   end
 
   describe '.ex2' do
     it 'returns the second element of an array' do
       array1 = [1,2,3,4,5,6]
+      res = Exercises.ex2(array1)
 
-      expect(Exercises.ex2(array1)).to eq(array1[1])
+      expect(res).to eq(array1[1])
     end
 
     it 'returns nil if array size is less than 2' do
       array2 = [1]
+      res = Exercises.ex2(array2)
 
-      expect(Exercises.ex2(array2)).to be_nil
+      expect(res).to be_nil
     end
   end
 
@@ -44,25 +50,44 @@ describe Exercises do
     it 'returns the sum of an array of numbers' do
       array = [1,2,3,4,5]
       sum = 15
+      res = Exercises.ex3(array)
 
-      expect(Exercises.ex3(array)).to eq(sum)
+      expect(res).to eq(sum)
     end
 
     it 'returns nil if the array is empty' do
       array=[]
+      res = Exercises.ex3(array)
 
-      expect(Exercises.ex3(array)).to be_nil
+      expect(res).to be_nil
     end
   end
 
   describe '.ex4' do
     it 'returns the max number of a given array' do
       array = [2,3,1,59,2,3,-1,32,42,900,2,3,1,0]
+      res = Exercises.ex4(array)
 
-      expect(Exercises.ex4(array)).to eq(900)
+      expect(res).to eq(900)
     end
 
     it 'returns nil if array is empty' do
     end
   end
+
+  describe '.ex5' do
+    it 'iterates through an array and puts each element' do
+      array = [1,2,3,4,5]
+
+      $stdout.should_receive(:puts).with(1)
+      $stdout.should_receive(:puts).with(2)
+      $stdout.should_receive(:puts).with(3)
+      $stdout.should_receive(:puts).with(4)
+      $stdout.should_receive(:puts).with(5)
+
+      Exercises.ex5(array)
+    end
+  end
+
+  
 end
