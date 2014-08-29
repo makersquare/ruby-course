@@ -35,7 +35,7 @@ class Borrower
 
   def initialize(name)
     @name = name
-    @books_checked_out = 0
+    @books_checked_out = []
     @reviews = {}
     @overdue = false
   end
@@ -67,12 +67,12 @@ class Library
     book_out = @books[book_id -1] 
     if book_out.status == "checked_out"
       nil
-    elsif borrower.books_checked_out >= 2
+    elsif borrower.books_checked_out.size >= 2 || 
       nil
     else
       book_out.borrower = borrower
       book_out.status = "checked_out"
-      borrower.books_checked_out += 1
+      borrower.books_checked_out << book_out
       book_out.due_date = Time.now + (60 * 60 * 24 * 7 * 1)
       @available_books.delete(book_out)
       @borrowed_books << book_out
@@ -83,6 +83,7 @@ class Library
   def get_borrower(book_id)
     book = @books.find {|x| x.id == book_id}
     book.borrower.name
+    #book.due_date = nil
   end
 
   def check_in_book(book)
@@ -90,8 +91,8 @@ class Library
       nil
     else
       borrower = book.borrower
-      borrower.books_checked_out -= 1
-      book.borrower = nil
+      borrower.books_checked_out.delete(book)
+      book.borrower, book.due_date = nil
       @available_books.push(book)
       @borrowed_books.delete(book)
       book.status = "available"

@@ -120,7 +120,8 @@ describe Library do
     expect(book.status).to eq 'checked_out'
   end
 
-  it "allows a borrower to have a book for a week before it is overdue" do
+  it "sets a due date in one week when a book is checked out
+   and sets due date back to nil when checked in" do
     lib = Library.new("Austin Public Library")
     lib.register_new_book("Green Eggs and Ham", "Dr. Seuss")
     book_id = lib.books.first.id
@@ -128,6 +129,10 @@ describe Library do
     book = lib.check_out_book(book_id, sam)
 
     (Time.now + (60 * 60 * 24 * 7 * 1) - book.due_date).should be < 1
+
+    lib.check_in_book(book)
+
+    expect(book.due_date).to eq(nil)
   end
 
   it "knows who borrowed a book" do
