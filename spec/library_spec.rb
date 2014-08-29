@@ -45,12 +45,52 @@ describe Book do
     book.check_in
     expect(book.status).to eq 'available'
   end
+
+  # added extension tests
+
+  it 'has attribute year published' do
+
+    book1 = Book.new("The Stranger", "Albert Camus", {year: 1990})
+
+    expect(book1.year).to eq(1990)
+    
+  end
+
+  it 'has attribute edition' do
+    book1 = Book.new("The Stranger", "Albert Camus", {edition: "10th"})
+
+    expect(book1.edition).to eq("10th")
+  end
+
+
 end
 
+
 describe Borrower do
+
   it "has a name" do
     borrower = Borrower.new("Mike")
     expect(borrower.name).to eq "Mike"
+  end
+
+  #extension tests
+
+  it 'borrower can leave review on a book with both a rating and optional written review' do
+
+    billy = Borrower.new("Billy")
+    book1 = Book.new("The Stranger", "Albert Camus")
+    book2 = Book.new("Nausea", "Jean-Paul Sartre")
+
+    billy.review_book(book1, 2)git
+    billy.review_book(book2, 3, review: "This book made me sick")
+
+    expect(book1.reviews[0][0]).to eq(2)
+    expect(book2.reviews[0][0]).to eq(3)
+
+
+    expect(book1.reviews[0][1]).to eq("no review was written")
+    expect(book2.reviews[0][1]).to eq("This book made me sick")
+
   end
 end
 
@@ -238,4 +278,5 @@ describe Library do
     expect(lib.borrowed_books.count).to eq(1)
     expect(lib.borrowed_books.first).to be_a(Book)
   end
+
 end

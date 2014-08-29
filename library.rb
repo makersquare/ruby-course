@@ -1,14 +1,16 @@
 
 class Book
-  attr_accessor :author, :title, :id, :status
+  attr_accessor :author, :title, :id, :status, :year, :edition, :reviews
 
-  def initialize(title, author, status: 'available', options= {})
+  def initialize(title, author, options={})
     @title = title
     @author = author
-    @status = status
+    @status = options[:status] || 'available'
     @id = nil
-    @year_published = options[:year_published] 
-    @edition = options[:edition]
+    @year= options[:year] || 'unknown'
+    @edition = options[:edition] || 'unknown'
+    #format is [ [rating, text review], [rating, text review] ]
+    @reviews = []
   end
 
   def check_out()
@@ -34,6 +36,12 @@ class Borrower
 
   def initialize(name)
     @name = name
+  end
+
+  
+  def review_book(book, stars, review: 'no review was written')
+    this_review = [stars, review]
+    book.reviews.push(this_review)
   end
 
 end
