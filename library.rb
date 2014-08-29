@@ -32,8 +32,11 @@ class Borrower
 
   attr_reader :name
 
+  attr_accessor :number_of_books
+
   def initialize(name)
     @name = name
+    @has_book = true
   end
 end
 
@@ -43,8 +46,9 @@ end
 class Library
 
   def initialize
-    @books = {}
+    @books = []
     @last_id = 0
+    @borrowers_hash = {}
   end
 
   def books
@@ -53,17 +57,22 @@ class Library
 
   def register_new_book(title, author)
     @last_id =+ 1
-    @books[@last_id] = Book.new(title, author, id=@last_id)
+    @books << Book.new(title, author, id=@last_id)
 
   end
 
   def check_out_book(book_id, borrower)
-    @books.each |book|
-
+    books.each do |book|
+      if book.id == book_id
+        book.check_out 
+        @borrowers_hash[book.id] = borrower
+        return book
+      end
+    end
   end
 
   def get_borrower(book_id)
-    @borrower_hash[id].name
+    @borrowers_hash[book_id].name
   end
 
 
