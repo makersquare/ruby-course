@@ -182,11 +182,14 @@ describe Library do
     expect(bookthree).to be_nil
   end
 
-  xit "returns available books" do
+  it "returns available books" do
     lib = Library.new("Austin Public Library")
-    lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
-    lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
-    lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
+    book1 = Book.new("Eloquent JavaScript", "Marijn Haverbeke")
+    book2 = Book.new("Essential JavaScript Design Patterns", "Addy Osmani")
+    book3 = Book.new("JavaScript: The Good Parts", "Douglas Crockford")
+    lib.register_new_book(book1)
+    lib.register_new_book(book2)
+    lib.register_new_book(book3)
 
     # At first, all books are available
     expect(lib.available_books.count).to eq(3)
@@ -199,7 +202,7 @@ describe Library do
     expect(lib.available_books.count).to eq(2)
   end
 
-  xit "after a book it returned, it can be checked out again" do
+  it "after a book is returned, it can be checked out again" do
     lib = Library.new("Austin Public Library")
     lib.register_new_book("Harry Potter", "J. K. Rowling")
     book_id = lib.books.first.id
