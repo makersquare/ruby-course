@@ -14,13 +14,15 @@ module Exercises
   # Exercise 1
   #  - Returns the number of elements in the array
   def self.ex1(array)
-    # TODO
+    counter = 0
+    array.each {|x| counter += 1}
+    counter
   end
 
   # Exercise 2
   #  - Returns the second element of an array
   def self.ex2(array)
-    # TODO
+    array[1]
   end
 
   # Exercise 3
