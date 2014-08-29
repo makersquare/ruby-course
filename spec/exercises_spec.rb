@@ -44,5 +44,17 @@ describe Exercises do
       expect(Exercises.ex4([3,10,99])).to eq(99)
     end
   end
+  describe '.ex5' do # DON'T FORGET TO DO THIS
+    xit 'iterates through an array and puts each element' do
+    end
+  end
+
+  describe '.ex6' do
+    it 'Updates the last item in the array to "panda"' do
+
+      expect(Exercises.ex6(["i","love","pizza"])).to eq("panda")
+    end
+  end
+
 
 end
