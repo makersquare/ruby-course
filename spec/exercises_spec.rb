@@ -32,4 +32,11 @@ describe Exercises do
     end
   end
 
+  describe '.ex3' do
+    it 'returns the sum of the given array of numbers' do
+
+      expect(Exercises.ex3([100,300])).to eq(400)
+    end
+  end
+
 end
