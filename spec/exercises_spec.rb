@@ -73,3 +73,17 @@ describe 'Exercise 7' do
     expect(result).to eq(res)
   end
 end
+
+describe 'Exercise 8' do
+  it "iterates through an array of hashes and prints out name and occupation" do
+    array = [{ :name => 'Bob', :occupation => ' the Builder' }, { :name => 'Bill', :occupation => ' the Baker' }, { :name => 'Bo', :occupation => ' the Ball Player' }]
+    $stdout.should_receive(:puts).with("Bob")
+    $stdout.should_receive(:puts).with(" the Builder")
+    $stdout.should_receive(:puts).with("Bill")
+    $stdout.should_receive(:puts).with(" the Baker")
+    $stdout.should_receive(:puts).with("Bo")
+    $stdout.should_receive(:puts).with(" the Ball Player")
+
+    result = Exercises.ex8(array)
+  end
+end
