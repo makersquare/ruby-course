@@ -48,6 +48,22 @@ describe Borrower do
     borrower = Borrower.new("Mike")
     expect(borrower.name).to eq "Mike"
   end
+
+  it "has year_published and edition variables" do
+    book = Book.new("The Prince", "Machiavelli", 1234567, 1496, 5)
+
+    expect(book.year_published).to eq(1496)
+    expect(book.edition).to eq(5)
+  end
+
+  it "allows the borrower to leave a book review" do
+    book = Book.new("The Old Man and the Sea", "Ernest Hemingway")
+    borrower = Borrower.new("Peter")
+    borrower.review_book(book, "I found the book rather shallow and pedantic.", 2)
+
+    expect(book.reviews.size).to eq(1)
+    expect(borrower.books_reviewed.size).to eq(1)
+  end
 end
 
 describe Library do
