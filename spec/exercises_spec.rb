@@ -40,4 +40,18 @@ describe Exercises do
     end
   end
 
+  describe '.ex3' do
+    it 'returns the sum of an array of numbers' do
+      array = [1,2,3,4,5]
+      sum = 15
+
+      expect(Exercises.ex3(array)).to eq(sum)
+    end
+
+    it 'returns nil if the array is empty' do
+      array=[]
+
+      expect(Exercises.ex3(array)).to be_nil
+    end
+  end
 end
