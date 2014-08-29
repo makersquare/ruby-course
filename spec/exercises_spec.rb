@@ -44,8 +44,21 @@ end
 
 describe 'Exercise 5' do
   it "Iterates through an array and `puts` each element" do
-    result = Exercises.ex5([1,2,3])
-    expect(result).to start_with(1)
-    expect(result).to end_with(3)
+    $stdout.should_receive(:puts).with(1)
+    $stdout.should_receive(:puts).with(2)
+    $stdout.should_receive(:puts).with(3)
+
+    Exercises.ex5([1,2,3])
+  end
+end
+
+describe 'Exercise 6' do
+  xit "Updates the last item in the array to 'panda'" do
+    result = Exercises.ex6([1,2,3])
+    expect(result[-1]).to be('panda')
+  end
+  xit "updates the last item to 'GODZILLA' is the last item is 'panda'" do
+    result = Exercises.ex6([1, 2, 'panda'])
+    expect(resul[-1]).to be('GODZILLA')
   end
 end
