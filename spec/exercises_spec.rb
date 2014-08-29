@@ -15,6 +15,28 @@ describe 'Exercise 0' do
   end
 end
 
+describe 'Exercise 1' do
+  it "checks the length of an empty array" do
+    result = Exercises.ex1([])
+    expect(result).to eq(0)
+  end
+
+  it "checks the length of a single-element array" do
+    result = Exercises.ex1([1])
+    expect(result).to eq(1)
+  end
+
+  it "checks the length of a multiple-element array" do
+    result = Exercises.ex1([1,2,3,4])
+    expect(result).to eq(4)
+  end
+
+  it "checks the length of an array with variable elements" do
+    array = [1, "b", :c, {}, []]
+    result = Exercises.ex1(array)
+    expect(result).to eq(5)
+  end
+end
 
 # describe 'Exercise 2' do
 #   it "triples the length of a string" do
