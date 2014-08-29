@@ -24,9 +24,11 @@ end
 
 class Borrower
   attr_reader :name
+  attr_accessor :counter
   def initialize(name)
     @name = name
     @borrowed_books = []
+    @counter = 0
   end
 
   def borrow_book(book)
@@ -46,17 +48,18 @@ class Library
   end
 
   def add_book(title, author)
-    @books.unshift(Book.new(title, author, rand(20000).to_s))
+    @books.push(Book.new(title, author, rand(20000).to_s))
   end
 
   def check_out_book(book_id, borrower)
     found_book = nil
     @books.each do |book| 
-      if book.id == book_id  && book.status != "checked_out"
+      if book.id == book_id  && book.status != "checked_out" && borrower.counter < 2
         book.status = "checked_out"
         borrower.borrow_book(book)
         @borrowers_books[book.id] = borrower.name #jimmy helped some with this
         found_book = book
+        borrower.counter+=1
       end
     end
   found_book

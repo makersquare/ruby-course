@@ -143,9 +143,9 @@ describe Library do
     expect(book.status).to eq 'available'
   end
 
-  xit "does not allow a Borrower to check out more than one Book at any given time" do
+  it "does not allow a Borrower to check out more than two Books at any given time" do
     # yeah it's a stingy library
-    lib = Library.new
+    lib = Library.new("Mega Extreme Adventure Library")
     lib.add_book("Eloquent JavaScript", "Marijn Haverbeke")
     lib.add_book("Essential JavaScript Design Patterns", "Addy Osmani")
     lib.add_book("JavaScript: The Good Parts", "Douglas Crockford")
@@ -154,7 +154,7 @@ describe Library do
     book_1 = lib.books[0]
     book_2 = lib.books[1]
     book_3 = lib.books[2]
-
+    # binding.pry
     # The first two books should check out fine
     book = lib.check_out_book(book_1.id, jackson)
     expect(book.title).to eq "Eloquent JavaScript"
