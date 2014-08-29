@@ -1,4 +1,6 @@
- class Exercises
+require 'pry-byebug'
+
+class Exercises
   # Exercise 0
   #  - Triples a given string `str`
   #  - Returns "nope" if `str` is "wishes"
@@ -25,20 +27,19 @@
   # Exercise 3
   #  - Returns the sum of the given array of numbers
   def self.ex3(array)
-    # TODO
+    array.inject { |sum, num| sum + num}
   end
 
   # Exercise 4
   #  - Returns the max number of the given array
   def self.ex4(array)
-    # TODO
-    
+    array.max
   end
 
   # Exercise 5
   #  - Iterates through an array and `puts` each element
   def self.ex5(array)
-    # TODO
+    array.each {|x| puts x}
   end
 
   # Exercise 6
@@ -46,14 +47,21 @@
   #  - If the last item is already 'panda', update
   #    it to 'GODZILLA' instead
   def self.ex6(array)
-    # TODO
+    if array[-1] == 'panda'
+      array[-1] = 'GODZILLA'
+      # array
+    else
+      array[-1] = "panda"
+      # array
+    end
+    array
   end
 
   # Exercise 7
   #  - If the string `str` exists in the array,
   #    add `str` to the end of the array
   def self.ex7(array, str)
-    # TODO
+    
   end
 
   # Exercise 8
@@ -61,7 +69,9 @@
   #    { :name => 'Bob', :occupation => 'Builder' }
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
-    # TODO
+    people.each do |x|
+      return "#{x[:name]} the #{x[:occupation]}"
+    end
   end
 
   # Exercise 9
