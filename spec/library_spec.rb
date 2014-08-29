@@ -138,9 +138,10 @@ describe Library do
     expect(book_again).to be_nil
   end
 
-  xit "allows a Borrower to check a book back in" do
+  it "allows a Borrower to check a book back in" do
     lib = Library.new("Austin Public Library")
-    lib.register_new_book("Finnegans Wake", "James Joyce")
+    new_book = Book.new("Finnegans Wake", "James Joyce")
+    lib.register_new_book(new_book)
     book_id = lib.books.first.id
 
     # Bob wants to check out Finnegans Wake
@@ -154,12 +155,15 @@ describe Library do
     expect(book.status).to eq 'available'
   end
 
-  xit "does not allow a Borrower to check out more than one Book at any given time" do
+  it "does not allow a Borrower to check out more than two Book at any given time" do
     # yeah it's a stingy library
     lib = Library.new("Austin Public Library")
-    lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
-    lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
-    lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
+    book1 = Book.new("Eloquent JavaScript", "Marijn Haverbeke")
+    book2 = Book.new("Essential JavaScript Design Patterns", "Addy Osmani")
+    book3 = Book.new("JavaScript: The Good Parts", "Douglas Crockford")
+    lib.register_new_book(book1)
+    lib.register_new_book(book2)
+    lib.register_new_book(book3)
 
     jackson = Borrower.new("Michael Jackson")
     book_1 = lib.books[0]
@@ -167,15 +171,15 @@ describe Library do
     book_3 = lib.books[2]
 
     # The first two books should check out fine
-    book = lib.check_out_book(book_1.id, jackson)
-    expect(book.title).to eq "Eloquent JavaScript"
+    bookone = lib.check_out_book(book_1.id, jackson)
+    expect(bookone.title).to eq "Eloquent JavaScript"
 
-    book = lib.check_out_book(book_2.id, jackson)
-    expect(book.title).to eq "Essential JavaScript Design Patterns"
+    booktwo = lib.check_out_book(book_2.id, jackson)
+    expect(booktwo.title).to eq "Essential JavaScript Design Patterns"
 
     # However, the third should return nil
-    book = lib.check_out_book(book_3.id, jackson)
-    expect(book).to be_nil
+    bookthree = lib.check_out_book(book_3.id, jackson)
+    expect(bookthree).to be_nil
   end
 
   xit "returns available books" do

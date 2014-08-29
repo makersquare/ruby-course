@@ -29,10 +29,11 @@ class Book
 end
 
 class Borrower
-  attr_reader :name
+  attr_reader :name, :current_books
 
-  def initialize(name)
+  def initialize(name, current_books=[])
     @name = name
+    @current_books = []
   end
 end
 
@@ -65,13 +66,19 @@ class Library
     elsif book.status == "checked_out"
       return nil      
     else
-      book.check_out
-      book.last_borrower = borrower
+      if borrower.current_books.length >= 2
+        nil
+      else 
+        book.check_out
+        book.last_borrower = borrower
+        borrower.current_books << book
+        return book
+      end
     end
-    return book
   end
 
   def check_in_book(book)
+    book.check_in
   end
 
   def available_books
@@ -86,3 +93,17 @@ class Library
   end
 
 end
+
+    lib = Library.new("Austin Public Library")
+    book1 = Book.new("Eloquent JavaScript", "Marijn Haverbeke")
+    book2 = Book.new("Essential JavaScript Design Patterns", "Addy Osmani")
+    book3 = Book.new("JavaScript: The Good Parts", "Douglas Crockford")
+    lib.register_new_book(book1)
+    lib.register_new_book(book2)
+    lib.register_new_book(book3)
+
+    jackson = Borrower.new("Michael Jackson")
+    book_1 = lib.books[0]
+    book_2 = lib.books[1]
+    book_3 = lib.books[2]
+
