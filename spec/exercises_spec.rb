@@ -143,9 +143,9 @@ describe Exercises do
           }
         ]
 
-      $stdout.should_receive(:puts).with("Bob the Builder")
-      $stdout.should_receive(:puts).with("Yusef the Student")
-      $stdout.should_receive(:puts).with("Sam the Fictional person")
+      Exercises.should_receive(:print).with("Bob the Builder")
+      Exercises.should_receive(:print).with("Yusef the Student")
+      Exercises.should_receive(:print).with("Sam the Fictional person")
 
       Exercises.ex8(people)
     end
@@ -165,6 +165,20 @@ describe Exercises do
       res = Exercises.ex9(time)
 
       expect(res).to be_true
+    end
+  end
+
+  describe '.ex10' do
+    it 'returns "happy hour" if the time is between 4 and 6pm' do
+      res = Exercises.ex10
+
+      expect(res).to eq("happy hour")
+    end
+
+    it 'returns "normal prices" if the time is not between 4 and 6pm' do
+      res = Exercises.ex10
+
+      expect(res).to eq("normal prices")
     end
   end
 end

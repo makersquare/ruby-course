@@ -66,7 +66,7 @@ module Exercises
   #    { :name => 'Bob', :occupation => 'Builder' }
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
-    people.each { |person| puts "#{person[:name]} the #{person[:occupation]}" }
+    people.each { |person| print "#{person[:name]} the #{person[:occupation]}" }
   end
 
   # Exercise 9
@@ -86,7 +86,12 @@ module Exercises
   #    Otherwise, returns "normal prices"
   # Hint: Read the "Stubbing" documentation on the Learn app.
   def self.ex10
-    # TODO
+    time = Time.now
+    if time.hour >= 16 && time.hour <= 18
+      return "happy hour"
+    else
+      return "normal prices"
+    end
   end
 end
 
