@@ -65,10 +65,18 @@ describe 'Exercise 3' do
   end
 end
 
-# describe 'Exercise 4' do
-#   it "triples the length of a string" do
-#   end
-# end
+describe 'Exercise 4' do
+  it "Returns the max number of the given array" do
+    array = [1,2,3,4,-5]
+    result = Exercises.ex4(array)
+    expect(result).to eq(4)
+  end
+
+  it "Returns nil for an empty array" do
+    result = Exercises.ex4([])
+    expect(result).to be_nil
+  end
+end
 
 # describe 'Exercise 5' do
 #   it "triples the length of a string" do
