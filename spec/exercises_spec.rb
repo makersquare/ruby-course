@@ -89,5 +89,21 @@ describe Exercises do
     end
   end
 
-  
+  describe '.ex6' do
+    it 'updates the last item in the array to "panda" if not panda' do
+      array = ["1", "2", "3", "4", 5]
+      expectation = ["1", "2", "3", "4", "panda"]
+      res = Exercises.ex6(array)
+
+      expect(res).to eq(expectation)
+    end
+
+    it 'updates the last item in the array to GODZILLA if it is panda' do
+      array = [1,2,3,4,"panda"]
+      expectation = [1,2,3,4,"GODZILLA"]
+      res = Exercises.ex6(array)
+
+      expect(res).to eq(expectation)
+    end
+  end
 end
