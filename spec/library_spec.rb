@@ -50,6 +50,7 @@ describe Borrower do
   end
 end
 
+
 describe Library do
 
   it "starts with an empty array of books" do
@@ -219,5 +220,97 @@ describe Library do
     # But now there should be one checked out book
     expect(lib.borrowed_books.count).to eq(1)
     expect(lib.borrowed_books.first).to be_a(Book)
+  end
+end
+
+describe Review do
+  it "exists attached to a book" do
+    reviewer = Borrower.new("Mike")
+    lib = Library.new
+    lib.register_new_book("Harry Potter", "J. K. Rowling")
+    book_id = lib.books.last.id
+    book = lib.check_out_book(book_id, reviewer)
+    reviewer.review_book(book,5,"YAY")
+    expect(book.reviews.count).to eq(1)
+  end
+
+  it "is a review attached to a book" do
+    reviewer = Borrower.new("Mike")
+    lib = Library.new
+    lib.register_new_book("Harry Potter", "J. K. Rowling")
+    book_id = lib.books.last.id
+    book = lib.check_out_book(book_id, reviewer)
+    reviewer.review_book(book,5,"YAY")
+    expect(book.reviews.values.first.class).to be_a(Review)
+  end
+
+  it "has five stars" do
+    reviewer = Borrower.new("Mike")
+    lib = Library.new
+    lib.register_new_book("Harry Potter", "J. K. Rowling")
+    book_id = lib.books.last.id
+    book = lib.check_out_book(book_id, reviewer)
+    reviewer.review_book(book,5,"YAY")    
+    expect(book.reviews.values.first.stars).to eq(5)
+  end
+
+  it "has a review" do
+    reviewer = Borrower.new("Mike")
+    lib = Library.new
+    lib.register_new_book("Harry Potter", "J. K. Rowling")
+    book_id = lib.books.last.id
+    book = lib.check_out_book(book_id, reviewer)
+    reviewer.review_book(book,5,"YAY")
+    expect(book.reviews.values.first.review.class).to be_a(String)
+  end
+
+  it "has a reviewer" do 
+    reviewer = Borrower.new("Mike")
+    lib = Library.new
+    lib.register_new_book("Harry Potter", "J. K. Rowling")
+    book_id = lib.books.last.id
+    book = lib.check_out_book(book_id, reviewer)
+    reviewer.review_book(book,5,"YAY")
+    expect(book.reviews.keys.first).to eq(reviewer)
+  end
+
+  it "knows what books are overdue" do
+    del = Borrower.new("Mike")
+    lib = Library.new
+    lib.register_new_book("Harry Potter", "J. K. Rowling")
+    book1_id = lib.books.last.id
+    lib.register_new_book("Harry Potter2", "J. K. Rowling")
+    book2_id = lib.books.last.id
+    book1 = lib.check_out_book(book1_id, del)
+
+    expect(lib.overdue_books.count).to eq(0)
+    expect(lib.available_books.count).to eq(1)
+    expect(lib.borrowed_books.count).to eq(1)
+
+    expect(lib.borrower_has_overdue_books?(del)).to be_false 
+
+    sleep(3)
+    expect(lib.borrower_has_overdue_books?(del)).to be_true
+    book2 = lib.check_out_book(book2_id, del)
+    expect(book2).to be_nil
+  end
+
+  it "allows books to be put on hold and checks out immediately" do
+    del = Borrower.new("Mike")
+    second = Borrower.new("Ravi")
+    lib = Library.new
+    lib.register_new_book("Harry Potter", "J. K. Rowling")
+    book1_id = lib.books.last.id
+    book1 = lib.check_out_book(book1_id, del)
+    lib.check_out_book(book1_id, second)
+    lib.put_on_hold(book1, second)
+
+    expect(book1.on_hold.count).to eq(1)
+
+    lib.check_in_book(book1)
+    expect(book1.on_hold.count).to eq(0)
+
+    expect(second.books_borrowed.first.class).to eq(Book)
+    expect(second.books_borrowed.first.title).to eq("Harry Potter")
   end
 end
