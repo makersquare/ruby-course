@@ -2,14 +2,15 @@ require "./library.rb"
 require 'pry-byebug'
 
 describe Book do
-  it "has a title and author, and nil id" do
-    book = Book.new("The Stranger", "Albert Camus")
+  it "has a title and author, and nil id, year published and edition (optional parameters)" do
+    book = Book.new("The Stranger", "Albert Camus", :edition => 3)
 
     #binding.pry
 
     expect(book.title).to eq "The Stranger"
     expect(book.author).to eq "Albert Camus"
     expect(book.id).to be_nil
+    expect(book.edition).to eq(3)
   end
 
   it "has a default status of available" do

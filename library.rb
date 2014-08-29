@@ -1,13 +1,22 @@
 
 class Book
-  attr_reader :author, :title 
+  attr_reader :author, :title, :year_published, :edition 
   attr_accessor :status, :id 
 
-  def initialize(title, author, id=nil)
+  def initialize(title, author, options={})
+    defaults = {
+      :id => nil,
+      :year_published => nil,
+      :edition => nil
+    }
+    options = defaults.merge(options)
     @title = title
     @author = author
-    @id = id
+    
     @status = "available"
+    @year_published = options[:year_published]
+    @edition = options[:edition]
+    @id = options[:id]
   end
 
   def check_out
@@ -45,7 +54,7 @@ class Library
   end
 
   def register_new_book(title, author)
-    @books << Book.new(title, author, (@idnum += 1))
+    @books << Book.new(title, author, :id => (@idnum += 1))
   end
 
 
