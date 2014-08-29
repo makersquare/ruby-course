@@ -188,7 +188,7 @@ describe Library do
     expect(lib.check_out_book(book_id2, nielsen)).to eq(nil)
 
     lib.check_in_book(book)
-    
+
     expect(lib.check_out_book(book_id2, nielsen).class).to eq(Book)
   end
 
@@ -284,4 +284,35 @@ describe Library do
     expect(lib.borrowed_books.count).to eq(1)
     expect(lib.borrowed_books.first).to be_a(Book)
   end
+
+  it "provides a list of who has checked out which Book and when those books are due to be returned" do
+    lib = Library.new("Austin Public Library")
+    book1 = lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
+    book2 = lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
+    book_id1 = lib.books.first.id
+    book_id2 = lib.books.last.id
+
+    kors = Borrower.new("Michael Kors")
+    vick = Borrower.new("Michael Vick")
+
+    lib.check_out_book(book_id1, kors)
+    lib.check_out_book(book_id2, vick)
+
+    expect(lib.list_borrowed_books.size).to eq 2
+    expect(lib.list_borrowed_books.first.class).to be_a(Book)
+
+    lib.check_in_book(book1) 
+
+    expect(lib.list_borrowed_books.size).to eq 
+    expect(lib.list_borrowed_books.first).to eq(book2)   
+  end
 end
+
+
+
+
+
+
+
+
+
