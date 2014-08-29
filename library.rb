@@ -50,13 +50,14 @@ class Library
 
   def check_out_book(book_id, borrower)
     checkedoutbook = nil
+    # binding.pry
     people_with_books_out = @books_out.values
     people_books_out_count = Hash.new(0)
     people_with_books_out.each do |name|
       people_books_out_count[name] += 1
     end
 
-    if people_books_out_count[borrower] < 1
+    if people_books_out_count[borrower] < 2
       @books.each do |b|
         if b.id == book_id && b.status == 'available'
           b.check_out
