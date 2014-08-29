@@ -155,11 +155,16 @@ describe 'Exercise 8' do
   end
 end
 
-
-# describe 'Exercise 9' do
-#   it "triples the length of a string" do
-#   end
-# end
+ describe 'Exercise 9' do
+   it "Returns `true` if the given time is in a leap year, false if not" do
+     test = Exercises.ex9(2014)
+     test2 = Exercises.ex9(2012)
+     test3 = Exercises.ex9(2000)
+     expect(test).to be_false
+     expect(test2).to be_true
+     expect(test3).to be_false
+   end
+ end
 
 # describe 'Exercise 10' do
 #   it "triples the length of a string" do
