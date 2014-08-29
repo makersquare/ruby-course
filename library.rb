@@ -36,7 +36,7 @@ class Borrower
 
   def initialize(name)
     @name = name
-    @checked_out_books = 0
+    @checked_out_books = []
   end
 end
 
@@ -55,9 +55,9 @@ class Library
 
   def check_out_book(book_id, borrower)
     book = @books.select { |book| book.id == book_id }.first
-    if book.status == "available" && borrower.checked_out_books < 2
+    if book.status == "available" && borrower.checked_out_books.length < 2
       book.check_out
-      borrower.checked_out_books +=1
+      borrower.checked_out_books.push(book)
       book.borrower = borrower
       book
     else
@@ -71,7 +71,7 @@ class Library
 
   def check_in_book(book)
     book.check_in
-    book.borrower.checked_out_books -= 1
+    book.borrower.checked_out_books.delete(book)
     book.borrower = nil
   end
 
