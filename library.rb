@@ -38,11 +38,12 @@ class Borrower
 end
 
 class Library
-  attr_accessor :books, :name, :book_id
+  attr_accessor :books, :name, :book_id, :borrowed_books
 
   def initialize(name)
     @books = []
     @book_id = 0
+    @borrowed_books = []
     #ID help from K izzle
   end
 
@@ -72,6 +73,7 @@ class Library
         book.check_out
         book.last_borrower = borrower
         borrower.current_books << book
+        @borrowed_books << book
         return book
       end
     end
@@ -79,6 +81,7 @@ class Library
 
   def check_in_book(book)
     book.check_in
+    @borrowed_books.delete(book)
   end
 
   def available_books
@@ -87,6 +90,7 @@ class Library
   end
 
   def borrowed_books
+    @borrowed_books
   end
 
   def get_borrower(book_id)
@@ -96,16 +100,4 @@ class Library
 
 end
 
-    lib = Library.new("Austin Public Library")
-    book1 = Book.new("Eloquent JavaScript", "Marijn Haverbeke")
-    book2 = Book.new("Essential JavaScript Design Patterns", "Addy Osmani")
-    book3 = Book.new("JavaScript: The Good Parts", "Douglas Crockford")
-    lib.register_new_book(book1)
-    lib.register_new_book(book2)
-    lib.register_new_book(book3)
-
-    jackson = Borrower.new("Michael Jackson")
-    book_1 = lib.books[0]
-    book_2 = lib.books[1]
-    book_3 = lib.books[2]
 
