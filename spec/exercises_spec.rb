@@ -49,6 +49,12 @@ describe 'Exercise'  do
 		result = Exercises.ex6([1, 2, 3, 'panda'])
 		expect(result).to eq([1, 2, 3, 'GODZILLA'])
 	end
+
+	it "if the string 'str' exists in the array add 'str' to the array" do
+		result = Exercises.ex7(['apples', 2, 3], 'apples')
+		expect(result).to eq(['apples', 2, 3, 'apples'])
+	end
+
 end
 
 
