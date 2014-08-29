@@ -34,17 +34,16 @@ end
 
 class Borrower
   attr_reader :name
-  attr_accessor :checked_out_books, :book_reviews
+  attr_accessor :books
 
   def initialize(name)
     @name = name
-    @checked_out_books = []
+    @books = {}
     @book_reviews = {}
   end
 
   def leave_review(book, review)
-    book_to_review = @checked_out_books.select { |book| book }
-    @book_reviews[book.title] = review
+    @books[book.title][:review] = review
   end
 end
 
@@ -63,9 +62,12 @@ class Library
 
   def check_out_book(book_id, borrower)
     book = @books.select { |book| book.id == book_id }.first
-    if book.status == "available" && borrower.checked_out_books.length < 2
+    if book.status == "available" && borrower.books.length < 2
       book.check_out
-      borrower.checked_out_books.push(book)
+      borrower.books[book.title] = {
+        review: nil,
+        days_until_due: 7
+      }
       book.borrower = borrower
       book
     else
@@ -79,7 +81,7 @@ class Library
 
   def check_in_book(book)
     book.check_in
-    book.borrower.checked_out_books.delete(book)
+    book.borrower.books.delete(book)
     book.borrower = nil
   end
 
