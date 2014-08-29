@@ -53,9 +53,6 @@ class Library
     @books.push(Book.new(title, author, @@id))
   end
 
-  def add_book(title, author)
-  end
-
   def check_out_book(book_id, borrower)
     book = @books.select { |book| book.id == book_id }.first
     if book.status == "available" && borrower.checked_out_books < 2
