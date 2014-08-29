@@ -57,15 +57,18 @@ describe Library do
     expect(lib.books.count).to eq(0)
   end
 
-  xit "add new books and assigns it an id" do
-    lib = Library.new
-    lib.register_new_book("Nausea", "Jean-Paul Sartre")
+  it "add new books and assigns it an id" do
+    lib = Library.new("Austin Public Library")
+    book = Book.new("Nausea", "Jean-Paul Sartre")
+
+    lib.register_new_book(book)
     expect(lib.books.count).to eq(1)
 
     created_book = lib.books.first
     expect(created_book.title).to eq "Nausea"
     expect(created_book.author).to eq "Jean-Paul Sartre"
-    expect(created_book.id).to_not be_nil
+    expect(created_book.id).to eq(1)
+
   end
 
   xit "can add multiple books" do
