@@ -24,6 +24,11 @@ describe 'Exercise'  do
 
 	it "returns the sume of the given array of numbers" do
 		result = Exercises.ex3([1,2,3])
-		expect(result). to eq(6)
+		expect(result).to eq(6)
+	end
+
+	it "returns the max number of the given array" do
+		result = Exercises.ex4([1, 2, 3])
+		expect(result).to eq(3)
 	end
 end
