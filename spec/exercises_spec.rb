@@ -148,9 +148,9 @@ describe 'Exercise 8' do
       {:name => 'Job', :occupation => 'Thinker'},
       {:name => 'Rob', :occupation => 'Thief'}
     ]
-    $stdout.should_receive(:puts).with("Bob is a Builder")
-    $stdout.should_receive(:puts).with("Job is a Thinker")
-    $stdout.should_receive(:puts).with("Rob is a Thief")
+    Exercises.should_receive(:print).with("Bob is a Builder")
+    Exercises.should_receive(:print).with("Job is a Thinker")
+    Exercises.should_receive(:print).with("Rob is a Thief")
     Exercises.ex8(array)
   end
 end
