@@ -75,21 +75,51 @@ describe 'Exercises' do
 
   describe '.ex7' do
 
+    it 'adds the string to the array if it already exists in the array' do
+      expect(Exercises.ex7(['ya', 'big', 'dingus'], 'dingus')).to eq (['ya', 'big', 'dingus', 'dingus'])
+    end
+
   end
 
   describe '.ex8' do
 
+    it 'prints out person name and occupation' do
+
+      people =[{name: "Billy", occupation: "garbage man"},{name: "Jimmy", occupation: "lumberjack"}]
+      STDOUT.should_receive(:puts).with("Billy garbage man")
+      STDOUT.should_receive(:puts).with("Jimmy lumberjack")
+
+      Exercises.ex8(people)
+    end
+
   end
 
   describe '.ex9' do
+    # 2008, 2012, 2016, ...
+    it 'returns true if the given time is in a leap year' do 
+      expect(Exercises.ex9(Time.new(2016))).to eq(true)
+    end
+
+    it 'returns false if the given time is not in a leap year' do
+      expect(Exercises.ex9(Time.new(2009))).to eq(false)
+    end
 
   end
 
   describe '.ex10' do
 
+    it 'returns happy hour if it is between 4pm and 6pm' do
+      #4:30:30
+      time1 = Time.new(2014, 8, 29, 13, 30, 30) 
+      expect(Exercises.ex10(time1)).to eq("happy hour")
+    end
+
+    it 'returns normal prices if it is not between 4pm and 6pm' do
+      time2 = Time.new(2014, 8, 29, 2, 30, 30) 
+      expect(Exercises.ex10(time2)).to eq("normal prices")
+    end
+
   end
   
-
-
 
 end
