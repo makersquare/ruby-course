@@ -60,8 +60,14 @@ class Library
 
   def check_out_book(book_id, borrower)
     book = @books.find {|x| x.id == book_id}
-    book.check_out
-    book.last_borrower = borrower
+    if book.last_borrower == borrower
+      return nil
+    elsif book.status == "checked_out"
+      return nil      
+    else
+      book.check_out
+      book.last_borrower = borrower
+    end
     return book
   end
 
