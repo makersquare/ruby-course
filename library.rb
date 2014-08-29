@@ -84,5 +84,12 @@ class Library
   end
 
   def borrowed_books
+    borrowed_books = [ ]
+    @books.each do |book|
+      if book.status == "checked_out"
+        borrowed_books.push(book)
+      end
+    end
+    borrowed_books
   end
 end
