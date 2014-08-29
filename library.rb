@@ -82,9 +82,15 @@ class Borrower
   end
 
   def books_available(lib)
+    lib.available_books.each do |book|
+      puts "#{book.title}. Due Date: #{book.due_date}"
+    end
   end
 
   def books_checked_out(lib)
+    lib.borrowed_books.each do |book|
+      puts "#{book.title}. Checked out by: #{book.borrowed_by}. Due Date: #{book.due_date}"
+    end
   end
 
 end

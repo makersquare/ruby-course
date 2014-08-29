@@ -70,6 +70,20 @@ describe Book do
     lib.register_new_book("The Prince", "Machiavelli")
     expect(lib.check_out_book(lib.books[1].id, borrower)).to be_nil
   end
+
+  it "Allows Borrowers to see available and checked out books in a library" do
+    lib = Library.new("Hogwarts Library")
+    borrower = Borrower.new("Jimmy")
+    borrower2 = Borrower.new("Alexander")
+    lib.register_new_book("The Old Man and the Sea", "Ernest Hemingway")
+    lib.register_new_book("1984", "George Orwell")
+    lib.register_new_book("Inferno", "Dante")
+
+    lib.check_out_book(lib.available_books[1].id, borrower2)
+
+    expect(borrower.books_available(lib)).to eq(lib.available_books)
+    expect(borrower.books_checked_out(lib)).to eq(lib.borrowed_books)
+  end
 end
 
 describe Borrower do
