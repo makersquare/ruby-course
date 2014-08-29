@@ -51,11 +51,12 @@ class Library
 
   def check_out_book(book_id, borrower)
     @books.each do |b|
-      if b.id == book_id
+      if b.id == book_id && b.status == "available"
         b.check_out
-        # @books.delete(b)
-      @borrower[book_id] = borrower
-      return b 
+        @borrower[book_id] = borrower
+        return b 
+      else 
+        return nil
     end
     end
   end
