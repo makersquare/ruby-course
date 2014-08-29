@@ -26,5 +26,9 @@ describe 'Exercises' do
     expect(Exercises.ex3([10,9,8,7,6,5,4,3,2,1])).to eq(55)
   end
 
-
+  it 'Returns the max number of the given array' do
+    expect(Exercises.ex4([])).to eq(nil)
+    expect(Exercises.ex4([9])).to eq(9)
+    expect(Exercises.ex4([10,9,8,7,88,6,5,4,15,3,2,1])).to eq(88)
+  end
 end
