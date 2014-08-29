@@ -5,11 +5,22 @@ describe Book do
   it "has a title and author, and nil id" do
     book = Book.new("The Stranger", "Albert Camus")
 
-    # binding.pry
-
     expect(book.title).to eq "The Stranger"
     expect(book.author).to eq "Albert Camus"
     expect(book.id).to be_nil
+  end
+
+  it "has optional year published and edition attributes" do
+    book = Book.new("Game of Thrones", "Martin")
+
+    expect(book.year_published).to be_nil
+    expect(book.edition).to be_nil
+
+    book.year_published = 1999
+    book.edition = "1st edition"
+
+    expect(book.year_published).to eq(1999)
+    expect(book.edition).to eq("1st edition")
   end
 
   it "has a default status of available" do
@@ -59,7 +70,6 @@ describe Borrower do
     book = lib.check_out_book(book_id, sam)
     review = sam.leave_review(book,"Too many pictures. 0/10")
     expect(review).to eq ("Too many pictures. 0/10")
-    binding.pry
   end
 end
 
