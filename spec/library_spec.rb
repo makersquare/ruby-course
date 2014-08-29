@@ -63,6 +63,16 @@ describe Borrower do
     #binding.pry
     expect(borrower.reviews[book.title]).to eq([7, ""])
   end
+
+  it "has an overdue attribute that returns true if any books are overdue" do
+    borrower = Borrower.new("Mike")
+    lib = Library.new("Austin Public Library")
+    lib.register_new_book("Green Eggs and Ham", "Dr. Seuss")
+    book_id = lib.books.first.id
+    book = lib.check_out_book(book_id, borrower)
+
+    expect(borrower.overdue).to eq(false)
+  end
 end
 
 describe Library do
@@ -108,6 +118,16 @@ describe Library do
 
     # The book should now be marked as checked out
     expect(book.status).to eq 'checked_out'
+  end
+
+  it "allows a borrower to have a book for a week before it is overdue" do
+    lib = Library.new("Austin Public Library")
+    lib.register_new_book("Green Eggs and Ham", "Dr. Seuss")
+    book_id = lib.books.first.id
+    sam = Borrower.new('Sam-I-am')
+    book = lib.check_out_book(book_id, sam)
+
+    expect(book.due_date).to eq()
   end
 
   it "knows who borrowed a book" do

@@ -30,12 +30,13 @@ end
 
 class Borrower
   attr_reader :name
-  attr_accessor :books_checked_out, :reviews
+  attr_accessor :books_checked_out, :reviews, :overdue
 
   def initialize(name)
     @name = name
     @books_checked_out = 0
     @reviews = {}
+    @overdue = false
   end
 
   def review_book(book, rating, review="")
