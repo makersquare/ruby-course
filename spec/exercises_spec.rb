@@ -20,8 +20,11 @@ describe 'Exercises' do
     expect(Exercises.ex2([10,9,8,7,6,5,4,3,2,1])).to eq(9)
   end
 
-
-
+  it 'Returns the sum of the given array of numbers' do
+    expect(Exercises.ex3([9,8])).to eq(17)
+    expect(Exercises.ex3([9])).to eq(9)
+    expect(Exercises.ex3([10,9,8,7,6,5,4,3,2,1])).to eq(55)
+  end
 
 
 end
