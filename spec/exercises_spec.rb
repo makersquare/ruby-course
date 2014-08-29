@@ -141,12 +141,20 @@ describe 'Exercise 7' do
   end
 end
 
-  
+describe 'Exercise 8' do
+  it "Puts out a hash of people and occupations" do
+    array = [
+      {:name => 'Bob', :occupation => 'Builder'},
+      {:name => 'Job', :occupation => 'Thinker'},
+      {:name => 'Rob', :occupation => 'Thief'}
+    ]
+    $stdout.should_receive(:puts).with("Bob is a Builder")
+    $stdout.should_receive(:puts).with("Job is a Thinker")
+    $stdout.should_receive(:puts).with("Rob is a Thief")
+    Exercises.ex8(array)
+  end
+end
 
-# describe 'Exercise 8' do
-#   it "triples the length of a string" do
-#   end
-# end
 
 # describe 'Exercise 9' do
 #   it "triples the length of a string" do
