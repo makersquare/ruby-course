@@ -47,11 +47,16 @@ class Library
   end
 
   def add_book(title, author)
-    id = rand(1000)
-    @books << Book.new(title, author, id)
+    @books << Book.new(title, author)
+    @books.each { |x| x.id = rand(1000) }
   end
 
   def check_out_book(book_id, borrower)
+    @books.each do |book|
+      if book.id = book_id
+        book.check_out
+      end
+    end
   end
 
   def check_in_book(book)
