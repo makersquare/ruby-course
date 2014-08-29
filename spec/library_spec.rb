@@ -48,6 +48,19 @@ describe Borrower do
     borrower = Borrower.new("Mike")
     expect(borrower.name).to eq "Mike"
   end
+
+  it "can leave a review about a book" do
+    lib = Library.new
+    lib.register_new_book("Green Eggs and Ham", "Dr. Seuss")
+    book_id = lib.books.first.id
+
+    # Sam wants to check out Green Eggs and Ham
+    sam = Borrower.new('Sam-I-am')
+    book = lib.check_out_book(book_id, sam)
+    review = sam.leave_review(book,"Too many pictures. 0/10")
+    expect(review).to eq ("Too many pictures. 0/10")
+    binding.pry
+  end
 end
 
 describe Library do

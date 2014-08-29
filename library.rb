@@ -32,11 +32,17 @@ end
 
 class Borrower
   attr_reader :name
-  attr_accessor :checked_out_books
+  attr_accessor :checked_out_books, :book_reviews
 
   def initialize(name)
     @name = name
     @checked_out_books = []
+    @book_reviews = {}
+  end
+
+  def leave_review(book, review)
+    book_to_review = @checked_out_books.select { |book| book }
+    @book_reviews[book.title] = review
   end
 end
 
