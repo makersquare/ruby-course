@@ -84,7 +84,6 @@ describe Time do
     book = lib.check_out_book(book_id, sam)
 
     Time.elapse_days(4, lib)
-    binding.pry
 
     expect(sam.books[book.title][:days_until_due]).to eq(3)
   end

@@ -46,14 +46,6 @@ class Borrower
   end
 end
 
-class Time
-  def self.elapse_days(days, lib)
-    borrowers_books_array = lib.books.select { |book| book.borrower != nil }
-    borrowers_book = borrowers_books_array.each { |book| book }
-    borrowers_book.each { |book| book.borrower.books[book.title][:days_until_due] -= days }
-  end
-end
-
 class Library
   attr_reader :books
   @@id = 0
@@ -98,5 +90,13 @@ class Library
 
   def borrowed_books
     borrowed = @books.select { |book| book.status == "checked_out" }
+  end
+end
+
+class Time
+  def self.elapse_days(days, lib)
+    borrowers_books_array = lib.books.select { |book| book.borrower != nil }
+    borrowers_book = borrowers_books_array.each { |book| book }
+    borrowers_book.each { |book| book.borrower.books[book.title][:days_until_due] -= days }
   end
 end
