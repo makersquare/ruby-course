@@ -31,4 +31,19 @@ describe 'Exercise'  do
 		result = Exercises.ex4([1, 2, 3])
 		expect(result).to eq(3)
 	end
+
+	it "iterates through an array and 'puts' each element" do      
+    STDOUT.should_receive(:puts).with("a")
+    STDOUT.should_receive(:puts).with("b")
+    STDOUT.should_receive(:puts).with("c")
+
+    Exercises.ex5(["a","b","c"]) 
+  end
+
+  it "updates the last item in the array to 'panda'" do
+		
+	end
 end
+
+
+
