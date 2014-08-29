@@ -1,4 +1,4 @@
-
+require 'pry-byebug'
 class Book
   attr_reader :author, :title, :id, :status, :borrower
   attr_accessor :review, :rating, :edition, :year_published
@@ -17,7 +17,7 @@ class Book
     return false if (@status[0] == 'checked_out')
     @borrower = borrower
     @status[0] = 'checked_out'
-    @status[1] = Time.now
+    @status[1] = Time.now + 24*7*60*60
   end
 
   def check_in
@@ -25,6 +25,11 @@ class Book
     @status[0] = 'available'
     @borrower = 'available'
   end
+
+  def overdue?
+    Time.now > @status[1] unless @status[0] == 'available'
+  end
+
 end
 
 class Borrower
@@ -37,6 +42,8 @@ class Borrower
     library.books[book_id-1].review[self] = review
     library.books[book_id-1].rating[self] = rating
   end
+
+
 end
 
 class Library
@@ -54,19 +61,21 @@ class Library
 
   def check_out_book(book_id, borrower)
     return nil if @books[book_id-1].status[0] == 'checked_out'
-    member = @books.map {|x| x.borrower}
-    return nil if member.count(borrower)>=2
-
-    
-      # member.each do |x|
-      # return nil if (x.status[1] - Time.now) > 24*60*24*7*60
-      # end
+    outalready = @books.select {|x| x.borrower == borrower}
+    return nil if outalready.count>=2
+    overdue_books = outalready.map {|book| book.overdue?}
+    if overdue_books.empty? && !outalready.empty?
+      p overdue_books
+      p outalready
+      return nil
+    end
 
     @books[book_id-1].check_out(borrower)
     @books[book_id-1]
   end
 
   def get_borrower(id)
+    # p @books[id-1].borrower.name
     @books[id-1].borrower.name
   end
 
