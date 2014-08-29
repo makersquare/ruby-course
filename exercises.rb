@@ -48,9 +48,9 @@ module Exercises
     if array.empty?
       array[0] = 'panda'
     elsif array.last == 'panda'
-      array[array.length-1] = 'GODZILLA'
+      array[-1] = 'GODZILLA'
     else
-      array[array.length-1] = 'panda'
+      array[-1] = 'panda'
     end
   end
 
@@ -83,8 +83,13 @@ module Exercises
   #  - Returns "happy hour" if it is between 4 and 6pm
   #    Otherwise, returns "normal prices"
   # Hint: Read the "Stubbing" documentation on the Learn app.
-  def self.ex10
-    # TODO
+  def self.ex10(time)
+    time_test = time.to_s.split[1].split(":")[0].to_i 
+    if time_test >= 16 && time_test <= 18
+      puts "happy hour"
+    else
+      puts "normal prices"
+    end
   end
 end
 

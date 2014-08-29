@@ -142,7 +142,7 @@ describe 'Exercise 7' do
 end
 
 describe 'Exercise 8' do
-  it "Puts out a hash of people and occupations" do
+  it "Prints out a hash of people and occupations" do
     array = [
       {:name => 'Bob', :occupation => 'Builder'},
       {:name => 'Job', :occupation => 'Thinker'},
@@ -166,7 +166,14 @@ end
    end
  end
 
-# describe 'Exercise 10' do
-#   it "triples the length of a string" do
-#   end
-# end
+describe 'Exercise 10' do
+  it "Returns 'happy hour' if within 4-6pm" do
+    $stdout.should_receive(:puts).with("happy hour")
+    Exercises.ex10(Time.new(2000, 10, 31, 16, 2, 2))
+  end
+
+  it "Returns 'normal prices' if outside that time" do
+    $stdout.should_receive(:puts).with("normal prices")
+    Exercises.ex10(Time.new(2000))
+  end
+end
