@@ -71,17 +71,20 @@ describe Library do
 
   end
 
-  xit "can add multiple books" do
-    lib = Library.new
-    lib.register_new_book("One", "Bob")
-    lib.register_new_book("Two", "Bob")
-    lib.register_new_book("Three", "Bob")
+  it "can add multiple books" do
+    lib = Library.new("Austin Public Library")
+    book1 = Book.new("One", "Bob")
+    book2 = Book.new("Two", "Bob")
+    book3 = Book.new("Three", "Bob")
+    lib.register_new_book(book1)
+    lib.register_new_book(book2)
+    lib.register_new_book(book3)
 
     expect(lib.books.count).to eq(3)
   end
 
-  xit "allows a Borrower to check out a book by its id" do
-    lib = Library.new
+  it "allows a Borrower to check out a book by its id" do
+    lib = Library.new("Austin Public Library")
     lib.register_new_book("Green Eggs and Ham", "Dr. Seuss")
     book_id = lib.books.first.id
 
@@ -98,7 +101,7 @@ describe Library do
   end
 
   xit "knows who borrowed a book" do
-    lib = Library.new
+    lib = Library.new("Austin Public Library")
     lib.register_new_book("The Brothers Karamazov", "Fyodor Dostoesvky")
     book_id = lib.books.first.id
 
@@ -111,7 +114,7 @@ describe Library do
   end
 
   xit "does not allow a book to be checked out twice in a row" do
-    lib = Library.new
+    lib = Library.new("Austin Public Library")
     lib.register_new_book = Book.new("Surely You're Joking Mr. Feynman", "Richard Feynman")
     book_id = lib.books.first.id
 
@@ -132,7 +135,7 @@ describe Library do
   end
 
   xit "allows a Borrower to check a book back in" do
-    lib = Library.new
+    lib = Library.new("Austin Public Library")
     lib.register_new_book("Finnegans Wake", "James Joyce")
     book_id = lib.books.first.id
 
@@ -149,7 +152,7 @@ describe Library do
 
   xit "does not allow a Borrower to check out more than one Book at any given time" do
     # yeah it's a stingy library
-    lib = Library.new
+    lib = Library.new("Austin Public Library")
     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
     lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
     lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
@@ -172,7 +175,7 @@ describe Library do
   end
 
   xit "returns available books" do
-    lib = Library.new
+    lib = Library.new("Austin Public Library")
     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
     lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
     lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
@@ -189,7 +192,7 @@ describe Library do
   end
 
   xit "after a book it returned, it can be checked out again" do
-    lib = Library.new
+    lib = Library.new("Austin Public Library")
     lib.register_new_book("Harry Potter", "J. K. Rowling")
     book_id = lib.books.first.id
 
@@ -208,7 +211,7 @@ describe Library do
   end
 
   xit "returns borrowed books" do
-    lib = Library.new
+    lib = Library.new("Austin Public Library")
     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
     lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
     lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")

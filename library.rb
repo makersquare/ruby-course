@@ -41,6 +41,7 @@ class Library
   def initialize(name)
     @books = []
     @book_id = 0
+    #ID help thanks to K izzle
   end
 
   def books
@@ -53,6 +54,7 @@ class Library
   end
 
   def add_book(title, author)
+    Book.new(title, author)
   end
 
   def check_out_book(book_id, borrower)
