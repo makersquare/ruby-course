@@ -51,10 +51,19 @@ describe 'Exercise 2' do
   end
 end
 
-# describe 'Exercise 3' do
-#   it "triples the length of a string" do
-#   end
-# end
+describe 'Exercise 3' do
+  it "returns the sum of the given array of numbers" do
+    array = [1,2,3,4,5]
+    result = Exercises.ex3(array)
+    expect(result).to eq(15)
+  end
+
+  it "returns the sum of the given array of any numbers" do
+    array = [1,2,3,4,-5]
+    result = Exercises.ex3(array)
+    expect(result).to eq(5)
+  end
+end
 
 # describe 'Exercise 4' do
 #   it "triples the length of a string" do
