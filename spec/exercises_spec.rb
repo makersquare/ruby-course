@@ -2,7 +2,7 @@ require_relative '../exercises.rb'
 require 'pry-byebug'
  
 
-describe 'Exercise 0' do
+describe 'Exercises' do
   it "triples the length of a string" do
     result = Exercises.ex0("ha")
     expect(result).to eq("hahaha")
@@ -48,10 +48,12 @@ describe 'Excercise 4' do
 end
 
 describe 'Excercise 5' do
-  xit "iterates through an array and `puts` each element" do
-    result = Exercises.ex5([4, 5, 7, 9])
-
-    expect(result).to eq("4579")
+  it "iterates through an array and `puts` each element" do
+    array = [1, 2, 3]
+    STDOUT.should_receive(:puts).with(1)
+    STDOUT.should_receive(:puts).with(2)
+    STDOUT.should_receive(:puts).with(3)
+    Exercises.ex5(array)
   end
 end
 
@@ -76,16 +78,38 @@ end
 
 describe 'Exercise 8' do
   it "Iterate through people_hash and print out their name and occupation." do
-    result1 = Exercises.ex8([{:name => 'Bob', :occupation => 'Builder' }])
+   people = [{:name => 'Bob', :occupation => 'Builder' },
+             {:name => 'Tom', :occupation => 'Climber' }]
 
-    expect(result1).to eq("Bob the Builder")
-
-
+    Exercises.should_receive(:print).with("Bob the Builder")
+    Exercises.should_receive(:print).with("Tom the Climber")
+    Exercises.ex8(people)
   end
 end
 
+describe 'Exercise 9' do 
+  it "Returns `true` if the given time is in a leap year" do 
+    result = Exercises.ex9(1996)
+    result2 = Exercises.ex9(2002)
 
+    expect(result).to eq(true)
+    expect(result2).to eq(false)
+  end
+end
 
+describe 'Exercise 10' do
+  it "check to see if the time is happy hour" do
+    early = Time.parse("11 am")
+    late = Time.parse("5:30 pm")
+
+    Time.stub(:now).and_return(early)
+    expect(Exercises.ex10).to eq("Normal Prices")
+
+    Time.stub(:now).and_return(late)
+    expect(Exercises.ex10).to eq("Happy Hour")
+    
+  end
+end
 
 
 
