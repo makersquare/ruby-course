@@ -1,7 +1,7 @@
 
 class Book
   attr_reader :author, :title, :year_published, :edition
-  attr_accessor :id, :status, :borrower
+  attr_accessor :id, :status, :borrower, :reviews
 
   def initialize(title, author, id=nil, status="available", year_published="unknown", edition="unknown")
     @author = author
@@ -11,6 +11,7 @@ class Book
     @borrower = nil
     @year_published = year_published
     @edition = edition
+    @reviews = {}
   end
 
   def check_out
@@ -29,11 +30,17 @@ end
 
 class Borrower
   attr_reader :name
-  attr_accessor :books_checked_out
+  attr_accessor :books_checked_out, :reviews
 
   def initialize(name)
     @name = name
     @books_checked_out = 0
+    @reviews = {}
+  end
+
+  def review_book(book, rating, review="")
+    book.reviews[self.name] = [rating, review]  
+    @reviews[book.title] = [rating, review]
   end
 end
 

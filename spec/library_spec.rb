@@ -52,6 +52,17 @@ describe Borrower do
     borrower = Borrower.new("Mike")
     expect(borrower.name).to eq "Mike"
   end
+
+  it "can review a Book with a rating and an optional written review" do
+    book = Book.new("The Stranger", "Albert Camus")
+    borrower = Borrower.new("Mike")
+    borrower.review_book(book, 7)
+
+    expect(book.reviews.size).to eq(1)
+    expect(book.reviews[borrower.name]).to eq([7, ""])
+    #binding.pry
+    expect(borrower.reviews[book.title]).to eq([7, ""])
+  end
 end
 
 describe Library do
@@ -180,7 +191,6 @@ describe Library do
     lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
 
     # At first, all books are available
-    #binding.pry
     expect(lib.available_books.count).to eq(3)
     expect(lib.available_books.first).to be_a(Book)
 
