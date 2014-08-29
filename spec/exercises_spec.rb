@@ -18,8 +18,7 @@ describe 'Exercise'  do
 	end
 
 	it "returns the second element of the array" do
-		result = Exercise.ex2([1,2,3])
-		expect(results).to eq(2)
-
+		result = Exercises.ex2([1,2,3])
+		expect(result).to eq(2)
 	end
 end
