@@ -54,6 +54,18 @@ describe Exercises do
 
       expect(Exercises.ex6(["i","love","pizza"])).to eq("panda")
     end
+
+    it 'changes the last array item to GODZILLA if it was panda' do
+
+      expect(Exercises.ex6(['i','love','panda'])).to eq('GODZILLA')
+    end
+  end
+
+  describe '.ex7' do
+    it 'adds "manatee" to the end of the array if the string "manatee" exists in the array' do
+
+      expect(Exercises.ex7(["monkey", "farm", "manatee"], 'manatee').last).to eq('manatee')
+    end
   end
 
 
