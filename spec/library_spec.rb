@@ -24,19 +24,19 @@ describe Book do
     expect(book.status).to eq('checked_out')
   end
 
-  xit "can't be checked out twice in a row" do
-    book = Book.new
+  it "can't be checked out twice in a row" do
+    book = Book.new("Heaven to Betsy", "Maud Hart Lovelace")
     did_it_work = book.check_out
-    expect(did_it_work).to eq(true)
+    expect(did_it_work).to be_true
 
     did_it_work_again = book.check_out
-    expect(did_it_work_again).to eq(false)
+    expect(did_it_work_again).to be_false
 
     expect(book.status).to eq 'checked_out'
   end
 
-  xit "can be checked in" do
-    book = Book.new
+  it "can be checked in" do
+    book = Book.new("Heaven to Betsy", "Maud Hart Lovelace")
     book.check_out
     book.check_in
     expect(book.status).to eq 'available'
@@ -44,7 +44,7 @@ describe Book do
 end
 
 describe Borrower do
-  xit "has a name" do
+  it "has a name" do
     borrower = Borrower.new("Mike")
     expect(borrower.name).to eq "Mike"
   end
@@ -52,13 +52,13 @@ end
 
 describe Library do
 
-  xit "starts with an empty array of books" do
-    lib = Library.new
+  it "starts with an empty array of books" do
+    lib = Library.new("APL")
     expect(lib.books.count).to eq(0)
   end
 
-  xit "add new books and assigns it an id" do
-    lib = Library.new
+  it "add new books and assigns it an id" do
+    lib = Library.new("APL")
     lib.register_new_book("Nausea", "Jean-Paul Sartre")
     expect(lib.books.count).to eq(1)
 
@@ -68,8 +68,8 @@ describe Library do
     expect(created_book.id).not_to be_nil
   end
 
-  xit "can add multiple books" do
-    lib = Library.new
+  it "can add multiple books" do
+    lib = Library.new("APL")
     lib.register_new_book("One", "Bob")
     lib.register_new_book("Two", "Bob")
     lib.register_new_book("Three", "Bob")
@@ -77,8 +77,8 @@ describe Library do
     expect(lib.books.count).to eq(3)
   end
 
-  xit "allows a Borrower to check out a book by its id" do
-    lib = Library.new
+  it "allows a Borrower to check out a book by its id" do
+    lib = Library.new("APL")
     lib.register_new_book("Green Eggs and Ham", "Dr. Seuss")
     book_id = lib.books.first.id
 
@@ -87,15 +87,15 @@ describe Library do
     book = lib.check_out_book(book_id, sam)
 
     # The checkout should return the book
-    expect(book).to eq(Book)
+    expect(book.class).to eq(Book)
     expect(book.title).to eq "Green Eggs and Ham"
 
     # The book should now be marked as checked out
     expect(book.status).to eq 'checked_out'
   end
 
-  xit "knows who borrowed a book" do
-    lib = Library.new
+  it "knows who borrowed a book" do
+    lib = Library.new("APL")
     lib.register_new_book("The Brothers Karamazov", "Fyodor Dostoesvky")
     book_id = lib.books.first.id
 
@@ -108,7 +108,7 @@ describe Library do
   end
 
   xit "does not allow a book to be checked out twice in a row" do
-    lib = Library.new
+    lib = Library.new("APL")
     lib.register_new_book = Book.new("Surely You're Joking Mr. Feynman", "Richard Feynman")
     book_id = lib.books.first.id
 
@@ -129,7 +129,7 @@ describe Library do
   end
 
   xit "allows a Borrower to check a book back in" do
-    lib = Library.new
+    lib = Library.new("APL")
     lib.register_new_book("Finnegans Wake", "James Joyce")
     book_id = lib.books.first.id
 
@@ -146,7 +146,7 @@ describe Library do
 
   xit "does not allow a Borrower to check out more than one Book at any given time" do
     # yeah it's a stingy library
-    lib = Library.new
+    lib = Library.new("APL")
     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
     lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
     lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
@@ -169,7 +169,7 @@ describe Library do
   end
 
   xit "returns available books" do
-    lib = Library.new
+    lib = Library.new("APL")
     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
     lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
     lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
