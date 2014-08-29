@@ -64,6 +64,15 @@ describe 'Exercise 6' do
     expect(result2).to eq(["blah", "blah", "blah", "panda"])
   end
 end
+describe 'Exercise 7' do
+  it "If the string exists in the array add it to the end of the array" do
+    result = Exercises.ex7(["blah", "jungle", "sloppy"], "sloppy")
+    result2 = Exercises.ex7(["blah", "jungle", "sloppy"], "dog")
+
+    expect(result).to eq(["blah", "jungle", "sloppy", "sloppy"])
+    expect(result2).to eq(["blah", "jungle", "sloppy"])
+  end
+end
 
 describe 'Exercise 8' do
   it "Iterate through people_hash and print out their name and occupation." do
