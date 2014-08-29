@@ -37,7 +37,7 @@ module Exercises
   # Exercise 5
   #  - Iterates through an array and `puts` each element
   def self.ex5(array)
-    # TODO
+    array.each {|ele| puts ele}
   end
 
   # Exercise 6

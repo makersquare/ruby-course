@@ -78,10 +78,32 @@ describe 'Exercise 4' do
   end
 end
 
-# describe 'Exercise 5' do
-#   it "triples the length of a string" do
-#   end
-# end
+describe 'Exercise 5' do
+  before do
+    $stdout = StringIO.new
+  end
+  it "Iterates through an array of one and `puts` each element" do
+    array = [1]
+    $stdout.should_receive(:puts).with(1)
+    Exercises.ex5(array)
+  end
+
+  it "Iterates through an array and `puts` each element" do
+    array = [1,2]
+    $stdout.should_receive(:puts).with(1)
+    $stdout.should_receive(:puts).with(2)
+    Exercises.ex5(array)
+  end
+
+  it "Iterates through an array of 3 and `puts` each element" do
+    array = [1,2,3]
+    $stdout.should_receive(:puts).with(1)
+    $stdout.should_receive(:puts).with(2)
+    $stdout.should_receive(:puts).with(3)
+    Exercises.ex5(array)
+  end
+
+end
 
 # describe 'Exercise 6' do
 #   it "triples the length of a string" do
