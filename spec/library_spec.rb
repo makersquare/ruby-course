@@ -92,140 +92,140 @@ describe Library do
 
     # Sam wants to check out Green Eggs and Ham
     sam = Borrower.new('Sam-I-am')
-    book = lib.check_out_book(book.id, sam)
+    book = lib.check_out_book(book_id, sam)
 
-    # The checkout should return the book
-    expect(book).to be_a(Book.new)
+    #The checkout should return the book" 
+    expect(book).to be_a(Book)
     expect(book.title).to eq "Green Eggs and Ham"
 
     # The book should now be marked as checked out
     expect(book.status).to eq 'checked_out'
+  end #success
+
+  it "knows who borrowed a book" do
+    lib = Library.new("Putins Library")
+    lib.register_new_book(Book.new("The Brothers Karamazov", "Fyodor Dostoesvky", 001))
+    book_id = lib.books.first.id
+
+    # Big Brother wants to check out The Brothers Karamazov
+    bro = Borrower.new('Big Brother')
+    book = lib.check_out_book(book_id, bro)
+
+    # The Library should know that he checked out the book
+    expect( lib.get_borrower(book_id) ).to eq 'Big Brother'
   end
 
-#   xit "knows who borrowed a book" do
-#     lib = Library.new
-#     lib.register_new_book("The Brothers Karamazov", "Fyodor Dostoesvky")
-#     book_id = lib.books.first.id
+  it "does not allow a book to be checked out twice in a row" do
+    lib = Library.new("Woodrow's Library")
+    lib.register_new_book(Book.new("Surely You're Joking Mr. Feynman", "Richard Feynman", 002))
+    book_id = lib.books.first.id
 
-#     # Big Brother wants to check out The Brothers Karamazov
-#     bro = Borrower.new('Big Brother')
-#     book = lib.check_out_book(book_id, bro)
+    # Leslie Nielsen wants to double check on that
+    nielsen = Borrower.new('Leslie Nielsen')
+    book = lib.check_out_book(book_id, nielsen)
 
-#     # The Library should know that he checked out the book
-#     expect( lib.get_borrower(book_id) ).to eq 'Big Brother'
-#   end
+    # The first time should be successful
+    expect(book).to be_a(Book)
 
-#   xit "does not allow a book to be checked out twice in a row" do
-#     lib = Library.new
-#     lib.register_new_book = Book.new("Surely You're Joking Mr. Feynman", "Richard Feynman")
-#     book_id = lib.books.first.id
+    # However, you can't check out the same book twice!
+    book_again = lib.check_out_book(book_id, nielsen)
+    expect(book_again).to be_nil
 
-#     # Leslie Nielsen wants to double check on that
-#     nielsen = Borrower.new('Leslie Nielsen')
-#     book = lib.check_out_book(book_id, nielsen)
+    son = Borrower.new('Leslie Nielsen the 2nd')
+    book_again = lib.check_out_book(book_id, son)
+    expect(book_again).to be_nil
+  end
 
-#     # The first time should be successful
-#     expect(book).to be_a(Book)
+  it "allows a Borrower to check a book back in" do
+    lib = Library.new("THE LIBRARY!")
+    lib.register_new_book(Book.new("Finnegans Wake", "James Joyce"))
+    book_id = lib.books.first.id
 
-#     # However, you can't check out the same book twice!
-#     book_again = lib.check_out_book(book_id, nielsen)
-#     expect(book_again).to be_nil
+    # Bob wants to check out Finnegans Wake
+    bob = Borrower.new('Bob Bobber')
+    book = lib.check_out_book(book_id, bob)
 
-#     son = Borrower.new('Leslie Nielsen the 2nd')
-#     book_again = lib.check_out_book(book_id, son)
-#     expect(book_again).to be_nil
-#   end
+    # o wait he changed his mind
+    lib.check_in_book(book)
 
-#   xit "allows a Borrower to check a book back in" do
-#     lib = Library.new
-#     lib.register_new_book("Finnegans Wake", "James Joyce")
-#     book_id = lib.books.first.id
+    # The book should now be marked as available!
+    expect(book.status).to eq 'available'
+  end
 
-#     # Bob wants to check out Finnegans Wake
-#     bob = Borrower.new('Bob Bobber')
-#     book = lib.check_out_book(book_id, bob)
+  it "does not allow a Borrower to check out more than one Book BUT LESS THAN TWO at any given time" do
+    # yeah it's a stingy library
+    lib = Library.new("Michael Jackson's Library")
+    lib.register_new_book(Book.new("Eloquent JavaScript", "Marijn Haverbeke", 111))
+    lib.register_new_book(Book.new("Essential JavaScript Design Patterns", "Addy Osmani", 006))
+    lib.register_new_book(Book.new("JavaScript: The Good Parts", "Douglas Crockford", 222))
 
-#     # o wait he changed his mind
-#     lib.check_in_book(book)
+    jackson = Borrower.new("Michael Jackson")
+    book_1 = lib.books[0]
+    book_2 = lib.books[1]
+    book_3 = lib.books[2]
 
-#     # The book should now be marked as available!
-#     expect(book.status).to eq 'available'
-#   end
+    # The first two books should check out fine
+    book = lib.check_out_book(book_1.id, jackson)
+    expect(book.title).to eq "Eloquent JavaScript"
 
-#   xit "does not allow a Borrower to check out more than one Book at any given time" do
-#     # yeah it's a stingy library
-#     lib = Library.new
-#     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
-#     lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
-#     lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
+    book = lib.check_out_book(book_2.id, jackson)
+    expect(book_2.title).to eq "Essential JavaScript Design Patterns"
 
-#     jackson = Borrower.new("Michael Jackson")
-#     book_1 = lib.books[0]
-#     book_2 = lib.books[1]
-#     book_3 = lib.books[2]
+    # However, the third should return nil
+    book = lib.check_out_book(book_3.id, jackson)
+    expect(book).to be_nil
+  end
 
-#     # The first two books should check out fine
-#     book = lib.check_out_book(book_1.id, jackson)
-#     expect(book.title).to eq "Eloquent JavaScript"
+  it "returns available books" do
+    lib = Library.new
+    lib.register_new_book(Book.new("Eloquent JavaScript", "Marijn Haverbeke"))
+    lib.register_new_book(Book.new("Essential JavaScript Design Patterns", "Addy Osmani"))
+    lib.register_new_book(Book.new("JavaScript: The Good Parts", "Douglas Crockford"))
 
-#     book = lib.check_out_book(book_2.id, jackson)
-#     expect(book.title).to eq "Essential JavaScript Design Patterns"
+    # At first, all books are available
+    expect(lib.available_books.count).to eq(3)
+    expect(lib.available_books.first).to be_a(Book)
 
-#     # However, the third should return nil
-#     book = lib.check_out_book(book_3.id, jackson)
-#     expect(book).to be_nil
-#   end
+    jordan = Borrower.new("Michael Jordan")
+    book = lib.check_out_book(lib.available_books.first.id, jordan)
 
-#   xit "returns available books" do
-#     lib = Library.new
-#     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
-#     lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
-#     lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
+    # But now, there should only be two available books
+    expect(lib.available_books.count).to eq(2)
+  end
 
-#     # At first, all books are available
-#     expect(lib.available_books.count).to eq(3)
-#     expect(lib.available_books.first).to be_a(Book)
+  it "after a book is returned, it can be checked out again" do
+    lib = Library.new
+    lib.register_new_book(Book.new("Harry Potter", "J. K. Rowling"))
+    book_id = lib.books.first.id
 
-#     jordan = Borrower.new("Michael Jordan")
-#     book = lib.check_out_book(lib.available_books.first.id, jordan)
+    # First, we check out the book
+    vick = Borrower.new("Michael Vick")
+    book = lib.check_out_book(book_id, vick)
+    expect( lib.get_borrower(book_id) ).to eq 'Michael Vick'
 
-#     # But now, there should only be two available books
-#     expect(lib.available_books.count).to eq(2)
-#   end
+    # When we check in a book, the Library does not care who checks it in
+    lib.check_in_book(book)
 
-#   xit "after a book it returned, it can be checked out again" do
-#     lib = Library.new
-#     lib.register_new_book("Harry Potter", "J. K. Rowling")
-#     book_id = lib.books.first.id
+    # Another person should be able to check the book out
+    schumacher = Borrower.new("Michael Schumacher")
+    book = lib.check_out_book(book_id, schumacher)
+    expect( lib.get_borrower(book_id) ).to eq 'Michael Schumacher'
+  end
 
-#     # First, we check out the book
-#     vick = Borrower.new("Michael Vick")
-#     book = lib.check_out_book(book_id, vick)
-#     expect( lib.get_borrower(book_id) ).to eq 'Michael Vick'
+  it "returns borrowed books" do
+    lib = Library.new
+    lib.register_new_book(Book.new("Eloquent JavaScript", "Marijn Haverbeke"))
+    lib.register_new_book(Book.new("Essential JavaScript Design Patterns", "Addy Osmani"))
+    lib.register_new_book(Book.new("JavaScript: The Good Parts", "Douglas Crockford"))
 
-#     # When we check in a book, the Library does not care who checks it in
-#     lib.check_in_book(book)
+    # At first, no books are checked out
+    expect(lib.borrowed_books.count).to eq(0)
 
-#     # Another person should be able to check the book out
-#     schumacher = Borrower.new("Michael Schumacher")
-#     book = lib.check_out_book(book_id, schumacher)
-#     expect( lib.get_borrower(book_id) ).to eq 'Michael Schumacher'
-#   end
+    kors = Borrower.new("Michael Kors")
+    book = lib.check_out_book(lib.books.first.id, kors)
 
-#   xit "returns borrowed books" do
-#     lib = Library.new
-#     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
-#     lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
-#     lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
-
-#     # At first, no books are checked out
-#     expect(lib.borrowed_books.count).to eq(0)
-
-#     kors = Borrower.new("Michael Kors")
-#     book = lib.check_out_book(lib.borrowed_books.first.id, kors)
-
-#     # But now there should be one checked out book
-#     expect(lib.borrowed_books.count).to eq(1)
-#     expect(lib.borrowed_books.first).to be_a(Book)
-#   end
+    # But now there should be one checked out book
+    expect(lib.borrowed_books.count).to eq(1)
+    expect(lib.borrowed_books.first).to be_a(Book)
+  end
 end 
