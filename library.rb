@@ -73,6 +73,10 @@ class Library
     book.check_in
   end
 
+  def get_borrower(book_id)
+    @books_out[book_id].name
+  end
+
   def available_books
     available_books = [ ]
     @books.each do |book|

@@ -94,7 +94,7 @@ describe Library do
     expect(book.status).to eq 'checked_out'
   end
 
-  xit "knows who borrowed a book" do
+  it "knows who borrowed a book" do
     lib = Library.new("MakerSquare")
     lib.register_new_book("The Brothers Karamazov", "Fyodor Dostoesvky")
     book_id = lib.books.first.id
@@ -186,7 +186,7 @@ describe Library do
   end
 
   xit "after a book it returned, it can be checked out again" do
-    lib = Library.new
+    lib = Library.new("MakerSquare")
     lib.register_new_book("Harry Potter", "J. K. Rowling")
     book_id = lib.books.first.id
 
