@@ -41,7 +41,13 @@ describe 'Exercise'  do
   end
 
   it "updates the last item in the array to 'panda'" do
-		
+		result = Exercises.ex6([1, 2, 3, 4])
+		expect(result).to eq([1,2,3,'panda'])
+	end
+
+	it "updates the last item in the array to GODZILLA" do
+		result = Exercises.ex6([1, 2, 3, 'panda'])
+		expect(result).to eq([1, 2, 3, 'GODZILLA'])
 	end
 end
 
