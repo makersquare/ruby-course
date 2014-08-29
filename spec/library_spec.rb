@@ -60,7 +60,7 @@ describe Library do
 
   it "add new books and assigns it an id" do
     lib = Library.new("MakerSquare")
-    lib.register_new_book(Book.new("Nausea", "Jean-Paul Sartre", 1))
+    lib.register_new_book("Nausea", "Jean-Paul Sartre", 1)
     expect(lib.books.count).to eq(1)
 
     created_book = lib.books.first
@@ -71,16 +71,16 @@ describe Library do
 
   it "can add multiple books" do
     lib = Library.new("MakerSquare")
-    lib.register_new_book(Book.new("One", "Bob", 2))
-    lib.register_new_book(Book.new("Two", "Bob", 3))
-    lib.register_new_book(Book.new("Three", "Bob", 4))
+    lib.register_new_book("One", "Bob", 2)
+    lib.register_new_book("Two", "Bob", 3)
+    lib.register_new_book("Three", "Bob", 4)
 
     expect(lib.books.count).to eq(3)
   end
 
   xit "allows a Borrower to check out a book by its id" do
-    lib = Library.new
-    lib.register_new_book("Green Eggs and Ham", "Dr. Seuss")
+    lib = Library.new("MakerSquare")
+    lib.register_new_book("Green Eggs and Ham", "Dr. Seuss", 5)
     book_id = lib.books.first.id
 
     # Sam wants to check out Green Eggs and Ham

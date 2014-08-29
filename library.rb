@@ -36,7 +36,7 @@ class Borrower
 end
 
 class Library
-  attr_reader :name, :title, :author
+  attr_reader :name, :title, :author, :who_has_book
   attr_accessor :books
 
   def initialize(name)
@@ -44,11 +44,15 @@ class Library
     @books = []
   end
 
-  def register_new_book(book_object)
-    @books.push(book_object)
+  def register_new_book(title, author, id)
+    @books.push(Book.new(title, author, id))
   end
 
   def check_out_book(book_id, borrower)
+    # @books.each do |book|
+    #   puts book.id
+    # end
+    # @book.status = 'checked_out'
   end
 
   def check_in_book(book)
