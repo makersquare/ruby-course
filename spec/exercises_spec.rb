@@ -117,6 +117,12 @@ describe 'Exercise 6' do
     Exercises.ex6(array)
     expect(array).to eq([1,2,'GODZILLA'])
   end
+
+  it "adds 'panda' if the array is empty" do
+    array = []
+    Exercises.ex6(array)
+    expect(array).to eq(['panda'])
+  end  
 end
 
 # describe 'Exercise 7' do
