@@ -125,10 +125,23 @@ describe 'Exercise 6' do
   end  
 end
 
-# describe 'Exercise 7' do
-#   it "triples the length of a string" do
-#   end
-# end
+describe 'Exercise 7' do
+  it "Adds str to the end of the array if array has str" do
+    array = [1,2,'panda']
+    str = 'panda'
+    Exercises.ex7(array,str)
+    expect(array).to eq([1,2,'panda','panda'])
+  end
+
+  it "Doesn't add str to the end of the array if array has no str" do
+    array = [1,2,'panda']
+    str = 'GODZILLA'
+    Exercises.ex7(array,str)
+    expect(array).to eq([1,2,'panda'])
+  end
+end
+
+  
 
 # describe 'Exercise 8' do
 #   it "triples the length of a string" do
