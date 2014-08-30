@@ -65,6 +65,7 @@ class Library
   end
 
   def check_out_book(book_id,borrower)
+    return nil if !@book_status[book_id.to_s][:book].check_out
     @book_status[book_id.to_s][:book].check_out
     @book_status[book_id.to_s][:borrower] = borrower
     @book_status[book_id.to_s][:book] 
@@ -74,7 +75,8 @@ class Library
     @book_status[book_id.to_s][:borrower].name
   end
 
-  def check_in_book
+  def check_in_book(book)
+    book.check_in
   end
 
   def available_books
