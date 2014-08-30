@@ -1,13 +1,15 @@
 require 'pry-byebug'
 class Book
   attr_reader :author, :title, :id, :status, :borrower, :year_published, :edition
-  def initialize(title,author,id=nil,year_published=1800,edition='1st')
+  attr_accessor :review
+  def initialize(title,author,year_published=1800,edition='1st',id=nil)
     @author = author
     @title = title
     @id = id
     @status = "available"
     @year_published = year_published
     @edition = edition
+    @review = {}
   end
 
   def check_out
@@ -23,11 +25,16 @@ class Book
   def overdue?
   end
 
+  def change_id(x)
+    @id = x
+  end
+
 end
 
 class Borrower
-  attr_reader 
-  def initialize
+  attr_reader :name
+  def initialize(name)
+    @name = name
   end
 
   def leave_review
@@ -37,15 +44,23 @@ class Borrower
 end
 
 class Library
-  attr_reader 
-  def initialize
+  @@counter = 0 
+  @@lib_book_status = {}
+  attr_reader :books, :name
+  def initialize(name="library")
+    @name = name
+    @books = []
+  end
+
+  def book_by_id
   end
 
   def books
     @books
   end
 
-  def add_booky
+  def add_book
+
   end
 
   def check_out_book
@@ -62,7 +77,8 @@ class Library
 
   def borrowed_books
   end
-  def register_new_book
+
+  def register_new_book()
   end
 end
 

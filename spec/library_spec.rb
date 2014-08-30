@@ -44,14 +44,14 @@ describe Book do
 
   it "Year published defaults to 1800." do
     book = Book.new("The Stranger", "Albert Camus")
-    book2 = Book.new('','','',2040)
+    book2 = Book.new('','',2040)
     expect(book.year_published).to eq 1800
     expect(book2.year_published).to eq 2040
   end
 
   it "Year published defaults to 1800." do
     book = Book.new("The Stranger", "Albert Camus")
-    book2 = Book.new('','','','','4th')
+    book2 = Book.new('','','','4th')
     expect(book.edition).to eq '1st'
     expect(book2.edition).to eq '4th'
   end
@@ -59,25 +59,25 @@ describe Book do
 end
 
 describe Borrower do
-  xit "has a name" do
+  it "has a name" do
     borrower = Borrower.new("Mike")
     expect(borrower.name).to eq "Mike"
   end
 
-  xit "Borrower can leave a review." do
-    borrower = Borrower.new("Mike")
-    lib = Library.new
-    lib.register_new_book("Nausea", "Jean-Paul Sartre")
-    borrower.leave_review(lib,1,"Loved it!",10)
-    expect(lib.books[0].review[borrower]).to eq "Loved it!"
-    expect(lib.books[0].rating[borrower]).to eq 10
-  end  
+  # xit "Borrower can leave a review." do
+  #   borrower = Borrower.new("Mike")
+  #   lib = Library.new
+  #   lib.register_new_book("Nausea", "Jean-Paul Sartre")
+  #   borrower.leave_review(lib,1,"Loved it!",10)
+  #   expect(lib.books[0].review[borrower]).to eq "Loved it!"
+  #   expect(lib.books[0].rating[borrower]).to eq 10
+  # end  
 
 end
 
 describe Library do
 
-  xit "starts with an empty array of books" do
+  it "starts with an empty array of books" do
     lib = Library.new
     expect(lib.books.count).to eq(0)
   end
