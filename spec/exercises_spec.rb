@@ -1,6 +1,6 @@
 # require 'rubygems'
 require 'rspec'
-# require 'pry-byebug'
+ require 'pry-byebug'
 require_relative '../exercises.rb'
 
 describe 'Exercise 0' do
@@ -155,14 +155,14 @@ describe 'Exercise 8' do
   end
 end
 
- describe 'Exercise 9' do
-   it "Returns `true` if the given time is in a leap year, false if not" do
-     test = Exercises.ex9(2014)
-     test2 = Exercises.ex9(2012)
-     test3 = Exercises.ex9(2000)
-     expect(test).to be_false
-     expect(test2).to be_true
-     expect(test3).to be_true
+describe 'Exercise 9' do
+  it "Returns `true` if the given time is in a leap year, false if not" do
+    test = Exercises.ex9(2014)
+    test2 = Exercises.ex9(2012)
+    test3 = Exercises.ex9(2000)
+    expect(test).to be_false
+    expect(test2).to be_true
+    expect(test3).to be_true
    end
  end
 
@@ -177,5 +177,29 @@ describe 'Exercise 10' do
     early = Time.parse("11 am")
     Time.stub(:now).and_return(early)
     expect(Exercises.ex10).to eq('normal prices')
+  end
+end
+
+describe 'Extension' do
+  it "Takes an array of strings and returns a hash with two keys" do
+    result = Extensions.extremes(['x', 'x', 'y', 'z'])
+    expect(result.keys).to eq([:most,:least])
+  end
+
+  it ":most => the string(s) that occurs the most as its value" do
+    result = Extensions.extremes(['x', 'x', 'y', 'z'])
+    expect(result[:most]).to eq('x')
+  end
+
+  it ":least => the string(s) that occurs the least as its value" do
+    result = Extensions.extremes(['x','x','x','y','y','z'])
+    expect(result[:least]).to eq('z')
+  end
+
+  it "handles ties with an array" do
+    result_hi = Extensions.extremes(['x','x','y','y','z'])
+    result_lo = Extensions.extremes(['x', 'x', 'y', 'z'])
+    expect(result_hi).to eq({ :most => ['x','y'], :least => 'z' })
+    expect(result_lo).to eq({ :most => 'x', :least => ['y', 'z'] })
   end
 end
