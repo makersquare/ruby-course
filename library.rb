@@ -4,6 +4,7 @@ class Book
   def initialize(title,author)
     @author = author
     @title = title
+    @status = "available"
   end
 
   def check_out

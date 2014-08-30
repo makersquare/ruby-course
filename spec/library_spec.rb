@@ -12,45 +12,45 @@ describe Book do
     expect(book.id).to be_nil
   end
 
-  xit "has a default status of available" do
-    book = Book.new
-    expect(book.status[0]).to eq 'available'
+  it "has a default status of available" do
+    book = Book.new("The Stranger", "Albert Camus")
+    expect(book.status).to eq 'available'
   end
 
   xit "can be checked out" do
-    book = Book.new
+    book = Book.new("The Stranger", "Albert Camus")
     did_it_work = book.check_out
     expect(did_it_work).to be_true
-    expect(book.status[0]).to eq 'checked_out'
+    expect(book.status).to eq 'checked_out'
   end
 
   xit "can't be checked out twice in a row" do
-    book = Book.new
+    book = Book.new("The Stranger", "Albert Camus")
     did_it_work = book.check_out
     expect(did_it_work).to be_true    #eq(true)
 
     did_it_work_again = book.check_out
     expect(did_it_work_again).to eq(false)
 
-    expect(book.status[0]).to eq 'checked_out'
+    expect(book.status).to eq 'checked_out'
   end
 
   xit "can be checked in" do
-    book = Book.new
+    book = Book.new("The Stranger", "Albert Camus")
     book.check_out
     book.check_in
-    expect(book.status[0]).to eq 'available'
+    expect(book.status).to eq 'available'
   end
 
   xit "Year published defaults to 1800." do
-    book = Book.new
+    book = Book.new("The Stranger", "Albert Camus")
     book2 = Book.new('','','',2040)
     expect(book.year_published).to eq 1800
     expect(book2.year_published).to eq 2040
   end
 
   xit "Year published defaults to 1800." do
-    book = Book.new
+    book = Book.new("The Stranger", "Albert Camus")
     book2 = Book.new('','','','','4th')
     expect(book.edition).to eq '1st'
     expect(book2.edition).to eq '4th'
@@ -116,7 +116,7 @@ describe Library do
     expect(book.title).to eq "Green Eggs and Ham"
 
     # The book should now be marked as checked out
-    expect(book.status[0]).to eq 'checked_out'
+    expect(book.status).to eq 'checked_out'
   end
 
   xit "knows who borrowed a book" do
@@ -166,7 +166,7 @@ describe Library do
     lib.check_in_book(book)
 
     # The book should now be marked as available!
-    expect(book.status[0]).to eq 'available'
+    expect(book.status).to eq 'available'
   end
 
   xit "does not allow a Borrower to check out more than one Book at any given time" do
