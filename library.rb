@@ -14,6 +14,7 @@ class Book
   end
 
   def check_in
+    @status = "available" if @status == "checked_out"
   end
 
   def overdue?
