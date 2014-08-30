@@ -1,10 +1,13 @@
 require 'pry-byebug'
 class Book
-  attr_reader :author, :title, :id, :status, :borrower
-  def initialize(title,author)
+  attr_reader :author, :title, :id, :status, :borrower, :year_published, :edition
+  def initialize(title,author,id=nil,year_published=1800,edition=1)
     @author = author
     @title = title
+    @id = id
     @status = "available"
+    @year_published = year_published
+    @edition = edition
   end
 
   def check_out

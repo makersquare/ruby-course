@@ -42,7 +42,7 @@ describe Book do
     expect(book.status).to eq 'available'
   end
 
-  xit "Year published defaults to 1800." do
+  it "Year published defaults to 1800." do
     book = Book.new("The Stranger", "Albert Camus")
     book2 = Book.new('','','',2040)
     expect(book.year_published).to eq 1800
