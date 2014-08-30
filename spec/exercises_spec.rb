@@ -123,3 +123,14 @@ describe 'Exercises' do
   
 
 end
+
+  describe '.extremes' do 
+
+    it 'returns a hash of form {most: x, least: y} indicating the most and least common elems in a given string array' do
+     result = Exercises.extremes(['x', 'x', 'y', 'z'])
+     expect(result).to eq({ :most => 'x', :least => ['y', 'z'] })
+
+    end
+
+  end
+

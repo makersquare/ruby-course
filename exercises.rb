@@ -28,13 +28,7 @@ module Exercises
   # Exercise 4
   #  - Returns the max number of the given array
   def self.ex4(array)
-    max = 0
-    array.each do |x|
-      if x > max
-        max = x
-      end
-    end
-    max
+    array.max
   end
 
   # Exercise 5
@@ -102,9 +96,8 @@ module Exercises
   end
 
 
-end
 
-module Extensions
+
   # Extension Exercise
   #  - Takes an `array` of strings. Returns a hash with two keys:
   #    :most => the string(s) that occures the most # of times as its value.
@@ -116,6 +109,49 @@ module Extensions
   #   expect(result).to eq({ :most => 'x', :least => ['y', 'z'] })
   #
   def self.extremes(array)
-    # TODO
+
+    set = array.uniq
+    val_to_count = {}
+
+    #Get counts for each string in the array
+    set.each {|x| val_to_count.store(x, array.count(x)) }
+    
+    #Find the highest count, and all strings that have that count
+    most_count = val_to_count.max_by{|k,v| v}[1]
+    most = val_to_count.find_all {|k,v| v == most_count}
+
+    #Find the lowest count, and all strings that have that count
+    least_count = val_to_count.min_by{|k,v| v}[1]
+    least = val_to_count.find_all {|k,v| v == least_count}
+
+    #Changing the format of the answer to fit specifications
+    #Current form is [ ["str", count], ["str', count] ]
+    #Needs to be ["str","str"] or if only one just "str'
+    reformated_least = "" 
+    reformated_most =  ""
+
+    if (most.size == 1)
+      reformated_most = most[0][0]
+    else
+      reformated_most = []
+      most.each do |x|
+        reformated_most.push(x[0])
+      end
+    end
+
+    if (least.size == 1)
+      reformated_least = least[0][0]
+    else
+      reformated_least = []
+      least.each do |x|
+          reformated_least.push(x[0])
+      end
+    end
+
+    extremes = {most: reformated_most, least: reformated_least}
+
   end
+
 end
+
+
