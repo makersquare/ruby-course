@@ -8,7 +8,9 @@ class Book
   end
 
   def check_out
+    return false if @status == "checked_out"
     @status = "checked_out" if @status == "available"
+
   end
 
   def check_in
