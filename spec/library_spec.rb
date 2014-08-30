@@ -17,7 +17,7 @@ describe Book do
     expect(book.status).to eq 'available'
   end
 
-  xit "can be checked out" do
+  it "can be checked out" do
     book = Book.new("The Stranger", "Albert Camus")
     did_it_work = book.check_out
     expect(did_it_work).to be_true
