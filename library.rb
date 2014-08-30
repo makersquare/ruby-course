@@ -79,11 +79,11 @@ class Library
     book.check_in
   end
 
-  def available_books
-  end
+  # def available_books
+  # end
 
-  def borrowed_books
-  end
+  # def borrowed_books
+  # end
 
   def register_new_book(title,author)
     @@counter += 1
@@ -91,6 +91,14 @@ class Library
     a.change_id(@@counter)
     @books.push(a)
     @book_status[@@counter.to_s]={book:a}
+  end
+
+  def checked_out_books_array
+    array = []
+    @book_status.each do |x,y|
+      array.push(y.borrower)
+    end
+    array    
   end
 end
 
