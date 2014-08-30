@@ -66,10 +66,12 @@ class Library
 
   def check_out_book(book_id,borrower)
     @book_status[book_id.to_s][:book].check_out
+    @book_status[book_id.to_s][:borrower] = borrower
     @book_status[book_id.to_s][:book] 
   end
 
-  def get_borrower
+  def get_borrower(book_id)
+    @book_status[book_id.to_s][:borrower].name
   end
 
   def check_in_book
@@ -86,8 +88,7 @@ class Library
     a = Book.new(title,author)
     a.change_id(@@counter)
     @books.push(a)
-    c = @@counter.to_s
-    @book_status[c]={book:a}
+    @book_status[@@counter.to_s]={book:a}
   end
 end
 
