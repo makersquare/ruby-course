@@ -2,10 +2,10 @@ require 'pry-byebug'
 class Book
   attr_reader :author, :title, :id, :status, :borrower, :year_published, :edition
   attr_accessor :review
-  def initialize(title,author,year_published=1800,edition='1st',id=nil)
+  def initialize(title,author,year_published=1800,edition='1st')
     @author = author
     @title = title
-    @id = id
+    @id = nil
     @status = "available"
     @year_published = year_published
     @edition = edition
@@ -45,11 +45,12 @@ end
 
 class Library
   @@counter = 0 
-  @@lib_book_status = {}
-  attr_reader :books, :name
+  
+  attr_reader :books, :name, :book_status
   def initialize(name="library")
     @name = name
     @books = []
+    @book_status = {}  
   end
 
   def book_by_id
@@ -78,7 +79,13 @@ class Library
   def borrowed_books
   end
 
-  def register_new_book()
+  def register_new_book(title,author)
+    @@counter += 1
+    a = Book.new(title,author)
+    a.change_id(@@counter)
+    @books.push(a)
+    @book_status[@@counter]=a
+    # @book_status
   end
 end
 
