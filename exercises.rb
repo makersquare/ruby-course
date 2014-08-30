@@ -107,20 +107,13 @@ module Extensions
   def self.extremes(array)
     histogram = Hash.new(0)
     array.each {|str| histogram[str] += 1}
-    swapped = Hash.new(nil)
-    histogram.each do |key,val|
-      if swapped[val] == nil
-        swapped[val] = key
-      elsif swapped[val].is_a?(String)
-        swapped[val] = [swapped[val]]
-        swapped[val] << key
-      elsif swapped[val].is_a?(Array)
-        swapped[val] << key
-      end
-    end 
+    swapped = Hash.new {|hash,key| hash[key] = []}
+    histogram.each { |key,val| swapped[val] << key }
     sorted = swapped.sort_by {|k,_| k}.to_a
     least = sorted.first[1]
     most = sorted.last[1]
+    least = least[0] if least.length == 1
+    most = most[0] if most.length == 1
     result = {:most => most, :least => least}
   end
 end
