@@ -1,9 +1,9 @@
 
 class Book
 
-  attr_reader :author, :title, :id, :status
+  attr_reader :author, :title, :id
 
-  attr_accessor :checked_out_to
+  attr_accessor :status
 
   def initialize(title, author, id=nil)
     @author = author
@@ -32,8 +32,6 @@ class Borrower
 
   attr_reader :name
 
-  attr_accessor :check_outs
-
   def initialize(name)
     @name = name
   end
@@ -55,7 +53,7 @@ class Library
   end
 
   def register_new_book(title, author)
-    @last_id =+ 1
+    @last_id += 1
     @books << Book.new(title, author, id=@last_id)
 
   end
@@ -63,10 +61,10 @@ class Library
   def check_out_book(book_id, borrower)
    
       book = @books.find  do |book|
-         book.id == book_id && book.status == 'available'
-       end
+        book.id == book_id
+      end
 
-      if book.check_out 
+      if !(@borrowers_hash.values.include?(borrower.name)) && book.check_out
         @borrowers_hash[book.id] = borrower.name
         book
       else
@@ -80,12 +78,16 @@ class Library
   end
 
 
-  def check_in_book(book) 
+  def check_in_book(book)
+    book.status = 'available'
+    @borrowers_hash[book.id] = nil
   end
 
   def available_books
+    @books.select {|book| book.status == 'available'}
   end
 
   def borrowed_books
+    @books.select {|book| book.status == 'checked_out'}
   end
 end
