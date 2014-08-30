@@ -25,6 +25,10 @@ class Book
   def overdue?
   end
 
+  def available?
+    return true if @status == "available"
+  end
+
   def change_id(x)
     @id = x
   end
@@ -79,11 +83,14 @@ class Library
     book.check_in
   end
 
-  # def available_books
-  # end
+  def available_books
+    @books.select {|x| x.available?}
+  end
 
-  # def borrowed_books
-  # end
+  def borrowed_books
+    @books.select {|x| !x.available?}
+
+  end
 
   def register_new_book(title,author)
     @@counter += 1
@@ -100,6 +107,7 @@ class Library
     end
     array    
   end
+
 end
 
 
