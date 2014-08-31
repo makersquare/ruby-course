@@ -51,7 +51,7 @@ end
 class Library
   @@counter = 0 
   
-  attr_reader :books, :name, :book_status
+  attr_reader :books, :name, :book_status, :book_reviews
   def initialize(name="library")
     @name = name
     @books = []
@@ -60,6 +60,17 @@ class Library
   end
 
   def send_review(book_id,message,rating,critic)
+    @book_reviews[book_id.to_s]={critic=>{review:message,rating:rating}}
+  end
+
+  def read_review(book_id)
+    @book_reviews[book_id.to_s].each do |x| 
+      x.each do |y|
+        y.each do |a,b|
+          puts b.to_s + 'hello'
+        end
+      end
+    end 
   end
 
   def book_by_id
