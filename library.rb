@@ -64,19 +64,24 @@ class Library
     @books
   end
 
-  def add_book
-
+  def add_book(book_instance)
+    @@counter += 1
+    book_instance.change_id(@@counter)
+    @books.push(book_instance)
+    @book_status[@@counter.to_s]={book:book_instance}
   end
 
   def check_out_book(book_id,borrower)
+    return nil if self.more_than_two?(borrower)
     return nil if !@book_status[book_id.to_s][:book].check_out
     @book_status[book_id.to_s][:book].check_out
     @book_status[book_id.to_s][:borrower] = borrower
     @book_status[book_id.to_s][:book] 
   end
 
-  def get_borrower(book_id)
-    @book_status[book_id.to_s][:borrower].name
+  def get_borrower(book_id,ind='name')
+    return @book_status[book_id.to_s][:borrower] if ind =='id'
+    return @book_status[book_id.to_s][:borrower].name if ind == 'name'
   end
 
   def check_in_book(book)
@@ -89,28 +94,20 @@ class Library
 
   def borrowed_books
     @books.select {|x| !x.available?}
-
   end
 
   def register_new_book(title,author)
-    @@counter += 1
-    a = Book.new(title,author)
-    a.change_id(@@counter)
-    @books.push(a)
-    @book_status[@@counter.to_s]={book:a}
+    new_book_instance = Book.new(title,author)
+    add_book(new_book_instance)
   end
 
-  def checked_out_books_array
-    array = []
-    @book_status.each do |x,y|
-      array.push(y.borrower)
-    end
-    array    
+  def more_than_two?(borrower)
+    array = self.borrowed_books.map {|x| x.id}
+    array2 = array.map {|x| self.get_borrower(x,'id')}
+    array2.count(borrower) >=2 ? true : false
+
+
+
   end
 
 end
-
-
-# Create a Hash for borrowed books {:book_id => Borrower Name}
-# Get rid of borrower in book attributes. Add something to Library to track the borrower. 
-# User .count method of borrow hash to check the number of books checked out. 

@@ -240,9 +240,9 @@ describe Library do
 
     kors = Borrower.new("Michael Kors")
     book = lib.check_out_book(lib.available_books.first.id, kors) #(lib.borrowed_books.first.id, kors)
-
+    book2 = lib.check_out_book(lib.available_books[1].id, kors)
     # But now there should be one checked out book
-    expect(lib.borrowed_books.count).to eq(1)
+    expect(lib.borrowed_books.count).to eq(2)
     expect(lib.borrowed_books.first).to be_a(Book)
   end
 end
