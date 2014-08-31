@@ -41,7 +41,8 @@ class Borrower
     @name = name
   end
 
-  def leave_review
+  def leave_review(library,book_id,message,rating)
+    library.send_review(book_id,message,rating,self)
   end
 
 
@@ -54,7 +55,11 @@ class Library
   def initialize(name="library")
     @name = name
     @books = []
-    @book_status = {}  
+    @book_status = {}
+    @book_reviews = {}
+  end
+
+  def send_review(book_id,message,rating,critic)
   end
 
   def book_by_id
@@ -105,9 +110,6 @@ class Library
     array = self.borrowed_books.map {|x| x.id}
     array2 = array.map {|x| self.get_borrower(x,'id')}
     array2.count(borrower) >=2 ? true : false
-
-
-
   end
 
 end

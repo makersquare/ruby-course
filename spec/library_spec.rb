@@ -64,14 +64,14 @@ describe Borrower do
     expect(borrower.name).to eq "Mike"
   end
 
-  # xit "Borrower can leave a review." do
-  #   borrower = Borrower.new("Mike")
-  #   lib = Library.new
-  #   lib.register_new_book("Nausea", "Jean-Paul Sartre")
-  #   borrower.leave_review(lib,1,"Loved it!",10)
-  #   expect(lib.books[0].review[borrower]).to eq "Loved it!"
-  #   expect(lib.books[0].rating[borrower]).to eq 10
-  # end  
+  it "Borrower can leave a review." do
+    borrower = Borrower.new("Mike")
+    lib = Library.new
+    lib.register_new_book("Nausea", "Jean-Paul Sartre")
+    borrower.leave_review(lib,1,"Loved it!",10)
+    expect(lib.books[0].review[borrower]).to eq "Loved it!"
+    expect(lib.books[0].rating[borrower]).to eq 10
+  end  
 
 end
 
