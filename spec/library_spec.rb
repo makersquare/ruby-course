@@ -69,8 +69,9 @@ describe Borrower do
     lib = Library.new
     lib.register_new_book("Nausea", "Jean-Paul Sartre")
     borrower.leave_review(lib,1,"Loved it!",10)
-    expect(lib.books[0].review[borrower]).to eq "Loved it!"
-    expect(lib.books[0].rating[borrower]).to eq 10
+    STDOUT.should_receive(:puts).with("Loved it!")
+    STDOUT.should_receive(:puts).with(10)
+    review = lib.read_review(1)
   end  
 
 end

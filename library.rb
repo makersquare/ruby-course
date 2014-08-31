@@ -65,11 +65,8 @@ class Library
 
   def read_review(book_id)
     @book_reviews[book_id.to_s].each do |x| 
-      x.each do |y|
-        y.each do |a,b|
-          puts b.to_s + 'hello'
-        end
-      end
+      puts x[1][:review]
+      puts x[1][:rating]
     end 
   end
 
