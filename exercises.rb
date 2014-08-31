@@ -50,14 +50,23 @@ module Exercises
   #  - If the last item is already 'panda', update
   #    it to 'GODZILLA' instead
   def self.ex6(array)
-    # TODO
+    if array.empty?
+    elsif array.last == 'panda'
+      array[(array.length - 1)] = 'GODZILLA'
+    else
+      array[(array.length - 1)] = 'panda'
+    end
+    array
   end
 
   # Exercise 7
   #  - If the string `str` exists in the array,
   #    add `str` to the end of the array
   def self.ex7(array, str)
-    # TODO
+    if array.include?(str)
+      array << str
+    end
+    array
   end
 
   # Exercise 8
@@ -65,7 +74,7 @@ module Exercises
   #    { :name => 'Bob', :occupation => 'Builder' }
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
-    # TODO
+    people.each {|x| puts "#{x[:name]} #{x[:occupation]}" }
   end
 
   # Exercise 9
@@ -73,17 +82,32 @@ module Exercises
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
-    # TODO
+    if (time % 4 == 0)
+      if (time % 100 == 0)
+        if(time % 400 == 0)
+          return true
+        end
+        return false
+      end
+      return true
+    end
+    return false
   end
 
   # Exercise 10
   #  - Returns "happy hour" if it is between 4 and 6pm
   #    Otherwise, returns "normal prices"
   # Hint: Read the "Stubbing" documentation on the Learn app.
-  def self.ex10
-    # TODO
+  def self.ex10(time)
+    t = time
+    if t.hour < 18 && t.hour >= 16
+      'happy hour'
+    else
+      'normal prices'
+    end
   end
 end
+
 
 module Extensions
   # Extension Exercise
