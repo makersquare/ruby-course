@@ -70,8 +70,7 @@ module Exercises
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
     people.each do |x|
-      puts x[:name]
-      puts x[:occupation]
+      print "#{x[:name]}: #{x[:occupation]}"
     end
   end
 
@@ -80,7 +79,7 @@ module Exercises
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
-    # TODO
+    (time % 4).zero? && !(time % 100).zero? || (time % 400).zero?
   end
 
   # Exercise 10
@@ -88,7 +87,12 @@ module Exercises
   #    Otherwise, returns "normal prices"
   # Hint: Read the "Stubbing" documentation on the Learn app.
   def self.ex10
-    # TODO
+    holder = Time.now
+    if holder.hour > 14 && holder.hour < 18
+      "happy hour"
+    else
+      "normal prices"
+    end
   end
 end
 
@@ -104,6 +108,12 @@ module Extensions
   #   expect(result).to eq({ :most => 'x', :least => ['y', 'z'] })
   #
   def self.extremes(array)
-    # TODO
+    count = Hash.new(0)
+    hash = Hash.new
+    array.each { |x| count[x] += 1 }
+    hash[:most] = count.select { |k, v| v == count.values.max }.keys
+    hash[:least] = count.select { |k, v| v == count.values.min }.keys
+    hash
   end
+
 end

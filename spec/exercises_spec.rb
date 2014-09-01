@@ -76,14 +76,56 @@ end
 
 describe 'Exercise 8' do
   it "iterates through an array of hashes and prints out name and occupation" do
-    array = [{ :name => 'Bob', :occupation => ' the Builder' }, { :name => 'Bill', :occupation => ' the Baker' }, { :name => 'Bo', :occupation => ' the Ball Player' }]
-    $stdout.should_receive(:puts).with("Bob")
-    $stdout.should_receive(:puts).with(" the Builder")
-    $stdout.should_receive(:puts).with("Bill")
-    $stdout.should_receive(:puts).with(" the Baker")
-    $stdout.should_receive(:puts).with("Bo")
-    $stdout.should_receive(:puts).with(" the Ball Player")
+    array = [{ :name => 'Bob', :occupation => 'Builder' }, { :name => 'Bill', :occupation => 'Baker' }, { :name => 'Bo', :occupation => 'Ball Player' }]
+    # $stdout.should_receive(:puts).with("Bob")
+    # $stdout.should_receive(:puts).with(" the Builder")
+    # $stdout.should_receive(:puts).with("Bill")
+    # $stdout.should_receive(:puts).with(" the Baker")
+    # $stdout.should_receive(:puts).with("Bo")
+    # $stdout.should_receive(:puts).with(" the Ball Player")
+
+    Exercises.should_receive(:print).with("Bob: Builder")
+    Exercises.should_receive(:print).with("Bill: Baker")
+    Exercises.should_receive(:print).with("Bo: Ball Player")
 
     result = Exercises.ex8(array)
+  end
+end
+
+describe 'Exercise 9' do
+  it "should return true if time is within a leap year" do 
+    a = 2000
+    b = 1900
+    c = 2016
+    result1 = Exercises.ex9(a)
+    result2 = Exercises.ex9(b)
+    result3 = Exercises.ex9(c)
+
+    expect(result1).to be_true
+    expect(result2).to be_false
+    expect(result3).to be_true
+  end
+end
+
+
+describe 'Exercise 10' do
+  it "returns happy hour between 4-6 pm" do
+    early = Time.parse("11 am")
+    late = Time.parse("5:30 pm")
+
+    Time.stub(:now).and_return(early)
+    expect(Exercises.ex10).to eq("normal prices")
+
+    Time.stub(:now).and_return(late)
+    expect(Exercises.ex10).to eq("happy hour")
+  end
+end
+
+describe 'Extensions' do
+  it 'takes an array of strings and returns a hash containing the most/least frequent strings' do
+    array = ["word", "word", "word", "other", "something", "something"]
+    result = Extensions.extremes(array)
+    result.should include(:most => ["word"], :least => ["other"])
+
   end
 end
