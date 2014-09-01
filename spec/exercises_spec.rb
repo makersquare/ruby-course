@@ -55,7 +55,44 @@ describe 'Exercise'  do
 		expect(result).to eq(['apples', 2, 3, 'apples'])
 	end
 
+	it "prints peoples occupations to stdout" do
+		people = [
+			{name: "kizzle", occupation: "oil and gas"},
+			{name: "ravi", occupation: "boss"}
+		]
+		Exercises.should_receive(:print).with("kizzle: oil and gas")
+		Exercises.should_receive(:print).with("ravi: boss")
+
+		Exercises.ex8(people)
+	end
+
+	it "returns 'true' if the given time is in a leap year otherwise returns 'false'" do
+		year1 = Exercises.ex9(800)
+		year2 = Exercises.ex9(2014)
+		year3 = Exercises.ex9(2004)
+
+		expect(year1).to be true
+		expect(year2).to be false
+		expect(year3).to be true
+	end
+
+
+	it "returns happy our between 4 and 6 pm" do
+		early = Time.parse("11 am")
+		late = Time.parse("5:30 pm")
+
+		Time.stub(:now).and_return(early)
+		expect(Exercises.ex10).to eq("normal prices")
+
+		Time.stub(:now).and_return(late)
+		expect(Exercises.ex10).to eq("happy hour")
+	end
 end
 
 
-
+describe 'Extensions' do
+	it "Takes an array of strings. Returns a hash with two keys. If any tie for most or least, return an array of an array of the tying strings" do
+		result = Extensions.extremes(['x', 'x', 'y', 'z'])
+  	expect(result).to eq({ :most => 'x', :least => ['y', 'z'] })
+	end
+end

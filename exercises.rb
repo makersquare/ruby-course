@@ -5,7 +5,7 @@ module Exercises
   #  - Returns "nope" if `str` is "wishes"
   def self.ex0(str)
     if str == "wishes"
-      return 'nope'
+      'nope'
     else
       x = str * 3
     end
@@ -67,7 +67,9 @@ module Exercises
   #    { :name => 'Bob', :occupation => 'Builder' }
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
-    # TODO
+    people.each do |p|
+      print "#{p[:name]}: #{p[:occupation]}"
+    end
   end
 
   # Exercise 9
@@ -75,7 +77,13 @@ module Exercises
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
-    # TODO
+    ((time % 4).zero? && !((time % 100).zero?)) || (time % 400).zero?
+  end
+
+  def self.ex10
+    hr = Time.now.hour
+    return "happy hour" if hr == 16 || hr ==17
+    'normal prices'
   end
 end
 
@@ -133,6 +141,33 @@ module Extensions
   #   expect(result).to eq({ :most => 'x', :least => ['y', 'z'] })
   #
   def self.extremes(array)
-    # TODO
+    count_hash = Hash.new(0)
+
+    array.each do |x|
+      count_hash[x] = count_hash[x] + 1
+    end
+
+    max_repeat_value = count_hash.values.max
+    min_repeat_value = count_hash.values.min
+
+    hash_min = count_hash.select {|k,v| v == min_repeat_value}
+    hash_max = count_hash.select {|k,v| v == max_repeat_value}
+
+    if hash_min.keys.count == 1
+      min_string = hash_min.keys[0]
+    else
+      min_string = hash_min.keys
+    end
+
+    if hash_max.keys.count == 1
+      max_string = hash_max.keys[0]
+    else
+      max_string = hash_max.keys
+    end
+
+    {
+      :most => max_string,
+      :least => min_string
+    }
   end
 end
