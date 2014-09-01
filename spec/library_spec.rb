@@ -13,19 +13,19 @@ describe Book do
   end
 
   it "has a default status of available" do
-    book = Book.new
+    book = Book.new("The Stranger", "Albert Camus")
     expect(book.status).to eq 'available'
   end
 
   it "can be checked out" do
-    book = Book.new
+    book = Book.new("The Stranger", "Albert Camus")
     did_it_work = book.check_out
     expect(did_it_work).to be_true
     expect(book.status).to eq 'checked_out'
   end
 
   it "can't be checked out twice in a row" do
-    book = Book.new
+    book = Book.new("The Stranger", "Albert Camus")
     did_it_work = book.check_out
     expect(did_it_work).to be_true
 
@@ -36,7 +36,7 @@ describe Book do
   end
 
   it "can be checked in" do
-    book = Book.new
+    book = Book.new("The Stranger", "Albert Camus")
     book.check_out
     book.check_in
     expect(book.status).to eq 'available'
@@ -54,13 +54,13 @@ end
 describe Library do
 
   it "starts with an empty array of books" do
-    lib = Library.new
+    lib = Library.new("Pritzker Law Library")
     expect(lib.books.count).to eq(0)
   end
 
   it "add new books and assigns it an id" do
-    lib = Library.new
-    lib.register_new_book("Nausea", "Jean-Paul Sartre")
+    lib = Library.new("Pritzker Law Library")
+    lib.register_new_book(Book.new("Nausea", "Jean-Paul Sartre"))
     expect(lib.books.count).to eq(1)
 
     created_book = lib.books.last
@@ -70,17 +70,17 @@ describe Library do
   end
 
   it "can add multiple books" do
-    lib = Library.new
-    lib.register_new_book("One", "Bob")
-    lib.register_new_book("Two", "Bob")
-    lib.register_new_book("Three", "Bob")
+    lib = Library.new("Pritzker Law Library")
+    lib.register_new_book(Book.new("One", "Bob"))
+    lib.register_new_book(Book.new("Two", "Bob"))
+    lib.register_new_book(Book.new("Three", "Bob"))
 
     expect(lib.books.count).to eq(3)
   end
 
   it "allows a Borrower to check out a book by its id" do
-    lib = Library.new
-    lib.register_new_book("Green Eggs and Ham", "Dr. Seuss")
+    lib = Library.new("Pritzker Law Library")
+    lib.register_new_book(Book.new("Green Eggs and Ham", "Dr. Seuss"))
     book_id = lib.books.last.id
 
     # Sam wants to check out Green Eggs and Ham
@@ -96,8 +96,8 @@ describe Library do
   end
 
   it "knows who borrowed a book" do
-    lib = Library.new
-    lib.register_new_book("The Brothers Karamazov", "Fyodor Dostoesvky")
+    lib = Library.new("Pritzker Law Library")
+    lib.register_new_book(Book.new("The Brothers Karamazov", "Fyodor Dostoesvky"))
     book_id = lib.books.last.id
 
     # Big Brother wants to check out The Brothers Karamazov
@@ -109,8 +109,8 @@ describe Library do
   end
 
   it "does not allow a book to be checked out twice in a row" do
-    lib = Library.new
-    lib.add_book(Book.new("Surely You're Joking Mr. Feynman", "Richard Feynman"))
+    lib = Library.new("Pritzker Law Library")
+    lib.register_new_book(Book.new("Surely You're Joking Mr. Feynman", "Richard Feynman"))
     book_id = lib.books.last.id
 
     # Leslie Nielsen wants to double check on that
@@ -131,7 +131,7 @@ describe Library do
 
   it "allows a Borrower to check a book back in" do
     lib = Library.new
-    lib.register_new_book("Finnegans Wake", "James Joyce")
+    lib.register_new_book(Book.new("Finnegans Wake", "James Joyce"))
     book_id = lib.books.last.id
 
     # Bob wants to check out Finnegans Wake
@@ -147,10 +147,10 @@ describe Library do
 
   it "does not allow a Borrower to check out more than two Books at any given time" do
     # yeah it's a stingy library
-    lib = Library.new
-    lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
-    lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
-    lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
+    lib = Library.new("Pritzker Law Library")
+    lib.register_new_book(Book.new("Eloquent JavaScript", "Marijn Haverbeke"))
+    lib.register_new_book(Book.new("Essential JavaScript Design Patterns", "Addy Osmani"))
+    lib.register_new_book(Book.new("JavaScript: The Good Parts", "Douglas Crockford"))
 
     jackson = Borrower.new("Michael Jackson")
     book_1 = lib.books[0]
@@ -170,10 +170,10 @@ describe Library do
   end
 
   it "returns available books" do
-    lib = Library.new
-    lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
-    lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
-    lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
+    lib = Library.new("Pritzker Law Library")
+    lib.register_new_book(Book.new("Eloquent JavaScript", "Marijn Haverbeke"))
+    lib.register_new_book(Book.new("Essential JavaScript Design Patterns", "Addy Osmani"))
+    lib.register_new_book(Book.new("JavaScript: The Good Parts", "Douglas Crockford"))
 
     # At first, all books are available
     expect(lib.available_books.count).to eq(3)
@@ -187,8 +187,8 @@ describe Library do
   end
 
   it "after a book is returned, it can be checked out again" do
-    lib = Library.new
-    lib.register_new_book("Harry Potter", "J. K. Rowling")
+    lib = Library.new("Pritzker Law Library")
+    lib.register_new_book(Book.new("Harry Potter", "J. K. Rowling"))
     book_id = lib.books.last.id
 
     # First, we check out the book
@@ -206,10 +206,10 @@ describe Library do
   end
 
   it "returns borrowed books" do
-    lib = Library.new
-    lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
-    lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
-    lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
+    lib = Library.new("Pritzker Law Library")
+    lib.register_new_book(Book.new("Eloquent JavaScript", "Marijn Haverbeke"))
+    lib.register_new_book(Book.new("Essential JavaScript Design Patterns", "Addy Osmani"))
+    lib.register_new_book(Book.new("JavaScript: The Good Parts", "Douglas Crockford"))
 
     # At first, no books are checked out
     expect(lib.borrowed_books.count).to eq(0)
@@ -226,8 +226,8 @@ end
 describe Review do
   it "exists attached to a book" do
     reviewer = Borrower.new("Mike")
-    lib = Library.new
-    lib.register_new_book("Harry Potter", "J. K. Rowling")
+    lib = Library.new("Pritzker Law Library")
+    lib.register_new_book(Book.new("Harry Potter", "J. K. Rowling"))
     book_id = lib.books.last.id
     book = lib.check_out_book(book_id, reviewer)
     reviewer.review_book(book,5,"YAY")
@@ -236,8 +236,8 @@ describe Review do
 
   it "is a review attached to a book" do
     reviewer = Borrower.new("Mike")
-    lib = Library.new
-    lib.register_new_book("Harry Potter", "J. K. Rowling")
+    lib = Library.new("Pritzker Law Library")
+    lib.register_new_book(Book.new("Harry Potter", "J. K. Rowling"))
     book_id = lib.books.last.id
     book = lib.check_out_book(book_id, reviewer)
     reviewer.review_book(book,5,"YAY")
@@ -246,8 +246,8 @@ describe Review do
 
   it "has five stars" do
     reviewer = Borrower.new("Mike")
-    lib = Library.new
-    lib.register_new_book("Harry Potter", "J. K. Rowling")
+    lib = Library.new("Pritzker Law Library")
+    lib.register_new_book(Book.new("Harry Potter", "J. K. Rowling"))
     book_id = lib.books.last.id
     book = lib.check_out_book(book_id, reviewer)
     reviewer.review_book(book,5,"YAY")    
@@ -256,8 +256,8 @@ describe Review do
 
   it "has a review" do
     reviewer = Borrower.new("Mike")
-    lib = Library.new
-    lib.register_new_book("Harry Potter", "J. K. Rowling")
+    lib = Library.new("Pritzker Law Library")
+    lib.register_new_book(Book.new("Harry Potter", "J. K. Rowling"))
     book_id = lib.books.last.id
     book = lib.check_out_book(book_id, reviewer)
     reviewer.review_book(book,5,"YAY")
@@ -266,8 +266,8 @@ describe Review do
 
   it "has a reviewer" do 
     reviewer = Borrower.new("Mike")
-    lib = Library.new
-    lib.register_new_book("Harry Potter", "J. K. Rowling")
+    lib = Library.new("Pritzker Law Library")
+    lib.register_new_book(Book.new("Harry Potter", "J. K. Rowling"))
     book_id = lib.books.last.id
     book = lib.check_out_book(book_id, reviewer)
     reviewer.review_book(book,5,"YAY")
@@ -276,10 +276,10 @@ describe Review do
 
   it "knows what books are overdue" do
     del = Borrower.new("Mike")
-    lib = Library.new
-    lib.register_new_book("Harry Potter", "J. K. Rowling")
+    lib = Library.new("Pritzker Law Library")
+    lib.register_new_book(Book.new("Harry Potter", "J. K. Rowling"))
     book1_id = lib.books.last.id
-    lib.register_new_book("Harry Potter2", "J. K. Rowling")
+    lib.register_new_book(Book.new("Harry Potter2", "J. K. Rowling"))
     book2_id = lib.books.last.id
     book1 = lib.check_out_book(book1_id, del)
 
@@ -298,8 +298,8 @@ describe Review do
   it "allows books to be put on hold and checks out immediately" do
     del = Borrower.new("Mike")
     second = Borrower.new("Ravi")
-    lib = Library.new
-    lib.register_new_book("Harry Potter", "J. K. Rowling")
+    lib = Library.new("Pritzker Law Library")
+    lib.register_new_book(Book.new("Harry Potter", "J. K. Rowling"))
     book1_id = lib.books.last.id
     book1 = lib.check_out_book(book1_id, del)
     lib.check_out_book(book1_id, second)

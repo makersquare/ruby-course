@@ -4,7 +4,7 @@ class Book
   attr_accessor :id, :reviews, :due_in, :on_hold, :overdue
 
 
-  def initialize(title=nil, author=nil, year_published=nil, edition=nil)
+  def initialize(title, author, year_published: nil, edition: nil)
     @title = title
     @author = author
     @id = nil
@@ -38,7 +38,6 @@ class Book
       puts "#{review_object.review}"
     end
   end
-
 end
 
 

@@ -1,8 +1,7 @@
-
 class Book
-  attr_reader :author, :title
+  attr_reader :author, :title, :reviews
 
-  def initialize(title=nil, author=nil, year_published=nil, edition=nil)
+  def initialize(title: nil, author: nil, year_published: nil, edition:nil)
     @title = title
     @author = author
     @year_published = year_published
@@ -31,7 +30,7 @@ class Book
 
   def check_reviews
     @reviews.each do |reviewer,review_object|
-      puts "#{reviewer.name} gave #{@title} #{review_object.stars} stars",""
+      puts "#{reviewer.name} gave #{@title} #{review_object.stars} stars"
       puts "Their review:"
       puts "#{review_object.review}"
     end
@@ -41,7 +40,7 @@ end
 
 class Review
   attr_reader :stars, :review
-  def initialize(stars=nil,review=nil)
+  def initialize(stars: nil,review: nil)
     @stars = stars
     @review = review
   end
@@ -56,15 +55,14 @@ class Review
 end
 
 
-class LibraryBookWrap
+class LibraryWrapper
   attr_reader :book
-  attr_accessor :borrowers_list_in_order, :due_in, :id
+  attr_accessor :due_in, :borrowers_list_in_order
 
   def initialize(book)
     @book = book
     @borrowers_list_in_order = []
     @due_in = nil
-    @id = id
   end
 
   def status
@@ -82,120 +80,117 @@ class LibraryBookWrap
     return false if @due_in == nil
     @due_in < Time.now
   end
+
+  def get_borrower
+    @borrowers_list_in_order.first
+  end
+
+  def add_borrower(borrower)
+    @borrowers_list_in_order << borrower
+  end  
+end
         
 
 class BorrowerCard
-  @@id_generator = 0
+  @@BORROWING_LIMIT = 2
 
-  attr_reader :name
-  attr_accessor :number_of_books_borrowed, :books_borrowed
-  def initialize(name)
+  attr_reader :name, :email_address
+  attr_accessor :books_borrowed
+
+  def initialize(name,address: nil)
     @name = name
     @books_borrowed = []
-    @number_of_books_borrowed = 0
+    email_address = address
   end
 
-  def not_overdue?
-    @books_borrowed.each do |book|
-      book.check_overdue
+  def eligible_borrower?
+    @books_borrowed.each do |book_wrapper|
+      if book_wrapper.overdue? 
+        return false
+      end
     end
+    if @books_borrowed.count >= @@BORROWING_LIMIT
+      return false
+    end
+    true
   end
-
 end
 
 
 class Library
-  attr_accessor :books
-  @@BORROWING_TIME = 10 #7*24*60*60
+  attr_accessor :books, :borrower_cards
 
-  def initialize(name="")
+  @@BORROWING_TIME = 7*24*60*60
+  @@borrower_id_generator = 0
+  @@book_id_generator = 0
+  
+
+  def initialize(name: nil)
     @name = name
-    @books = []
-    @id_giver = 0
-    @books_and_their_borrowers = {}
-    @borrowers_and_their_books = Hash.new { |hash,key| hash[key] = [] }
+    @books = {} #book id => book_wrapper_object
+    @borrower_cards = {} #borrower id => borrower_object
   end
 
-  def register_new_book(title, author)
-    book = Book.new(title,author)
-    @id_giver += 1
-    book.id = @id_giver
-    @books << book
-    book
+  def issues_borrower_card(borrower_card)
+    @@borrower_id_generator += 1
+    @borrower_cards[@@borrower_id_generator] = borrower_card
   end
 
-  def add_book(book)
-    @id_giver += 1
-    book.id = @id_giver
-    @books << book
-    book
+  def register_new_book(library_book)
+    @@book_id_generator += 1
+    @books[@@book_id_generator] = library_book
   end
 
-  def check_out_book(book_id, borrower)
-    checking_out = @books.find {|book| book.id == book_id}
-    if borrower.number_of_books_borrowed < 2 && !(borrower_has_overdue_books?(borrower))
-      if checking_out.check_out
-        borrower.number_of_books_borrowed += 1
-        @books_and_their_borrowers[checking_out] = borrower
-        @borrowers_and_their_books[borrower] = @borrowers_and_their_books[borrower] << checking_out
-        borrower.books_borrowed << checking_out
-        checking_out.due_in = Time.now + @@BORROWING_TIME
-        checking_out
-      else
-        puts "#{checking_out} is currently out to #{borrower.name} and is due back by #{checking_out.due_in}."
-      end
-    else 
-      nil
+  def check_out_book(book_id, borrower_id)
+    borrower_obj = @borrower_cards[borrower_id]
+    book_obj = @books[book_id]
+    if !(borrower_obj.eligible_borrower?)
+      return "Ineligible to borrow at this time."
     end
+    if (book_obj.status == "checked out" || book_obj.status == "checked out and on hold")
+      return "That book is currently unavailable. Would you like to place a hold?"
+    end
+    borrower_obj.books_borrowed << @books[book_id]
+    book_obj.add_borrower(borrower_obj)
+    book_obj.due_in = Time.now + @@BORROWING_TIME
+    book_obj
+   # binding.pry
   end
 
   def get_borrower(book_id)
-    @books_and_their_borrowers.each {|book,borrower| return borrower if book.id == book_id}
+    @books[book_id].borrowers_list_in_order.first
   end
 
-  def check_in_book(book)
-    borrower = get_borrower(book.id)
-    borrower.number_of_books_borrowed -= 1
-    borrower.books_borrowed.delete(book)
-    book.due_in = nil
-    @books_and_their_borrowers[book] = nil
-    @borrowers_and_their_books[borrower].delete(book)
-    book.check_in
-    if !(book.on_hold.empty?)
-      check_out_book(book.id, book.on_hold.shift)
+  def check_in_book(book_id)
+    borrower = @books[book_id].borrowers_list_in_order.shift
+    @books[book_id].due_in = nil
+
+    borrower.books_borrowed.delete(@books[book_id])
+    if !(@books[book_id].borrowers_list_in_order.empty?)
+      check_out_book(book_id, @borrower_cards.key(@books[book_id].borrowers_list_in_order.first))
+      email_borrower(book_id, @borrower_cards.key(@books[book_id].borrowers_list_in_order.first))
     end
   end
 
-  def put_on_hold(book,borrower)
-    if book.status == "checked_out"
-      book.on_hold << borrower
-      puts "#{borrower.name} is number #{book.on_hold.length} on the hold list for #{book.title}."
-    end
+  def put_on_hold(book_id,borrower_id)
+    @books[book_id].add_borrower(@borrower_cards[borrower_id])
+    puts "#{borrower_cards[borrower_id].name} is number #{@books[book_id].borrowers_list_in_order.length} on the hold list for #{@books[book_id].book.title}."
   end
 
   def available_books
-    @books.select { |book| book.status == "available" }
+    @books.values.select { |book| book.status == "available" }
   end
 
   def borrowed_books
-    @books.select { |book| book.status == "checked_out" }
+    @books.values.select { |book| book.status == "checked out" || book.status == "checked out and on hold" }
   end
 
   def overdue_books
-    @books.select do |book|
-      next if book.due_in == nil
-      book.overdue = true if book.due_in < Time.now
-    end
+    @books.values.select { |book| book.overdue?}
   end
 
-  def borrower_has_overdue_books?(borrower)
-    overdue_books
-    @borrowers_and_their_books[borrower].each do |book|
-      if book.overdue
-        return true
-      end
-    end
-    return false
+  def email_borrower(book_id, borrower_id)
+    # send to @borrower_cards[borrower_id].email_address
+    # about @books[book_id].book.title
   end
-
 end
