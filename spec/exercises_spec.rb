@@ -186,3 +186,12 @@ describe Exercises do
     end
   end
 end
+
+describe Extensions do
+  describe '.extremes' do
+    it 'returns a hash with :most and :least keys containing strings' do
+      result = Extensions.extremes(['x', 'x', 'y', 'z'])
+      expect(result).to eq({ :most => 'x', :least => ['y', 'z'] })
+    end
+  end
+end

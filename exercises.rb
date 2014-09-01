@@ -107,6 +107,23 @@ module Extensions
   #   expect(result).to eq({ :most => 'x', :least => ['y', 'z'] })
   #
   def self.extremes(array)
-    # TODO
+    hash = Hash.new(0)
+    array.each { |str| hash[str] +=1 }
+    max = hash.values.max
+    min = hash.values.min
+    most = hash.select { |k, v| v == max }.keys
+    least = hash.select { |k, v| v == min }.keys
+    if most.size == 1
+      most = most.first
+    end
+
+    if least.size == 1
+      least = least.first
+    end
+
+    return {
+      most: most,
+      least: least
+    }
   end
 end
