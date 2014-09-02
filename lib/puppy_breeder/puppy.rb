@@ -1,6 +1,5 @@
 #Refer to this class as PuppyBreeder::Puppy
 module PuppyBreeder
-
   class Puppy
     attr_accessor :name, :breed, :age
 
@@ -10,8 +9,8 @@ module PuppyBreeder
       @age = age
     end
 
-    def set_price(price)
-      @price = price
+    def yell
+      puts "FUCK OFF PUPPY"
     end
   end
 end
