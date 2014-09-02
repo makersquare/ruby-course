@@ -13,15 +13,17 @@ module PuppyBreeder
 
   def self.complete_request(id, dog)
     if request_pending? && dog_available?
-      
-
-
-      end
+      puppy = PuppyBreeder::Data.allpuppies.select { |x| x.name == dog }.first
+      request = PuppyBreeder::Data.allrequests.select { |y| y.id == id }.first
+      puppy.status = 'adopted'
+      request.puppy = puppy
+      request.status = 'completed'
     end
   end
 
+
   def self.dog_available?(breed)
-    PuppyBreeder::Data.allpuppies.each do |x|
+    PuppyBreeder::Data.allpuppies.select do |x|
       if x.breed == breed && x.status = 'available'
       end
     end
