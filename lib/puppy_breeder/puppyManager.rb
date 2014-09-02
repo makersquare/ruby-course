@@ -5,10 +5,6 @@ module PuppyBreeder
 
     @@puppies_for_sale = []
 
-    #so I need initialize if I never intend to make an object?
-    def initialize()
-    end
-
     def self.add_puppy_for_sale(puppy)
       @@puppies_for_sale.push(puppy)
     end
@@ -30,8 +26,6 @@ module PuppyBreeder
       puppies = puppies_for_sale
       match = puppies.find { |pup| pup.breed == desired_breed }
     end
-
-    
 
   end
 end

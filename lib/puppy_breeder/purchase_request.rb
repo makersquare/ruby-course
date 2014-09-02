@@ -3,11 +3,15 @@ module PuppyBreeder
 
   class PurchaseRequest
 
-    BREED_TO_PRICE = {golden_retriever: 200, afghan_hound: 300, alaskan_malamute: 400, cocker_spaniel: 500}
+    attr_reader :breed, :price
 
+    BREED_TO_PRICE = {"golden retriever" => 200, "afghan hound" => 300, 
+    "alaskan malamute" => 400, "cocker spaniel" => 500}
+
+    #unknown breeds default to 250
     def initialize(breed)
       @breed = breed
-      @price = BREED_TO_PRICE[breed]
+      @price = BREED_TO_PRICE[breed] || 250
       PuppyBreeder::RequestManager.add_request(self)
     end
 

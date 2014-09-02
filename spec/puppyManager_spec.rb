@@ -87,7 +87,4 @@ describe PuppyBreeder::PuppyManager do
   end
 
 
-
-
-
 end
