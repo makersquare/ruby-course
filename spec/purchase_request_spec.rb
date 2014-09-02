@@ -9,6 +9,13 @@ describe PuppyBreeder::PurchaseRequest do
       expect(request.status).to eq(:pending)
     end
 
+    it "shows how a purchase request was submitted with a default of by customer" do
+      request = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+      result = request.method
+
+      expect(result).to eq(:by_customer)
+    end
+
     it "creates a unique id number for each purchase request" do
       request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
       request2 = PuppyBreeder::PurchaseRequest.new("Pitbull")
