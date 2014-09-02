@@ -16,9 +16,10 @@ module PuppyBreeder
       end
     end
     
-
+    def submit_purchase_request(breed, requester=nil)
+      request = PuppyBreeder::PurchaseRequest.new(breed, self, requester)
+    end
   end
 end
 
 
-# Breeder.add_puppy(Puppy.new(params))
