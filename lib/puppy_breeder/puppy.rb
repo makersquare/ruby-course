@@ -52,10 +52,15 @@ module PuppyBreeder
       @@available_dogs.delete(dog)
     end
 
-    def self.fill_dog_order(request_id,dog_id)
-      puts "Request #{request_id} for #{PuppyBreeder::RequestRepository.breed_requested(request_id)} has been filled. Dog #{dog_id}, #{@@doglist[dog_id].name} has been assigned."
-      self.adoption(dog_id)
-      RequestRepository.complete_request(request_id)
+    def self.fill_dog_order(request_id,dog_id,condition=true)
+      if condition
+        puts "Request #{request_id} for #{PuppyBreeder::RequestRepository.breed_requested(request_id)} has been filled. Dog #{dog_id}, #{@@doglist[dog_id].name} has been assigned."
+        self.adoption(dog_id)
+        RequestRepository.complete_request(request_id)
+      else
+        puts "Request #{request_id} for #{PuppyBreeder::RequestRepository.breed_requested(request_id)} has been ended. Dog #{dog_id}, #{@@doglist[dog_id].name} has not been assigned."
+        RequestRepository.end_request(request_id)
+      end
       return doglist[dog_id].name
     end
 

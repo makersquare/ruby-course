@@ -39,6 +39,12 @@ module PuppyBreeder
       @@pending_request.delete(@@list[request_id])
     end
 
+    def self.end_request(request_id)
+      puts "Request #{request_id} has been denied. Please contact Animal Protective services."
+      @@closed_request << @@list[request_id]
+      @@pending_request.delete(@@list[request_id])
+    end
+
     def self.list
       @@list
     end
