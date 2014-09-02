@@ -1,4 +1,5 @@
 #Refer to this class as PuppyBreeder::Puppy
+require 'pry-byebug'
 module PuppyBreeder
   class Puppy
     @@counter = 1
@@ -15,17 +16,21 @@ module PuppyBreeder
   end
 
   class DogShelter
-    @@costhash={'pitbull'=>300,'golden retrierver'=>400,'mix'=>200,'ultra rare breed'=>1000}
+    @@costhash={'pitbull'=>300,'golden retrierver'=>400,'mix'=>200,'ultra rare breed'=>1000,'lab'=>500}
     @@counter =1
     @@doglist = {}
     @@available_dogs=[]
     @@adopted_dogs = []
 
-    def self.add_dog(breed)
-      dog = Puppy.new(breed)
+    def self.add_dog(dog)
       @@doglist[@@counter] = dog
       @@available_dogs << dog
       @@counter += 1
+    end
+
+    def self.create_dog(breed)
+      dog = Puppy.new(breed)
+      add_dog(dog)
     end
 
     def self.cost?(id_number)
@@ -41,16 +46,17 @@ module PuppyBreeder
       @@doglist      
     end
 
-    def adoption(dog_id)
-      dog = @@dog_list[dog_id]
+    def self.adoption(dog_id)
+      dog = doglist[dog_id]
       @@adopted_dogs.push(dog)
       @@available_dogs.delete(dog)
     end
 
     def self.fill_dog_order(request_id,dog_id)
-      puts "#{request_id} for #{request_id.breed_requested} has been filled. Dog #{dog_id}, #{@@doglist[dog_id].name} has been assigned."
+      puts "Request #{request_id} for #{PuppyBreeder::RequestRepository.breed_requested(request_id)} has been filled. Dog #{dog_id}, #{@@doglist[dog_id].name} has been assigned."
       self.adoption(dog_id)
       RequestRepository.complete_request(request_id)
+      return doglist[dog_id].name
     end
 
   end

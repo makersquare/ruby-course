@@ -18,8 +18,9 @@ end
 describe PuppyBreeder::RequestRepository do
   it 'Should allow request repo to create requests.' do
     a = PuppyBreeder::RequestRepository
-    req1 = PuppyBreeder::RequestRepository.create_request
+    req1 = PuppyBreeder::RequestRepository.create_request('pitbull')
     expect(a.list.count).to eq(1)
+    expect(a.breed_requested(1)).to eq('pitbull')
     req2 = PuppyBreeder::RequestRepository.create_request
     expect(a.list.count).to eq(2)
   end
@@ -47,3 +48,6 @@ describe PuppyBreeder::RequestRepository do
   end
 
 end
+
+
+# breed_requested
