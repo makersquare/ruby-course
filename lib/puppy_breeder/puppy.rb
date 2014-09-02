@@ -16,7 +16,7 @@ module PuppyBreeder
   end
 
   class DogShelter
-    @@costhash={'shetlinpony'=>5000,'pitbull'=>300,'golden retrierver'=>400,'mix'=>200,'ultra rare breed'=>1000,'lab'=>500}
+    @@costhash={'pinata'=>50,'shetlinpony'=>5000,'pitbull'=>300,'golden retrierver'=>400,'mix'=>200,'ultra rare breed'=>1000,'lab'=>500}
     @@counter =1
     @@doglist = {}
     @@available_dogs=[]
@@ -26,7 +26,7 @@ module PuppyBreeder
       @@doglist[@@counter] = dog
       @@available_dogs << dog
       @@counter += 1
-      # RequestRepository.pending_list_kick(dog.breed)
+      RequestRepository.pending_list_kick(dog.breed)
     end
 
     def self.create_dog(breed)

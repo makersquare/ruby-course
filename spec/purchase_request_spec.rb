@@ -44,8 +44,19 @@ describe PuppyBreeder::RequestRepository do
   it 'Completed list should populate completed requests.' do
     a = PuppyBreeder::RequestRepository
     expect(a.completed_list.count).to eq(2)
-
   end
+
+
+################################################################################
+  it 'Pending List should populate when hold requested used.' do
+    a = PuppyBreeder::RequestRepository
+    req5 = a.create_request('pinata')
+    req6 = a.create_request('pinata')
+    a.hold_request(5)
+    a.hold_request(6)
+    expect(a.pending_requests.count).to eq(2)
+  end
+
 
 end
 

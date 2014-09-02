@@ -71,10 +71,18 @@ module PuppyBreeder
       @@pending_request
     end
 
+
+#######################################################
     def self.hold_request(request_id)
-      request = @@list[request_id]
-      @@hold_list << request
-      @pending_request.delete(request)
+      p request_id
+      p list
+      p @@list[request_id]
+      # request = @@list[request_id]
+      @@hold_list << @@list[request_id]
+      @pending_request.delete(@@list[request_id])
+    end
+
+    def self.pending_list_kick(breed)
     end
 
   end
