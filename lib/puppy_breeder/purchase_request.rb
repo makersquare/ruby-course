@@ -33,6 +33,16 @@ module PuppyBreeder
       end
     end
 
-  end
+    def change_status(purchase_request, new_status)
+      purchase_array.each do |pr|
+        pr.status = new_status if purchase_request == pr
+      end
+    end
 
+    def review_completed_orders
+      purchase_array.select do |purchase_req|
+        purchase_req.status == "completed"
+      end
+    end
+  end
 end

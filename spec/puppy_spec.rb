@@ -66,6 +66,28 @@ describe PuppyBreeder::PurchaseOrderArray do
 			expect(po_array.review_new_orders).to eq([po1, po2])
 		end
 	end
+
+	describe ".change_status" do
+		it "changes the status of the purchase request in the array" do
+			po_array = PuppyBreeder::PurchaseOrderArray.new
+			po = PuppyBreeder::PurchaseRequest.new('boxer')
+			po_array.add_purchase_request(po)
+			po_array.change_status(po, 'completed')
+
+			expect(po_array.purchase_array.first.status).to eq('completed')
+		end
+	end
+
+	describe ".review_completed_orders" do
+		it "returns an array with purchase requests with status completed" do
+			po_array = PuppyBreeder::PurchaseOrderArray.new
+			po = PuppyBreeder::PurchaseRequest.new('boxer')
+			po_array.add_purchase_request(po)
+			po_array.change_status(po, 'completed')
+
+			expect(po_array.review_completed_orders).to eq([po])
+		end
+	end
 end
 
 
