@@ -2,7 +2,7 @@ require 'pry-byebug'
 #Refer to this class as PuppyBreeder::PurchaseRequest
 module PuppyBreeder
   class PurchaseRequest
-    attr_accessor :breed, :status, :id_count, :id_num, :open_orders
+    attr_accessor :breed, :status, :id_count, :id_num, :open_orders, :completed_orders
 
     @@id_count = 0
     @@open_orders = { }
@@ -14,7 +14,6 @@ module PuppyBreeder
       @@id_count += 1
 
       @@open_orders[@id_num] = self
-      # binding.pry
     end
 
     def self.open_orders
@@ -27,6 +26,10 @@ module PuppyBreeder
 
     def self.reject(order_id)
       @@open_orders[order_id].status = 'rejected'
+    end
+
+    def self.completed
+      @@open_orders.select { |k,v| v.status == 'accepted'}
     end
   end
 end

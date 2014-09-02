@@ -65,6 +65,15 @@ describe PuppyBreeder::PurchaseRequest do
     PuppyBreeder::PurchaseRequest.reject(0)
     expect(PuppyBreeder::PurchaseRequest.open_orders[0].status).to eq('rejected')
   end
+
+    it "shows completed orders" do
+    request = PuppyBreeder::PurchaseRequest.new("german shepherd")
+    expect(PuppyBreeder::PurchaseRequest.completed.count).to eq(0)
+
+    PuppyBreeder::PurchaseRequest.accept(0)
+
+    expect(PuppyBreeder::PurchaseRequest.completed.count).to eq(1)
+  end
 end
 
 describe PuppyBreeder::Breeder do
