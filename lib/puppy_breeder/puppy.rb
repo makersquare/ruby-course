@@ -26,6 +26,7 @@ module PuppyBreeder
       @@doglist[@@counter] = dog
       @@available_dogs << dog
       @@counter += 1
+      # RequestRepository.pending_list_kick(dog.breed)
     end
 
     def self.create_dog(breed)
@@ -70,6 +71,10 @@ module PuppyBreeder
       matches = doglist.select {|x,y| (y.breed == breed && y.status == 'available')}
       dog_id =  matches.keys[0]
       fill_dog_order(request_id,dog_id)
+    end
+
+    def self.hold_request(request_id)
+      RequestRepository.hold_request(request_id)      
     end
 
   end

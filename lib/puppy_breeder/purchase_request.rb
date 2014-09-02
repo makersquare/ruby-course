@@ -15,6 +15,7 @@ module PuppyBreeder
 
 
   class RequestRepository
+    @@hold_list = []
     @@counter = 1
     @@list = Hash.new
     @@completed_list=[]
@@ -64,6 +65,16 @@ module PuppyBreeder
 
     def self.completed_list
       @@completed_list
+    end
+
+    def self.pending_requests
+      @@pending_request
+    end
+
+    def self.hold_request(request_id)
+      request = @@list[request_id]
+      @@hold_list << request
+      @pending_request.delete(request)
     end
 
   end
