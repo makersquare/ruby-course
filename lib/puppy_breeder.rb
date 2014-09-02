@@ -35,12 +35,12 @@ module PuppyBreeder
     PuppyBreeder.get_orders.select { |order| order.completed? }
   end
 
-  def self.review_purchase_requests
-    PuppyBreeder.get_orders.select { |order| !order.completed? }
+  def self.review_purchase_request(id)
+    PuppyBreeder.get_orders.select { |order| order.id == id }
   end
 
-  def self.accept_purchase_requests
-    PuppyBreeder.get_orders.each { |order| order.complete_order }
+  def self.accept_purchase_request(id)
+    PuppyBreeder.get_orders.select { |order| order.id == id }.first.complete_order
   end
 end
 
