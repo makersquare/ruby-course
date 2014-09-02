@@ -4,26 +4,22 @@ module PuppyBreeder
     attr_accessor :pending
 
 
-    def self.see_pending_requests(breeder)
-      @pending = []
+    # def self.see_pending_requests(breeder)
+    #   breeder.purchase_requests.select do |key, array|
+        
+    # end
+
+    # def self.approve_requests(breeder)
+    #   self.see_pending_requests(breeder)
+    # end
+
+    def self.see_completed_requests(breeder)
       breeder.purchase_requests.each do |key, array|
-        array.each do |requests| 
-          if requests.status == "pending" 
-            @pending << requests
-          end
+        @completed = array.select do |request| 
+           request.status == "completed" 
         end
       end 
-      @pendings   
-    end
-
-    def self.approve_requests(breeder)
-    end
-
-    def self.view_completed_requests(breeder)
-      breeder.purchase_requests.each do |key, array|
-        @completed = array.select {|requests| requests.status == "completed" }
-      end 
-      @completed 
+      return @completed   
     end
 
 

@@ -3,9 +3,8 @@ module PuppyBreeder
   class PurchaseRequest
     attr_accessor :breed, :requester, :status
 
-    def initialize(breed, breeder, requester, status="pending")
+    def initialize(breed, breeder, status="pending")
       @breed = breed
-      @requester = requester
       @status = status 
       @breeder = breeder
 

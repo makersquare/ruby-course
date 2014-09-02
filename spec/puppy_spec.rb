@@ -13,6 +13,7 @@ describe PuppyBreeder::Puppy do
   it "stores each puppy in a hash, sorted by breed" do 
 
     mill = PuppyBreeder::Breeder.new
+    mill.add_breed(:chow, 1500)
     spot = PuppyBreeder::Puppy.new("Spot", :chow, 1)
     mill.add_inventory(spot)
   
@@ -22,6 +23,7 @@ describe PuppyBreeder::Puppy do
 
   it "enables Breeder to add more than one puppy of the same breed" do
     mill = PuppyBreeder::Breeder.new
+    mill.add_breed(:chow, 1500)
     pup1 = PuppyBreeder::Puppy.new("Spot", :chow, 1)
     pup2 = PuppyBreeder::Puppy.new("Josh", :chow, 2)
     mill.add_inventory(pup1)
@@ -32,11 +34,12 @@ describe PuppyBreeder::Puppy do
 
   it "Allows breeder to set price of puppy" do
     mill = PuppyBreeder::Breeder.new
+    mill.add_breed(:chow, 1500)
     pup1 = PuppyBreeder::Puppy.new("Spot", :chow, 1)
-    PuppyBreeder::Puppy.set_breed_price(:chow, 15)
-    result = PuppyBreeder::Puppy.costs
+    mill.add_inventory(pup1)
+    result = mill.puppy_inventory[pup1.breed][:price]
 
-    expect(result.count).to be 1
+    expect(result).to eq 1500
   end
 end
 
