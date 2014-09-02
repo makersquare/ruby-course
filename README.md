@@ -20,9 +20,10 @@ Classes:
 Puppy
 	@variables:
 		breed
-		cost
-		puppy_id
+		name
+		age
 		sold_status
+		puppy_id
 
 Customer
 	@@variables:
@@ -55,9 +56,16 @@ Breed of the dog:
 
 	Purchase requests are made for a specific breed, not for a specific dog.
 
-	Price for a puppy is set be a breed.
+	*Price for a puppy is set be a breed.
 
-	Attributes of puppy are name, breed, age.
+	*Attributes of puppy are name, breed, age.
 
 Breed hash that stores puppies, costs.
 
+
+hash = {
+	:breed => {
+		:price => ###,
+		:list => [instance, instance, instance]
+	}
+}
