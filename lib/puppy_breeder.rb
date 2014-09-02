@@ -14,7 +14,7 @@ module PuppyBreeder
     hash[key] = {
       :price => @@puppy_price[key],
       :dog_list => dog_list
-    } 
+    }
   end
 
   @@puppy_price = {
@@ -24,8 +24,9 @@ module PuppyBreeder
     :yorkshire_terrier => 500
   }
 
-  @@purchase_requests_open = {}
-  @@purchase_requests_completed = {}
+  @@open_purchase_requests = {}
+
+  @@completed_purchase_requests = {}
 
   @@purchase_id = 0
 
@@ -34,13 +35,17 @@ module PuppyBreeder
   end
   
   def self.review_purchase(purchase)
-    # either accept or reject
-    # based on whether we have that breed
+    key = purchase.breed.to_sym
+    if @@puppies_hash.has_key?(key)
+      self.accept_purchase(purchase)
+    else
+      self.reject_purchase(purchase)
+    end
   end
 
   def self.accept_purchase(purchase)
     @@purchase_id += 1
-    @@purchase_requests_open[@@purchase_id] = purchase
+    @@open_purchase_requests[@@purchase_id] = purchase
     @@purchase_id
   end
 
@@ -53,8 +58,8 @@ module PuppyBreeder
   end
 
   def self.deliver_puppy(purchase_id)
-    purchase = @@purchase_requests_open.delete(purchase_id)
-    @@purchase_requests_completed[purchase_id] = purchase
+    purchase = @@open_purchase_requests.delete(purchase_id)
+    @@completed_purchase_requests[purchase_id] = purchase
     delivered = @@puppies_hash[purchase.breed.to_sym][:dog_list].pop
     delivered
   end
@@ -68,11 +73,11 @@ module PuppyBreeder
   end
 
   def self.open_purchase_requests
-    @@purchase_requests_open.values
+    @@open_purchase_requests.values
   end
 
   def self.completed_purchase_requests
-    @@purchase_requests_completed.values
+    @@completed_purchase_requests.values
   end
 
 end
