@@ -1,18 +1,15 @@
 #Refer to this class as PuppyBreeder::PurchaseRequest
 module PuppyBreeder
   class PurchaseRequest
-    attr_accessor :breed, :status
+    attr_accessor :breed, :status, :id_count, :id_num
 
-    # @@purchase_orders = [ ]
+    @@id_count = 0
 
-    def initialize(breed,status='pending')
+    def initialize(breed,status='pending',id_num=@id_count)
       @breed = breed
       @status = status
-      # @@purchase_orders.push(self)
+      @id_num = @@id_count
+      @@id_count += 1
     end
-
-    # def self.purchase_orders
-    #   @@purchase_orders
-    # end
   end
 end

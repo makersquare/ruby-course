@@ -1,6 +1,15 @@
 require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::PurchaseRequest do
+  # before(:each) do ... end
+  # this is a before hook
+  # read the docs son.
+  # someclass.class_variable_set
+
+  before(:each) do
+    PuppyBreeder::PurchaseRequest.class_variable_set(:@@id_count, 0)
+  end
+  
   it "creates a purchase request" do
     result = PuppyBreeder::PurchaseRequest.new("german shepherd")
     expect(result.class).to eq(PuppyBreeder::PurchaseRequest)
@@ -14,6 +23,19 @@ describe PuppyBreeder::PurchaseRequest do
   it "checks that status is pending" do
     result = PuppyBreeder::PurchaseRequest.new("german shepherd")
     expect(result.status).to eq("pending")
+  end
+
+  it "checks that id is 0" do
+    result = PuppyBreeder::PurchaseRequest.new("german shepherd")
+    expect(result.id_num).to eq(0)
+  end
+
+  it "checks that id is 0 for first request and 1 for second" do
+    result1 = PuppyBreeder::PurchaseRequest.new("german shepherd")
+    result2 = PuppyBreeder::PurchaseRequest.new("german shepherd")
+
+    expect(result1.id_num).to eq(0)
+    expect(result2.id_num).to eq(1)
   end
 end
 

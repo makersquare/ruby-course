@@ -3,13 +3,10 @@ module PuppyBreeder
   class Breeder 
     attr_accessor :name, :all_puppies
 
-
     def initialize(name)
       @all_puppies = { }
       @name = name
     end
-
-    puts "Hello"
 
     def add_puppy(puppy)
       if !@all_puppies.has_key?(puppy.breed)
