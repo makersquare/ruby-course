@@ -19,6 +19,7 @@ module PuppyBreeder
 
     def accept
       @status = :completed
+      ForSale.purchase(self.breed)
     end 
   end
 end
