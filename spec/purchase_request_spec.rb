@@ -48,9 +48,22 @@ describe PuppyBreeder::PurchaseRequest do
   it "shows there are 2 current open orders" do
     result = PuppyBreeder::PurchaseRequest.new("german shepherd")
     result1 = PuppyBreeder::PurchaseRequest.new("german shepherd")
-    # result1 = PuppyBreeder::PurchaseRequest.new("belgian malinois")
 
     expect(PuppyBreeder::PurchaseRequest.open_orders.count).to eq(2)
+  end
+
+  it "changes pending to accepted" do
+    result = PuppyBreeder::PurchaseRequest.new("german shepherd")
+
+    PuppyBreeder::PurchaseRequest.accept(0)
+    expect(PuppyBreeder::PurchaseRequest.open_orders[0].status).to eq('accepted')
+  end
+
+  it "changes pending to rejected" do
+    result = PuppyBreeder::PurchaseRequest.new("german shepherd")
+
+    PuppyBreeder::PurchaseRequest.reject(0)
+    expect(PuppyBreeder::PurchaseRequest.open_orders[0].status).to eq('rejected')
   end
 end
 

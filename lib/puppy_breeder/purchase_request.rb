@@ -20,5 +20,13 @@ module PuppyBreeder
     def self.open_orders
       @@open_orders 
     end
+
+    def self.accept(order_id)
+      @@open_orders[order_id].status = 'accepted'
+    end
+
+    def self.reject(order_id)
+      @@open_orders[order_id].status = 'rejected'
+    end
   end
 end
