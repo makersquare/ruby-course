@@ -39,3 +39,7 @@ atributes of puppy; name, breed, age. keep name.
   lib directory/ puppy.rb breeder.rb
   spec directory/ puppy_spec breeder_spec
 
+puppy purchaesreqeust customer      poosibly breeder
+
+figuring out how to store information about purchase requests
+figuring out how to store information about puppies
