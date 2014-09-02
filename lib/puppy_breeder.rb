@@ -1,18 +1,20 @@
 # we initialize the module here to use in our other files
 module PuppyBreeder
-	class Breeder
-	# 	def initialize
-			
-	# 	end
-	# end
 
-	# class Puppy_storage
+	class Inventory
 
-	# 	def intialize
-	# 		puppy_hash = {}
-	# 	end
+		attr_accessor :inventory_hash, :breed_price
+
+		def initialize
+			@inventory_hash = {}
+			@breed_price = {}
+		end
+
+		def update_breed_price(breed, price)
+			breed_price[:price] = price
+		end
+
 	end
-
 end
 
 require_relative 'puppy_breeder/puppy.rb'

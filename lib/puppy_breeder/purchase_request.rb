@@ -23,5 +23,7 @@ module PuppyBreeder
   	def add_purchase_request(purchase_request)
   		purchase_array << purchase_request
   	end
+
+    
   end
 end

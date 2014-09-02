@@ -37,14 +37,38 @@ describe PuppyBreeder::PurchaseOrderArray do
 		expect(PuppyBreeder::PurchaseOrderArray).to be_a(Class)
 	end
 
-	it "adds purchase requests to the array" do
-		po_array = PuppyBreeder::PurchaseOrderArray.new
+	describe ".initialize" do
+		it "adds purchase requests to the array" do
+			po_array = PuppyBreeder::PurchaseOrderArray.new
 
-		expect(po_array.purchase_array).to eq([])
-		
-		po = PuppyBreeder::PurchaseRequest.new('boxer')
-		po_array.add_purchase_request(po)
-
-		expect(po_array.purchase_array.first).to eq(po)
+			expect(po_array.purchase_array).to eq([])
+		end
 	end
+		
+	describe ".add_purchase_request" do
+		it "puts the purchase request in the array" do
+			po_array = PuppyBreeder::PurchaseOrderArray.new
+			po = PuppyBreeder::PurchaseRequest.new('boxer')
+			po_array.add_purchase_request(po)
+
+			expect(po_array.purchase_array.first).to eq(po)
+		end
+	end
+end
+
+
+describe PuppyBreeder::Inventory do
+	it "exists" do
+		expect(PuppyBreeder::Inventory).to be_a(Class)
+	end
+
+	describe ".initialize" do
+		it "creates empty hashes for breed_price and inventory_hash in inventory class" do
+			inv = PuppyBreeder::Inventory.new
+			expect(inv.inventory_hash).to eq({})
+			expect(inv.breed_price).to eq({})
+		end
+	end
+
+
 end
