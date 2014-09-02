@@ -42,6 +42,10 @@ module PuppyBreeder
     @@purchase_orders
   end
 
+  def self.view_complete_orders
+    @@purchase_orders.select { |p| p.status == "complete" }
+  end
+
 end
 
 require_relative 'puppy_breeder/puppy.rb'

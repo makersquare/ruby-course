@@ -62,10 +62,25 @@ describe PuppyBreeder do
   it "changes status of purchase order" do
     po = PuppyBreeder::PurchaseRequest.new("husky")
     PuppyBreeder.store_purchase_orders(po)
-    PuppyBreeder.change_order_status(po, "approved")
+    PuppyBreeder.change_order_status(po, "complete")
 
     expect(PuppyBreeder.purchase_orders.length).to eq(1)
     expect(PuppyBreeder.purchase_orders.first.breed).to eq("husky")
-    expect(PuppyBreeder.purchase_orders.first.status).to eq("approved")
+    expect(PuppyBreeder.purchase_orders.first.status).to eq("complete")
   end
+
+  it "views completed purchase orders" do
+    po = PuppyBreeder::PurchaseRequest.new("husky", "complete")
+    po1 = PuppyBreeder::PurchaseRequest.new("chow", "complete")
+    po2 = PuppyBreeder::PurchaseRequest.new("husky")
+    PuppyBreeder.store_purchase_orders(po)
+    PuppyBreeder.store_purchase_orders(po1)
+    PuppyBreeder.store_purchase_orders(po2)
+
+
+    result = PuppyBreeder.view_complete_orders
+
+    expect(result.length).to eq(2)
+  end
+
 end
