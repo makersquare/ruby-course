@@ -24,8 +24,10 @@ module PuppyBreeder
     :yorkshire_terrier => 500
   }
 
-  @@purchase_requests_open = []
-  @@purchase_requests_completed = []
+  @@purchase_requests_open = {}
+  @@purchase_requests_completed = {}
+
+  @@purchase_id = 0
 
   def self.input_purchase(customer,breed)
     self.review_purchase(PurchaseRequest.new(customer,breed))
@@ -37,7 +39,9 @@ module PuppyBreeder
   end
 
   def self.accept_purchase(purchase)
-    @@purchase_requests_open << purchase
+    @@purchase_id += 1
+    @@purchase_requests_open[@@purchase_id] = purchase
+    @@purchase_id
   end
 
   def self.reject_purchase(purchase)
@@ -48,9 +52,9 @@ module PuppyBreeder
     @@puppies_hash[puppy.breed][:dog_list] << puppy
   end
 
-  def self.deliver_puppy(purchase)
-    @@purchase_requests_open.delete(purchase)
-    @@purchase_requests_completed << purchase
+  def self.deliver_puppy(purchase_id)
+    purchase = @@purchase_requests_open.delete(purchase_id)
+    @@purchase_requests_completed[purchase_id] = purchase
     delivered = @@puppies_hash[purchase.breed.to_sym][:dog_list].pop
     delivered
   end
@@ -64,11 +68,11 @@ module PuppyBreeder
   end
 
   def self.open_purchase_requests
-    @@purchase_requests_open
+    @@purchase_requests_open.values
   end
 
   def self.completed_purchase_requests
-    @@purchase_requests_completed
+    @@purchase_requests_completed.values
   end
 
 end
