@@ -16,7 +16,16 @@ describe PuppyBreeder::Requests do
   end
 
   describe '#complete_request' do
-    it "removes a completed purchase order from the array"
+    it "changes the status of the accepted order to completed in the purchase orders array" do
+      request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+      request2 = PuppyBreeder::PurchaseRequest.new("Pitbull")
+
+      request1.accept
+
+      result = PuppyBreeder::Requests.purchase_orders
+
+      expect(result.first.status).to eq(:completed)
+    end
   end
 
   describe '#pending_purchase_orders' do
