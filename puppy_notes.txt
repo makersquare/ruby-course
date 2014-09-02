@@ -1,20 +1,8 @@
-customer makes purchase request
-class variables an array of hashes
 
-1) puppy container class or inventory
-
-2) puppy class
-name, age, breed
-
-3) purchase request class
-
-4) purchase request storage
-
-why we use module. spec helper requires 
-
-customer generates puppy
 
 To do:
+create request_lob.rb to keep track and store the requests
+create a request_log_spec to test that the purchase requests are being stored
 
 Completed: 
 puppy.rb
@@ -30,6 +18,8 @@ has inventory, purchase_request, and puppy in it
 
 inventory.rb
 creates a class with breed and price, sets a hash for breed pointing to price and initializes quantity to zero. That hash gets stored in a puppies hash. 
+create add puppy method to inventory
+
 
 
 

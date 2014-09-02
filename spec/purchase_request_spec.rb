@@ -26,7 +26,6 @@ describe PuppyBreeder::PurchaseRequest do
   it 'creates a sequential request id' do
     new_request = PuppyBreeder::PurchaseRequest.new("Schnauzer")
     new_request2 = PuppyBreeder::PurchaseRequest.new("Pitbull")
-    binding.pry
     expect(new_request.request_id).to be(1)
     expect(new_request2.request_id).to be(2)
   end

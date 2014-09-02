@@ -16,5 +16,12 @@ describe PuppyBreeder::Inventory do
     expect(test.puppies["Mutt"]["price"]).to eq(1000)
   end
 
+  it 'adds a puppy to the inventory' do
+    test = PuppyBreeder::Inventory.new
+    test.add_breed("Schnauzer", 500)
+    puppy = PuppyBreeder::Puppy.new("Dana", "Schnauzer", 1)
+    test.add_puppy(puppy)
 
+    expect(test.puppies["Schnauzer"]["list"]).to include(puppy)
+  end
 end
