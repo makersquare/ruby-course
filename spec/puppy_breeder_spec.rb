@@ -69,7 +69,7 @@ describe PuppyBreeder do
     expect(PuppyBreeder.purchase_orders.first.status).to eq("complete")
   end
 
-  it "views completed purchase orders" do
+  it "views orders by status" do
     po = PuppyBreeder::PurchaseRequest.new("husky", "complete")
     po1 = PuppyBreeder::PurchaseRequest.new("chow", "complete")
     po2 = PuppyBreeder::PurchaseRequest.new("husky")
@@ -78,7 +78,7 @@ describe PuppyBreeder do
     PuppyBreeder.store_purchase_orders(po2)
 
 
-    result = PuppyBreeder.view_complete_orders
+    result = PuppyBreeder.select_orders_by_status("complete")
 
     expect(result.length).to eq(2)
   end

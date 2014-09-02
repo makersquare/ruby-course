@@ -42,8 +42,8 @@ module PuppyBreeder
     @@purchase_orders
   end
 
-  def self.view_complete_orders
-    @@purchase_orders.select { |p| p.status == "complete" }
+  def self.select_orders_by_status(status)
+    @@purchase_orders.select { |p| p.status == status }
   end
 
 end
