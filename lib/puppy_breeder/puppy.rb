@@ -1,5 +1,6 @@
 #Refer to this class as PuppyBreeder::Puppy
 module PuppyBreeder
+
   class Puppy
     attr_accessor :name, :breed, :age
 

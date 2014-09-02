@@ -10,4 +10,9 @@ describe PuppyBreeder::PurchaseRequest do
     result = PuppyBreeder::PurchaseRequest.new("german shepherd")
     expect(result.breed).to eq("german shepherd")
   end
+
+  it "checks that status is pending" do
+    result = PuppyBreeder::PurchaseRequest.new("german shepherd")
+    expect(result.status).to eq("pending")
+  end
 end

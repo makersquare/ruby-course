@@ -1,13 +1,13 @@
 #Refer to this class as PuppyBreeder::PurchaseRequest
 module PuppyBreeder
   class PurchaseRequest
-    attr_accessor :breed, :purchase_orders
+    attr_accessor :breed, :purchase_orders, :status
 
     @@purchase_orders = [ ]
 
-    def initialize(breed)
+    def initialize(breed,status='pending')
       @breed = breed
-
+      @status = status
       @@purchase_orders.push(self)
     end
 
