@@ -14,10 +14,22 @@ describe 'PuppyBreeder' do
     (result).should include(request)
   end
 
+  # it "can complete a request" do
+  #   PuppyBreeder.add_breed("lab", 300)
+  #   dog = PuppyBreeder::Puppy.new('kevin', 'lab')
+  #   request = PuppyBreeder::PurchaseRequest.new("Jack", "lab")
+  #   PuppyBreeder.complete_request(request.id, dog.name)
+  #   expect(dog.status).to eq('adopted')
+  #   expect(result.status).to eq('completed')
+  #   expect(result.puppy).to eq(dog)
+  # end
+
+
   it "reviews completed purchase requests" do
     PuppyBreeder.add_breed("lab", 300)
+    dog = PuppyBreeder::Puppy.new('kevin', 'lab')
     request = PuppyBreeder::PurchaseRequest.new("Steve", "lab")
-    PuppyBreeder.complete_request(request.id)
+    PuppyBreeder.complete_request(request.id, dog.name)
     result = PuppyBreeder.completed_requests
     (PuppyBreeder::Data.allrequests).should include(request)
     (result).should include(request)

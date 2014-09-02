@@ -12,7 +12,7 @@ module PuppyBreeder
   end
 
   def self.complete_request(id, dog)
-    if request_pending? && dog_available?
+    if request_pending?(id) && dog_available?(dog)
       puppy = PuppyBreeder::Data.allpuppies.select { |x| x.name == dog }.first
       request = PuppyBreeder::Data.allrequests.select { |y| y.id == id }.first
       puppy.status = 'adopted'
@@ -29,7 +29,7 @@ module PuppyBreeder
     end
   end
 
-  def request_pending?(id)
+  def self.request_pending?(id)
     PuppyBreeder::Data.allrequests.each do |x|
       if x.id == id && x.status = 'pending'
       end
