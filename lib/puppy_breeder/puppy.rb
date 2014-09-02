@@ -3,11 +3,10 @@ module PuppyBreeder
   
   class Puppy
   
-    attr_accessor :age_in_days
-    attr_reader :name, :breed 
+    attr_reader :breed, :name, :age_in_days 
 
     def initialize(breed: nil,name: nil,age_in_days:nil)
-      @breed = breed
+      @breed = BreedFixer.symbol(breed)
       @name = name
       @age_in_days = age_in_days
     end

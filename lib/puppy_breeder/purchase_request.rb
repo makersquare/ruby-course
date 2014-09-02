@@ -3,15 +3,25 @@ module PuppyBreeder
   
   class PurchaseRequest
   
-    attr_reader :customer,:breed
-    attr_accessor :id
+    attr_reader :breed
   
-    def initialize(customer,breed)
-      @customer = customer
-      @breed = breed
-      @id = nil
+    def initialize(breed, status=:pending)
+      @breed = BreedFixer.symbol(breed)
+      @status = status
     end
   
+    def pending?
+      @status == :pending
+    end
+
+    def accepted?
+      @status == :accepted
+    end
+    
+    def accept!
+      @status = :accepted
+    end
+
   end
 
 end
