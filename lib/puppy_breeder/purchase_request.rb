@@ -13,7 +13,7 @@ module PuppyBreeder
       @@counter += 1
     end
 
-    def self.review
+    def review
 
     end
 

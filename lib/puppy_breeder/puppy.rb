@@ -9,5 +9,9 @@ module PuppyBreeder
       @breed = breed
     end
 
+    def add(price = nil)
+      ForSale.add(self, price)
+    end 
+
   end
 end
