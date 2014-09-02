@@ -63,12 +63,19 @@ describe PuppyBreeder::Inventory do
 	end
 
 	describe ".initialize" do
-		it "creates empty hashes for breed_price and inventory_hash in inventory class" do
+		it "creates empty hash inventory_hash in inventory class" do
 			inv = PuppyBreeder::Inventory.new
+			
 			expect(inv.inventory_hash).to eq({})
-			expect(inv.breed_price).to eq({})
 		end
 	end
 
+	describe ".add_breed_price" do
+		it "adds to the breed price hash with the breed as the key and price as the value" do
+			inv = PuppyBreeder::Inventory.new
+			inv.add_breed_price("boxer", 2.99)
 
+			expect(inv.inventory_hash.first).to eq(["boxer", {:price => 2.99, :puppies => []}])
+		end
+	end
 end

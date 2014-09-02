@@ -3,17 +3,22 @@ module PuppyBreeder
 
 	class Inventory
 
-		attr_accessor :inventory_hash, :breed_price
+		attr_accessor :inventory_hash
 
 		def initialize
-			@inventory_hash = {}
-			@breed_price = {}
+			@inventory_hash = Hash.new
 		end
 
-		def update_breed_price(breed, price)
-			breed_price[:price] = price
+		def add_breed_price(breed, price)
+			inventory_hash[breed] = {
+				:price => price,
+				:puppies =>[]
+			}
 		end
 
+		def add_puppy_to_inventory(puppy)
+			inventory_hash[puppy.breed][:puppies] << puppy
+		end
 	end
 end
 
