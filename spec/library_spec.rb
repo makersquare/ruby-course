@@ -21,7 +21,7 @@ describe 'Book' do
     book = Book.new
     did_it_work = book.check_out
     expect(did_it_work).to be_true
-    expect(book.status).to eq 'checked_out'
+    expect(book.status).to eq 'checked out'
   end
 
   it "can't be checked out twice in a row" do
@@ -32,7 +32,7 @@ describe 'Book' do
     did_it_work_again = book.check_out
     expect(did_it_work_again).to eq(false)
 
-    expect(book.status).to eq 'checked_out'
+    expect(book.status).to eq 'checked out'
   end
 
   it "can be checked in" do
@@ -83,11 +83,11 @@ describe Library do
 
     # Sam wants to check out Green Eggs and Ham
     sam = Borrower.new('Sam-I-am')
-    book = lib.books[book_id]
+    book = lib.books.last
     check_out = lib.check_out_book(book_id, sam)
 
     # The book should now be marked as checked out
-    expect(book.status).to eq 'checked_out'
+    expect(book.status).to eq 'checked out'
 
     # The checkout should return the book
     expect(book).to be_a(Book)
@@ -108,6 +108,7 @@ describe Library do
     expect( lib.get_borrower(book_id) ).to eq 'Big Brother'
   end
 
+
   it "does not allow a book to be checked out twice in a row" do
     lib = Library.new
     lib.register_new_book("Surely You're Joking Mr. Feynman", "Richard Feynman")
@@ -115,7 +116,7 @@ describe Library do
 
     # Leslie Nielsen wants to double check on that
     nielsen = Borrower.new('Leslie Nielsen')
-    book = lib.books[book_id]
+    book = lib.books.last
     check_out = lib.check_out_book(book_id, nielsen)
 
     # The first time should be successful
@@ -137,8 +138,9 @@ describe Library do
 
     # Bob wants to check out Finnegans Wake
     bob = Borrower.new('Bob Bobber')
-    book = lib.books[book_id]
+    book = lib.books.last
     check_out = lib.check_out_book(book_id, bob)
+    expect(book.status).to eq 'checked out'
     # oh wait he changed his mind
     lib.check_in_book(book_id)
     
@@ -150,6 +152,9 @@ describe Library do
   it "does not allow a Borrower to check out more than two Book at any given time" do
     # yeah it's a stingy library
     lib = Library.new
+
+
+
     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
     lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
     lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
@@ -188,14 +193,14 @@ describe Library do
     expect(lib.available_books.count).to eq(2)
   end
 
-  it "after a book it returned, it can be checked out again" do
+  it "after a book is returned, it can be checked out again" do
     lib = Library.new
     lib.register_new_book("Harry Potter", "J. K. Rowling")
     book_id = lib.books.first.id
 
     # First, we check out the book
     vick = Borrower.new("Michael Vick")
-    book = lib.books[book_id]
+    book = lib.books[0]
     check_out = lib.check_out_book(book_id, vick)
     expect( lib.get_borrower(book_id) ).to eq 'Michael Vick'
 

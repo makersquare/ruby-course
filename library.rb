@@ -1,28 +1,19 @@
-
-# I wrote program to accept a the test code pretty close to as it was written. The biggest change I made was
-# having the original checkout method two different methods, one to create the book and the second to check it out.
-# The original test code didn't assign the new books as variables and creating a dynamic variable name that I could
-# later call on proved to be a bit difficult. I decided to store the instanes in an array, in which the index was the 
-# same as the new ID. It works, but after seening your solution of just assigning the variables in the test code, I could
-# have definitely simplified things. I went back and forth as to whether I should store available/checked out books in 
-# seperate new arrays, as I think it would be quicker to call upon and return a result in the case of a large number of books, 
-# as opposed checking the status of each book contained in a hash, which is why I originally went with the 2 arrays. I might 
-# come back and play with this once I finish the puppy breeding assignment.  
-
 class Book
   attr_reader :title, :author, :status
-  attr_accessor :id
+  attr_accessor :id, :borrower
 
-  def initialize(title=nil, author=nil, id=nil, status='available')
+  def initialize(title=nil, author=nil, id=nil, borrower=nil, status='available')
     @title = title
     @author = author
     @status = status
     @id = id
+    @borower = borrower
   end
+
 
   def check_out
     if @status == 'available'
-      @status = 'checked_out'
+      @status = 'checked out'
       return true
     else
       return false
@@ -30,7 +21,7 @@ class Book
   end
 
   def check_in
-    if @status == 'checked_out'
+    if @status == 'checked out'
       @status = 'available'
       return true
     else
@@ -50,13 +41,10 @@ class Borrower
 end
 
 class Library
-  attr_reader :books, :checked_out, :available_books, :borrowed_books
+  @@id = 0
+  attr_reader :books
   def initialize(name='nil')
     @books = []
-    @id = books.length # should be set to 0, but becomes buggy when testing, id is assigned
-    @checked_out = {} # book_id => borrower
-    @available_books = []
-    @borrowed_books = []
   end
 
   def checked_out
@@ -64,37 +52,43 @@ class Library
   end
 
   def register_new_book(title, author)
-    @books << Book.new(title, author, @id)
-    @available_books << @books.last
-    @id += 1
+    @books << Book.new(title, author, @@id)
+    @@id += 1
+    @books.last
   end
 
   def get_borrower(book_id)
-    if @books[book_id].status == 'available'
+    book = @books.select {|x| x.id == book_id}[0]
+    if book.status == 'available'
       return nil
     else 
-      @checked_out[book_id].name
+      book.borrower.name
     end
   end
 
   def check_out_book(book_id, borrower)
-    if @books[book_id].status == 'available' && borrower.num_books_checked_out < 2
-      @books[book_id].check_out
-      @checked_out[book_id] = borrower
+    book = @books.select {|x| x.id == book_id}[0]
+    if book.status == 'available' && borrower.num_books_checked_out < 2
       borrower.num_books_checked_out += 1
-      @available_books.delete(@books[book_id])
-      @borrowed_books << @books[book_id]
+      book.borrower = borrower
+      book.check_out
     end
   end
 
   def check_in_book(book_id)
-    if @books[book_id].status == 'checked_out'
-      @books[book_id].check_in
-      @checked_out[book_id].num_books_checked_out -= 1
-      @checked_out.delete(book_id)
-      @available_books << @books[book_id]
-      @borrowed_books.delete(@books[book_id])
+    book = @books.select {|x| x.id == book_id}[0]
+    if book.status == 'checked out'
+      book.check_in
+      book.borrower.num_books_checked_out -= 1
     end
+  end
+
+  def available_books
+    @books.select {|x| x.status == 'available'}
+  end
+
+  def borrowed_books
+    @books.select {|x| x.status == 'checked out'}
   end
 end
 
