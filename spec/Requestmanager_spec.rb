@@ -84,6 +84,75 @@ describe PuppyBreeder::RequestManager do
 
   end
 
+  describe '.view_open_requests' do
+
+    it 'returns the @@open_requests array' do 
+
+      PuppyBreeder::RequestManager.clear_all_requests
+      PuppyBreeder::PuppyManager.clear_puppies
+
+      request = PuppyBreeder::PurchaseRequest.new("afghan hound")
+
+      expect(PuppyBreeder::RequestManager.view_open_requests).to eq([request])
+
+
+    end
+
+  end
+
+  describe '.view_completed_requests' do
+
+    it 'returns the @@completed_requests array' do 
+
+      PuppyBreeder::RequestManager.clear_all_requests
+      PuppyBreeder::PuppyManager.clear_puppies
+
+      request = PuppyBreeder::PurchaseRequest.new("afghan hound")
+      PuppyBreeder::RequestManager.approve_request(request)
+
+      expect(PuppyBreeder::RequestManager.view_completed_requests).to eq([request])
+
+    end
+
+  end
+
+  describe '.view_denied_requests' do
+
+    it 'returns the @@denied_requests array' do 
+
+      PuppyBreeder::RequestManager.clear_all_requests
+      PuppyBreeder::PuppyManager.clear_puppies
+
+      request = PuppyBreeder::PurchaseRequest.new("afghan hound")
+      PuppyBreeder::RequestManager.deny_request(request)
+
+      expect(PuppyBreeder::RequestManager.view_denied_requests).to eq([request])
+
+    end
+
+  end
+
+  describe '.clear_all_requests' do
+
+    it 'sets @@completed_requests, @@open_requests, and @@denied_requests to empty' do 
+
+      PuppyBreeder::RequestManager.clear_all_requests
+      PuppyBreeder::PuppyManager.clear_puppies
+
+      request1 = PuppyBreeder::PurchaseRequest.new("afghan hound")
+      request2 = PuppyBreeder::PurchaseRequest.new("afghan hound")
+      request3 = PuppyBreeder::PurchaseRequest.new("afghan hound")
+      PuppyBreeder::RequestManager.approve_request(request1)
+      PuppyBreeder::RequestManager.deny_request(request2)
+
+      expect(PuppyBreeder::RequestManager.view_completed_requests).to eq([request1])
+      expect(PuppyBreeder::RequestManager.view_denied_requests).to eq([request2])
+      expect(PuppyBreeder::RequestManager.view_open_requests).to eq([request3])
+
+    end
+
+  end
+
 
 
 end
