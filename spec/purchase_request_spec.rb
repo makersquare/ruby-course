@@ -5,6 +5,8 @@ describe PuppyBreeder::PurchaseRequest do
     @purchase_req = PuppyBreeder::PurchaseRequest.new("Greyhound")
   end
 
+  # let(:request) { PuppyBreeder::PurchaseRequest.new("Greyhound") }
+
   describe '#initialize' do
     it 'creates a PuppyBreeder::PurchaseRequest object' do
       expect(@purchase_req).to be_an_instance_of(PuppyBreeder::PurchaseRequest)
