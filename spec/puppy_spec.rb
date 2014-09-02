@@ -29,6 +29,5 @@ describe PuppyBreeder::DogShelter do
     expect(a.available_by_breed('pitbull').count).to eq(2)
     expect(a.cost?(1)).to eq(200)
     expect(a.cost?(2)).to eq(300)
-
   end
 end

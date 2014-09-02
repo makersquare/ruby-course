@@ -41,7 +41,16 @@ module PuppyBreeder
       @@doglist      
     end
 
-    def fill_dog_order
+    def adoption(dog_id)
+      dog = @@dog_list[dog_id]
+      @@adopted_dogs.push(dog)
+      @@available_dogs.delete(dog)
+    end
+
+    def self.fill_dog_order(request_id,dog_id)
+      puts "#{request_id} for #{request_id.breed_requested} has been filled. Dog #{dog_id}, #{@@doglist[dog_id].name} has been assigned."
+      self.adoption(dog_id)
+      RequestRepository.complete_request(request_id)
     end
 
   end

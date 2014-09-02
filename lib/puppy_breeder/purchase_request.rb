@@ -21,16 +21,20 @@ module PuppyBreeder
     @@pending_request = []
     attr_accessor :number
 
-    def self.add_request(breed='mix')
-      request = PurchaseRequest.new(breed)
+    def self.add_request(request)
       @number = @@counter
-      @@counter += 1
       @@list[@number] = request
-      @@pending_request<< request
+      @@pending_request<< request  
+      @@counter += 1
+    end
+
+    def self.create_request(breed='mix')
+      request = PurchaseRequest.new(breed)
+      self.add_request(request)
     end
 
     def self.complete_request(request_id)
-      puts "Request #{@@list[request_id].request_id} has been filled."
+      puts "Request #{request_id} has been filled."
       @@closed_request << @@list[request_id]
       @@pending_request.delete(@@list[request_id])
     end
@@ -41,6 +45,10 @@ module PuppyBreeder
 
     def self.pending_list
       @@pending_request
+    end
+
+    def self.breed_requested(request_id)
+      @@list[request_id].breed      
     end
 
     def self.completed_list
