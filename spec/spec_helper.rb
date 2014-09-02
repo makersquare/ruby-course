@@ -2,3 +2,4 @@
 require 'rspec'
 require 'pry-byebug'
 require_relative '../lib/puppy_breeder.rb'
+puppy = PuppyBreeder::Puppy.new("Fido", "Greyhound", 30)
