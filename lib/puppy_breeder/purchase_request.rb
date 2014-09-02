@@ -11,9 +11,20 @@ module PuppyBreeder
   end
 
   class Purchasecontainer
-    def initialize(request_id)
-      @request_id = request_id
+    @@container = Hash.new()
+    def initialize(breed, purchaser_id)
+      @breed = breed
+      @purchaser_id = purchaser_id
+      @@container[@breed] = {
+        :request => []
+      }
     end
 
+    def purchase_request
+      @@container[@breed][:request] << @purchaser_id
+    end
+    def self.container
+      @@container 
+    end
   end
 end
