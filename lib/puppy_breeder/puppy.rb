@@ -1,13 +1,14 @@
 #Refer to this class as PuppyBreeder::Puppy
 module PuppyBreeder
   class Puppy
-    attr_accessor :name, :breed, :age, :puppy_id
+    attr_accessor :name, :breed, :age, :puppy_id, :status
     @@counter = 0
-    def initialize(name, breed, age)
+    def initialize(name, breed, age, status= "available")
       @name = name
       @breed = breed
       @age = age
       @puppy_id = @@counter += 1
+      @status = status
     end 
 
   end

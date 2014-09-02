@@ -25,13 +25,15 @@ module PuppyBreeder
       @@container[@breed][:pending] << @purchaser_id
     end
 
-    def purchase_fill(purchaser_id, puppy_id)
+    def purchase_fill(purchaser_id, puppy)
       purp = @@container[@breed][:pending].shift
-      @@container[@breed][:accepted] << [purp, puppy_id]
+      @@container[@breed][:accepted] << [purp, puppy]
+      puppy.status="sold"
     end
     
     def self.container
       @@container 
     end
+
   end
 end
