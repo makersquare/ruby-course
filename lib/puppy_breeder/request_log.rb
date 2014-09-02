@@ -16,7 +16,8 @@ module PuppyBreeder
 
     def modify_request(request_id, decision) #takes the request id and 
       #whether the request is approved or denied
-      @request
+      found_request = @request_log.select{|request| request.request_id == request_id}      
+      found_request.first.status = decision
     end
 
     def view_completed
