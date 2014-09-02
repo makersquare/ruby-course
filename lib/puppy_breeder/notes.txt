@@ -1,0 +1,41 @@
+Requirements gathering: figuring out the details of the job. Its also useful to document what needs to be done. Goal of the exercise is to take notes on requirements, then as a pod ask questions etc. etc. 
+
+Kinds of questions: what types of classes, how many, attribues of classes, how should the classes be used?
+Most important part - TEST COVERAGE.
+
+Goal: Have this completed by tomorrow morning. 
+
+Classes: customer, breeder, 
+do we need a dog class?
+
+
+customer
+  - purchase request <name, pending request>
+  Does the breed of dog matter at all?
+
+breeder
+  - manually input purchase request
+  - add new puppies for sale
+  - review and accept new purchase reqeusts from customers
+  - review all completed purchase orders
+  By what attribute do you want to track the orders?
+  Cycle - create puppy request, breed puppy, distribute puppy.
+
+
+  Breeder class needed.
+  request submitted; pending reqeust; breeder generates puppy; breeder fills request.
+
+  where do requests class? pending in puppy_request
+
+
+  separate each class into an rb file.
+  figure out what the spec helper
+
+breed of the dog is most important. purchase reqesuts are made for a specific breed, not dog. Price is set by breed, not by price. breed hash with prices, and also storing the.
+
+atributes of puppy; name, breed, age. keep name. 
+
+
+  lib directory/ puppy.rb breeder.rb
+  spec directory/ puppy_spec breeder_spec
+
