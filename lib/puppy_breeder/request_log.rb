@@ -21,7 +21,7 @@ module PuppyBreeder
     end
 
     def view_completed
-      #returns the completed log
+      completed_requests = @request_log.select{|request| request.status !="pending"}
     end
 
     def view_all
