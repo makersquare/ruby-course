@@ -38,7 +38,7 @@ module Exercises
   # Exercise 5
   #  - Iterates through an array and `puts` each element
   def self.ex5(array)
-    # TODO
+    array.each{|ele| puts ele}
   end
 
   # Exercise 6
@@ -67,23 +67,42 @@ module Exercises
   #    { :name => 'Bob', :occupation => 'Builder' }
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
-    # TODO
+    people.each do |person|
+      puts "#{person[:name]}: #{person[:occupation]}"
+    end
   end
 
   # Exercise 9
   #  - Returns `true` if the given time is in a leap year
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
-  def self.ex9(time)
-    # TODO
+  def self.ex9(year)
+    #NESTED IF STATEMENTS DEDICATED TO MY HOMIE NICK. 
+    if year % 4 == 0
+      if year % 100 == 0
+        if year % 900 != (600 || 200)
+          true
+        else
+          false
+        end
+      else
+        true
+      end
+    else
+      false
+    end
   end
 
   # Exercise 10
   #  - Returns "happy hour" if it is between 4 and 6pm
   #    Otherwise, returns "normal prices"
   # Hint: Read the "Stubbing" documentation on the Learn app.
-  def self.ex10
-    # TODO
+  def self.ex10(year)
+    if Time.now.hour == 16 or Time.now.hour == 17
+      "Happy Hour"
+    else
+      "Normal Prices"
+    end
   end
 end
 
