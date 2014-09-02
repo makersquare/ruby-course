@@ -51,7 +51,8 @@ module PuppyBreeder
   def self.deliver_puppy(purchase)
     @@purchase_requests_open.delete(purchase)
     @@purchase_requests_completed << purchase
-    @@puppies_hash[purchase.breed][:dog_list].pop
+    delivered = @@puppies_hash[purchase.breed.to_sym][:dog_list].pop
+    delivered
   end
 
   def self.dogs_available
@@ -60,6 +61,14 @@ module PuppyBreeder
 
   def self.price
     return @@puppy_price
+  end
+
+  def self.open_purchase_requests
+    @@purchase_requests_open
+  end
+
+  def self.completed_purchase_requests
+    @@purchase_requests_completed
   end
 
 end
