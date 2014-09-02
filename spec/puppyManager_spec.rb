@@ -13,7 +13,29 @@ describe PuppyBreeder::PuppyManager do
       expect(PuppyBreeder::PuppyManager.puppies_for_sale.include?(puppy)).to eq(true)
     end
 
+  end
+
+  describe '.remove_puppy_for_sale' do
+
+    it 'deletes the given puppy argument from the PuppyManager @@pupies_for_sale array' do
+
+      puppy = PuppyBreeder::Puppy.new("Spot", "golden retriever", 1)
+
+      PuppyBreeder::PuppyManager.add_puppy_for_sale(puppy)
+      PuppyBreeder::PuppyManager.remove_puppy_for_sale(puppy)
+
+      expect(PuppyBreeder::PuppyManager.puppies_for_sale.include?(puppy)).to eq(false)
+
+
+    end
 
   end
+
+
+  describe '.puppies_for_sale' do
+
+  end
+
+
 
 end
