@@ -3,16 +3,11 @@
 module PuppyBreeder
   class PurchaseRequest
     @@counter = 0
-    attr_reader :breed, :request_id
-    def initialize(breed)
+    attr_reader :breed, :request_id, :status
+    def initialize(breed, status="pending")
       @breed = breed
-      @request_id = counter += 1
-      @purchase_request = {
-        @request_id => {
-          "breed" => @breed,
-          "cost" => 0 #get cost from hash stored in inventory
-          #:date = Time.now
-          }}
+      @status = status
+      @request_id = @@counter += 1
     end
   end
 end
