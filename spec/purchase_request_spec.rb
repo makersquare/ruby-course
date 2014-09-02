@@ -1,6 +1,9 @@
 require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::PurchaseRequest do
+  before(:each) { PuppyBreeder::Requests.instance_variable_set :@purchase_orders, [] }
+  before(:each) { PuppyBreeder::PurchaseRequest.class_variable_set :@@counter, 1 }
+
   describe '.initialize' do
     it "creates a new purchase request for a breed with a status of pending" do
       request = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
@@ -25,13 +28,15 @@ describe PuppyBreeder::PurchaseRequest do
   end
 
   describe '.review' do
-    xit "shows all pending purchase requests" do
+    it "shows all pending purchase requests" do
       request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
       request2 = PuppyBreeder::PurchaseRequest.new("Pitbull")
 
       result = PuppyBreeder::PurchaseRequest.review
+      binding.pry
 
-      expect(result.first).to be_a(PurchaseRequest)
+      expect(result.size).to eq 2
+      expect(result.first.class).to eq(PuppyBreeder::PurchaseRequest)
     end
   end
 

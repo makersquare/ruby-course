@@ -14,8 +14,9 @@ module PuppyBreeder
       Requests.new_request(self)
     end
 
-    def review
-
+    def self.review
+      ForSale.for_sale
+      Requests.purchase_orders
     end
 
     def accept

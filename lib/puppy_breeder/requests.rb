@@ -1,6 +1,5 @@
 module PuppyBreeder
   class Requests
-    #attr_accessor :purchase_orders
 
     def self.new_request(order)
       if !defined? @purchase_orders

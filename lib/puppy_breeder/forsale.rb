@@ -1,7 +1,6 @@
 module PuppyBreeder
   class ForSale
-    attr_accessor :for_sale
-
+    
     def self.add(puppy, price = nil)
       if !defined? @for_sale
         @for_sale = {}
@@ -28,6 +27,10 @@ module PuppyBreeder
         @for_sale[breed][:count] -= 1
       end
 
+      @for_sale
+    end
+
+    def self.for_sale
       @for_sale
     end
 
