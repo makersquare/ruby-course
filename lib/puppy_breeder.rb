@@ -19,9 +19,9 @@ module PuppyBreeder
 
   def self.add_puppy_to_hash(puppy)
     if @@puppies[puppy.breed]
-      @@puppies[puppy.breed][:list] += [puppy]
+      @@puppies[puppy.breed][:list].push(puppy)
     else
-      @@puppies[puppy.breed][:list] = puppy
+      @@puppies[puppy.breed][:list] = [puppy]
     end
   end
 

@@ -21,4 +21,17 @@ describe PuppyBreeder do
 
   end
 
+  it "adds a new puppy object to the list" do
+    mav = PuppyBreeder::Puppy.new("mav", "husky", 4)
+    viking = PuppyBreeder::Puppy.new("viking", "husky", 2)
+    PuppyBreeder.add_breed_to_hash(mav, 500)
+    PuppyBreeder.add_puppy_to_hash(mav)
+    PuppyBreeder.add_puppy_to_hash(viking)
+
+    expect(PuppyBreeder.puppies["husky"][:list][0]).to eq(mav)
+    expect(PuppyBreeder.puppies["husky"][:list][1]).to eq(viking)
+
+  end
+
+
 end
