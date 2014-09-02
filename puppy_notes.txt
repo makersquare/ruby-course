@@ -1,8 +1,7 @@
 
 
 To do:
-create request_lob.rb to keep track and store the requests
-create a request_log_spec to test that the purchase requests are being stored
+
 
 Completed: 
 puppy.rb
@@ -20,6 +19,9 @@ inventory.rb
 creates a class with breed and price, sets a hash for breed pointing to price and initializes quantity to zero. That hash gets stored in a puppies hash. 
 create add puppy method to inventory
 
+request_log.rb
+create request_lob.rb to keep track and store the requests
+create a request_log_spec to test that the purchase requests are being stored
 
 
 
