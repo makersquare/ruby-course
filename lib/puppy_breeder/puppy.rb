@@ -3,7 +3,7 @@ module PuppyBreeder
   class Puppy
 
 # Access cost and status. Read breed, name, age, and puppy_id.
-    attr_accessor :cost, :status
+    attr_accessor :status
     attr_reader :breed, :name, :age, :id
 
 # Counter for setting puppy_id.
@@ -18,6 +18,16 @@ module PuppyBreeder
       @status = status
       @@counter += 1
       @id = @@counter
+    end
+
+# Changes the puppy's status to pending.
+    def requested
+      @status = "Pending"
+    end
+
+# Changes the puppy's status to sold.
+    def sold
+      @status = "Sold"
     end
 
   end

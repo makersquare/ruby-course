@@ -16,5 +16,15 @@ module PuppyBreeder
       @id = @@counter
     end
 
+# Approves purchase request and changes status to Approved.
+    def approve_request
+      @status = "Approved"
+    end
+
+# Denies purchase request and changes status to Denied.
+    def deny_request
+      @status = "Denied"
+    end
+
   end
 end

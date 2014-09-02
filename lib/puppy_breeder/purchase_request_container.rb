@@ -15,12 +15,39 @@ module PuppyBreeder
       @requests << request
     end
 
-    def approve_request(request)
-
+# Displays all completed requests.
+    def completed_requests
+      @requests.select do |request| 
+        request.status == "Approved" || request.status == "Denied"
+      end
     end
 
-    def deny_request(request)
+# Displays all pending requests.
+    def pending_requests
+      @requests.select do |request| 
+        request.status == "Pending"
+      end
+    end
 
+# Displays all approved requests.
+    def approved_requests
+      @requests.select do |request| 
+        request.status == "Approved"
+      end
+    end
+
+# Displays all denied requests.
+    def denied_requests
+      @requests.select do |request| 
+        request.status == "Denied"
+      end
+    end
+
+# Displays all requests by the breed.
+    def requests_of_a_breed(breed)
+      @requests.select do |request|
+        request.breed == breed
+      end
     end
 
   end
