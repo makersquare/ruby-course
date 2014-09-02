@@ -45,10 +45,6 @@ describe PuppyBreeder::RequestLog do
     expect(log.view_completed).to include(request)
   end
 
-  xit 'gives the rejected requests from the log' do
-    #returns the rejected status requests
-  end
-
   xit 'purges the log' do
     #erases the log and empties the array or maybe it just archives it 
     #so the current log gets pushed into a separate array with all the 
