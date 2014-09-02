@@ -11,16 +11,36 @@ module PuppyBreeder
     PuppyBreeder::Data.cost[name] = cost
   end
 
-  # def self.pending_requests
-  #   PuppyBreeder::Data.allrequests.each do |x|
-  #     if x.status == 'pending'
-  #       puts "Pending Requests:"
-  #       puts "#Request No. #{x.id}"
-  #     end
-  #     "There are no pending requests."
-  #   end
-  # end
+  def self.complete_request(id, dog)
+    if request_pending? && dog_available?
+      
 
+
+      end
+    end
+  end
+
+  def self.dog_available?(breed)
+    PuppyBreeder::Data.allpuppies.each do |x|
+      if x.breed == breed && x.status = 'available'
+      end
+    end
+  end
+
+  def request_pending?(id)
+    PuppyBreeder::Data.allrequests.each do |x|
+      if x.id == id && x.status = 'pending'
+      end
+    end
+  end
+
+  def self.pending_requests
+    PuppyBreeder::Data.allrequests.select {|x| x.status == 'pending'}
+  end
+
+  def self.completed_requests
+    PuppyBreeder::Data.allrequests.select {|x| x.status == 'completed'}
+  end
 end
 
 require_relative 'puppy_breeder/puppy.rb'
