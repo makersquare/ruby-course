@@ -9,7 +9,8 @@ module PuppyBreeder
 # Counter for setting puppy_id.
     @@puppy_counter = 0 
 
-# Initializes with breed, name, age, sold_status, and puppy_id.
+# Initializes with breed, name, age, sold_status, and puppy_id. 
+# sold_status can be "Available", "Sold", or "Pending"
     def initialize(breed, name, age, sold_status="Available")
       @breed = breed
       @name = name

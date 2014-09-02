@@ -6,7 +6,7 @@ describe PuppyBreeder::PuppyContainer do
     breeder = PuppyBreeder::PuppyContainer.new("Cookie Fleck")
 
     expect(breeder.class).to eq(PuppyBreeder::PuppyContainer)
-    expect(breeder.container.class).to eq(Hash)
+    expect(breeder.puppies.class).to eq(Hash)
     expect(breeder.name).to eq("Cookie Fleck")
 
   end
@@ -21,11 +21,11 @@ describe PuppyBreeder::PuppyContainer do
     breeder.add_breed("Golden Retriever", 2000)
     breeder.add_breed("Dachshund", 400)
 
-    expect(breeder.container["French Bulldog"][:price]).to eq(1500)
-    expect(breeder.container["Shih Tzu"][:price]).to eq(500)
-    expect(breeder.container["Boxer"][:price]).to eq(750)
-    expect(breeder.container["Golden Retriever"][:price]).to eq(2000)
-    expect(breeder.container["Dachshund"][:price]).to eq(400)
+    expect(breeder.puppies["French Bulldog"][:price]).to eq(1500)
+    expect(breeder.puppies["Shih Tzu"][:price]).to eq(500)
+    expect(breeder.puppies["Boxer"][:price]).to eq(750)
+    expect(breeder.puppies["Golden Retriever"][:price]).to eq(2000)
+    expect(breeder.puppies["Dachshund"][:price]).to eq(400)
   end
 
   it "Adds a puppy to the container. Adds the instance to the available puppies array within the container variable" do
@@ -46,9 +46,11 @@ describe PuppyBreeder::PuppyContainer do
     breeder.add_puppy(puppy3)
     breeder.add_puppy(puppy4)
 
-    expect(breeder.container["French Bulldog"][:available_puppies]).to eq([puppy, puppy3])
-    expect(breeder.container["Boxer"][:available_puppies]).to eq([puppy2])
-    expect(breeder.container["Golden Retriever"][:available_puppies]).to eq([puppy4])
+    expect(breeder.puppies["French Bulldog"][:available_puppies]).to eq([puppy, puppy3])
+    expect(breeder.puppies["Boxer"][:available_puppies]).to eq([puppy2])
+    expect(breeder.puppies["Golden Retriever"][:available_puppies]).to eq([puppy4])
+    expect(breeder.puppies["French Bulldog"][:available_puppies].length).to eq(2)
+    expect(breeder.puppies["Boxer"][:available_puppies].length).to eq(1)
 
   end
 
