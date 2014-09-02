@@ -4,23 +4,24 @@ module PuppyBreeder
     @@counter = 1
     attr_accessor :request_id, :status, :breed
 
-    def initialize(breed='mix')
+    def initialize(breed)
       @request_id = @@counter
       @@counter += 1
       @status = false
       @breed = breed
-      RequestRepository.add_request(@request_id,self)
     end
   end
 
 
 
   class RequestRepository
+    @@counter = 1
     @@list = Hash.new(0)
     attr_accessor :list
 
-    def add_request
-    end
+    # def self.add_request(breed='mix')
+    #   request = PurchaseRequest.new(breed)
+    # end
 
 
   end
