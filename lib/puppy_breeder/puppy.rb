@@ -67,7 +67,7 @@ module PuppyBreeder
 
     def self.first_avail_dog_breed(request_id)
       breed = RequestRepository.breed_requested(request_id)
-      matches = doglist.select {|x,y| y.breed == breed }
+      matches = doglist.select {|x,y| (y.breed == breed && y.status == 'available')}
       dog_id =  matches.keys[0]
       fill_dog_order(request_id,dog_id)
     end
