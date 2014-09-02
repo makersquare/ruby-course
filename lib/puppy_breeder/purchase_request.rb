@@ -17,8 +17,9 @@ module PuppyBreeder
   class RequestRepository
     @@counter = 1
     @@list = Hash.new
-    @@closed_request=[]
+    @@completed_list=[]
     @@pending_request = []
+    @@denied_request = []
     attr_accessor :number
 
     def self.add_request(request)
@@ -35,18 +36,22 @@ module PuppyBreeder
 
     def self.complete_request(request_id)
       puts "Request #{request_id} has been filled."
-      @@closed_request << @@list[request_id]
+      @@completed_list << @@list[request_id]
       @@pending_request.delete(@@list[request_id])
     end
 
     def self.end_request(request_id)
       puts "Request #{request_id} has been denied. Please contact Animal Protective services."
-      @@closed_request << @@list[request_id]
+      @@denied_request<< @@list[request_id]
       @@pending_request.delete(@@list[request_id])
     end
 
     def self.list
       @@list
+    end
+
+    def self.deny_list
+      @@deny_list
     end
 
     def self.pending_list
@@ -58,7 +63,7 @@ module PuppyBreeder
     end
 
     def self.completed_list
-      @@closed_request
+      @@completed_list
     end
 
   end

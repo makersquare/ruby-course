@@ -32,9 +32,9 @@ describe PuppyBreeder::DogShelter do
   end
 
   it 'Should be able to fill do orders. =true' do
-    a = PuppyBreeder::DogShelter
     dog4 = PuppyBreeder::DogShelter.create_dog('pitbull')
     dog5 = PuppyBreeder::DogShelter.create_dog('lab')
+    a = PuppyBreeder::DogShelter
     r = PuppyBreeder::RequestRepository
 
     STDOUT.should_receive(:puts).with("Request 40 for mix has been filled. Dog 4, spot has been assigned.")
@@ -51,6 +51,17 @@ describe PuppyBreeder::DogShelter do
     allow(r).to receive(:breed_requested).and_return("lab")
     allow(r).to receive(:end_request).and_return("Request 41 has been denied. Please contact Animal Protective services.")
     expect(a.fill_dog_order(41,5,false)).to eq('spot')
+  end
+
+  it 'Should be able to fill order by first available breed.' do
+    a = PuppyBreeder::DogShelter
+    r = PuppyBreeder::RequestRepository
+    dog6 = PuppyBreeder::DogShelter.create_dog('shetlinpony')
+
+    STDOUT.should_receive(:puts).with("Request 42 for shetlinpony has been filled. Dog 6, spot has been assigned.")
+    allow(r).to receive(:breed_requested).and_return("shetlinpony")
+    allow(r).to receive(:complete_request).and_return("Request 42 has been filled.")
+    expect(a.first_avail_dog_breed(42)).to eq('spot')
   end
 
 end

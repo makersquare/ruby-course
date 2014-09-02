@@ -16,7 +16,7 @@ module PuppyBreeder
   end
 
   class DogShelter
-    @@costhash={'pitbull'=>300,'golden retrierver'=>400,'mix'=>200,'ultra rare breed'=>1000,'lab'=>500}
+    @@costhash={'shetlinpony'=>5000,'pitbull'=>300,'golden retrierver'=>400,'mix'=>200,'ultra rare breed'=>1000,'lab'=>500}
     @@counter =1
     @@doglist = {}
     @@available_dogs=[]
@@ -48,6 +48,7 @@ module PuppyBreeder
 
     def self.adoption(dog_id)
       dog = doglist[dog_id]
+      dog.status = 'adopted'
       @@adopted_dogs.push(dog)
       @@available_dogs.delete(dog)
     end
@@ -62,6 +63,13 @@ module PuppyBreeder
         RequestRepository.end_request(request_id)
       end
       return doglist[dog_id].name
+    end
+
+    def self.first_avail_dog_breed(request_id)
+      breed = RequestRepository.breed_requested(request_id)
+      matches = doglist.select {|x,y| y.breed == breed }
+      dog_id =  matches.keys[0]
+      fill_dog_order(request_id,dog_id)
     end
 
   end
