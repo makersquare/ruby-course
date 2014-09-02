@@ -1,16 +1,12 @@
 module PuppyBreeder
   class PuppyContainer
     @@puppies = {}
-    @@breed_prices = {
-      "Greyhound" => 250,
-      "Boxer" => 300,
-      "Great Dane" => 400
-    }
+    @@breed_prices = {}
 
     def self.add_breed(breed, price=999)
       @@breed_prices[breed] = price
     end
-    
+
     def self.add_puppy(puppy)
       if @@puppies.has_key?(puppy.breed)
         @@puppies[puppy.breed][:list].push(puppy)

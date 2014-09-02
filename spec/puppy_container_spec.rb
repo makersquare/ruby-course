@@ -6,12 +6,14 @@ describe PuppyBreeder::PuppyContainer do
       puppy1 = PuppyBreeder::Puppy.new("Fido", "Greyhound", 30)
       puppy2 = PuppyBreeder::Puppy.new("Jack", "Great Dane", 25)
       puppy3 = PuppyBreeder::Puppy.new("Jill", "Great Dane", 50)
+      PuppyBreeder::PuppyContainer.add_breed("Greyhound", 1000)
+      PuppyBreeder::PuppyContainer.add_breed("Great Dane")
+
       PuppyBreeder::PuppyContainer.add_puppy(puppy1)
       PuppyBreeder::PuppyContainer.add_puppy(puppy2)
       PuppyBreeder::PuppyContainer.add_puppy(puppy3)
 
       res = PuppyBreeder::PuppyContainer.get_puppies["Greyhound"][:list]
-
       expect(res).to include(puppy1)
     end
   end
