@@ -22,6 +22,18 @@ module PuppyBreeder
   def self.get_puppies
     @@puppies
   end
+
+  def self.get_completed_orders
+    PuppyBreeder::PurchaseRequest.orders.select { |order| order.completed? }
+  end
+
+  def self.review_purchase_requests
+    PuppyBreeder::PurchaseRequest.orders.select { |order| !order.completed? }
+  end
+
+  def self.accept_purchase_requests
+    PuppyBreeder::PurchaseRequest.orders.each { |order| order.complete_order }
+  end
 end
 
 require_relative 'puppy_breeder/puppy.rb'
