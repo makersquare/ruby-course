@@ -25,5 +25,9 @@ module PuppyBreeder
       Requests.complete_request(self)
       ForSale.purchase(self.breed)
     end 
+
+    def self.completed_orders
+      Requests.completed_purchase_orders
+    end
   end
 end
