@@ -11,3 +11,25 @@ name, age, breed
 4) purchase request storage
 
 why we use module. spec helper requires 
+
+customer generates puppy
+
+To do:
+
+Completed: 
+puppy.rb
+creates a puppy instance with proper variables
+puppy_spec tests for creation of a puppy instance
+
+purchase_request.rb
+creates a purchase request with an ID, breed, status=pending
+purchase_request_spec tests for instance creation, status, breed, and id
+
+puppy_breeder.rb
+has inventory, purchase_request, and puppy in it
+
+inventory.rb
+creates a class with breed and price, sets a hash for breed pointing to price and initializes quantity to zero. That hash gets stored in a puppies hash. 
+
+
+
