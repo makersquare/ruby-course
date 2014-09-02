@@ -3,17 +3,16 @@ require_relative 'spec_helper.rb'
 describe PuppyBreeder::PuppyContainer do
   it "Creates a container for all puppies the breeder has." do
 
-    breeder = PuppyBreeder::PuppyContainer.new("Cookie Fleck")
+    breeder = PuppyBreeder::PuppyContainer.new
 
     expect(breeder.class).to eq(PuppyBreeder::PuppyContainer)
     expect(breeder.puppies.class).to eq(Hash)
-    expect(breeder.name).to eq("Cookie Fleck")
 
   end
 
   it "Adds breeds to the container. Associates a cost with breed, and creates a available puppies array." do
 
-    breeder = PuppyBreeder::PuppyContainer.new("Cookie Fleck")
+    breeder = PuppyBreeder::PuppyContainer.new
     
     breeder.add_breed("French Bulldog", 1500)
     breeder.add_breed("Shih Tzu", 500)
@@ -30,7 +29,7 @@ describe PuppyBreeder::PuppyContainer do
 
   it "Adds a puppy to the container. Adds the instance to the available puppies array within the container variable" do
 
-    breeder = PuppyBreeder::PuppyContainer.new("Cookie Fleck")
+    breeder = PuppyBreeder::PuppyContainer.new
 
     puppy = PuppyBreeder::Puppy.new("French Bulldog", "Murphy", 3)
     puppy2 = PuppyBreeder::Puppy.new("Boxer", "Sadie", 1)

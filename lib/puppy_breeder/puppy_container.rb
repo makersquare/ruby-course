@@ -7,8 +7,7 @@ module PuppyBreeder
     attr_reader :name
 
 # Initialization creates a name variable and an empty hash with default value of 0.
-    def initialize(name)
-      @name = name
+    def initialize
       @puppies = Hash.new(0)
     end
 

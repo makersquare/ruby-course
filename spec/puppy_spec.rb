@@ -8,8 +8,8 @@ describe PuppyBreeder::Puppy do
     expect(puppy.breed).to eq("French Bulldog")
     expect(puppy.name).to eq("Murphy")
     expect(puppy.age).to eq(3)
-    expect(puppy.sold_status).to eq("Available")
-    expect(puppy.puppy_id).to eq(1)
+    expect(puppy.status).to eq("Available")
+    expect(puppy.id).to eq(1)
     expect(puppy.class).to eq(PuppyBreeder::Puppy)
 
     puppy2 = PuppyBreeder::Puppy.new("Boxer", "Sadie", 1)
@@ -17,8 +17,8 @@ describe PuppyBreeder::Puppy do
     expect(puppy2.breed).to eq("Boxer")
     expect(puppy2.name).to eq("Sadie")
     expect(puppy2.age).to eq(1)
-    expect(puppy2.sold_status).to eq("Available")
-    expect(puppy2.puppy_id).to eq(2)
+    expect(puppy2.status).to eq("Available")
+    expect(puppy2.id).to eq(2)
     expect(puppy2.class).to eq(PuppyBreeder::Puppy)
 
   end

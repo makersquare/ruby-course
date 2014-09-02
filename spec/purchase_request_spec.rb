@@ -7,14 +7,14 @@ describe PuppyBreeder::PurchaseRequest do
     request = PuppyBreeder::PurchaseRequest.new("French Bulldog")
 
     expect(request.breed).to eq("French Bulldog")
-    expect(request.request_id).to eq(1)
-    expect(request.request_status).to eq("Pending")
+    expect(request.status).to eq("Pending")
+    expect(request.id).to eq(1)
 
     request2 = PuppyBreeder::PurchaseRequest.new("Golden Retriever", "Denied")
 
     expect(request2.breed).to eq("Golden Retriever")
-    expect(request2.request_id).to eq(2)
-    expect(request2.request_status).to eq("Denied")
+    expect(request2.id).to eq(2)
+    expect(request2.status).to eq("Denied")
 
   end
 

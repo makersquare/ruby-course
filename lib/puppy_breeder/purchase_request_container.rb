@@ -1,18 +1,18 @@
 #Refer to this class as PuppyBreeder::PurchaseRequestContainer
 module PuppyBreeder
   class PurchaseRequestContainer
+
+# Access requests
     attr_accessor :requests
 
+# Initiailizes with requests hash. Has three keys: "Pending", "Approved", "Denied".
     def initialize
-      @requests = {
-        "Pending" => [],
-        "Approved" => [],
-        "Denied" => []
-      }
+      @requests = Array.new
     end
 
+# Add an instance of PurchaseRequest into the requests hash with a key of the status.
     def add_request(request)
-      @requests[request.request_status] << request
+      @requests << request
     end
 
     def approve_request(request)

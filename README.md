@@ -11,10 +11,11 @@ README.md
 - As a breeder, I want to be able to view all completed purchase orders.
 
 What it should be able to do:
-- Customer submits purchase request. Breeder must acknowledge and accept request.
+** - Customer submits purchase request. 
+- Breeder must acknowledge and accept request.
 - Breeder submits purchase request.
 - Breeder can review purchase orders.
-- Breeder adds puppies for sale.
+**- Breeder adds puppies for sale.
 
 Classes:
 Puppy
@@ -63,9 +64,21 @@ Breed of the dog:
 Breed hash that stores puppies, costs.
 
 
-hash = {
+puppy_container_hash = {
 	:breed => {
 		:price => ###,
 		:list => [instance, instance, instance]
+	}
+}
+
+purchase_request_hash = {
+	:pending => {
+
+	}
+	:approved => {
+
+	}
+	:denied => {
+		
 	}
 }
