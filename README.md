@@ -18,8 +18,6 @@ What it should be able to do:
 
 Classes:
 Puppy
-	@@varibles:
-		puppies
 	@variables:
 		breed
 		cost
@@ -38,15 +36,28 @@ Customer
 		?favorite breed
 
 Purchase Request
-	
-	@@variables:
-		requests
+
 	@variables:
 		puppy_id
 		customer_id
 		request_id
 		request_status
 
-	
+Breeder
 
-Module - Breeder
+Puppy Container
+
+Purchase Request Container
+
+
+
+Breed of the dog:
+
+	Purchase requests are made for a specific breed, not for a specific dog.
+
+	Price for a puppy is set be a breed.
+
+	Attributes of puppy are name, breed, age.
+
+Breed hash that stores puppies, costs.
+
