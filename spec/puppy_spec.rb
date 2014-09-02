@@ -78,4 +78,15 @@ describe PuppyBreeder::Inventory do
 			expect(inv.inventory_hash.first).to eq(["boxer", {:price => 2.99, :puppies => []}])
 		end
 	end
+
+	describe ".add_puppy_to_inventory" do
+		it "adds an instance of a puppy into the inventory hash" do
+			pup = PuppyBreeder::Puppy.new('doggy', 'boxer', 30)
+			inv = PuppyBreeder::Inventory.new
+			inv.add_breed_price("boxer", 2.99)
+			inv.add_puppy_to_inventory(pup)
+
+			expect(inv.inventory_hash[pup.breed][:puppies]).to eq([pup])
+		end
+	end
 end

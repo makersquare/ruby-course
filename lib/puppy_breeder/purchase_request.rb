@@ -24,6 +24,6 @@ module PuppyBreeder
   		purchase_array << purchase_request
   	end
 
-    
   end
+
 end
