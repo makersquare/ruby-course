@@ -6,6 +6,7 @@ module PuppyBreeder
   @@purchase_orders = []
   @@puppies = {}
 
+
   def self.add_breed_to_hash(puppy, price)
     @@puppies[puppy.breed] = {
       :price => price,
@@ -29,8 +30,8 @@ module PuppyBreeder
     @@purchase_orders << purchase_request
   end
 
-  def self.change_purchase_order_status(purchase_request, new_status)
-    purchase_request.status = new_status
+  def self.change_order_status(po, new_status)
+    po.status = new_status
   end
 
   def self.puppies
