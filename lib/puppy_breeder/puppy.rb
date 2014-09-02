@@ -8,7 +8,5 @@ module PuppyBreeder
       @age = age
     end
 
-    
-
   end
 end
