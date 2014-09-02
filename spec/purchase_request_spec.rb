@@ -15,9 +15,6 @@ describe PuppyBreeder::PurchaseRequest do
     it 'defauts the status to pending' do
       expect(@purchase_req.status).to eq("pending")
     end
-    it 'pushes the order to a class variable array of @@orders' do
-      expect(PuppyBreeder::PurchaseRequest.orders).to include(@purchase_req)
-    end
   end
 
   describe '#completed?' do

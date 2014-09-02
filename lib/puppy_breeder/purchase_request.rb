@@ -3,16 +3,13 @@ module PuppyBreeder
   class PurchaseRequest
     attr_reader :breed
     attr_accessor :status
-    @@orders = []
+    @@counter = 0
 
     def initialize(breed)
       @breed = breed
-      @@orders << self
       @status = 'pending'
-    end
-
-    def self.orders
-      @@orders
+      @id = @@counter
+      @@counter += 1
     end
 
     def complete_order

@@ -8,7 +8,6 @@ describe PuppyBreeder do
     PuppyBreeder.add_puppy(puppy1)
     PuppyBreeder.add_puppy(puppy2)
     PuppyBreeder.add_puppy(puppy3)
-
   end
   describe '.add_puppy' do
     it 'creates a data structure (hash) which stores puppies by breed' do
@@ -18,8 +17,10 @@ describe PuppyBreeder do
 
   describe '.get_completed_orders' do
     it 'returns the orders which have a status of complete' do
-      PuppyBreeder::PurchaseRequest.new("Boxer")
-      PuppyBreeder::PurchaseRequest.new("Great Dane")
+      order1 = PuppyBreeder::PurchaseRequest.new("Boxer")
+      order2 = PuppyBreeder::PurchaseRequest.new("Great Dane")
+      PuppyBreeder.add_order(order1)
+      PuppyBreeder.add_order(order2)
       expect(PuppyBreeder.get_completed_orders.size).to eq(0)
     end
   end
@@ -33,8 +34,7 @@ describe PuppyBreeder do
   describe '.accept_purchase_requests' do
     it 'accepts all of the purchase requests' do
       PuppyBreeder.accept_purchase_requests
-      binding.pry
-      expect(PuppyBreeder.get_completed_orders.size).to eq(2)
+      expect(PuppyBreeder.get_completed_orders.first.status).to eq('complete')
     end
   end
 end
