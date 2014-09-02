@@ -70,6 +70,22 @@ describe PuppyBreeder::PuppyManager do
 
   end
 
+  describe '.find_match' do
+
+    it 'returns the first puppy of the breed specified in the purchase request' do
+      puppy1 = PuppyBreeder::Puppy.new("Spot", "golden retriever", 1)
+      puppy2 = PuppyBreeder::Puppy.new("Bowser", "golden retriever", 0.5)
+
+      PuppyBreeder::PuppyManager.add_puppy_for_sale(puppy1)
+      PuppyBreeder::PuppyManager.add_puppy_for_sale(puppy2)
+
+      request = PuppyBreeder::PurchaseRequest.new("golden retriever")
+
+      expect(PuppyBreeder::PuppyManager.find_match(request)).to eq(puppy1)
+    end
+
+  end
+
 
 
 
