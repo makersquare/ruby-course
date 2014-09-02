@@ -46,7 +46,7 @@ module PuppyBreeder
   def self.accept_purchase(purchase)
     @@purchase_id += 1
     @@open_purchase_requests[@@purchase_id] = purchase
-    @@purchase_id
+    purchase.id = @@purchase_id
   end
 
   def self.reject_purchase(purchase)
@@ -57,11 +57,10 @@ module PuppyBreeder
     @@puppies_hash[puppy.breed][:dog_list] << puppy
   end
 
-  def self.deliver_puppy(purchase_id)
-    purchase = @@open_purchase_requests.delete(purchase_id)
-    @@completed_purchase_requests[purchase_id] = purchase
-    delivered = @@puppies_hash[purchase.breed.to_sym][:dog_list].pop
-    delivered
+  def self.deliver_puppy(purchase)
+    purchase = @@open_purchase_requests.delete(purchase.id)
+    @@completed_purchase_requests[purchase.id] = purchase
+    @@puppies_hash[purchase.breed.to_sym][:dog_list].pop
   end
 
   def self.dogs_available
