@@ -10,9 +10,9 @@ module PuppyBreeder
       @breeder = breeder
 
       if breeder.purchase_requests[breed] == nil 
-        breeder.purchase_requests[breed] = [{requester: requester, status: "pending" }] 
+        breeder.purchase_requests[breed] = [self] 
       else
-        breeder.purchase_requests[breed].push({requester: requester, status: "pending" })
+        breeder.purchase_requests[breed].push(self)
       end
     end
 

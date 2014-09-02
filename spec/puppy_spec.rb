@@ -27,7 +27,17 @@ describe PuppyBreeder::Puppy do
     mill.add_inventory(pup1)
     mill.add_inventory(pup2)
 
-
     expect(mill.puppy_inventory[:chow].count).to eq 2
   end
+
+  it "Allows breeder to set price of puppy" do
+    mill = PuppyBreeder::Breeder.new
+    pup1 = PuppyBreeder::Puppy.new("Spot", :chow, 1)
+    PuppyBreeder::Puppy.set_breed_price(:chow, 15)
+    result = PuppyBreeder::Puppy.costs
+
+    expect(result.count).to be 1
+  end
 end
+
+
