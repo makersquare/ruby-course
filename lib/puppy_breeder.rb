@@ -13,9 +13,7 @@ module PuppyBreeder
     }
   end
 
-
-
-  def self.set_breed_price(puppy,price)
+  def self.change_breed_price(puppy,price)
     @@puppies[puppy.breed][:price] = price
   end
 
