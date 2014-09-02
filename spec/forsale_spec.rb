@@ -32,7 +32,6 @@ describe PuppyBreeder::ForSale do
     order = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
     result = order.accept
     
-    #expect(order.status).to eq(:completed)
     expect(result["Golden Retriever"][:count]).to eq(0)
     expect(result["Pitbull"][:count]).to eq(1)
   end 

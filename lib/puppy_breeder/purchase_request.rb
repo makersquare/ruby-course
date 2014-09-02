@@ -11,6 +11,7 @@ module PuppyBreeder
       @status = :pending
       @id = @@counter
       @@counter += 1
+      Requests.new_request(self)
     end
 
     def review
