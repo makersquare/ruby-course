@@ -8,6 +8,7 @@ module PuppyBreeder
       @breed = breed
       @status = status
       @request_id = @@counter += 1
+      
     end
   end
 end

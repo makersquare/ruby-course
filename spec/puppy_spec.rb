@@ -9,10 +9,3 @@ describe PuppyBreeder::Puppy do
 
 end
 
-describe PuppyBreeder::Inventory do
-  it 'creates a new inventory' do
-    test = PuppyBreeder::Inventory.new
-
-    expect(test.class).to eq(PuppyBreeder::Inventory)
-  end
-end

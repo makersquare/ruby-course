@@ -16,15 +16,24 @@ describe PuppyBreeder::RequestLog do
 
   end
 
-  xit 'gives the first pending request for approval' do
+  it 'gets pending requests' do
     #sort through the request log array for pending status
     #get the first one
     #approves or rejects 
     #changes the status of the request
+    request = PuppyBreeder::PurchaseRequest.new("Schnauzer")
+    log = PuppyBreeder::RequestLog.new
+    log.add_request(request)
+
+    expect(log.review_pending.first.status).to eq("pending")    
   end
 
   xit 'gives a list of all requests in the log' do
     #returns the request log array
+  end
+
+  xit 'gives the completed orders in the log' do
+    #returns completed
   end
 
   xit 'gives the rejected requests from the log' do

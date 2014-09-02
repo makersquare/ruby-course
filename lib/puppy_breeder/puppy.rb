@@ -9,7 +9,7 @@ module PuppyBreeder
       @name = name
       @breed = breed
       @age = age
-      #pass this puppy to the inventory
+      #call inventory.add_puppy()
     end
   end
 end
