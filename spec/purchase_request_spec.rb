@@ -17,6 +17,17 @@ describe PuppyBreeder::PurchaseRequest do
     end
   end
 
+  describe '.review' do
+    xit "shows all pending purchase requests" do
+      request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+      request2 = PuppyBreeder::PurchaseRequest.new("Pitbull")
+
+      result = PuppyBreeder::PurchaseRequest.review
+
+      expect(result.first).to be_a(PurchaseRequest)
+    end
+  end
+
   describe '.accept' do
     it "changes the purchase request status from pending to completed" do
       request = PuppyBreeder::PurchaseRequest.new("Golden Retriever")

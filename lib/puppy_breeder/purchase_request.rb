@@ -12,6 +12,10 @@ module PuppyBreeder
       @@counter += 1
     end
 
+    def self.review
+
+    end
+
     def accept
       @status = :completed
     end 
