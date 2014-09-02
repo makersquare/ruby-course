@@ -54,6 +54,18 @@ describe PuppyBreeder::PurchaseOrderArray do
 			expect(po_array.purchase_array.first).to eq(po)
 		end
 	end
+
+	describe ".review_new_orders" do
+		it "returns an array with purchase requests with status pending" do
+			po_array = PuppyBreeder::PurchaseOrderArray.new
+			po1 = PuppyBreeder::PurchaseRequest.new('boxer')
+			po2 = PuppyBreeder::PurchaseRequest.new('fox')
+			po_array.add_purchase_request(po1)
+			po_array.add_purchase_request(po2)
+
+			expect(po_array.review_new_orders).to eq([po1, po2])
+		end
+	end
 end
 
 

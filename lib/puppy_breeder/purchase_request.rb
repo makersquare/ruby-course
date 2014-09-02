@@ -12,6 +12,9 @@ module PuppyBreeder
   	end
   end
 
+
+
+
   class PurchaseOrderArray
 
   	attr_accessor :purchase_array
@@ -23,6 +26,12 @@ module PuppyBreeder
   	def add_purchase_request(purchase_request)
   		purchase_array << purchase_request
   	end
+
+    def review_new_orders
+      purchase_array.select do |purchase_req|
+        purchase_req.status == "pending"
+      end
+    end
 
   end
 
