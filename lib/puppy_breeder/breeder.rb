@@ -1,14 +1,22 @@
 module PuppyBreeder
   class Breeder
-  @@puppy_inventory = {}
+    attr_accessor :puppy_inventory
+    
+    def initialize
+    @puppy_inventory = {}
+    end
 
-    def self.add_puppy(name, breed, age)
-      @@puppy_inventory[breed] = [name, age]
+    def add_inventory(new_puppy)
+      if @puppy_inventory[new_puppy.breed] == nil 
+        @puppy_inventory[new_puppy.breed] = [new_puppy]
+      else
+        @puppy_inventory[new_puppy.breed].push(new_puppy)
+      end
     end
     
-    def self.puppy_inventory
-      @@puppy_inventory
-    end
 
   end
 end
+
+
+# Breeder.add_puppy(Puppy.new(params))

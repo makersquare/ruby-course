@@ -1,6 +1,7 @@
 require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::Puppy do
+
   it "allows the breeder to add puppies" do
     result = PuppyBreeder::Puppy.new("Spot", :chow, 1)
 
@@ -13,9 +14,22 @@ describe PuppyBreeder::Puppy do
 
     mill = PuppyBreeder::Breeder.new
     spot = PuppyBreeder::Puppy.new("Spot", :chow, 1)
+    mill.add_inventory(spot)
+  
 
-    binding.pry
-    expect(PuppyBreeder::Breeder.puppy_inventory.count).to eq 1
+    expect(mill.puppy_inventory.count).to eq 1
   end
 
+  it "enables Breeder to add more than one puppy of the same breed" do
+    mill = PuppyBreeder::Breeder.new
+    pup1 = PuppyBreeder::Puppy.new("Spot", :chow, 1)
+    pup2 = PuppyBreeder::Puppy.new("Josh", :chow, 2)
+    mill.add_inventory(pup1)
+    mill.add_inventory(pup2)
+
+    binding.pry
+
+
+    expect(mill.puppy_inventory[:chow].count).to eq 2
+  end
 end
