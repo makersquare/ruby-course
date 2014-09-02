@@ -27,8 +27,6 @@ describe PuppyBreeder::Puppy do
     mill.add_inventory(pup1)
     mill.add_inventory(pup2)
 
-    binding.pry
-
 
     expect(mill.puppy_inventory[:chow].count).to eq 2
   end

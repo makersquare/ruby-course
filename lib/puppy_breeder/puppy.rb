@@ -7,9 +7,7 @@ module PuppyBreeder
       @name = name
       @breed = breed
       @age = age
-      
-      # PuppyBreeder::Breeder.add_inventory(self)
-      
+            
     end
 
     

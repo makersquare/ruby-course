@@ -1,9 +1,11 @@
 module PuppyBreeder
   class Breeder
-    attr_accessor :puppy_inventory
+    attr_accessor :puppy_inventory, :purchase_requests
     
     def initialize
     @puppy_inventory = {}
+    @purchase_requests = {}
+
     end
 
     def add_inventory(new_puppy)
