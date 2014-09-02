@@ -25,12 +25,20 @@ module PuppyBreeder
     end
   end
 
-  def self.store_purchase_orders(purchase_order)
-    @@purchase_orders << purchase_order
+  def self.store_purchase_orders(purchase_request)
+    @@purchase_orders << purchase_request
+  end
+
+  def self.change_purchase_order_status(purchase_request, new_status)
+    purchase_request.status = new_status
   end
 
   def self.puppies
     @@puppies
+  end
+
+  def self.purchase_orders
+    @@purchase_orders
   end
 
 end

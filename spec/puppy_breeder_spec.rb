@@ -30,8 +30,15 @@ describe PuppyBreeder do
 
     expect(PuppyBreeder.puppies["husky"][:list][0]).to eq(mav)
     expect(PuppyBreeder.puppies["husky"][:list][1]).to eq(viking)
-
   end
 
+  it "adds purchase request to purchase_orders array" do
+    po = PuppyBreeder::PurchaseRequest.new("husky")
+    PuppyBreeder.store_purchase_orders(po)
+
+    expect(PuppyBreeder.purchase_orders.length).to eq(1)
+    expect(PuppyBreeder.purchase_orders.first.breed).to eq("husky")
+    expect(PuppyBreeder.purchase_orders.first.status).to eq("pending")
+  end
 
 end
