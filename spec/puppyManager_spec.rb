@@ -34,7 +34,43 @@ describe PuppyBreeder::PuppyManager do
 
   describe '.puppies_for_sale' do
 
+    it 'returns the puppies currently for sale (the PuppyManager @@puppies_for_sale' do
+
+      puppy1 = PuppyBreeder::Puppy.new("Spot", "golden retriever", 1)
+      puppy2 = PuppyBreeder::Puppy.new("Bowser", "golden retriever", 0.5)
+
+      #Clear all remnant puppies for test accuracy
+      PuppyBreeder::PuppyManager.clear_puppies
+
+      PuppyBreeder::PuppyManager.add_puppy_for_sale(puppy1)
+      PuppyBreeder::PuppyManager.add_puppy_for_sale(puppy2)
+
+      expect(PuppyBreeder::PuppyManager.puppies_for_sale).to eq([puppy1, puppy2])
+
+
+    end
+
   end
+
+  describe '.clear_puppies' do 
+
+    it 'empties the PuppyManager @@puppies_for_sale array' do 
+
+      puppy1 = PuppyBreeder::Puppy.new("Spot", "golden retriever", 1)
+      puppy2 = PuppyBreeder::Puppy.new("Bowser", "golden retriever", 0.5)
+
+      PuppyBreeder::PuppyManager.add_puppy_for_sale(puppy1)
+      PuppyBreeder::PuppyManager.add_puppy_for_sale(puppy2)
+
+      PuppyBreeder::PuppyManager.clear_puppies
+      expect(PuppyBreeder::PuppyManager.puppies_for_sale).to eq([])
+      
+
+    end
+
+  end
+
+
 
 
 
