@@ -10,6 +10,15 @@ module PuppyBreeder
 
     end
 
+    def self.complete_request(order)
+      completed_order = @purchase_orders.find {|x| x = order}
+      completed_order.status = :completed
+    end
+
+    def self.pending_purchase_orders
+      @purchase_orders.select {|x| x.status == :pending}
+    end
+
     def self.purchase_orders
       @purchase_orders
     end

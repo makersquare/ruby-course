@@ -33,7 +33,6 @@ describe PuppyBreeder::PurchaseRequest do
       request2 = PuppyBreeder::PurchaseRequest.new("Pitbull")
 
       result = PuppyBreeder::PurchaseRequest.review
-      binding.pry
 
       expect(result.size).to eq 2
       expect(result.first.class).to eq(PuppyBreeder::PurchaseRequest)

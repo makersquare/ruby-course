@@ -1,7 +1,8 @@
 #Refer to this class as PuppyBreeder::PurchaseRequest
 module PuppyBreeder
   class PurchaseRequest
-    attr_reader :breed, :status, :id, :method
+    attr_reader :breed, :id, :method
+    attr_accessor :status
 
     @@counter = 1
 
@@ -15,12 +16,13 @@ module PuppyBreeder
     end
 
     def self.review
-      ForSale.for_sale
-      Requests.purchase_orders
+      # ForSale.for_sale
+      Requests.pending_purchase_orders
     end
 
     def accept
       @status = :completed
+      Requests.complete_request(self)
       ForSale.purchase(self.breed)
     end 
   end
