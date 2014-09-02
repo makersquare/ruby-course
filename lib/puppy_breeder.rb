@@ -2,20 +2,7 @@ require 'pry-byebug'
 # we initialize the module here to use in our other files
 module PuppyBreeder
 
-  @@puppies_hash = Hash.new do |hash, key|
-    key = key.to_sym
-
-    if hash.has_key?(key)
-      dog_list = hash[key][:dog_list]
-    else
-      dog_list = []
-    end
-
-    hash[key] = {
-      :price => @@puppy_price[key],
-      :dog_list => dog_list
-    }
-  end
+  @@puppies_hash = {}
 
   @@puppy_price = {
     :boxer => 1000,
@@ -54,7 +41,16 @@ module PuppyBreeder
   end
 
   def self.add_puppy(puppy)
-    @@puppies_hash[puppy.breed][:dog_list] << puppy
+    key = puppy.breed.to_sym
+
+    if @@puppies_hash.has_key?(key)
+      @@puppies_hash[key][:dog_list] << puppy
+    else
+      @@puppies_hash[key] = {
+        :price => @@puppy_price[key],
+        :dog_list => [puppy]
+      }
+    end
   end
 
   def self.deliver_puppy(purchase)
