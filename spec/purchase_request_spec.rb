@@ -8,6 +8,7 @@ describe PuppyBreeder::PurchaseRequest do
 
   before(:each) do
     PuppyBreeder::PurchaseRequest.class_variable_set(:@@id_count, 0)
+    PuppyBreeder::PurchaseRequest.class_variable_set(:@@open_orders, {})
   end
   
   it "creates a purchase request" do
@@ -36,6 +37,20 @@ describe PuppyBreeder::PurchaseRequest do
 
     expect(result1.id_num).to eq(0)
     expect(result2.id_num).to eq(1)
+  end
+
+  it "shows there is 1 current open order" do
+    result = PuppyBreeder::PurchaseRequest.new("german shepherd")
+
+    expect(PuppyBreeder::PurchaseRequest.open_orders.count).to eq(1)
+  end
+
+  it "shows there are 2 current open orders" do
+    result = PuppyBreeder::PurchaseRequest.new("german shepherd")
+    result1 = PuppyBreeder::PurchaseRequest.new("german shepherd")
+    # result1 = PuppyBreeder::PurchaseRequest.new("belgian malinois")
+
+    expect(PuppyBreeder::PurchaseRequest.open_orders.count).to eq(2)
   end
 end
 
