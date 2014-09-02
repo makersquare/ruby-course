@@ -30,3 +30,73 @@ What it should be able to do:
 ** - Breeder submits purchase request.
 ** - Breeder can review purchase orders.
 ** - Breeder adds puppies for sale.
+
+
+****************************
+Making a terminal client.
+
+Make a class. It doesn't need to exist within the module.
+
+require_relative 'lib/puppy_breeder.rb'
+
+class TerminalClient
+
+	def self.help_menu
+		puts "Help Menu"
+		puts "add - name, breed, age"
+		puts "view: this shows all puppies"
+	end
+
+	def self.start
+		print "command>  "
+		input = gets.chomp
+
+		command = input.split.first
+
+		case command
+		when "breed"
+			create_new_breed(input)
+		when "add"
+			add_puppy_to_inventory(input)
+		when "show"
+			show_pups_by_breed(input)
+		when "exit"
+			puts "OKTHXBYE"
+			return
+		else
+			puts "I don't know that commange"
+		end
+
+		start
+
+	end
+
+	def self.add_breed_to_inventory(input)
+		breed = input.split[1]
+		PuppyBreeder::PuppyContainer.add_breed(breed)
+	end
+
+	def self.get_breed_price(input)
+		price = PuppyBreeder::PuppyContainer.get_breed_price(input.split[1])
+		puts "The breed #{input.split[1]} costs #{cost}."
+	end
+
+	def self.add_puppy_to_inventory(input)
+		input = input.split
+		name = input[1]
+		breed = input[2]
+		age = input[3].to_i
+
+		x = PuppyBreeder::Puppy.new(name, breed, age)
+		PuppyBreeder::PuppyContainer.add_puppy(x)
+	end
+
+	def self.show_pups_by_breed
+		puppies = PuppyBreeder::PuppyContainer.puppy_info
+	end
+end
+
+Run by irb
+
+load TerminalClient file.
+

@@ -52,3 +52,24 @@ module PuppyBreeder
 
   end
 end
+
+# Nick's answers:
+
+# module PuppyBreeder
+#   class PurchaseRequestContainer
+#     @@requests = []
+
+    # def self.add_request(request)
+    #   @@requests << request
+    # end
+
+    # def self.show_complete_requests
+    #   @@requests.select { |r| r.accepted? }
+    # end
+
+    # def self.show_pending_requests
+    #   @@requests.select { |r| r.pending? }
+    # end
+
+#   end
+# end

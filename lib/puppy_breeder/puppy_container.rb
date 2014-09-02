@@ -20,7 +20,11 @@ module PuppyBreeder
 
 # Adds a puppy to container. Puppy's breed must be added to container before puppy of that breed can be added, that way a price and available puppies array can be already established.
     def add_puppy(puppy)
-      @puppies[puppy.breed][:available_puppies] << puppy
+      if @@puppies[puppy.breed]
+        @puppies[puppy.breed][:available_puppies] << puppy
+      else
+        raise "No breed for puppy."
+      end
     end
 
 # Removes puppy from :available_puppies array if that puppy is available.
@@ -39,3 +43,35 @@ module PuppyBreeder
 
   end
 end
+
+# Nick's answers:
+
+# module PuppyBreeder
+#   class PuppyContainer
+#     @@puppies = {}
+
+    # def self.add_breed(breed, price)
+    #   @@puppies[puppy.breed] = {
+    #     :price => price,
+    #     :list => []
+    #   }
+    # end
+
+    # def self.add_puppy(puppy)
+    #   if @@puppies[puppy.breed]
+    #     @@puppies[puppy.breed][:list] << puppy
+    #   else
+    #     raise "No breed for puppy."
+    #   end
+    # end
+
+    # def get_breed_price(breed)
+    #   @@puppies[breed][:price]
+    # end
+
+    # def self.puppy_info
+    #   @@puppies
+    # end  
+
+#   end
+# end
