@@ -1,0 +1,13 @@
+customer makes purchase request
+class variables an array of hashes
+
+1) puppy container class or inventory
+
+2) puppy class
+name, age, breed
+
+3) purchase request class
+
+4) purchase request storage
+
+why we use module. spec helper requires 
