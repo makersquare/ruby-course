@@ -138,4 +138,18 @@ describe PuppyBreeder do
     expect(result.length).to eq(3)
   end
 
+  xit "automatically sells the puppy if there is a waitlist for that breed" do
+    po = PuppyBreeder::PurchaseRequest.new("husky")
+    PuppyBreeder.waitlist
+
+
+    expect(PuppyBreeder.waitlist.length).to eq(1)
+
+    mav = PuppyBreeder::Puppy.new("mav", "husky", 45)
+    PuppyBreeder.add_puppy_to_hash(mav)
+
+    expect(PuppyBreeder.waitlist.length).to eq(0)
+    expect(mav.status).to eq(:purchased)
+    end
+
 end
