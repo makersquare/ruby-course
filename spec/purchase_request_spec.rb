@@ -6,6 +6,8 @@ describe PuppyBreeder::PurchaseRequest do
 
   describe '.initialize' do
     it "creates a new purchase request for a breed with a status of pending" do
+      spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
+      spot.add
       request = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
 
       expect(request.breed).to eq("Golden Retriever")

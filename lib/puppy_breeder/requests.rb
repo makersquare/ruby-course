@@ -6,7 +6,11 @@ module PuppyBreeder
         @purchase_orders = []
       end
 
-      @purchase_orders << order
+      if ForSale.for_sale[order.breed][:count] < 1
+        order.status = :on_hold
+      end
+      
+        @purchase_orders << order
 
     end
 

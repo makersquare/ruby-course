@@ -13,6 +13,13 @@ describe PuppyBreeder::Requests do
       expect(result.size).to eq 2
       expect(result.first.breed).to eq("Golden Retriever")
     end
+
+    it "checks if there is a puppy of the chosen breed available and marks as on_hold if not" do
+      request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+
+      result = request1.status
+      expect(result).to eq(:on_hold)
+    end
   end
 
   describe '#complete_request' do
