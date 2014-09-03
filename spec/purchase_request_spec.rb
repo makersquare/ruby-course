@@ -74,6 +74,24 @@ describe PuppyBreeder::PurchaseRequest do
 
     expect(PuppyBreeder::PurchaseRequest.completed.count).to eq(1)
   end
+
+  it "puts order on hold" do
+    result = PuppyBreeder::PurchaseRequest.new("german shepherd")
+
+    PuppyBreeder::PurchaseRequest.hold(0)
+    expect(PuppyBreeder::PurchaseRequest.open_orders[0].status).to eq('hold')
+  end
+
+  it "shows orders, excluding holding orders" do
+    PuppyBreeder::PurchaseRequest.new("german shepherd")
+    PuppyBreeder::PurchaseRequest.new("german shepherd")
+    PuppyBreeder::PurchaseRequest.new("german shepherd")
+    PuppyBreeder::PurchaseRequest.new("german shepherd")
+
+    PuppyBreeder::PurchaseRequest.hold(1)
+    
+    expect(PuppyBreeder::PurchaseRequest.orders.count).to eq(3)
+  end
 end
 
 describe PuppyBreeder::Breeder do

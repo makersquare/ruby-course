@@ -28,8 +28,16 @@ module PuppyBreeder
       @@open_orders[order_id].status = 'rejected'
     end
 
+    def self.hold(order_id)
+      @@open_orders[order_id].status = 'hold'
+    end
+
+    def self.orders
+      @@open_orders.select { |k,v| !v.status == 'hold' }
+    end
+
     def self.completed
-      @@open_orders.select { |k,v| v.status == 'accepted'}
+      @@open_orders.select { |k,v| v.status == 'accepted' }
     end
   end
 end
