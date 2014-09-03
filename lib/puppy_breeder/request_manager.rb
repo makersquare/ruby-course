@@ -14,7 +14,8 @@ module PuppyBreeder
     end
 
     def self.accept_all_requests(breeder)
-      breeder.purchase_requests.each {|request| request.status = "completed" }
+      pending = self.see_pending_requests(breeder)
+      pending.each {|request| request.status = "completed" }
     end
   end
 end
