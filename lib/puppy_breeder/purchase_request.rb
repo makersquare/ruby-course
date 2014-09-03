@@ -13,9 +13,11 @@ module PuppyBreeder
 
     def available?(inventory)
       if inventory.inventory_hash[breed_request][:puppies] == []
-        return true
+        return false
+      elsif inventory.inventory_hash[breed_request][:puppies] == nil
+        return false
       else
-        false
+        return true
       end
     end
   end
@@ -50,6 +52,12 @@ module PuppyBreeder
     def review_orders_on_hold
       purchase_array.select do |purchase_req|
         purchase_req.status == "hold"
+      end
+    end
+
+    def review_all_orders_not_on_hold
+       purchase_array.select do |purchase_req|
+        purchase_req.status != "hold"
       end
     end
 
