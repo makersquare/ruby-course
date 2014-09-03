@@ -11,9 +11,16 @@ describe PuppyBreeder::RequestLog do
 
   end
 
+  it 'adds a request to the hold log if there is no available pup' do
+    request = PuppyBreeder::PurchaseRequest.new("Dinosaur")
+    PuppyBreeder::RequestLog.add_request(request)
+
+    expect(PuppyBreeder::RequestLog.hold_log.last).to eq(request)
+  end
+
   it 'gets pending requests' do
     request = PuppyBreeder::PurchaseRequest.new("Schnauzer")
-    log = PuppyBreeder::RequestLog.new
+    log = PuppyBreeder::RequestLog
     log.add_request(request)
 
     expect(log.review_pending.first.status).to eq("pending")    
@@ -21,17 +28,18 @@ describe PuppyBreeder::RequestLog do
 
   it 'modifies a pending request' do
     request = PuppyBreeder::PurchaseRequest.new("Schnauzer")
-    log = PuppyBreeder::RequestLog.new
+    log = PuppyBreeder::RequestLog
+    #binding.pry
     log.add_request(request)
     log.modify_request(request.request_id, "approved")
 
-    expect(log.request_log.first.status).to eq("approved")
+    expect(log.request_log.last.status).to eq("approved")
   end
 
   it 'gives the completed orders in the log' do
     request = PuppyBreeder::PurchaseRequest.new("Schnauzer")
     request2 = PuppyBreeder::PurchaseRequest.new("Maltese")
-    log = PuppyBreeder::RequestLog.new
+    log = PuppyBreeder::RequestLog
     log.add_request(request)
     log.modify_request(request.request_id, "approved")
     log.add_request(request)
@@ -40,9 +48,4 @@ describe PuppyBreeder::RequestLog do
     expect(log.view_completed).to include(request)
   end
 
-  xit 'purges the log' do
-    #erases the log and empties the array or maybe it just archives it 
-    #so the current log gets pushed into a separate array with all the 
-    #other archived logs, and the request log returns to an empty state. 
-  end
 end

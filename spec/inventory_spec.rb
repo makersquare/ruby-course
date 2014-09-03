@@ -8,7 +8,7 @@ describe PuppyBreeder::Inventory do
   end
 
   it 'adds a breed to the inventory' do
-    test = PuppyBreeder::Inventory.new
+    test = PuppyBreeder::Inventory
     test.add_breed("Schnauzer", 500)
     test.add_breed("Mutt", 1000)
 
@@ -17,7 +17,7 @@ describe PuppyBreeder::Inventory do
   end
 
   it 'adds a puppy to the inventory' do
-    test = PuppyBreeder::Inventory.new
+    test = PuppyBreeder::Inventory
     test.add_breed("Schnauzer", 500)
     puppy = PuppyBreeder::Puppy.new("Dana", "Schnauzer", 1)
     test.add_puppy(puppy)

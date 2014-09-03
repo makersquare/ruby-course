@@ -1,20 +1,18 @@
 module PuppyBreeder
   class RequestLog
-    attr_reader :request_log, :pending
-    def initialize
       @@request_log = []
-      @@hold_log
-    end
+      @@hold_log = []
 
     def self.add_request(request)
-      if Inventory.puppies[request.breed][list.length] >= 1
-      @@request_log.push(request)
+      # binding.pry
+      if Inventory.puppies[request.breed] && Inventory.puppies[request.breed]["list"].length >= 1
+        @@request_log.push(request)
     else
       @@hold_log.push(request)
     end
   end
 
-    def self.eview_pending
+    def self.review_pending
       #prints out a list of the information regarding the request
       pending = @@request_log.select{|request| request.status=="pending"}
     end
@@ -27,6 +25,13 @@ module PuppyBreeder
 
     def self.view_completed
       completed_requests = @@request_log.select{|request| request.status !="pending"}
+    end
+
+    def self.request_log
+      @@request_log
+    end
+    def self.hold_log
+      @@hold_log
     end
   end
 end
