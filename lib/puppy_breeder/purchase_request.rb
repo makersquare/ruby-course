@@ -15,6 +15,17 @@ module PuppyBreeder
       end
     end
 
+    def self.pending?
+      @status == "pending"
+    end
+
+    def self.completed?
+      @status == "completed"
+    end
+
+    def self.accept!
+      @status = "completed"
+    end
     
 
 
