@@ -1,12 +1,16 @@
-# line1 = "Cats are smarter than dogs";
-# line2 = "Dogs also like meat";
+class MyHash
+  def initialize
+    @pairs = Array.new(4)
+  end
 
-# if ( line1 =~ /Cats(.*)/ )
-#   puts "Line1 contains Cats"
-# end
-# if ( line2 =~ /Cats(.*)/ )
-#   puts "Line2 contains  Dogs"
-# end
+  def []=(key, value)
+    index = find_index(key)
+    @pairs[index] = value
+  end
 
-nick = "Fudge".sub("Fudge", "Brownies")
-p nick 
+  def [](key)
+    index = find_index(key)
+    @pairs[index]
+  end
+end
+

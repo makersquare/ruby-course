@@ -17,7 +17,10 @@ module PuppyBreeder
     end
 
     def add_puppy(puppy) #Professor Nick helped here
+      #add if else statement - check the new puppy breed against 
+      #the hold list and ############################
       @puppies[puppy.breed]["list"] << puppy
+
     end
 
   end

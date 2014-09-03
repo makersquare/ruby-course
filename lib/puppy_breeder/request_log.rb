@@ -7,6 +7,10 @@ module PuppyBreeder
 
     def add_request(request)
       @request_log.push(request)
+      #add code that if the breed requested does not match
+      #any dogs in the kennel then the request is put into
+      #a hold queue LOOK AT ME OVER HERE I AM CODE THAT NEEDS
+      #TO BE IMPLEMENTED
     end
 
     def review_pending
