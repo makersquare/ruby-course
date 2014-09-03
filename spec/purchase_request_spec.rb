@@ -4,7 +4,7 @@ describe PuppyBreeder::PurchaseRequest do
   it "allows customers to submit requests" do
     mill = PuppyBreeder::Breeder.new
     request1 = PuppyBreeder::PurchaseRequest.new(:chow, mill)
-    result = mill.purchase_requests[:chow]
+    result = mill.purchase_requests 
 
     expect(request1.status).to eq "pending"
     expect(result).to eq [request1]
@@ -13,7 +13,7 @@ describe PuppyBreeder::PurchaseRequest do
   it "stores requests by breed in a hash in the Breeder class" do
    mill = PuppyBreeder::Breeder.new
     request1 = PuppyBreeder::PurchaseRequest.new(:chow, mill)
-    result = mill.purchase_requests[:chow]
+    result = mill.purchase_requests
 
     expect(result).to eq [request1]
   end
@@ -24,6 +24,6 @@ describe PuppyBreeder::Breeder do
     mill = PuppyBreeder::Breeder.new
     result = mill.submit_purchase_request(:Goldendoodle)
 
-    expect(mill.purchase_requests[:Goldendoodle]).to eq [result]
+    expect(mill.purchase_requests).to eq [result]
   end
 end
