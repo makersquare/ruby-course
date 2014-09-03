@@ -1,38 +1,36 @@
 #Refer to this class as PuppyBreeder::Puppy
 module PuppyBreeder
   class Puppy
-    attr_accessor :name, :breed, :age, :puppy_id, :status
-    @@counter = 0
-    def initialize(name, breed, age, status= "available")
+    attr_accessor :name, :breed, :age
+    def initialize(name, breed, age)
       @name = name
       @breed = breed
       @age = age
-      @puppy_id = @@counter += 1
-      @status = status
     end 
 
   end
 
   class Puppycontainer
+    @@pound = {}
     
-    def initialize(puppy)
-      @puppy = puppy
-      @pound = Hash.new(0)
-    end
-    
-    def add_stats(breed, cost)
-      @pound[breed] = {
+    def self.add_breed(breed, cost=0)
+      @@pound[breed] = {
           :cost => cost,
           :available => []
         }
     end
 
-    def add_pup_pound(puppy)
-      @pound[puppy.breed][:available] << puppy
+    def self.add_pup_pound(puppy)
+      if @@pound[puppy.breed]
+        @@pound[puppy.breed][:available] << puppy
+      else
+        raise "No breed yet"
+      end
+
     end
     
-    def pound
-      @pound
+    def self.pound
+      @@pound
     end
 
   end

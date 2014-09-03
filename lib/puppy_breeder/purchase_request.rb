@@ -1,39 +1,43 @@
 #Refer to this class as PuppyBreeder::PurchaseRequest
 module PuppyBreeder
   class PurchaseRequest
-    attr_accessor :breed, :purchaser_id
-    def initialize(breed)
-      @counter = 0
+    attr_accessor :breed, :status
+    def initialize(breed, status=:pending)
+      ###add status
       @breed = breed
-      @purchaser_id = @counter += 1
+      @status = status
+    end
+    def pending?
+      @status == :pending
     end
 
+    def accepted!
+      @status = :accepted
+    end
+
+    def hold! 
+      @status = :hold
+    end
   end
 
   class Purchasecontainer
-    @@container = Hash.new()
-    def initialize(breed, purchaser_id)
-      @breed = breed
-      @purchaser_id = purchaser_id
-      @@container[@breed] = {
-        :pending => [],
-        :accepted => []
-      }
-    end
-
-    def purchase_request
-      @@container[@breed][:pending] << @purchaser_id
-    end
-
-    def purchase_fill(purchaser_id, puppy)
-      purp = @@container[@breed][:pending].shift
-      @@container[@breed][:accepted] << [purp, puppy]
-      puppy.status="sold"
+    @@container = []
+    # def initialize(breed)
+    #   @breed = breed
+    # end
+      
+    def self.purchase_request(request)
+      if !PuppyBreeder::Puppycontainer.pound.has_key?(request.breed)
+        request.hold!
+      elsif !PuppyBreeder::Puppycontainer.pound[:available].nil?
+        request.hold!
+      end
+      @@container << request
     end
     
     def self.container
       @@container 
     end
-
   end
 end
+
