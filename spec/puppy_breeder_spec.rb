@@ -48,14 +48,14 @@ describe PuppyBreeder do
 
     expect(PuppyBreeder.purchase_orders.length).to eq(1)
     expect(PuppyBreeder.purchase_orders.last.breed).to eq("husky")
-    expect(PuppyBreeder.purchase_orders.last.status).to eq("pending")
+    expect(PuppyBreeder.purchase_orders.last.status).to eq(:pending)
     expect(PuppyBreeder.purchase_orders.last.id).to eq(1)
 
     PuppyBreeder.store_purchase_orders(po2)
 
     expect(PuppyBreeder.purchase_orders.length).to eq(2)
     expect(PuppyBreeder.purchase_orders.last.breed).to eq("chow")
-    expect(PuppyBreeder.purchase_orders.last.status).to eq("pending")
+    expect(PuppyBreeder.purchase_orders.last.status).to eq(:pending)
     expect(PuppyBreeder.purchase_orders.last.id).to eq(2)
   end
 
@@ -66,13 +66,13 @@ describe PuppyBreeder do
 
     expect(PuppyBreeder.purchase_orders.length).to eq(1)
     expect(PuppyBreeder.purchase_orders.first.breed).to eq("pug")
-    expect(PuppyBreeder.purchase_orders.first.status).to eq("pending")
+    expect(PuppyBreeder.purchase_orders.first.status).to eq(:pending)
 
     PuppyBreeder.review_order_status(po)
 
     expect(PuppyBreeder.purchase_orders.length).to eq(1)
     expect(PuppyBreeder.purchase_orders.first.breed).to eq("pug")
-    expect(PuppyBreeder.purchase_orders.first.status).to eq("on_hold")
+    expect(PuppyBreeder.purchase_orders.first.status).to eq(:on_hold)
 
     vik = PuppyBreeder::Puppy.new("viking", "pug", 16)
     PuppyBreeder.add_puppy_to_hash(vik)
@@ -80,13 +80,13 @@ describe PuppyBreeder do
 
     expect(PuppyBreeder.purchase_orders.length).to eq(1)
     expect(PuppyBreeder.purchase_orders.first.breed).to eq("pug")
-    expect(PuppyBreeder.purchase_orders.first.status).to eq("complete")
+    expect(PuppyBreeder.purchase_orders.first.status).to eq(:complete)
 
   end
 
   it "views all complete orders" do
-    po = PuppyBreeder::PurchaseRequest.new("husky", "complete")
-    po1 = PuppyBreeder::PurchaseRequest.new("chow", "complete")
+    po = PuppyBreeder::PurchaseRequest.new("husky", :complete)
+    po1 = PuppyBreeder::PurchaseRequest.new("chow", :complete)
     po2 = PuppyBreeder::PurchaseRequest.new("husky")
     PuppyBreeder.store_purchase_orders(po)
     PuppyBreeder.store_purchase_orders(po1)

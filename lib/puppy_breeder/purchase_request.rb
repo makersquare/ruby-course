@@ -5,7 +5,7 @@ module PuppyBreeder
 
     @@counter = 0
 
-    def initialize(breed, status="pending", id=nil)
+    def initialize(breed, status=:pending, id=nil)
       @breed = breed
       @status = status
       @@counter += 1
@@ -13,15 +13,23 @@ module PuppyBreeder
     end
 
     def pending?
-      @status == "pending"
+      @status == :pending
     end
 
     def complete?
-      @status == "complete"
+      @status == :complete
+    end
+
+    def complete!
+      @status = :complete
+    end
+
+    def on_hold!
+      @status = :on_hold
     end
 
     def on_hold?
-      @status == "on_hold"
+      @status == :on_hold
     end
 
   end

@@ -33,10 +33,15 @@ module PuppyBreeder
   end
 
   def self.review_order_status(po)
-    if @@puppies[po.breed][:list].empty?
-      po.status = "on_hold"
-    else
-      po.status = "complete"
+    if @@puppies[po.breed] == nil
+      po.on_hold!
+    elsif @@puppies[po.breed][:list].empty?
+      po.on_hold!
+    elsif @@puppies[po.breed][:list].find { |p| p.available? }
+      po.complete!
+      @@puppies[po.breed][:list].find { |p| p.purchased! }
+    else     
+      po.on_hold!
     end
   end
 
