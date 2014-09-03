@@ -53,4 +53,20 @@ describe PuppyBreeder::PurchaseRequest do
     end
   end
 
+  describe '#completed_orders' do
+    it "returns all orders with a status of completed" do
+      request = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+      request.accept
+
+      result = PuppyBreeder::PurchaseRequest.completed_orders
+      expect(result.size).to eq 1
+      expect(result.first.status).to eq(:completed)
+    end
+  end
+
 end
+
+
+
+
+

@@ -22,7 +22,7 @@ describe PuppyBreeder::ForSale do
       expect(result[fido.breed][:price]).to eq 800
       expect(result["Boston Terrier"]).to be_nil
     end
-    
+
   end
 
   describe '#purchase' do

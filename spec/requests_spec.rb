@@ -69,4 +69,10 @@ describe PuppyBreeder::Requests do
     end
   end
 
+  describe '#hold_to_pending' do
+    it "changes the first on hold order for a particular breed to pending" do
+      
+    end
+  end
+
 end
