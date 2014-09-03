@@ -19,6 +19,13 @@ module Bookly
         @db.exec("DELETE FROM books")
       end
 
+      def all
+        results = @db.exec("SELECT * FROM books")
+        results.map do |row|
+          book = Bookly::Book.new(row["name"], Date.parse(row["published_at"]))
+        end
+      end
+
       def save(book)
         if book.id.nil?
           # The book has no id; that means we need to create it

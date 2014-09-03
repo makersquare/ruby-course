@@ -17,4 +17,13 @@ describe Bookly::Repositories::Books do
     expect(retrieved_book.name).to eq book.name
     expect(retrieved_book.published_at).to eq book.published_at
   end
+
+  it "gets all books" do
+    subject.save  Bookly::Book.new("How Hulk Has Hands", Date.parse('1983-10-29'))
+    subject.save  Bookly::Book.new("When Will Won't Work", Date.parse('2013-05-15'))
+
+    books = subject.all
+    expect(books.count).to eq 2
+    expect(books.map &:name).to include "How Hulk Has Hands", "When Will Won't Work"
+  end
 end
