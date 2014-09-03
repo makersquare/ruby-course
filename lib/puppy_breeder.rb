@@ -5,21 +5,29 @@
 #Breeder: view all completed purchase orders
 
 # we initialize the module here to use in our other files
+
+#How do we structure this so that it looks like an actual database? That's why Nick structured his data the way he did.
+
 module PuppyBreeder
 
   def self.add_breed(name, cost)
     PuppyBreeder::Data.cost[name] = cost
   end
 
-  def self.complete_request(id, dog)
-    if request_pending?(id) && dog_available?(dog)
-      puppy = PuppyBreeder::Data.allpuppies.select { |x| x.name == dog }.first
+  def self.complete_request(id, breed)
+    if request_pending?(id) && dog_available?(breed)
+      puppy = PuppyBreeder::Data.allpuppies.select { |x| x.breed == breed }.first
       request = PuppyBreeder::Data.allrequests.select { |y| y.id == id }.first
       puppy.status = 'adopted'
       request.puppy = puppy
       request.status = 'completed'
+    elsif request_pending?(id) && !dog_available?(breed)
+      request = PuppyBreeder::Data.allrequests.select { |z| z.id == id }.first
+      request = 'hold'
+      PuppyBreeder::Data.onhold << request
     end
   end
+
 
 
   def self.dog_available?(breed)
