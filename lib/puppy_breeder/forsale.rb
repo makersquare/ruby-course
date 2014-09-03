@@ -1,27 +1,26 @@
 module PuppyBreeder
   class ForSale
+    @for_sale = {}
     
     def self.add(puppy, price = nil)
-      if !defined? @for_sale
-        @for_sale = {}
+
+      if !@for_sale[puppy.breed]
+        @for_sale[puppy.breed] = {
+          price: price,
+          count: 1
+        }
+      else
+        @for_sale[puppy.breed][:price] = price if !price
+        @for_sale[puppy.breed][:count] += 1
       end
 
-      if @for_sale[puppy.breed] == nil
-        @for_sale[puppy.breed] = {}
-        @for_sale[puppy.breed][:price] = price
-        @for_sale[puppy.breed][:count] = 1
-      elsif price == nil
-        @for_sale[puppy.breed][:count] += 1
-      else
-        @for_sale[puppy.breed][:price] = price
-        @for_sale[puppy.breed][:count] += 1
-      end
+      #Requests.purchase_orders.find {|x| x.breed == self.breed && x.status == :on_hold}
 
       @for_sale
     end
 
     def self.purchase(breed)
-      if @for_sale[breed] == nil || @for_sale[breed][:count] == 0
+      if !@for_sale[breed] || @for_sale[breed][:count] == 0
         return false
       else
         @for_sale[breed][:count] -= 1

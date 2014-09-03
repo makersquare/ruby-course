@@ -1,17 +1,13 @@
 module PuppyBreeder
   class Requests
+    @purchase_orders = []
 
     def self.new_request(order)
-      if !defined? @purchase_orders
-        @purchase_orders = []
-      end
-
       if ForSale.for_sale[order.breed][:count] < 1
         order.status = :on_hold
       end
-      
-        @purchase_orders << order
 
+      @purchase_orders << order
     end
 
     def self.complete_request(order)
