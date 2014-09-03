@@ -125,8 +125,10 @@ describe PuppyBreeder do
   end
 
   it "shows all purchase orders except those on hold" do
-    po = PuppyBreeder::PurchaseRequest.new("husky", "complete")
-    po1 = PuppyBreeder::PurchaseRequest.new("chow", "complete")
+    PuppyBreeder.add_breed_to_hash("chow", 500)
+    PuppyBreeder.add_breed_to_hash("husky", 1000)
+    po = PuppyBreeder::PurchaseRequest.new("husky")
+    po1 = PuppyBreeder::PurchaseRequest.new("chow")
     po2 = PuppyBreeder::PurchaseRequest.new("husky")
     PuppyBreeder.store_purchase_orders(po)
     PuppyBreeder.store_purchase_orders(po1)
