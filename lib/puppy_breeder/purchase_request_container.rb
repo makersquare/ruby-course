@@ -18,10 +18,12 @@ module PuppyBreeder
     end
 
     def self.next_hold(breed)
+      breed = PuppyBreeder::BreedFixer.symbol(breed)
       @@purchase_request_container.find {|r| r.on_hold? && r.breed == breed }
     end
 
     def self.next_pending(breed)
+      breed = PuppyBreeder::BreedFixer.symbol(breed)
       @@purchase_request_container.find {|r| r.pending? && r.breed == breed}
     end
   end
