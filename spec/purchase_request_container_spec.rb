@@ -35,11 +35,11 @@ describe PuppyBreeder::PurchaseRequestContainer do
     request_container = PuppyBreeder::PurchaseRequestContainer.new
 
     request = PuppyBreeder::PurchaseRequest.new("French Bulldog")
-    request2 = PuppyBreeder::PurchaseRequest.new("Golden Retriever", "Denied")
-    request3 = PuppyBreeder::PurchaseRequest.new("Golden Retriever", "Denied")
-    request4 = PuppyBreeder::PurchaseRequest.new("Golden Retriever", "Denied")
-    request5 = PuppyBreeder::PurchaseRequest.new("Golden Retriever", "Approved")
-    request6 = PuppyBreeder::PurchaseRequest.new("Golden Retriever", "Approved")
+    request2 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+    request3 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+    request4 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+    request5 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+    request6 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
 
     request_container.add_request(request)
     request_container.add_request(request2)
@@ -47,6 +47,12 @@ describe PuppyBreeder::PurchaseRequestContainer do
     request_container.add_request(request4)
     request_container.add_request(request5)
     request_container.add_request(request6)
+
+    request_container.requests[1].approve!
+    request_container.requests[2].deny!
+    request_container.requests[3].approve!
+    request_container.requests[4].deny!
+    request_container.requests[5].approve!
 
     expect(request_container.completed_requests).to be_a(Array)
     expect(request_container.completed_requests).to eq([request2, request3, request4, request5, request6])
@@ -62,13 +68,9 @@ describe PuppyBreeder::PurchaseRequestContainer do
     request = PuppyBreeder::PurchaseRequest.new("French Bulldog")
     request2 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
     request3 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
-    request4 = PuppyBreeder::PurchaseRequest.new("Shih Tzu")
-    request5 = PuppyBreeder::PurchaseRequest.new("Boxer")
-    request6 = PuppyBreeder::PurchaseRequest.new("French Bulldog")
-
-    request2.approve_request
-    request3.deny_request
-    request5.approve_request
+    request4 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+    request5 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+    request6 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
 
     request_container.add_request(request)
     request_container.add_request(request2)
@@ -77,8 +79,12 @@ describe PuppyBreeder::PurchaseRequestContainer do
     request_container.add_request(request5)
     request_container.add_request(request6)
 
+    request_container.requests[2].pending!
+    request_container.requests[4].pending!
+    request_container.requests[5].pending!
+
     expect(request_container.pending_requests.class).to eq(Array)
-    expect(request_container.pending_requests).to eq([request, request4, request6])
+    expect(request_container.pending_requests).to eq([request3, request5, request6])
     expect(request_container.pending_requests.length).to eq(3)
 
   end
@@ -91,13 +97,9 @@ describe PuppyBreeder::PurchaseRequestContainer do
     request = PuppyBreeder::PurchaseRequest.new("French Bulldog")
     request2 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
     request3 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
-    request4 = PuppyBreeder::PurchaseRequest.new("Shih Tzu")
-    request5 = PuppyBreeder::PurchaseRequest.new("Boxer")
-    request6 = PuppyBreeder::PurchaseRequest.new("French Bulldog")
-
-    request2.approve_request
-    request3.deny_request
-    request5.approve_request
+    request4 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+    request5 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+    request6 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
 
     request_container.add_request(request)
     request_container.add_request(request2)
@@ -106,9 +108,13 @@ describe PuppyBreeder::PurchaseRequestContainer do
     request_container.add_request(request5)
     request_container.add_request(request6)
 
+    request_container.requests[0].approve!
+    request_container.requests[2].approve!
+    request_container.requests[5].approve!
+
     expect(request_container.approved_requests.class).to eq(Array)
-    expect(request_container.approved_requests).to eq([request2, request5])
-    expect(request_container.approved_requests.length).to eq(2)
+    expect(request_container.approved_requests).to eq([request, request3, request6])
+    expect(request_container.approved_requests.length).to eq(3)
 
   end
 
@@ -120,13 +126,9 @@ describe PuppyBreeder::PurchaseRequestContainer do
     request = PuppyBreeder::PurchaseRequest.new("French Bulldog")
     request2 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
     request3 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
-    request4 = PuppyBreeder::PurchaseRequest.new("Shih Tzu")
-    request5 = PuppyBreeder::PurchaseRequest.new("Boxer")
-    request6 = PuppyBreeder::PurchaseRequest.new("French Bulldog")
-
-    request2.approve_request
-    request3.deny_request
-    request5.approve_request
+    request4 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+    request5 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+    request6 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
 
     request_container.add_request(request)
     request_container.add_request(request2)
@@ -135,11 +137,42 @@ describe PuppyBreeder::PurchaseRequestContainer do
     request_container.add_request(request5)
     request_container.add_request(request6)
 
+    request_container.requests[1].deny!
+    request_container.requests[4].deny!
+    request_container.requests[5].deny!
+
     expect(request_container.denied_requests.class).to eq(Array)
-    expect(request_container.denied_requests).to eq([request3])
-    expect(request_container.denied_requests.length).to eq(1)
+    expect(request_container.denied_requests).to eq([request2, request5, request6])
+    expect(request_container.denied_requests.length).to eq(3)
 
   end
+
+# Held Requests Method Tester
+  it "Returns hold requests by order of request." do
+
+    request_container = PuppyBreeder::PurchaseRequestContainer.new
+
+    request = PuppyBreeder::PurchaseRequest.new("French Bulldog")
+    request2 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+    request3 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+    request4 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+    request5 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+    request6 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+
+    request_container.add_request(request)
+    request_container.add_request(request2)
+    request_container.add_request(request3)
+    request_container.add_request(request4)
+    request_container.add_request(request5)
+    request_container.add_request(request6)
+
+    request_container.requests[1].deny!
+    request_container.requests[4].deny!
+    request_container.requests[5].deny!
+
+    expect(request_container.held_requests).to eq([request, request3, request4])
+
+  end  
 
 # Requests by Breed Method Tester
   it "Returns an array of all requests by breed." do

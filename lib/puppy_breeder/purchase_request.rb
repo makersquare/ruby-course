@@ -8,7 +8,7 @@ module PuppyBreeder
     @@counter = 0
 
 # Initializes with breed, request_id, and request_status.
-# request_status can be "Pending", "Approved", or "Denied".
+# request_status can be "Pending", "Approved", "Hold" or "Denied".
     def initialize(breed, status="Pending")
       @breed = breed
       @status = status
@@ -17,17 +17,17 @@ module PuppyBreeder
     end
 
 # Approves purchase request and changes status to Approved.
-    # def approve_request 
-    #   @status = "Approved"
-    # end
-
-    # Nick's
-    def accepted!
-      @status = "Accepted"
+    def approve!
+      @status = "Approved"
     end
 
+    # Nick's
+    # def accepted!
+    #   @status = "Accepted"
+    # end
+
 # Denies purchase request and changes status to Denied.
-    def deny_request
+    def deny!
       @status = "Denied"
     end
 
@@ -36,8 +36,16 @@ module PuppyBreeder
       @status == "Pending"
     end
 
+    def pending!
+      @status = "Pending"
+    end
+
     def accepted?
       @status == "Accepted"
+    end
+
+    def hold!
+      @status = "Hold"
     end
 
   end

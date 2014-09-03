@@ -2,6 +2,9 @@ require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::PurchaseRequest do
 
+  before(:each) { PuppyBreeder::PurchaseRequest.class_variable_set(
+    :@@counter, 0)}
+
 # Initialize Method Tester
   it "Initializes a purchase request with breed, request_id, and request_status." do
 
@@ -26,7 +29,7 @@ describe PuppyBreeder::PurchaseRequest do
 
     expect(request.status).to eq("Pending")
 
-    request.approve_request
+    request.approve!
     expect(request.status).to eq("Approved")
 
   end
@@ -38,9 +41,20 @@ describe PuppyBreeder::PurchaseRequest do
 
     expect(request.status).to eq("Pending")
 
-    request.deny_request
+    request.deny!
     expect(request.status).to eq("Denied")
 
   end
 
+# Hold Purchase Request Method Tester
+  it "Changes request status to Hold" do
+
+    request = PuppyBreeder::PurchaseRequest.new("French Bulldog")
+
+    expect(request.status).to eq("Pending")
+
+    request.hold!
+    expect(request.status).to eq("Hold")
+
+  end
 end

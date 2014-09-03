@@ -2,6 +2,9 @@ require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::Puppy do
 
+  before(:each) { PuppyBreeder::Puppy.class_variable_set(
+    :@@counter, 0)}
+
 # Initialize Method Test
   it "Creates an instance of Puppy Class. Creates instance variables for breed, cost, sold_status, and puppy_id." do
 
