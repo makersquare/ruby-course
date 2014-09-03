@@ -7,12 +7,12 @@ module PuppyBreeder
       @name = name
       @breed = breed
       @age = age
-      @adoption_status = @adoption_status
+      @adoption_status = adoption_status
     end
 
-    # def available?
-    #   @adoption_status == available
-    # end
+    def available?
+      @adoption_status == "available"
+    end
 
     # def purchased!
     #   @adoption_status = "purchased"

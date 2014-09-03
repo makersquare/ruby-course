@@ -9,4 +9,10 @@ describe PuppyBreeder::Puppy do
     expect(puppy.age).to eq(4)
   end
 
+  it "checks if a puppy's adoption status is available" do
+
+    chaz = PuppyBreeder::Puppy.new("chaz", "chow", 24)
+    expect(chaz.available?).to eq(true)
+  end
+
 end
