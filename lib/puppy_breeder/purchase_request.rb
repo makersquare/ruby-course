@@ -10,6 +10,14 @@ module PuppyBreeder
   		@breed_request = breed
   		@status = status
   	end
+
+    def available?(inventory)
+      if inventory.inventory_hash[breed_request][:puppies] == []
+        return true
+      else
+        false
+      end
+    end
   end
 
 
@@ -36,6 +44,12 @@ module PuppyBreeder
     def change_status(purchase_request, new_status)
       purchase_array.each do |pr|
         pr.status = new_status if purchase_request == pr
+      end
+    end
+
+    def review_orders_on_hold
+      purchase_array.select do |purchase_req|
+        purchase_req.status == "hold"
       end
     end
 

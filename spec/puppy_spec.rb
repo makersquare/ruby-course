@@ -77,6 +77,17 @@ describe PuppyBreeder::PurchaseOrderArray do
 		end
 	end
 
+	describe ".review_orders_on_hold" do
+		it "returns an array with purchase requests with status hold" do
+			po_array = PuppyBreeder::PurchaseOrderArray.new
+			po = PuppyBreeder::PurchaseRequest.new('boxer')
+			po_array.add_purchase_request(po)
+			po_array.change_status(po, 'hold')
+
+			expect(po_array.review_orders_on_hold).to eq([po])
+		end
+	end
+
 	describe ".review_completed_orders" do
 		it "returns an array with purchase requests with status completed" do
 			po_array = PuppyBreeder::PurchaseOrderArray.new
