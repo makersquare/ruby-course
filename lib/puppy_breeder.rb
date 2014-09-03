@@ -28,7 +28,15 @@ module PuppyBreeder
     end
   end
 
-
+  def self.remove_hold(id)
+    request = PuppyBreeder::Data.onhold.select { |x| x.id == id }
+    PuppyBreeder::Data.onhold.delete(request)
+    PuppyBreeder::Data.allrequests.select do |y|
+      if y.id == id
+        y.status = 'pending'
+      end
+    end
+  end
 
   def self.dog_available?(breed)
     PuppyBreeder::Data.allpuppies.select do |x|
