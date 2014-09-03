@@ -12,5 +12,17 @@ module PuppyBreeder
       @id = @@counter
     end
 
+    def pending?
+      @status == "pending"
+    end
+
+    def complete?
+      @status == "complete"
+    end
+
+    def on_hold?
+      @status == "on_hold"
+    end
+
   end
 end

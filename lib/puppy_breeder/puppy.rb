@@ -14,9 +14,9 @@ module PuppyBreeder
       @adoption_status == "available"
     end
 
-    # def purchased!
-    #   @adoption_status = "purchased"
-    # end
+    def purchased!
+      @adoption_status = "purchased"
+    end
 
   end
 end

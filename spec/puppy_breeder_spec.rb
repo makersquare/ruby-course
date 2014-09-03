@@ -84,7 +84,7 @@ describe PuppyBreeder do
 
   end
 
-  it "views orders by status" do
+  it "views all complete orders" do
     po = PuppyBreeder::PurchaseRequest.new("husky", "complete")
     po1 = PuppyBreeder::PurchaseRequest.new("chow", "complete")
     po2 = PuppyBreeder::PurchaseRequest.new("husky")
@@ -92,13 +92,11 @@ describe PuppyBreeder do
     PuppyBreeder.store_purchase_orders(po1)
     PuppyBreeder.store_purchase_orders(po2)
 
+    result = PuppyBreeder.complete_orders
 
-    result = PuppyBreeder.select_orders_by_status("complete")
-    result2 = PuppyBreeder.select_orders_by_status("pending")
 
     expect(result.length).to eq(2)
-    expect(result2.length).to eq(1)
-    expect(result2.first.id).to eq(3)
+    expect(result.last.id).to eq(2)
 
   end
 

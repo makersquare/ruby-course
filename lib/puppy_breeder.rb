@@ -48,16 +48,17 @@ module PuppyBreeder
     @@purchase_orders
   end
 
-  def self.select_orders_by_status(status)
-    @@purchase_orders.select { |p| p.status == status }
+  def self.complete_orders
+    @@purchase_orders.select { |p| p.complete? }
   end
 
+
   def self.active_orders
-    @@purchase_orders.select {|p| p.status == "pending" || p.status == "complete"}
+    @@purchase_orders.select {|p| !p.on_hold?}
   end
 
   def self.waitlist
-    hold_orders = @@purchase_orders.select {|p| p.status == "on_hold" }
+    hold_orders = @@purchase_orders.select {|p| p.on_hold? }
     waitlist = hold_orders.sort_by {|o| o.id}
   end
 
