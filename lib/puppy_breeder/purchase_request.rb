@@ -33,7 +33,7 @@ module PuppyBreeder
     end
 
     def self.orders
-      @@open_orders.select { |k,v| !v.status == 'hold' }
+      @@open_orders.select { |k,v| v.status == 'accepted' || v.status == 'rejected' || v.status == 'pending' }
     end
 
     def self.completed
