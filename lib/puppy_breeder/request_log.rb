@@ -3,15 +3,16 @@ module PuppyBreeder
     attr_reader :request_log, :pending
     def initialize
       @request_log = []
+      @hold_log
     end
 
     def add_request(request)
+      if Inventory.puppies[request.breed][list.length] >= 1
       @request_log.push(request)
-      #add code that if the breed requested does not match
-      #any dogs in the kennel then the request is put into
-      #a hold queue LOOK AT ME OVER HERE I AM CODE THAT NEEDS
-      #TO BE IMPLEMENTED
+    else
+      @hold_log.push(request)
     end
+  end
 
     def review_pending
       #prints out a list of the information regarding the request
