@@ -58,13 +58,7 @@ describe PuppyBreeder::DogShelter do
     a = PuppyBreeder::DogShelter
     r = PuppyBreeder::RequestRepository
     allow(r).to receive(:breed_requested).and_return("shepard")
-
-    # STDOUT.should_receive(:puts).with("Request 42 for shetlinpony has been filled. Dog 6, spot has been assigned.")
-    # STDOUT.should_receive(:puts).with("Request 42 for shepard should be reconsidered.")
     dog6 = PuppyBreeder::DogShelter.create_dog('shepard')
-    
-    # allow(r).to receive(:complete_request).and_return("Request 42 has been filled.")
-    # expect(a.first_avail_dog_breed(42)).to eq('spot')
   end
 
 end

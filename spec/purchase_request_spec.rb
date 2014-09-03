@@ -47,7 +47,6 @@ describe PuppyBreeder::RequestRepository do
   end
 
 
-################################################################################
   it 'Pending List should populate when hold requested used. New puppy instance of held breed will kick a reminder to the Shelter.' do
     a = PuppyBreeder::RequestRepository
     b = PuppyBreeder::Puppy
@@ -55,14 +54,9 @@ describe PuppyBreeder::RequestRepository do
     req6 = a.create_request('pinata')
     a.hold_request(5)
     a.hold_request(6)
-    # STDOUT.should_receive(:puts).with("Request 5 for the mix should be reconsidered.")
-    # STDOUT.should_receive(:puts).with("Request 6 for the mix should be reconsidered.")
     dog1 = PuppyBreeder::DogShelter.create_dog('mix')
     expect(a.pending_requests.count).to eq(4)
   end
 
 
 end
-
-
-# breed_requested
