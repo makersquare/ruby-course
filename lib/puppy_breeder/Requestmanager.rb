@@ -6,6 +6,7 @@ module PuppyBreeder
     @@open_requests = []
     @@denied_requests = []
     @@completed_requests = []
+    @@held_requests = []
 
     def self.add_request(purchase_request)
       @@open_requests.push(purchase_request)
@@ -13,9 +14,14 @@ module PuppyBreeder
 
     def self.approve_request(purchase_request)
       @@open_requests.delete(purchase_request)
-      @@completed_requests.push(purchase_request)
       puppy = PuppyBreeder::PuppyManager.find_match(purchase_request)
-      PuppyBreeder::PuppyManager.remove_puppy_for_sale(puppy)
+
+      if (puppy != nil)
+        @@completed_requests.push(purchase_request)
+        PuppyBreeder::PuppyManager.remove_puppy_for_sale(puppy)
+      else
+        @@held_requests.push(purchase_request)
+      end
     end
 
     def self.deny_request(purchase_request)
@@ -33,6 +39,10 @@ module PuppyBreeder
 
     def self.view_denied_requests()
       @@denied_requests
+    end
+
+    def self.view_held_requests()
+      @@held_requests
     end
 
     def self.clear_all_requests()

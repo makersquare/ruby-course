@@ -19,16 +19,35 @@ describe PuppyBreeder::RequestManager do
 
   describe '.approve_request' do
 
-    it 'moves the given request from  RequestManagers @@open_requests to @@completed_requests' do
+    it 'moves the given request from  RequestManagers @@open_requests to @@completed_requests IF the matching pup is the same breed as the request' do
 
       PuppyBreeder::RequestManager.clear_all_requests
       PuppyBreeder::PuppyManager.clear_puppies
+
+      puppy = PuppyBreeder::Puppy.new("Billy", "afghan hound", 1)
+      PuppyBreeder::PuppyManager.add_puppy_for_sale(puppy)
 
       request = PuppyBreeder::PurchaseRequest.new("afghan hound")
       PuppyBreeder::RequestManager.approve_request(request)
 
       expect(PuppyBreeder::RequestManager.view_open_requests.include?(request)).to eq(false)
       expect(PuppyBreeder::RequestManager.view_completed_requests.include?(request)).to eq(true)
+
+    end
+
+    it 'moves the given requests from RequestManagers @@open_requests to @@held_requests IF the matching pup is not available' do
+
+      PuppyBreeder::RequestManager.clear_all_requests
+      PuppyBreeder::PuppyManager.clear_puppies
+
+      puppy = PuppyBreeder::Puppy.new("Billy", "golden retriever", 1)
+      PuppyBreeder::PuppyManager.add_puppy_for_sale(puppy)
+
+      request = PuppyBreeder::PurchaseRequest.new("afghan hound")
+      PuppyBreeder::RequestManager.approve_request(request)
+
+      expect(PuppyBreeder::RequestManager.view_open_requests.include?(request)).to eq(false)
+      expect(PuppyBreeder::RequestManager.view_held_requests.include?(request)).to eq(true)
 
     end
 
@@ -107,6 +126,9 @@ describe PuppyBreeder::RequestManager do
       PuppyBreeder::RequestManager.clear_all_requests
       PuppyBreeder::PuppyManager.clear_puppies
 
+      puppy = PuppyBreeder::Puppy.new("Billy", "afghan hound", 1)
+      PuppyBreeder::PuppyManager.add_puppy_for_sale(puppy)
+
       request = PuppyBreeder::PurchaseRequest.new("afghan hound")
       PuppyBreeder::RequestManager.approve_request(request)
 
@@ -138,6 +160,12 @@ describe PuppyBreeder::RequestManager do
 
       PuppyBreeder::RequestManager.clear_all_requests
       PuppyBreeder::PuppyManager.clear_puppies
+
+      puppy1 = PuppyBreeder::Puppy.new("Billy", "afghan hound", 1)
+      PuppyBreeder::PuppyManager.add_puppy_for_sale(puppy1)
+
+      puppy2 = PuppyBreeder::Puppy.new("Billy", "afghan hound", 1)
+      PuppyBreeder::PuppyManager.add_puppy_for_sale(puppy2)
 
       request1 = PuppyBreeder::PurchaseRequest.new("afghan hound")
       request2 = PuppyBreeder::PurchaseRequest.new("afghan hound")

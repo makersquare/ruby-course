@@ -13,6 +13,4 @@ describe PuppyBreeder::Puppy do
 
   end
 
-
-
 end
