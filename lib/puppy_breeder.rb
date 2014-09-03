@@ -24,6 +24,8 @@ module PuppyBreeder
     else
       @@puppies[puppy.breed][:list] = [puppy]
     end
+
+
   end
 
   def self.store_purchase_orders(purchase_request)
@@ -48,6 +50,15 @@ module PuppyBreeder
 
   def self.select_orders_by_status(status)
     @@purchase_orders.select { |p| p.status == status }
+  end
+
+  def self.active_orders
+    @@purchase_orders.select {|p| p.status == "pending" || p.status == "complete"}
+  end
+
+  def self.waitlist
+    hold_orders = @@purchase_orders.select {|p| p.status == "on_hold" }
+    waitlist = hold_orders.sort_by {|o| o.id}
   end
 
 end

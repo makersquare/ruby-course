@@ -94,8 +94,48 @@ describe PuppyBreeder do
 
 
     result = PuppyBreeder.select_orders_by_status("complete")
+    result2 = PuppyBreeder.select_orders_by_status("pending")
 
     expect(result.length).to eq(2)
+    expect(result2.length).to eq(1)
+    expect(result2.first.id).to eq(3)
+
+  end
+
+  it "orders the waitlist by purchase order id number" do
+    PuppyBreeder.add_breed_to_hash("bull", 500)
+    PuppyBreeder.add_breed_to_hash("husky", 1000)
+    mav = PuppyBreeder::Puppy.new("mav", "husky", 4)
+    bpo1 = PuppyBreeder::PurchaseRequest.new("bull")
+    po2 = PuppyBreeder::PurchaseRequest.new("husky")
+    bpo3 = PuppyBreeder::PurchaseRequest.new("bull")
+
+    PuppyBreeder.store_purchase_orders(bpo1)
+    PuppyBreeder.store_purchase_orders(po2)
+    PuppyBreeder.store_purchase_orders(bpo3)
+
+    PuppyBreeder.review_order_status(bpo1)
+    PuppyBreeder.review_order_status(po2)
+    PuppyBreeder.review_order_status(bpo3)
+
+    result = PuppyBreeder.waitlist
+    expect(result.first.id).to eq(1)
+    expect(result.last.id).to eq(3)
+
+  end
+
+  it "shows all purchase orders except those on hold" do
+    po = PuppyBreeder::PurchaseRequest.new("husky", "complete")
+    po1 = PuppyBreeder::PurchaseRequest.new("chow", "complete")
+    po2 = PuppyBreeder::PurchaseRequest.new("husky")
+    PuppyBreeder.store_purchase_orders(po)
+    PuppyBreeder.store_purchase_orders(po1)
+    PuppyBreeder.store_purchase_orders(po2)
+
+
+    result = PuppyBreeder.active_orders
+
+    expect(result.length).to eq(3)
   end
 
 end

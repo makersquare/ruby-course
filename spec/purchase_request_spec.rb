@@ -6,12 +6,11 @@ describe PuppyBreeder::PurchaseRequest do
     PuppyBreeder::PurchaseRequest.class_variable_set(:@@counter, 0)
   end
 
-  it "initializes with breed, status pending and ID" do
+  it "initializes with breed and initializes status as available" do
 
-    po = PuppyBreeder::PurchaseRequest.new("husky")
-    expect(po.breed).to eq("husky")
-    expect(po.status).to eq("pending")
-    expect(po.id).to eq(1)
+  po = PuppyBreeder::PurchaseRequest.new("husky")
+  expect(po.breed).to eq("husky")
+  expect(po.status).to eq("pending")
+  expect(po.id).to eq(1)
   end
-
 end
