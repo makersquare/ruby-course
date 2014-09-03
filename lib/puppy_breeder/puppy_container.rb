@@ -2,76 +2,74 @@
 module PuppyBreeder
   class PuppyContainer
 
+    # Refactored
+    @@puppies = Hash.new(0)
+
 # Access puppies hash.
-    attr_accessor :puppies
+    # attr_accessor :puppies
 
 # Initialization creates a name variable and an empty hash with default value of 0.
-    def initialize
-      @puppies = Hash.new(0)
-    end
+    # def initialize
+    #   @puppies = Hash.new(0)
+    # end
 
 # Adds breed and cost of breed to container.
-    def add_breed(breed, cost)
-      @puppies[breed] = { 
-        :price => cost,
-        :available_puppies => []
+    # def add_breed(breed, cost)
+    #   @puppies[breed] = { 
+    #     :price => cost,
+    #     :available_puppies => []
+    #   }
+    # end
+
+    # Refactored
+    def self.add_breed(breed, price=1000)
+      @@puppies[breed] = {
+        :price => price, 
+        :list => []
       }
     end
 
 # Adds a puppy to container. Puppy's breed must be added to container before puppy of that breed can be added, that way a price and available puppies array can be already established.
-    def add_puppy(puppy)
-      if @@puppies[puppy.breed]
-        @puppies[puppy.breed][:available_puppies] << puppy
-      else
-        raise "No breed for puppy."
-      end
-    end
-
-# Removes puppy from :available_puppies array if that puppy is available.
-    def remove_puppy(puppy)
-      if @puppies[puppy.breed][:available_puppies].include?(puppy)
-        @puppies[puppy.breed][:available_puppies].delete(puppy)
-      end
-    end
-
-# Finds out whether that breed of puppy is available.
-    def breed_availability(breed)
-      if @puppies[breed][:available_puppies].length > 0
-        @puppies[breed][:available_puppies]
-      end
-    end
-
-  end
-end
-
-# Nick's answers:
-
-# module PuppyBreeder
-#   class PuppyContainer
-#     @@puppies = {}
-
-    # def self.add_breed(breed, price)
-    #   @@puppies[puppy.breed] = {
-    #     :price => price,
-    #     :list => []
-    #   }
-    # end
-
-    # def self.add_puppy(puppy)
+    # def add_puppy(puppy)
     #   if @@puppies[puppy.breed]
-    #     @@puppies[puppy.breed][:list] << puppy
+    #     @puppies[puppy.breed][:available_puppies] << puppy
     #   else
     #     raise "No breed for puppy."
     #   end
     # end
 
-    # def get_breed_price(breed)
-    #   @@puppies[breed][:price]
+    # Refactored
+    def self.add_puppy(puppy)
+      if @@puppies[puppy.breed]
+        @@puppies[puppy.breed][:list] << pup
+      else
+        raise "No breed exists."
+      end
+    end
+
+# Removes puppy from :available_puppies array if that puppy is available.
+    # def remove_puppy(puppy)
+    #   if @puppies[puppy.breed][:available_puppies].include?(puppy)
+    #     @puppies[puppy.breed][:available_puppies].delete(puppy)
+    #   end
     # end
 
-    # def self.puppy_info
-    #   @@puppies
-    # end  
+# Finds out whether that breed of puppy is available.
+    # def breed_availability(breed)
+    #   if @puppies[breed][:available_puppies].length > 0
+    #     @puppies[breed][:available_puppies]
+    #   end
+    # end
 
-#   end
-# end
+# Get info of @@puppies
+    # Refactored
+    def self.get_breed_price(breed)
+      @@puppies[breed][:price]
+    end
+
+    def self.puppy_info
+      @@puppies
+    end
+
+  end
+end

@@ -17,8 +17,13 @@ module PuppyBreeder
     end
 
 # Approves purchase request and changes status to Approved.
-    def approve_request # Nick titled has accept!
-      @status = "Approved"
+    # def approve_request 
+    #   @status = "Approved"
+    # end
+
+    # Nick's
+    def accepted!
+      @status = "Accepted"
     end
 
 # Denies purchase request and changes status to Denied.
@@ -26,19 +31,14 @@ module PuppyBreeder
       @status = "Denied"
     end
 
+# Nick's:
+    def pending?
+      @status == "Pending"
+    end
+
+    def accepted?
+      @status == "Accepted"
+    end
+
   end
-end
-
-# Nick's methods:
-
-    # def pending?
-    #   @status == "Pending"
-    # end
-
-    # def accepted?
-    #   @status == "Accepted"
-    # end
-
-    # def accepted!
-    #   @status = "Accepted"
-    # end
+end    
