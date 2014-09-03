@@ -103,6 +103,19 @@ describe PuppyBreeder::PurchaseRequest do
 
     expect(PuppyBreeder::PurchaseRequest.on_hold.first.id_num).to eq(0)
   end
+
+    it "shows holding orders and confirms that they are in the correct order" do
+    PuppyBreeder::PurchaseRequest.new("german shepherd")
+    PuppyBreeder::PurchaseRequest.new("german shepherd")
+    PuppyBreeder::PurchaseRequest.new("german shepherd")
+    PuppyBreeder::PurchaseRequest.new("german shepherd")
+
+    PuppyBreeder::PurchaseRequest.hold(0)
+    PuppyBreeder::PurchaseRequest.hold(3)
+    
+    expect(PuppyBreeder::PurchaseRequest.on_hold.first.id_num).to eq(0)
+    expect(PuppyBreeder::PurchaseRequest.on_hold.last.id_num).to eq(3)
+  end
 end
 
 describe PuppyBreeder::Breeder do

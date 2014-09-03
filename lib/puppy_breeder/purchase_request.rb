@@ -31,7 +31,7 @@ module PuppyBreeder
 
     def self.hold(order_id)
       @@open_orders[order_id].status = 'hold'
-      @@on_hold << @@open_orders[order_id]
+      @@on_hold.push(@@open_orders[order_id])
     end
 
     def self.orders
