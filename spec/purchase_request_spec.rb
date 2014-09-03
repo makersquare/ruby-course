@@ -88,9 +88,20 @@ describe PuppyBreeder::PurchaseRequest do
     PuppyBreeder::PurchaseRequest.new("german shepherd")
     PuppyBreeder::PurchaseRequest.new("german shepherd")
 
-    PuppyBreeder::PurchaseRequest.hold(1)
+    PuppyBreeder::PurchaseRequest.hold(0)
     
     expect(PuppyBreeder::PurchaseRequest.orders.count).to eq(3)
+  end
+
+  it "shows holding orders" do
+    PuppyBreeder::PurchaseRequest.new("german shepherd")
+    PuppyBreeder::PurchaseRequest.new("german shepherd")
+    PuppyBreeder::PurchaseRequest.new("german shepherd")
+    PuppyBreeder::PurchaseRequest.new("german shepherd")
+
+    PuppyBreeder::PurchaseRequest.hold(0)
+
+    expect(PuppyBreeder::PurchaseRequest.on_hold.first.id_num).to eq(0)
   end
 end
 
