@@ -11,8 +11,17 @@ describe PuppyBreeder::RequestContainer do
 
     @order1 = PuppyBreeder::PurchaseRequest.new("Boxer")
     @order2 = PuppyBreeder::PurchaseRequest.new("Great Dane")
+    @order3 = PuppyBreeder::PurchaseRequest.new("TEST")
     PuppyBreeder::RequestContainer.add_order(@order1)
     PuppyBreeder::RequestContainer.add_order(@order2)
+    PuppyBreeder::RequestContainer.add_order(@order3)
+  end
+
+  describe '.add_order' do
+    it 'checks if puppy container has a suitable puppy' do
+      res = PuppyBreeder::RequestContainer.get_orders.first
+      expect(res.status).to eq('hold')
+    end
   end
 
   describe '.get_completed_orders' do
@@ -24,7 +33,7 @@ describe PuppyBreeder::RequestContainer do
   describe '.review_purchase_request' do
     it 'returns order which has a status of pending using id' do
       res1 = PuppyBreeder::RequestContainer.review_purchase_request
-      expect(res1).to include(@order1)
+      expect(res1).to include(@order2)
     end
   end
 

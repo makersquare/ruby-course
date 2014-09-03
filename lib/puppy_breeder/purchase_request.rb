@@ -17,5 +17,14 @@ module PuppyBreeder
       return true if @status == 'complete'
       false
     end
+
+    def hold?
+      return true if @status == 'hold'
+      false
+    end
+
+    def put_on_hold
+      @status = 'hold'
+    end
   end
 end

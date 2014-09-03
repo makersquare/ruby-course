@@ -4,6 +4,10 @@ module PuppyBreeder
 
     def self.add_order(order)
       @@orders << order
+      if PuppyBreeder::PuppyContainer.has_suitable_puppy?(order)
+      else
+        order.put_on_hold
+      end
     end
 
     def self.get_orders
@@ -15,7 +19,7 @@ module PuppyBreeder
     end
 
     def self.review_purchase_request
-      self.get_orders.select { |order| !order.completed? }
+      self.get_orders.select { |order| !order.completed?  && !order.hold? }
     end
 
     def self.accept_purchase_request

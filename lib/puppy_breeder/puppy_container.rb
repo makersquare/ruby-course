@@ -21,5 +21,10 @@ module PuppyBreeder
     def self.get_puppies
       @@puppies
     end
+
+    def self.has_suitable_puppy?(order)
+      return true if @@puppies.has_key?(order.breed)
+      false
+    end
   end
 end
