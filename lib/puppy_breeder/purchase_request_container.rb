@@ -17,6 +17,13 @@ module PuppyBreeder
       @@purchase_request_container.select {|r| r.pending? }
     end
 
+    def self.next_hold(breed)
+      @@purchase_request_container.find {|r| r.on_hold? && r.breed == breed }
+    end
+
+    def self.next_pending(breed)
+      @@purchase_request_container.find {|r| r.pending? && r.breed == breed}
+    end
   end
 
 end

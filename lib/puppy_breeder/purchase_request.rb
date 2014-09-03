@@ -22,6 +22,14 @@ module PuppyBreeder
       @status = :accepted
     end
 
+    def on_hold?
+      @status == :on_hold
+    end
+    
+    def on_hold!
+      @status = :on_hold
+    end    
+
   end
 
 end

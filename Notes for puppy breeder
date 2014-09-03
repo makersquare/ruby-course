@@ -1,0 +1,40 @@
+Notes for puppy breeder
+
+puppy note--take breed, lowercase, split, join by underscore, turn into symbol, then store
+
+purchase_request
+
+	have status (:pending)
+	def pending? -- check status
+	def accepted?
+	def accept! -- change status
+
+	(perhaps a variable to tell how we got the purchase request, viz the parameters of the task)
+
+purchase request container
+
+	just class variables and methods
+	-an array of requests, ability to add, show complete
+
+	def self.add_requests(req)
+	@@requests << req
+
+	def self.show_completed
+	@@requests.select {|r| r.accepted? }
+
+	def self.show_pending -- for review
+
+	--no need to make different arrays for all these different structures
+	--consider keeping everything in one place and just changing some attribute for sorting purposes
+
+puppy container
+
+	def add_breed to the hash
+	def add_puppy to the breed section of the hash
+
+	maybe methods for accessing or changing the puppy info (price, list of puppies, etc.)
+
+notes for puppy breeder 2
+user story: the user experience perspective/narrative: "As a __, I want to ___"
+
+doesn't expect us to finish it all
