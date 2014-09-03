@@ -15,6 +15,12 @@ module Bookly
           )])
       end
 
+      def seed
+        self.save  Bookly::Book.new("How Hulk Has Hands", Date.parse('1983-10-29'))
+        self.save  Bookly::Book.new("When Will Won't Work", Date.parse('2013-05-15'))
+        self.save  Bookly::Book.new("Why Mai Fly By", Date.parse('2010-11-28'))
+      end
+
       def delete_all
         @db.exec("DELETE FROM books")
       end
