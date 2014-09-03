@@ -7,6 +7,9 @@ module PuppyBreeder
 
     def add_breed(breed, price) #talked to jimmy about my rough idea for this
       #and he helped me flesh it out
+      #should have added an if @puppies[breed]
+      #truthyness to test for the breed already
+      #existing
       @puppies[breed] = {
         "price" => price,
         "list" => []
@@ -19,3 +22,6 @@ module PuppyBreeder
 
   end
 end
+
+#could have set the methods to class methods so
+#I didn't ahve to create an instatiated object

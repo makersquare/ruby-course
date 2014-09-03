@@ -24,14 +24,6 @@ module PuppyBreeder
       completed_requests = @request_log.select{|request| request.status !="pending"}
     end
 
-    def view_all
-      #return all requests in the log including pending, rejected,
-      #and approved
-
-    end
-    def view_rejected
-      #return only rejected requests from the log
-    end
     def purge_log
       #erase the contents of the log or possibly do this for only 
       #rejected items
