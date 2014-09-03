@@ -22,7 +22,7 @@ module PuppyBreeder
       @bank_account = 0
       @puppies = []
       @purchase_requests = {}
-      @price_list = {'Mut' => 50}
+      @price_list = {'mut' => 50}
     end
 
     def new_puppy(puppy)
@@ -35,7 +35,9 @@ module PuppyBreeder
       @puppies.each {|pup| pup.price = new_price if pup.breed == update_breed}
     end
 
-    def pending(dog, customer)
+    def pending(breed, customer)
+      dog = @puppies.map {|pup| pup if pup.breed == breed}
+      dog = dog[rand(dog.length)]
       dog.status = "pending purchase by #{customer.name}"
       @purchase_requests[customer] = dog
     end

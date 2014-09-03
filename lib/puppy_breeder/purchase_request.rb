@@ -6,8 +6,8 @@ module PuppyBreeder
       @name = name
     end
 
-    def request_dog(dog, breeder)
-      breeder.pending(dog, self)
+    def request_dog(breed, breeder)
+      breeder.pending(breed, self)
     end
 
   end
