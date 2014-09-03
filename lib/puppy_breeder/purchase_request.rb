@@ -33,7 +33,7 @@ module PuppyBreeder
       @@open_orders[order_id].status = 'hold'
       @@on_hold.push(@@open_orders[order_id])
     end
-
+    
     def self.orders
       @@open_orders.select { |k,v| v.status == 'accepted' || v.status == 'rejected' || v.status == 'pending' }
     end
