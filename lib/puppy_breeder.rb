@@ -19,7 +19,12 @@ module PuppyBreeder
   end
 
   def self.add_puppy_to_hash(puppy)
-    if @@puppies[puppy.breed]
+    if @@puppies[puppy.breed] == nil
+        @@puppies[puppy.breed] = {
+          :price => 500,
+          :list => []
+        }
+    elsif @@puppies[puppy.breed]
       @@puppies[puppy.breed][:list] << puppy
     else
       @@puppies[puppy.breed][:list] = [puppy]
