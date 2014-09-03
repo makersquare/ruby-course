@@ -1,26 +1,26 @@
 # we initialize the module here to use in our other files
 module PuppyBreeder
 
-  attr_accessor :puppies, :purchase_orders
+  attr_accessor :puppies, :purchase_orders, :breed
 
   @@purchase_orders = []
   @@puppies = {}
 
 
-  def self.add_breed_to_hash(puppy, price)
-    @@puppies[puppy.breed] = {
+  def self.add_breed_to_hash(breed, price)
+    @@puppies[breed] = {
       :price => price,
       :list => []
     }
   end
 
-  def self.change_breed_price(puppy,price)
-    @@puppies[puppy.breed][:price] = price
+  def self.change_breed_price(breed,price)
+    @@puppies[breed][:price] = price
   end
 
   def self.add_puppy_to_hash(puppy)
     if @@puppies[puppy.breed]
-      @@puppies[puppy.breed][:list].push(puppy)
+      @@puppies[puppy.breed][:list] << puppy
     else
       @@puppies[puppy.breed][:list] = [puppy]
     end
@@ -30,8 +30,12 @@ module PuppyBreeder
     @@purchase_orders << purchase_request
   end
 
-  def self.change_order_status(po, new_status)
-    po.status = new_status
+  def self.review_order_status(po)
+    if @@puppies[po.breed][:list].empty?
+      po.status = "on_hold"
+    else
+      po.status = "complete"
+    end
   end
 
   def self.puppies

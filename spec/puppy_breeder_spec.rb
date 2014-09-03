@@ -12,7 +12,7 @@ describe PuppyBreeder do
 
   it "adds breed to puppies hash using add_breed_to_hash" do
     mav = PuppyBreeder::Puppy.new("mav", "husky", 4)
-    PuppyBreeder.add_breed_to_hash(mav, 500)
+    PuppyBreeder.add_breed_to_hash("husky", 500)
 
     expect(PuppyBreeder.puppies.count).to eq(1)
     expect(PuppyBreeder.puppies["husky"][:price]).to eq(500)
@@ -21,11 +21,11 @@ describe PuppyBreeder do
 
   it "changes the price of a breed" do
     mav = PuppyBreeder::Puppy.new("mav", "husky", 4)
-    PuppyBreeder.add_breed_to_hash(mav, 500)
+    PuppyBreeder.add_breed_to_hash("husky", 500)
 
     expect(PuppyBreeder.puppies["husky"][:price]).to eq(500)
 
-    PuppyBreeder.change_breed_price(mav, 600)
+    PuppyBreeder.change_breed_price("husky", 600)
     expect(PuppyBreeder.puppies["husky"][:price]).to eq(600)
 
   end
@@ -60,13 +60,28 @@ describe PuppyBreeder do
   end
 
   it "changes status of purchase order" do
-    po = PuppyBreeder::PurchaseRequest.new("husky")
+    PuppyBreeder.add_breed_to_hash("pug", 500)
+    po = PuppyBreeder::PurchaseRequest.new("pug")
     PuppyBreeder.store_purchase_orders(po)
-    PuppyBreeder.change_order_status(po, "complete")
 
     expect(PuppyBreeder.purchase_orders.length).to eq(1)
-    expect(PuppyBreeder.purchase_orders.first.breed).to eq("husky")
+    expect(PuppyBreeder.purchase_orders.first.breed).to eq("pug")
+    expect(PuppyBreeder.purchase_orders.first.status).to eq("pending")
+
+    PuppyBreeder.review_order_status(po)
+
+    expect(PuppyBreeder.purchase_orders.length).to eq(1)
+    expect(PuppyBreeder.purchase_orders.first.breed).to eq("pug")
+    expect(PuppyBreeder.purchase_orders.first.status).to eq("on_hold")
+
+    vik = PuppyBreeder::Puppy.new("viking", "pug", 16)
+    PuppyBreeder.add_puppy_to_hash(vik)
+    PuppyBreeder.review_order_status(po)
+
+    expect(PuppyBreeder.purchase_orders.length).to eq(1)
+    expect(PuppyBreeder.purchase_orders.first.breed).to eq("pug")
     expect(PuppyBreeder.purchase_orders.first.status).to eq("complete")
+
   end
 
   it "views orders by status" do
