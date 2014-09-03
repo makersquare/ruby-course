@@ -71,8 +71,7 @@ module PuppyBreeder
   end
 
   def self.waitlist
-    hold_orders = @@purchase_orders.select {|p| p.on_hold? }
-    waitlist = hold_orders.sort_by {|o| o.id}
+    waitlist = @@purchase_orders.select {|p| p.on_hold? }
   end
 
 end
