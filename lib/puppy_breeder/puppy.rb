@@ -8,7 +8,7 @@ module PuppyBreeder
     def initialize(breed='mix',name="spot", age='unknown')
       @id = @@counter
       @@counter +=1
-      @status = 'available'
+      @status = :pending
       @breed = breed
       @name = name
       @age = age
@@ -17,7 +17,7 @@ module PuppyBreeder
   end
 
   class DogShelter
-    @@costhash={'pinata'=>50,'shetlinpony'=>5000,'pitbull'=>300,'golden retrierver'=>400,'mix'=>200,'ultra rare breed'=>1000,'lab'=>500}
+    @@costhash={'pinata'=>50,'shepard'=>5000,'pitbull'=>300,'golden retrierver'=>400,'mix'=>200,'ultra rare breed'=>1000,'lab'=>500}
     @@counter =1
     @@doglist = {}
     @@available_dogs=[]
@@ -56,7 +56,7 @@ module PuppyBreeder
 
     def self.adoption(dog_id)
       dog = doglist[dog_id]
-      dog.status = 'adopted'
+      dog.status = :adopted
       @@adopted_dogs.push(dog)
       @@available_dogs.delete(dog)
     end
@@ -64,7 +64,6 @@ module PuppyBreeder
     def self.fill_dog_order(request_id,dog_id,condition=true)
       if condition
         puts "Request #{request_id} for #{PuppyBreeder::RequestRepository.breed_requested(request_id)} has been filled. Dog #{dog_id}, #{@@doglist[dog_id].name} has been assigned."
-        self.adoption(dog_id)
         RequestRepository.complete_request(request_id)
       else
         puts "Request #{request_id} for #{PuppyBreeder::RequestRepository.breed_requested(request_id)} has been ended. Dog #{dog_id}, #{@@doglist[dog_id].name} has not been assigned."
@@ -76,6 +75,7 @@ module PuppyBreeder
     def self.first_avail_dog_breed(request_id)
       breed = RequestRepository.breed_requested(request_id)
       matches = doglist.select {|x,y| (y.breed == breed && y.status == 'available')}
+      p matches
       dog_id =  matches.keys[0]
       fill_dog_order(request_id,dog_id)
     end

@@ -1,4 +1,5 @@
 require_relative 'spec_helper.rb'
+require 'pry-byebug'
 
 describe PuppyBreeder::Puppy do
   it 'Should create puppy with correct attributes.' do
@@ -8,7 +9,7 @@ describe PuppyBreeder::Puppy do
 
     expect(b.breed).to eq('pit')
     expect(b.id).to eq(1)
-    expect(b.status).to eq('available')
+    expect(b.status).to eq(:pending)
     expect(c.breed).to eq('mix')  
     expect(c.id).to eq(2)  
   end
@@ -56,12 +57,14 @@ describe PuppyBreeder::DogShelter do
   it 'Should be able to fill order by first available breed.' do
     a = PuppyBreeder::DogShelter
     r = PuppyBreeder::RequestRepository
-    dog6 = PuppyBreeder::DogShelter.create_dog('shetlinpony')
+    allow(r).to receive(:breed_requested).and_return("shepard")
 
-    STDOUT.should_receive(:puts).with("Request 42 for shetlinpony has been filled. Dog 6, spot has been assigned.")
-    allow(r).to receive(:breed_requested).and_return("shetlinpony")
-    allow(r).to receive(:complete_request).and_return("Request 42 has been filled.")
-    expect(a.first_avail_dog_breed(42)).to eq('spot')
+    # STDOUT.should_receive(:puts).with("Request 42 for shetlinpony has been filled. Dog 6, spot has been assigned.")
+    # STDOUT.should_receive(:puts).with("Request 42 for shepard should be reconsidered.")
+    dog6 = PuppyBreeder::DogShelter.create_dog('shepard')
+    
+    # allow(r).to receive(:complete_request).and_return("Request 42 has been filled.")
+    # expect(a.first_avail_dog_breed(42)).to eq('spot')
   end
 
 end

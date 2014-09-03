@@ -85,7 +85,7 @@ module PuppyBreeder
 
     def self.pending_list_kick(breed)
       reconsider = @@pending_request.select {|x| x.breed == breed}
-      reconsider.each {|x| puts "Request #{x.request_id} for the #{x.breed} should be reconsidered."}
+      reconsider.each {|x| hold_to_pending(x)}
     end
   end
 end
