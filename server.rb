@@ -1,8 +1,11 @@
 require 'sinatra'
 require_relative 'lib/puppy_breeder.rb'
+require 'pry-byebug'
+
+set :bind, '0.0.0.0'
 
 get '/' do
-  'hello world'
+  erb :index
 end
 
 get '/puppy' do
@@ -10,7 +13,8 @@ get '/puppy' do
 end
 
 post '/puppy' do
-  puppy = PuppyBreeder::Puppy.new(params["name"], params["age"], params["breed"])
+  # binding.pry
+  puppy = PuppyBreeder::Puppy.new(params["breed"], params["name"], params["age"])
   if PuppyBreeder::PuppyContainer.puppy_info[puppy.breed].nil?
     PuppyBreeder::PuppyContainer.add_breed(puppy.breed)
   end

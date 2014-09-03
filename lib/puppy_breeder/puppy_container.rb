@@ -3,7 +3,7 @@ module PuppyBreeder
   class PuppyContainer
 
     # Refactored
-    @@puppies = Hash.new(0)
+    @@puppies = {}
 
 # Access puppies hash.
     # attr_accessor :puppies
@@ -41,9 +41,9 @@ module PuppyBreeder
     # Refactored
     def self.add_puppy(puppy)
       if @@puppies[puppy.breed]
-        @@puppies[puppy.breed][:list] << pup
+        @@puppies[puppy.breed][:list] << puppy
       else
-        raise "No breed exists."
+        raise "No Breed for that Puppy!"
       end
     end
 
