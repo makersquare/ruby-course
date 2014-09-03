@@ -34,6 +34,12 @@ module PuppyBreeder
       end
       @@container << request
     end
+    def self.first_inline(breed)
+      @@container.select do |req|
+        req.status == :hold && req.breed == breed
+      end.first
+    end
+
     
     def self.container
       @@container 
