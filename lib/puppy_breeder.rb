@@ -17,7 +17,11 @@ module PuppyBreeder
 		end
 
 		def add_puppy_to_inventory(puppy)
-			inventory_hash[puppy.breed][:puppies] << puppy
+			if inventory_hash[puppy.breed]
+				inventory_hash[puppy.breed][:puppies] << puppy
+			else
+				raise "Error no breed for puppy!"
+			end
 		end
 	end
 end
