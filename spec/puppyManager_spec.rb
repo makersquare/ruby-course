@@ -13,6 +13,21 @@ describe PuppyBreeder::PuppyManager do
       expect(PuppyBreeder::PuppyManager.puppies_for_sale.include?(puppy)).to eq(true)
     end
 
+    it 'checks Request Managers @@held_requests automatically and approves that request if a matching puppy was found' do
+
+      PuppyBreeder::RequestManager.clear_all_requests
+      PuppyBreeder::PuppyManager.clear_puppies
+
+      request = PuppyBreeder::PurchaseRequest.new("golden retriever")
+      PuppyBreeder::RequestManager.approve_request(request)
+
+      puppy = PuppyBreeder::Puppy.new("Spot", "golden retriever", 1)
+      PuppyBreeder::PuppyManager.add_puppy_for_sale(puppy)
+      PuppyBreeder::RequestManager.approve_request(request)
+
+      expect(PuppyBreeder::PuppyManager.puppies_for_sale.include?(puppy)).to eq(false)
+  end
+
   end
 
   describe '.remove_puppy_for_sale' do

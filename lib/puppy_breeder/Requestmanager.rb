@@ -16,7 +16,7 @@ module PuppyBreeder
       @@open_requests.delete(purchase_request)
       puppy = PuppyBreeder::PuppyManager.find_match(purchase_request)
 
-      if (puppy != nil)
+      if (puppy.is_a?(PuppyBreeder::Puppy))
         @@completed_requests.push(purchase_request)
         PuppyBreeder::PuppyManager.remove_puppy_for_sale(puppy)
       else
@@ -49,6 +49,7 @@ module PuppyBreeder
       @@open_requests = []
       @@denied_requests = []
       @@completed_requests = []
+      @@held_requests = []
     end
 
     
