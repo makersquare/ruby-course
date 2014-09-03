@@ -2,12 +2,6 @@ require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::RequestContainer do
   before(:all) do
-    puppy1 = PuppyBreeder::Puppy.new("Fido", "Greyhound", 30)
-    puppy2 = PuppyBreeder::Puppy.new("Jack", "Great Dane", 25)
-    puppy3 = PuppyBreeder::Puppy.new("Jill", "Great Dane", 50)
-    PuppyBreeder::PuppyContainer.add_puppy(puppy1)
-    PuppyBreeder::PuppyContainer.add_puppy(puppy2)
-    PuppyBreeder::PuppyContainer.add_puppy(puppy3)
 
     @order1 = PuppyBreeder::PurchaseRequest.new("Boxer")
     @order2 = PuppyBreeder::PurchaseRequest.new("Great Dane")
