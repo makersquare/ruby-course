@@ -21,9 +21,7 @@ module Bookly
 
       def all
         results = @db.exec("SELECT * FROM books")
-        results.map do |row|
-          book = Bookly::Book.new(row["name"], Date.parse(row["published_at"]))
-        end
+        results.map {|row| build(row) }
       end
 
       def save(book)
@@ -31,8 +29,9 @@ module Bookly
           # The book has no id; that means we need to create it
           sql = %q{ INSERT INTO books (name, published_at) VALUES ($1, $2)
                     returning id; }
-          result = @db.exec(sql, [book.name, book.published_at])
-          book.instance_variable_set("@id", result[0]["id"])
+          results = @db.exec(sql, [book.name, book.published_at])
+          row = results.first
+          book.instance_variable_set("@id", row["id"])
         else
           # The book *does* have an id, so we need to update it
           sql = "UPDATE books SET (name, published_at) = ($1, $2)"
@@ -42,11 +41,18 @@ module Bookly
 
       def find(book_id)
         sql = "SELECT * FROM books WHERE id=$1"
-        result = @db.exec(sql, [book_id]).first
+        results = @db.exec(sql, [book_id])
+        row = results.first
 
-        book = Bookly::Book.new(result["name"], Date.parse(result["published_at"]))
-        book.instance_variable_set("@id", result["id"])
+        book = build(row)
+        book.instance_variable_set("@id", row["id"])
         book
+      end
+
+      private
+
+      def build(row)
+        Bookly::Book.new(row["name"], Date.parse(row["published_at"]))
       end
     end
   end
