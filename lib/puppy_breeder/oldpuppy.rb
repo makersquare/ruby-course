@@ -24,16 +24,12 @@ module PuppyBreeder
     @@adopted_dogs = []
 
 
-    def add_breed_cost(breed,cost)
-      @@costhash[breed]=cost
-    end
-
 
     def self.add_dog(dog)
       @@doglist[@@counter] = dog
       @@available_dogs << dog
       @@counter += 1
-      PuppyBreeder::RequestRepository.pending_list_kick(dog.breed)
+      RequestRepository.pending_list_kick(dog.breed)
     end
 
     def self.create_dog(breed)

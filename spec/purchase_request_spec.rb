@@ -50,10 +50,13 @@ describe PuppyBreeder::RequestRepository do
 ################################################################################
   it 'Pending List should populate when hold requested used.' do
     a = PuppyBreeder::RequestRepository
+    b = PuppyBreeder::Puppy
     req5 = a.create_request('pinata')
     req6 = a.create_request('pinata')
     a.hold_request(5)
     a.hold_request(6)
+    dog1 = PuppyBreeder::DogShelter.create_dog('mix')
+
     expect(a.pending_requests.count).to eq(2)
   end
 

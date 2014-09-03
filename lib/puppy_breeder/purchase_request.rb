@@ -23,6 +23,8 @@ module PuppyBreeder
     @@denied_request = []
     attr_accessor :number
 
+    ###########@status, and @accepted for the status of the request and whether or not it has been accepted.
+
     def self.add_request(request)
       @number = @@counter
       @@list[@number] = request
@@ -71,19 +73,19 @@ module PuppyBreeder
       @@pending_request
     end
 
-
-#######################################################
     def self.hold_request(request_id)
-      p request_id
-      p list
-      p @@list[request_id]
-      # request = @@list[request_id]
       @@hold_list << @@list[request_id]
-      @pending_request.delete(@@list[request_id])
+      @@pending_request.delete(@@list[request_id])
+    end
+
+    def self.hold_to_pending(request_id)
+      @@pending_request << @@list[request_id]
+      @@hold_list.delete(@@list[request_id])
     end
 
     def self.pending_list_kick(breed)
+      reconsider = @@pending_request.select {|x| x.breed == breed}
+      reconsider.each {|x| puts "Request #{x.request_id} for the #{x.breed} should be reconsidered."}
     end
-
   end
 end
