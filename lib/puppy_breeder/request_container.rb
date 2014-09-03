@@ -1,9 +1,29 @@
 module PuppyBreeder
 
 class RequestContainer
-  @@requests = []
-  def self.save_request(request)
-    @@requests << request
+
+@@requests = {:doberman => [obj1,obj2],
+  :pitbull => [asdf,asdf,asdf]
+
+  def self.requests
+    @@requests
+  end
+
+  def self.save_request(purchaserequest)
+  
+
+
+
+
+  if @@requests.keys.include?(purchaserequest.breed) 
+    return @@requests[purchaserequest.breed][:list] << purchaserequest
+    else
+      @@requests[purchaserequest.breed] = [purchaserequest]
+        
+    
+  else
+
+
   end
 
   def self.show_all_requests
@@ -13,6 +33,10 @@ class RequestContainer
   def self.show_accepted_requests
     @@requests.select { |r| r.status == 'accepted' }
   end
-end
 
+  def self.show_hold_requests
+    @@requests.select { |r| r.status == 'hold'}
+  end
+
+end
 end

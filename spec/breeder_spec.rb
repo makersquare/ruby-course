@@ -16,9 +16,12 @@ describe PuppyBreeder::Breeder do
     it "it makes a puppy be fore sale" do
 
     breeder1 = PuppyBreeder::Breeder.new("Ravi")
-    
-    expect(breeder1.name).to eq("Ravi")
-    
+    pupp1 = PuppyBreeder::Puppy.new("Lucy", 23, "pitbull")
+    breeder1.for_sale(pupp1)
+
+    expect(breeder1.breed_types["pitbull"][:list][0].name).to eq ("Lucy")
+    expect(breeder1.breed_types["pitbull"][:list][0].age).to eq (23)
+    expect(breeder1.breed_types["pitbull"][:list][0].breed).to eq ("pitbull")
 
     end
 
