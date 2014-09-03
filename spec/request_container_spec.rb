@@ -40,7 +40,7 @@ describe PuppyBreeder::RequestContainer do
   describe '.accept_purchase_request' do
     it 'accept the purchase request with given id' do
       PuppyBreeder::RequestContainer.accept_purchase_request
-      expect(PuppyBreeder::RequestContainer.get_completed_orders).to include(@order1)
+      expect(PuppyBreeder::RequestContainer.get_completed_orders).to include(@order2)
     end
   end
 end

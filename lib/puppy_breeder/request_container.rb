@@ -23,7 +23,11 @@ module PuppyBreeder
     end
 
     def self.accept_purchase_request
-      self.get_orders.each { |order| order.complete_order }
+      self.get_orders.each do |order|
+        if PuppyBreeder::PuppyContainer.has_suitable_puppy?(order)
+          order.complete_order
+        end
+      end
     end
   end
 end
