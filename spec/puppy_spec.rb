@@ -12,7 +12,6 @@ describe PuppyBreeder::Puppy do
   		expect(pup.name).to eq('doggy')
   		expect(pup.breed).to eq('boxer')
   		expect(pup.age).to eq(30)
-  		expect(pup.status).to eq('available')
   	end
   end
 end

@@ -4,11 +4,10 @@ module PuppyBreeder
 
   	attr_reader :name, :breed, :age, :status
 
-  	def initialize(name, breed, age, status = 'available')
+  	def initialize(name, breed, age)
   		@name = name
   		@breed = breed
   		@age = age
-  		@status = status
   	end
 
   end
