@@ -2,27 +2,28 @@
 module PuppyBreeder
   class Puppy
     attr_reader :name, :breed, :age
-    attr_accessor :price, :status
-    def initialize(name, breed, age=0, status='available', price=nil)
+    attr_accessor :price, :status, :buyer
+    def initialize(name, breed, age=0, status='available', price=nil, buyer=nil)
       @name = name
       @breed = breed
       @age = age
       @status = status
       @price = price
+      @buyer = buyer
     end
   end
 
-
   class Breeder
-    attr_reader :name, :puppies, :price_list, :bank_account
+    attr_reader :name, :puppies, :price_list, :bank_account, :hold
     attr_accessor :purchase_requests
 
     def initialize(name)
       @name = name
       @bank_account = 0
       @puppies = []
-      @purchase_requests = {}
+      @hold = []
       @price_list = {'mut' => 50}
+      @hold_counter = 0
     end
 
     def new_puppy(puppy)
@@ -36,23 +37,29 @@ module PuppyBreeder
     end
 
     def pending(breed, customer)
-      dog = @puppies.map {|pup| pup if pup.breed == breed}
-      dog = dog[rand(dog.length)]
-      dog.status = "pending purchase by #{customer.name}"
-      @purchase_requests[customer] = dog
+      dog = @puppies.select {|pup| pup if pup.breed == breed && pup.status == 'available'}
+      if dog.length >= 1
+        dog = dog[rand(dog.length)]
+        dog.status = "pending purchase by #{customer.name}"
+        dog.buyer = customer
+      else 
+        @hold << {@hold_counter => [customer, breed]}
+        @hold_counter += 1
+      end
     end
+
+
 
     def sell_dog(dog)
       status_arr = dog.status.split
       if status_arr.first == 'pending'
         @bank_account += dog.price
-        dog.status = "sold to #{status_arr[3..-1].join(" ")}"
-        @puppies.delete(dog)
+        dog.status = "sold to #{dog.buyer.name}"
       end
     end
 
     def view_sales
-      @purchase_requests.values.select {|pup| pup if pup.status.split.first == 'sold'}
+      @puppies.select {|pup| pup if pup.status.split.first == 'sold'}
     end
 
     private
@@ -60,6 +67,7 @@ module PuppyBreeder
     def price_assignment(puppy)
       puppy.price = @price_list[puppy.breed]
     end
+
   end
 end
 
