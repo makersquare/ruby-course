@@ -2,6 +2,7 @@ require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::Requests do
   before(:each) { PuppyBreeder::Requests.instance_variable_set :@purchase_orders, [] }
+  before(:each) { PuppyBreeder::ForSale.instance_variable_set :@for_sale, {} }
 
   describe '#new_request' do
     it "adds a new purchase request to the purchase orders array" do
@@ -37,6 +38,11 @@ describe PuppyBreeder::Requests do
 
   describe '#pending_purchase_orders' do
     it "shows only purchase orders with a status of pending" do
+      spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
+      fido = PuppyBreeder::Puppy.new("Fido", 2, "Pitbull")
+      spot.add
+      fido.add
+    
       request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
       request2 = PuppyBreeder::PurchaseRequest.new("Pitbull")
 

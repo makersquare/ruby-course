@@ -8,6 +8,16 @@ describe PuppyBreeder::Puppy do
       expect(spot.name).to eq("Spot")
       expect(spot.age).to eq 1
       expect(spot.breed).to eq("Golden Retriever")
+      expect(spot.status).to eq(:not_for_sale)
+    end
+  end
+
+  describe '.add' do
+    it 'changes the status to :for_sale' do
+      spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
+      spot.add
+
+      expect(spot.status).to eq(:for_sale)
     end
   end
 

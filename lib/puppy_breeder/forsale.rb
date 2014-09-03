@@ -14,8 +14,6 @@ module PuppyBreeder
         @for_sale[puppy.breed][:count] += 1
       end
 
-      #Requests.purchase_orders.find {|x| x.breed == self.breed && x.status == :on_hold}
-
       @for_sale
     end
 
