@@ -21,19 +21,25 @@ module PuppyBreeder
       @name = name
       @bank_account = 0
       @puppies = []
-      @hold = []
+      @hold = {'mut' => []}
       @price_list = {'mut' => 50}
       @hold_counter = 0
     end
 
+
     def new_puppy(puppy)
       price_assignment(puppy)
       @puppies << puppy
+      if @hold[puppy.breed].length > 0
+        self.pending(puppy.breed, @hold[puppy.breed].first[1])
+        @hold[puppy.breed].shift
+      end
     end
 
     def update_price(update_breed, new_price)
       @price_list[update_breed] = new_price
       @puppies.each {|pup| pup.price = new_price if pup.breed == update_breed}
+      @hold[update_breed] = []
     end
 
     def pending(breed, customer)
@@ -43,7 +49,7 @@ module PuppyBreeder
         dog.status = "pending purchase by #{customer.name}"
         dog.buyer = customer
       else 
-        @hold << {@hold_counter => [customer, breed]}
+        @hold[breed] << [@hold_counter, customer]
         @hold_counter += 1
       end
     end
