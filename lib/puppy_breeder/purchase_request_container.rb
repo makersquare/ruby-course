@@ -12,6 +12,7 @@ module PuppyBreeder
 # Initiailizes with requests hash. Has three keys: "Pending", "Approved", "Denied".
     def initialize
       @requests = Array.new
+      # @db = PG.connect(host: 'localhost', dbname: 'puppy-breeder-db')
     end
 
 # Add an instance of PurchaseRequest into the requests hash with a key of the status.
