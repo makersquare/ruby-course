@@ -25,7 +25,7 @@ describe PuppyBreeder::PurchaseRequest do
 
   describe '#hold?' do
     it 'returns true if the order has a status of hold' do
-      @purchase_req.put_on_hold
+      @purchase_req.hold!
       expect(@purchase_req.hold?).to eq(true)
     end
   end

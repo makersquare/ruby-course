@@ -23,8 +23,12 @@ module PuppyBreeder
       false
     end
 
-    def put_on_hold
+    def hold!
       @status = 'hold'
+    end
+
+    def pending?
+      return true if @status == 'pending'
     end
   end
 end
