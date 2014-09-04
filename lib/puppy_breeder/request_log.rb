@@ -23,6 +23,15 @@ module PuppyBreeder
       found_request.first.status = decision
     end
 
+    def self.check_hold(puppy)
+      if @@hold_log.find{ |hold|  hold.breed == puppy.breed} #if the hold log includes the breed
+        #find the first purchase request and return it. 
+        hold = @@hold_log.find{ |hold|  hold.breed == puppy.breed}
+        @@request_log.push(hold)
+        @@hold_log.delete(hold)
+      end
+    end
+
     def self.view_completed
       completed_requests = @@request_log.select{|request| request.status !="pending"}
     end

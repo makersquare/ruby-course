@@ -19,7 +19,12 @@ module PuppyBreeder
     def self.add_puppy(puppy) #Professor Nick helped here
       #add if else statement - check the new puppy breed against 
       #the hold list and ############################
+      if !@@puppies.has_key?(puppy.breed) #professor nick again
+        @@puppies[puppy.breed] = {"price" => 9999, "list" => []}
+      end
+
       @@puppies[puppy.breed]["list"] << puppy
+      RequestLog.check_hold(puppy)
 
     end
 

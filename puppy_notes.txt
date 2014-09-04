@@ -1,7 +1,9 @@
 
 
 To do:
-add approval process method to request log and specs
+if a puppy is added to our inventory, then the inventory class method checks the hold queue for a matching puppy and the first one availble using find and return that object. 
+
+
 
 
 

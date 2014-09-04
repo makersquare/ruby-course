@@ -36,6 +36,18 @@ describe PuppyBreeder::RequestLog do
     expect(log.request_log.last.status).to eq("approved")
   end
 
+  it 'adds the oldest purchase request to request log when a puppy matching the request is added' do
+    PuppyBreeder::RequestLog.class_variable_set :@@request_log, []
+    PuppyBreeder::RequestLog.class_variable_set :@@hold_log, []
+    
+    request = PuppyBreeder::PurchaseRequest.new("Dinosaur")
+    PuppyBreeder::RequestLog.add_request(request)
+    puppy = PuppyBreeder::Puppy.new("Rex", "Dinosaur", 1)
+    PuppyBreeder::Inventory.add_puppy(puppy)
+
+    expect(PuppyBreeder::RequestLog.request_log).to include(request)
+  end
+
   it 'gives the completed orders in the log' do
     request = PuppyBreeder::PurchaseRequest.new("Schnauzer")
     request2 = PuppyBreeder::PurchaseRequest.new("Maltese")
