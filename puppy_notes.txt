@@ -1,0 +1,31 @@
+
+
+To do:
+if a puppy is added to our inventory, then the inventory class method checks the hold queue for a matching puppy and the first one availble using find and return that object. 
+
+
+
+
+
+Completed: 
+puppy.rb
+creates a puppy instance with proper variables
+puppy_spec tests for creation of a puppy instance
+
+purchase_request.rb
+creates a purchase request with an ID, breed, status=pending
+purchase_request_spec tests for instance creation, status, breed, and id
+
+puppy_breeder.rb
+has inventory, purchase_request, and puppy in it
+
+inventory.rb
+creates a class with breed and price, sets a hash for breed pointing to price and initializes quantity to zero. That hash gets stored in a puppies hash. 
+create add puppy method to inventory
+
+request_log.rb
+create request_lob.rb to keep track and store the requests
+create a request_log_spec to test that the purchase requests are being stored
+
+
+
