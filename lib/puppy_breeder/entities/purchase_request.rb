@@ -4,14 +4,13 @@ module PuppyBreeder
     attr_reader :breed, :id, :method
     attr_accessor :status
 
-    @@counter = 1
+    #@@counter = 1
 
-    def initialize(breed, method = :by_customer)
+    def initialize(breed)
       @breed = breed
-      @method = method
       @status = :pending
-      @id = @@counter
-      @@counter += 1
+      @id = nil
+      #@@counter += 1
       Requests.new_request(self)
     end
 

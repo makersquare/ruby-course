@@ -5,7 +5,7 @@ describe PuppyBreeder::PurchaseRequest do
   before(:each) { PuppyBreeder::PurchaseRequest.class_variable_set :@@counter, 1 }
 
   describe '.initialize' do
-    it "creates a new purchase request for a breed with a status of pending" do
+    xit "creates a new purchase request for a breed with a status of pending" do
       spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
       spot.add
       request = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
@@ -14,7 +14,7 @@ describe PuppyBreeder::PurchaseRequest do
       expect(request.status).to eq(:pending)
     end
 
-    it "shows how a purchase request was submitted with a default of by_customer" do
+    xit "shows how a purchase request was submitted with a default of by_customer" do
       request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
       request2 = PuppyBreeder::PurchaseRequest.new("Pitbull", :fax)
       result1 = request1.method
@@ -24,7 +24,7 @@ describe PuppyBreeder::PurchaseRequest do
       expect(result2).to eq(:fax)
     end
 
-    it "creates a unique id number for each purchase request" do
+    xit "creates a unique id number for each purchase request" do
       request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
       request2 = PuppyBreeder::PurchaseRequest.new("Pitbull")
 
@@ -33,7 +33,7 @@ describe PuppyBreeder::PurchaseRequest do
   end
 
   describe '#review' do
-    it "shows all pending purchase requests" do
+    xit "shows all pending purchase requests" do
       request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
       request2 = PuppyBreeder::PurchaseRequest.new("Pitbull")
 
@@ -45,7 +45,7 @@ describe PuppyBreeder::PurchaseRequest do
   end
 
   describe '.accept' do
-    it "changes the purchase request status from pending to completed" do
+    xit "changes the purchase request status from pending to completed" do
       request = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
       request.accept
 
@@ -54,7 +54,7 @@ describe PuppyBreeder::PurchaseRequest do
   end
 
   describe '#completed_orders' do
-    it "returns all orders with a status of completed" do
+    xit "returns all orders with a status of completed" do
       request = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
       request.accept
 

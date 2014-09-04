@@ -2,13 +2,13 @@
 module PuppyBreeder
   class Puppy
     attr_reader :name, :age, :breed
-    attr_accessor :status
+    #attr_accessor :status
 
     def initialize(name, age, breed)
       @name = name
       @age = age
       @breed = breed
-      @status = :not_for_sale
+      #@status = :not_for_sale
     end
 
     def add(price = nil)

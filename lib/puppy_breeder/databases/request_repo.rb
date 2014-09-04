@@ -1,36 +1,75 @@
-module PuppyBreeder
-  class Requests
-    @purchase_orders = []
+require 'pg'
 
-    def self.new_request(order)
-      if ForSale.for_sale.empty? || ForSale.for_sale[order.breed][:count] == 0
-        order.status = :on_hold
+module PuppyBreeder
+  module Repos
+    class Requests
+      #@purchase_orders = []
+
+      def initialize
+        @db = PG.connect(host: 'localhost', dbname: 'puppy-breeder')
+        build_tables
       end
 
-      @purchase_orders << order
-    end
+      def build_tables
+        @db.exec(%q[
+          CREATE TABLE IF NOT EXISTS requests(
+            id serial,
+            breed text,
+            status text
+          )
+        ])
+      end
 
-    def self.complete_request(order)
-      completed_order = @purchase_orders.find {|x| x = order}
-      completed_order.status = :completed
-    end
+      def log
+        result = @db.exec('SELECT * FROM requests;')
+        build_request(result.entries)
+      end
 
-    def self.pending_purchase_orders
-      @purchase_orders.select {|x| x.status == :pending}
-    end
+      def add_request(request)
+        pups_available = PuppyBreeder::Repos::Puppies.log.select { |p| p.breed == request.breed }
 
-    def self.completed_purchase_orders
-      @purchase_orders.select {|x| x.status == :completed}
-    end
+        if pups_available.empty?
+          request.hold!
+        end
 
-    def self.purchase_orders
-      @purchase_orders
-    end
+        @db.exec(%q[
+          INSERT INTO requests (breed, status)
+          VALUES ($1, $2);
+        ], [request.breed, request.status])
+      end
 
-    def self.hold_to_pending(order)
-      to_pending = @purchase_orders.find {|x| x = order}
-      to_pending.first.status = :pending if !to_pending.nil?
-    end
+      def pending_requests
+        result = @db.exec(%q[
+          SELECT * FROM requests WHERE status = 'pending';
+        ])
+        build_request(result.entries)
+      end
 
+      def completed_requests
+        result = @db.exec(%q[
+          SELECT * FROM requests WHERE status = 'completed';
+        ])
+        build_request(result.entries)
+      end
+
+      def build_request(entries)
+        entries.map do |req|
+          x = PuppyBreeder::PurchaseRequest.new(req["breed"])
+          x.instance_variable_set :@id, req["id"].to_i
+          x.instance_variable_set :@status, req["status"].to_sym
+          x
+        end
+      end
+
+      def self.complete_request(order)
+        completed_order = @purchase_orders.find {|x| x = order}
+        completed_order.status = :completed
+      end
+
+      def self.hold_to_pending(order)
+        to_pending = @purchase_orders.find {|x| x = order}
+        to_pending.first.status = :pending if !to_pending.nil?
+      end
+    end
   end
 end

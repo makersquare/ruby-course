@@ -2,7 +2,7 @@ require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::Puppy do
   describe '.initialize' do
-    it "creates a puppy with a name, age and breed" do
+    xit "creates a puppy with a name, age and breed" do
       spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
 
       expect(spot.name).to eq("Spot")
@@ -13,7 +13,7 @@ describe PuppyBreeder::Puppy do
   end
 
   describe '.add' do
-    it 'changes the status to :for_sale' do
+    xit 'changes the status to :for_sale' do
       spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
       spot.add
 
