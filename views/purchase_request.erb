@@ -19,13 +19,14 @@
 				<div class="col-md-12">
 			    	<h1>Purchase a Puppy!</h1>
 			    	<form type="/purchase_request" method="post">
-			    		<input type="text" name="name" placeholder="name" />
+			    		<input type="text" name="name" placeholder="Your Name" />
 			    		<h3>Breed:</h3>
-			    		<input type="radio" name="french" value="french">French Bulldog<br />
-						<input type="radio" name="boxer" value="boxer">Boxer<br />
-						<input type="radio" name="golden" value="golden">Golden Retriever<br />
-						<input type="radio" name="shihtzu" value="shihtzu">Shih Tzu<br />
-						<input type="submit" class="btn btn-success" value="Purchase!" />
+			    		<% @puppy_list.each do |puppy| %>
+				    	<input type="radio" name="breed" value=<%= puppy.breed %>> 
+				    	<%= puppy.breed.capitalize %><br/>
+				    	<% end %>
+				    	<br />
+    					<input type="submit" class="btn btn-success" value="Buy this PUPPY!" />
 					</form>
 		    	</div>
 		    </div>

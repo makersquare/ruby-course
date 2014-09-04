@@ -1,8 +1,9 @@
+# require 'pry-byebug'
 #Refer to this class as PuppyBreeder::PurchaseRequest
 module PuppyBreeder
   class PurchaseRequest
     attr_accessor :status
-    attr_reader :breed, :id
+    attr_reader :breed, :id, :cost
 
 # Counter for request_id.
     @@counter = 0
@@ -14,6 +15,9 @@ module PuppyBreeder
       @status = status
       @@counter += 1
       @id = @@counter
+      puppy_list = PuppyBreeder::puppy_container.puppies
+      # binding.pry
+      @cost = puppy_list[breed][:price]
     end
 
 # Approves purchase request and changes status to Approved.

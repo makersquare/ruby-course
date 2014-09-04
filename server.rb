@@ -13,29 +13,35 @@ get '/puppy' do
 end
 
 post '/puppy' do
-  # binding.pry
   puppy = PuppyBreeder::Puppy.new(params["breed"], params["name"], params["age"])
-  if PuppyBreeder::PuppyContainer.puppy_info[puppy.breed].nil?
-    PuppyBreeder::PuppyContainer.add_breed(puppy.breed)
+  if PuppyBreeder::puppy_container.puppies[puppy.breed].nil?
+    PuppyBreeder::puppy_container.add_breed(puppy.breed)
   end
-  PuppyBreeder::PuppyContainer.add_puppy(puppy)
+  PuppyBreeder::puppy_container.add_puppy(puppy)
   redirect to '/puppies'
 end
 
 get '/puppies' do
-  puppies = PuppyBreeder::PuppyContainer.puppy_info
-  @puppy_list = puppies.map { |key, val| val[:list] }.flatten
+  puppies = PuppyBreeder::puppy_container.puppies
+  @puppy_list = puppies.map { |key, val| val[:available_puppies] }.flatten
   erb :puppies
 end
 
 get '/purchase_request' do
+  puppies = PuppyBreeder::puppy_container.puppies
+  @puppy_list = puppies.map { |key, val| val[:available_puppies] }.flatten
   erb :purchase_request
 end
 
 post '/purchase_request' do
-
+  request = PuppyBreeder::PurchaseRequest.new(params["breed"])
+  PuppyBreeder::purchase_request_container.add_request(request)
+  redirect to '/requests'
 end
 
 get '/requests' do
+  @request_list = PuppyBreeder::purchase_request_container.requests
+  @puppy_list = PuppyBreeder::puppy_container.puppies
+  # binding.pry
   erb :requests
 end

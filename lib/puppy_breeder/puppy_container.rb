@@ -1,4 +1,5 @@
 #Refer to this class as PuppyBreeder::PuppyContainer
+require 'pry-byebug'
 module PuppyBreeder
   class PuppyContainer
 
@@ -10,11 +11,11 @@ module PuppyBreeder
 
 # Initialization creates a name variable and an empty hash with default value of 0.
     def initialize
-      @puppies = Hash.new(0)
+      @puppies = Hash.new
     end
 
 # Adds breed and cost of breed to container.
-    def add_breed(breed, cost)
+    def add_breed(breed, cost=1000)
       @puppies[breed] = { 
         :price => cost,
         :available_puppies => []
