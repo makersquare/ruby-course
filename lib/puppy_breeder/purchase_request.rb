@@ -19,6 +19,14 @@ module PuppyBreeder
       @status = "hold"
     end
 
+    def accept(breeder)
+      if @status == 'hold'
+      @status = "accepted"
+      breeder.breed_types[self.breed][:list].pop
+    end
+    end
+
+
   end
 
 end

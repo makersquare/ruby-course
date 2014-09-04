@@ -2,28 +2,21 @@ module PuppyBreeder
 
 class RequestContainer
 
-@@requests = {:doberman => [obj1,obj2],
-  :pitbull => [asdf,asdf,asdf]
+  attr_accessor :requests
+
+@@requests = {}
 
   def self.requests
     @@requests
   end
 
   def self.save_request(purchaserequest)
-  
-
-
-
-
-  if @@requests.keys.include?(purchaserequest.breed) 
-    return @@requests[purchaserequest.breed][:list] << purchaserequest
+    if @@requests.has_key?(purchaserequest.breed)
+      @@requests[purchaserequest.breed] << purchaserequest
     else
-      @@requests[purchaserequest.breed] = [purchaserequest]
-        
-    
-  else
-
-
+      @@requests[purchaserequest.breed] = []
+      @@requests[purchaserequest.breed] << purchaserequest
+    end
   end
 
   def self.show_all_requests
