@@ -16,7 +16,6 @@ module PuppyBreeder
       @@counter += 1
       @id = @@counter
       puppy_list = PuppyBreeder::puppy_container.puppies
-      # binding.pry
       @cost = puppy_list[breed][:price]
     end
 

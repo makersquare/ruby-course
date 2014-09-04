@@ -15,6 +15,18 @@ module PuppyBreeder
       # @db = PG.connect(host: 'localhost', dbname: 'puppy-breeder-db')
     end
 
+    def log
+      result = @db.exec('SELECT * FROM requests;')
+      result.entries.map do |req|
+        x = PuppyBreeder::PurchaseRequest.new(req[breed])
+        x.instance_variable_set :@id, req["id"].to_i
+        x.instance_variable_set :@status, req["status"].to_sym
+        x
+      # result.entries will look similar to:
+      # [{"id" => "3"}, {"breed" => "boxer"}, {"status" =>"pending"}]
+      end
+    end
+
 # Add an instance of PurchaseRequest into the requests hash with a key of the status.
     def add_request(request)
       if !PuppyBreeder.puppy_container.breed_availability(request.breed)
@@ -23,6 +35,19 @@ module PuppyBreeder
 
       @requests << request
     end
+
+    # def add_request(request)
+    #   pups_available = PuppyBreeder::Repos::Puppy.log.select { |p| p.breed == request.breed }
+      
+    #   if pups_available.empty?
+    #     request.hold!
+    #   end
+
+    #   @db.exec(%q[
+    #     INSERT INTO requests (breed, status)
+    #     VALUES ($1, $2);
+    #   ], (request.breed, request.status))
+    # end
 
     # Refactored
     # def self.add_request(request)
