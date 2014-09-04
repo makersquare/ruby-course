@@ -1,0 +1,78 @@
+#Refer to this class as PuppyBreeder::PuppyContainer
+require 'pry-byebug'
+module PuppyBreeder
+  class PuppyContainer
+
+    # Refactored
+    # @@puppies = {}
+
+# Access puppies hash.
+    attr_accessor :puppies
+
+# Initialization creates a name variable and an empty hash with default value of 0.
+    def initialize
+      @puppies = Hash.new
+    end
+
+# Adds breed and cost of breed to container.
+    def add_breed(breed, cost=1000)
+      @puppies[breed] = { 
+        :price => cost,
+        :available_puppies => []
+      }
+    end
+
+    # Refactored
+    # def self.add_breed(breed, price=1000)
+    #   @@puppies[breed] = {
+    #     :price => price, 
+    #     :list => []
+    #   }
+    # end
+
+# Adds a puppy to container. Puppy's breed must be added to container before puppy of that breed can be added, that way a price and available puppies array can be already established.
+    def add_puppy(puppy)
+      if @puppies[puppy.breed]
+        @puppies[puppy.breed][:available_puppies] << puppy
+      else
+        raise "No breed for puppy."
+      end
+    end
+
+    # Refactored
+    # def self.add_puppy(puppy)
+    #   if @@puppies[puppy.breed]
+    #     @@puppies[puppy.breed][:list] << puppy
+    #   else
+    #     raise "No Breed for that Puppy!"
+    #   end
+    # end
+
+# Removes puppy from :available_puppies array if that puppy is available.
+    def remove_puppy(puppy)
+      if @puppies[puppy.breed][:available_puppies].include?(puppy)
+        @puppies[puppy.breed][:available_puppies].delete(puppy)
+      end
+    end
+
+# Finds out whether that breed of puppy is available.
+    def breed_availability(breed)
+      if !@puppies.has_key?(breed)
+        return nil
+      elsif !@puppies[breed][:available_puppies].empty?
+        @puppies[breed][:available_puppies]
+      end
+    end
+
+# Get info of @@puppies
+    # Refactored
+    # def self.get_breed_price(breed)
+    #   @@puppies[breed][:price]
+    # end
+
+    # def self.puppy_info
+    #   @@puppies
+    # end
+
+  end
+end
