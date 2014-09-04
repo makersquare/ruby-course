@@ -27,13 +27,13 @@ get '/puppies' do
   erb :puppies
 end
 
-get '/purchase_request' do
+get '/request' do
   puppies = PuppyBreeder::puppy_container.puppies
   @puppy_list = puppies.map { |key, val| val[:available_puppies] }.flatten
-  erb :purchase_request
+  erb :request
 end
 
-post '/purchase_request' do
+post '/request' do
   request = PuppyBreeder::PurchaseRequest.new(params["breed"])
   PuppyBreeder::purchase_request_container.add_request(request)
   redirect to '/requests'

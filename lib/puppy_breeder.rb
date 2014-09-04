@@ -9,7 +9,7 @@ module PuppyBreeder
   end
 end
 
-require_relative 'puppy_breeder/puppy.rb'
-require_relative 'puppy_breeder/purchase_request.rb'
-require_relative 'puppy_breeder/puppy_container.rb'
-require_relative 'puppy_breeder/purchase_request_container.rb'
+require_relative 'puppy_breeder/entities/puppy.rb'
+require_relative 'puppy_breeder/entities/request.rb'
+require_relative 'puppy_breeder/databases/puppy_repo.rb'
+require_relative 'puppy_breeder/databases/request_repo.rb'
