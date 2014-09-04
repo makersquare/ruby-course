@@ -8,6 +8,10 @@ module PuppyBreeder
       @@completed_requests = []
       @@held_requests = []
 
+      def self.connect_db()
+        @@db = PG.connect(host: "localhost", dbname: "requests")
+      end
+
       def self.add_request(purchase_request)
         @@open_requests.push(purchase_request)
       end

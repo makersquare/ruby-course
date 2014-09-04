@@ -6,6 +6,26 @@ module PuppyBreeder
 
       @@puppies_for_sale = []
 
+      def self.connect_db()
+        @@db = PG.connect(host: "localhost", dbname: "puppies")
+      end
+
+      def build_puppies(entries)
+        entries.map do |pup|
+          name = pup["name"]
+          breed = pup["breed"] 
+          age = pup["age"].to_i
+
+          x = PuppyBreeder::Puppy.new(name, breed, age)
+
+        end
+      end
+
+      def log()
+        result = @@db.exec('SELECT * FROM puppies')
+        build_puppies(result.entries)
+      end
+
       def self.check_held_requests()
          PuppyBreeder::RequestManager.view_held_requests
       end
