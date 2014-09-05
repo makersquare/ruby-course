@@ -4,6 +4,22 @@ describe PuppyBreeder::Repos::Requests do
   before(:each) {PuppyBreeder::Repos::Requests.new.destroy}
   before(:each) {PuppyBreeder::Repos::Puppies.new.destroy}
 
+  describe '.log' do
+    it 'returns an array of request objects' do
+      requests = PuppyBreeder::Repos::Requests.new
+      result = requests.log
+
+      expect(result).to eq ([])
+
+      request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+      requests.add_request(request1)
+      result = requests.log
+
+      expect(result.size).to eq 1
+      expect(result.first.class).to eq(PuppyBreeder::PurchaseRequest)
+    end 
+  end
+
   describe '.add_request' do
     it "adds a new purchase request to the database" do
       requests = PuppyBreeder::Repos::Requests.new
@@ -52,37 +68,18 @@ describe PuppyBreeder::Repos::Requests do
     end
   end
 
-  describe '#complete_request' do
-    xit "changes the status of the accepted order to completed in the purchase orders array" do
-      request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
-      request2 = PuppyBreeder::PurchaseRequest.new("Pitbull")
+  # describe '#complete_request' do
+  #   xit "changes the status of the accepted order to completed in the purchase orders array" do
+  #     request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+  #     request2 = PuppyBreeder::PurchaseRequest.new("Pitbull")
 
-      request1.accept
+  #     request1.accept
 
-      result = PuppyBreeder::Repos::Requests.purchase_orders
+  #     result = PuppyBreeder::Repos::Requests.purchase_orders
 
-      expect(result.first.status).to eq(:completed)
-    end
-  end
-
-  describe '#pending_purchase_orders' do
-    xit "shows only purchase orders with a status of pending" do
-      spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
-      fido = PuppyBreeder::Puppy.new("Fido", 2, "Pitbull")
-      spot.add
-      fido.add
-    
-      request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
-      request2 = PuppyBreeder::PurchaseRequest.new("Pitbull")
-
-      request1.accept
-
-      result = PuppyBreeder::Repos::Requests.pending_purchase_orders
-
-      expect(result.size).to eq 1
-      expect(result.first.status).to eq (:pending)
-    end
-  end
+  #     expect(result.first.status).to eq(:completed)
+  #   end
+  # end
 
   describe '#completed_purchase_orders' do
     xit "shows only purchase orders with a status of completed" do
