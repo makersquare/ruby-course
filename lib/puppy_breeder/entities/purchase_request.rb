@@ -9,7 +9,7 @@ module PuppyBreeder
   	def initialize(breed, status="pending")
   		@breed = breed
   		@status = status
-      # @id = id
+      @id = nil
   	end
 
     def available?(inventory)

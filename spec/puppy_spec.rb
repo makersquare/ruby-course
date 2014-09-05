@@ -39,27 +39,29 @@ describe PuppyBreeder::Repos::PurchaseOrderArray do
 		expect(PuppyBreeder::Repos::PurchaseOrderArray).to be_a(Class)
 	end
 
-	describe ".initialize" do
-		xit "adds purchase requests to the array" do
-			po_array = PuppyBreeder::Repos::PurchaseOrderArray.new
-			PuppyBreeder.request_repo
-			expect(po_array.purchase_array).to eq([])
-		end
-	end
+	# describe ".initialize" do
+	# 	xit "creates a connection" do
+	# 		PuppyBreeder.request_repo
+	# 		expect().to be_a()
+	# 	end
+	# end
 		
 	describe ".add_purchase_request" do
-		xit "puts the purchase request in the array" do
-			po_array = PuppyBreeder::Repos::PurchaseOrderArray.new
+		it "puts the purchase request in the table" do
+			PuppyBreeder.request_repo.drop_table
 			po = PuppyBreeder::PurchaseRequest.new('boxer')
-			po_array.add_purchase_request(po)
+			PuppyBreeder.request_repo.add_purchase_request(po)
+			result = PuppyBreeder.request_repo.review_new_orders
 
-			expect(po_array.purchase_array.first).to eq(po)
+			expect(result.first.breed).to eq('boxer')
+			expect(po.id).to eq(1)
 		end
 	end
 
 	describe ".review_new_orders" do
 		it "returns an array with purchase requests with status pending" do
 			# po_array = PuppyBreeder::Repos::PurchaseOrderArray.new
+			PuppyBreeder.request_repo.drop_table
 			po1 = PuppyBreeder::PurchaseRequest.new('boxer')
 			po2 = PuppyBreeder::PurchaseRequest.new('fox')
 			PuppyBreeder.request_repo.add_purchase_request(po1)
@@ -72,84 +74,91 @@ describe PuppyBreeder::Repos::PurchaseOrderArray do
 	end
 
 	describe ".change_status" do
-		xit "changes the status of the purchase request in the array" do
-			po_array = PuppyBreeder::PurchaseOrderArray.new
+		it "changes the status of the purchase request in the array" do
+			PuppyBreeder.request_repo.drop_table
 			po = PuppyBreeder::PurchaseRequest.new('boxer')
-			po_array.add_purchase_request(po)
-			po_array.change_status(po, 'completed')
+			PuppyBreeder.request_repo.add_purchase_request(po)
+			PuppyBreeder.request_repo.change_status(po, 'hold')
+			result = PuppyBreeder.request_repo.review_orders_on_hold
 
-			expect(po_array.purchase_array.first.status).to eq('completed')
+			expect(result.first.status).to eq('hold')
 		end
 	end
 
 	describe ".review_orders_on_hold" do
-		xit "returns an array with purchase requests with status hold" do
-			po_array = PuppyBreeder::PurchaseOrderArray.new
+		it "returns an array with purchase requests with status hold" do
+			PuppyBreeder.request_repo.drop_table
 			po = PuppyBreeder::PurchaseRequest.new('boxer')
-			po_array.add_purchase_request(po)
-			po_array.change_status(po, 'hold')
+			po2 = PuppyBreeder::PurchaseRequest.new('dog')
+			PuppyBreeder.request_repo.add_purchase_request(po)
+			PuppyBreeder.request_repo.add_purchase_request(po2)
+			PuppyBreeder.request_repo.change_status(po, 'hold')
+			PuppyBreeder.request_repo.change_status(po2, 'hold')
+			result = PuppyBreeder.request_repo.review_orders_on_hold
 
-			expect(po_array.review_orders_on_hold).to eq([po])
+			expect(result.first.status).to eq('hold')
+			expect(result.last.status).to eq('hold')
 		end
 	end
 
 	describe ".review_all_orders_not_on_hold" do
-		xit "returns an array of all purchase orders not on hold" do
-			po_array = PuppyBreeder::PurchaseOrderArray.new
-			po1 = PuppyBreeder::PurchaseRequest.new('boxer')
+		it "returns an array of all purchase orders not on hold" do
+			PuppyBreeder.request_repo.drop_table
+			po = PuppyBreeder::PurchaseRequest.new('boxer')
 			po2 = PuppyBreeder::PurchaseRequest.new('fox')
-			po_array.add_purchase_request(po1)
-			po_array.add_purchase_request(po2)
-			po_array.add_purchase_request(po1)
-			po_array.change_status(po1, 'hold')
+			PuppyBreeder.request_repo.add_purchase_request(po)
+			PuppyBreeder.request_repo.add_purchase_request(po2)
+			PuppyBreeder.request_repo.change_status(po2, 'hold')
+			result = PuppyBreeder.request_repo.review_all_orders_not_on_hold
 
-			expect(po_array.review_all_orders_not_on_hold).to eq([po2])
+			expect(result.first.status).to eq('pending')
 		end
 	end
 
 	describe ".review_completed_orders" do
-		xit "returns an array with purchase requests with status completed" do
-			po_array = PuppyBreeder::PurchaseOrderArray.new
+		it "returns an array with purchase requests with status completed" do
+			PuppyBreeder.request_repo.drop_table
 			po = PuppyBreeder::PurchaseRequest.new('boxer')
-			po_array.add_purchase_request(po)
-			po_array.change_status(po, 'completed')
+			PuppyBreeder.request_repo.add_purchase_request(po)
+			PuppyBreeder.request_repo.change_status(po, 'completed')
+			result = PuppyBreeder.request_repo.review_completed_orders
 
-			expect(po_array.review_completed_orders).to eq([po])
+			expect(result.first.status).to eq('completed')
 		end
 	end
 end
 
 
-# describe PuppyBreeder::Repo::Inventory do
-# 	xit "exists" do
-# 		expect(PuppyBreeder::Inventory).to be_a(Class)
-# 	end
+describe PuppyBreeder::Repo::Inventory do
+	xit "exists" do
+		expect(PuppyBreeder::Inventory).to be_a(Class)
+	end
 
-# 	describe ".initialize" do
-# 		xit "creates empty hash inventory_hash in inventory class" do
-# 			inv = PuppyBreeder::Inventory.new
+	describe ".initialize" do
+		xit "creates empty hash inventory_hash in inventory class" do
+			inv = PuppyBreeder::Inventory.new
 			
-# 			expect(inv.inventory_hash).to eq({})
-# 		end
-# 	end
+			expect(inv.inventory_hash).to eq({})
+		end
+	end
 
-# 	describe ".add_breed_price" do
-# 		xit "adds to the breed price hash with the breed as the key and price as the value" do
-# 			inv = PuppyBreeder::Inventory.new
-# 			inv.add_breed_price("boxer", 2.99)
+	describe ".add_breed_price" do
+		xit "adds to the breed price hash with the breed as the key and price as the value" do
+			inv = PuppyBreeder::Inventory.new
+			inv.add_breed_price("boxer", 2.99)
 
-# 			expect(inv.inventory_hash.first).to eq(["boxer", {:price => 2.99, :puppies => []}])
-# 		end
-# 	end
+			expect(inv.inventory_hash.first).to eq(["boxer", {:price => 2.99, :puppies => []}])
+		end
+	end
 
-# 	describe ".add_puppy_to_inventory" do
-# 		xit "adds an instance of a puppy into the inventory hash" do
-# 			pup = PuppyBreeder::Puppy.new('doggy', 'boxer', 30)
-# 			inv = PuppyBreeder::Inventory.new
-# 			inv.add_breed_price("boxer", 2.99)
-# 			inv.add_puppy_to_inventory(pup)
+	describe ".add_puppy_to_inventory" do
+		xit "adds an instance of a puppy into the inventory hash" do
+			pup = PuppyBreeder::Puppy.new('doggy', 'boxer', 30)
+			inv = PuppyBreeder::Inventory.new
+			inv.add_breed_price("boxer", 2.99)
+			inv.add_puppy_to_inventory(pup)
 
-# 			expect(inv.inventory_hash[pup.breed][:puppies]).to eq([pup])
-# 		end
-#		end
-# end
+			expect(inv.inventory_hash[pup.breed][:puppies]).to eq([pup])
+		end
+		end
+end
