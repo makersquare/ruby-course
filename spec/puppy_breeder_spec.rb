@@ -1,4 +1,5 @@
 require_relative 'spec_helper.rb'
+require 'pry-byebug'
 
 describe PuppyBreeder do
 
@@ -50,56 +51,55 @@ describe PuppyBreeder do
 
   it "adds purchase request to purchase_orders array" do
     po = PuppyBreeder::PurchaseRequest.new("husky")
-    PuppyBreeder.store_purchase_orders(po)
+    PuppyBreeder.request_repo.store_purchase_orders(po)
     po2 = PuppyBreeder::PurchaseRequest.new("chow")
 
-    expect(PuppyBreeder.purchase_orders.length).to eq(1)
-    expect(PuppyBreeder.purchase_orders.last.breed).to eq("husky")
-    expect(PuppyBreeder.purchase_orders.last.status).to eq(:pending)
-    expect(PuppyBreeder.purchase_orders.last.id).to eq(1)
+    expect(PuppyBreeder.request_repo.purchase_orders.entries.length).to eq(1)
+    expect(PuppyBreeder.request_repo.purchase_orders.entries.last.breed).to eq("husky")
+    expect(PuppyBreeder.request_repo.purchase_orders.entries.last.status).to eq(:pending)
+    expect(PuppyBreeder.request_repo.purchase_orders.entries.last.id).to eq(1)
 
-    PuppyBreeder.store_purchase_orders(po2)
+    PuppyBreeder.request_repo.store_purchase_orders(po2)
 
-    expect(PuppyBreeder.purchase_orders.length).to eq(2)
-    expect(PuppyBreeder.purchase_orders.last.breed).to eq("chow")
-    expect(PuppyBreeder.purchase_orders.last.status).to eq(:pending)
-    expect(PuppyBreeder.purchase_orders.last.id).to eq(2)
+    expect(PuppyBreeder.request_repo.purchase_orders.length).to eq(2)
+    expect(PuppyBreeder.request_repo.purchase_orders.entries.last.breed).to eq("chow")
+    expect(PuppyBreeder.request_repo.purchase_orders.entries.last.status).to eq(:pending)
+    expect(PuppyBreeder.request_repo.purchase_orders.entries.last.id).to eq(2)
   end
 
-  xit "changes status of purchase order" do
-    PuppyBreeder.add_breed_to_hash("pug", 500)
+  it "changes status of purchase order" do
+    PuppyBreeder.breed_repo.add_breed('pug', 7000)
     po = PuppyBreeder::PurchaseRequest.new("pug")
-    PuppyBreeder.store_purchase_orders(po)
+    PuppyBreeder.request_repo.store_purchase_orders(po)
 
-    expect(PuppyBreeder.purchase_orders.length).to eq(1)
-    expect(PuppyBreeder.purchase_orders.first.breed).to eq("pug")
-    expect(PuppyBreeder.purchase_orders.first.status).to eq(:pending)
+    expect(PuppyBreeder.request_repo.purchase_orders.entries.length).to eq(1)
+    expect(PuppyBreeder.request_repo.purchase_orders.entries.first.breed).to eq("pug")
+    expect(PuppyBreeder.request_repo.purchase_orders.entries.first.status).to eq(:pending)
 
-    PuppyBreeder.review_order_status(po)
+    PuppyBreeder.request_repo.review_order_status(po)
 
-    expect(PuppyBreeder.purchase_orders.length).to eq(1)
-    expect(PuppyBreeder.purchase_orders.first.breed).to eq("pug")
-    expect(PuppyBreeder.purchase_orders.first.status).to eq(:on_hold)
+    expect(PuppyBreeder.request_repo.purchase_orders.entries.length).to eq(1)
+    expect(PuppyBreeder.request_repo.purchase_orders.entries.first.breed).to eq("pug")
+    expect(PuppyBreeder.request_repo.purchase_orders.entries.first.status).to eq(:on_hold)
 
     vik = PuppyBreeder::Puppy.new("viking", "pug", 16)
-    PuppyBreeder.add_puppy_to_hash(vik)
-    PuppyBreeder.review_order_status(po)
+    PuppyBreeder.puppy_repo.add_puppy(vik)
+    PuppyBreeder.request_repo.review_order_status(po)
 
-    expect(PuppyBreeder.purchase_orders.length).to eq(1)
-    expect(PuppyBreeder.purchase_orders.first.breed).to eq("pug")
-    expect(PuppyBreeder.purchase_orders.first.status).to eq(:complete)
-
+    expect(PuppyBreeder.request_repo.purchase_orders.entries.length).to eq(1)
+    expect(PuppyBreeder.request_repo.purchase_orders.entries.first.breed).to eq("pug")
+    expect(PuppyBreeder.request_repo.purchase_orders.entries.first.status).to eq(:complete)
   end
 
-  xit "views all complete orders" do
+  it "views all complete orders" do
     po = PuppyBreeder::PurchaseRequest.new("husky", :complete)
     po1 = PuppyBreeder::PurchaseRequest.new("chow", :complete)
     po2 = PuppyBreeder::PurchaseRequest.new("husky")
-    PuppyBreeder.store_purchase_orders(po)
-    PuppyBreeder.store_purchase_orders(po1)
-    PuppyBreeder.store_purchase_orders(po2)
+    PuppyBreeder.request_repo.store_purchase_orders(po)
+    PuppyBreeder.request_repo.store_purchase_orders(po1)
+    PuppyBreeder.request_repo.store_purchase_orders(po2)
 
-    result = PuppyBreeder.complete_orders
+    result = PuppyBreeder.request_repo.complete_orders
 
 
     expect(result.length).to eq(2)
@@ -107,56 +107,56 @@ describe PuppyBreeder do
 
   end
 
-  xit "orders the waitlist by purchase order id number" do
-    PuppyBreeder.add_breed_to_hash("bull", 500)
-    PuppyBreeder.add_breed_to_hash("husky", 1000)
+  it "orders the waitlist by purchase order id number" do
+    PuppyBreeder.breed_repo.add_breed("bull", 500)
+    PuppyBreeder.breed_repo.add_breed("husky", 1000)
     mav = PuppyBreeder::Puppy.new("mav", "husky", 4)
     bpo1 = PuppyBreeder::PurchaseRequest.new("bull")
     po2 = PuppyBreeder::PurchaseRequest.new("husky")
     bpo3 = PuppyBreeder::PurchaseRequest.new("bull")
 
-    PuppyBreeder.store_purchase_orders(bpo1)
-    PuppyBreeder.store_purchase_orders(po2)
-    PuppyBreeder.store_purchase_orders(bpo3)
+    PuppyBreeder.request_repo.store_purchase_orders(bpo1)
+    PuppyBreeder.request_repo.store_purchase_orders(po2)
+    PuppyBreeder.request_repo.store_purchase_orders(bpo3)
 
-    PuppyBreeder.review_order_status(bpo1)
-    PuppyBreeder.review_order_status(po2)
-    PuppyBreeder.review_order_status(bpo3)
+    PuppyBreeder.request_repo.review_order_status(bpo1)
+    PuppyBreeder.request_repo.review_order_status(po2)
+    PuppyBreeder.request_repo.review_order_status(bpo3)
 
-    result = PuppyBreeder.waitlist
+    result = PuppyBreeder.request_repo.waitlist
     expect(result.first.id).to eq(1)
     expect(result.last.id).to eq(3)
 
   end
 
-  xit "shows all purchase orders except those on hold" do
-    PuppyBreeder.add_breed_to_hash("chow", 500)
-    PuppyBreeder.add_breed_to_hash("husky", 1000)
+  it "shows all purchase orders except those on hold" do
+    PuppyBreeder.breed_repo.add_breed("chow", 500)
+    PuppyBreeder.breed_repo.add_breed("husky", 1000)
     po = PuppyBreeder::PurchaseRequest.new("husky")
     po1 = PuppyBreeder::PurchaseRequest.new("chow")
     po2 = PuppyBreeder::PurchaseRequest.new("husky")
-    PuppyBreeder.store_purchase_orders(po)
-    PuppyBreeder.store_purchase_orders(po1)
-    PuppyBreeder.store_purchase_orders(po2)
+    PuppyBreeder.request_repo.store_purchase_orders(po1)
+    PuppyBreeder.request_repo.store_purchase_orders(po2)
 
 
-    result = PuppyBreeder.active_orders
-
-    expect(result.length).to eq(3)
+    result = PuppyBreeder.request_repo.active_orders
+    expect(result.length).to eq(2)
   end
 
-  xit "automatically sells the puppy if there is a waitlist for that breed" do
-    po = PuppyBreeder::PurchaseRequest.new("husky")
-    PuppyBreeder.waitlist
+  # UNNECESSARY TEST FOR UNNECESSARY FEATURE:
+  
+  # it "automatically sells the puppy if there is a waitlist for that breed" do
+  #   po = PuppyBreeder::PurchaseRequest.new("husky")
+  #   result = PuppyBreeder.request_repo.waitlist
 
 
-    expect(PuppyBreeder.waitlist.length).to eq(1)
+  #   expect(result.length).to eq(1)
 
-    mav = PuppyBreeder::Puppy.new("mav", "husky", 45)
-    PuppyBreeder.add_puppy_to_hash(mav)
+  #   mav = PuppyBreeder::Puppy.new("mav", "husky", 45)
+  #   PuppyBreeder.puppy_repo.add_puppy(mav)
 
-    expect(PuppyBreeder.waitlist.length).to eq(0)
-    expect(mav.status).to eq(:purchased)
-    end
+  #   expect(PuppyBreeder.waitlist.length).to eq(0)
+  #   expect(mav.status).to eq(:purchased)
+  #   end
 
 end

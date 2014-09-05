@@ -51,9 +51,10 @@ module PuppyBreeder
         #   @@puppies[puppy.breed][:list] = [puppy]
         # end
       
-        @db.exec(%q[
+        result = @db.exec(%q[
             INSERT INTO puppies (name, breed, age, adoption_status)
-            VALUES ($1, $2, $3, $4);
+            VALUES ($1, $2, $3, $4)
+            RETURNING id;
             ], [pup.name, pup.breed, pup.age, pup.adoption_status])
       end
 
