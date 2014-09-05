@@ -5,10 +5,11 @@ module PuppyBreeder
 
       def initialize
         @db = PG.connect(host: "localhost", dbname: "requestDB")
-        @open_requests = []
-        @denied_requests = []
-        @completed_requests = []
-        @held_requests = []
+        #REPLACE THESE WITH THE DB!
+        # @open_requests = []
+        # @denied_requests = []
+        # @completed_requests = []
+        # @held_requests = []
       end
 
       def build_tables
