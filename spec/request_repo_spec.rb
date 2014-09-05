@@ -49,7 +49,7 @@ describe PuppyBreeder::Repos::Requests do
     end
   end
 
-  describe 'pending_requests' do
+  describe '.pending_requests' do
     it "shows all pending purchase requests" do
       requests = PuppyBreeder::Repos::Requests.new
       puppies = PuppyBreeder::Repos::Puppies.new
@@ -65,6 +65,26 @@ describe PuppyBreeder::Repos::Requests do
 
       expect(result.size).to eq 1
       expect(result.first.status).to eq(:pending)
+    end
+  end
+
+  describe '.completed_requests' do
+    it "shows all completed purchase requests" do
+      requests = PuppyBreeder::Repos::Requests.new
+      puppies = PuppyBreeder::Repos::Puppies.new
+      request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+      request2 = PuppyBreeder::PurchaseRequest.new("Pitbull") 
+      spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
+      puppies.add_puppy(spot)
+      request1.accept!    
+
+      requests.add_request(request1)
+      requests.add_request(request2)
+
+      result = requests.completed_requests
+
+      expect(result.size).to eq 1
+      expect(result.first.status).to eq(:completed)
     end
   end
 
