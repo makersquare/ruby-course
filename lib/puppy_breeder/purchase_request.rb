@@ -8,7 +8,7 @@ module PuppyBreeder
     def initialize(breed, status="pending")
       @breed = breed
       @status = status
-      @request_id = @@counter += 1
+      @request_id
 
     end
   end
