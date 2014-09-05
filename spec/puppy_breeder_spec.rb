@@ -18,13 +18,10 @@ describe PuppyBreeder do
 
   it "changes the price of a breed" do
     PuppyBreeder.breed_repo.add_breed('husky', 1000)
-
     expect(PuppyBreeder.breed_repo.breeds.first.price).to eq(1000)
-
+    
     PuppyBreeder.breed_repo.change_breed_price('husky', 600)
-
     expect(PuppyBreeder.breed_repo.breeds.first.price).to eq(600)
-
   end
 
   it "adds a new puppy object to the list" do
