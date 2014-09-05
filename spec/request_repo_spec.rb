@@ -20,11 +20,16 @@ describe PuppyBreeder::Repos::Requests do
       expect(result.first.breed).to eq("Golden Retriever")
     end
 
-    xit "checks if there is a puppy of the chosen breed available and marks as on_hold if not" do
+    it "checks if there is a puppy of the chosen breed available and marks as on_hold if not" do
+      requests = PuppyBreeder::Repos::Requests.new
+      puppies = PuppyBreeder::Repos::Puppies.new
       request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+      
+      requests.add_request(request1)
+      
+      result = requests.log
 
-      result = request1.status
-      expect(result).to eq(:on_hold)
+      expect(result.first.status).to eq (:on_hold)
     end
   end
 
