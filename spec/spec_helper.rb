@@ -1,0 +1,10 @@
+#require this file in your spec files to help DRY up your tests
+require 'rspec'
+require 'pry-byebug'
+require_relative '../lib/app.rb'
+# require_relative '../lib/app/databases/breed_repo.rb'
+# require_relative '../lib/app/databases/puppy_repo.rb'
+# require_relative '../lib/app/databases/request_repo.rb'
+# require_relative '../lib/app/entities/breed.rb'
+# require_relative '../lib/app/entities/puppy.rb'
+# require_relative '../lib/app/entities/request.rb'
