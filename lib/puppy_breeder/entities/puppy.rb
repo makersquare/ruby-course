@@ -1,8 +1,8 @@
 #Refer to this class as PuppyBreeder::Puppy
 module PuppyBreeder
   class Puppy
-    attr_reader :name, :age, :breed, :price
-    #attr_accessor :status
+    attr_reader :name, :age, :breed 
+    attr_accessor :price
 
     def initialize(name, age, breed)
       @name = name

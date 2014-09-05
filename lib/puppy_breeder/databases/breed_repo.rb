@@ -2,21 +2,21 @@ module PuppyBreeder
   module Repos
     class Breeds
 
-      def initialize #test?
+      def initialize
         @db = PG.connect(host: 'localhost', dbname: 'puppy-breeder')
         build_table
       end
 
-      def build_table #test?
+      def build_table
         @db.exec(%q[
           CREATE TABLE IF NOT EXISTS breeds(
             breed text PRIMARY KEY, 
             price money
           )
-        ]) #can primary key be left out if id serial?
+        ]) #can primary key be left out of id serial?
       end
 
-      def destroy #test?
+      def destroy 
         @db.exec(%q[
           DROP TABLE IF EXISTS breeds
         ])
@@ -28,7 +28,7 @@ module PuppyBreeder
         build_breeds(result.entries)
       end
 
-      def build_breeds(entries) #test?
+      def build_breeds(entries)
         entries.map do |req|
           x = PuppyBreeder::Breed.new(req["breed"], req["price"])
           x

@@ -3,14 +3,13 @@ require 'pg'
 module PuppyBreeder
   module Repos
     class Requests
-      #@purchase_orders = []
 
-      def initialize #test?
+      def initialize 
         @db = PG.connect(host: 'localhost', dbname: 'puppy-breeder')
         build_table
       end
 
-      def build_table #test?
+      def build_table 
         @db.exec(%q[
           CREATE TABLE IF NOT EXISTS requests(
             id serial,
@@ -20,7 +19,7 @@ module PuppyBreeder
         ])
       end
 
-      def destroy #test?
+      def destroy 
         @db.exec(%q[
           DROP TABLE IF EXISTS requests;
         ])
@@ -68,7 +67,7 @@ module PuppyBreeder
         build_request(result.entries)
       end
 
-      def build_request(entries) #test?
+      def build_request(entries) 
         entries.map do |req|
           x = PuppyBreeder::PurchaseRequest.new(req["breed"])
           x.instance_variable_set :@id, req["id"].to_i

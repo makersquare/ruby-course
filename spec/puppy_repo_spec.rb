@@ -42,6 +42,31 @@ describe PuppyBreeder::Repos::Puppies do
       expect(result.any?{|x| x.breed == "Boston Terrier"}).to be_false
     end
 
+    context "the breed of the puppy is not listed in the breeds database" do
+      it "adds puppy to database with nil price" do
+        spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
+        puppies = PuppyBreeder::Repos::Puppies.new
+        puppies.add_puppy(spot)
+        result = puppies.log
+
+        expect(result.first.price).to be_nil
+      end
+    end 
+
+    context "the breed of the puppy is listed in the breeds database" do
+      it "adds puppy to database with price from breed database" do
+        puppies = PuppyBreeder::Repos::Puppies.new
+        spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
+        breeds = PuppyBreeder::Repos::Breeds.new
+        golden = PuppyBreeder::Breed.new("Golden Retriever", 800)
+        breeds.add_breed(golden)
+        puppies.add_puppy(spot)
+        result = puppies.log
+
+        expect(result.first.price).to eq "$800.00"
+      end
+    end 
+
   end
 
   describe '.update_prices' do
@@ -70,21 +95,5 @@ describe PuppyBreeder::Repos::Puppies do
       expect(result.first.price).to eq "$800.00"
     end
   end
-
-  # describe '#purchase' do
-  #   it "removes puppies from the for sale group once purchased" do
-  #     spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
-  #     fido = PuppyBreeder::Puppy.new("Fido", 2, "Pitbull")
-      
-  #     spot.add(500)
-  #     fido.add(800)
-
-  #     order = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
-  #     result = order.accept
-      
-  #     expect(result["Golden Retriever"][:count]).to eq(0)
-  #     expect(result["Pitbull"][:count]).to eq(1)
-  #   end 
-  # end
 
 end

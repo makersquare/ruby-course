@@ -3,14 +3,13 @@ require 'pg'
 module PuppyBreeder
   module Repos
     class Puppies
-      #@for_sale = {}
       
-      def initialize #test?
+      def initialize
         @db = PG.connect(host: 'localhost', dbname: 'puppy-breeder')
         build_table
       end
 
-      def build_table #test?
+      def build_table
         @db.exec(%q[
           CREATE TABLE IF NOT EXISTS puppies(
             id serial,
@@ -22,7 +21,7 @@ module PuppyBreeder
         ])
       end
 
-      def destroy #test?
+      def destroy
         @db.exec(%q[
           DROP TABLE IF EXISTS puppies
         ])
@@ -34,7 +33,7 @@ module PuppyBreeder
         build_puppy(result.entries)
       end
 
-      def build_puppy(entries) #test?
+      def build_puppy(entries)
         entries.map do |req|
           x = PuppyBreeder::Puppy.new(req["name"], req["age"], req["breed"])
           x.instance_variable_set :@price, req["price"]
@@ -42,24 +41,17 @@ module PuppyBreeder
         end
       end
 
-      def add_puppy(puppy, price = nil)
+      def add_puppy(puppy)
+        breeds_available = PuppyBreeder.breed_repo.log.select { |b| b.breed == puppy.breed }
 
-        # if !@for_sale[puppy.breed]
-        #   @for_sale[puppy.breed] = {
-        #     price: price,
-        #     count: 1
-        #   }
-        # else
-        #   @for_sale[puppy.breed][:price] = price if !price
-        #   @for_sale[puppy.breed][:count] += 1
-        # end
-
-        # @for_sale
+        if breeds_available.first
+          puppy.price = breeds_available.first.price
+        end
 
         @db.exec(%q[
-          INSERT INTO puppies (name, age, breed)
-          VALUES ($1, $2, $3);
-        ], [puppy.name, puppy.age, puppy.breed])
+          INSERT INTO puppies (name, age, breed, price)
+          VALUES ($1, $2, $3, $4);
+        ], [puppy.name, puppy.age, puppy.breed, puppy.price])
 
         #if there is an on-hold request for this breed, change to pending
       end
@@ -71,20 +63,6 @@ module PuppyBreeder
           ], [b.price, b.breed])
         end
       end
-
-      # def self.purchase(breed)
-      #   if !@for_sale[breed] || @for_sale[breed][:count] == 0
-      #     return false
-      #   else
-      #     @for_sale[breed][:count] -= 1
-      #   end
-
-      #   @for_sale
-      # end
-
-      # def self.for_sale
-      #   @for_sale
-      # end
 
     end 
   end
