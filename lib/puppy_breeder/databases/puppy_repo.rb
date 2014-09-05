@@ -14,10 +14,10 @@ module PuppyBreeder
         @db.exec(%q[
           CREATE TABLE IF NOT EXISTS puppies (
             id serial,
+            name text,
             breed text,
             age int,
-            adoption_status text,
-            price int
+            adoption_status text
             )
           ])
       end
@@ -42,7 +42,7 @@ module PuppyBreeder
       # end
 
       # PG READY
-      def add_puppy_to_hash(pup)
+      def add_puppy(pup)
         # if @@puppies[puppy.breed] == nil
         #     @@puppies[puppy.breed] = {:price => 1000, :list => []}
         # elsif @@puppies[puppy.breed]
@@ -52,19 +52,9 @@ module PuppyBreeder
         # end
       
         @db.exec(%q[
-            INSERT INTO puppies (breed, age, adoption_status, price)
+            INSERT INTO puppies (name, breed, age, adoption_status)
             VALUES ($1, $2, $3, $4);
-            ], [pup.breed, pup.age, pup.adoption_status, pup.price])        # binding.pry
-      end
-
-      #PG READY
-      # Can i do this?
-      def change_breed_price(pup)
-        # @@puppies[breed][:price] = price
-        @db.exec(%q[
-            UPDATE puppies (price) WHERE breed = pup.breed
-            VALUES ($1); 
-          ], [pup.price])
+            ], [pup.name, pup.breed, pup.age, pup.adoption_status])
       end
 
 
@@ -81,7 +71,7 @@ module PuppyBreeder
       # PG READY
       def build_request(entries)
         entries.map do |pup|
-          x = PuppyBreeder::Puppy.new(pup['name'], pup['breed'], pup['age'], pup['adoption_status'].to_sym, pup['price'].to_i)
+          x = PuppyBreeder::Puppy.new(pup['name'], pup['breed'], pup['age'].to_i, pup['adoption_status'].to_sym)
           x.instance_variable_set :@id, pup['id'].to_i
           # x.instance_variable_set :@adoption_status, pup["adoption_status"].to_sym
           # x.instance_variable_set :@price, pup["price"].to_i

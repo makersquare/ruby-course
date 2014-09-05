@@ -11,6 +11,5 @@ describe PuppyBreeder::PurchaseRequest do
   po = PuppyBreeder::PurchaseRequest.new("husky")
   expect(po.breed).to eq("husky")
   expect(po.status).to eq(:pending)
-  expect(po.id).to eq(1)
   end
 end

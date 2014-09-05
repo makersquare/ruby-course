@@ -1,15 +1,16 @@
 #Refer to this class as PuppyBreeder::PurchaseRequest
 module PuppyBreeder
   class PurchaseRequest
-    attr_accessor :breed, :status, :id
+    attr_accessor :breed, :status
+    # :id
 
-    @@counter = 0
+    # @@counter = 0
 
-    def initialize(breed, status=:pending, id=nil)
+    def initialize(breed, status=:pending)
       @breed = breed
       @status = status
-      @@counter += 1
-      @id = @@counter
+      # @@counter += 1
+      # @id = @@counter
     end
 
     def pending?

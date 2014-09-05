@@ -4,42 +4,51 @@ describe PuppyBreeder do
 
   before(:each) do
     PuppyBreeder.puppy_repo.drop_and_rebuild
+    PuppyBreeder.request_repo.drop_and_rebuild
+    PuppyBreeder.breed_repo.drop_and_rebuild    
   end
 
-  it "adds breed to puppies hash using add_puppy_to_hash" do
-    mav = PuppyBreeder::Puppy.new("mav", "husky", 4)
-    PuppyBreeder.puppy_repo.add_puppy_to_hash(mav)
+  it "adds breed to puppies hash using add_breed" do
+    # mav = PuppyBreeder::Puppy.new("mav", "husky", 4)
+    PuppyBreeder.breed_repo.add_breed('husky', 1000)
     # this is the old way commented out
     # expect(PuppyBreeder.puppies.count).to eq(1)
     # when you call #puppy_repo.puppies you should get back an array of puppy objects
-    expect(PuppyBreeder.puppy_repo.puppies.count).to eq(1)
+    expect(PuppyBreeder.breed_repo.breeds.count).to eq(1)
+    expect(PuppyBreeder.breed_repo.breeds.first.breed).to eq('husky')
+    expect(PuppyBreeder.breed_repo.breeds.first.price).to eq(1000)
     # expect(PuppyBreeder.puppies["husky"][:price]).to eq(500)
     # expect(PuppyBreeder.puppies["husky"][:list]).to eq([])
   end
 
-  xit "changes the price of a breed" do
-    mav = PuppyBreeder::Puppy.new("mav", "husky", 4)
-    PuppyBreeder.puppy_repo.add_puppy_to_hash(mav)
+  it "changes the price of a breed" do
+    PuppyBreeder.breed_repo.add_breed('husky', 1000)
 
-    expect(PuppyBreeder.puppy_repo.puppies["husky"][:price]).to eq(500)
+    expect(PuppyBreeder.breed_repo.breeds.first.price).to eq(1000)
+    # expect(PuppyBreeder.puppy_repo.puppies.first.price).to eq(1000)
 
-    PuppyBreeder.change_breed_price("husky", 600)
-    expect(PuppyBreeder.puppies["husky"][:price]).to eq(600)
+    PuppyBreeder.breed_repo.change_breed_price('husky', 600)
+
+    expect(PuppyBreeder.breed_repo.breeds.first.price).to eq(600)
+    # expect(PuppyBreeder.puppy_repo.puppies["husky"][:price]).to eq(600)
 
   end
 
-  xit "adds a new puppy object to the list" do
-    mav = PuppyBreeder::Puppy.new("mav", "husky", 4)
-    viking = PuppyBreeder::Puppy.new("viking", "husky", 2)
-    PuppyBreeder.add_breed_to_hash(mav, 500)
-    PuppyBreeder.add_puppy_to_hash(mav)
-    PuppyBreeder.add_puppy_to_hash(viking)
+  it "adds a new puppy object to the list" do
+    mav = PuppyBreeder::Puppy.new("mav", "husky", 54)
+    vik = PuppyBreeder::Puppy.new("viking", "chow", 70)
 
-    expect(PuppyBreeder.puppies["husky"][:list][0]).to eq(mav)
-    expect(PuppyBreeder.puppies["husky"][:list][1]).to eq(viking)
+    PuppyBreeder.puppy_repo.add_puppy(mav)
+    PuppyBreeder.puppy_repo.add_puppy(vik)
+
+    expect(PuppyBreeder.puppy_repo.puppies.entries.first.id).to eq(1)
+    expect(PuppyBreeder.puppy_repo.puppies.entries.first.name).to eq('mav')
+    expect(PuppyBreeder.puppy_repo.puppies.entries.first.adoption_status).to eq(:available)
+    expect(PuppyBreeder.puppy_repo.puppies.entries[1].id).to eq(2)
+    expect(PuppyBreeder.puppy_repo.puppies.entries[1].name).to eq('viking')
   end
 
-  xit "adds purchase request to purchase_orders array" do
+  it "adds purchase request to purchase_orders array" do
     po = PuppyBreeder::PurchaseRequest.new("husky")
     PuppyBreeder.store_purchase_orders(po)
     po2 = PuppyBreeder::PurchaseRequest.new("chow")

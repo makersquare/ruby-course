@@ -121,9 +121,9 @@ module PuppyBreeder
       # PG READY
       def build_request(entries)
         entries.map do |req|
-          x = PuppyBreeder::PurchaseRequest.new(req["breed"])
-          x.instance_variable_set :@id, req["id"].to_i
-          x.instance_variable_set :@status, req["status"].to_sym
+          x = PuppyBreeder::PurchaseRequest.new(req['breed'], req['status'].to_sym)
+          # x.instance_variable_set :@id, req["id"].to_i
+          # x.instance_variable_set :@status, req["status"].to_sym
           x
         end
       end

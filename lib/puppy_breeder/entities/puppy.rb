@@ -3,15 +3,14 @@ require 'pry-byebug'
 
 module PuppyBreeder
   class Puppy
-    attr_accessor :name, :breed, :age, :adoption_status, :price
+    attr_accessor :name, :breed, :age, :adoption_status, :id
 
-    def initialize(name, breed, age, adoption_status=:available, price=1000)
+    def initialize(name, breed, age, adoption_status=:available, id=nil)
       @name = name
       @breed = breed
       @age = age
       @adoption_status = adoption_status
-      @price = price
-      # binding.pry
+      @id = id
     end
 
 
