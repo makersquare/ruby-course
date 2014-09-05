@@ -95,4 +95,41 @@ describe PuppyBreeder::Repos::PuppyRepo do
 
   end
 
+  it "Sets a puppy's status to On Hold" do
+
+    breeder = PuppyBreeder::Repos::PuppyRepo.new
+    breeder.drop_and_rebuild_tables
+
+    puppy = PuppyBreeder::Puppy.new("French Bulldog", "Jimmy", 1)
+    puppy2 = PuppyBreeder::Puppy.new("Boxer", "Atlas", 4)
+
+    breeder.add_puppy(puppy)
+    breeder.add_puppy(puppy2)
+
+    breeder.set_puppy_to_on_hold(breeder.show_puppies[0])
+
+    expect(breeder.show_held_puppies.length).to eq(1)
+
+  end
+
+  it "Sets a puppy's status to Sold" do
+
+    breeder = PuppyBreeder::Repos::PuppyRepo.new
+    breeder.drop_and_rebuild_tables
+
+    puppy = PuppyBreeder::Puppy.new("French Bulldog", "Jimmy", 1)
+    puppy2 = PuppyBreeder::Puppy.new("Boxer", "Atlas", 4)
+
+    breeder.add_puppy(puppy)
+    breeder.add_puppy(puppy2)
+
+    puppies = breeder.show_puppies
+
+    breeder.set_puppy_to_sold(puppies[0])
+    breeder.set_puppy_to_sold(puppies[1])
+
+    expect(breeder.show_sold_puppies.length).to eq(2)
+
+  end
+
 end

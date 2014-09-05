@@ -111,8 +111,28 @@ module PuppyBreeder
         holds = @db.exec(%q[
           SELECT * FROM requests WHERE status = 'On Hold';
         ])
-        # holds.sort_by! { |request| request.id }
         build_request(holds.entries)
+      end
+
+# APPROVED STATUS CHANGE
+      def set_request_to_approved(request)
+        @db.exec(%q[
+          UPDATE requests SET status = 'Approved' WHERE id = $1;
+        ], [request.id])
+      end
+
+# ON HOLD STATUS CHANGE
+      def set_request_to_on_hold(request)
+        @db.exec(%q[
+          UPDATE requests SET status = 'On Hold' WHERE id = $1;
+        ], [request.id])
+      end
+
+# DENIED STATUS CHANGE
+      def set_request_to_denied(request)
+        @db.exec(%q[
+          UPDATE requests SET status = 'Denied' WHERE id = $1;
+        ], [request.id])
       end
 
 # All current requests by the breed.

@@ -211,7 +211,79 @@ describe PuppyBreeder::Repos::RequestRepo do
     expect(request_repo.show_hold_requests).to be_a(Array)
     expect(request_repo.show_hold_requests.length).to eq(1)
 
-  end  
+  end 
+
+# Approved Status Change Method Tester
+  it "Sets the request status to Approved." do
+
+    request_repo = PuppyBreeder::Repos::RequestRepo.new
+    request_repo.drop_and_rebuild_tables
+
+    request = PuppyBreeder::Request.new("French Bulldog")
+    request2 = PuppyBreeder::Request.new("French Bulldog")
+    request3 = PuppyBreeder::Request.new("French Bulldog")
+
+    request_repo.add_request(request)
+    request_repo.add_request(request2)
+    request_repo.add_request(request3)
+
+    requests = request_repo.log
+
+    request_repo.set_request_to_approved(requests[0])
+    request_repo.set_request_to_approved(requests[2])
+
+    expect(request_repo.show_approved_requests).to be_a(Array)
+    expect(request_repo.show_approved_requests.length).to eq(2)
+
+  end
+
+# On Hold Status Change Method Tester
+  it "Sets the request status to On Hold." do
+
+    request_repo = PuppyBreeder::Repos::RequestRepo.new
+    request_repo.drop_and_rebuild_tables
+
+    request = PuppyBreeder::Request.new("French Bulldog")
+    request2 = PuppyBreeder::Request.new("French Bulldog")
+    request3 = PuppyBreeder::Request.new("French Bulldog")
+
+    request_repo.add_request(request)
+    request_repo.add_request(request2)
+    request_repo.add_request(request3)
+
+    requests = request_repo.log
+
+    request_repo.set_request_to_on_hold(requests[0])
+    request_repo.set_request_to_on_hold(requests[2])
+
+    expect(request_repo.show_hold_requests).to be_a(Array)
+    expect(request_repo.show_hold_requests.length).to eq(2)
+
+  end
+
+# Denied Status Change Method Tester 
+  it "Sets the request status to Denied." do
+
+    request_repo = PuppyBreeder::Repos::RequestRepo.new
+    request_repo.drop_and_rebuild_tables
+
+    request = PuppyBreeder::Request.new("French Bulldog")
+    request2 = PuppyBreeder::Request.new("French Bulldog")
+    request3 = PuppyBreeder::Request.new("French Bulldog")
+
+    request_repo.add_request(request)
+    request_repo.add_request(request2)
+    request_repo.add_request(request3)
+
+    requests = request_repo.log
+
+    request_repo.set_request_to_denied(requests[0])
+    request_repo.set_request_to_denied(requests[2])
+
+    expect(request_repo.show_denied_requests).to be_a(Array)
+    expect(request_repo.show_denied_requests.length).to eq(2)
+
+  end
 
 # Requests by Breed Method Tester
   it "Returns an array of all requests by breed." do

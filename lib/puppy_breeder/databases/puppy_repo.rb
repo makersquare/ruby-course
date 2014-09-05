@@ -82,12 +82,16 @@ module PuppyBreeder
         build_request(sold)
       end
 
-      def set_puppy_to_on_hold
-
+      def set_puppy_to_on_hold(puppy)
+        @db.exec(%q[
+          UPDATE puppies SET status = 'On Hold' WHERE id = $1;
+        ], [puppy.id])
       end
 
-      def set_puppy_to_sold
-
+      def set_puppy_to_sold(puppy)
+        @db.exec(%q[
+          UPDATE puppies SET status = 'Sold' WHERE id = $1;
+        ], [puppy.id])
       end
 
     end
