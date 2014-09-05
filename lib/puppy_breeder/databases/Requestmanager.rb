@@ -4,11 +4,23 @@ module PuppyBreeder
     class RequestManager
 
       def initialize
-        @db = PG.connect(host: "localhost", dbname: "requests")
+        @db = PG.connect(host: "localhost", dbname: "requestDB")
         @open_requests = []
         @denied_requests = []
         @completed_requests = []
         @held_requests = []
+      end
+
+      def build_tables
+        @db.exec(%q[
+          CREATE TABLE IF NOT EXISTS requests(
+            breed text,
+            price int,
+            open boolean,
+            denied boolean,
+            completed boolean,
+            held boolean);
+        ])
       end
 
       #Need to place requests into appropriate arrays above!
@@ -16,10 +28,10 @@ module PuppyBreeder
         entries.map do |req| 
           breed = req["breed"]
           price = req["price"]
-          open = 
-          denied =
-          completed =
-          held = 
+          open = req["open"]
+          denied = req["closed"]
+          completed = req["completed"]
+          held = req["held"]
           x = PuppyBreeder::PurchaseRequest.new(breed, request_manager)
         end
       end

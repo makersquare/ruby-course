@@ -5,8 +5,17 @@ module PuppyBreeder
     class PuppyManager
 
       def initialize
-        @db = PG.connect(host: "localhost", dbname: "puppies")
+        @db = PG.connect(host: "localhost", dbname: "puppyDB")
         @puppies_for_sale = []
+      end
+
+      def build_tables
+        @db.exec(%q[
+          CREATE TABLE IF NOT EXISTS puppies(
+            name text,
+            breed text,
+            age int);
+          ])
       end
 
       def build_puppies(entries)
