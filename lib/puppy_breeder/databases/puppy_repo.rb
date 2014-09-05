@@ -7,10 +7,10 @@ module PuppyBreeder
       
       def initialize #test?
         @db = PG.connect(host: 'localhost', dbname: 'puppy-breeder')
-        build_tables
+        build_table
       end
 
-      def build_tables #test?
+      def build_table #test?
         @db.exec(%q[
           CREATE TABLE IF NOT EXISTS puppies(
             id serial,
@@ -19,13 +19,6 @@ module PuppyBreeder
             breed text
           )
         ])
-
-        @db.exec(%q[
-          CREATE TABLE IF NOT EXISTS breeds(
-            breed text,
-            price int
-          )
-        ]) #HOW TO MAKE BREED THE KEY?
       end
 
       def destroy #test?
@@ -38,7 +31,7 @@ module PuppyBreeder
       end
 
       def log
-        build_tables
+        build_table
         result = @db.exec('SELECT * FROM puppies;')
         build_puppy(result.entries)
       end

@@ -21,7 +21,7 @@ describe PuppyBreeder::Repos::Puppies do
   end
 
   describe '.add_puppy' do
-    it "can add puppies for sale" do
+    it "can add puppies to the database" do
       spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
       fido = PuppyBreeder::Puppy.new("Fido", 2, "Pitbull")
       puppies = PuppyBreeder::Repos::Puppies.new
@@ -41,6 +41,11 @@ describe PuppyBreeder::Repos::Puppies do
       expect(result.any?{|x| x.breed == "Boston Terrier"}).to be_false
     end
 
+  end
+
+  describe '.add_breed' do
+    xit "adds a new breed with price to the breeds database" do
+    end
   end
 
   # describe '#purchase' do
