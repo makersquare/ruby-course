@@ -32,10 +32,12 @@ module PuppyBreeder
           request.status = 'hold'
         end
 
-        @db.exec(%q[
+        result = @db.exec(%q[
           INSERT INTO requests (breed, status)
-          VALUES ($1, $2);
+          VALUES ($1, $2)
+          RETURNING id;
         ], [request.breed, request.status])
+        request.id = result.first["id"].to_i
       end
 
       def log
@@ -57,16 +59,17 @@ module PuppyBreeder
         build_request(result.entries)
       end
 
-      def accept_purchase_request
+      def accept_purchase_request(request)
         @db.exec(%q[
-          UPDATE requests SET status = 'complete' WHERE status = 'pending';
-        ])
+          UPDATE requests SET status = 'complete' WHERE id = $1;
+        ], [request.id])
       end
 
       def build_request(entries)
         entries.map do |req|
           x = PuppyBreeder::PurchaseRequest.new(req["breed"])
           x.instance_variable_set :@status, req["status"]
+          x.instance_variable_set :@id, req["id"].to_i
           x
         end
       end
