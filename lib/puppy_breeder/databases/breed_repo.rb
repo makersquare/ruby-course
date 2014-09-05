@@ -18,7 +18,7 @@ module PuppyBreeder
         @db.exec(%q[
           CREATE TABLE IF NOT EXISTS breeds(
             breed text,
-            price int
+            price money
           )
         ])
       end
@@ -47,7 +47,7 @@ module PuppyBreeder
         entries.map do |req|
           x = PuppyBreeder::Breed.new(req["breed"], req["price"])
           x.instance_variable_set :@breed, req["breed"]
-          x.instance_variable_set :@price, req["price"].to_i
+          x.instance_variable_set :@price, req["price"]
           x
         end
       end

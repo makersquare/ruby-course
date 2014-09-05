@@ -35,7 +35,7 @@ describe PuppyBreeder::Repos::BreedLog do
       PuppyBreeder.breed_repo.update_price(breed)
 
       result = PuppyBreeder.breed_repo.log.first
-      expect(result.price).to eq(1000)
+      expect(result.price).to eq("$1,000.00")
     end
   end
 
