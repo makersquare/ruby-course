@@ -142,18 +142,19 @@ describe PuppyBreeder::Repos::Inventory do
 	# 	end
 	# end
 
-	# describe ".add_breed_price" do
-	# 	xit "adds to the breed price hash with the breed as the key and price as the value" do
-	# 		inv = PuppyBreeder::Inventory.new
-	# 		inv.add_breed_price("boxer", 2.99)
+	describe ".add_breed_price" do
+		it "adds to the breed price to the database" do
+			PuppyBreeder.inventory_repo.drop_tables
+			PuppyBreeder.inventory_repo.add_breed_price('boxer', 2.99)
+			result = PuppyBreeder.inventory_repo.review_prices
 
-	# 		expect(inv.inventory_hash.first).to eq(["boxer", {:price => 2.99, :puppies => []}])
-	# 	end
-	# end
+			expect(result.first).to eq({"breed" => "boxer", "price" => "$2.99"})
+		end
+	end
 
 	describe ".add_puppy_to_inventory" do
 		it "adds an instance of a puppy into the database" do
-			PuppyBreeder.inventory_repo.drop_table
+			PuppyBreeder.inventory_repo.drop_tables
 			pup = PuppyBreeder::Puppy.new('doggy', 'boxer', 30)
 			PuppyBreeder.inventory_repo.add_puppy_to_inventory(pup)
 			result = PuppyBreeder.inventory_repo.review_puppies

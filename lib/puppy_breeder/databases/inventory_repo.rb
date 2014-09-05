@@ -19,11 +19,21 @@ module PuppyBreeder
               age integer
             )
         ])
+
+        @db.exec(%q[
+        	CREATE TABLE IF NOT EXISTS prices(
+        			breed text,
+        			price money
+        		)
+        ])
       end
 
-      def drop_table
+      def drop_tables
         @db.exec(%q[
           DROP TABLE inventory;
+        ])
+        @db.exec(%q[
+          DROP TABLE prices;
         ])
         build_tables
       end
@@ -34,19 +44,30 @@ module PuppyBreeder
 			# 	@inventory_hash = Hash.new
 			# end
 
-			# def add_breed_price(breed, price)
-			# 	inventory_hash[breed] = {
-			# 		:price => price,
-			# 		:puppies =>[]
-			# 	}
-			# end
+			def add_breed_price(breed, price)
+				# inventory_hash[breed] = {
+				# 	:price => price,
+				# 	:puppies =>[]
+				# }
+				result = @db.exec(%q[
+          INSERT INTO prices (breed, price)
+          VALUES ($1, $2);
+          ], [breed, price])
+			end
 
-			def build_request(entries)
+			def review_prices
+				result = @db.exec(%q[
+					SELECT * FROM prices;
+				])
+				result.entries
+			end
+
+			def build_puppies(entries)
         entries.map do |req|
           x = PuppyBreeder::Puppy.new(req["name"], req["breed"], req["age"])
           x.instance_variable_set :@name, req["name"]
           x.instance_variable_set :@breed, req["breed"]
-          x.instance_variable_set :@age, req["age"]
+          x.instance_variable_set :@age, req["age"].to_i
           x
         end
       end
@@ -55,7 +76,7 @@ module PuppyBreeder
         result = @db.exec(%q[
           SELECT * FROM inventory;
         ])
-        build_request(result.entries)
+        build_puppies(result.entries)
       end
 
 			def add_puppy_to_inventory(puppy)
