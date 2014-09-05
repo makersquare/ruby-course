@@ -1,15 +1,20 @@
 require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::Repos::Requests do
-  before(:each) {PuppyBreeder.puppy_repo.destroy_and_rebuild}
-  before(:each) {PuppyBreeder.request_repo.destroy_and_rebuild}
+  before(:each) {PuppyBreeder::Repos::Requests.new.destroy}
+  before(:each) {PuppyBreeder::Repos::Puppies.new.destroy}
 
-  describe '#new_request' do
-    xit "adds a new purchase request to the purchase orders array" do
+  describe '.add_request' do
+    it "adds a new purchase request to the database" do
+      requests = PuppyBreeder::Repos::Requests.new
+      puppies = PuppyBreeder::Repos::Puppies.new
       request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
       request2 = PuppyBreeder::PurchaseRequest.new("Pitbull")
-
-      result = PuppyBreeder::Repos::Requests.purchase_orders
+      
+      requests.add_request(request1)
+      requests.add_request(request2)
+      
+      result = requests.log
 
       expect(result.size).to eq 2
       expect(result.first.breed).to eq("Golden Retriever")
@@ -22,18 +27,22 @@ describe PuppyBreeder::Repos::Requests do
       expect(result).to eq(:on_hold)
     end
   end
-  
+
   describe 'pending_requests' do
     it "shows all pending purchase requests" do
-      request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
-      request2 = PuppyBreeder::PurchaseRequest.new("Pitbull")
       requests = PuppyBreeder::Repos::Requests.new
-      puppies = PuppyBreeder::Repos::Requests.new
+      puppies = PuppyBreeder::Repos::Puppies.new
+      request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+      request2 = PuppyBreeder::PurchaseRequest.new("Pitbull") 
+      spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
+      puppies.add_puppy(spot)    
+
       requests.add_request(request1)
       requests.add_request(request2)
+
       result = requests.pending_requests
 
-      expect(result.size).to eq 2
+      expect(result.size).to eq 1
       expect(result.first.status).to eq(:pending)
     end
   end

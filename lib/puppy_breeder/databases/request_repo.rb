@@ -20,11 +20,10 @@ module PuppyBreeder
         ])
       end
 
-      def destroy_and_rebuild
+      def destroy
         @db.exec(%q[
           DROP TABLE IF EXISTS requests
         ])
-        build_table
       end
 
       def log

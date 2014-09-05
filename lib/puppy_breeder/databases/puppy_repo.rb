@@ -28,14 +28,13 @@ module PuppyBreeder
         ]) #HOW TO MAKE BREED THE KEY?
       end
 
-      def destroy_and_rebuild
+      def destroy
         @db.exec(%q[
           DROP TABLE IF EXISTS puppies
         ])
         @db.exec(%q[
           DROP TABLE IF EXISTS breeds
         ])
-        build_tables
       end
 
       def log

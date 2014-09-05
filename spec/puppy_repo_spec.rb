@@ -1,8 +1,8 @@
 require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::Repos::Puppies do
-  before(:each) {PuppyBreeder.puppy_repo.destroy_and_rebuild}
-  before(:each) {PuppyBreeder.request_repo.destroy_and_rebuild}
+  before(:each) {PuppyBreeder.puppy_repo.destroy}
+  before(:each) {PuppyBreeder.request_repo.destroy}
 
   describe '.add_puppy' do
     it "can add puppies for sale" do
