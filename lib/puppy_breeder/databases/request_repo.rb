@@ -5,12 +5,12 @@ module PuppyBreeder
     class Requests
       #@purchase_orders = []
 
-      def initialize
+      def initialize #test?
         @db = PG.connect(host: 'localhost', dbname: 'puppy-breeder')
         build_table
       end
 
-      def build_table
+      def build_table #test?
         @db.exec(%q[
           CREATE TABLE IF NOT EXISTS requests(
             id serial,
@@ -20,7 +20,7 @@ module PuppyBreeder
         ])
       end
 
-      def destroy
+      def destroy #test?
         @db.exec(%q[
           DROP TABLE IF EXISTS requests
         ])
@@ -65,7 +65,7 @@ module PuppyBreeder
         build_request(result.entries)
       end
 
-      def build_request(entries)
+      def build_request(entries) #test?
         entries.map do |req|
           x = PuppyBreeder::PurchaseRequest.new(req["breed"])
           x.instance_variable_set :@id, req["id"].to_i

@@ -4,6 +4,22 @@ describe PuppyBreeder::Repos::Puppies do
   before(:each) {PuppyBreeder.puppy_repo.destroy}
   before(:each) {PuppyBreeder.request_repo.destroy}
 
+  describe '.log' do
+    it 'returns an array of puppy objects' do
+      puppies = PuppyBreeder::Repos::Puppies.new
+      result = puppies.log
+
+      expect(result).to eq ([])
+
+      spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
+      puppies.add_puppy(spot)
+      result = puppies.log
+
+      expect(result.size).to eq 1
+      expect(result.first.class).to eq(PuppyBreeder::Puppy)
+    end 
+  end
+
   describe '.add_puppy' do
     it "can add puppies for sale" do
       spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")

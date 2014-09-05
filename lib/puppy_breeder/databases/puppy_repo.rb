@@ -5,12 +5,12 @@ module PuppyBreeder
     class Puppies
       #@for_sale = {}
       
-      def initialize
+      def initialize #test?
         @db = PG.connect(host: 'localhost', dbname: 'puppy-breeder')
         build_tables
       end
 
-      def build_tables
+      def build_tables #test?
         @db.exec(%q[
           CREATE TABLE IF NOT EXISTS puppies(
             id serial,
@@ -28,7 +28,7 @@ module PuppyBreeder
         ]) #HOW TO MAKE BREED THE KEY?
       end
 
-      def destroy
+      def destroy #test?
         @db.exec(%q[
           DROP TABLE IF EXISTS puppies
         ])
