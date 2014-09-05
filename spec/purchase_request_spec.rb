@@ -147,18 +147,18 @@ describe PuppyPalace::PurchaseRequest do
     expect(PuppyPalace.request_repo.show_hold.count).to eq(1)
   end
 
-  xit "shows holding orders and confirms that they are in the correct order" do
-    PuppyPalace::PurchaseRequest.new("german shepherd")
-    PuppyPalace::PurchaseRequest.new("german shepherd")
-    PuppyPalace::PurchaseRequest.new("german shepherd")
-    PuppyPalace::PurchaseRequest.new("german shepherd")
+  # xit "shows holding orders and confirms that they are in the correct order" do
+  #   PuppyPalace::PurchaseRequest.new("german shepherd")
+  #   PuppyPalace::PurchaseRequest.new("german shepherd")
+  #   PuppyPalace::PurchaseRequest.new("german shepherd")
+  #   PuppyPalace::PurchaseRequest.new("german shepherd")
 
-    PuppyPalace::PurchaseRequest.hold(0)
-    PuppyPalace::PurchaseRequest.hold(3)
+  #   PuppyPalace::PurchaseRequest.hold(0)
+  #   PuppyPalace::PurchaseRequest.hold(3)
     
-    expect(PuppyPalace::PurchaseRequest.on_hold.first.id_num).to eq(0)
-    expect(PuppyPalace::PurchaseRequest.on_hold.last.id_num).to eq(3)
-  end
+  #   expect(PuppyPalace::PurchaseRequest.on_hold.first.id_num).to eq(0)
+  #   expect(PuppyPalace::PurchaseRequest.on_hold.last.id_num).to eq(3)
+  # end
 end
 
 # describe PuppyPalace::Breeder do

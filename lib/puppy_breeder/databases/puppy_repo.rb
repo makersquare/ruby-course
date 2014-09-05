@@ -47,36 +47,6 @@ module PuppyPalace
           VALUES ($1,$2,$3);
           ], [puppy.name,puppy.breed,puppy.age])
       end
-
-      # def add_puppy(puppy)
-      #   result = @db.exec(%q[
-      #     SELECT * FROM puppies WHERE breed = $1}
-      #     ], [puppy.breed])
-
-      #   if result.empty?
-      #     orders_on_hold = PuppyPalace::Repos::PurchaseReqLog.log.select { |req| req.breed == puppy.breed }
-      #     orders_on_hold.each { |req| req.activated! }
-      #   end
-
-      #   @db.exec(%q[
-      #     INSERT INTO puppies (name,breed,age) 
-      #     VALUES ($1,$2,$3);
-      #   ], [request.name,request.breed,request.age])
-      # end
-
-      # def new_breed(breed, price=1000)
-      #   result = @db.exec('SELECT * FROM puppies WHERE breed = #{breed}')
-      #   return "That breed already exists!" if !result.nil?
-
-      # end
-
-      # def breed_price(breed, price)
-
-      # end
-
-      # def show_by_breed(breed)
-      #   result = @db.exec('SELECT * FROM puppies WHERE breed = #{breed}')
-      # end
     end
   end
 end
