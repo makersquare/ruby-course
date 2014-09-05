@@ -1,7 +1,18 @@
 require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::Repos::PuppyLog do
-  describe '.add_puppy' do
+
+  describe '#log' do
+    it 'returns array of puppy objects' do
+      puppy = PuppyBreeder::Puppy.new("Fido", "Poodle", 23)
+      PuppyBreeder.puppy_repo.add_puppy(puppy)
+
+      result = PuppyBreeder.puppy_repo.log.first
+      expect(result).to be_an_instance_of(PuppyBreeder::Puppy)
+    end
+  end
+
+  describe '#add_puppy' do
     it 'adds a puppy to the data structure' do
       PuppyBreeder.puppy_repo.drop_tables
       puppy1 = PuppyBreeder::Puppy.new("Fido", "Greyhound", 30)

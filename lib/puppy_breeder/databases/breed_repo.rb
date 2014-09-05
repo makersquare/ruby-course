@@ -37,6 +37,12 @@ module PuppyBreeder
         ], [breed.breed, breed.price])
       end
 
+      def update_price(breed)
+        @db.exec(%q[
+          UPDATE breeds SET price = $1 WHERE breed = $2;
+        ], [breed.price, breed.breed])
+      end
+
       def build_breed(entries)
         entries.map do |req|
           x = PuppyBreeder::Breed.new(req["breed"], req["price"])

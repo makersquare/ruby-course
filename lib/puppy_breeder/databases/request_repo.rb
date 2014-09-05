@@ -43,7 +43,7 @@ module PuppyBreeder
         build_request(result.entries)
       end
 
-      def get_completed_orders
+      def get_completed_requests
         result = @db.exec(%q[
           SELECT * FROM requests WHERE status = 'complete';
         ])

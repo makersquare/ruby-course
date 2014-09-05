@@ -20,9 +20,9 @@ describe PuppyBreeder::Repos::RequestLog do
     end
   end
 
-  describe '.get_completed_orders' do
+  describe '.get_completed_requests' do
     it 'returns the orders which have a status of complete' do
-      res = PuppyBreeder.request_repo.get_completed_orders
+      res = PuppyBreeder.request_repo.get_completed_requests
       expect(res.size).to eq(0)
     end
   end
@@ -37,7 +37,7 @@ describe PuppyBreeder::Repos::RequestLog do
   describe '.accept_purchase_request' do
     it 'accept the purchase requests' do
       PuppyBreeder.request_repo.accept_purchase_request
-      expect(PuppyBreeder.request_repo.get_completed_orders.sample.status).to eq('complete')
+      expect(PuppyBreeder.request_repo.get_completed_requests.sample.status).to eq('complete')
     end
   end
 end

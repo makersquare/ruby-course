@@ -7,7 +7,7 @@ describe PuppyBreeder::Repos::BreedLog do
   end
 
   describe '#log' do
-    it 'returns breed objects' do
+    it 'returns array of breed objects' do
       breed = PuppyBreeder::Breed.new("Poodle", 800)
       PuppyBreeder.breed_repo.add_breed(breed)
 
@@ -24,6 +24,16 @@ describe PuppyBreeder::Repos::BreedLog do
       result = PuppyBreeder.breed_repo.log
       expect(result.size).to eq(2)
       expect(result.last.breed).to eq("Husky")
+    end
+  end
+
+  describe '#update_price' do
+    it 'updates a breeds price' do
+      breed = PuppyBreeder::Breed.new("Husky", 750)
+      PuppyBreeder.breed_repo.update_price(breed)
+
+      result = PuppyBreeder.breed_repo.log.last
+      expect(result.price).to eq(750)
     end
   end
 
