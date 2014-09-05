@@ -31,4 +31,16 @@ describe PuppyBreeder::Repos::PuppyLog do
       expect(result).to eq(4)
     end
   end
+
+  describe '#update_puppy' do
+    it 'updates a puppies info based on id' do
+      puppy = PuppyBreeder::Puppy.new("Oreo", "Cat", 70)
+      PuppyBreeder.puppy_repo.add_puppy(puppy)
+      puppy.breed = "Husky"
+      PuppyBreeder.puppy_repo.update_puppy(puppy)
+
+      result = PuppyBreeder.puppy_repo.log.last.breed
+      expect(result).to eq("Husky")
+    end
+  end
 end

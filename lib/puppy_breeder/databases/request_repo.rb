@@ -37,7 +37,7 @@ module PuppyBreeder
           VALUES ($1, $2)
           RETURNING id;
         ], [request.breed, request.status])
-        request.id = result.first["id"].to_i
+        request.instance_variable_set("@id", result[0]["id"])
       end
 
       def log
