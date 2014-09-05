@@ -23,13 +23,6 @@ module PuppyBreeder
             age int
           )
         ])
-
-        @db.exec(%q[
-          CREATE TABLE IF NOT EXISTS breeds(
-            breed text,
-            price int
-          )
-        ])
       end
 
       def drop_tables
@@ -41,13 +34,6 @@ module PuppyBreeder
           DROP TABLE breeds;
         ])
         build_tables
-      end
-
-      def add_breed(breed, price=999)
-        @db.exec(%q[
-          INSERT INTO breeds (breed, price)
-            VALUES ($1, $2);
-        ], [breed, price])
       end
 
       def add_puppy(puppy)

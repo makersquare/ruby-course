@@ -29,7 +29,7 @@ module PuppyBreeder
       def add_order(order)
         pups_available = PuppyBreeder.puppy_repo.log.select { |p| p.breed == order.breed }
         if pups_available.empty?
-          order.hold!
+          order.status = 'hold'
         end
 
         @db.exec(%q[
