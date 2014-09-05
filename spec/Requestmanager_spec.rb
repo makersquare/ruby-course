@@ -13,8 +13,11 @@ describe PuppyBreeder::Repos::RequestManager do
       puppy_manager.clear_puppies
 
       request = PuppyBreeder::PurchaseRequest.new("afghan hound", request_manager)
+      breed = request.breed
+      price = request.price
 
-      expect(request_manager.view_open_requests).to eq([request])
+      expect(request_manager.view_open_requests[0].breed).to eq(breed)
+      expect(request_manager.view_open_requests[0].price).to eq(price)
 
     end
 
@@ -33,8 +36,12 @@ describe PuppyBreeder::Repos::RequestManager do
       request = PuppyBreeder::PurchaseRequest.new("afghan hound", request_manager)
       request_manager.approve_request(request, PuppyBreeder.puppy_repo)
 
-      expect(request_manager.view_open_requests.include?(request)).to eq(false)
-      expect(request_manager.view_completed_requests.include?(request)).to eq(true)
+      breed = request.breed
+      price = request.price
+
+      expect(request_manager.view_open_requests[0]).to eq(nil)
+      expect(request_manager.view_completed_requests[0].breed).to eq(breed)
+      expect(request_manager.view_completed_requests[0].price).to eq(price)
 
     end
 
@@ -49,8 +56,12 @@ describe PuppyBreeder::Repos::RequestManager do
       request = PuppyBreeder::PurchaseRequest.new("afghan hound", request_manager)
       request_manager.approve_request(request, PuppyBreeder.puppy_repo)
 
-      expect(request_manager.view_open_requests.include?(request)).to eq(false)
-      expect(request_manager.view_held_requests.include?(request)).to eq(true)
+      breed = request.breed
+      price = request.price
+
+      expect(request_manager.view_open_requests[0]).to eq(nil)
+      expect(request_manager.view_held_requests[0].breed).to eq(breed)
+      expect(request_manager.view_held_requests[0].price).to eq(price)
 
     end
 
@@ -99,8 +110,12 @@ describe PuppyBreeder::Repos::RequestManager do
       request = PuppyBreeder::PurchaseRequest.new("afghan hound", request_manager)
       request_manager.deny_request(request)
 
-      expect(request_manager.view_open_requests.include?(request)).to eq(false)
-      expect(request_manager.view_denied_requests.include?(request)).to eq(true)
+      breed = request.breed
+      price = request.price
+
+      expect(request_manager.view_open_requests[0]).to eq(nil)
+      expect(request_manager.view_denied_requests[0].breed).to eq(breed)
+      expect(request_manager.view_denied_requests[0].price).to eq(price)
 
     end
 
@@ -115,8 +130,11 @@ describe PuppyBreeder::Repos::RequestManager do
 
       request = PuppyBreeder::PurchaseRequest.new("afghan hound", request_manager)
 
-      expect(request_manager.view_open_requests).to eq([request])
+      breed = request.breed
+      price = request.price
 
+      expect(request_manager.view_open_requests[0].breed).to eq(breed)
+      expect(request_manager.view_open_requests[0].price).to eq(price)
 
     end
 
@@ -135,7 +153,11 @@ describe PuppyBreeder::Repos::RequestManager do
       request = PuppyBreeder::PurchaseRequest.new("afghan hound", request_manager)
       request_manager.approve_request(request, PuppyBreeder.puppy_repo)
 
-      expect(request_manager.view_completed_requests).to eq([request])
+      breed = request.breed
+      price = request.price
+
+      expect(request_manager.view_completed_requests[0].breed).to eq(breed)
+      expect(request_manager.view_completed_requests[0].price).to eq(price)
 
     end
 
@@ -151,7 +173,12 @@ describe PuppyBreeder::Repos::RequestManager do
       request = PuppyBreeder::PurchaseRequest.new("afghan hound", request_manager)
       request_manager.deny_request(request)
 
-      expect(request_manager.view_denied_requests).to eq([request])
+      breed = request.breed
+      price = request.price
+
+      expect(request_manager.view_denied_requests[0].breed).to eq(breed)
+      expect(request_manager.view_denied_requests[0].price).to eq(price)
+
 
     end
 
@@ -176,9 +203,20 @@ describe PuppyBreeder::Repos::RequestManager do
       request_manager.approve_request(request1, PuppyBreeder.puppy_repo)
       request_manager.deny_request(request2)
 
-      expect(request_manager.view_completed_requests).to eq([request1])
-      expect(request_manager.view_denied_requests).to eq([request2])
-      expect(request_manager.view_open_requests).to eq([request3])
+      breed1 = request1.breed
+      price1 = request1.price
+      breed2 = request2.breed
+      price2 = request2.price
+      breed3 = request3.breed
+      price3 = request3.price
+
+
+      expect(request_manager.view_completed_requests[0].breed).to eq(breed1)
+      expect(request_manager.view_completed_requests[0].price).to eq(price1)
+      expect(request_manager.view_denied_requests[0].breed).to eq(breed2)
+      expect(request_manager.view_denied_requests[0].price).to eq(price2)
+      expect(request_manager.view_open_requests[0].breed).to eq(breed3)
+      expect(request_manager.view_open_requests[0].price).to eq(price3)
 
     end
 
