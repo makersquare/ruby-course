@@ -8,15 +8,34 @@ module PuppyBreeder
       @@completed_requests = []
       @@held_requests = []
 
-      def self.connect_db()
-        @@db = PG.connect(host: "localhost", dbname: "requests")
+
+      def initialize
+        @db = PG.connect(host: "localhost", dbname: "requests")
       end
 
-      def self.add_request(purchase_request)
+      #Need to place requests into appropriate arrays above!
+      def build_requests(entries)
+        entries.map do |req| 
+          breed = req["breed"]
+          price = req["price"]
+          open = 
+          denied =
+          completed =
+          held = 
+          x = PuppyBreeder::PurchaseRequest.new(breed, price)
+        end
+      end
+
+      def log()
+        result = @db.exec('SELECT * FROM requests;')
+        build_requests(result.entries)
+      end
+
+      def add_request(purchase_request)
         @@open_requests.push(purchase_request)
       end
 
-      def self.approve_request(purchase_request)
+      def approve_request(purchase_request)
         @@open_requests.delete(purchase_request)
         puppy = PuppyBreeder::PuppyManager.find_match(purchase_request)
 
@@ -28,28 +47,28 @@ module PuppyBreeder
         end
       end
 
-      def self.deny_request(purchase_request)
+      def deny_request(purchase_request)
         @@open_requests.delete(purchase_request)
         @@denied_requests.push(purchase_request)
       end
 
-      def self.view_open_requests()
+      def view_open_requests()
         @@open_requests
       end
 
-      def self.view_completed_requests()
+      def view_completed_requests()
         @@completed_requests
       end
 
-      def self.view_denied_requests()
+      def view_denied_requests()
         @@denied_requests
       end
 
-      def self.view_held_requests()
+      def view_held_requests()
         @@held_requests
       end
 
-      def self.clear_all_requests()
+      def clear_all_requests()
         @@open_requests = []
         @@denied_requests = []
         @@completed_requests = []

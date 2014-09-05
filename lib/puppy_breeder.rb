@@ -26,5 +26,6 @@ require_relative 'puppy_breeder/databases/Requestmanager.rb'
 
 PuppyBreeder.puppy_repo = PuppyBreeder::Repos::PuppyManager
 PuppyBreeder.puppy_repo.connect_db()
+
 PuppyBreeder.request_repo = PuppyBreeder::Repos::RequestManager
 PuppyBreeder.request_repo.connect_db()
