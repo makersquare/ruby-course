@@ -26,16 +26,16 @@ describe PuppyBreeder::Repos::RequestLog do
   end
 
   describe '.review_purchase_request' do
-    it 'returns order which has a status of pending using id' do
+    it 'returns orders which has a status of pending' do
       res1 = PuppyBreeder.request_repo.review_purchase_request.first.status
       expect(res1).to eq('pending')
     end
   end
 
-  # describe '.accept_purchase_request' do
-  #   it 'accept the purchase request with given id' do
-  #     PuppyBreeder.request_repo.accept_purchase_request
-  #     expect(PuppyBreeder.request_repo.get_completed_orders).to include(@order2)
-  #   end
-  # end
+  describe '.accept_purchase_request' do
+    it 'accept the purchase requests' do
+      PuppyBreeder.request_repo.accept_purchase_request
+      expect(PuppyBreeder.request_repo.get_completed_orders.first.status).to eq('complete')
+    end
+  end
 end

@@ -20,7 +20,13 @@ module PuppyBreeder
             id serial,
             name text,
             breed text,
-            age int,
+            age int
+          )
+        ])
+
+        @db.exec(%q[
+          CREATE TABLE IF NOT EXISTS breeds(
+            breed text,
             price int
           )
         ])
@@ -28,8 +34,8 @@ module PuppyBreeder
 
       def add_breed(breed, price=999)
         @db.exec(%q[
-          INSERT INTO puppies (breed, price)
-          VALUES ($1, $2);
+          INSERT INTO breeds (breed, price)
+            VALUES ($1, $2);
         ], [breed, price])
       end
 
@@ -49,11 +55,6 @@ module PuppyBreeder
           x
         end
       end
-
-      # def has_suitable_puppy?(order)
-      #   return true if @@puppies.has_key?(order.breed)
-      #   false
-      # end
     end
   end
 end

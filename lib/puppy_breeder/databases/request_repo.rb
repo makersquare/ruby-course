@@ -51,13 +51,11 @@ module PuppyBreeder
         build_request(result.entries)
       end
 
-      # def accept_purchase_request
-      #   self.get_orders.each do |order|
-      #     if PuppyBreeder::PuppyContainer.has_suitable_puppy?(order)
-      #       order.complete_order
-      #     end
-      #   end
-      # end
+      def accept_purchase_request
+        @db.exec(%q[
+          UPDATE requests SET status = 'complete' WHERE status = 'pending';
+        ])
+      end
 
       def build_request(entries)
         entries.map do |req|
