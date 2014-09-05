@@ -143,20 +143,4 @@ describe PuppyBreeder do
     expect(result.length).to eq(2)
   end
 
-  # UNNECESSARY TEST FOR UNNECESSARY FEATURE:
-  
-  # it "automatically sells the puppy if there is a waitlist for that breed" do
-  #   po = PuppyBreeder::PurchaseRequest.new("husky")
-  #   result = PuppyBreeder.request_repo.waitlist
-
-
-  #   expect(result.length).to eq(1)
-
-  #   mav = PuppyBreeder::Puppy.new("mav", "husky", 45)
-  #   PuppyBreeder.puppy_repo.add_puppy(mav)
-
-  #   expect(PuppyBreeder.waitlist.length).to eq(0)
-  #   expect(mav.status).to eq(:purchased)
-  #   end
-
 end
