@@ -1,8 +1,23 @@
 require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::Repos::Requests do
-  before(:each) { PuppyBreeder::Repos::Requests.instance_variable_set :@purchase_orders, [] }
-  before(:each) { PuppyBreeder::Repos::Puppies.instance_variable_set :@for_sale, {} }
+  # before(:each) { PuppyBreeder::Repos::Requests.instance_variable_set :@purchase_orders, [] }
+  # before(:each) { PuppyBreeder::Repos::Puppies.instance_variable_set :@for_sale, {} }
+
+  describe 'pending_requests' do
+    xit "shows all pending purchase requests" do
+      request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+      request2 = PuppyBreeder::PurchaseRequest.new("Pitbull")
+      requests = PuppyBreeder.request_repo
+      puppies = PuppyBreeder.puppy_repo
+      requests.add_request(request1)
+      requests.add_request(request2)
+      result = requests.pending_requests
+
+      expect(result.size).to eq 2
+      expect(result.first).to eq(request1)
+    end
+  end
 
   describe '#new_request' do
     xit "adds a new purchase request to the purchase orders array" do

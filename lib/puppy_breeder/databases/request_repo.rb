@@ -7,10 +7,10 @@ module PuppyBreeder
 
       def initialize
         @db = PG.connect(host: 'localhost', dbname: 'puppy-breeder')
-        build_tables
+        build_table
       end
 
-      def build_tables
+      def build_table
         @db.exec(%q[
           CREATE TABLE IF NOT EXISTS requests(
             id serial,
@@ -52,6 +52,13 @@ module PuppyBreeder
         build_request(result.entries)
       end
 
+      def hold_requests
+        result = @db.exec(%q[
+          SELECT * FROM requests WHERE status = 'on_hold';
+        ])
+        build_request(result.entries)
+      end
+
       def build_request(entries)
         entries.map do |req|
           x = PuppyBreeder::PurchaseRequest.new(req["breed"])
@@ -61,15 +68,23 @@ module PuppyBreeder
         end
       end
 
-      def self.complete_request(order)
-        completed_order = @purchase_orders.find {|x| x = order}
-        completed_order.status = :completed
+      def update_request_to_accept(request)
+        result = @db.exec(%q[
+          UPDATE requests SET status = 'completed' WHERE id = #{request.id}
+        ])
       end
 
-      def self.hold_to_pending(order)
-        to_pending = @purchase_orders.find {|x| x = order}
-        to_pending.first.status = :pending if !to_pending.nil?
-      end
+
+
+      # def self.complete_request(order)
+      #   completed_order = @purchase_orders.find {|x| x = order}
+      #   completed_order.status = :completed
+      # end
+
+      # def self.hold_to_pending(order)
+      #   to_pending = @purchase_orders.find {|x| x = order}
+      #   to_pending.first.status = :pending if !to_pending.nil?
+      # end
     end
   end
 end

@@ -19,33 +19,47 @@ module PuppyBreeder
             breed text
           )
         ])
+
+        @db.exec(%q[
+          CREATE TABLE IF NOT EXISTS breeds(
+            breed text,
+            price int
+          )
+        ]) #HOW TO MAKE BREED THE KEY?
       end
 
       def log
         result = @db.exec('SELECT * FROM puppies;')
-        build_request(result.entries)
+        build_puppy(result.entries)
       end
 
-      def build_request(entries)
+      def build_puppy(entries)
         entries.map do |req|
           x = PuppyBreeder::Puppy.new(req["name"], req["age"], req["breed"])
-          
+          x
         end
       end
 
-      def self.add(puppy, price = nil)
+      def add_puppy(puppy, price = nil)
 
-        if !@for_sale[puppy.breed]
-          @for_sale[puppy.breed] = {
-            price: price,
-            count: 1
-          }
-        else
-          @for_sale[puppy.breed][:price] = price if !price
-          @for_sale[puppy.breed][:count] += 1
-        end
+        # if !@for_sale[puppy.breed]
+        #   @for_sale[puppy.breed] = {
+        #     price: price,
+        #     count: 1
+        #   }
+        # else
+        #   @for_sale[puppy.breed][:price] = price if !price
+        #   @for_sale[puppy.breed][:count] += 1
+        # end
 
-        @for_sale
+        # @for_sale
+
+        @db.exec(%q[
+          INSERT INTO puppies (name, age, breed)
+          VALUES ($1, $2, $3);
+        ], [puppy.name, puppy.age, puppy.breed])
+
+        #if there is an on-hold request for this breed, change to pending
       end
 
       def self.purchase(breed)

@@ -11,22 +11,30 @@ module PuppyBreeder
       @status = :pending
       @id = nil
       #@@counter += 1
-      Requests.new_request(self)
+      #Requests.new_request(self)
     end
 
-    def self.review
-      # ForSale.for_sale
-      Requests.pending_purchase_orders
-    end
+    # def self.review
+    #   ForSale.for_sale
+    #   Requests.pending_purchase_orders
+    # end
 
-    def accept
+    def accept!
       @status = :completed
-      Requests.complete_request(self)
-      ForSale.purchase(self.breed)
+      # Requests.complete_request(self)
+      # ForSale.purchase(self.breed)
     end 
 
-    def self.completed_orders
-      Requests.completed_purchase_orders
+    # def self.completed_orders
+    #   Requests.completed_purchase_orders
+    # end
+
+    # def pending?
+    #   @status == :pending
+    # end
+
+    def on_hold!
+      @status = :on_hold
     end
   end
 end
