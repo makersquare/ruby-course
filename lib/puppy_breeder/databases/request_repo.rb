@@ -27,10 +27,6 @@ module PuppyBreeder
       end
 
       def add_purchase_request(request)
-        pups_available = PuppyBreeder.puppy_repo.log.select { |p| p.breed == request.breed }
-        if pups_available.empty?
-          request.status = 'hold'
-        end
 
         result = @db.exec(%q[
           INSERT INTO requests (breed, status)
@@ -38,6 +34,13 @@ module PuppyBreeder
           RETURNING id;
         ], [request.breed, request.status])
         request.instance_variable_set("@id", result[0]["id"])
+      end
+
+      def update_purchase_request(request)
+        @db.exec(%q[
+          UPDATE requests SET breed = $1, status = $2
+          WHERE id = $3
+        ], [request.breed, request.status, request.id])
       end
 
       def log

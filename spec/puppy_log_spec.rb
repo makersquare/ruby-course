@@ -2,7 +2,7 @@ require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::Repos::PuppyLog do
 
-  before(:all) do
+  before(:each) do
     PuppyBreeder.puppy_repo.drop_tables
   end
 
@@ -28,7 +28,7 @@ describe PuppyBreeder::Repos::PuppyLog do
       res = PuppyBreeder.puppy_repo.log.select { |x| x.name == "Fido" }.first.name
       expect(res).to eq(puppy1.name)
       result = PuppyBreeder.puppy_repo.log.size
-      expect(result).to eq(4)
+      expect(result).to eq(3)
     end
   end
 

@@ -1,8 +1,7 @@
 #Refer to this class as PuppyBreeder::PurchaseRequest
 module PuppyBreeder
   class PurchaseRequest
-    attr_reader :breed
-    attr_accessor :status, :id
+    attr_accessor :status, :id, :breed
 
     def initialize(breed)
       @breed = breed

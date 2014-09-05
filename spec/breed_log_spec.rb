@@ -2,7 +2,7 @@ require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::Repos::BreedLog do
 
-  before(:all) do
+  before(:each) do
     PuppyBreeder.breed_repo.drop_tables
   end
 
@@ -22,7 +22,7 @@ describe PuppyBreeder::Repos::BreedLog do
       PuppyBreeder.breed_repo.add_breed(breed)
 
       result = PuppyBreeder.breed_repo.log
-      expect(result.size).to eq(2)
+      expect(result.size).to eq(1)
       expect(result.last.breed).to eq("Husky")
     end
   end
@@ -30,10 +30,12 @@ describe PuppyBreeder::Repos::BreedLog do
   describe '#update_price' do
     it 'updates a breeds price' do
       breed = PuppyBreeder::Breed.new("Husky", 750)
+      PuppyBreeder.breed_repo.add_breed(breed)
+      breed.price = 1000
       PuppyBreeder.breed_repo.update_price(breed)
 
-      result = PuppyBreeder.breed_repo.log.last
-      expect(result.price).to eq(750)
+      result = PuppyBreeder.breed_repo.log.first
+      expect(result.price).to eq(1000)
     end
   end
 

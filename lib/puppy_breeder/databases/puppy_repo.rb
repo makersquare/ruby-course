@@ -29,10 +29,6 @@ module PuppyBreeder
         @db.exec(%q[
           DROP TABLE puppies;
         ])
-
-        @db.exec(%q[
-          DROP TABLE breeds;
-        ])
         build_tables
       end
 

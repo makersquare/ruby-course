@@ -1,7 +1,7 @@
 require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::Repos::RequestLog do
-  before(:all) do
+  before(:each) do
     PuppyBreeder.request_repo.drop_tables
     @request1 = PuppyBreeder::PurchaseRequest.new("Boxer")
     @request2 = PuppyBreeder::PurchaseRequest.new("Great Dane")
@@ -19,6 +19,15 @@ describe PuppyBreeder::Repos::RequestLog do
     end
   end
 
+  describe '#update_purchase_request' do
+    it 'updates a purchase request based on id' do
+      @request3.breed = "Hound"
+      PuppyBreeder.request_repo.update_purchase_request(@request3)
+      result = PuppyBreeder.request_repo.log.last
+      expect(result.breed).to eq("Hound")
+    end
+  end
+
   describe '#get_completed_requests' do
     it 'returns the requests which have a status of complete' do
       res = PuppyBreeder.request_repo.get_completed_requests
@@ -28,7 +37,7 @@ describe PuppyBreeder::Repos::RequestLog do
 
   describe '#review_purchase_request' do
     it 'returns requests which has a status of pending' do
-      res1 = PuppyBreeder.request_repo.review_purchase_request.sample.status
+      res1 = PuppyBreeder.request_repo.review_purchase_request.first.status
       expect(res1).to eq('pending')
     end
   end

@@ -1,6 +1,6 @@
 module PuppyBreeder
   class Breed
-    attr_reader :breed, :price
+    attr_accessor :breed, :price
     
     def initialize(breed, price=300)
       @breed = breed
