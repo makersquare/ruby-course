@@ -48,12 +48,12 @@ module PuppyBreeder
         #   request_manager.approve_request(match)
         # end
 
-        db.exec(%q[
+        @db.exec(%q[
           INSERT INTO puppies (name, breed, age)
           VALUES ($1, $2, $3);],
           [puppy.name, puppy.breed, puppy.age])
 
-        held_requests = check_held_requests
+        held_requests = check_held_requests(PuppyBreeder.request_repo)
         match = held_requests.find {|req| find_match(req) != nil}
         if (match.is_a?(PuppyBreeder::Puppy))
         request_manager.approve_request(match)
@@ -79,7 +79,7 @@ module PuppyBreeder
 
       def clear_puppies()
         #@puppies_for_sale = []
-        @db.exec(%q[DELETE * FROM puppies;])
+        @db.exec(%q[DELETE FROM puppies;])
       end
 
       def find_match(purchase_request)

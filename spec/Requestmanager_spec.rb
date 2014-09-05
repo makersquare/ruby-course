@@ -1,6 +1,6 @@
 require_relative 'spec_helper.rb'  
 
-describe PuppyBreeder::RequestManager do
+describe PuppyBreeder::Repos::RequestManager do
 
   request_manager = PuppyBreeder.request_repo
   puppy_manager = PuppyBreeder.puppy_repo
@@ -12,7 +12,7 @@ describe PuppyBreeder::RequestManager do
       request_manager.clear_all_requests
       puppy_manager.clear_puppies
 
-      request = PuppyBreeder::PurchaseRequest.new("afghan hound")
+      request = PuppyBreeder::PurchaseRequest.new("afghan hound", request_manager)
 
       expect(request_manager.view_open_requests).to eq([request])
 
@@ -28,10 +28,10 @@ describe PuppyBreeder::RequestManager do
       puppy_manager.clear_puppies
 
       puppy = PuppyBreeder::Puppy.new("Billy", "afghan hound", 1)
-      puppy_manager.add_puppy_for_sale(puppy)
+      puppy_manager.add_puppy_for_sale(puppy, PuppyBreeder.request_repo)
 
-      request = PuppyBreeder::PurchaseRequest.new("afghan hound")
-      request_manager.approve_request(request)
+      request = PuppyBreeder::PurchaseRequest.new("afghan hound", request_manager)
+      request_manager.approve_request(request, PuppyBreeder.puppy_repo)
 
       expect(request_manager.view_open_requests.include?(request)).to eq(false)
       expect(request_manager.view_completed_requests.include?(request)).to eq(true)
@@ -44,10 +44,10 @@ describe PuppyBreeder::RequestManager do
       puppy_manager.clear_puppies
 
       puppy = PuppyBreeder::Puppy.new("Billy", "golden retriever", 1)
-      puppy_manager.add_puppy_for_sale(puppy)
+      puppy_manager.add_puppy_for_sale(puppy, PuppyBreeder.request_repo)
 
-      request = PuppyBreeder::PurchaseRequest.new("afghan hound")
-      request_manager.approve_request(request)
+      request = PuppyBreeder::PurchaseRequest.new("afghan hound", request_manager)
+      request_manager.approve_request(request, PuppyBreeder.puppy_repo)
 
       expect(request_manager.view_open_requests.include?(request)).to eq(false)
       expect(request_manager.view_held_requests.include?(request)).to eq(true)
@@ -60,9 +60,9 @@ describe PuppyBreeder::RequestManager do
       puppy_manager.clear_puppies
 
       puppy = PuppyBreeder::Puppy.new("Billy", "afghan hound", 1)
-      puppy_manager.add_puppy_for_sale(puppy)
+      puppy_manager.add_puppy_for_sale(puppy, PuppyBreeder.request_repo)
 
-      request = PuppyBreeder::PurchaseRequest.new("afghan hound")
+      request = PuppyBreeder::PurchaseRequest.new("afghan hound", request_manager)
       match = puppy_manager.find_match(request)
 
       expect(puppy.breed == request.breed).to eq(true) 
@@ -76,12 +76,12 @@ describe PuppyBreeder::RequestManager do
       puppy_manager.clear_puppies
 
       puppy = PuppyBreeder::Puppy.new("Billy", "afghan hound", 1)
-      puppy_manager.add_puppy_for_sale(puppy)
+      puppy_manager.add_puppy_for_sale(puppy, PuppyBreeder.request_repo)
 
-      request = PuppyBreeder::PurchaseRequest.new("afghan hound")
+      request = PuppyBreeder::PurchaseRequest.new("afghan hound", request_manager)
       match = puppy_manager.find_match(request)
 
-      request_manager.approve_request(request)
+      request_manager.approve_request(request, PuppyBreeder.puppy_repo)
 
       expect(puppy_manager.puppies_for_sale.include?(match)).to eq(false)
 
@@ -96,7 +96,7 @@ describe PuppyBreeder::RequestManager do
       request_manager.clear_all_requests
       puppy_manager.clear_puppies
 
-      request = PuppyBreeder::PurchaseRequest.new("afghan hound")
+      request = PuppyBreeder::PurchaseRequest.new("afghan hound", request_manager)
       request_manager.deny_request(request)
 
       expect(request_manager.view_open_requests.include?(request)).to eq(false)
@@ -113,7 +113,7 @@ describe PuppyBreeder::RequestManager do
       request_manager.clear_all_requests
       puppy_manager.clear_puppies
 
-      request = PuppyBreeder::PurchaseRequest.new("afghan hound")
+      request = PuppyBreeder::PurchaseRequest.new("afghan hound", request_manager)
 
       expect(request_manager.view_open_requests).to eq([request])
 
@@ -130,10 +130,10 @@ describe PuppyBreeder::RequestManager do
       puppy_manager.clear_puppies
 
       puppy = PuppyBreeder::Puppy.new("Billy", "afghan hound", 1)
-      puppy_manager.add_puppy_for_sale(puppy)
+      puppy_manager.add_puppy_for_sale(puppy, PuppyBreeder.request_repo)
 
-      request = PuppyBreeder::PurchaseRequest.new("afghan hound")
-      request_manager.approve_request(request)
+      request = PuppyBreeder::PurchaseRequest.new("afghan hound", request_manager)
+      request_manager.approve_request(request, PuppyBreeder.puppy_repo)
 
       expect(request_manager.view_completed_requests).to eq([request])
 
@@ -148,7 +148,7 @@ describe PuppyBreeder::RequestManager do
       request_manager.clear_all_requests
       puppy_manager.clear_puppies
 
-      request = PuppyBreeder::PurchaseRequest.new("afghan hound")
+      request = PuppyBreeder::PurchaseRequest.new("afghan hound", request_manager)
       request_manager.deny_request(request)
 
       expect(request_manager.view_denied_requests).to eq([request])
@@ -165,15 +165,15 @@ describe PuppyBreeder::RequestManager do
       puppy_manager.clear_puppies
 
       puppy1 = PuppyBreeder::Puppy.new("Billy", "afghan hound", 1)
-      puppy_manager.add_puppy_for_sale(puppy1)
+      puppy_manager.add_puppy_for_sale(puppy1, PuppyBreeder.request_repo)
 
       puppy2 = PuppyBreeder::Puppy.new("Billy", "afghan hound", 1)
-      puppy_manager.add_puppy_for_sale(puppy2)
+      puppy_manager.add_puppy_for_sale(puppy2, PuppyBreeder.request_repo)
 
-      request1 = PuppyBreeder::PurchaseRequest.new("afghan hound")
-      request2 = PuppyBreeder::PurchaseRequest.new("afghan hound")
-      request3 = PuppyBreeder::PurchaseRequest.new("afghan hound")
-      request_manager.approve_request(request1)
+      request1 = PuppyBreeder::PurchaseRequest.new("afghan hound", request_manager)
+      request2 = PuppyBreeder::PurchaseRequest.new("afghan hound", request_manager)
+      request3 = PuppyBreeder::PurchaseRequest.new("afghan hound", request_manager)
+      request_manager.approve_request(request1, PuppyBreeder.puppy_repo)
       request_manager.deny_request(request2)
 
       expect(request_manager.view_completed_requests).to eq([request1])

@@ -41,7 +41,7 @@ module PuppyBreeder
 
       def log()
         result = @db.exec('SELECT * FROM requests;')
-        build_requests(result.entries)
+        build_requests(result.entries, PuppyBreeder.request_repo)
       end
 
       def add_request(purchase_request)
@@ -54,7 +54,7 @@ module PuppyBreeder
         completed = false
         held = false
         @db.exec(%q[INSERT INTO requests
-          VALUES ($1,$2,$3,$4,$5,$6);], [id, breed, price, open, denied, completed, held])
+          VALUES ($1,$2,$3,$4,$5,$6,$7);], [id, breed, price, open, denied, completed, held])
       end
 
       def approve_request(purchase_request, puppy_manager)
@@ -100,28 +100,28 @@ module PuppyBreeder
         # @open_requests
         result = @db.exec(%q[SELECT * FROM requests
           WHERE open = true;])
-        requests = build_requests(result)
+        requests = build_requests(result, PuppyBreeder.request_repo)
       end
 
       def view_completed_requests()
         # @completed_requests
         result = @db.exec(%q[SELECT * FROM requests
           WHERE completed = true;])
-        requests = build_requests(result)
+        requests = build_requests(result, PuppyBreeder.request_repo)
       end
 
       def view_denied_requests()
         # @denied_requests
         result = @db.exec(%q[SELECT * FROM requests
           WHERE denied = true;])
-        requests = build_requests(result)
+        requests = build_requests(result, PuppyBreeder.request_repo)
       end
 
       def view_held_requests()
         # @held_requests
         result = @db.exec(%q[SELECT * FROM requests
           WHERE held = true;])
-        requests = build_requests(result)
+        requests = build_requests(result, PuppyBreeder.request_repo)
       end
 
       def clear_all_requests()

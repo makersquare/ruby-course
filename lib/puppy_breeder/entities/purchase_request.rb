@@ -2,7 +2,7 @@
 module PuppyBreeder
 
   class PurchaseRequest
-    @@count = 0
+    @@count = 1
 
     attr_reader :breed, :price, :id
 
