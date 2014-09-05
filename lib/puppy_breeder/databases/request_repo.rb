@@ -26,16 +26,16 @@ module PuppyBreeder
         build_tables
       end
 
-      def add_order(order)
-        pups_available = PuppyBreeder.puppy_repo.log.select { |p| p.breed == order.breed }
+      def add_purchase_request(request)
+        pups_available = PuppyBreeder.puppy_repo.log.select { |p| p.breed == request.breed }
         if pups_available.empty?
-          order.status = 'hold'
+          request.status = 'hold'
         end
 
         @db.exec(%q[
           INSERT INTO requests (breed, status)
           VALUES ($1, $2);
-        ], [order.breed, order.status])
+        ], [request.breed, request.status])
       end
 
       def log
