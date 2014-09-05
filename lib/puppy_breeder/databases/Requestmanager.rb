@@ -39,11 +39,6 @@ module PuppyBreeder
         end
       end
 
-      def log()
-        result = @db.exec('SELECT * FROM requests;')
-        build_requests(result.entries, PuppyBreeder.request_repo)
-      end
-
       def add_request(purchase_request)
         #@open_requests.push(purchase_request)
         id = purchase_request.id

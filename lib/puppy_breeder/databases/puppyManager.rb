@@ -29,11 +29,6 @@ module PuppyBreeder
         end
       end
 
-      def log()
-        result = @db.exec('SELECT * FROM puppies;')
-        build_puppies(result.entries)
-      end
-
       def check_held_requests(request_manager)
          request_manager.view_held_requests
       end
