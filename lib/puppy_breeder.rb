@@ -1,86 +1,28 @@
 # we initialize the module here to use in our other files
 module PuppyBreeder
-
-  attr_accessor :puppies, :purchase_orders, :breed
-
-  @@purchase_orders = []
-  @@puppies = {}
-
-
-  def self.add_breed_to_hash(breed, price)
-    @@puppies[breed] = {
-      :price => price,
-      :list => []
-    }
+# GETTER AND SETTER METHODS GO IN HERE
+  def self.request_repo=(x)
+    @request_repo = x
   end
 
-  def self.change_breed_price(breed,price)
-    @@puppies[breed][:price] = price
+  def self.request_repo
+    @request_repo
   end
 
-  def self.add_puppy_to_hash(puppy)
-    if @@puppies[puppy.breed] == nil
-        @@puppies[puppy.breed] = {:price => 500, :list => []}
-    elsif @@puppies[puppy.breed]
-      @@puppies[puppy.breed][:list] << puppy
-    else
-      @@puppies[puppy.breed][:list] = [puppy]
-    end
+  def self.puppy_repo=(x)
+    @puppy_repo = x
+  end 
 
-    # @@purchase_orders.each do |po|
-    #   if po.breed == puppy.breed && po.on_hold?
-    #     puppy.purchased!
-    #     po.complete!
-    #   end
-    # end
-
+  def self.puppy_repo
+    @puppy_repo
   end
-
-  def self.store_purchase_orders(purchase_request)
-    @@purchase_orders << purchase_request
-  end
-
-  def self.review_order_status(po)
-    if @@puppies[po.breed] == nil
-      po.on_hold!
-    elsif @@puppies[po.breed][:list].empty?
-      po.on_hold!
-    elsif @@puppies[po.breed][:list].find { |p| p.available? }
-      po.complete!
-      @@puppies[po.breed][:list].find { |p| p.purchased! }
-    else     
-      po.on_hold!
-    end
-  end
-
-  def self.puppies
-    @@puppies
-  end
-
-  def self.purchase_orders
-    @@purchase_orders
-  end
-
-  def self.complete_orders
-    @@purchase_orders.select { |p| p.complete? }
-  end
-
-
-  def self.active_orders
-    @@purchase_orders.select {|p| !p.on_hold?}
-  end
-
-  def self.waitlist
-    waitlist = @@purchase_orders.select {|p| p.on_hold? }
-  end
-
 end
 
-require_relative 'puppy_breeder/puppy.rb'
-require_relative 'puppy_breeder/purchase_request.rb'
+require_relative 'puppy_breeder/entities/puppy.rb'
+require_relative 'puppy_breeder/entities/purchase_request.rb'
+require_relative 'puppy_breeder/databases/puppy_repo.rb'
+require_relative 'puppy_breeder/databases/request_repo.rb'
 
-
-
-
-
+PuppyBreeder.puppy_repo = PuppyBreeder::Repos::PuppyRepo.new
+PuppyBreeder.request_repo = PuppyBreeder::Repos::RequestRepo.new
 
