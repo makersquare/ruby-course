@@ -10,18 +10,5 @@ module PuppyBreeder
       @price = price
     end
 
-
-    # def available?
-    #   @adoption_status == :available
-    # end
-
-    # def purchased?
-    #   @adoption_status == :purchased
-    # end
-
-    # def purchased!
-    #   @adoption_status = :purchased
-    # end
-
   end
 end

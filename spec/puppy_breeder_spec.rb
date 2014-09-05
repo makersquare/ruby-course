@@ -10,28 +10,20 @@ describe PuppyBreeder do
   end
 
   it "adds breed to puppies hash using add_breed" do
-    # mav = PuppyBreeder::Puppy.new("mav", "husky", 4)
     PuppyBreeder.breed_repo.add_breed('husky', 1000)
-    # this is the old way commented out
-    # expect(PuppyBreeder.puppies.count).to eq(1)
-    # when you call #puppy_repo.puppies you should get back an array of puppy objects
     expect(PuppyBreeder.breed_repo.breeds.count).to eq(1)
     expect(PuppyBreeder.breed_repo.breeds.first.breed).to eq('husky')
     expect(PuppyBreeder.breed_repo.breeds.first.price).to eq(1000)
-    # expect(PuppyBreeder.puppies["husky"][:price]).to eq(500)
-    # expect(PuppyBreeder.puppies["husky"][:list]).to eq([])
   end
 
   it "changes the price of a breed" do
     PuppyBreeder.breed_repo.add_breed('husky', 1000)
 
     expect(PuppyBreeder.breed_repo.breeds.first.price).to eq(1000)
-    # expect(PuppyBreeder.puppy_repo.puppies.first.price).to eq(1000)
 
     PuppyBreeder.breed_repo.change_breed_price('husky', 600)
 
     expect(PuppyBreeder.breed_repo.breeds.first.price).to eq(600)
-    # expect(PuppyBreeder.puppy_repo.puppies["husky"][:price]).to eq(600)
 
   end
 

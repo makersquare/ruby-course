@@ -27,11 +27,7 @@ module PuppyBreeder
         build_tables
       end
 
-      # @@purchase_orders = []
-
-      # PG READY
       def store_purchase_orders(request)
-      #   @@purchase_orders << purchase_request
         result = @db.exec(%q[
           INSERT INTO requests (breed, status)
           VALUES ($1, $2)
@@ -40,14 +36,11 @@ module PuppyBreeder
         request.instance_variable_set :@id, result.entries.first["id"]
       end
 
-
-      # MAYBE PG READY
       def review_order_status(po)
         pups_available = PuppyBreeder.puppy_repo.puppies.select { |p| p.breed == po.breed }
 
         if pups_available.empty?
           po.on_hold!
-          # binding.pry
         else
           po.complete!
           pups_available.first.purchased!
@@ -59,41 +52,32 @@ module PuppyBreeder
 
       end
     
-      # PG READY
       def purchase_orders
-        # @@purchase_orders
         result = @db.exec('SELECT* FROM requests;')
         build_request(result.entries)
       end
 
-      # PG READY
       def complete_orders
-        # @@purchase_orders.select { |p| p.complete? }
         result = @db.exec(%q[
             SELECT * FROM requests WHERE status = 'complete';
           ])
         build_request(result.entries)
       end
 
-      # PG READY
       def active_orders
-        # @@purchase_orders.select {|p| !p.on_hold?}
         result = @db.exec(%q[
             SELECT * FROM requests WHERE status != 'on_hold';
           ])
         build_request(result.entries)
       end
 
-      # PG READY
       def waitlist
-        # waitlist = @@purchase_orders.select {|p| p.on_hold? }
         result = @db.exec(%q[
             SELECT * FROM requests WHERE status = 'on_hold';
           ])
         build_request(result.entries)
       end
 
-      # PG READY
       def build_request(entries)
         entries.map do |req|
           x = PuppyBreeder::PurchaseRequest.new(req['breed'], req['status'].to_sym)
