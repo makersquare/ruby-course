@@ -1,4 +1,5 @@
 require 'pg'
+require 'pry-byebug'
 
 module PuppyBreeder
   module Repos
@@ -37,6 +38,13 @@ module PuppyBreeder
         #hashes where each hash is the field name and each
         #value is the value of the field. 
         #then it passes it to the method build_request
+        build_request(result.entries)
+      end
+
+      def show_holds
+        result = @db.exec(%q[
+          SELECT * FROM requests WHERE status = 'hold';
+          ])
         build_request(result.entries)
       end
 
@@ -93,7 +101,7 @@ module PuppyBreeder
       #if there is no matching dog it will return an 
       #empty array
       def add_request(request)
-        pups_available = PuppyBreeder::Repos::Puppy.log.select do |p|
+        pups_available = PuppyBreeder.puppy_repo.log.select do |p|
           p.breed == request.breed
         end
         #if the array returned above is empty, then 
@@ -108,9 +116,13 @@ module PuppyBreeder
         #table the breed and status from the passed in
         #object.
         @db.exec(%q[
-          INSERT INTO requests (breed, status, id)
-          VALUES ($1, $2, $3);
-          ] [request.breed, request.status, request.request_id])
+          INSERT INTO requests (breed, status)
+          VALUES ($1, $2);
+          ], [request.breed, request.status])
+      end
+
+      def refresh_tables
+        @db.exec("DELETE FROM requests WHERE id IS NOT NULL")
       end
     end
   end

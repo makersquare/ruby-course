@@ -9,5 +9,9 @@ module PuppyBreeder
       @status = status
       @request_id
     end
+
+    def hold!
+      @status = 'hold'
+    end
   end
 end

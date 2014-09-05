@@ -18,11 +18,11 @@ module PuppyBreeder
       @db.exec(%q[
         CREATE TABLE IF NOT EXISTS puppies(
           id serial,
+          name text,
           breed text,
-          name text, 
-          price monetary, 
-          );
-        ])
+          age int
+        )
+      ])
     end
 
     def log
@@ -37,7 +37,7 @@ module PuppyBreeder
     def build_puppy(entries)
       entries.map do |req|
 
-        x = PuppyBreeder::Inventory.new(req["name"],req["breed"],req["age"])
+        x = PuppyBreeder::Puppy.new(req["name"],req["breed"],req["age"])
         x
       end
     end
@@ -47,11 +47,11 @@ module PuppyBreeder
       @db.exec(%q[
         INSERT INTO puppies (name, breed, age)
         VALUES ($1, $2, $3);
-        ] [puppy.name, puppy.status, puppy.puppy_id]) 
+        ], [puppy.name, puppy.breed, puppy.age]) 
     end
 
     #get the PG::RESULT object and store it in result
-    def get_puppy_list
+    def puppies_list
       #returns an array of puppy objects
       result = @db.exec(%q[
         SELECT * FROM puppies
@@ -59,11 +59,14 @@ module PuppyBreeder
       #call build puppy which returns the array of puppy objects
       build_puppy(result.entries)
     end
+    def refresh_tables
+      @db.exec("DELETE FROM puppies WHERE id IS NOT NULL")
+    end
   end
 end
-end
+end       
 
-
+# dfaklsjdfkajsdlfkjaskdjflaskdjflkasjdflk
 
 
 
@@ -95,7 +98,8 @@ end
     # end
 
     # def self.puppies
-    #   @@puppies
+    #   @@puppieslib
+
     # end
 
     # def self.puppies=(puppies)

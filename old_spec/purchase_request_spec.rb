@@ -23,5 +23,12 @@ describe PuppyBreeder::PurchaseRequest do
     expect(new_request.breed).to eq("Schnauzer")
   end 
 
+  it 'creates a sequential request id' do
+    new_request = PuppyBreeder::PurchaseRequest.new("Schnauzer")
+    new_request2 = PuppyBreeder::PurchaseRequest.new("Pitbull")
+    expect(new_request.request_id).to be(1)
+    expect(new_request2.request_id).to be(2)
+  end
+
 
 end

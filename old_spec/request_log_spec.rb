@@ -3,34 +3,28 @@ require 'pry-byebug'
 
 describe PuppyBreeder::Repos::RequestLog do
 
-  before do
-    PuppyBreeder.request_repo.refresh_tables
-    PuppyBreeder.puppy_repo.refresh_tables
-  end
-
   it 'adds a request to the database' do
     request = PuppyBreeder::PurchaseRequest.new("Schnauzer")
-    PuppyBreeder.request_repo.add_request(request)
+    PuppyBreeder::Repos::RequestLog.add_request(request)
 
-    expect(PuppyBreeder.request_repo.log.first.breed).to eq("Schnauzer")
+    expect(PuppyBreeder::Repos::RequestLog.log["breed"]).to eq("schnauzer")
 
 
   end
 
-  it 'sets the status of the request to hold if no matching pup is available' do
+  xit 'adds a request to the hold log if there is no available pup' do
     request = PuppyBreeder::PurchaseRequest.new("Dinosaur")
-    PuppyBreeder.request_repo.add_request(request)
+    PuppyBreeder::RequestLog.add_request(request)
 
-    expect(PuppyBreeder.request_repo.show_holds.first.status).to eq("hold")
+    expect(PuppyBreeder::RequestLog.hold_log.last).to eq(request)
   end
 
-  it 'gets pending requests' do
+  xit 'gets pending requests' do
     request = PuppyBreeder::PurchaseRequest.new("Schnauzer")
-    puppy = PuppyBreeder::Puppy.new("Dana", "Schnauzer", 30)
-    PuppyBreeder.puppy_repo.add_puppy(puppy)
-    PuppyBreeder.request_repo.add_request(request)
+    log = PuppyBreeder::RequestLog
+    log.add_request(request)
 
-    expect(PuppyBreeder.request_repo.log.first.status).to eq("pending")    
+    expect(log.review_pending.first.status).to eq("pending")    
   end
 
   xit 'modifies a pending request' do
