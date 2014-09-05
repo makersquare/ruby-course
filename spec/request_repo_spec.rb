@@ -107,6 +107,28 @@ describe PuppyBreeder::Repos::Requests do
     end
   end
 
+  describe 'update_request_status' do
+    it "changes the status in the database to the new status" do
+      requests = PuppyBreeder::Repos::Requests.new
+      puppies = PuppyBreeder::Repos::Puppies.new
+      request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+      request2 = PuppyBreeder::PurchaseRequest.new("Pitbull") 
+
+      requests.add_request(request1)
+      requests.add_request(request2)
+
+      spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
+      puppies.add_puppy(spot)
+      request1.accept! 
+      requests.update_request_status(request1)  
+
+      result = requests.log
+
+      expect(result.first.status).to eq(:completed)
+      expect(result.last.status).to eq(:on_hold)
+    end
+  end
+
   # describe '#complete_request' do
   #   xit "changes the status of the accepted order to completed in the purchase orders array" do
   #     request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")

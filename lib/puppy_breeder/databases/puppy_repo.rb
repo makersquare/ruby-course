@@ -43,7 +43,7 @@ module PuppyBreeder
         build_puppy(result.entries)
       end
 
-      def build_puppy(entries)
+      def build_puppy(entries) #test?
         entries.map do |req|
           x = PuppyBreeder::Puppy.new(req["name"], req["age"], req["breed"])
           x

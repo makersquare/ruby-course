@@ -16,18 +16,18 @@ module PuppyBreeder
             id serial,
             breed text,
             status text
-          )
+          );
         ])
       end
 
       def destroy #test?
         @db.exec(%q[
-          DROP TABLE IF EXISTS requests
+          DROP TABLE IF EXISTS requests;
         ])
       end
 
       def log
-        result = @db.exec('SELECT * FROM requests;')
+        result = @db.exec('SELECT * FROM requests ORDER BY id ASC;')
         build_request(result.entries)
       end
 
@@ -42,6 +42,17 @@ module PuppyBreeder
           INSERT INTO requests (breed, status)
           VALUES ($1, $2);
         ], [request.breed, request.status])
+
+        result = @db.exec(%q[
+          SELECT * 
+          FROM requests 
+          ORDER BY id DESC 
+          LIMIT 1
+        ])
+
+        final = build_request(result.entries)
+
+        request.id = final.first.id
       end
 
       def pending_requests
@@ -74,13 +85,11 @@ module PuppyBreeder
         end
       end
 
-      def update_request_to_accept(request)
-        result = @db.exec(%q[
-          UPDATE requests SET status = 'completed' WHERE id = #{request.id}
-        ])
+      def update_request_status(request)
+        @db.exec(%q[
+          UPDATE requests SET status = $1 WHERE id = $2;
+        ], [request.status, request.id])
       end
-
-
 
       # def self.complete_request(order)
       #   completed_order = @purchase_orders.find {|x| x = order}
