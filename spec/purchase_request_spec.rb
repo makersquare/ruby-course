@@ -1,11 +1,12 @@
 require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::PurchaseRequest do
+  before(:each) {PuppyBreeder.puppy_repo.destroy}
   
   describe '.initialize' do
     it "creates a new purchase request for a breed with a status of pending" do
       spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
-      puppies = PuppyBreeder::Repos::Puppies.new
+      puppies = PuppyBreeder.puppy_repo
       puppies.add_puppy(spot)
       request = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
 

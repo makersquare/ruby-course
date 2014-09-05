@@ -1,12 +1,12 @@
 require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::Repos::Requests do
-  before(:each) {PuppyBreeder::Repos::Requests.new.destroy}
-  before(:each) {PuppyBreeder::Repos::Puppies.new.destroy}
+  before(:each) {PuppyBreeder.request_repo.destroy}
+  before(:each) {PuppyBreeder.puppy_repo.destroy}
 
   describe '.log' do
     it 'returns an array of request objects' do
-      requests = PuppyBreeder::Repos::Requests.new
+      requests = PuppyBreeder.request_repo
       result = requests.log
 
       expect(result).to eq ([])
@@ -22,8 +22,8 @@ describe PuppyBreeder::Repos::Requests do
 
   describe '.add_request' do
     it "adds a new purchase request to the database" do
-      requests = PuppyBreeder::Repos::Requests.new
-      puppies = PuppyBreeder::Repos::Puppies.new
+      requests = PuppyBreeder.request_repo
+      puppies = PuppyBreeder.puppy_repo
       request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
       request2 = PuppyBreeder::PurchaseRequest.new("Pitbull")
       
@@ -37,8 +37,8 @@ describe PuppyBreeder::Repos::Requests do
     end
 
     it "checks if there is a puppy of the chosen breed available and marks as on_hold if not" do
-      requests = PuppyBreeder::Repos::Requests.new
-      puppies = PuppyBreeder::Repos::Puppies.new
+      requests = PuppyBreeder.request_repo
+      puppies = PuppyBreeder.puppy_repo
       request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
       
       requests.add_request(request1)
@@ -51,8 +51,8 @@ describe PuppyBreeder::Repos::Requests do
 
   describe '.pending_requests' do
     it "shows all pending purchase requests" do
-      requests = PuppyBreeder::Repos::Requests.new
-      puppies = PuppyBreeder::Repos::Puppies.new
+      requests = PuppyBreeder.request_repo
+      puppies = PuppyBreeder.puppy_repo
       request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
       request2 = PuppyBreeder::PurchaseRequest.new("Pitbull") 
       spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
@@ -70,8 +70,8 @@ describe PuppyBreeder::Repos::Requests do
 
   describe '.completed_requests' do
     it "shows all completed purchase requests" do
-      requests = PuppyBreeder::Repos::Requests.new
-      puppies = PuppyBreeder::Repos::Puppies.new
+      requests = PuppyBreeder.request_repo
+      puppies = PuppyBreeder.puppy_repo
       request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
       request2 = PuppyBreeder::PurchaseRequest.new("Pitbull") 
       spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
@@ -90,8 +90,8 @@ describe PuppyBreeder::Repos::Requests do
 
   describe '.hold_requests' do
     it "shows all on_hold purchase requests" do
-      requests = PuppyBreeder::Repos::Requests.new
-      puppies = PuppyBreeder::Repos::Puppies.new
+      requests = PuppyBreeder.request_repo
+      puppies = PuppyBreeder.puppy_repo
       request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
       request2 = PuppyBreeder::PurchaseRequest.new("Pitbull") 
       spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
@@ -109,8 +109,8 @@ describe PuppyBreeder::Repos::Requests do
 
   describe 'update_request_status' do
     it "changes the status in the database to the new status" do
-      requests = PuppyBreeder::Repos::Requests.new
-      puppies = PuppyBreeder::Repos::Puppies.new
+      requests = PuppyBreeder.request_repo
+      puppies = PuppyBreeder.puppy_repo
       request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
       request2 = PuppyBreeder::PurchaseRequest.new("Pitbull") 
 

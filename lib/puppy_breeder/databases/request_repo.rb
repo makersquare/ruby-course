@@ -26,11 +26,13 @@ module PuppyBreeder
       end
 
       def log
+        build_table
         result = @db.exec('SELECT * FROM requests ORDER BY id ASC;')
         build_request(result.entries)
       end
 
       def add_request(request)
+        build_table
         pups_available = PuppyBreeder.puppy_repo.log.select { |p| p.breed == request.breed }
 
         if pups_available.empty?

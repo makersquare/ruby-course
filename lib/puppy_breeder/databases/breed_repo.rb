@@ -20,6 +20,7 @@ module PuppyBreeder
         @db.exec(%q[
           DROP TABLE IF EXISTS breeds
         ])
+        build_table
       end
 
       def log

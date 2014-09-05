@@ -1,11 +1,11 @@
 require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::Repos::Breeds do
-  before(:each) {PuppyBreeder::Repos::Breeds.new.destroy}
+  before(:each) {PuppyBreeder.breed_repo.destroy}
 
   describe '.log' do
     it 'returns an array of breed objects' do
-      breeds = PuppyBreeder::Repos::Breeds.new
+      breeds = PuppyBreeder.breed_repo
       result = breeds.log
 
       expect(result).to eq ([])
@@ -23,7 +23,7 @@ describe PuppyBreeder::Repos::Breeds do
     it 'adds a breed into the database' do
       golden = PuppyBreeder::Breed.new("Golden Retriever", 800)
       pitbull = PuppyBreeder::Breed.new("Pitbull", 500)
-      breeds = PuppyBreeder::Repos::Breeds.new
+      breeds = PuppyBreeder.breed_repo
       breeds.add_breed(golden)
       result = breeds.log
 

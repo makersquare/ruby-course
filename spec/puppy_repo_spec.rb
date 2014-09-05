@@ -2,12 +2,11 @@ require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::Repos::Puppies do
   before(:each) {PuppyBreeder.puppy_repo.destroy}
-  before(:each) {PuppyBreeder.request_repo.destroy}
-  before(:each) {PuppyBreeder::Repos::Breeds.new.destroy}
+  before(:each) {PuppyBreeder.breed_repo.destroy}
 
   describe '.log' do
     it 'returns an array of puppy objects' do
-      puppies = PuppyBreeder::Repos::Puppies.new
+      puppies = PuppyBreeder.puppy_repo
       result = puppies.log
 
       expect(result).to eq ([])
@@ -25,7 +24,7 @@ describe PuppyBreeder::Repos::Puppies do
     it "can add puppies to the database" do
       spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
       fido = PuppyBreeder::Puppy.new("Fido", 2, "Pitbull")
-      puppies = PuppyBreeder::Repos::Puppies.new
+      puppies = PuppyBreeder.puppy_repo
       puppies.add_puppy(spot)
       result = puppies.log
 
@@ -45,7 +44,7 @@ describe PuppyBreeder::Repos::Puppies do
     context "the breed of the puppy is not listed in the breeds database" do
       it "adds puppy to database with nil price" do
         spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
-        puppies = PuppyBreeder::Repos::Puppies.new
+        puppies = PuppyBreeder.puppy_repo
         puppies.add_puppy(spot)
         result = puppies.log
 
@@ -55,9 +54,9 @@ describe PuppyBreeder::Repos::Puppies do
 
     context "the breed of the puppy is listed in the breeds database" do
       it "adds puppy to database with price from breed database" do
-        puppies = PuppyBreeder::Repos::Puppies.new
+        puppies = PuppyBreeder.puppy_repo
         spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
-        breeds = PuppyBreeder::Repos::Breeds.new
+        breeds = PuppyBreeder.breed_repo
         golden = PuppyBreeder::Breed.new("Golden Retriever", 800)
         breeds.add_breed(golden)
         puppies.add_puppy(spot)
@@ -71,8 +70,8 @@ describe PuppyBreeder::Repos::Puppies do
 
   describe '.update_prices' do
     it "updates the puppies database with prices from the breeds database" do
-      breeds = PuppyBreeder::Repos::Breeds.new
-      puppies = PuppyBreeder::Repos::Puppies.new
+      breeds = PuppyBreeder.breed_repo
+      puppies = PuppyBreeder.puppy_repo
       spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
       fido = PuppyBreeder::Puppy.new("Fido", 2, "Pitbull")
       puppies.add_puppy(spot)
