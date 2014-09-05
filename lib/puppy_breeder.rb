@@ -1,33 +1,27 @@
 # we initialize the module here to use in our other files
-module PuppyBreeder
-  class Breeder 
-    attr_accessor :name, :all_puppies
+module PuppyPalace
+  def self.request_repo=(x)
+    @request_repo = x 
+  end
 
-    def initialize(name)
-      @all_puppies = { }
-      @name = name
-    end
+  def self.request_repo
+    @request_repo
+  end
 
-    def add_puppy(puppy)
-      if !@all_puppies.has_key?(puppy.breed)
-        @all_puppies[puppy.breed] = {
-          :price => nil,
-          :list => [puppy]
-        }
-      else
-       @all_puppies[puppy.breed][:list].push(puppy)
-     end
-    end
+  def self.puppy_repo=(x)
+    @puppy_repo = x 
+  end
 
-    def all_puppies
-      @all_puppies
-    end
-
-    def set_price(breed, price)
-      @all_puppies[breed][:price] = price
-    end
+  def self.puppy_repo
+    @puppy_repo
   end
 end
 
-require_relative 'puppy_breeder/puppy.rb'
-require_relative 'puppy_breeder/purchase_request.rb'
+require_relative 'puppy_breeder/entities/puppy.rb'
+require_relative 'puppy_breeder/entities/request.rb'
+require_relative 'puppy_breeder/databases/request_repo.rb'
+require_relative 'puppy_breeder/databases/puppy_repo.rb'
+
+PuppyPalace.request_repo = PuppyPalace::Repos::PurchaseReqLog.new
+
+PuppyPalace.puppy_repo = PuppyPalace::Repos::PuppyRepo.new

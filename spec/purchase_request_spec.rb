@@ -1,161 +1,181 @@
 require_relative 'spec_helper.rb'
 
-describe PuppyBreeder::PurchaseRequest do
+describe PuppyPalace::PurchaseRequest do
   # before(:each) do ... end
   # this is a before hook
   # read the docs son.
   # someclass.class_variable_set
 
   before(:each) do
-    PuppyBreeder::PurchaseRequest.class_variable_set(:@@id_count, 0)
-    PuppyBreeder::PurchaseRequest.class_variable_set(:@@open_orders, {})
+    PuppyPalace.request_repo.drop_tables
+    PuppyPalace.request_repo.build_tables
   end
   
   it "creates a purchase request" do
-    result = PuppyBreeder::PurchaseRequest.new("german shepherd")
-    expect(result.class).to eq(PuppyBreeder::PurchaseRequest)
+    result = PuppyPalace::PurchaseRequest.new("german shepherd")
+    expect(result.class).to eq(PuppyPalace::PurchaseRequest)
   end
 
   it "creates purchase request for german shepherds" do
-    result = PuppyBreeder::PurchaseRequest.new("german shepherd")
+    result = PuppyPalace::PurchaseRequest.new("german shepherd")
     expect(result.breed).to eq("german shepherd")
   end
 
   it "checks that status is pending" do
-    result = PuppyBreeder::PurchaseRequest.new("german shepherd")
+    result = PuppyPalace::PurchaseRequest.new("german shepherd")
+
     expect(result.status).to eq("pending")
   end
 
-  it "checks that id is 0" do
-    result = PuppyBreeder::PurchaseRequest.new("german shepherd")
-    expect(result.id_num).to eq(0)
-  end
+  # it "checks that id is 0" do
+  #   result = PuppyPalace::PurchaseRequest.new("german shepherd")
+  #   expect(result.id_num).to eq(0)
+  # end
 
-  it "checks that id is 0 for first request and 1 for second" do
-    result1 = PuppyBreeder::PurchaseRequest.new("german shepherd")
-    result2 = PuppyBreeder::PurchaseRequest.new("german shepherd")
+  # it "checks that id is 0 for first request and 1 for second" do
+  #   result1 = PuppyPalace::PurchaseRequest.new("german shepherd")
+  #   result2 = PuppyPalace::PurchaseRequest.new("german shepherd")
 
-    expect(result1.id_num).to eq(0)
-    expect(result2.id_num).to eq(1)
-  end
+  #   expect(result1.id_num).to eq(0)
+  #   expect(result2.id_num).to eq(1)
+  # end
 
   it "shows there is 1 current open order" do
-    result = PuppyBreeder::PurchaseRequest.new("german shepherd")
+    result = PuppyPalace::PurchaseRequest.new("german shepherd")
 
-    expect(PuppyBreeder::PurchaseRequest.open_orders.count).to eq(1)
+    PuppyPalace.request_repo.add_request(result)
+
+    expect(PuppyPalace.request_repo.open_orders.count).to eq(1)
   end
 
   it "shows there are 2 current open orders" do
-    result = PuppyBreeder::PurchaseRequest.new("german shepherd")
-    result1 = PuppyBreeder::PurchaseRequest.new("german shepherd")
+    result = PuppyPalace::PurchaseRequest.new("german shepherd")
+    result1 = PuppyPalace::PurchaseRequest.new("german shepherd")
 
-    expect(PuppyBreeder::PurchaseRequest.open_orders.count).to eq(2)
+    PuppyPalace.request_repo.add_request(result)
+    PuppyPalace.request_repo.add_request(result1)
+
+    expect(PuppyPalace.request_repo.open_orders.count).to eq(2)
   end
 
   it "changes pending to accepted" do
-    result = PuppyBreeder::PurchaseRequest.new("german shepherd")
+    # binding.pry
+    result = PuppyPalace::PurchaseRequest.new("german shepherd")
 
-    PuppyBreeder::PurchaseRequest.accept(0)
-    expect(PuppyBreeder::PurchaseRequest.open_orders[0].status).to eq('accepted')
+    PuppyPalace.request_repo.add_request(result)
+
+    id = PuppyPalace.request_repo.open_orders.first.id
+
+    # req = PuppyPalace.request_repo.find_request(result.id)
+
+    # result.accept
+
+    # expect(result.status).to eq("accepted")
+
+    PuppyPalace.request_repo.accept!(id)
+
+    expect(PuppyPalace.request_repo.open_orders.first.status).to eq(:accepted)
   end
 
   it "changes pending to rejected" do
-    result = PuppyBreeder::PurchaseRequest.new("german shepherd")
+    result = PuppyPalace::PurchaseRequest.new("german shepherd")
+    PuppyPalace.request_repo.add_request(result)
+    id = PuppyPalace.request_repo.open_orders.first.id
 
-    PuppyBreeder::PurchaseRequest.reject(0)
-    expect(PuppyBreeder::PurchaseRequest.open_orders[0].status).to eq('rejected')
+    PuppyPalace.request_repo.reject!(id)
+    expect(PuppyPalace.request_repo.open_orders.first.status).to eq(:rejected)
+    # PuppyPalace::PurchaseRequest.reject(0)
+    # expect(PuppyPalace::PurchaseRequest.open_orders[0].status).to eq('rejected')
   end
 
-    it "shows completed orders" do
-    request = PuppyBreeder::PurchaseRequest.new("german shepherd")
-    expect(PuppyBreeder::PurchaseRequest.completed.count).to eq(0)
+  it "shows completed orders" do
+    result = PuppyPalace::PurchaseRequest.new("german shepherd")
 
-    PuppyBreeder::PurchaseRequest.accept(0)
+    PuppyPalace.request_repo.add_request(result)
 
-    expect(PuppyBreeder::PurchaseRequest.completed.count).to eq(1)
+    id = PuppyPalace.request_repo.open_orders.first.id
+    PuppyPalace.request_repo.accept!(id)
+
+    expect(PuppyPalace.request_repo.show_orders.count).to eq(1)
+    # expect(PuppyPalace::PurchaseRequest.completed.count).to eq(0)
+
+    # PuppyPalace::PurchaseRequest.accept(0)
+
+    # expect(PuppyPalace::PurchaseRequest.completed.count).to eq(1)
   end
 
   it "puts order on hold" do
-    result = PuppyBreeder::PurchaseRequest.new("german shepherd")
+    result = PuppyPalace::PurchaseRequest.new("german shepherd")
+    PuppyPalace.request_repo.add_request(result)
+    id = PuppyPalace.request_repo.open_orders.first.id
 
-    PuppyBreeder::PurchaseRequest.hold(0)
-    expect(PuppyBreeder::PurchaseRequest.open_orders[0].status).to eq('hold')
+    PuppyPalace.request_repo.hold!(id)
+    expect(PuppyPalace.request_repo.open_orders.first.status).to eq(:on_hold)
   end
 
   it "shows orders, excluding holding orders" do
-    PuppyBreeder::PurchaseRequest.new("german shepherd")
-    PuppyBreeder::PurchaseRequest.new("german shepherd")
-    PuppyBreeder::PurchaseRequest.new("german shepherd")
-    PuppyBreeder::PurchaseRequest.new("german shepherd")
+    r1 = PuppyPalace::PurchaseRequest.new("german shepherd")
+    r2 = PuppyPalace::PurchaseRequest.new("german shepherd")
+    r3 = PuppyPalace::PurchaseRequest.new("german shepherd")
+    r4 = PuppyPalace::PurchaseRequest.new("german shepherd")
 
-    PuppyBreeder::PurchaseRequest.hold(0)
-    
-    expect(PuppyBreeder::PurchaseRequest.orders.count).to eq(3)
+    PuppyPalace.request_repo.add_request(r1)
+    PuppyPalace.request_repo.add_request(r2)
+    PuppyPalace.request_repo.add_request(r3)
+    PuppyPalace.request_repo.add_request(r4)
+
+    id = PuppyPalace.request_repo.open_orders.first.id
+    PuppyPalace.request_repo.hold!(id)
+
+    expect(PuppyPalace.request_repo.show_exclude_hold.count).to eq(3)
   end
 
   it "shows holding orders" do
-    PuppyBreeder::PurchaseRequest.new("german shepherd")
-    PuppyBreeder::PurchaseRequest.new("german shepherd")
-    PuppyBreeder::PurchaseRequest.new("german shepherd")
-    PuppyBreeder::PurchaseRequest.new("german shepherd")
+    r1 = PuppyPalace::PurchaseRequest.new("german shepherd")
+    r2 = PuppyPalace::PurchaseRequest.new("german shepherd")
+    r3 = PuppyPalace::PurchaseRequest.new("german shepherd")
+    r4 = PuppyPalace::PurchaseRequest.new("german shepherd")
 
-    PuppyBreeder::PurchaseRequest.hold(0)
+    PuppyPalace.request_repo.add_request(r1)
+    PuppyPalace.request_repo.add_request(r2)
+    PuppyPalace.request_repo.add_request(r3)
+    PuppyPalace.request_repo.add_request(r4)
 
-    expect(PuppyBreeder::PurchaseRequest.on_hold.first.id_num).to eq(0)
+    id = PuppyPalace.request_repo.open_orders.first.id
+    PuppyPalace.request_repo.hold!(id)
+
+    expect(PuppyPalace.request_repo.show_hold.count).to eq(1)
   end
 
-    it "shows holding orders and confirms that they are in the correct order" do
-    PuppyBreeder::PurchaseRequest.new("german shepherd")
-    PuppyBreeder::PurchaseRequest.new("german shepherd")
-    PuppyBreeder::PurchaseRequest.new("german shepherd")
-    PuppyBreeder::PurchaseRequest.new("german shepherd")
+  xit "shows holding orders and confirms that they are in the correct order" do
+    PuppyPalace::PurchaseRequest.new("german shepherd")
+    PuppyPalace::PurchaseRequest.new("german shepherd")
+    PuppyPalace::PurchaseRequest.new("german shepherd")
+    PuppyPalace::PurchaseRequest.new("german shepherd")
 
-    PuppyBreeder::PurchaseRequest.hold(0)
-    PuppyBreeder::PurchaseRequest.hold(3)
+    PuppyPalace::PurchaseRequest.hold(0)
+    PuppyPalace::PurchaseRequest.hold(3)
     
-    expect(PuppyBreeder::PurchaseRequest.on_hold.first.id_num).to eq(0)
-    expect(PuppyBreeder::PurchaseRequest.on_hold.last.id_num).to eq(3)
+    expect(PuppyPalace::PurchaseRequest.on_hold.first.id_num).to eq(0)
+    expect(PuppyPalace::PurchaseRequest.on_hold.last.id_num).to eq(3)
   end
 end
 
-describe PuppyBreeder::Breeder do
-  it "adds puppy to hash of puppies" do
-    puppy = PuppyBreeder::Puppy.new("molly","german shepherd",21)
-    breeder = PuppyBreeder::Breeder.new("Joe-Shmoe")
+# describe PuppyPalace::Breeder do
+#   it "adds puppy to hash of puppies" do
+#     puppy = PuppyPalace::Puppy.new("molly","german shepherd",21)
+#     breeder = PuppyPalace::Breeder.new("Joe-Shmoe")
 
-    breeder.add_puppy(puppy)
+#     breeder.add_puppy(puppy)
 
-    expect(breeder.all_puppies[puppy.breed][:list].last.name).to eq("molly")
-  end
+#     expect(breeder.all_puppies[puppy.breed][:list].last.name).to eq("molly")
+#   end
 
-  it "adds two puppies and checks that both are present" do
-    puppy = PuppyBreeder::Puppy.new("molly","german shepherd",21)
-    puppy1 = PuppyBreeder::Puppy.new("joe","german shepherd",21)
-    breeder = PuppyBreeder::Breeder.new("Joe-Shmoe")
+#   it "adds two puppies and checks that both are present" do
+#   end
+# end
 
-    breeder.add_puppy(puppy)
-    breeder.add_puppy(puppy1)
-
-    expect(breeder.all_puppies[puppy.breed][:list].first.name).to eq("molly")
-    expect(breeder.all_puppies[puppy.breed][:list].last.name).to eq("joe")
-  end
-
-  it "checks that price is set to nil" do
-    puppy = PuppyBreeder::Puppy.new("molly","german shepherd",21)
-    breeder = PuppyBreeder::Breeder.new("Joe-Shmoe")
-
-    breeder.add_puppy(puppy)
-
-    expect(breeder.all_puppies[puppy.breed][:price]).to be(nil)
-  end
-
-  it "sets the price to the designated price" do
-    puppy = PuppyBreeder::Puppy.new("molly","german shepherd",21)
-    breeder = PuppyBreeder::Breeder.new("Joe-Shmoe")
-
-    breeder.add_puppy(puppy)
-    breeder.set_price("german shepherd","1000")
-
-    expect(breeder.all_puppies[puppy.breed][:price]).to eq("1000")
-  end
-end
+require_relative '../lib/puppy_breeder/entities/puppy.rb'
+require_relative '../lib/puppy_breeder/entities/request.rb'
+require_relative '../lib/puppy_breeder/databases/request_repo.rb'
+require_relative '../lib/puppy_breeder/databases/puppy_repo.rb'
