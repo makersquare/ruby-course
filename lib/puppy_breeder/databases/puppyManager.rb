@@ -57,8 +57,8 @@ module PuppyBreeder
         match = held_requests.find {|req| find_match(req) != nil}
         if (match.is_a?(PuppyBreeder::Puppy))
         request_manager.approve_request(match)
+        #remove_puppy_for_sale()
         end
-
 
       end
 

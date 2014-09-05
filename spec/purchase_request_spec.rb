@@ -15,7 +15,12 @@ describe PuppyBreeder::PurchaseRequest do
 
     it 'adds itself into the RequestManager open_requests' do
       request = PuppyBreeder::PurchaseRequest.new("golden retriever", PuppyBreeder.request_repo)
-      expect(request_manager.view_open_requests.include?(request)).to eq(true)
+
+      breed = request.breed
+      price = request.price
+
+      expect(request_manager.view_open_requests[0].breed).to eq(breed)
+      expect(request_manager.view_open_requests[0].price).to eq(price)
     end
 
   end

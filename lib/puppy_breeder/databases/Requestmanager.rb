@@ -78,6 +78,7 @@ module PuppyBreeder
           @db.exec(%q[UPDATE requests
             SET completed = true
             WHERE id = ($1);], [id])
+          PuppyBreeder.puppy_repo.remove_puppy_for_sale(puppy)
         else
             @db.exec(%q[UPDATE requests
             SET held = true
