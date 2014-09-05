@@ -1,34 +1,42 @@
-#Refer to this class as PuppyBreeder::Puppy
 module PuppyBreeder
   class Puppy
+    attr_reader :breed, :name, :age, :status, :id, :cost 
 
-# Access cost and status. Read breed, name, age, and puppy_id.
-    attr_accessor :status
-    attr_reader :breed, :name, :age, :id
-
-# Counter for setting puppy_id.
-    @@counter = 0 
-
-# Initializes with breed, name, age, sold_status, and puppy_id. 
-# sold_status can be "Available", "Sold", or "Pending"
+# Initializes with breed, name, age, status, id.
     def initialize(breed, name, age, status="Available")
       @breed = breed
       @name = name
       @age = age
-      @status = status
-      # @@counter += 1
-      # @id = @@counter
+      @status = status # "Available", "On Hold", "Sold"
+      @id = nil
+      @cost = 500
     end
 
-# Changes the puppy's status to pending.
-    def requested
-      @status = "Pending"
+# PENDING
+    def available?
+      @status == "Available"
     end
 
-# Changes the puppy's status to sold.
-    def sold
+    def available!
+      @status = "Available"
+    end
+
+# ON HOLD
+    def on_hold?
+      @status == "On Hold"
+    end
+
+    def on_hold!
+      @status = "On Hold"
+    end
+
+# SOLD
+    def sold?
+      @status == "Sold"
+    end
+
+    def sold!
       @status = "Sold"
     end
-
   end
 end

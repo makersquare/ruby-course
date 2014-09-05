@@ -14,7 +14,7 @@ describe PuppyBreeder::Puppy do
     expect(puppy.name).to eq("Murphy")
     expect(puppy.age).to eq(3)
     expect(puppy.status).to eq("Available")
-    # expect(puppy.id).to eq(1)
+    expect(puppy.id).to eq(nil)
     expect(puppy.class).to eq(PuppyBreeder::Puppy)
 
     puppy2 = PuppyBreeder::Puppy.new("Boxer", "Sadie", 1)
@@ -23,20 +23,34 @@ describe PuppyBreeder::Puppy do
     expect(puppy2.name).to eq("Sadie")
     expect(puppy2.age).to eq(1)
     expect(puppy2.status).to eq("Available")
-    # expect(puppy2.id).to eq(2)
+    expect(puppy2.id).to eq(nil)
     expect(puppy2.class).to eq(PuppyBreeder::Puppy)
 
   end
 
-# Requested Method Test
-  it "Changes the puppy's status to Pending" do
+# Available Method Test
+  it "Tests available? and available! methods." do
+
+    puppy = PuppyBreeder::Puppy.new("French Bulldog", "Murphy", 3, "On Hold")
+
+    expect(puppy.available?).to be_false
+    expect(puppy.status).to eq("On Hold")
+    puppy.available!
+    expect(puppy.available?).to be_true
+    expect(puppy.status).to eq("Available")
+
+  end
+
+# On Hold Method Test
+  it "Changes the puppy's status to On Hold" do
 
     puppy = PuppyBreeder::Puppy.new("French Bulldog", "Murphy", 3)
 
+    expect(puppy.on_hold?).to be_false
     expect(puppy.status).to eq("Available")
-
-    puppy.requested
-    expect(puppy.status).to eq("Pending")
+    puppy.on_hold!
+    expect(puppy.on_hold?).to be_true
+    expect(puppy.status).to eq("On Hold")
 
   end
 
@@ -45,9 +59,10 @@ describe PuppyBreeder::Puppy do
 
     puppy = PuppyBreeder::Puppy.new("French Bulldog", "Murphy", 3)
 
+    expect(puppy.sold?).to be_false
     expect(puppy.status).to eq("Available")
-    
-    puppy.sold
+    puppy.sold!
+    expect(puppy.sold?).to be_true
     expect(puppy.status).to eq("Sold")
 
   end

@@ -1,4 +1,3 @@
-# we initialize the module here to use in our other files
 module PuppyBreeder
 
 # Creates single instance of Puppy Container

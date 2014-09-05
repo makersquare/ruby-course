@@ -1,40 +1,26 @@
-# require 'pry-byebug'
-#Refer to this class as PuppyBreeder::PurchaseRequest
 module PuppyBreeder
   class Request
-    attr_accessor :status
-    attr_reader :breed, :id, :cost
+    attr_reader :breed, :id, :cost, :status
 
-# Counter for request_id.
-    @@counter = 0
-
-# Initializes with breed, request_id, and request_status.
-# request_status can be "Pending", "Approved", "Hold" or "Denied".
+# Initializes with breed, status, and id.
     def initialize(breed, status="Pending")
       @breed = breed
-      @status = status
-      # @@counter += 1
+      @status = status # == "Pending", "Approved", "On Hold" or "Denied".
       @id = nil
-      # puppy_list = PuppyBreeder::puppy_repo_instance.puppies
-      # @cost = puppy_list[breed][:price]
+      @cost = 1000
     end
 
-# Approves purchase request and changes status to Approved.
-    def approve!
-      @status = "Approved"
+# DENIED REQUESTS:
+
+    def denied?
+      @status == "Denied"
     end
 
-    # Nick's
-    # def accepted!
-    #   @status = "Accepted"
-    # end
-
-# Denies purchase request and changes status to Denied.
-    def deny!
+    def denied!
       @status = "Denied"
     end
 
-# Nick's:
+# PENDING REQUESTS:
     def pending?
       @status == "Pending"
     end
@@ -43,12 +29,24 @@ module PuppyBreeder
       @status = "Pending"
     end
 
-    def accepted?
-      @status == "Accepted"
+# APPROVED REQUESTS: 
+
+    def approved?
+      @status == "Approved"
     end
 
-    def hold!
-      @status = "Hold"
+    def approved!
+      @status = "Approved"
+    end
+
+# HOLD REQUESTS:
+
+    def on_hold?
+      @status == "On Hold"
+    end
+
+    def on_hold!
+      @status = "On Hold"
     end
 
   end

@@ -12,12 +12,10 @@ describe PuppyBreeder::Request do
 
     expect(request.breed).to eq("French Bulldog")
     expect(request.status).to eq("Pending")
-    # expect(request.id).to eq(1)
 
     request2 = PuppyBreeder::Request.new("Golden Retriever", "Denied")
 
     expect(request2.breed).to eq("Golden Retriever")
-    # expect(request2.id).to eq(2)
     expect(request2.status).to eq("Denied")
 
   end
@@ -29,7 +27,7 @@ describe PuppyBreeder::Request do
 
     expect(request.status).to eq("Pending")
 
-    request.approve!
+    request.approved!
     expect(request.status).to eq("Approved")
 
   end
@@ -41,7 +39,7 @@ describe PuppyBreeder::Request do
 
     expect(request.status).to eq("Pending")
 
-    request.deny!
+    request.denied!
     expect(request.status).to eq("Denied")
 
   end
@@ -53,8 +51,8 @@ describe PuppyBreeder::Request do
 
     expect(request.status).to eq("Pending")
 
-    request.hold!
-    expect(request.status).to eq("Hold")
+    request.on_hold!
+    expect(request.status).to eq("On Hold")
 
   end
 end

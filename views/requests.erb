@@ -11,17 +11,49 @@
 	    		text-align: center;
 	    		background-image: url(http://naturalpetrecipes.com/wp-content/uploads/2013/03/LabPuppy.jpg);
 	    	}
+	    	h3 {
+	    		font-weight: bold;
+	    	}
+	    	p {
+	    		font-size: 1.2em;
+	    	}
 	    </style>
 	</head>
 	<body>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-			    	<h1>All Your Moneyz!</h1>
-			    	<% @request_list.each do |request| %>
-			    	<p style="font-size: 1.5em;">
-			    	<%= request.id %>. <%= request.breed %>
-			    	<br/> Status is <%= request.status %>.
+					<h1>All Your Moneyz!</h1>
+				</div>
+				<div class="col-md-3">
+			    	<h3>Pending Requests</h3>
+			    	<% @pending_list.each do |request| %>
+			    	<p>
+			    	ID <%= request.id %>: <%= request.breed %>
+				    </p>
+			    	<% end %>
+		    	</div>
+		    	<div class="col-md-3">
+			    	<h3>On Hold Requests</h3>
+			    	<% @hold_list.each do |request| %>
+			    	<p>
+			    	ID <%= request.id %>: <%= request.breed %>
+			    	</p>
+			    	<% end %>
+		    	</div>
+		    	<div class="col-md-3">
+			    	<h3>Approved Requests</h3>
+			    	<% @approved_list.each do |request| %>
+			    	<p>
+			    	ID <%= request.id %>: <%= request.breed %>
+			    	</p>
+			    	<% end %>
+		    	</div>
+		    	<div class="col-md-3">
+			    	<h3>Denied Requests</h3>
+			    	<% @denied_list.each do |request| %>
+			    	<p>
+			    	ID <%= request.id %>: <%= request.breed %>
 			    	</p>
 			    	<% end %>
 		    	</div>
