@@ -88,6 +88,25 @@ describe PuppyBreeder::Repos::Requests do
     end
   end
 
+  describe '.hold_requests' do
+    it "shows all on_hold purchase requests" do
+      requests = PuppyBreeder::Repos::Requests.new
+      puppies = PuppyBreeder::Repos::Puppies.new
+      request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+      request2 = PuppyBreeder::PurchaseRequest.new("Pitbull") 
+      spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
+      puppies.add_puppy(spot)    
+
+      requests.add_request(request1)
+      requests.add_request(request2)
+
+      result = requests.hold_requests
+
+      expect(result.size).to eq 1
+      expect(result.first.status).to eq(:on_hold)
+    end
+  end
+
   # describe '#complete_request' do
   #   xit "changes the status of the accepted order to completed in the purchase orders array" do
   #     request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
