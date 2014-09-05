@@ -13,19 +13,20 @@ module PAWS
           CREATE TABLE IF NOT EXISTS requests(
             id serial,
             breed text,
-            status text
+            status text,
+            price_id money
             )
           ])
       end
-#     price_id money REFERENCES price_list ( id )
-
+# , FOREIGN KEY (breed, price_id) REFERENCES price_list (breed, price)
+  
       def log
         result = @db.exec('SELECT * FROM requests;')
         build_request(result.entries)
       end
 
       def add_request(request)
-        pups_available = PAWS::Repos::PuppyRepo.new.log.select {|p| p.breed == request.breed }
+        pups_available = PAWS.puppy_repo.log.select {|p| p.breed == request.breed }
         if pups_available.empty?
           request.on_hold!
         end
@@ -36,8 +37,6 @@ module PAWS
           RETURNING id;
         ], [request.breed,request.status])
         request.id = result.entries.first["id"].to_i
-
-        # price_id ?
       end
 
       def update_request_status(request)

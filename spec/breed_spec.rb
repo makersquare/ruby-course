@@ -10,7 +10,6 @@ describe PAWS::Breed do
     breed = PAWS::Breed.new("boxer")
     expect(breed.breed).to eq("boxer")
     expect(breed.price).to eq(nil)
-    expect(breed.id).to eq(nil)
   end
 
   it "can change price" do

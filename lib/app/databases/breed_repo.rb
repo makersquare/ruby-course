@@ -16,9 +16,31 @@ module PAWS
             )
           ])
       end
-# question ID necessary? 
 
-      def add_breed(breed,price)
+      def add_breed(breed)
+        begin
+          result = @db.exec(%q[
+            INSERT INTO price_list (breed,price)
+            VALUES ($1, $2)
+            RETURNING * ;
+          ], [breed.breed,breed.price])
+          result.entries.first
+        rescue  PG::UniqueViolation
+          puts "That breed already exists."
+        end
+      end
+
+      def change_breed_price_by_hand(breed)
+        result = @db.exec(%q[
+          UPDATE price_list
+          SET price = $1
+          WHERE breed = $2
+          RETURNING * ;
+        ], [breed.price,breed.breed])
+        result.entries.first
+      end
+
+      def add_breed_by_hand(breed,price)
         begin
           result = @db.exec(%q[
             INSERT INTO price_list (breed,price)
@@ -31,7 +53,7 @@ module PAWS
         end
       end
 
-      def change_breed_price(breed,price)
+      def change_breed_price_by_hand(breed,price)
         result = @db.exec(%q[
           UPDATE price_list
           SET price = $1

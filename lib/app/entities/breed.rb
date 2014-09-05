@@ -2,12 +2,11 @@ module PAWS
   
   class Breed
   
-    attr_reader :breed, :price, :id
+    attr_reader :breed, :price
   
-    def initialize(breed, price=nil, id=nil)
+    def initialize(breed, price=nil)
       @breed = breed
       @price = price
-      @id = id
     end
 
     def update_price(price)

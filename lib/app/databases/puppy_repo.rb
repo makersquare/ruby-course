@@ -33,12 +33,11 @@ module PAWS
         end
       end
 
-      def add_puppy(puppy,repo)
-      #change this   
-        open_requests = repo.log.select { |p| p.breed == puppy.breed && p.on_hold? }
+      def add_puppy(puppy)  
+        open_requests = PAWS.request_repo.log.select { |p| p.breed == puppy.breed && p.on_hold? }
         on_hold_request = open_requests.find {|p| p.on_hold?}
         if on_hold_request
-          match_puppy(puppy,on_hold_request,repo)
+          match_puppy(puppy,on_hold_request)
         end
 
         result = @db.exec(%q[
@@ -49,11 +48,10 @@ module PAWS
         puppy.id = result.entries.first["id"].to_i
       end
 
-      def match_puppy(puppy,status_matching_po,repo)
+      def match_puppy(puppy,status_matching_po)
         puppy.adopted!
         status_matching_po.complete!
-        #change this
-        repo.update_request_status(status_matching_po)
+        PAWS.request_repo.update_request_status(status_matching_po)
       end
 
       def show_all_breeds
@@ -77,8 +75,15 @@ module PAWS
         build_puppies(result.entries)
       end
 
+      def show_all_adopted_puppies
+        result = @db.exec(%q[
+          SELECT * FROM puppies WHERE status = 'adopted';
+          ])
+        build_puppies(result.entries)
+      end
+
       def adoptathon
-        pending_requests = PAWS::Repos::RequestRepo.log.select { |p| p.pending?}
+        pending_requests = PAWS.request_repo.log.select { |p| p.pending?}
         pending_requests.each do |pending_request|
           available_puppies = show_all_available_puppies
           puppy_to_adopt = available_puppies.find { |puppy| pending_request.breed == puppy.breed }
@@ -93,7 +98,7 @@ module PAWS
         @db.exec(%q[
           UPDATE puppies
           SET status = $1
-          WHERE CONDITION id = $2;
+          WHERE id = $2;
         ], [puppy_to_adopt.status,puppy_to_adopt.id])
       end
 
