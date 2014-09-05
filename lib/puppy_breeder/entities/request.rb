@@ -1,7 +1,7 @@
 # require 'pry-byebug'
 #Refer to this class as PuppyBreeder::PurchaseRequest
 module PuppyBreeder
-  class PurchaseRequest
+  class Request
     attr_accessor :status
     attr_reader :breed, :id, :cost
 
@@ -13,10 +13,10 @@ module PuppyBreeder
     def initialize(breed, status="Pending")
       @breed = breed
       @status = status
-      @@counter += 1
-      @id = @@counter
-      puppy_list = PuppyBreeder::puppy_container.puppies
-      @cost = puppy_list[breed][:price]
+      # @@counter += 1
+      @id = nil
+      # puppy_list = PuppyBreeder::puppy_repo_instance.puppies
+      # @cost = puppy_list[breed][:price]
     end
 
 # Approves purchase request and changes status to Approved.

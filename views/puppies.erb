@@ -18,7 +18,7 @@
 			<div class="row">
 				<div class="col-md-12">
 			    	<h1>Puppies You've Put Down!</h1>
-			    	<% @puppy_list.each do |puppy| %>
+			    	<% @puppies.each do |puppy| %>
 			    	<p style="font-size: 2em;"><%= puppy.name %> is a <%= puppy.breed %> and is <%= puppy.age %> years old.</p>
 			    	<br />
 			    	<% end %>

@@ -16,8 +16,8 @@ module PuppyBreeder
       @name = name
       @age = age
       @status = status
-      @@counter += 1
-      @id = @@counter
+      # @@counter += 1
+      # @id = @@counter
     end
 
 # Changes the puppy's status to pending.

@@ -4,7 +4,7 @@ require 'pg'
 
 module PuppyBreeder
   module Repos
-    class PurchaseRequestContainer
+    class RequestRepo
 
       # Refactored
       # @@requests = []
@@ -33,12 +33,20 @@ module PuppyBreeder
         ])
       end
 
+      def drop_and_rebuild_tables
+        @db.exec(%q[
+          DROP TABLE IF EXISTS requests;
+        ])
+
+        build_tables
+      end
+
   # Helper method. Builds the request for database entries.
       def build_request(entries)
         entries.map do |request|
-          x = PuppyBreeder::PurchaseRequest.new(request[breed])
+          x = PuppyBreeder::Request.new(request["breed"])
           x.instance_variable_set :@id, request["id"].to_i
-          x.instance_variable_set :@status, request["status"].to_sym
+          x.instance_variable_set :@status, request["status"]
           x
         end
       end
@@ -57,7 +65,7 @@ module PuppyBreeder
 
       #   @requests << request
       
-        pups_available = PuppyBreeder::Repos::PuppyContainer.log.select { |p| p.breed == request.breed }
+        pups_available = PuppyBreeder.puppy_repo_instance.log.select { |p| p.breed == request.breed }
         
         if pups_available.empty?
           request.hold!

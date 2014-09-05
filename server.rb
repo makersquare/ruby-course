@@ -17,31 +17,46 @@ post '/puppy' do
   # if PuppyBreeder::Repos::PuppyContainer.log[puppy.breed].nil?
   #   PuppyBreeder::Repos::PuppyContainer.add_breed(puppy.breed)
   # end
-  PuppyBreeder::Repos::PuppyContainer.add_puppy(puppy)
+  PuppyBreeder.puppy_repo_instance.add_puppy(puppy)
   redirect to '/puppies'
 end
 
 get '/puppies' do
-  puppies = PuppyBreeder::Repos::PuppyContainer.log
-  @puppy_list = puppies.map { |key, val| val[:available_puppies] }.flatten
+  @puppies = PuppyBreeder.puppy_repo_instance.log
+  # breeds = @puppies.map { |x| x.breed }.uniq
+  # puppy_list = {}
+  # puppies.each do |puppy|
+    # puppy_list[puppy.breed][:available_puppies] << puppy
+  # end
+  # @puppy_list = puppy_list.map { |key, val| val[:available_puppies] }.flatten
   erb :puppies
 end
 
 get '/request' do
-  puppies = PuppyBreeder::Repos::PuppyContainer.log
-  @puppy_list = puppies.map { |key, val| val[:available_puppies] }.flatten
+  @puppies = PuppyBreeder.puppy_repo_instance.log
+  @breeds = @puppies.map { |x| x.breed }.uniq
+  # puppies = PuppyBreeder.puppy_repo_instance.log
+  # puppy_list = {}
+  # puppies.each do |puppy|
+  #   puppy_list[puppy.breed][:available_puppies] << puppy
+  # end
+  # @puppy_list = puppy_list.map { |key, val| val[:available_puppies] }.flatten
   erb :request
 end
 
 post '/request' do
-  request = PuppyBreeder::PurchaseRequest.new(params["breed"])
-  PuppyBreeder::Repos::PurchaseRequestContainer.add_request(request)
+  request = PuppyBreeder::Request.new(params["breed"])
+  PuppyBreeder.request_repo_instance.add_request(request)
   redirect to '/requests'
 end
 
 get '/requests' do
-  @request_list = PuppyBreeder::Repos::PurchaseRequestContainer.log
-  @puppy_list = PuppyBreeder::Repos::PuppyContainer.log
+  @request_list = PuppyBreeder.puppy_repo_instance.log
+  # puppy_list = Hash.new(0)
+  # puppies.each do |puppy|
+  #   puppy_list[puppy.breed][:available_puppies] << puppy
+  # end
+  # @puppy_list = puppy_list.map { |key, val| val[:available_puppies] }.flatten
   # binding.pry
   erb :requests
 end

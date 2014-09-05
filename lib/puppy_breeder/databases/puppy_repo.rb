@@ -4,7 +4,7 @@ require 'pg'
 
 module PuppyBreeder
   module Repos
-    class PuppyContainer
+    class PuppyRepo
 
       # Refactored
       # @@puppies = {}
@@ -17,8 +17,6 @@ module PuppyBreeder
         # @puppies = Hash.new
         @db = PG.connect(host: 'localhost', dbname: 'puppy-breeder-db')
         build_tables
-
-        
       end
 
 # Builds tables each time the request is initialized
@@ -29,17 +27,26 @@ module PuppyBreeder
             breed TEXT,
             name TEXT,
             age INT,
-            status TEXT
+            status TEXT,
+            cost INT
           );
         ])
       end
 
+      def drop_and_rebuild_tables
+        @db.exec(%q[
+          DROP TABLE IF EXISTS puppies;
+        ])
+
+        build_tables
+      end
+
 # Helper method. Builds the request for database entries.
       def build_request(entries)
-        entries.map do |request|
-          x = PuppyBreeder::Puppy.new(request[breed, name, age])
-          x.instance_variable_set :@id, request["id"].to_i
-          x.instance_variable_set :@status, request["status"].to_sym
+        entries.map do |puppy|
+          x = PuppyBreeder::Puppy.new(puppy["breed"], puppy["name"], puppy["age"])
+          x.instance_variable_set :@id, puppy["id"].to_i
+          x.instance_variable_set :@status, puppy["status"]
           x
         end
       end
@@ -51,18 +58,18 @@ module PuppyBreeder
       end
 
   # Adds breed and cost of breed to container.
-      def add_breed(breed, cost=1000)
-        # @puppies[breed] = { 
-        #   :price => cost,
-        #   :available_puppies => []
-        # }
+      # def add_breed(breed, cost=1000)
+      #   # @puppies[breed] = { 
+      #   #   :price => cost,
+      #   #   :available_puppies => []
+      #   # }
 
-        @db.exec(%q[
-          INSERT INTO puppies (breed)
-          VALUES ($1);
-        ], [breed])
+      #   @db.exec(%q[
+      #     INSERT INTO puppies (breed)
+      #     VALUES ($1);
+      #   ], [breed])
 
-      end
+      # end
 
       # Refactored
       # def self.add_breed(breed, price=1000)
@@ -80,8 +87,8 @@ module PuppyBreeder
         #   raise "No breed for puppy."
         # end
 
-        breeds_available = log.select { |p| p.breed }
-        add_breed(puppy.breed) if !breeds_available.inclue?(puppy.breed)
+        # breeds_available = log.select { |p| p.breed }
+        # add_breed(puppy.breed) if !breeds_available.include?(puppy.breed)
 
         @db.exec(%q[
           INSERT INTO puppies (breed, name, age)

@@ -21,9 +21,9 @@
 			    	<form type="/purchase_request" method="post">
 			    		<input type="text" name="name" placeholder="Your Name" />
 			    		<h3>Breed:</h3>
-			    		<% @puppy_list.each do |puppy| %>
-				    	<input type="radio" name="breed" value=<%= puppy.breed %>> 
-				    	<%= puppy.breed.capitalize %><br/>
+			    		<% @breeds.each do |breed| %>
+				    	<input type="radio" name="breed" value=<%= breed %>> 
+				    	<%= breed.capitalize %><br/>
 				    	<% end %>
 				    	<br />
     					<input type="submit" class="btn btn-success" value="Buy this PUPPY!" />

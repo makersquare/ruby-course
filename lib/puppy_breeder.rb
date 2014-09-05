@@ -2,13 +2,13 @@
 module PuppyBreeder
 
 # Creates single instance of Puppy Container
-  def self.puppy_container
-    @__db_instance ||= PuppyBreeder::Repos::PuppyContainer.new
+  def self.puppy_repo_instance
+    @__db_instance ||= PuppyBreeder::Repos::PuppyRepo.new
   end
 
 # Creates single instance of Purchase Request Container
-  def self.purchase_request_container
-    @__db_instance2 ||= PuppyBreeder::Repos::PurchaseRequestContainer.new
+  def self.request_repo_instance
+    @__db_instance2 ||= PuppyBreeder::Repos::RequestRepo.new
   end
 
 # Getter method for request repo
