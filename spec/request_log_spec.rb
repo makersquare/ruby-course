@@ -30,8 +30,9 @@ describe PuppyBreeder::Repos::RequestLog do
 
   describe '#get_completed_requests' do
     it 'returns the requests which have a status of complete' do
+      PuppyBreeder.request_repo.accept_purchase_request(@request3)
       res = PuppyBreeder.request_repo.get_completed_requests
-      expect(res.size).to eq(0)
+      expect(res.size).to eq(1)
     end
   end
 
