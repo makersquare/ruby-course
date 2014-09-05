@@ -2,10 +2,9 @@
 module PuppyBreeder
   class Puppy
     attr_reader :id, :name, :breed, :age
-    @@counter = 0
 
     def initialize(name, breed, age)
-      @puppy_id = @@counter +=1
+      @puppy_id
       @name = name
       @breed = breed
       @age = age

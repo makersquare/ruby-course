@@ -25,7 +25,7 @@ module PuppyBreeder
             id serial,
             breed text,
             status text 
-            )
+            );
           ])# do we need a semi-colon?
       end
 
@@ -109,7 +109,7 @@ module PuppyBreeder
         #object.
         @db.exec(%q[
           INSERT INTO requests (breed, status, id)
-          VALUES ($1, $2);
+          VALUES ($1, $2, $3);
           ] [request.breed, request.status, request.request_id])
       end
     end
