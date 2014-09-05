@@ -32,6 +32,17 @@ module PuppyBreeder
         ])
       end
 
+      def drop_tables
+        @db.exec(%q[
+          DROP TABLE puppies;
+        ])
+
+        @db.exec(%q[
+          DROP TABLE breeds;
+        ])
+        build_tables
+      end
+
       def add_breed(breed, price=999)
         @db.exec(%q[
           INSERT INTO breeds (breed, price)

@@ -21,3 +21,6 @@ require_relative 'puppy_breeder/entities/puppy.rb'
 require_relative 'puppy_breeder/entities/purchase_request.rb'
 require_relative 'puppy_breeder/databases/puppy_repo.rb'
 require_relative 'puppy_breeder/databases/request_repo.rb'
+
+PuppyBreeder.request_repo = PuppyBreeder::Repos::RequestLog.new
+PuppyBreeder.puppy_repo = PuppyBreeder::Repos::PuppyLog.new

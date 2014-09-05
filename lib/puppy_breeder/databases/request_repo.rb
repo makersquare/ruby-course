@@ -19,8 +19,14 @@ module PuppyBreeder
         ])
       end
 
+      def drop_tables
+        @db.exec(%q[
+          DROP TABLE requests;
+        ])
+        build_tables
+      end
+
       def add_order(order)
-        PuppyBreeder.puppy_repo = PuppyBreeder::Repos::PuppyLog.new
         pups_available = PuppyBreeder.puppy_repo.log.select { |p| p.breed == order.breed }
         if pups_available.empty?
           order.hold!
@@ -60,7 +66,6 @@ module PuppyBreeder
       def build_request(entries)
         entries.map do |req|
           x = PuppyBreeder::PurchaseRequest.new(req["breed"])
-          x.instance_variable_set :@id, req["id"].to_i
           x.instance_variable_set :@status, req["status"]
           x
         end

@@ -17,9 +17,16 @@ describe PuppyBreeder::PurchaseRequest do
     end
   end
 
+  describe '#complete!' do
+    it 'changes the status of an order to complete' do
+      @purchase_req.complete!
+      expect(@purchase_req.status).to eq('complete')
+    end
+  end
+
   describe '#completed?' do
-    it 'returns false if the order has a status of pending' do
-      expect(@purchase_req.completed?).to eq(false)
+    it 'returns true if the order has a status of pending' do
+      expect(@purchase_req.completed?).to eq(true)
     end
   end
 
@@ -27,6 +34,15 @@ describe PuppyBreeder::PurchaseRequest do
     it 'returns true if the order has a status of hold' do
       @purchase_req.hold!
       expect(@purchase_req.hold?).to eq(true)
+    end
+  end
+
+  describe '#hold!' do
+    it 'changes status of order to hold' do
+      @purchase_req.complete!
+      expect(@purchase_req.status).to eq('complete')
+      @purchase_req.hold!
+      expect(@purchase_req.status).to eq('hold')
     end
   end
 end

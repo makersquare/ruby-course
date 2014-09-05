@@ -1,7 +1,7 @@
 #Refer to this class as PuppyBreeder::PurchaseRequest
 module PuppyBreeder
   class PurchaseRequest
-    attr_reader :breed, :id
+    attr_reader :breed
     attr_accessor :status
 
     def initialize(breed)
@@ -9,7 +9,7 @@ module PuppyBreeder
       @status = 'pending'
     end
 
-    def complete_order
+    def complete!
       @status = 'complete'
     end
 

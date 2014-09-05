@@ -3,10 +3,10 @@ require_relative 'spec_helper.rb'
 describe PuppyBreeder::Repos::PuppyLog do
   describe '.add_puppy' do
     it 'adds a puppy to the data structure' do
-      PuppyBreeder.puppy_repo = PuppyBreeder::Repos::PuppyLog.new
+      PuppyBreeder.puppy_repo.drop_tables
       puppy1 = PuppyBreeder::Puppy.new("Fido", "Greyhound", 30)
       puppy2 = PuppyBreeder::Puppy.new("Jack", "Great Dane", 25)
-      puppy3 = PuppyBreeder::Puppy.new("Jill", "Great Dane", 50)
+      puppy3 = PuppyBreeder::Puppy.new("Jill", "Husky", 50)
       PuppyBreeder.puppy_repo.add_breed("Greyhound", 1000)
       PuppyBreeder.puppy_repo.add_breed("Great Dane")
 
@@ -22,7 +22,7 @@ describe PuppyBreeder::Repos::PuppyLog do
   describe '.add_breed' do
     it 'adds a breed and price to the hash' do
       PuppyBreeder.puppy_repo.add_breed("Husky")
-      puppy = PuppyBreeder::Puppy.new("Jack", "Husky", 25)
+      puppy = PuppyBreeder::Puppy.new("Fido2", "Cat", 25)
       PuppyBreeder.puppy_repo.add_puppy(puppy)
       res = PuppyBreeder.puppy_repo.log.last.name
       expect(res).to eq(puppy.name)
