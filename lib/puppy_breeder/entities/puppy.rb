@@ -11,12 +11,12 @@ module PuppyBreeder
       #@status = :not_for_sale
     end
 
-    def add(price = nil)
-      self.status = :for_sale
-      ForSale.add(self, price)
-      on_hold = Requests.purchase_orders.find {|x| x.breed == self.breed && x.status == :on_hold}
-      Requests.hold_to_pending(on_hold) if !on_hold.nil?
-    end 
+    # def add(price = nil)
+    #   self.status = :for_sale
+    #   ForSale.add(self, price)
+    #   on_hold = Requests.purchase_orders.find {|x| x.breed == self.breed && x.status == :on_hold}
+    #   Requests.hold_to_pending(on_hold) if !on_hold.nil?
+    # end 
 
   end
 end
