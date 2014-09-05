@@ -2,7 +2,7 @@
 module PuppyBreeder
 
   module Repos
-    class Puppmanager
+    class PuppyManager
 
       def initialize
         @db = PG.connect(host: "localhost", dbname: "puppies")
