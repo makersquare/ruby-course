@@ -28,7 +28,18 @@ module PuppyBreeder
         ]) #HOW TO MAKE BREED THE KEY?
       end
 
+      def destroy_and_rebuild
+        @db.exec(%q[
+          DROP TABLE IF EXISTS puppies
+        ])
+        @db.exec(%q[
+          DROP TABLE IF EXISTS breeds
+        ])
+        build_tables
+      end
+
       def log
+        build_tables
         result = @db.exec('SELECT * FROM puppies;')
         build_puppy(result.entries)
       end
@@ -62,19 +73,19 @@ module PuppyBreeder
         #if there is an on-hold request for this breed, change to pending
       end
 
-      def self.purchase(breed)
-        if !@for_sale[breed] || @for_sale[breed][:count] == 0
-          return false
-        else
-          @for_sale[breed][:count] -= 1
-        end
+      # def self.purchase(breed)
+      #   if !@for_sale[breed] || @for_sale[breed][:count] == 0
+      #     return false
+      #   else
+      #     @for_sale[breed][:count] -= 1
+      #   end
 
-        @for_sale
-      end
+      #   @for_sale
+      # end
 
-      def self.for_sale
-        @for_sale
-      end
+      # def self.for_sale
+      #   @for_sale
+      # end
 
     end 
   end

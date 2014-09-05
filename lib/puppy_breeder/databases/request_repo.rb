@@ -20,16 +20,23 @@ module PuppyBreeder
         ])
       end
 
+      def destroy_and_rebuild
+        @db.exec(%q[
+          DROP TABLE IF EXISTS requests
+        ])
+        build_table
+      end
+
       def log
         result = @db.exec('SELECT * FROM requests;')
         build_request(result.entries)
       end
 
       def add_request(request)
-        pups_available = PuppyBreeder::Repos::Puppies.log.select { |p| p.breed == request.breed }
+        pups_available = PuppyBreeder.puppy_repo.log.select { |p| p.breed == request.breed }
 
         if pups_available.empty?
-          request.hold!
+          request.on_hold!
         end
 
         @db.exec(%q[

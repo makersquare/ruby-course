@@ -1,44 +1,46 @@
 require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::Repos::Puppies do
-  before(:each) { PuppyBreeder::Repos::Puppies.instance_variable_set :@for_sale, {} }
+  before(:each) {PuppyBreeder.puppy_repo.destroy_and_rebuild}
+  before(:each) {PuppyBreeder.request_repo.destroy_and_rebuild}
 
-  describe '#add' do
-    xit "can add puppies for sale" do
+  describe '.add_puppy' do
+    it "can add puppies for sale" do
       spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
       fido = PuppyBreeder::Puppy.new("Fido", 2, "Pitbull")
-      
-      spot.add
-      result = PuppyBreeder::Repos::Puppies.for_sale
+      puppies = PuppyBreeder::Repos::Puppies.new
+      puppies.add_puppy(spot)
+      result = puppies.log
 
       expect(result.size).to eq 1
-      expect(result[spot.breed][:count]).to eq 1
-      expect(result[spot.breed][:price]).to be_nil
+      expect(result.first.age.to_i).to eq 1
+      expect(result.first.breed).to eq "Golden Retriever"
 
-      result2 = fido.add(800)
+      puppies.add_puppy(fido)
+      result = puppies.log
 
       expect(result.size).to eq 2
-      expect(result[fido.breed][:count]).to eq 1
-      expect(result[fido.breed][:price]).to eq 800
-      expect(result["Boston Terrier"]).to be_nil
+      expect(result.last.age.to_i).to eq 2
+      expect(result.last.breed).to eq "Pitbull"
+      expect(result.any?{|x| x.breed == "Boston Terrier"}).to be_false
     end
 
   end
 
-  describe '#purchase' do
-    xit "removes puppies from the for sale group once purchased" do
-      spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
-      fido = PuppyBreeder::Puppy.new("Fido", 2, "Pitbull")
+  # describe '#purchase' do
+  #   it "removes puppies from the for sale group once purchased" do
+  #     spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
+  #     fido = PuppyBreeder::Puppy.new("Fido", 2, "Pitbull")
       
-      spot.add(500)
-      fido.add(800)
+  #     spot.add(500)
+  #     fido.add(800)
 
-      order = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
-      result = order.accept
+  #     order = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+  #     result = order.accept
       
-      expect(result["Golden Retriever"][:count]).to eq(0)
-      expect(result["Pitbull"][:count]).to eq(1)
-    end 
-  end
+  #     expect(result["Golden Retriever"][:count]).to eq(0)
+  #     expect(result["Pitbull"][:count]).to eq(1)
+  #   end 
+  # end
 
 end
