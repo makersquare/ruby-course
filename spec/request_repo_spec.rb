@@ -142,24 +142,24 @@ describe PuppyBreeder::Repos::Requests do
   #   end
   # end
 
-  describe '#completed_purchase_orders' do
-    xit "shows only purchase orders with a status of completed" do
-      request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
-      request2 = PuppyBreeder::PurchaseRequest.new("Pitbull")
+  # describe '#completed_purchase_orders' do
+  #   xit "shows only purchase orders with a status of completed" do
+  #     request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+  #     request2 = PuppyBreeder::PurchaseRequest.new("Pitbull")
 
-      request1.accept
+  #     request1.accept
 
-      result = PuppyBreeder::Repos::Requests.completed_purchase_orders
+  #     result = PuppyBreeder::Repos::Requests.completed_purchase_orders
 
-      expect(result.size).to eq 1
-      expect(result.first.status).to eq (:completed)
-    end
-  end
+  #     expect(result.size).to eq 1
+  #     expect(result.first.status).to eq (:completed)
+  #   end
+  # end
 
-  describe '#hold_to_pending' do
-    xit "changes the first on hold order for a particular breed to pending" do
+  # describe '#hold_to_pending' do
+  #   xit "changes the first on hold order for a particular breed to pending" do
       
-    end
-  end
+  #   end
+  # end
 
 end

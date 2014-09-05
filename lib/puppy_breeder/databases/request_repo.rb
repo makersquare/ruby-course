@@ -38,21 +38,13 @@ module PuppyBreeder
           request.on_hold!
         end
 
-        @db.exec(%q[
+        result = @db.exec(%q[
           INSERT INTO requests (breed, status)
-          VALUES ($1, $2);
+          VALUES ($1, $2)
+          RETURNING id;
         ], [request.breed, request.status])
 
-        result = @db.exec(%q[
-          SELECT * 
-          FROM requests 
-          ORDER BY id DESC 
-          LIMIT 1
-        ])
-
-        final = build_request(result.entries)
-
-        request.id = final.first.id
+        request.id = result.entries.first["id"].to_i
       end
 
       def pending_requests
