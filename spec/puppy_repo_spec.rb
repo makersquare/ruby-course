@@ -3,6 +3,7 @@ require_relative 'spec_helper.rb'
 describe PuppyBreeder::Repos::Puppies do
   before(:each) {PuppyBreeder.puppy_repo.destroy}
   before(:each) {PuppyBreeder.request_repo.destroy}
+  before(:each) {PuppyBreeder::Repos::Breeds.new.destroy}
 
   describe '.log' do
     it 'returns an array of puppy objects' do
@@ -43,8 +44,30 @@ describe PuppyBreeder::Repos::Puppies do
 
   end
 
-  describe '.add_breed' do
-    xit "adds a new breed with price to the breeds database" do
+  describe '.update_prices' do
+    it "updates the puppies database with prices from the breeds database" do
+      breeds = PuppyBreeder::Repos::Breeds.new
+      puppies = PuppyBreeder::Repos::Puppies.new
+      spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
+      fido = PuppyBreeder::Puppy.new("Fido", 2, "Pitbull")
+      puppies.add_puppy(spot)
+      puppies.add_puppy(fido)
+
+      result = puppies.log
+
+      expect(result.all?{|x| x.price == nil}).to be_true
+
+      golden = PuppyBreeder::Breed.new("Golden Retriever", 800)
+      pitbull = PuppyBreeder::Breed.new("Pitbull", 500)
+      breeds.add_breed(golden)
+      breeds.add_breed(pitbull)
+
+      puppies.update_prices(breeds.log)
+
+      result = puppies.log
+
+      expect(result.all?{|x| x.price}).to be_true
+      expect(result.first.price).to eq "$800.00"
     end
   end
 

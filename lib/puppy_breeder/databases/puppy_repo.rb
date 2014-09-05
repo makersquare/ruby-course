@@ -16,7 +16,8 @@ module PuppyBreeder
             id serial,
             name text,
             age int,
-            breed text
+            breed text,
+            price money
           )
         ])
       end
@@ -36,6 +37,7 @@ module PuppyBreeder
       def build_puppy(entries) #test?
         entries.map do |req|
           x = PuppyBreeder::Puppy.new(req["name"], req["age"], req["breed"])
+          x.instance_variable_set :@price, req["price"]
           x
         end
       end
@@ -60,6 +62,14 @@ module PuppyBreeder
         ], [puppy.name, puppy.age, puppy.breed])
 
         #if there is an on-hold request for this breed, change to pending
+      end
+
+      def update_prices(breed_array)
+        breed_array.each do |b|
+          @db.exec(%q[
+            UPDATE puppies SET price = $1 WHERE breed = $2;
+          ], [b.price, b.breed])
+        end
       end
 
       # def self.purchase(breed)
