@@ -9,10 +9,10 @@ module PuppyBreeder
     "alaskan malamute" => 400, "cocker spaniel" => 500}
 
     #unknown breeds default to 250
-    def initialize(breed)
+    def initialize(breed, request_manager)
       @breed = breed
       @price = BREED_TO_PRICE[breed] || 250
-      PuppyBreeder::RequestManager.add_request(self)
+      request_manager.add_request(self)
     end
 
   end

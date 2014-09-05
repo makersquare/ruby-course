@@ -14,7 +14,7 @@ module PuppyBreeder
       end
 
       #Need to place requests into appropriate arrays above!
-      def build_requests(entries)
+      def build_requests(entries, request_manager)
         entries.map do |req| 
           breed = req["breed"]
           price = req["price"]
@@ -22,7 +22,7 @@ module PuppyBreeder
           denied =
           completed =
           held = 
-          x = PuppyBreeder::PurchaseRequest.new(breed, price)
+          x = PuppyBreeder::PurchaseRequest.new(breed, request_manager)
         end
       end
 
@@ -35,13 +35,13 @@ module PuppyBreeder
         @@open_requests.push(purchase_request)
       end
 
-      def approve_request(purchase_request)
+      def approve_request(purchase_request, puppy_manager)
         @@open_requests.delete(purchase_request)
-        puppy = PuppyBreeder::PuppyManager.find_match(purchase_request)
+        puppy = puppy_manager.find_match(purchase_request)
 
         if (puppy.is_a?(PuppyBreeder::Puppy))
           @@completed_requests.push(purchase_request)
-          PuppyBreeder::PuppyManager.remove_puppy_for_sale(puppy)
+          puppy_manager.remove_puppy_for_sale(puppy)
         else
           @@held_requests.push(purchase_request)
         end

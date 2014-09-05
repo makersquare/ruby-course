@@ -24,8 +24,8 @@ module PuppyBreeder
         build_puppies(result.entries)
       end
 
-      def check_held_requests()
-         PuppyBreeder::RequestManager.view_held_requests
+      def check_held_requests(request_manager)
+         request_manager.view_held_requests
       end
 
       def add_puppy_for_sale(puppy, request_manager)
