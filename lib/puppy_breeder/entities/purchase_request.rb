@@ -2,8 +2,9 @@
 module PuppyBreeder
 
   class PurchaseRequest
+    @@count = 0
 
-    attr_reader :breed, :price
+    attr_reader :breed, :price, :id
 
     BREED_TO_PRICE = {"golden retriever" => 200, "afghan hound" => 300, 
     "alaskan malamute" => 400, "cocker spaniel" => 500}
@@ -12,7 +13,9 @@ module PuppyBreeder
     def initialize(breed, request_manager)
       @breed = breed
       @price = BREED_TO_PRICE[breed] || 250
+      @id = @@count
       request_manager.add_request(self)
+      @@count +=1 
     end
 
   end

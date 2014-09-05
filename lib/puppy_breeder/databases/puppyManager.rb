@@ -6,6 +6,7 @@ module PuppyBreeder
 
       def initialize
         @db = PG.connect(host: "localhost", dbname: "puppyDB")
+        build_tables
         #REPLACE THIS WITH THE DB! 
         #@puppies_for_sale = []
       end
