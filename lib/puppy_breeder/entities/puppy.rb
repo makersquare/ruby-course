@@ -2,7 +2,7 @@
 module PuppyBreeder
   class Puppy
     attr_reader :name, :age, :breed 
-    attr_accessor :price, :availability
+    attr_accessor :price, :availability, :id
 
     def initialize(name, age, breed)
       @name = name
@@ -10,6 +10,7 @@ module PuppyBreeder
       @breed = breed
       @price = nil
       @availability = :for_sale
+      @id = nil
     end
 
     # def add(price = nil)

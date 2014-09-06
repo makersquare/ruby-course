@@ -50,10 +50,13 @@ module PuppyBreeder
           puppy.price = breeds_available.first.price
         end
 
-        @db.exec(%q[
+        result = @db.exec(%q[
           INSERT INTO puppies (name, age, breed, price, availability)
-          VALUES ($1, $2, $3, $4, $5);
+          VALUES ($1, $2, $3, $4, $5)
+          RETURNING id;
         ], [puppy.name, puppy.age, puppy.breed, puppy.price, puppy.availability])
+
+        puppy.id = result.entries.first["id"].to_i
 
         #if there is an on-hold request for this breed, change to pending
       end
@@ -64,6 +67,12 @@ module PuppyBreeder
             UPDATE puppies SET price = $1 WHERE breed = $2;
           ], [b.price, b.breed])
         end
+      end
+
+      def update_availability(puppy)
+        @db.exec(%q[
+            UPDATE puppies SET availability = $1 WHERE id = $2;
+          ], [b.availability, b.id])
       end
 
     end 

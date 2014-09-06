@@ -96,4 +96,10 @@ describe PuppyBreeder::Repos::Puppies do
     end
   end
 
+  describe '.update_availability' do
+    it "updates a puppy availability in the database to sold" do
+      
+    end
+  end
+
 end
