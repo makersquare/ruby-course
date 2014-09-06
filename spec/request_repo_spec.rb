@@ -130,37 +130,26 @@ describe PuppyBreeder::Repos::Requests do
     end
   end
 
-  # describe '#complete_request' do
-  #   xit "changes the status of the accepted order to completed in the purchase orders array" do
-  #     request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
-  #     request2 = PuppyBreeder::PurchaseRequest.new("Pitbull")
+  describe '.update_holds' do
+    it "checks all on hold orders to see if a puppy has been added with that breed and updates the first" do
+      requests = PuppyBreeder.request_repo
+      puppies = PuppyBreeder.puppy_repo
+      request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
+      request2 = PuppyBreeder::PurchaseRequest.new("Pitbull") 
 
-  #     request1.accept
+      requests.add_request(request1)
+      requests.add_request(request2)
 
-  #     result = PuppyBreeder::Repos::Requests.purchase_orders
+      spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
+      puppies.add_puppy(spot)
 
-  #     expect(result.first.status).to eq(:completed)
-  #   end
-  # end
-
-  # describe '#completed_purchase_orders' do
-  #   xit "shows only purchase orders with a status of completed" do
-  #     request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
-  #     request2 = PuppyBreeder::PurchaseRequest.new("Pitbull")
-
-  #     request1.accept
-
-  #     result = PuppyBreeder::Repos::Requests.completed_purchase_orders
-
-  #     expect(result.size).to eq 1
-  #     expect(result.first.status).to eq (:completed)
-  #   end
-  # end
-
-  # describe '#hold_to_pending' do
-  #   xit "changes the first on hold order for a particular breed to pending" do
+      requests.update_holds
       
-  #   end
-  # end
+      result = requests.log
+      
+      expect(result.first.status).to eq :pending
+      expect(result.last.status).to eq :on_hold
+    end
+  end
 
 end

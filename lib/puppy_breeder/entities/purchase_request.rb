@@ -17,5 +17,9 @@ module PuppyBreeder
     def on_hold!
       @status = :on_hold
     end
+
+    def pending!
+      @status = :pending
+    end
   end
 end

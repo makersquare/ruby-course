@@ -84,10 +84,20 @@ module PuppyBreeder
         ], [request.status, request.id])
       end
 
-      # def self.complete_request(order)
-      #   completed_order = @purchase_orders.find {|x| x = order}
-      #   completed_order.status = :completed
-      # end
+      def update_holds
+        hold_requests = PuppyBreeder.request_repo.log.select { |req| req.status == :on_hold}
+
+        puppies = PuppyBreeder.puppy_repo.log.select { |pup| pup.availability == :for_sale}
+
+        puppies.each do |pup|
+          result = hold_requests.find {|req| req.breed == pup.breed}
+          if result
+            hold_requests.delete(result)
+            result.pending!
+            update_request_status(result)
+          end
+        end
+      end
 
       # def self.hold_to_pending(order)
       #   to_pending = @purchase_orders.find {|x| x = order}
