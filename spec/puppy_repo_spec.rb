@@ -21,7 +21,7 @@ describe PuppyBreeder::Repos::Puppies do
   end
 
   describe '.add_puppy' do
-    it "can add puppies to the database" do
+    it "can add puppies to the database and sets the id attribute" do
       spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
       fido = PuppyBreeder::Puppy.new("Fido", 2, "Pitbull")
       puppies = PuppyBreeder.puppy_repo
@@ -32,6 +32,8 @@ describe PuppyBreeder::Repos::Puppies do
       expect(result.first.age.to_i).to eq 1
       expect(result.first.breed).to eq "Golden Retriever"
       expect(result.first.availability).to eq :for_sale
+      expect(result.first.id.to_i).to eq 1
+
 
       puppies.add_puppy(fido)
       result = puppies.log
@@ -40,6 +42,8 @@ describe PuppyBreeder::Repos::Puppies do
       expect(result.last.age.to_i).to eq 2
       expect(result.last.breed).to eq "Pitbull"
       expect(result.last.availability).to eq :for_sale
+      expect(result.last.id.to_i).to eq 2
+
     end
 
     context "the breed of the puppy is not listed in the breeds database" do
@@ -98,7 +102,23 @@ describe PuppyBreeder::Repos::Puppies do
 
   describe '.update_availability' do
     it "updates a puppy availability in the database to sold" do
+      puppies = PuppyBreeder.puppy_repo
+      spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
+      fido = PuppyBreeder::Puppy.new("Fido", 2, "Pitbull")
+      puppies.add_puppy(spot)
+      puppies.add_puppy(fido)
+
+      result = puppies.log
+
+      expect(result.all?{|x| x.availability == :for_sale}).to be_true
+
+      spot.sold!
+      puppies.update_availability(spot)
+
+      result = puppies.log
       
+      expect(result.first.availability).to eq :for_sale
+      expect(result.last.availability).to eq :sold
     end
   end
 

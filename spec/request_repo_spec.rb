@@ -21,7 +21,7 @@ describe PuppyBreeder::Repos::Requests do
   end
 
   describe '.add_request' do
-    it "adds a new purchase request to the database" do
+    it "adds a new purchase request to the database and sets the id attribute" do
       requests = PuppyBreeder.request_repo
       puppies = PuppyBreeder.puppy_repo
       request1 = PuppyBreeder::PurchaseRequest.new("Golden Retriever")
@@ -34,6 +34,7 @@ describe PuppyBreeder::Repos::Requests do
 
       expect(result.size).to eq 2
       expect(result.first.breed).to eq("Golden Retriever")
+      expect(result.first.id.to_i).to eq 1
     end
 
     it "checks if there is a puppy of the chosen breed available and marks as on_hold if not" do

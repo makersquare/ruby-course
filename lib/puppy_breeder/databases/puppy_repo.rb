@@ -39,6 +39,7 @@ module PuppyBreeder
           x = PuppyBreeder::Puppy.new(req["name"], req["age"], req["breed"])
           x.instance_variable_set :@price, req["price"]
           x.instance_variable_set :@availability, req["availability"].to_sym
+          x.instance_variable_set :@id, req["id"].to_i
           x
         end
       end
@@ -72,7 +73,7 @@ module PuppyBreeder
       def update_availability(puppy)
         @db.exec(%q[
             UPDATE puppies SET availability = $1 WHERE id = $2;
-          ], [b.availability, b.id])
+          ], [puppy.availability, puppy.id])
       end
 
     end 
