@@ -16,7 +16,7 @@ module PuppyBreeder
         ]) #can primary key be left out of id serial?
       end
 
-      def destroy 
+      def destroy_and_rebuild 
         @db.exec(%q[
           DROP TABLE IF EXISTS breeds
         ])
@@ -24,7 +24,6 @@ module PuppyBreeder
       end
 
       def log
-        build_table
         result = @db.exec('SELECT * FROM breeds;')
         build_breeds(result.entries)
       end

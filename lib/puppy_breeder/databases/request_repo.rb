@@ -19,14 +19,14 @@ module PuppyBreeder
         ])
       end
 
-      def destroy 
+      def destroy_and_rebuild 
         @db.exec(%q[
           DROP TABLE IF EXISTS requests;
         ])
+        build_table
       end
 
       def log
-        build_table
         result = @db.exec('SELECT * FROM requests ORDER BY id ASC;')
         build_request(result.entries)
       end

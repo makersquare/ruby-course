@@ -1,8 +1,8 @@
 require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::Repos::Puppies do
-  before(:each) {PuppyBreeder.puppy_repo.destroy}
-  before(:each) {PuppyBreeder.breed_repo.destroy}
+  before(:each) {PuppyBreeder.puppy_repo.destroy_and_rebuild}
+  before(:each) {PuppyBreeder.breed_repo.destroy_and_rebuild}
 
   describe '.log' do
     it 'returns an array of puppy objects' do
@@ -31,6 +31,7 @@ describe PuppyBreeder::Repos::Puppies do
       expect(result.size).to eq 1
       expect(result.first.age.to_i).to eq 1
       expect(result.first.breed).to eq "Golden Retriever"
+      expect(result.first.availability).to eq :for_sale
 
       puppies.add_puppy(fido)
       result = puppies.log
@@ -38,7 +39,7 @@ describe PuppyBreeder::Repos::Puppies do
       expect(result.size).to eq 2
       expect(result.last.age.to_i).to eq 2
       expect(result.last.breed).to eq "Pitbull"
-      expect(result.any?{|x| x.breed == "Boston Terrier"}).to be_false
+      expect(result.last.availability).to eq :for_sale
     end
 
     context "the breed of the puppy is not listed in the breeds database" do

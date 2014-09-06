@@ -1,8 +1,8 @@
 require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::Repos::Requests do
-  before(:each) {PuppyBreeder.request_repo.destroy}
-  before(:each) {PuppyBreeder.puppy_repo.destroy}
+  before(:each) {PuppyBreeder.request_repo.destroy_and_rebuild}
+  before(:each) {PuppyBreeder.puppy_repo.destroy_and_rebuild}
 
   describe '.log' do
     it 'returns an array of request objects' do

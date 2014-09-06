@@ -1,7 +1,7 @@
 require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::Repos::Breeds do
-  before(:each) {PuppyBreeder.breed_repo.destroy}
+  before(:each) {PuppyBreeder.breed_repo.destroy_and_rebuild}
 
   describe '.log' do
     it 'returns an array of breed objects' do

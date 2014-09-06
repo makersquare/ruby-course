@@ -11,13 +11,13 @@ describe PuppyBreeder::Puppy do
     end
   end
 
-  # describe '.add' do
-  #   xit 'changes the status to :for_sale' do
-  #     spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
-  #     spot.add
+  describe '.sold!' do
+    it 'changes the availability to :sold' do
+      spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
+      spot.sold!
 
-  #     expect(spot.status).to eq(:for_sale)
-  #   end
-  # end
+      expect(spot.availability).to eq(:sold)
+    end
+  end
 
 end

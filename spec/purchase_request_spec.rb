@@ -1,7 +1,7 @@
 require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::PurchaseRequest do
-  before(:each) {PuppyBreeder.puppy_repo.destroy}
+  before(:each) {PuppyBreeder.puppy_repo.destroy_and_rebuild}
   
   describe '.initialize' do
     it "creates a new purchase request for a breed with a status of pending" do

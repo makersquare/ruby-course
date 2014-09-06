@@ -16,12 +16,13 @@ module PuppyBreeder
             name text,
             age int,
             breed text,
-            price money
+            price money,
+            availability text
           )
         ])
       end
 
-      def destroy
+      def destroy_and_rebuild
         @db.exec(%q[
           DROP TABLE IF EXISTS puppies
         ])
@@ -29,7 +30,6 @@ module PuppyBreeder
       end
 
       def log
-        build_table
         result = @db.exec('SELECT * FROM puppies;')
         build_puppy(result.entries)
       end
@@ -38,6 +38,7 @@ module PuppyBreeder
         entries.map do |req|
           x = PuppyBreeder::Puppy.new(req["name"], req["age"], req["breed"])
           x.instance_variable_set :@price, req["price"]
+          x.instance_variable_set :@availability, req["availability"].to_sym
           x
         end
       end
@@ -50,9 +51,9 @@ module PuppyBreeder
         end
 
         @db.exec(%q[
-          INSERT INTO puppies (name, age, breed, price)
-          VALUES ($1, $2, $3, $4);
-        ], [puppy.name, puppy.age, puppy.breed, puppy.price])
+          INSERT INTO puppies (name, age, breed, price, availability)
+          VALUES ($1, $2, $3, $4, $5);
+        ], [puppy.name, puppy.age, puppy.breed, puppy.price, puppy.availability])
 
         #if there is an on-hold request for this breed, change to pending
       end

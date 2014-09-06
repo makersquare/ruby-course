@@ -2,14 +2,14 @@
 module PuppyBreeder
   class Puppy
     attr_reader :name, :age, :breed 
-    attr_accessor :price
+    attr_accessor :price, :availability
 
     def initialize(name, age, breed)
       @name = name
       @age = age
       @breed = breed
       @price = nil
-      #@status = :not_for_sale
+      @availability = :for_sale
     end
 
     # def add(price = nil)
@@ -18,6 +18,10 @@ module PuppyBreeder
     #   on_hold = Requests.purchase_orders.find {|x| x.breed == self.breed && x.status == :on_hold}
     #   Requests.hold_to_pending(on_hold) if !on_hold.nil?
     # end 
+
+    def sold!
+      @availability = :sold
+    end
 
   end
 end
