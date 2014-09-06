@@ -146,10 +146,10 @@ describe PuppyBreeder::Repos::Requests do
       requests.update_holds
       
       result = requests.log
-      
+
       expect(result.first.status).to eq :pending
       expect(result.last.status).to eq :on_hold
     end
   end
-
+  
 end

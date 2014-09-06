@@ -21,5 +21,6 @@ module PuppyBreeder
     def pending!
       @status = :pending
     end
+    
   end
 end

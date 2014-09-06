@@ -58,8 +58,6 @@ module PuppyBreeder
         ], [puppy.name, puppy.age, puppy.breed, puppy.price, puppy.availability])
 
         puppy.id = result.entries.first["id"].to_i
-
-        #if there is an on-hold request for this breed, change to pending
       end
 
       def update_prices(breed_array)
@@ -75,7 +73,7 @@ module PuppyBreeder
             UPDATE puppies SET availability = $1 WHERE id = $2;
           ], [puppy.availability, puppy.id])
       end
-
+      
     end 
   end
 end

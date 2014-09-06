@@ -49,6 +49,7 @@ module PuppyBreeder
       end
 
       def pending_requests
+        update_holds
         result = @db.exec(%q[
           SELECT * FROM requests WHERE status = 'pending';
         ])
@@ -98,11 +99,7 @@ module PuppyBreeder
           end
         end
       end
-
-      # def self.hold_to_pending(order)
-      #   to_pending = @purchase_orders.find {|x| x = order}
-      #   to_pending.first.status = :pending if !to_pending.nil?
-      # end
+      
     end
   end
 end

@@ -1,6 +1,7 @@
 require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::Puppy do
+  
   describe '.initialize' do
     it "creates a puppy with a name, age, breed, price set to nil, and availability set to for_sale" do
       spot = PuppyBreeder::Puppy.new("Spot", 1, "Golden Retriever")
