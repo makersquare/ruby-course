@@ -2,16 +2,24 @@
 
 module PuppyBreeder
   class PurchaseRequest
-    attr_reader :breed, :request_id
-    attr_accessor :status
-    def initialize(breed, status="pending")
+    attr_reader :breed
+    attr_accessor :status, :id, :puppy_id
+    def initialize(breed, status="pending", id=nil)
       @breed = breed
       @status = status
-      @request_id
+      @id = id
+      @puppy_id
     end
+
+
 
     def hold!
       @status = 'hold'
+    end
+#take this out if you're going to do the automatic thing
+#####################################
+    def approve!
+      @status = 'accepted'
     end
   end
 end

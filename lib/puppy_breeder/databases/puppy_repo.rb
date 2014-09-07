@@ -9,7 +9,7 @@ module PuppyBreeder
     # end
 
     def initialize
-      @db = PG.connect(host: 'localhost', dbname: 'puppy-breeder')
+      @db = PG.connect(host: 'localhost', dbname: 'puppy-breeder1')
       build_tables
 
     end
@@ -20,7 +20,8 @@ module PuppyBreeder
           id serial,
           name text,
           breed text,
-          age int
+          age int,
+          available boolean
         )
       ])
     end
@@ -44,10 +45,19 @@ module PuppyBreeder
 
     def add_puppy(puppy)
       #on th
-      @db.exec(%q[
-        INSERT INTO puppies (name, breed, age)
-        VALUES ($1, $2, $3);
-        ], [puppy.name, puppy.breed, puppy.age]) 
+      request = @db.exec(%q[
+        INSERT INTO puppies (name, breed, age, available)
+        VALUES ($1, $2, $3, $4)
+        RETURNING id;
+        ], [puppy.name, puppy.breed, puppy.age, true]) 
+        puppy.instance_variable_set :@id, request.entries.first["id"]
+
+      #return the id here but also call the method?
+      ################################################
+
+      PuppyBreeder.request_repo.check_holds
+
+
     end
 
     #get the PG::RESULT object and store it in result
@@ -59,8 +69,14 @@ module PuppyBreeder
       #call build puppy which returns the array of puppy objects
       build_puppy(result.entries)
     end
+    # def refresh_tables
+    #   @db.exec("DELETE FROM puppies WHERE id IS NOT NULL")
+    # end
     def refresh_tables
-      @db.exec("DELETE FROM puppies WHERE id IS NOT NULL")
+      @db.exec(%q[
+        DROP TABLE puppies;
+        ])
+      build_tables
     end
   end
 end

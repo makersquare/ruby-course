@@ -1,27 +1,33 @@
 require_relative 'spec_helper.rb'
+require 'pg'
+
+
 
 describe PuppyBreeder::Repos::Inventory do
-  xit 'creates a new inventory' do
-    test = PuppyBreeder::Inventory.new
 
-    expect(test.class).to eq(PuppyBreeder::Inventory)
+  before do
+    PuppyBreeder.request_repo.refresh_tables
+    PuppyBreeder.puppy_repo.refresh_tables
   end
 
-  xit 'adds a breed to the inventory' do
-    test = PuppyBreeder::Inventory
-    test.add_breed("Schnauzer", 500)
-    test.add_breed("Mutt", 1000)
+  #there must be a better way to test for this
+  #creates a puppy, adds the puppy, retrieves the log, checks to see
+  #if log is empty (should return false indicating log has the puppy)
+  it 'creates a new inventory' do
+    pup = PuppyBreeder::Puppy.new("Dana", "Schnauzer", 5)
+    PuppyBreeder.puppy_repo.add_puppy(pup)
+    test = PuppyBreeder.puppy_repo.log
 
-    expect(test.puppies["Schnauzer"]["price"]).to eq(500)
-    expect(test.puppies["Mutt"]["price"]).to eq(1000)
+    expect(test.empty?).to be_false
   end
 
-  xit 'adds a puppy to the inventory' do
-    test = PuppyBreeder::Inventory
-    test.add_breed("Schnauzer", 500)
+  it 'adds a puppy to the inventory' do
+    #this tests the log method, add_puppy method, and the build puppy method
+    #maybe I'm supposed to test those individually but all I'm doing is 
+    #modifying my previous tests. 
     puppy = PuppyBreeder::Puppy.new("Dana", "Schnauzer", 1)
-    test.add_puppy(puppy)
-
-    expect(test.puppies["Schnauzer"]["list"]).to include(puppy)
+    PuppyBreeder.puppy_repo.add_puppy(puppy)
+    list = PuppyBreeder.puppy_repo.log
+    expect(list.last.name).to eq(puppy.name)
   end
 end

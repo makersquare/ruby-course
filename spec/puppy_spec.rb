@@ -1,6 +1,12 @@
 require_relative 'spec_helper.rb'
 
 describe PuppyBreeder::Puppy do
+
+  before do
+    PuppyBreeder.request_repo.refresh_tables
+    PuppyBreeder.puppy_repo.refresh_tables
+  end
+
   it "creates an instance of the puppy class" do
     dana = PuppyBreeder::Puppy.new("Dana", "Schnauzer", 4)
 

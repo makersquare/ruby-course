@@ -2,6 +2,11 @@ require_relative 'spec_helper.rb'
 require 'pry-byebug'
 
 describe PuppyBreeder::PurchaseRequest do
+  before do
+    PuppyBreeder.request_repo.refresh_tables
+    PuppyBreeder.puppy_repo.refresh_tables
+  end
+
   #patrick wrote the following line to reset counter 
   before (:each) { PuppyBreeder::PurchaseRequest.class_variable_set(:@@counter, 0) }
 
