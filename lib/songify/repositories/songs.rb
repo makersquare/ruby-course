@@ -21,6 +21,12 @@ module Songify
         ])
       end
 
+      def build_song(entry)
+        song = Songify::Song.new(entry["artist"],entry["title"],entry["album"],entry["length"].to_i)
+        song.instance_variable_set :@id, entry["id"].to_i
+        song
+      end
+
       def drop_table
         @db.exec(%q[DROP TABLE songs])
         build_table
@@ -28,7 +34,8 @@ module Songify
 
       #song id, possibly artist?, album?
       def get_a_song(id)
-        get_all_songs(id)[0]
+        song = get_all_songs(id)
+        song[0]
       end
 
       # does not need a paramater
@@ -38,6 +45,8 @@ module Songify
           sql = "WHERE id = #{id}"
         end
         songs = @db.exec("SELECT * FROM songs " + sql ).entries
+        song = songs.map{|x| build_song(x)}
+        song
       end
 
       #paramaters, song object
@@ -66,7 +75,7 @@ module Songify
 
       #parameter needed, song id.
       def delete_a_song(id)
-        @db.exec(%q[DELETE FROM songs WHERE id = ] + "#{id}")
+        @db.exec(%q[DELETE FROM songs WHERE id = $1],[id])
       end
 
 
