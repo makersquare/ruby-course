@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="utf-8">
+	    <title>Puppies You've Put Down!</title>
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	    <style>
+	    	html, body {
+	    		height: 100%;
+	    		width: 100%;
+	    		text-align: center;
+	    		background-image: url(http://naturalpetrecipes.com/wp-content/uploads/2013/03/LabPuppy.jpg);
+	    	}
+	    	h3 {
+	    		font-weight: bold;
+	    	}
+	    	p {
+	    		font-size: 1.2em;
+	    	}
+	    </style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+			    	<h1>Puppies!!!</h1>
+			    <div class="col-md-4">
+			    	<h3>Available Puppies</h3>
+			    	<% @available_list.each do |puppy| %>
+			    	<p><%= @available_counter %>. 
+			    	<%= puppy.name %> is a <%= puppy.breed %> and is <%= puppy.age %> years old.</p>
+			    	<% @available_counter += 1 %>
+			    	<% end %>
+		    	</div>
+		    	<div class="col-md-4">
+		    		<h3>Puppies On Hold</h3>
+			    	<% @hold_list.each do |puppy| %>
+			    	<p><%= @hold_counter %>. 
+			    	<%= puppy.name %> is a <%= puppy.breed %> and is <%= puppy.age %> years old.</p>
+			    	<% @hold_counter += 1 %>
+			    	<% end %>
+		    	</div>
+		    	<div class="col-md-4">
+		    		<h3>Sold List</h3>
+			    	<% @sold_list.each do |puppy| %>
+			    	<p><%= @sold_counter %>. 
+			    	<%= puppy.name %> is a <%= puppy.breed %> and is <%= puppy.age %> years old.</p>
+			    	<% @sold_counter += 1 %>
+			    	<% end %>
+		    	</div>
+		    </div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+    				<div style="height: 50px;"></div>
+		    	</div>
+		    </div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+			    	<h1>Puppies and Purchase Requests!</h1>
+			    	<ul></ul>
+			    		<li><a href="/">Back to the Start!</a></li>
+			    		<li><a href="/puppy">Put Down a Puppy!</a></li>
+			    		<li><a href="/request">Purchase a Puppy!</a></li>
+			    		<li><a href="/requests">All Your Moneyz!</a></li>
+			    	</ul>
+		    	</div>
+		    </div>
+		</div>
+
+
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>
