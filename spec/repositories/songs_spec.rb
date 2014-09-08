@@ -11,7 +11,7 @@ describe Songify::Repos::Songs do
       result = songs.get_song(song.id)
 
       expect(result).to be_a(Songify::Song)
-      expect(result.id).to eq 1
+      expect(result.id).to eq(song.id)
       expect(result.genre).to eq 'fake_genre'
     end
   end
@@ -51,11 +51,11 @@ describe Songify::Repos::Songs do
       songs.save_song(song)
       songs.save_song(song2)
 
-      songs.delete_song(1)
+      songs.delete_song(song.id)
       result = songs.get_all_songs
 
       expect(result.size).to eq 1
-      expect(result.first.id).to eq 2
+      expect(result.first.id).to eq(song2.id)
       expect(result.first.title).to eq 'fake_title2'
     end
   end
