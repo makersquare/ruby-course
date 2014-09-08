@@ -1,6 +1,8 @@
 require_relative '../spec_helper.rb'
 
 describe Songify::Repositories::Songs do
+  let(:song) { song = Songify::Song.new("test title", "test artist", "test album") }
+
   before(:each) do
     Songify.songs_repo.drop_table
   end
@@ -18,7 +20,6 @@ describe Songify::Repositories::Songs do
 
   describe '#save_a_song' do
     it 'saves a song into the table using a song object' do
-      song = Songify::Song.new("test title", "test artist", "test album")
       expect(song.id).to be_nil
       Songify.songs_repo.save_a_song(song)
       expect(song.id).to be_true
@@ -27,7 +28,11 @@ describe Songify::Repositories::Songs do
 
   describe '#delete_a_song' do
     it 'deletes a given song using an id' do
-
+      expect(song.id).to be_nil
+      Songify.songs_repo.save_a_song(song)
+      expect(song.id).to be_true
+      Songify.songs_repo.delete_a_song(song)
+      expect(song.id).to be_nil
     end
   end
 
