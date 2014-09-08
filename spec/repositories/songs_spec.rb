@@ -16,6 +16,19 @@ describe Songify::Repos::Songs do
     end
   end
 
+  describe '.get_all_songs' do
+    it 'returns an array of all song objects' do
+      song2 = Songify::Song.new('fake_title2', 'fake_artist2', 'fake_album2', 'fake_genre2', 'fake_length2')
+      songs.save_song(song)
+      songs.save_song(song2)
+      result = songs.get_all_songs
+
+      expect(result.size).to eq 2
+      expect(result.last.id).to eq 2
+      expect(result.all? {|x| x.class == Songify::Song}).to be_true
+    end
+  end
+
   describe '.save_song' do
     it 'adds a song to the database' do
       songs.save_song(song)

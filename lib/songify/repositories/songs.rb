@@ -38,7 +38,10 @@ module Songify
 
       #no parameter needed
       def get_all_songs
-
+        result = @db.exec(%q[
+          SELECT * FROM songs
+        ])
+        build_songs(result.entries)
       end
 
       #parameter should be song object
