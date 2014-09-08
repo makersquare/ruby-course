@@ -1,3 +1,5 @@
+require 'pg'
+
 module Songify
   module Repositories
     class Songs
@@ -33,6 +35,12 @@ module Songify
 
       # parameter should be song object
       def save_a_song(song)
+        result = @db.exec(%q[
+          INSERT INTO songs (title, artist, album)
+          VALUES ($1, $2, $3)
+          returning id
+        ], [song.title, song.artist, song.album])
+        song.instance_variable_set("@id", result[0]["id"])
       end
 
       # parameter could be song id
