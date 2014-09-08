@@ -26,18 +26,11 @@ module Songify
         @db.exec("DROP TABLE songs")
         build_table
       end
-
-      def build_song(entries)
-        entries.map do |song|
-        x = Songify::Song.new(song["title"], song["artist"], song["genre"])
-        x.instance_variable_set :@id, song["id"].to_i  
-        x
-      end   
-      end
-
-      def log
-        result = @db.exec('SELECT * FROM songs;')
-        build_song(result.entries)
+#changed after solution
+      def build_song(data) 
+        x = Songify::Song.new(data["title"], data["artist"], data["genre"])
+        x.instance_variable_set :@id, data["id"].to_i  
+        x   
       end
 
       def save_song(song)
@@ -47,16 +40,18 @@ module Songify
 
         song.id = result.entries.first["id"].to_i
       end
-
+      
+#changed after solution
       def get_song(id)
        result = @db.exec(%q[
           SELECT * FROM songs WHERE id = $1;], [id])
-        build_song(result.entries)
+        build_song(result.first) 
       end
 
+#changed this after solution
       def get_all_songs
         result = @db.exec('SELECT * FROM songs;')
-        build_song(result.entries)
+        result.map {|r| build_song(r) } 
       end
 
       def delete_song(id)

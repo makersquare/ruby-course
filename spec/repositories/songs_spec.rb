@@ -9,21 +9,23 @@ describe Songify::Repo::Songs do
 
   it "saves a Song to the database" do
 
-    songs_test.save_song(tune1)
-    result = songs_test.log
+    #added after Nick's example solution
+    expect(tune1.id).to be_nil
+   
+    result = songs_test.save_song(tune1)
 
-    expect(result.first.id).not_to be_nil
+    expect(tune1.id).not_to be_nil
 
   end
 
-  it "gets a Song from the database" do
+  it "gets a Song from the database by ID" do
     songs_test.save_song(tune1)
     songs_test.save_song(tune2)
 
     result = songs_test.get_song(tune1.id)
 
-    expect(result.first.title).to eq("fake_title") 
-
+    expect(result.title).to eq("fake_title") 
+    expect(result).to be_a(Songify::Song)
   end
 
   it "gets all Songs from the database" do
@@ -40,6 +42,9 @@ describe Songify::Repo::Songs do
   it "deletes a Song from the database" do 
     songs_test.save_song(tune1)
     songs_test.save_song(tune2)
+    result = songs_test.get_all_songs
+
+    expect(result.count).to eq 2
 
     songs_test.delete_song(tune2.id)
     
