@@ -30,7 +30,7 @@ module Songify
           title = song["title"]
           id = song["id"]
           song = Songify::Song.new(title, artist, album)
-          song.id = id.to_i
+          song.instance_variable_set(:@id, id.to_i) 
           song
         end
       end
