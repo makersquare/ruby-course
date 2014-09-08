@@ -19,8 +19,14 @@ describe Songify::Repos::Songs do
       songs.save_song(song)
       result = songs.log
 
-      expect(result.first.id).to eq 1
       expect(result.first.title).to eq 'fake_title'
+    end
+
+    it 'sets the id attribute of the song object passed in' do
+      songs.save_song(song)
+      result = songs.log
+
+      expect(result.first.id).to eq 1
     end
   end
 

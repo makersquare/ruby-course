@@ -41,7 +41,7 @@ module Songify
       end
 
       #parameter could be song id
-      def get_song
+      def get_song(song_id)
 
       end
 
