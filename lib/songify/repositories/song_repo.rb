@@ -30,7 +30,7 @@ module Songify
           title = song["title"]
           id = song["id"]
           song = Songify::Song.new(title, artist, album)
-          song.id = id
+          song.id = id.to_i
           song
         end
       end
@@ -42,11 +42,14 @@ module Songify
 
       #song id param?
       def get_song(id)
-
+        song = @db.exec(%q[SELECT * FROM songs
+          WHERE id = ($1);], [id])
+        build_songs(song)[0]
       end
 
       #no param
       def get_all_songs
+        build_songs(entries)
       end
 
       def save_song(song)
@@ -58,7 +61,8 @@ module Songify
 
       #song id param?
       def delete_song(id)
-        @db.exec(%q[SELECT * WHERE id = ($1);], [id])
+        @db.exec(%q[DELETE FROM songs
+          WHERE id = ($1);], [id])
       end
 
 
