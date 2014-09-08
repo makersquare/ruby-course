@@ -30,7 +30,7 @@ module Songify
         result = @db.exec(%q[
           SELECT * FROM songs WHERE id = $1
         ], [id])
-        build_song(result.entries).first
+        build_song(result.first)
       end
 
       # no parameter needed
@@ -38,7 +38,7 @@ module Songify
         result = @db.exec(%q[
           SELECT * FROM songs
         ])
-        build_song(result.entries)
+        result.map { |song| build_song(song) }
       end
 
       # parameter should be song object
@@ -48,7 +48,7 @@ module Songify
           VALUES ($1, $2, $3)
           returning id
         ], [song.title, song.artist, song.album])
-        song.instance_variable_set("@id", result[0]["id"])
+        song.instance_variable_set("@id", result[0]["id"].to_i)
       end
 
       # parameter is song object so i can set id back to nil once deleted
@@ -60,15 +60,10 @@ module Songify
       end
 
       # helper method to build song objects
-      def build_song(entries)
-        entries.map do |song|
-          x = Songify::Song.new(song["title"], song["artist"], song["album"])
-          x.instance_variable_set :@title, song["title"]
-          x.instance_variable_set :@artist, song["artist"]
-          x.instance_variable_set :@album, song["album"]
-          x.instance_variable_set :@id, song["id"]
-          x
-        end
+      def build_song(song)
+        x = Songify::Song.new(song["title"], song["artist"], song["album"])
+        x.instance_variable_set :@id, song["id"].to_i
+        x
       end
     end
   end
