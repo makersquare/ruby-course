@@ -8,15 +8,21 @@ module Songify
         build_table
       end
 
-      def build_song(entries)
-        entries.map do |song|
-          s = Songify::Song.new(song["title"],
-                                song["artist"],
-                                song["album"],
-                                song["genre"])
-          s.instance_variable_set :@id, song["id"].to_i
-          s
-        end
+      # def build_all_songs(entries)
+      #   entries.map do |song|
+      #     s = Songify::Song.new(song["title"],
+      #                           song["artist"],
+      #                           song["album"],
+      #                           song["genre"])
+      #     s.instance_variable_set :@id, song["id"].to_i
+      #     s
+      #   end
+      # end
+
+      def build_song(data)
+        s = Songify::Song.new(data["title"],data["artist"],data["album"],data["genre"])
+        s.instance_variable_set :@id, data['id'].to_i
+        s
       end
 
       def build_table
@@ -41,14 +47,14 @@ module Songify
         requested_song = @db.exec(%q[
           SELECT * FROM songs WHERE id = $1;
           ], [song.id])
-        build_song(requested_song.entries)
+        build_song(requested_song.first)
       end
 
       def show_all_songs
         requested_songs = @db.exec(%q[
           SELECT * FROM songs
           ])
-        build_song(requested_songs.entries)
+        requested_songs.map { |s| build_song(s) }
       end
 
       def save_a_song(song)

@@ -33,7 +33,7 @@ describe Songify::Repositories::Songs do
 
     req_song = Songify.songs_repo.show_a_song(song)
 
-    expect(req_song.first.title).to eq('fake_title')
+    expect(req_song.title).to eq('fake_title')
   end
 
   it 'shows all songs from the songs table' do
