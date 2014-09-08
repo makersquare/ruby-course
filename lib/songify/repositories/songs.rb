@@ -18,7 +18,7 @@ module Songify
             album text,
             genre text,
             length text
-          )
+          );
         ])
       end
 
@@ -35,7 +35,7 @@ module Songify
       def build_songs(entries)
         entries.map do |song|
           x = Songify::Song.new(song["title"], song["artist"], song["album"], song["genre"], song["length"])
-          x.instance_variable_set :@id, req["id"].to_i
+          x.instance_variable_set :@id, song["id"].to_i
           x
         end
       end
@@ -52,7 +52,13 @@ module Songify
 
       #parameter should be song object
       def save_song(song)
+        result = @db.exec(%q[
+          INSERT INTO songs (title, artist, album, genre, length)
+          VALUES ($1, $2, $3, $4, $5)
+          RETURNING id;
+        ], [song.title, song.artist, song.album, song.genre, song.length])
 
+        song.id = result.entries.first["id"].to_i
       end
 
       #parameter could be song id

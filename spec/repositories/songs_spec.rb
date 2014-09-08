@@ -6,7 +6,8 @@ describe Songify::Repos::Songs do
   let(:songs) { Songify.songs_repo}
 
   describe '.log' do
-    it 'returns an array of song objects' do
+    it 'returns an array of song objects' do      
+      songs.save_song(song)
       result = songs.log
 
       expect(result.first).to be_a(Songify::Song)
@@ -15,7 +16,7 @@ describe Songify::Repos::Songs do
 
   describe '.save_song' do
     it 'adds a song to the database' do
-      save_song(song)
+      songs.save_song(song)
       result = songs.log
 
       expect(result.first.id).to eq 1
