@@ -22,7 +22,7 @@ describe Songify::Repositories::Songs do
   it "selects a song by its Song ID" do
     result = Songify.songs_repo.get_a_song(4)
     expect(result.size).to eq(1)
-    # binding.pry
+
     expect(result.first.class).to be(Songify::Song)
   end
 
@@ -34,7 +34,12 @@ describe Songify::Repositories::Songs do
     expect(result[0].id).to eq(1)
     expect(result[1].id).to eq(2)
     expect(result[2].id).to eq(4)
+  end
 
+  it "check that the next song added will have an ID of 5" do
+    Songify.songs_repo.save_a_song(song)
+    result = Songify.songs_repo.get_all_songs
+    expect(result.last.id).to eq(5)
   end
 
 end
