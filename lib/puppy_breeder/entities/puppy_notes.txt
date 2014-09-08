@@ -1,0 +1,35 @@
+To Do:
+Request log spec 
+  Need to modify pending request. i don't know how to handle
+  this. 
+  Need to automatically cycle through all of the holds
+  and match puppies with the holds in order. Code is there.
+  When I add the puppy it automatically runs a loop on all 
+  holds to see if there is a match, and if there is, it calls
+  another method which 
+  1) updates the record of the puppy so it's availability changes to false indicating it's been
+  reserved
+  2) updates the request log with the id of the puppy
+  3) updates the status of the request in the log from
+  hold to accepted. 
+  When I run rspec I get an error from the add_puppy method
+  saying error: could not determine data type of parameter $1
+  $1 is the puppy.name and 
+  4) Figure out how to store the price to breed in two tables?
+  	or just use the 3 table method
+
+Done:
+Puppy spec - checks for class instance creation and 
+  for proper setting of instance variables
+Purchase Request spec - checks for instance creation
+  checks for pending status as default
+  checks for the breed attribute being set
+Inventory spec - checks for new inventory creation
+  checks for log, checks to make sure puppy gets added
+  to the repo.
+Request Log spec - 
+  adds a request to the database
+  checks for the log
+  sets the status to hold if no matching dog is available
+  gets the pending requests
+
