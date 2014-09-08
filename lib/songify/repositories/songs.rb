@@ -8,17 +8,6 @@ module Songify
         build_table
       end
 
-      # def build_all_songs(entries)
-      #   entries.map do |song|
-      #     s = Songify::Song.new(song["title"],
-      #                           song["artist"],
-      #                           song["album"],
-      #                           song["genre"])
-      #     s.instance_variable_set :@id, song["id"].to_i
-      #     s
-      #   end
-      # end
-
       def build_song(data)
         s = Songify::Song.new(data["title"],data["artist"],data["album"],data["genre"])
         s.instance_variable_set :@id, data['id'].to_i
