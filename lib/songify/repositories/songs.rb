@@ -27,22 +27,13 @@ module Songify
         build_table
       end
 
-      def log
-        result = @db.exec('SELECT * FROM songs ORDER BY id ASC;')
-        build_songs(result.entries)
-      end
-
-      def build_songs(entries)
-        entries.map do |song|
-          x = Songify::Song.new(song["title"], song["artist"], song["album"], song["genre"], song["length"])
-          x.instance_variable_set :@id, song["id"].to_i
-          x
-        end
-      end
-
       #parameter could be song id
       def get_song(song_id)
+        result = @db.exec(%q[
+          SELECT * FROM songs WHERE id = $1;
+        ], [song_id])
 
+        build_songs(result.entries).first
       end
 
       #no parameter needed
@@ -64,6 +55,19 @@ module Songify
       #parameter could be song id
       def delete_song(song)
 
+      end
+
+      def log
+        result = @db.exec('SELECT * FROM songs ORDER BY id ASC;')
+        build_songs(result.entries)
+      end
+
+      def build_songs(entries)
+        entries.map do |song|
+          x = Songify::Song.new(song["title"], song["artist"], song["album"], song["genre"], song["length"])
+          x.instance_variable_set :@id, song["id"].to_i
+          x
+        end
       end
       
     end
