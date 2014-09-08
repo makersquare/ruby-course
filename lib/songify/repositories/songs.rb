@@ -27,7 +27,6 @@ module Songify
         build_table
       end
 
-      #parameter could be song id
       def get_song(song_id)
         result = @db.exec(%q[
           SELECT * FROM songs WHERE id = $1;
@@ -36,7 +35,6 @@ module Songify
         build_songs(result.entries).first
       end
 
-      #no parameter needed
       def get_all_songs
         result = @db.exec(%q[
           SELECT * FROM songs
@@ -44,7 +42,6 @@ module Songify
         build_songs(result.entries)
       end
 
-      #parameter should be song object
       def save_song(song)
         result = @db.exec(%q[
           INSERT INTO songs (title, artist, album, genre, length)
@@ -56,8 +53,11 @@ module Songify
       end
 
       #parameter could be song id
-      def delete_song(song)
-
+      def delete_song(song_id)
+        @db.exec(%q[
+          DELETE FROM songs
+          WHERE id = $1;
+        ], [song_id])
       end
 
       def log

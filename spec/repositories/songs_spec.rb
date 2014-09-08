@@ -45,6 +45,21 @@ describe Songify::Repos::Songs do
     end
   end
 
+  describe '.delete_song' do
+    it 'removes a song from the database' do
+      song2 = Songify::Song.new('fake_title2', 'fake_artist2', 'fake_album2', 'fake_genre2', 'fake_length2')
+      songs.save_song(song)
+      songs.save_song(song2)
+
+      songs.delete_song(1)
+      result = songs.log
+
+      expect(result.size).to eq 1
+      expect(result.first.id).to eq 2
+      expect(result.first.title).to eq 'fake_title2'
+    end
+  end
+
   describe '.log' do
     it 'returns an array of song objects' do      
       songs.save_song(song)
