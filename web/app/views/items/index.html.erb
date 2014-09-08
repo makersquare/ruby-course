@@ -1,5 +1,23 @@
 <h1>Items Dashboard</h1>
 
+<h2>New Item</h2>
+<% if @error %>
+  <p>Error: <%= @error %></p>
+<% end %>
+<%= form_tag items_path, :method => :post do %>
+
+  <%= label_tag 'item[name]', 'Item Name:' %>
+  <%= text_field_tag 'item[name]' %>
+  <br />
+
+  <%= label_tag 'item[price]', 'Item Price:' %>
+  <%= text_field_tag 'item[price]' %>
+  <br />
+
+  <%= submit_tag 'Create Item' %>
+<% end %>
+
+<h2>All Items</h2>
 <% @items.each do |item| %>
 <p>
   <%= item.name %> $<%= item.price %>

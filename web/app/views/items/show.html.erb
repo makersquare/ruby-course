@@ -1,2 +1,4 @@
-<h1>Items#show</h1>
-<p>Find me in app/views/items/show.html.erb</p>
+<h1><%= @item.name %></h1>
+<p>Price: $<%= @item.price %></p>
+
+<%= link_to "View all items", items_path %>
