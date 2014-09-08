@@ -6,9 +6,10 @@ describe Songify::Repositories::Songs do
   
   it "adds a song to the database" do
     Songify.songs_repo.drop_table
+    expect(song.id).to be_nil
     Songify.songs_repo.save_a_song(song)
     result = Songify.songs_repo.get_all_songs
-    expect(result.size).to eq(1)
+    expect(result.size).to be(1)
   end
 
   it "gets all songs from the database" do
@@ -21,9 +22,9 @@ describe Songify::Repositories::Songs do
 
   it "selects a song by its Song ID" do
     result = Songify.songs_repo.get_a_song(4)
-    expect(result.size).to eq(1)
-
-    expect(result.first.class).to be(Songify::Song)
+    # expect(result.size).to eq(1)
+    expect(result.id).to be(4)
+    expect(result.class).to be(Songify::Song)
   end
 
 

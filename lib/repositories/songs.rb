@@ -25,24 +25,32 @@ module Songify
         build_table
       end
 
-      def build_songs(entries)
-        entries.map do |song|
-          x = Songify::Song.new(song["title"], song["artist"], song["album"])
-          x.instance_variable_set :@id, song["id"].to_i
-          x
-        end
+      # def build_songs(entries)
+      #   entries.map do |song|
+      #     x = Songify::Song.new(song["title"], song["artist"], song["album"])
+      #     x.instance_variable_set :@id, song["id"].to_i
+      #     x
+      #   end
+      # end
+
+      def build_song(data)
+        x = Songify::Song.new(data['title'], data['artist'], data['album'])
+        x.instance_variable_set :@id, data['id'].to_i
+        x
       end
+
 
       # parameter could be song id
       def get_a_song(song_id)
         result = @db.exec("SELECT * FROM songs WHERE id=($1)", [song_id])
-        build_songs(result.entries)
+        build_song(result.first)
       end
 
       # no parameter needed
       def get_all_songs
         result = @db.exec("SELECT * FROM songs")
-        build_songs(result.entries)
+        # build_songs(result.entries)
+        result.map { |r| build_song(r) }
       end
 
       # paramter should be song object
