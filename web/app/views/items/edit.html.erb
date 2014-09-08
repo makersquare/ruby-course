@@ -1,2 +1,14 @@
-<h1>Items#edit</h1>
-<p>Find me in app/views/items/edit.html.erb</p>
+<h1>Editing: <%= @item.name %></h1>
+
+<%= form_tag item_path(@item.id), :method => :put do %>
+
+  <%= label_tag 'item[name]', 'Item Name:' %>
+  <%= text_field_tag 'item[name]', @item.name %>
+  <br />
+
+  <%= label_tag 'item[price]', 'Item Price:' %>
+  <%= text_field_tag 'item[price]', @item.price %>
+  <br />
+
+  <%= submit_tag 'Update Item' %>
+<% end %>

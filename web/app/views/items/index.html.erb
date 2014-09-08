@@ -20,6 +20,6 @@
 <h2>All Items</h2>
 <% @items.each do |item| %>
 <p>
-  <%= item.name %> $<%= item.price %>
+  <%= link_to item.name, item_path(item.id) %> $<%= item.price %>
 </p>
 <% end %>

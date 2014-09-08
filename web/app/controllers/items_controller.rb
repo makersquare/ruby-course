@@ -25,12 +25,15 @@ class ItemsController < ApplicationController
   end
 
   def edit
+    @item = DoubleDog.db.get_item  params[:id].to_i
   end
 
   def update
+    # DoubleDog::UpdateItem would go here
   end
 
   def destroy
+    # DoubleDog::DestroyItem would go here
   end
 
   private
