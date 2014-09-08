@@ -1,2 +1,9 @@
 <h1>Welcome to Double Dog PoS</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+
+<% if current_user %>
+  <p>Welcome, <%= current_user.username %>!</p>
+<% end %>
+
+<% if current_user && current_user.admin? %>
+  <p><%= link_to "Visit items dashboard", items_path %></p>
+<% end %>
