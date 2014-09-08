@@ -37,6 +37,8 @@ describe Songify::Repositories::Song_Repo do
       expect(songs[0].title).to eq("fake_title")
       expect(songs[1].title).to eq("dingus")
       expect(songs[2].title).to eq("tim")
+      expect(songs.size).to eq (3)
+
     end
 
   end

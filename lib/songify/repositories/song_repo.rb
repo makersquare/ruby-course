@@ -40,14 +40,14 @@ module Songify
         result = result.entries
       end
 
-      #song id param?
+      
       def get_song(id)
         song = @db.exec(%q[SELECT * FROM songs
           WHERE id = ($1);], [id])
         build_songs(song)[0]
       end
 
-      #no param
+      
       def get_all_songs
         build_songs(entries)
       end
@@ -59,7 +59,7 @@ module Songify
           [song.title, song.artist, song.album])
       end
 
-      #song id param?
+    
       def delete_song(id)
         @db.exec(%q[DELETE FROM songs
           WHERE id = ($1);], [id])
