@@ -24,6 +24,7 @@ describe Songify::Repositories::Songs do
     expect(song1["album"]).to eq("albumA")
     expect(song1["length"]).to eq("4")
     expect(song1["id"]).to eq("1")
+    expect(song1[song1]).to be_a(Songify::Song)
   end
 
   it 'Will GET all Songs' do
@@ -33,14 +34,20 @@ describe Songify::Repositories::Songs do
     expect(Songify.song_repo.get_all_songs.entries.count).to eq(6)
   end
 
-  # it 'Will UPDATE a Song' do
-  #   Songify.song_repo.update_a_song(6,'artist10,song10,album10,10')
-  #   expect(song6["artist"]).to eq("artist10")
-  #   expect(song6["title"]).to eq("song10")
-  #   expect(song6["album"]).to eq("album10")
-  #   expect(song6["length"]).to eq("10")
-  #   expect(song6["id"]).to eq("6")
-  # end
+  it 'Will UPDATE a Song' do
+    Songify.song_repo.update(6,'artist','artist10')#,song10,album10,10')
+    song6 = Songify.song_repo.get_a_song(6)
+    expect(song6["artist"]).to eq("artist10")
+  end
+
+  it 'Will update multipel attributes' do
+    Songify.song_repo.update_all(6,nil,'song10','album10',10)
+    song6 = Songify.song_repo.get_a_song(6)
+    expect(song6["title"]).to eq("song10")
+    expect(song6["album"]).to eq("album10")
+    expect(song6["length"]).to eq("10")
+    expect(song6["id"]).to eq("6")
+  end
 
   it 'Will DESTROY a Song' do
     Songify.song_repo.delete_a_song(1)
