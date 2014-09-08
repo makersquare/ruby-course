@@ -12,10 +12,11 @@ describe Songify::Song do
     expect(song.year).to eq(1971)
     expect(song.genre).to eq('Classic Rock')
     expect(song.rating).to be_nil
-    expect(song.reviews.class).to eq(Array)
+    expect(song.id).to be_nil
 
   end
 
+  # Year Setter Method
   it "Update the year of the song" do
 
     song.year = 1990
