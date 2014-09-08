@@ -9,7 +9,6 @@ module Songify
       @year = year
       @genre = genre
       @rating = nil
-      # @reviews = []
       @id = nil
     end
 
@@ -24,14 +23,6 @@ module Songify
     def id=(x)
       @id = x
     end
-
-    # def add_review(review, reviewer_name, publisher)
-    #   @reviews << { 
-    #     :review => review,
-    #     :reviewer_name => reviewer_name,
-    #     :publisher => publisher
-    #   }
-    # end
 
   end
 end

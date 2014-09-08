@@ -32,6 +32,7 @@ module Songify
         build_table
       end
 
+      # Helper method. Builds song entry.
       def build_song(entry)
         x = Songify::Song.new(
             entry["title"], 
@@ -99,7 +100,6 @@ module Songify
             SELECT * FROM songs WHERE rating = $1;
           ], [keyword])
         end
-
         build_song(song)
       end
 
@@ -109,6 +109,33 @@ module Songify
         get_all.map { |song| build_song(song) }
       end
 
+      # Save multiple songs at once
+      def save_multiple_songs(*songs)
+        # songs.each do |song|
+        #   save = @db.exec(%q[
+        #   INSERT INTO songs (title, artist, album, year, genre, rating) 
+        #   VALUES ($1, $2, $3, $4, $5, $6)
+        #   RETURNING id;
+        # ], [song.title, song.artist, song.album, song.year, song.genre, song.rating])
+        # song.instance_variable_set :@id, save.entries.first["id"].to_i
+
+        # Keepin' it weird
+        base = "INSERT INTO songs (title, artist, album, year, genre, rating) values "
+        values = songs.map do |song| 
+          title = song.title.gsub(';', '')
+          artist = song.artist.gsub(';', '')
+          album = song.album.gsub(';', '')
+          year = song.year.gsub(';', '')
+          genre = song.genre.gsub(';', '')
+          rating = song.rating.gsub(';', '')
+          "('#{title}', '#{artist}', '#{album}')" 
+        end
+        sql = base + values.join(',') + "RETURNING id"
+        result = @db.exec(sql)
+        songs.each_with_index do |song, index|
+          song.instance_variable_set :@id, result[index]['id'].to_i
+        end
+      end
     end
   end
 end

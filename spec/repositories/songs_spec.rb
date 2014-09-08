@@ -4,7 +4,7 @@ describe Songify::Repositories::Songs do
   let(:songs) { Songify.songs }
   let(:song) { Songify::Song.new('When the Levee Breaks', 'Led Zeppelin', 'Led Zeppelin IV', 1971, 'Classic Rock') }
   let(:song2) { Songify::Song.new('Mr. Brightside', 'The Killers', 'Hot Fuss', 2003, 'Indie Rock') }
-  let(:song3) { Songify::Song.new("Since I've Been Loving You", 'Led Zeppelin', 'Led Zeppelin III', 1970, 'Classic Rock') }
+  let(:song3) { Songify::Song.new("Since Ive Been Loving You", 'Led Zeppelin', 'Led Zeppelin III', 1970, 'Classic Rock') }
   let(:song4) { Songify::Song.new('Daylight', 'Matt and Kim', 'Grand', 2009, 'Indie Pop') }
 
   it "Methods: save_song and get_all_songs. Saves a song. Then returns all songs." do
@@ -63,6 +63,17 @@ describe Songify::Repositories::Songs do
 
     song_list = songs.get_all_songs
     expect(song_list.length).to eq(0)
+
+  end
+
+  it "Saves multiple song objects at once" do
+
+    songs.drop_and_rebuild_table
+
+    songs.save_multiple_songs(song, song2, song3, song4)
+
+    song_list = songs.get_all_songs
+    expect(song_list.size).to eq(4)
 
   end
 
