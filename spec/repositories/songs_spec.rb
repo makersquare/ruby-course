@@ -18,10 +18,14 @@ describe Songify::Repositories::Songs do
     expect(song.id).to_not be_nil 
   end
 
-  xit 'deletes a song from the songs table' do
-    # Songify.songs_repo.delete_a_song(song)
+  it 'deletes a song from the songs table' do
+    Songify.songs_repo.save_a_song(song)
+    before_del = Songify.songs_repo.show_all_songs
+    expect(before_del.count).to eq(1)
 
-    # expect(Songify.songs_repo.first).to be_nil
+    Songify.songs_repo.delete_a_song(song)
+    after_del = Songify.songs_repo.show_all_songs
+    expect(after_del.count).to eq(0)
   end
 
   it 'shows a song from the songs table' do
