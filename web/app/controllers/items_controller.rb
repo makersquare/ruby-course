@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
   def index
+    @items = DoubleDog.db.all_items
   end
 
   def create
