@@ -52,11 +52,10 @@ module Songify
       end
 
       # parameter is song object so i can set id back to nil once deleted
-      def delete_a_song(song)
+      def delete_a_song(id)
         @db.exec(%q[
           DELETE FROM songs WHERE id = $1
-        ], [song.id])
-        song.instance_variable_set("@id", nil)
+        ], [id])
       end
 
       # helper method to build song objects
