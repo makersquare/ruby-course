@@ -1,4 +1,5 @@
 require_relative '../spec_helper.rb'
+require 'pry-byebug'
 
 describe Songify::Repositories::Songs do
   let(:song) { song = Songify::Song.new("test title", "test artist", "test album") }
@@ -9,6 +10,14 @@ describe Songify::Repositories::Songs do
 
   describe '#get_a_song' do
     it 'returns a song from the table with given id' do
+      Songify.songs_repo.save_a_song(song)
+      result = Songify.songs_repo.get_a_song(song.id)
+      
+      expect(result.size).to eq(1)
+      expect(result.first.title).to eq("test title")
+      expect(result.first.artist).to eq("test artist")
+      expect(result.first.album).to eq("test album")
+      expect(result.first.id).to be_true
     end
   end
 
