@@ -24,12 +24,12 @@ describe Songify::Repositories::Songs do
     # expect(Songify.songs_repo.first).to be_nil
   end
 
-  xit 'shows a song from the songs table' do
-    # Songify.songs_repo.save_a_song(song)
+  it 'shows a song from the songs table' do
+    Songify.songs_repo.save_a_song(song)
 
-    # requested_song = Songify.songs_repo.show_a_song(song)
-    
-    # expect(requested_song.title).to eq('fake_title')
+    req_song = Songify.songs_repo.show_a_song(song)
+
+    expect(req_song.first.title).to eq('fake_title')
   end
 
   it 'shows all songs from the songs table' do
@@ -39,5 +39,7 @@ describe Songify::Repositories::Songs do
     all_songs = Songify.songs_repo.show_all_songs
 
     expect(all_songs.count).to eq(2)
+    expect(all_songs.first.title).to eq('fake_title')
+    expect(all_songs.last.title).to eq('fake_title_1')
   end
 end
