@@ -15,11 +15,10 @@ describe Songify::Repositories::Songs do
       Songify.songs_repo.save_a_song(song)
       result = Songify.songs_repo.get_a_song(song.id)
 
-      expect(result.size).to eq(1)
-      expect(result.first.title).to eq("test title")
-      expect(result.first.artist).to eq("test artist")
-      expect(result.first.album).to eq("test album")
-      expect(result.first.id).to be_true
+      expect(result.title).to eq(song.title)
+      expect(result.artist).to eq(song.artist)
+      expect(result.album).to eq(song.album)
+      expect(result.id).to eq(song.id)
     end
   end
 
@@ -39,7 +38,7 @@ describe Songify::Repositories::Songs do
     it 'saves a song into the table using a song object' do
       expect(song.id).to be_nil
       Songify.songs_repo.save_a_song(song)
-      expect(song.id).to be_true
+      expect(song.id).to_not be_nil
     end
   end
 
@@ -48,7 +47,7 @@ describe Songify::Repositories::Songs do
       expect(song.id).to be_nil
       Songify.songs_repo.save_a_song(song)
 
-      expect(song.id).to be_true
+      expect(song.id).to_not be_nil
       Songify.songs_repo.delete_a_song(song)
       expect(song.id).to be_nil
     end

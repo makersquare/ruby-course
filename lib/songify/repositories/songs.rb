@@ -30,7 +30,7 @@ module Songify
         result = @db.exec(%q[
           SELECT * FROM songs WHERE id = $1
         ], [id])
-        build_song(result.entries)
+        build_song(result.entries).first
       end
 
       # no parameter needed
