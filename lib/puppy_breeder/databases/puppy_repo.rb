@@ -22,8 +22,14 @@ module PuppyBreeder
           breed text,
           age int,
           available boolean
-        )
+        );
       ])
+      @db.exec(%q[
+        CREATE TABLE IF NOT EXISTS prices(
+          breed text,
+          price money
+          )
+        ])
     end
 
     def log
@@ -52,12 +58,7 @@ module PuppyBreeder
         ], [puppy.name, puppy.breed, puppy.age, true]) 
         puppy.instance_variable_set :@id, request.entries.first["id"]
 
-      #return the id here but also call the method?
-      ################################################
-
       PuppyBreeder.request_repo.check_holds
-
-
     end
 
     #get the PG::RESULT object and store it in result

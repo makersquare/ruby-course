@@ -15,22 +15,48 @@ module PuppyBreeder
             id serial,
             breed text,
             status text,
-            puppy_id int
+            puppy_id int,
+            price money
             );
           ])
       end
-
+#is there a way to add an entry for a specific breed unless that breed
+#already exists. is it the || = thing?
       def add_breed(breed, price)
-        @db.exec(%q[
+        result = @db.exec('SELECT breed FROM prices')
+        breeds = result.entries
+        matches = false
+        breeds.map do |breed_pair| 
+          breed_pair.each do |key, val|
+            if val ==breed
+              matches = true
+            end
+          end
+        end
+        if matches = false
+          @db.exec(%q[
           INSERT INTO prices (breed, price)
           VALUES ($1, $2)
           ], [breed, price])
+        end
       end
 
       def get_price_list
         result = @db.exec('SELECT * FROM prices;')
-        prices = build_request(result.entries)
+        result.entries
       end
+# now what i need to do is add the code that adds the price to the
+#   purchase request
+      # def build_price_list
+      # #look at each of the hashes in the the array
+      # entries.map do |req|
+      #   x = PuppyBreeder::PurchaseRequest.new(req["breed"])
+      #   x.instance_variable_set :@id, req["id"].to_i
+      #   x.instance_variable_set :@puppy_id, req["puppy_id"].to_i
+      #   x.instance_variable_set :@status, req["status"]
+      #   x
+      #   end
+      # end
 
       def log
         result = @db.exec('SELECT * FROM requests;') 
@@ -89,23 +115,43 @@ module PuppyBreeder
             if puppy.breed == hold.breed
               pup_id = puppy.id
               hold_id = hold.id
+              price = get_price(puppy.breed)
               # binding.pry
               update_records(pup_id, hold_id)
             end
           end
         end
       end
-      #changes
+
+      def get_price(breed)
+        #it's trying to get the price but it's getting nil because
+        #there's no price
+
+        price = @db.exec(%q[
+          SELECT price FROM prices 
+          WHERE breed = $1;
+          ], [breed])
+        # binding.pry
+        puts "stuff"
+        price.entries.first["price"]
+      end
+
       def update_records(pup_id, request_id)
+
+        result = @db.exec(%q[
+          UPDATE puppies SET available = 'false'
+          RETURNING breed;
+          ])
+        breed = result.entries.first["breed"]
+
+        price = get_price(breed)
         @db.exec(%q[
           UPDATE requests 
-          SET (puppy_id, status) = ($1, $2)
-          WHERE id = $3;
-          ], [pup_id, 'accepted', request_id])
+          SET (puppy_id, status, price) = ($1, $2, $3)
+          WHERE id = $4;
+          ], [pup_id, 'accepted', price, request_id])
         #update the puppy record to change availability
-        @db.exec(%q[
-          UPDATE puppies SET available = 'false';
-          ])
+        
       end
 
       def build_request(entries)
@@ -115,6 +161,7 @@ module PuppyBreeder
           x.instance_variable_set :@id, req["id"].to_i
           x.instance_variable_set :@puppy_id, req["puppy_id"].to_i
           x.instance_variable_set :@status, req["status"]
+          x.instance_variable_set :@price, req["price"]
           x
         end
       end

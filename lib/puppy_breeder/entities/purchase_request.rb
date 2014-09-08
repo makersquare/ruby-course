@@ -3,12 +3,13 @@
 module PuppyBreeder
   class PurchaseRequest
     attr_reader :breed
-    attr_accessor :status, :id, :puppy_id
+    attr_accessor :status, :id, :puppy_id, :price
     def initialize(breed, status="pending", id=nil)
       @breed = breed
       @status = status
       @id = id
       @puppy_id
+      @price
     end
 
 

@@ -20,8 +20,8 @@ describe PuppyBreeder::Repos::RequestLog do
   it 'adds a breed to the prices table' do
     PuppyBreeder.request_repo.add_breed("Schnauzer", 500)
 
-binding.pry
-    expect(PuppyBreeder.request_repo.get_price_list.first)
+    expect(PuppyBreeder.request_repo.get_price_list.first["price"]).to eq("$500.00")
+    expect(PuppyBreeder.request_repo.get_price_list.first["breed"]).to eq("Schnauzer")
   end
 
 
@@ -94,12 +94,14 @@ binding.pry
     request = PuppyBreeder::PurchaseRequest.new("Dinosaur")
     #should add the request but because there's no dinosaur in the table
     #it should mark it as category hold. 
+    # PuppyBreeder.request_repo.add_breed("Dinosaur", 1000)
     PuppyBreeder.request_repo.add_request(request)
     #a puppy is created
     #gets the id for the puppy in the 
     puppy = PuppyBreeder::Puppy.new("Rex", "Dinosaur", 1)
 
     #puppy is added
+
     PuppyBreeder.puppy_repo.add_puppy(puppy)
     #method adds the puppy to the repo and calls request_repo update hold
     #which checks for any holds that can be fulfilled and then fulfills them
@@ -116,8 +118,20 @@ binding.pry
     PuppyBreeder.request_repo.add_request(request2)
     PuppyBreeder.request_repo.update_records(puppy.id, request.id)
     log = PuppyBreeder.request_repo
+
     expect(log.show_accepted_requests.length).to eq(1)
     expect(PuppyBreeder.request_repo.show_accepted_requests.first.id).to eq(1)
+  end
+
+  it 'checks the price of a purchase request to verify it matches the breed price' do
+    PuppyBreeder.request_repo.add_breed("pug", 300)
+    request = PuppyBreeder::PurchaseRequest.new("pug")
+    PuppyBreeder.request_repo.add_request(request)
+    puppy = PuppyBreeder::Puppy.new("Dana", "pug", 3)
+    PuppyBreeder.puppy_repo.add_puppy(puppy)
+   # binding.pry
+
+    expect(PuppyBreeder.request_repo.show_accepted_requests.first.price).to eq("$300.00")
   end
 
 end
