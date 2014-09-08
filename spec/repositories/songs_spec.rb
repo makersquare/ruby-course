@@ -47,6 +47,7 @@ describe Songify::Repositories::Songs do
     it 'deletes a given song using an id' do
       expect(song.id).to be_nil
       Songify.songs_repo.save_a_song(song)
+
       expect(song.id).to be_true
       Songify.songs_repo.delete_a_song(song)
       expect(song.id).to be_nil
