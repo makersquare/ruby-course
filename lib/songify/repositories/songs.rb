@@ -48,18 +48,23 @@ module Songify
         
       end
 
-      def update_a_song(id,artist=nil,title=nil,album=nil,length=nil)
-        newinfo={'id'=> id, 'artist'=> artist, 'title'=> title, 'album'=> album, 'length'=> length}
-        sql =  newinfo.select{|x,y| "#{x} = #{y}" if !y.nil?}
-        updates =  sql.join(' AND ')
+      # def update_a_song(id,artist=nil,title=nil,album=nil,length=nil)
+      #   newinfo = [['artist',artist],['title',title],['album',album],['length',length]]
+      #   info = newinfo.select{|x,y| !y.nil?}
+      #   info
 
-        @db.exec(%q[ 
-          UPDATE songs 
-          SET ] + updates +  %q[
-          WHERE USER ID = ] + "#{id}"
-        )
+
+      #   # newinfo={'id'=> id, 'artist'=> artist, 'title'=> title, 'album'=> album, 'length'=> length}
+      #   # sql =  newinfo.select{|x,y| "#{x} = #{y}" if !y.nil?}
+      #   # updates =  sql.join(' AND ')
+
+      #   @db.exec(%q[ 
+      #     UPDATE songs 
+      #     SET ] + updates +  %q[
+      #     WHERE USER ID = ] + "#{id}"
+      #   )
         
-      end
+      # end
 
 
       #parameter needed, song id.
