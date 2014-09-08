@@ -56,12 +56,6 @@ module Songify
       end
 
       def save_a_song(*song)
-        #prevent a duplicate entry?
-        #retrieve all songs with matching artist, album, and song
-        #build_song and if that array is not empty
-        #
-        #from the song array, subtract the son
-
         song.each do |song|
          result = @db.exec(%q[
             INSERT INTO songs (title, artist, album)

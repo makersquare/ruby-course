@@ -28,7 +28,7 @@ describe Songify::Repositories::Songs do
 
   it 'gets all songs' do 
     song2 = Songify::Song.new("party time", "Bob", "Bob's hits")
-    song3 = Songify::Song.new("party time", "Bob", "Bob's hits")
+    song3 = Songify::Song.new("party time1", "Bob", "Bob's hits")
     Songify.songs_repo.save_a_song(song, song2, song3)
 
     expect(Songify.songs_repo.get_all_songs.length).to eq(3)
@@ -36,12 +36,50 @@ describe Songify::Repositories::Songs do
 
   it 'deletes a song' do 
     song2 = Songify::Song.new("party time", "Bob", "Bob's hits")
-    song3 = Songify::Song.new("party time", "Bob", "Bob's hits")
+    song3 = Songify::Song.new("party time1", "Bob", "Bob's hits")
     Songify.songs_repo.save_a_song(song, song2, song3)
     Songify.songs_repo.delete_a_song(song3.id)
 
     expect(Songify.songs_repo.get_all_songs.length).to eq(2)
   end
 
+  # it 'prevents duplicates from being added to the database' do 
+  #   song2 = Songify::Song.new("party time", "Bob", "Bob's hits")
+  #   song3 = Songify::Song.new("party time", "Bob", "Bob's hits")
+  #   Songify.songs_repo.save_a_song(song, song2, song3)
+
+  #   expect(Songify.songs_repo.get_all_songs.length).to eq(2)
+  # end
 
 end
+
+# def save_a_song(*song)
+#         #prevent a duplicate entry?
+#         #retrieve all songs with matching artist, album, and song
+#         #build_song and if that array is not empty there is a duplicate
+#         songs = get_all_songs
+#         duplicates = []
+#         songs.each do |song|
+#           result = @db.exec(%q[
+#             SELECT * FROM songs
+#             WHERE artist = 'song.artist' AND title = 'song.title'
+#             AND album = 'song.album'
+#             ])
+#           duplicates.push(result.entries)
+#         end
+#         binding.pry
+#         if duplicates.length > 0
+#           refined_list = song - duplicates
+          
+#         end
+
+      #   refined_list.each do |song|
+      #    result = @db.exec(%q[
+      #       INSERT INTO songs (title, artist, album)
+      #       VALUES ($1, $2, $3)
+      #       RETURNING id;
+      #       ], [song.title, song.artist, song.album])
+      #     song.instance_variable_set :@id, result.entries.first["id"].to_i 
+      #   end
+          
+      # end
