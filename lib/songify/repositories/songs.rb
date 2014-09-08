@@ -1,3 +1,5 @@
+require 'pg'
+
 module Songify
   module Repos
     class Songs
@@ -23,6 +25,19 @@ module Songify
       def drop_table
         @db.exec("DROP TABLE IF EXISTS songs")
         build_table
+      end
+
+      def log
+        result = @db.exec('SELECT * FROM songs ORDER BY id ASC;')
+        build_songs(result.entries)
+      end
+
+      def build_songs(entries)
+        entries.map do |song|
+          x = Songify::Song.new(song["title"], song["artist"], song["album"], song["genre"], song["length"])
+          x.instance_variable_set :@id, req["id"].to_i
+          x
+        end
       end
 
       #parameter could be song id

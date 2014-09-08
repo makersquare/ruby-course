@@ -10,7 +10,7 @@ module Songify
 
 end
 
-require_relative "songify/entities/song.rb"
-require_relative "songify/repositories/songs.rb"
+require_relative 'songify/entities/song.rb'
+require_relative 'songify/repositories/songs.rb'
 
-#Songify.songs_repo = Songify::Repos::Songs.new
+Songify.songs_repo = Songify::Repos::Songs.new
