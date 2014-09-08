@@ -32,14 +32,14 @@ describe Songify::Repos::Songs do
   describe '.save_song' do
     it 'adds a song to the database' do
       songs.save_song(song)
-      result = songs.log
+      result = songs.get_all_songs
 
       expect(result.first.title).to eq 'fake_title'
     end
 
     it 'sets the id attribute of the song object passed in' do
       songs.save_song(song)
-      result = songs.log
+      result = songs.get_all_songs
 
       expect(result.first.id).to eq 1
     end
@@ -52,20 +52,11 @@ describe Songify::Repos::Songs do
       songs.save_song(song2)
 
       songs.delete_song(1)
-      result = songs.log
+      result = songs.get_all_songs
 
       expect(result.size).to eq 1
       expect(result.first.id).to eq 2
       expect(result.first.title).to eq 'fake_title2'
-    end
-  end
-
-  describe '.log' do
-    it 'returns an array of song objects' do      
-      songs.save_song(song)
-      result = songs.log
-
-      expect(result.first).to be_a(Songify::Song)
     end
   end
 

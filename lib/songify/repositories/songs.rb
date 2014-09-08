@@ -36,9 +36,7 @@ module Songify
       end
 
       def get_all_songs
-        result = @db.exec(%q[
-          SELECT * FROM songs
-        ])
+        result = @db.exec('SELECT * FROM songs ORDER BY id ASC;')
         build_songs(result.entries)
       end
 
@@ -52,17 +50,11 @@ module Songify
         song.id = result.entries.first["id"].to_i
       end
 
-      #parameter could be song id
       def delete_song(song_id)
         @db.exec(%q[
           DELETE FROM songs
           WHERE id = $1;
         ], [song_id])
-      end
-
-      def log
-        result = @db.exec('SELECT * FROM songs ORDER BY id ASC;')
-        build_songs(result.entries)
       end
 
       def build_songs(entries)
