@@ -50,7 +50,7 @@
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#about">About</a>
+                        <a class="page-scroll" href="#add">Add a Song</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#songs">Songs</a>
@@ -83,13 +83,62 @@
     </header>
 
     <!-- About Section -->
-    <section id="about" class="container content-section text-center">
+    <section id="add" class="container content-section text-center">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
-                <h2>About Songify</h2>
+                <h2>Add a Song</h2>
                 <p></p>
-                <p></p>
-                <p></p>
+                <table class="add-song-table">
+                    <form action="/" method="post">
+                        <tr>
+                            <div class="title">
+                                <th><label for="title">Title: </label></th>
+                                <td><input type="text" id="title" name="title" value="Title" class="text-box"></td>
+                            </div>
+                        </tr>
+                        <tr>
+                            <div class="artist">
+                                <th><label for="artist">Artist: </label></th>
+                                <td><input type="text" id="artist" name="artist" value="Artist" class="text-box"></td>
+                            </div>
+                        </tr>
+                        <tr>
+                            <div class="album">
+                                <th><label for="album">Album: </label></th>
+                                <td><input type="text" id="album" name="album" value="Album" class="text-box"></td>
+                            </div>
+                        </tr>
+                        <tr>
+                            <div class="year">
+                                <th><label for="year">Year: </label></th>
+                                <td><input type="text" id="year" name="year" value="Year" class="text-box"></td>
+                            </div>
+                        </tr>
+                        <tr>
+                            <div class="genre">
+                                <th><label for="genre">Genre: </label></th>
+                                <td><input type="text" id="genre" name="genre" value="genre" class="text-box"></td>
+                            </div>
+                        </tr>
+                        <tr>
+                            <div class="rating">
+                                <th><label for="rating">Rating: </label></th>
+                                <td><select id="rating" name="rating" class="select-box">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select></td>
+                            </div>
+                        </tr>
+                        <tr>
+                            <div class="submit">
+                                <th colspan="2"><input type="submit" class="btn btn-default submit"></th>
+                            </div>
+                        </tr>
+                    </form>
+                </table>
             </div>
         </div>
     </section>
@@ -101,7 +150,7 @@
                 <div class="col-lg-8 col-lg-offset-2">
                     <h2>Songs</h2>
                     <p></p>
-                    <a href="#" class="btn btn-default btn-lg">Visit Songs Page</a>
+                    <!-- <a href="#" class="btn btn-default btn-lg">Visit Songs Page</a> -->
                 </div>
             </div>
         </div>
