@@ -8,14 +8,15 @@ describe Songify::Server do
 
   describe "GET /" do
     it "Loads the homepage. Displays all songs in db" do
-
+      Songify.songs.save_song(Songify::Song.new("Eleanor Rigby", "The Beatles", "The White Album"))
       get '/'
-      expect(last_repsponse.body).to include "Songify"
+      expect(last_response.body).to include "Songify"
+      Songify.songs.drop_and_rebuild_table
     end
   end
   
   describe "POST /" do
-    it "Creates a new song. Adds to DB."
+    it "Creates a new song. Adds to DB." do
 
     end
   end

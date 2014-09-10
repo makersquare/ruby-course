@@ -73,7 +73,7 @@
                     <div class="col-md-8 col-md-offset-2">
                         <h1 class="brand-heading">Songify</h1>
                         <p class="intro-text">where words fail<br><strong>MUSIC SPEAKS</strong></p>
-                        <a href="#about" class="btn btn-circle page-scroll">
+                        <a href="#songs" class="btn btn-circle page-scroll">
                             <i class="fa fa-angle-double-down animated"></i>
                         </a>
                     </div>
@@ -93,31 +93,31 @@
                         <tr>
                             <div class="title">
                                 <th><label for="title">Title: </label></th>
-                                <td><input type="text" id="title" name="title" value="Title" class="text-box"></td>
+                                <td><input type="text" id="title" name="title" class="text-box"></td>
                             </div>
                         </tr>
                         <tr>
                             <div class="artist">
                                 <th><label for="artist">Artist: </label></th>
-                                <td><input type="text" id="artist" name="artist" value="Artist" class="text-box"></td>
+                                <td><input type="text" id="artist" name="artist" class="text-box"></td>
                             </div>
                         </tr>
                         <tr>
                             <div class="album">
                                 <th><label for="album">Album: </label></th>
-                                <td><input type="text" id="album" name="album" value="Album" class="text-box"></td>
+                                <td><input type="text" id="album" name="album" class="text-box"></td>
                             </div>
                         </tr>
                         <tr>
                             <div class="year">
                                 <th><label for="year">Year: </label></th>
-                                <td><input type="text" id="year" name="year" value="Year" class="text-box"></td>
+                                <td><input type="text" id="year" name="year" class="text-box"></td>
                             </div>
                         </tr>
                         <tr>
                             <div class="genre">
                                 <th><label for="genre">Genre: </label></th>
-                                <td><input type="text" id="genre" name="genre" value="genre" class="text-box"></td>
+                                <td><input type="text" id="genre" name="genre" class="text-box"></td>
                             </div>
                         </tr>
                         <tr>
@@ -150,6 +150,30 @@
                 <div class="col-lg-8 col-lg-offset-2">
                     <h2>Songs</h2>
                     <p></p>
+                    <table class="songs-table" cellspacing="1" cellpadding="2" border="1">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Artist</th>
+                                <th>Album</th>
+                                <th>Year</th>
+                                <th>Genre</th>
+                                <th>Rating</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% songs.each do |song| %>
+                                <tr>
+                                    <td><%= song.title %></td>
+                                    <td><%= song.artist %></td>
+                                    <td><%= song.album %></td>
+                                    <td><%= song.year %></td>
+                                    <td><%= song.genre %></td>
+                                    <td><%= song.rating %></td>
+                                </tr>
+                            <% end %>
+                        </tbody>
+                    </table>
                     <!-- <a href="#" class="btn btn-default btn-lg">Visit Songs Page</a> -->
                 </div>
             </div>

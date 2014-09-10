@@ -44,6 +44,17 @@ describe Songify::Repositories::Songs do
 
   end
 
+  it "Saves multiple song objects at once" do
+
+    songs.drop_and_rebuild_table
+
+    songs.save_multiple_songs(song, song2, song3, song4)
+
+    song_list = songs.get_all_songs
+    expect(song_list.size).to eq(4)
+
+  end
+
   it "Deletes a song from the database" do
 
     songs.drop_and_rebuild_table
@@ -64,17 +75,7 @@ describe Songify::Repositories::Songs do
     song_list = songs.get_all_songs
     expect(song_list.length).to eq(0)
 
-  end
-
-  it "Saves multiple song objects at once" do
-
     songs.drop_and_rebuild_table
 
-    songs.save_multiple_songs(song, song2, song3, song4)
-
-    song_list = songs.get_all_songs
-    expect(song_list.size).to eq(4)
-
   end
-
 end

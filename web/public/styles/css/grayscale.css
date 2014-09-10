@@ -381,3 +381,21 @@ body {
     margin-right: auto;
     margin-left: auto;
 }
+.songs-table {
+    margin-right: auto;
+    margin-left: auto;
+    background-color: black;
+    border: 1px solid white;
+}
+input {
+    color: black;
+}
+.songs-table th, td {
+    padding: 5px;
+    text-align: left;
+}
+/*ul {
+    display: block;
+    margin: 5px auto;
+    list-style: none;
+}*/

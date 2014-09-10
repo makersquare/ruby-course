@@ -9,12 +9,17 @@ set :bind, '0.0.0.0'
 class Songify::Server < Sinatra::Application
 
   get '/' do
-    erb :index
+    erb :index, :locals => {
+      songs: Songify.songs.get_all_songs
+    }
   end
 
   post '/' do
-    @songs = Songify.songs.get_all_songs
-    erb :index
+    song = Songify::Song.new(params["title"], params["artist"], params["album"], params["year"], params["genre"], params["rating"])
+    Songify.songs.save_song(song)
+    erb :index, :locals => {
+      songs: Songify.songs.get_all_songs
+    }
   end
 
 
