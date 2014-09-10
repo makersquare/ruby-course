@@ -1,0 +1,49 @@
+require 'server_spec_helper'
+require 'pry-byebug'
+
+describe Songify::Server do
+
+  def app
+    Songify::Server.new
+  end
+
+  describe "GET /" do
+    it "loads the homepage" do
+      get '/'
+      expect(last_response).to be_ok
+      expect(last_response.body).to include "Hello"
+    end
+  end
+
+  describe "GET /show" do
+    it "shows all songs available" do
+      get '/show'
+      Songify.songs_repo.save_a_song Songify::Song.new("Fake Title One", "Fake Artist One", "Fake Album One", "Fake Genre One")
+      Songify.songs_repo.save_a_song Songify::Song.new("Fake Title Two", "Fake Artist Two", "Fake Album Two", "Fake Genre Two")
+
+      expect(last_response.body).to include "Fake Title One", "Fake Artist Two"
+    end
+  end
+
+  describe "GET /new" do
+    #contains form to build a new song
+    it "creates a new song" do
+      get '/new'
+      # binding.pry
+      # "hello"
+      expect(last_response.body).to include "<form action=\"/users\" method=\"post\">"
+
+    end
+  end
+
+  describe "POST /create" do
+    #returns the new song after submitted
+    it "shows the newly created song" do
+      post '/create', { "song_title" => "Fake Title", "song_artist" => "Fake Artist", "song_album" => "Fake Album", "song_genre" => "Fake Genre" }
+      expect(last_response).to be_ok
+      song = Songify.songs_repo.show_all_songs.last
+
+      expect(last_response.body).to eq(song.title)
+    end
+  end
+end
