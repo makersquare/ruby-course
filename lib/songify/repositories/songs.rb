@@ -33,13 +33,7 @@ module Songify
             RETURNING id;
           ], [song.title, song.artist, song.album])
           
-          song.instance_variable_set :@id, result.entries.first['id']
-      end
-
-      # no parameter needed here
-      def get_all_songs
-        result = @db.exec('SELECT * FROM songs;')
-        build_song(result.entries)
+          song.instance_variable_set :@id, result.first['id'].to_i
       end
 
       # parameter could be song id
@@ -48,23 +42,28 @@ module Songify
             SELECT * FROM songs 
             WHERE id = $1;
           ], [id])
-        build_song(result.entries)
+
+        build_song(result.first)
+      end
+
+      # no parameter needed here
+      def get_all_songs
+        result = @db.exec('SELECT * FROM songs;')
+        result.map { |r| build_song(r)}
       end
 
       # parameter could be song id
       def delete_a_song(id)
-          result = @db.exec(%q[
+        result = @db.exec(%q[
           DELETE FROM songs 
           WHERE id = $1;
         ], [id])
-        build_song(result.entries)
       end
 
-      def build_song(entries)
-        entries.map do |song|
-          x = Songify::Song.new(song['title'], song['artist'], song['album'], song['id'].to_i)
-          x
-        end
+      def build_song(data)
+        x = Songify::Song.new(data['title'], data['artist'], data['album'])
+        x.instance_variable_set :@id, data['id'].to_i
+        x
       end
 
     end

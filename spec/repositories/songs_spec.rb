@@ -13,47 +13,47 @@ describe Songify::Repositories::Songs do
 
     Songify.songs_repo.save_a_song(song)
 
-    # expect(result.length).to eq(1)
     expect(song.id).to_not be_nil
   end 
+
+  it 'will get a song by id' do
+    song = Songify::Song.new("fake_title", "fake_artist", "fake_album")
+    Songify.songs_repo.save_a_song(song)
+
+    result = Songify.songs_repo.get_a_song(song.id)
+
+    expect(result).to be_a(Songify::Song)
+    expect(result.id).to eq(song.id)
+  end
 
   it 'will get all songs' do
     song1 = Songify::Song.new("fake_title", "fake_artist", "fake_album")
     song2 = Songify::Song.new("fake_title_2", "fake_artist_2", "fake_album_2")
-
     Songify.songs_repo.save_a_song(song1)
     Songify.songs_repo.save_a_song(song2)
 
-    result = Songify.songs_repo.get_all_songs
+    song_list = Songify.songs_repo.get_all_songs
 
-    expect(result.length).to eq(2)
+    expect(song_list.size).to eq(2)
   end
 
-  it 'will get a song by id' do
-    song1 = Songify::Song.new("fake_title", "fake_artist", "fake_album")
-    song2 = Songify::Song.new("fake_title_2", "fake_artist_2", "fake_album_2")
-
-    Songify.songs_repo.save_a_song(song1)
-    Songify.songs_repo.save_a_song(song2)
-
-    result = Songify.songs_repo.get_a_song(song2.id)
-
-    expect(result.first.title).to eq("fake_title_2")
-  end
 
   it 'will delete a song by id' do
     song1 = Songify::Song.new("fake_title_1", "fake_artist_1", "fake_album_1")
     song2 = Songify::Song.new("fake_title_2", "fake_artist_2", "fake_album_2")
-
     Songify.songs_repo.save_a_song(song1)
     Songify.songs_repo.save_a_song(song2)
 
+    song_list = Songify.songs_repo.get_all_songs
+
+    expect(song_list.size).to eq(2)
+
     Songify.songs_repo.delete_a_song(song2.id)
 
-    result = Songify.songs_repo.get_all_songs
+    song_list = Songify.songs_repo.get_all_songs
 
-    expect(result.length).to eq(1)
-    expect(result.first.title).to eq("fake_title_1")
+    expect(song_list.size).to eq(1)
+    expect(song_list.first.title).to eq("fake_title_1")
   end
 
 end
