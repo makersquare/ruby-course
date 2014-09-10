@@ -1,6 +1,8 @@
 require_relative '../lib/songify.rb'
 require 'sinatra/base'
 
+set :bind, '0.0.0.0'
+
 class Songify::Server < Sinatra::Application
   get '/' do
     erb :index
@@ -22,4 +24,6 @@ class Songify::Server < Sinatra::Application
     Songify.songs_repo.save_a_song(song)
     song.title
   end
+
+  run! IF __FILE__ == $0
 end
