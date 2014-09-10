@@ -1,8 +1,7 @@
 module Songify
   class Song
 
-    attr_reader :artist, :title, :album, :year_published, :rating
-    attr_accessor :id
+    attr_reader :artist, :title, :album, :year_published, :rating, :id
 
     def initialize(title: nil, artist: nil, album:nil, year_published: nil, rating: nil)
       @title = title
