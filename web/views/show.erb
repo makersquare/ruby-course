@@ -1,0 +1,14 @@
+<html>
+<head>
+	<title>Songify: Show Songs</title>
+</head>
+<body>
+	<h1>Show Songs</h1>
+	<% @songs.each do |song| %>
+		<%= song.title + ", " + song.artist + ", " + song.album + ", " + song.genre + ", " +song.length %>
+		<br>
+	<% end %>
+	<br>
+	<a href="/index">Return to index</a>
+</body>
+</html>

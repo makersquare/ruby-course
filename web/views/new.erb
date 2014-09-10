@@ -1,0 +1,35 @@
+<html>
+<head>
+	<title>Songify: New Song</title>
+</head>
+<body>
+	<h1>Add New Song</h1>
+	<form action='/create' method='post'>
+		<ul>
+			<li>
+				<input type="text" name="title">
+				<label for="title">Title</label>
+			</li>
+			<li>
+				<input type="text" name="artist">
+				<label for="artist">Artist</label>
+			</li>
+			<li>
+				<input type="text" name="album">
+				<label for="album">Album</label>
+			</li>
+			<li>
+				<input type="text" name="genre">
+				<label for="genre">Genre</label>
+			</li>
+			<li>
+				<input type="text" name="length">
+				<label for="length">Length</label>
+			</li>
+		</ul>
+		<input type="submit" value="Add song">
+	</form>
+
+	<a href="/index">Return to index</a>
+</body>
+</html>
