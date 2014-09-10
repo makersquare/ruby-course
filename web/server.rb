@@ -4,7 +4,7 @@ require 'sinatra/base'
 class Songify::Server < Sinatra::Application
 
   get '/' do
-    @songs = Songify.songs_repo.all
+    @songs = Songify.songs_repo.get_all_songs
     erb :index
   end
 

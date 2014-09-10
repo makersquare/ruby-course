@@ -7,9 +7,9 @@ namespace :db do
   end
 
   task :migrate do
-    require './lib/bookly.rb'
-    Songify::Repositories::Songs.new('songify_test').create_tables
-    Songify::Repositories::Songs.new('songify_dev').create_tables
+    require './lib/songify.rb'
+    Songify::Repositories::Songs.new('songify_test').build_table
+    Songify::Repositories::Songs.new('songify_dev').build_table
     puts "Databases migrated."
   end
 

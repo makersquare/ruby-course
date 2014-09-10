@@ -6,6 +6,16 @@ describe Songify::Server do
     Songify::Server.new
   end
 
+  describe "GET /" do
+    it "loads the homepage" do
+      Songify.songs_repo.save_a_song(Songify::Song.new("fake_title", "fake_artist", "fake_album"))
+      Songify.songs_repo.save_a_song(Songify::Song.new("fake_title_2", "fake_artist_2", "fake_album_2"))
+      get '/'
+      expect(last_response).to be_ok
+      expect(last_response.body).to include "fake_title", "fake_title_2"
+    end
+  end
+
   # describe "GET /" do
   #   it "loads the homepage" do
   #     Bookly.books_repo.save  Bookly::Book.new("My First Book", Date.parse('1983-10-29'))

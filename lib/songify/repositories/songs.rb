@@ -4,8 +4,8 @@ module Songify
   module Repositories
     class Songs
 
-      def initialize
-        @db = PG.connect(host: 'localhost', dbname: 'songify')
+      def initialize(db_name)
+        @db = PG.connect(host: 'localhost', dbname: db_name)
         build_table
       end
 
@@ -58,6 +58,10 @@ module Songify
           DELETE FROM songs 
           WHERE id = $1;
         ], [id])
+      end
+
+      def delete_all
+        @db.exec("DELETE FROM songs")
       end
 
       def build_song(data)
