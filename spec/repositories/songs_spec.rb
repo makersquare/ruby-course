@@ -39,7 +39,8 @@ describe Songify::Repositories::Songs do
     song3 = Songify::Song.new("party time1", "Bob", "Bob's hits")
     Songify.songs_repo.save_a_song(song, song2, song3)
     Songify.songs_repo.delete_a_song(song3.id)
-
+    #this block in expect should be written up here and stored in a variable
+    #which is then passed in the ()
     expect(Songify.songs_repo.get_all_songs.length).to eq(2)
   end
 end

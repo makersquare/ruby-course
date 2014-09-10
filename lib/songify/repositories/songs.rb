@@ -4,8 +4,8 @@ module Songify
   module Repositories
     class Songs
 
-      def initialize
-        @db = PG.connect(host: 'localhost', dbname: 'songify')
+      def initialize(dbname)
+        @db = PG.connect(host: 'localhost', dbname: dbname)
         build_table
       end
 
@@ -33,18 +33,23 @@ module Songify
       end
       
       def build_a_song(entries)
+        #would have been better to not use loop?
         entries.map do |song|
           x = Songify::Song.new(song["title"],["artist"],["album"])
           x.instance_variable_set :@id, song["id"].to_i
           x
         end
       end
-      
+      #add a parameter that allows you to pass in criteria
+      #for a song
       def get_all_songs
         result = @db.exec(%q[
           SELECT * FROM songs;
           ])
         build_a_song(result.entries)
+        #result.map { |r| build_song(r)}
+        #this way we don't have to do this in the build song
+        #method
       end
       
       def save_a_song(*song)
