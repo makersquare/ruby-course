@@ -11,20 +11,22 @@ module Songify
 
       def build_table
         @db.exec(%q[CREATE TABLE IF NOT EXISTS genres (
-          genre_id serial,
-          genre text);])
+          id serial,
+          title text);])
         
       end
 
       def drop_table
-        @db.exec('DROP TABLE songs;')
+        @db.exec('DROP TABLE genres;')
         build_table
       end
 
       def build_genres(entries)
         entries.map do  |genre|
-          this_genre = genre["genre"]
+          id = genre["id"]
+          this_genre = genre["title"]
           genre = Songify::Genre.new(this_genre)
+          genre.instance_variable_set(:@id, id.to_i) 
           genre
         end
       end

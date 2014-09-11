@@ -9,6 +9,14 @@ module Songify
     @song_repo
   end
 
+  def self.genre_repo=(x)
+    @genre_repo = x
+  end
+
+  def self.genre_repo
+    @genre_repo
+  end
+
 
 end
 
@@ -19,4 +27,5 @@ require_relative 'songify/repositories/genre_repo.rb'
 require_relative '../web/server.rb'
 
 Songify.song_repo = Songify::Repositories::Song_Repo.new
-#app = Songify::Server.new
+Songify.genre_repo = Songify::Repositories::Genre_Repo.new
+
