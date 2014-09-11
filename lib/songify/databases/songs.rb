@@ -17,7 +17,8 @@ module Songify
             artist text,
             album text,
             year_published int,
-            rating int
+            rating int,
+            genre_id int REFERENCES genres (id)
             )
           ])
       end
@@ -28,11 +29,13 @@ module Songify
       end
 
       def save_a_song(song)
+        genre_id = Songify.genres.save_a_genre(Songify::Genre.new(song.genre))
+
         result = @db.exec(%q[
-          INSERT INTO songs (title,artist,album,year_published,rating)
-          VALUES ($1,$2,$3,$4,$5)
+          INSERT INTO songs (title,artist,album,year_published,rating,genre_id)
+          VALUES ($1,$2,$3,$4,$5,$6)
           RETURNING id
-          ], [song.title,song.artist,song.album,song.year_published,song.rating])
+          ], [song.title,song.artist,song.album,song.year_published,song.rating, genre_id])
         song.instance_variable_set :@id, result.entries.first["id"].to_i
       end
 
@@ -71,6 +74,7 @@ module Songify
 
       def build_song(entries)
         entries.map do |song_hash|
+          genre = Songify.genres.get_a_genre(song_hash["genre_id"]).genre
           x = Songify::Song.new(
             title:song_hash["title"], 
             artist:song_hash["artist"],
@@ -79,6 +83,7 @@ module Songify
             rating:song_hash["rating"].to_i
             )
           x.instance_variable_set :@id, song_hash["id"].to_i
+          x.instance_variable_set :@genre, genre
           x
         end
       end
@@ -125,4 +130,11 @@ end
         # songs.each_with_index do |song,i|
         #   song.instance_variable_set :@id, result.entries[i]["id"].to_i
         # end
+
+
+
+
+
+
+
 

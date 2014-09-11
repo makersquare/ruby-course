@@ -1,15 +1,16 @@
 module Songify
   class Song
 
-    attr_reader :artist, :title, :album, :year_published, :rating, :id
+    attr_reader :artist, :title, :album, :year_published, :rating, :id, :genre
 
-    def initialize(title: nil, artist: nil, album:nil, year_published: nil, rating: nil)
+    def initialize(title: nil, artist: nil, album:nil, year_published: nil, rating: nil, genre: nil)
       @title = title
       @artist = artist
       @album = album
       @year_published = year_published
       @rating = nil
       @id = nil
+      @genre = nil
     end
 
     def correct_info(type, correction)      
