@@ -34,13 +34,22 @@ class Songify::Server < Sinatra::Application
     end
 
     known_genre_titles = Songify.genre_repo.get_all_genres.map {|x| x.title}
-
+    genre_id = ""
     if (known_genre_titles.include?(genre) == false)
         new_genre = Songify::Genre.new(genre)
         Songify.genre_repo.save_genre(new_genre)
+        all_genres = Songify.genre_repo.get_all_genres
+        new_genre = all_genres.find {|x| x.title == genre}
+        genre_id = new_genre.id
+    else
+        all_genres = Songify.genre_repo.get_all_genres
+        new_genre = all_genres.find {|x| x.title == genre}
+        genre_id = new_genre.id
     end
 
     song = Songify::Song.new(title, artist, album)
+    #adjust song repo table to have genre_id
+    song.instance_variable_set(:@genre_id, genre_id.to_i)
     Songify.song_repo.save_song(song)
 
     redirect to('/index')

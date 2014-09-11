@@ -6,5 +6,6 @@ require_relative '../lib/songify.rb'
 RSpec.configure do |config|
   config.before(:each) do
     Songify.song_repo.drop_table
+    Songify.genre_repo.drop_table
   end
 end

@@ -29,3 +29,7 @@ require_relative '../web/server.rb'
 Songify.song_repo = Songify::Repositories::Song_Repo.new
 Songify.genre_repo = Songify::Repositories::Genre_Repo.new
 
+#Uncomment and restart the server to tables of the database (will lose all data)
+# Songify.song_repo.drop_table
+# Songify.genre_repo.drop_table
+
