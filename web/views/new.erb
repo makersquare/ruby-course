@@ -5,5 +5,14 @@
 	<input name="artist" type="text"><br>
 	<label for="album">Album:</label>
 	<input name="album" type="text"><br>
+	<label for="choose_genre">Choose an existing genre:</label>
+	<select name="choosen_genre">
+		<option> select a genre </option>
+		<%genres.each do |g| %>
+			<option> <%= g.title %> </option>
+		<% end %>
+	</select>
+	<label for="make_new_genre">Or enter your own genre here:</label>
+	<input name="new_genre" type="text"><br>
 	<input name="submit" type="submit"><br>
 </form>
