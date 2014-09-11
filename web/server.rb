@@ -24,10 +24,15 @@ Songify.songs_repo = Songify::Repo::Songs.new("songify_dev")
     song = Songify::Song.new(params["title"], params["artist"], params["genre"])
 
     Songify.songs_repo.save_song(song)
-    erb :create  
+        redirect to('/show')
+
   end
 
-
+  # get "/create" do
+  # end
+ 
 run! if __FILE__ == $0
   end
 
+##Questions: should songs be showing up?
+##Why won't it redirect

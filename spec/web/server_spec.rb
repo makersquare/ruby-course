@@ -47,7 +47,7 @@ describe "POST /create" do
     
     last_song = Songify.songs_repo.get_all_songs.last
 
-    expect(last_song.title).to include "Song I entered"
+    expect(last_song.title).to eq "Song I entered"
   end
 end
 

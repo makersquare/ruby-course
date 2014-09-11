@@ -1,6 +1,7 @@
-
+<h3>Songs:</h3>
+<ul>
 <% @songs.each do |x| %>
-Title: <%= x.title %>
-Artist: <%=	x.artist %>
-Genre: <%=	x.genre %>
+<li><%= x.title %>, <%= x.artist %>, <%= x.genre %></li>
 <% end %>
+</ul>
+
