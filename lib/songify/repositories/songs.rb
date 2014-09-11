@@ -16,7 +16,7 @@ module Songify
             title text,
             artist text,
             album text,
-            genre_id text
+            genre_id int
           );
         ])
       end
@@ -58,7 +58,7 @@ module Songify
 
       def build_songs(entries)
         entries.map do |song|
-          x = Songify::Song.new(song["title"], song["artist"], song["album"], song["genre_id"])
+          x = Songify::Song.new(song["title"], song["artist"], song["album"], song["genre_id"].to_i)
           x.instance_variable_set :@id, song["id"].to_i
           x
         end
