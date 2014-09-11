@@ -19,10 +19,11 @@ module Songify
         @db.exec(%q[
           DROP TABLE IF EXISTS genres
           ])
+        build_table
       end
 
       def save_genre(genre)
-        @db.exec(%q[
+        response = @db.exec(%q[
           INSERT INTO genres(genre)
           VALUES ($1)
           RETURNING id;
