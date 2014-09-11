@@ -367,6 +367,9 @@ body {
     border-radius: 5px;
     margin: 5px 10px;
 }
+.genre.text-box {
+    width: 152px;
+}
 .select-box {
     width: 50px;
     margin: 5px 15px;
@@ -394,6 +397,16 @@ input[type=text] {
 .songs-table th, td {
     padding: 5px;
     text-align: left;
+}
+div.radio {
+    position: relative;
+    left: 30px;
+}
+label.genre {
+    vertical-align: top;
+}
+label.other {
+    font-weight: 200;
 }
 /*ul {
     display: block;

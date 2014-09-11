@@ -16,11 +16,18 @@ class Songify::Server < Sinatra::Application
   end
 
   post '/' do
-    genre = Songify::Genre.new(params["genre"]) # Pulling genre from text entry.
-    Songify.genres.add_genre(genre) # Adding genre to genres repo.
-    genre_list = Songify.genres.get_all_genres # Pulling a genre list from genres table.
-    genre_id = genre_list.last.id # Pulling newest genre id.
-    
+    genre_name = params["genre"]
+    genre_match = Songify.genres.get_all_genres.find { |x| x.name == genre_name }
+    genre_id = nil
+
+    if genre_match == nil
+      genre = Songify::Genre.new(params["genre"]) # Pulling genre from text entry.
+      Songify.genres.add_genre(genre) # Adding genre to genres repo.
+      genre_id = Songify.genres.get_all_genres.last.id # Pulling newest genre id.
+    else
+      genre_id = genre_match.id
+    end
+    binding.pry
     song = Songify::Song.new(params["title"], params["artist"], params["album"], params["year"], genre_id, params["rating"])
     Songify.songs.save_song(song)
     erb :index, :locals => {

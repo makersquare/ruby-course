@@ -116,8 +116,17 @@
                         </tr>
                         <tr>
                             <div class="genre">
-                                <th><label for="genre">Genre: </label></th>
-                                <td><input type="text" id="genre" name="genre" class="text-box"></td>
+                                <th><label for="genre" class="genre">Genre: </label></th>
+                                <td>
+                                    <% genres.each do |genre| %>
+                                        <div class="radio" style="display:block;">
+                                            <input type="radio" id="genre" name="genre" value="<%= genre.name %>"><%= genre.name %></input>
+                                        </div>
+                                    <% end %>
+                                <label for="other-genre" class="other">New </label>
+                                <input type="text" id="other-genre" name="genre" class="genre text-box">
+
+                                </td>
                             </div>
                         </tr>
                         <tr>
