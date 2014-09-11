@@ -43,33 +43,33 @@ describe Songify::Repositories::Genre_Repo do
 
   end
 
-  # describe '.save_song' do
+  describe '.save_genre' do
 
-  #   it 'saves a song to the database' do
+    it 'saves a genre to the database' do
 
-  #     repo.drop_table
+      repo.drop_table
 
-  #     repo.save_song(song)
-  #     songs = repo.build_songs(repo.entries)
-  #     expect(songs[0].is_a?(Songify::Song)).to eq(true)
+      repo.save_genre(genre)
+      genres = repo.build_genres(repo.entries)
+      expect(genres[0].is_a?(Songify::Genre)).to eq(true)
 
-  #   end
+    end
 
-  # end
+   end
 
-  # describe '.delete_song' do
+  describe '.delete_genre' do
 
-  #   it 'deletes a song from the database' do
+    it 'deletes a genre from the database' do
 
-  #       repo.drop_table
+        repo.drop_table
 
-  #       repo.save_song(song)
-  #       id = 1
-  #       repo.delete_song(id)
+        repo.save_genre(genre)
+        id = 1
+        repo.delete_genre(id)
 
-  #       expect(repo.get_song(id)).to eq(nil)
-  #   end
+        expect(repo.get_genre(id)).to eq(nil)
+    end
 
-  #end
+  end
   
 end
