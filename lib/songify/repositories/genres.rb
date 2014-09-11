@@ -9,7 +9,7 @@ module Songify
       def build_table
         @db.exec(%q[
           CREATE TABLE IF NOT EXISTS genres(
-            id serial,
+            id serial UNIQUE,
             genre text
             )
           ])
@@ -17,9 +17,14 @@ module Songify
 
       def drop_table
         @db.exec(%q[
-          DROP TABLE IF EXISTS genres
+          DROP TABLE IF EXISTS genres CASCADE
           ])
         build_table
+      end
+
+      def build_genre(data)
+        s = Songify::Genre.new(data["name"])
+        s.instance_variable_set :@id, data['id'].to_i
       end
 
       def save_genre(genre)
@@ -29,6 +34,13 @@ module Songify
           RETURNING id;
           ], [genre])
         genre.instance_variable_set :@id, response.first['id'].to_i
+      end
+
+      def show_all_genres
+        requested_genres = @db.exec(%q[
+          SELECT * FROM genres
+          ])
+        requested_genres.map { |g| build_genre(g) }
       end
     end
   end
