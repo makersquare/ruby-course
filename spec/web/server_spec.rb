@@ -1,5 +1,5 @@
 require 'server_spec_helper'
-
+require 'pry-byebug'
 describe Songify::Server do
 	
 	def app
@@ -45,10 +45,9 @@ describe Songify::Server do
 		it "creates a song and puts into the table" do
 			Songify.songs_repo.drop_table
 			post '/create', {'title'=>'fake_title', 'artist'=>'fake_artist', 'album'=>'fake_album'}
-
-			get '/index'
-			expect(last_response).to be_ok
-			expect(last_response.body).to include 'fake_title'
+			expect(last_response.status).to eq(302)
+			result = Songify.songs_repo.get_all_songs
+			expect(result.last.title).to eq('fake_title')
 		end
 	end
 end
