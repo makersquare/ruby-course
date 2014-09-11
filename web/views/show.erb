@@ -1,5 +1,10 @@
 <ul>
 	<% @songs.each do |song| %>
-		<li><%= song.title %></li>
+		<li>Song <%= song.id%>: 
+		<ul>
+			<li> Title: <%= song.title %></li>
+			<li> Artist: <%= song.artist %></li> 
+			<li> Album: <%= song.album %></li>
+		</ul>
 	<% end %>
 </ul>
