@@ -20,11 +20,11 @@ module Songify
       # end
 
       # Build for testing.
-      def drop_and_rebuild_table
-        @db.exec(%q[
-          DROP TABLE IF EXISTS genres;
-        ])
-      end
+      # def drop_and_rebuild_table
+      #   @db.exec(%q[
+      #     DROP TABLE IF EXISTS genres;
+      #   ])
+      # end
 
       # Builds genre entry. Helper Method.
       def build_genre(entry)
@@ -48,6 +48,7 @@ module Songify
         delete = @db.exec(%q[
           D
         ])
+      end
 
     end
   end

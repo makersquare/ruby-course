@@ -8,6 +8,9 @@ namespace :db do
 
   task :migrate do
     require './lib/songify.rb'
+    Songify::Repositories.adapter = 'songify_test'
+    Songify::Repositories.build_tables
+    Songify::Repositories.adapter = 'songify_dev'
     Songify::Repositories.build_tables
     puts "Databases migrated"
   end

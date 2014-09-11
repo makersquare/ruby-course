@@ -1,7 +1,7 @@
 require_relative '../spec_helper.rb'
 
-describe Sonfigy::genre do
+describe Songify::Repositories::Genres do
 
-  
+
   
 end

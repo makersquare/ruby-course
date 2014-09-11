@@ -15,7 +15,7 @@ class Songify::Server < Sinatra::Application
   end
 
   post '/' do
-    song = Songify::Song.new(params["title"], params["artist"], params["album"], params["year"], params["genre"], params["rating"])
+    song = Songify::Song.new(params["title"], params["artist"], params["album"], params["year"], params["genre_id"], params["rating"])
     Songify.songs.save_song(song)
     erb :index, :locals => {
       songs: Songify.songs.get_all_songs

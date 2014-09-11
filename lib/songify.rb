@@ -23,6 +23,6 @@ end
 
 require_relative 'songify/entities/song.rb'
 require_relative 'songify/repositories/songs.rb'
-
-Songify.songs = Songify::Repositories::Songs.new
-Songify.genres = Songify::Repositories::Genres.new
+require_relative 'songify/entities/genre.rb'
+require_relative 'songify/repositories/genres.rb'
+require_relative 'songify/repositories/repositories.rb'
