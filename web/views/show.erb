@@ -1,6 +1,9 @@
 <html>
 <head>
 	<title>Songify: Show Songs</title>
+	<link rel="stylesheet" type="text/css" href="/stylesheets/css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/css/main.css">
+</head>
 </head>
 <body>
 	<h1>Show Songs</h1>
@@ -8,7 +11,8 @@
 		<%= "Songs database is empty." %>
 	<%else%>
 		<% @songs.each do |song| %>
-			<%= "#{song.id}. #{song.title}, #{song.artist}, #{song.album}, #{song.genre}"  %>
+			<% genre = Songify.genres_repo.get_genre(song.genre_id) %>
+			<%= "#{song.id}. #{song.title}, #{song.artist}, #{song.album}, #{genre.genre_name.capitalize}"  %>
 			<br>
 		<% end %>
 	<% end %>

@@ -1,7 +1,6 @@
 require_relative '../spec_helper.rb'
 
 describe Songify::Repos::Genres do
-  before(:each) {Songify.genres_repo.drop_table}
   let(:genre) { Songify::Genre.new('pop')}
   let(:genres) { Songify.genres_repo}
 

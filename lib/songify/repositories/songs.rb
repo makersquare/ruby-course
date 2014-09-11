@@ -16,13 +16,13 @@ module Songify
             title text,
             artist text,
             album text,
-            genre_id int
+            genre_id int REFERENCES genres(id)
           );
         ])
       end
 
       def drop_table
-        @db.exec("DROP TABLE IF EXISTS songs")
+        @db.exec("DROP TABLE IF EXISTS songs CASCADE;")
         build_table
       end
 
@@ -39,14 +39,15 @@ module Songify
         build_songs(result.entries)
       end
 
-      def save_song(song)
+      def save_song(song, genre)
         result = @db.exec(%q[
           INSERT INTO songs (title, artist, album, genre_id)
           VALUES ($1, $2, $3, $4)
           RETURNING id;
-        ], [song.title, song.artist, song.album, song.genre_id])
+        ], [song.title, song.artist, song.album, genre.id])
 
         song.id = result.entries.first["id"].to_i
+        song.genre_id = result.entries.first["genre_id"].to_i
       end
 
       def delete_song(song_id)
@@ -58,8 +59,9 @@ module Songify
 
       def build_songs(entries)
         entries.map do |song|
-          x = Songify::Song.new(song["title"], song["artist"], song["album"], song["genre_id"].to_i)
+          x = Songify::Song.new(song["title"], song["artist"], song["album"])
           x.instance_variable_set :@id, song["id"].to_i
+          x.instance_variable_set :@genre_id, song["genre_id"].to_i
           x
         end
       end

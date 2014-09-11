@@ -16,26 +16,36 @@ class Songify::Server < Sinatra::Application
   end
 
   get '/new' do
+    @genres = Songify.genres_repo.get_all_genres
     erb :new
   end
 
   post '/create' do
-    if [params["title"], params["artist"], params["album"], params["genre_id"]].any? {|x| x == nil}
+    @genres = Songify.genres_repo.get_all_genres
+    if [params["title"], params["artist"], params["album"]].any? {|x| x == ""}
       erb :error
-    else
-      song = Songify::Song.new(params["title"], params["artist"], params["album"], params["genre_id"])
-      Songify.songs_repo.save_song(song)
+    elsif params["genre_id"] && params["genre_id"] != ""
+      song = Songify::Song.new(params["title"], params["artist"], params["album"])
+      genre = Songify.genres_repo.get_genre(params["genre_id"].to_i)
+      Songify.songs_repo.save_song(song, genre)
       erb :create
+    elsif params["genre"] != ""
+      match = @genres.find {|x| x.genre_name == params["genre"].downcase}
+      if match
+        song = Songify::Song.new(params["title"], params["artist"], params["album"])
+        Songify.songs_repo.save_song(song, match)
+      else
+        new_genre = Songify::Genre.new(params["genre"])
+        Songify.genres_repo.save_genre(new_genre)
+        song = Songify::Song.new(params["title"], params["artist"], params["album"])
+        Songify.songs_repo.save_song(song, new_genre)
+      end
+      erb :create
+    else
+      erb :error
     end
   end
 
   run! if __FILE__ == $0
 end
-
-# <% song = Songify.songs_repo.get_song(song_id) %>
-#   <%= song.title %>
-#   <%= song.artist %>
-#   <%= song.album %>
-#   <%= song.genre %>
-#   <%= song.length %>
 

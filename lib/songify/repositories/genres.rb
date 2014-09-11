@@ -12,14 +12,14 @@ module Songify
       def build_table
         @db.exec(%q[
           CREATE TABLE IF NOT EXISTS genres(
-            id serial,
+            id serial PRIMARY KEY,
             genre_name text
           );
         ])
       end
 
       def drop_table
-        @db.exec("DROP TABLE IF EXISTS genres")
+        @db.exec("DROP TABLE IF EXISTS genres CASCADE")
         build_table
       end
 

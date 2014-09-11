@@ -1,6 +1,8 @@
 <html>
 <head>
 	<title>Songify: New Song</title>
+	<link rel="stylesheet" type="text/css" href="/stylesheets/css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/css/main.css">
 </head>
 <body>
 	<h1>Add New Song</h1>
@@ -18,10 +20,26 @@
 				<input type="text" name="album">
 				<label for="album">Album</label>
 			</li>
-			<li>
-				<input type="text" name="genre">
-				<label for="genre">Genre</label>
-			</li>
+			<% if @genres.empty? %>
+				<li>
+					<input type="text" name="genre">
+					<label for="genre">Genre</label>
+				</li>
+			<% else %>
+				<li>
+					<select name="genre_id">
+						<option value="" selected></option>
+						<% @genres.each do |x| %>
+							<option value=<%= "#{x.id}" %>><%="#{x.genre_name}"%></option>
+						<% end %>
+					</select>
+					<label for="genre_id">Genre</label>
+				</li>
+				<li>
+					<input type="text" name="genre">
+					<label for="genre">New Genre</label>
+				</li>
+			<% end %>
 		</ul>
 		<input type="submit" value="Add song">
 	</form>

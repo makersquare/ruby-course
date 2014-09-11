@@ -4,7 +4,7 @@ module Songify
     attr_accessor :id
 
     def initialize(genre_name)
-      @genre_name = genre_name
+      @genre_name = genre_name.downcase
       @id = nil
     end
 
