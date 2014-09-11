@@ -35,11 +35,10 @@ describe Songify::Server do
 
   describe "/show/:id" do
     it "shows a single song based on a given id in the url" do
-      Songify.songs_repo.drop_table
-      Songify.songs_repo.save_a_song(Songify::Song.new("yusef", "yusef", "yusef"))
+      Songify.songs_repo.save_a_song(Songify::Song.new("show_title", "show_artist", "show_album"))
       get '/show/1'
       expect(last_response).to be_ok
-      expect(last_response.body).to include "yusef"
+      expect(last_response.body).to include "show_title"
     end
   end
 

@@ -1,4 +1,4 @@
-<% if defined? @song %>
+<% if @song != nil%>
   <table>
   <tr>
   	<th>ID</th>
@@ -7,12 +7,12 @@
     <th>Album</th>
   </tr>
   <tr>
-  <% if @song != nil %>
   	<td><%= @song.id %></td>
   	<td><%= @song.title %></td>
   	<td><%= @song.artist %></td>
   	<td><%= @song.album %></td>
-  	<% end %>
   </tr>
 </table>
+<% else %>
+<h1>Song not found</h1>
 <% end %>
