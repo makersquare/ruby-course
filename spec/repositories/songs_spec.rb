@@ -2,7 +2,7 @@ require_relative '../spec_helper.rb'
 
 describe Songify::Repos::Songs do
   before(:each) {Songify.songs_repo.drop_table}
-  let(:song) { Songify::Song.new('fake_title', 'fake_artist', 'fake_album', 'fake_genre', 'fake_length')}
+  let(:song) { Songify::Song.new('fake_title', 'fake_artist', 'fake_album', 'fake_genre')}
   let(:songs) { Songify.songs_repo}
 
   describe '.get_song' do
@@ -18,7 +18,7 @@ describe Songify::Repos::Songs do
 
   describe '.get_all_songs' do
     it 'returns an array of all song objects' do
-      song2 = Songify::Song.new('fake_title2', 'fake_artist2', 'fake_album2', 'fake_genre2', 'fake_length2')
+      song2 = Songify::Song.new('fake_title2', 'fake_artist2', 'fake_album2', 'fake_genre2')
       songs.save_song(song)
       songs.save_song(song2)
       result = songs.get_all_songs
@@ -47,7 +47,7 @@ describe Songify::Repos::Songs do
 
   describe '.delete_song' do
     it 'removes a song from the database' do
-      song2 = Songify::Song.new('fake_title2', 'fake_artist2', 'fake_album2', 'fake_genre2', 'fake_length2')
+      song2 = Songify::Song.new('fake_title2', 'fake_artist2', 'fake_album2', 'fake_genre2')
       songs.save_song(song)
       songs.save_song(song2)
 

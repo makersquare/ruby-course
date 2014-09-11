@@ -20,10 +20,10 @@ class Songify::Server < Sinatra::Application
   end
 
   post '/create' do
-    if [params["title"], params["artist"], params["album"], params["genre"], params["length"]].any? {|x| x == nil}
+    if [params["title"], params["artist"], params["album"], params["genre"]].any? {|x| x == nil}
       erb :error
     else
-      song = Songify::Song.new(params["title"], params["artist"], params["album"], params["genre"], params["length"])
+      song = Songify::Song.new(params["title"], params["artist"], params["album"], params["genre"])
       Songify.songs_repo.save_song(song)
       erb :create
     end

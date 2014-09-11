@@ -8,7 +8,7 @@
 		<%= "Songs database is empty." %>
 	<%else%>
 		<% @songs.each do |song| %>
-			<%= "#{song.id}. #{song.title}, #{song.artist}, #{song.album}, #{song.genre}, #{song.length}"  %>
+			<%= "#{song.id}. #{song.title}, #{song.artist}, #{song.album}, #{song.genre}"  %>
 			<br>
 		<% end %>
 	<% end %>
