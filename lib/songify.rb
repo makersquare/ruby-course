@@ -13,7 +13,9 @@ module Songify
 end
 
 require_relative 'songify/entities/song.rb'
+require_relative 'songify/entities/genre.rb'
 require_relative 'songify/repositories/song_repo.rb'
+require_relative 'songify/repositories/genre_repo.rb'
 require_relative '../web/server.rb'
 
 Songify.song_repo = Songify::Repositories::Song_Repo.new

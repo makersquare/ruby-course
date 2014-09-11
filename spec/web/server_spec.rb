@@ -51,7 +51,7 @@ describe Songify::Server do
       size = Songify.song_repo.get_all_songs.size
       post '/create', {"title" => "Dingus", "artist" => "The Dingus", "album" => "Dingus"}
 
-      expect(last_response).to be_ok
+      expect(last_response.status).to eq(302)
       expect(Songify.song_repo.get_all_songs.size).to eq (size+1)
       
     end

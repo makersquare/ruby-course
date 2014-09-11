@@ -3,10 +3,10 @@ module Songify
 
   class Genre
 
-    attr_reader :genre
+    attr_reader :title
 
     def initialize(genre_title)
-      @genre = genre_title
+      @title = genre_title
     end
 
   end
