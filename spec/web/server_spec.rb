@@ -45,9 +45,9 @@ describe Songify::Server do
 		it "creates a song and puts into the table" do
 			Songify.songs_repo.drop_table
 			post '/create', {'title'=>'fake_title', 'artist'=>'fake_artist', 'album'=>'fake_album'}
-			# expect(last_response).to be_ok
 
 			get '/index'
+			expect(last_response).to be_ok
 			expect(last_response.body).to include 'fake_title'
 		end
 	end
