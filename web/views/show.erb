@@ -7,10 +7,12 @@
     <th>Album</th>
   </tr>
   <tr>
+  <% if @song != nil %>
   	<td><%= @song.id %></td>
   	<td><%= @song.title %></td>
   	<td><%= @song.artist %></td>
   	<td><%= @song.album %></td>
+  	<% end %>
   </tr>
 </table>
 <% end %>

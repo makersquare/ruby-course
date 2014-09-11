@@ -5,7 +5,7 @@ class Songify::Server < Sinatra::Application
 
   set :bind, '0.0.0.0'
 
-  get '/index' do
+  get '/' do
     @songs = Songify.songs_repo.get_all_songs
     erb :index
   end
@@ -18,7 +18,7 @@ class Songify::Server < Sinatra::Application
   post '/create' do
     @song = Songify::Song.new(params["title"], params["artist"], params["album"])
     Songify.songs_repo.save_a_song(@song)
-    redirect '/index'
+    redirect '/'
   end
 
   get '/new' do

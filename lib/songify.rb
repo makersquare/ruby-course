@@ -13,4 +13,4 @@ end
 require_relative 'songify/entities/song.rb'
 require_relative 'songify/repositories/songs.rb'
 
-Songify.songs_repo = Songify::Repositories::Songs.new
+Songify.songs_repo = Songify::Repositories::Songs.new("songify_test")

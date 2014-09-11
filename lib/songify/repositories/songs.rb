@@ -4,8 +4,8 @@ module Songify
   module Repositories
     class Songs
 
-      def initialize
-        @db = PG.connect(host: 'localhost', dbname: 'songify')
+      def initialize(dbname)
+        @db = PG.connect(host: 'localhost', dbname: dbname)
         build_table
       end
 
@@ -30,7 +30,11 @@ module Songify
         result = @db.exec(%q[
           SELECT * FROM songs WHERE id = $1
         ], [id])
-        build_song(result.first)
+        if result.entries.size > 0
+          build_song(result.first)
+        else
+          nil
+        end
       end
 
       # no parameter needed
