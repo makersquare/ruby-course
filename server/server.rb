@@ -1,7 +1,7 @@
 require_relative '../lib/songify.rb'
 require 'sinatra'
 require 'sinatra/reloader'
-
+require 'pry-byebug'
 class Songify::Server < Sinatra::Application
   get '/' do
     erb :index
@@ -9,15 +9,17 @@ class Songify::Server < Sinatra::Application
 
   get '/show' do
     all = Songify.song_repo.get_all_songs
-    erb :show, :locals=>{:all=> all}
+    genres = Songify.genre_repo.get_all_genres
+    erb :show, :locals=>{:all=> all, :genres=>genres}
   end
 
   get '/new' do
-    erb :new
+    genres = Songify.genre_repo.get_all_genres
+    erb :new, :locals=>{:genres=> genres}
   end
 
   post '/create' do
-    song = Songify::Song.new(params["artist"],params["title"],params["album"],params["length"])
+    song = Songify::Song.new(params["artist"],params["title"],params["album"],params["length"],params["genre_id"])
     Songify.song_repo.save_a_song(song)
     redirect to '/show'
   end

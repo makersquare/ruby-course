@@ -14,6 +14,7 @@ module Songify
   end
 end
 
+require_relative 'table.rb'
 require_relative 'songify/entities/song.rb'
 require_relative 'songify/entities/genre.rb'
 require_relative 'songify/repositories/songs.rb'

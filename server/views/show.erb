@@ -12,13 +12,34 @@
 
 		<% all.each do |x| %>
 			<tr>
-				<th><%= x.artist %></TH>
-				<th><%= x.title %></TH>
-				<th><%= x.album %></TH>
-				<th><%= x.length %></TH>
-				<th>GENRE</TH>
+				<td><%= x.artist %></td>
+				<td><%= x.title %></td>
+				<td><%= x.album %></td>
+				<td><%= x.length %></td>
+				<td><%= genres[1].genre %></td>
+				<td><%= Songify.genre_repo.get_a_genre(x.genre_id.to_i).class %></td>
+				<td><%= p Songify.genre_repo.get_a_genre(x.genre_id.to_i) %></td>
 			</tr>	
 		<% end %>
 	</table>
 
+	<table>
+			<tr>
+				<th>GENRE</TH>
+				<th>ID</TH>
+			</tr>
+
+
+		<% genres.each do |x| %>
+			<tr>
+				<td><%= x.genre %></td>
+				<td><%= x.id %></td>
+			</tr>	
+		<% end %>
+	</table>
+
+
 </ul>
+<p> <% genres.each do |g| %>
+	<%= g.genre %>
+	<% end %>

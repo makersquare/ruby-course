@@ -2,7 +2,7 @@ require_relative '../spec_helper.rb'
 
 
 describe Songify::Repositories::Songs do
-  Songify.song_repo.drop_table
+  Songify::Tables.drop_table
   let(:songa){Songify::Song.new('artist','songname','albumA',4)}
   let(:songb){Songify::Song.new('artist','songname','albumA',5)}
   let(:songc){Songify::Song.new('artist','songname','albumA',6)}

@@ -2,10 +2,14 @@ require_relative '../spec_helper.rb'
 
 
 describe Songify::Repositories::Genres do
-  Songify.genre_repo.drop_table
+  # Songify.genre_repo.drop_table
   let(:genrea){Songify::Genre.new('Country')}
   let(:genreb){Songify::Genre.new('Rap')}
   let(:genrec){Songify::Genre.new('Alternative')}
+  let(:genred){Songify::Genre.new('Polka')}
+  let(:genred){Songify::Genre.new('Polka')}
+
+
 
   it 'Will SAVE a Genre' do
     Songify.genre_repo.save_genre(genrea)
@@ -15,38 +19,30 @@ describe Songify::Repositories::Genres do
     expect(Songify.genre_repo.get_all_genres.entries.count).to eq (3)
   end
 
-  xit 'Will GET a Song' do
+  it 'Will GET a Genre' do
     genre1 = Songify.genre_repo.get_a_genre(1)
-    expect(song1.genre).to eq("Country")
-    # expect(song1.length).to eq(4)
-    # expect(song1.id).to eq(1)
-    expect(song1).to be_a(Songify::Genre)
+    expect(genre1.genre).to eq("Country")
+    expect(genre1.id).to eq(1)
+    expect(genre1).to be_a(Songify::Genre)
+    genre1 = Songify.genre_repo.get_a_genre(2)
+    expect(genre1.genre).to eq("Rap")
+    expect(genre1.id).to eq(2)
+    expect(genre1).to be_a(Songify::Genre)
   end
 
-  xit 'Will GET all Songs' do
-    Songify.genre_repo.save_a_song(songd)
-    Songify.genre_repo.save_a_song(songe)
-    Songify.genre_repo.save_a_song(songf)
-    expect(Songify.genre_repo.get_all_songs.count).to eq(6)
+  it 'Will GET all Genres' do
+    expect(Songify.genre_repo.get_all_genres.count).to eq(3)
   end
 
-  xit 'Will UPDATE a Song' do
-    Songify.genre_repo.update(6,'artist','artist10')#,song10,album10,10')
-    song6 = Songify.genre_repo.get_a_song(6)
-    expect(song6.artist).to eq("artist10")
+  it 'Will UPDATE a Genre' do
+    Songify.genre_repo.update(3,'new_name')
+    genree = Songify.genre_repo.get_a_genre(3)
+    expect(genree.genre).to eq("new_name")
   end
 
-  xit 'Will update multipel attributes' do
-    Songify.genre_repo.update_all(6,nil,'song10','album10')#,10)
-    song6 = Songify.genre_repo.get_a_song(6)
-    expect(song6.title).to eq("song10")
-    expect(song6.album).to eq("album10")
-    expect(song6.id).to eq(6)
-  end
-
-  xit 'Will DESTROY a Song' do
-    Songify.genre_repo.delete_a_song(1)
-    expect(Songify.genre_repo.get_all_songs.entries.count).to eq(5)
+  it 'Will DESTROY a Song' do
+    Songify.genre_repo.delete_a_genre(4)
+    expect(Songify.genre_repo.get_all_genres.entries.count).to eq(3)
   end
 
 end

@@ -6,31 +6,14 @@ module Songify
 
       def initialize
         @db = PG.connect(host: "localhost", dbname: "songify")  
-        build_table
+        # build_table
       end
 
-      def build_table
-        @db.exec(%q[
-          CREATE TABLE IF NOT EXISTS songs(
-            id serial,
-            artist text,
-            title text,
-            album text,
-            length int,
-            genre_id int
-          )
-        ])
-      end
 
       def build_song(entry)
-        song = Songify::Song.new(entry["artist"],entry["title"],entry["album"],entry["length"].to_i)
+        song = Songify::Song.new(entry["artist"],entry["title"],entry["album"],entry["length"].to_i,entry["genre_id"])
         song.instance_variable_set :@id, entry["id"].to_i
         song
-      end
-
-      def drop_table
-        @db.exec(%q[DROP TABLE songs])
-        build_table
       end
 
       #song id, possibly artist?, album?
@@ -52,9 +35,9 @@ module Songify
 
       #paramaters, song object
       def save_a_song(song)
-        @db.exec(%q[ INSERT INTO songs( artist, title, album, length)
-          VALUES( $1, $2, $3, $4)
-        ], [song.artist, song.title, song.album, song.length])
+        @db.exec(%q[ INSERT INTO songs( artist, title, album, length, genre_id)
+          VALUES( $1, $2, $3, $4, $5)
+        ], [song.artist, song.title, song.album, song.length, song.genre_id])
         
       end
 
@@ -72,7 +55,10 @@ module Songify
           WHERE id = ] + id.to_s
         )
       end
-
+        # @db.exec(%q[ 
+        #   UPDATE songs 
+        #   SET $1 = $2 WHERE id = ] + id.to_s,[piece, artist]
+        # )
 
       #parameter needed, song id.
       def delete_a_song(id)
