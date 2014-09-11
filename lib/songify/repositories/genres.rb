@@ -17,6 +17,13 @@ module Songify
         ])
       end
 
+      def get_a_genre(id)
+        result = @db.exec(%q[
+          SELECT * FROM genres WHERE id = $1;
+        ], [id])
+        build_genre(result.first)
+      end
+
       def drop_table
         @db.exec("DROP TABLE genres")
         build_table
@@ -29,6 +36,12 @@ module Songify
           returning id;
         ], [genre.name])
         genre.instance_variable_set("@id", result[0]["id"].to_i)
+      end
+
+      def build_genre(genre)
+        x = Songify::Genre.new(genre["name"])
+        x.instance_variable_set :@id, genre["id"].to_i
+        x
       end
     end
   end

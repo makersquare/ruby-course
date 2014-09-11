@@ -11,7 +11,9 @@ describe Songify::Repositories::Genres do
 
   describe '#get_a_genre' do
     it 'returns a genre by given id' do
-
+      Songify.genres_repo.save_a_genre(genre1)
+      result = Songify.genres_repo.get_a_genre(genre1.id)
+      expect(result.name).to eq("rap")
     end
   end
 
