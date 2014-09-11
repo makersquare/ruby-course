@@ -1,6 +1,24 @@
 
 <ul>
-	<% all.each do |x| %>
-	<li>ARTIST: <%= x.artist %> --- NAME: <%= x.title %> --- ALBUM: <%= x.album %> --- LENGTH: <%= x.length %> </li>
-	<% end %>
+	<table>
+			<tr>
+				<th>ARTIST</TH>
+				<th>TITLE</TH>
+				<th>ALBUM</TH>
+				<th>LENGTH</TH>
+				<th>GENRE</TH>
+			</tr>
+
+
+		<% all.each do |x| %>
+			<tr>
+				<th><%= x.artist %></TH>
+				<th><%= x.title %></TH>
+				<th><%= x.album %></TH>
+				<th><%= x.length %></TH>
+				<th>GENRE</TH>
+			</tr>	
+		<% end %>
+	</table>
+
 </ul>

@@ -37,4 +37,8 @@ describe Songify::Server do
       expect(last_response.body).to include "Servercheck" 
     end
   end
+
+
+
+  
 end

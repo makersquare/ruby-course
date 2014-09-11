@@ -16,7 +16,8 @@ module Songify
             artist text,
             title text,
             album text,
-            length int 
+            length int,
+            genre_id int
           )
         ])
       end

@@ -22,8 +22,5 @@ class Songify::Server < Sinatra::Application
     redirect to '/show'
   end
 
-  # get '/' do
-  #   'hello'
-  # end
   run! if __FILE__ == $0
 end
