@@ -39,7 +39,7 @@ describe Songify::Server do
 
   describe "POST /create" do
     #returns the new song after submitted
-    xit "shows the newly created song" do
+    it "shows the newly created song" do
       post '/create', { "song-title" => "Fake Title", "song-artist" => "Fake Artist", "song-album" => "Fake Album" }
       expect(last_response.status).to eq 302
       song = Songify.songs_repo.show_all_songs

@@ -22,7 +22,15 @@ class Songify::Server < Sinatra::Application
     song = Songify::Song.new(params["song-title"],params["song-artist"],params["song-album"])
     genre = Songify::Genre.new(params["genre"])
     Songify.genres_repo.save_genre(genre)
-    Songify.songs_repo.save_a_song(song, genre)
+    # @genres = Songify.genres_repo.show_all_genres
+
+    # if @genres.include?(params["genre"])
+      # Songify.songs_repo.save_a_song(song, params["genre"])
+    # else
+      # genre = Songify.genres_repo.save_genre(genre)
+      Songify.songs_repo.save_a_song(song, genre)
+    # end
+    # Songify.songs_repo.save_a_song(song, genre)
     redirect to '/show'
   end
 
