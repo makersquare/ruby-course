@@ -3,6 +3,7 @@ require 'pg'
 module Songify
   module Repositories
     class Genres
+
       def initialize(dbname)
         @db = PG.connect(host: 'localhost', dbname: dbname)
         build_table
@@ -11,7 +12,7 @@ module Songify
       def build_table
         @db.exec(%q[
           CREATE TABLE IF NOT EXISTS genres(
-            id serial,
+            id serial PRIMARY KEY,
             name text
           )
         ])
@@ -38,9 +39,8 @@ module Songify
         result.map { |genre| build_genre(genre) }
       end
 
-      def drop_table
-        @db.exec("DROP TABLE genres")
-        build_table
+      def truncate_table
+        @db.exec("TRUNCATE TABLE genres, songs")
       end
 
       def save_a_genre(genre)

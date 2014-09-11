@@ -1,3 +1,4 @@
+require 'pry-byebug'
 module Songify
   # songs repo setter method
   def self.songs_repo=(x)
@@ -25,5 +26,5 @@ require_relative 'songify/repositories/songs.rb'
 require_relative 'songify/entities/genre.rb'
 require_relative 'songify/repositories/genres.rb'
 
-Songify.songs_repo = Songify::Repositories::Songs.new("songify_dev")
 Songify.genres_repo = Songify::Repositories::Genres.new("songify_dev")
+Songify.songs_repo = Songify::Repositories::Songs.new("songify_dev")

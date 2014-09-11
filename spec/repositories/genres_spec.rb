@@ -5,10 +5,6 @@ describe Songify::Repositories::Genres do
   let(:genre2) { genre = Songify::Genre.new("country") }
   let(:genre3) { genre = Songify::Genre.new("classical") }
 
-  before(:each) do
-    Songify.genres_repo.drop_table
-  end
-
   describe '#get_a_genre_by_id' do
     it 'returns a genre by given id' do
       Songify.genres_repo.save_a_genre(genre1)

@@ -16,14 +16,13 @@ module Songify
             title text,
             artist text,
             album text,
-            genre_id int
+            genre_id int REFERENCES genres
           )
         ])
       end
 
-      def drop_table
-        @db.exec("DROP TABLE songs")
-        build_table
+      def truncate_table
+        @db.exec("TRUNCATE TABLE songs")
       end
 
       # parameter could be song id
@@ -49,10 +48,10 @@ module Songify
       # parameter should be song object
       def save_a_song(song)
         result = @db.exec(%q[
-          INSERT INTO songs (title, artist, album)
-          VALUES ($1, $2, $3)
+          INSERT INTO songs (title, artist, album, genre_id)
+          VALUES ($1, $2, $3, $4)
           returning id
-        ], [song.title, song.artist, song.album])
+        ], [song.title, song.artist, song.album, song.genre_id])
         song.instance_variable_set("@id", result[0]["id"].to_i)
       end
 
@@ -65,7 +64,7 @@ module Songify
 
       # helper method to build song objects
       def build_song(song)
-        x = Songify::Song.new(song["title"], song["artist"], song["album"])
+        x = Songify::Song.new(song["title"], song["artist"], song["album"], song["genre_id"].to_i)
         x.instance_variable_set :@id, song["id"].to_i
         x
       end
