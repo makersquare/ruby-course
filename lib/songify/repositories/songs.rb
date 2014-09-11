@@ -26,10 +26,6 @@ module Songify
         build_table
       end
 
-      def delete_all
-        @db.exec("DELETE FROM songs")
-      end
-
       def get_song(song_id)
         result = @db.exec(%q[
           SELECT * FROM songs WHERE id = $1;

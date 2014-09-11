@@ -6,6 +6,6 @@ Songify.songs_repo = Songify::Repos::Songs.new('songify_test')
 
 RSpec.configure do |config|
   config.before(:each) do
-    Songify.songs_repo.delete_all
+    Songify.songs_repo.drop_table
   end
 end

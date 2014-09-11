@@ -6,7 +6,7 @@ describe Songify::Genre do
   describe '.initialize' do
     it 'will initialize with genre name and id set to nil' do
       expect(genre.genre_name).to eq 'pop'
-      expect(genre.genre_id).to be_nil
+      expect(genre.id).to be_nil
     end
   end
 
