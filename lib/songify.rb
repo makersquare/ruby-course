@@ -9,12 +9,12 @@ module Songify
     @songs_repo
   end
 
-  # songs repo setter method
+  # genres repo setter method
   def self.genres_repo=(x)
     @genres_repo = x
   end
 
-  # songs repo getter method
+  # genres repo getter method
   def self.genres_repo
     @genres_repo
   end

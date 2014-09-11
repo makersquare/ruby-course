@@ -15,7 +15,8 @@ module Songify
             id serial,
             title text,
             artist text,
-            album text
+            album text,
+            genre_id int
           )
         ])
       end

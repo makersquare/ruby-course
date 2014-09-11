@@ -1,18 +1,18 @@
-<% if @song != nil%>
-  <table>
+<table>
   <tr>
-  	<th>ID</th>
+    <th>ID</th>
     <th>Title</th>
     <th>Artist</th>
     <th>Album</th>
+    <th>Genre</th>
   </tr>
-  <tr>
-  	<td><%= @song.id %></td>
-  	<td><%= @song.title %></td>
-  	<td><%= @song.artist %></td>
-  	<td><%= @song.album %></td>
-  </tr>
+  <% @songs.each do |song| %>
+    <tr>
+      <td><%= song.id %></td>
+      <td><%= song.title %></td>
+      <td><%= song.artist %></td>
+      <td><%= song.album %></td>
+      <td><%=  %></td>
+    </tr>
+    <% end %>
 </table>
-<% else %>
-<h1>Song not found</h1>
-<% end %>

@@ -12,33 +12,21 @@ describe Songify::Server do
       get '/'
       expect(last_response).to be_ok
     end
-
-    it "displays a list of all of the songs in database" do
-      Songify.songs_repo.save_a_song(Songify::Song.new("test title 1", "test artist 1", "test album 1"))
-      Songify.songs_repo.save_a_song(Songify::Song.new("test title 2", "test artist 2", "test album 2"))
-      Songify.songs_repo.save_a_song(Songify::Song.new("test title 3", "test artist 3", "test album 3"))
-
-      get '/'
-
-      expect(last_response.body).to include "test title 1", "test artist 1", "test album 1",
-                                            "test title 2", "test artist 2", "test album 2",
-                                            "test title 3", "test artist 3", "test album 3"
-    end
   end
 
   describe "POST /create" do
     it "enters a new song in the database" do
-      post '/create', { "title" => "post test title", "artist" => "post test artist", "album" => "post test album" }
+      post '/create', { "title" => "post test title", "artist" => "post test artist", "album" => "post test album", "genre" => "genre1" }
       expect(last_response.status).to eq 302
     end
   end
 
-  describe "/show/:id" do
-    it "shows a single song based on a given id in the url" do
-      Songify.songs_repo.save_a_song(Songify::Song.new("show_title", "show_artist", "show_album"))
-      get '/show/1'
+  describe "/show" do
+    it "shows all of the songs" do
+      post '/create', { "title" => "title1", "artist" => "artist1", "album" => "album1", "genre" => "genre1" }
+      get '/show'
       expect(last_response).to be_ok
-      expect(last_response.body).to include "show_title"
+      expect(last_response.body).to include "title1", "artist1", "album1", "genre1"
     end
   end
 

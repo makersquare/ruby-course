@@ -10,6 +10,8 @@ namespace :db do
     require './lib/songify.rb'
     Songify::Repositories::Songs.new('songify_test')
     Songify::Repositories::Songs.new('songify_dev')
+    Songify::Repositories::Genres.new('songify_test')
+    Songify::Repositories::Genres.new('songify_dev')
     puts "Databases migrated."
   end
 
