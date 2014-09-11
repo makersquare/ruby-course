@@ -24,6 +24,13 @@ module Songify
         build_genre(result.first)
       end
 
+      def get_all_genres
+        result = @db.exec(%q[
+          SELECT * FROM genres;
+        ])
+        result.map { |genre| build_genre(genre) }
+      end
+
       def drop_table
         @db.exec("DROP TABLE genres")
         build_table

@@ -17,6 +17,18 @@ describe Songify::Repositories::Genres do
     end
   end
 
+  describe '#get_all_genres' do
+    it 'returns all of the genres in the database' do
+      Songify.genres_repo.save_a_genre(genre1)
+      Songify.genres_repo.save_a_genre(genre2)
+      Songify.genres_repo.save_a_genre(genre3)
+      result = Songify.genres_repo.get_all_genres
+      expect(result.size).to eq(3)
+      expect(result.last.name).to eq("classical")
+      expect(result.first).to be_an_instance_of(Songify::Genre)
+    end
+  end
+
   describe '#save_a_genre' do
     it 'saves a genre in the genres table' do
       expect(genre1.id).to be_nil
