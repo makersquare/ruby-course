@@ -4,8 +4,8 @@ describe Songify::Repo::Songs do
   before(:each) { Songify.songs_repo.drop_table }
 
   let(:songs_test) {Songify.songs_repo}
-  let(:tune1) {Songify::Song.new("fake_title", "fake_artist", "fake_genre")}
-  let(:tune2) {Songify::Song.new("fake_2", "2_artist", "2_genre")}
+  let(:tune1) {Songify::Song.new("fake_title", "fake_artist", "fake_album")}
+  let(:tune2) {Songify::Song.new("fake_2", "2_artist", "2_album")}
 
   it "saves a Song to the database" do
 
