@@ -1,5 +1,7 @@
 require 'server_spec_helper'
+
 require_relative './server_spec_helper.rb'
+
 
 
 describe Songify::Server do 
@@ -51,7 +53,7 @@ describe Songify::Server do
 
       expect(last_response).to be_ok
       expect(Songify.song_repo.get_all_songs.size).to eq (size+1)
-
+      
     end
 
   end

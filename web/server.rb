@@ -1,5 +1,8 @@
 require_relative '../lib/songify.rb'
-require 'sinatra/base'
+
+require 'sinatra'
+require 'sinatra/reloader'
+#require 'sinatra/base'
 
 class Songify::Server < Sinatra::Application
 
@@ -22,9 +25,12 @@ class Songify::Server < Sinatra::Application
     album = params["album"]
     song = Songify::Song.new(title, artist, album)
     Songify.song_repo.save_song(song)
-
+    redirect to('/index')
  end
+
+ run! if __FILE__ == $0
 
 
 
 end
+
