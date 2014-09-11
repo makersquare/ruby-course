@@ -35,10 +35,10 @@ describe Songify::Server do
   describe "POST /create" do
     it "creates a new song to add to database" do
       post '/create', { "title" => "song_title3", "artist" => "some_artist", "album" => "some_album" }
-      expect(last_response).to be_ok
-
+      expect(last_response.redirect?).to be_true
+      follow_redirect!
       last_song = Songify.songs_repo.get_all_songs.last
-      expect(last_response.body).to eq(last_song.title)
+      expect(last_response.body).to include(last_song.title)
     end
   end
 

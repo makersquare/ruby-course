@@ -28,8 +28,9 @@ class Songify::Server < Sinatra::Application
     song = Songify::Song.new(params["title"], params["artist"], params["album"])
     Songify.songs_repo.save_a_song(song)
     song.title
+    redirect to('/show')
   end
 
 
-# run! if __FILE__ == $0
+run! if __FILE__ == $0
 end
