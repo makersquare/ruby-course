@@ -16,22 +16,18 @@ module Songify
         
       end
 
-      # def drop_table
-      #   @db.exec('DROP TABLE songs;')
-      #   build_table
-      # end
+      def drop_table
+        @db.exec('DROP TABLE songs;')
+        build_table
+      end
 
-      # def build_songs(entries)
-      #   entries.map do  |song|
-      #     artist = song["artist"]
-      #     album = song["album"]
-      #     title = song["title"]
-      #     id = song["id"]
-      #     song = Songify::Song.new(title, artist, album)
-      #     song.instance_variable_set(:@id, id.to_i) 
-      #     song
-      #   end
-      # end
+      def build_genres(entries)
+        entries.map do  |genre|
+          this_genre = genre["genre"]
+          genre = Songify::Genre.new(this_genre)
+          genre
+        end
+      end
 
       # def entries
       #   result = @db.exec(%q[SELECT * FROM songs])
