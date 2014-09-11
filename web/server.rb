@@ -26,6 +26,7 @@ class Songify::Server < Sinatra::Application
     artist = params["artist"]
     album = params["album"]
     chosen_genre = params["chosen_genre"]
+    
 
     if chosen_genre == "select a genre" 
         genre = params["new_genre"]
@@ -34,7 +35,7 @@ class Songify::Server < Sinatra::Application
     end
 
     known_genre_titles = Songify.genre_repo.get_all_genres.map {|x| x.title}
-    genre_id = ""
+
     if (known_genre_titles.include?(genre) == false)
         new_genre = Songify::Genre.new(genre)
         Songify.genre_repo.save_genre(new_genre)
