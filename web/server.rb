@@ -20,7 +20,7 @@ class Songify::Server < Sinatra::Application
   end
 
   post "/create" do
-    song = Songify::Song.new(params["title"], params["artist"], params["genre"])
+    song = Songify::Song.new(params["title"], params["artist"], params["album"])
 
     Songify.songs_repo.save_song(song)
         redirect to('/show')
