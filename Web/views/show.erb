@@ -1,0 +1,7 @@
+<ol>
+<% @songs.each do |song_object| %>
+  <li>Song:<%=song_object.title%>
+  Artist:<%=song_object.artist%>
+  Album:<%=song_object.album%></li>
+  <% end %>
+</ol>
