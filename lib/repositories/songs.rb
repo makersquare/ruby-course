@@ -54,11 +54,14 @@ module Songify
       end
 
       # paramter should be song object
-      def save_a_song(song)
-        @db.exec(%q[
-          INSERT INTO songs(title, artist, album)
-          VALUES ($1, $2, $3)
-        ], [song.title, song.artist, song.album])
+      def save_a_song(*song)
+        song.each do |song|
+          result = @db.exec(%q[
+            INSERT INTO songs(title, artist, album)
+            VALUES ($1, $2, $3)
+          ], [song.title, song.artist, song.album])
+        end
+
       end
 
       # parameter could be song id

@@ -17,10 +17,14 @@ describe Songify::Repositories::Songs do
     Songify.songs_repo.save_a_song(song)
     Songify.songs_repo.save_a_song(song)
     result = Songify.songs_repo.get_all_songs
-    expect(result.size).to eq(4)
+    expect(result.size).to eq(3)
   end
 
   it "selects a song by its Song ID" do
+    Songify.songs_repo.save_a_song(song)
+    Songify.songs_repo.save_a_song(song)
+    Songify.songs_repo.save_a_song(song)
+    Songify.songs_repo.save_a_song(song)
     result = Songify.songs_repo.get_a_song(4)
     # expect(result.size).to eq(1)
     expect(result.id).to be(4)
@@ -29,6 +33,10 @@ describe Songify::Repositories::Songs do
 
 
   it "deletes a song from the database by its Song ID" do
+    Songify.songs_repo.save_a_song(song)
+    Songify.songs_repo.save_a_song(song)
+    Songify.songs_repo.save_a_song(song)
+    Songify.songs_repo.save_a_song(song)
     Songify.songs_repo.delete_a_song(3)
     result = Songify.songs_repo.get_all_songs
     expect(result.size).to eq(3)
@@ -37,10 +45,5 @@ describe Songify::Repositories::Songs do
     expect(result[2].id).to eq(4)
   end
 
-  it "check that the next song added will have an ID of 5" do
-    Songify.songs_repo.save_a_song(song)
-    result = Songify.songs_repo.get_all_songs
-    expect(result.last.id).to eq(5)
-  end
 
 end
