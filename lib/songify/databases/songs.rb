@@ -130,11 +130,3 @@ end
         # songs.each_with_index do |song,i|
         #   song.instance_variable_set :@id, result.entries[i]["id"].to_i
         # end
-
-
-
-
-
-
-
-

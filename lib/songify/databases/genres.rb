@@ -13,7 +13,7 @@ module Songify
         @db.exec(%q[
           CREATE TABLE IF NOT EXISTS genres(
             id serial,
-            genre text)
+            genre text UNIQUE)
           ])
       end
 
@@ -23,17 +23,18 @@ module Songify
       end
 
       def save_a_genre(genre)
-        if !(Songify.genres.get_all_genres.include?(genre))
+        begin
           result = @db.exec(%q[
             INSERT INTO genres (genre)
             VALUES ($1)
             RETURNING id
             ], [genre.genre])
-        else 
-          result = Songify.genres.get_a_genre_by_name(genre.genre)
+          genre.instance_variable_set :@id, result.entries.first["id"].to_i
+          return genre.id
+        rescue  PG::UniqueViolation
+          return Songify.genres.get_a_genre_by_name(genre.genre).id
         end
-        genre.instance_variable_set :@id, result.entries.first["id"].to_i
-        return genre.id
+
       end
 
       def get_a_genre(id)
@@ -44,6 +45,7 @@ module Songify
       end
 
       def get_a_genre_by_name(name)
+        name = name.downcase.capitalize
         result = @db.exec(%q[
           SELECT * FROM genres WHERE genre = $1
           ], [name])
