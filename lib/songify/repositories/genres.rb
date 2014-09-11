@@ -17,10 +17,17 @@ module Songify
         ])
       end
 
-      def get_a_genre(id)
+      def get_a_genre_by_id(id)
         result = @db.exec(%q[
           SELECT * FROM genres WHERE id = $1;
         ], [id])
+        build_genre(result.first)
+      end
+
+      def get_a_genre_by_name(name)
+        result = @db.exec(%q[
+          SELECT * FROM genres WHERE name = $1;
+        ], [name])
         build_genre(result.first)
       end
 
