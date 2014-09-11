@@ -10,7 +10,6 @@ describe Songify::Genre do
 
     expect(genre.title). to eq('death metal')
 
-
   end
 
 end

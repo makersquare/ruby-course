@@ -29,35 +29,35 @@ module Songify
         end
       end
 
-      # def entries
-      #   result = @db.exec(%q[SELECT * FROM songs])
-      #   result = result.entries
-      # end
+      def entries
+        result = @db.exec(%q[SELECT * FROM genres])
+        result = result.entries
+      end
 
       
-      # def get_song(id)
-      #   song = @db.exec(%q[SELECT * FROM songs
-      #     WHERE id = ($1);], [id])
-      #   build_songs(song)[0]
-      # end
+      def get_genre(id)
+        genre = @db.exec(%q[SELECT * FROM genres
+          WHERE id = ($1);], [id])
+        build_genres(genre)[0]
+      end
 
       
-      # def get_all_songs
-      #   build_songs(entries)
-      # end
+      def get_all_genres
+        build_genres(entries)
+      end
 
-      # def save_song(song)
-      #   @db.exec(%q[INSERT INTO songs
-      #     (title, artist, album)
-      #     VALUES ($1,$2,$3);],
-      #     [song.title, song.artist, song.album])
-      # end
+      def save_genre(genre)
+        @db.exec(%q[INSERT INTO genres
+          (title)
+          VALUES ($1);],
+          [genre.title])
+      end
 
     
-      # def delete_song(id)
-      #   @db.exec(%q[DELETE FROM songs
-      #     WHERE id = ($1);], [id])
-      # end
+      def delete_genre(id)
+        @db.exec(%q[DELETE FROM genres
+          WHERE id = ($1);], [id])
+      end
 
 
     end
