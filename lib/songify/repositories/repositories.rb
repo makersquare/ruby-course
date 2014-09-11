@@ -35,6 +35,6 @@ module Songify
           DROP TABLE IF EXISTS genres;
         ])
       end
-
+      
   end
 end

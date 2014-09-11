@@ -168,7 +168,7 @@
                                     <td><%= song.artist %></td>
                                     <td><%= song.album %></td>
                                     <td><%= song.year %></td>
-                                    <td><%= song.genre %></td>
+                                    <td><%= Songify.genres.get_genre(song.genre_id).first["name"] %></td>
                                     <td><%= song.rating %></td>
                                 </tr>
                             <% end %>

@@ -1,7 +1,7 @@
 require_relative '../lib/songify.rb'
 require 'songify'
 
-Songify.songs = Songify::Repositories.adapter = 'songify_test'
+Songify::Repositories.adapter = 'songify_test'
 Songify.songs = Songify::Repositories::Songs.new
 Songify.genres = Songify::Repositories::Genres.new
 

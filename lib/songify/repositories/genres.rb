@@ -38,7 +38,7 @@ module Songify
 
       def delete_genre(id)
         delete = Songify::Repositories.adapter.exec(%q[
-          DELETE FROM genres WHERE id = $1
+          DELETE FROM genres WHERE id = $1;
         ], [id])
       end
 
