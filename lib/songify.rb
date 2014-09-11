@@ -10,9 +10,19 @@ module Songify
     @songs = x
   end
 
+  # Genres Repo Getter Method
+  def self.genres
+    @genres
+  end
+
+  def self.genres=(x)
+    @genres = x
+  end
+
 end
 
 require_relative 'songify/entities/song.rb'
 require_relative 'songify/repositories/songs.rb'
 
 Songify.songs = Songify::Repositories::Songs.new
+Songify.genres = Songify::Repositories::Genres.new

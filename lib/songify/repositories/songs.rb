@@ -4,25 +4,25 @@ module Songify
   module Repositories
     class Songs
 
-      def initialize
-        @db = PG.connect(host: 'localhost', dbname: 'songify')
-        build_table
-      end
+      # def initialize
+      #   @db = PG.connect(host: 'localhost', dbname: 'songify')
+      #   build_table
+      # end
 
       # Builds songs table.
-      def build_table
-        @db.exec(%q[
-          CREATE TABLE IF NOT EXISTS songs(
-            id SERIAL,
-            title TEXT,
-            artist TEXT,
-            album TEXT,
-            year INT,
-            genre TEXT,
-            rating INT
-          );
-        ])
-      end
+      # def build_table
+      #   @db.exec(%q[
+      #     CREATE TABLE IF NOT EXISTS songs(
+      #       id SERIAL,
+      #       title TEXT,
+      #       artist TEXT,
+      #       album TEXT,
+      #       year INT,
+      #       genre TEXT,
+      #       rating INT
+      #     );
+      #   ])
+      # end
 
       # Resets songs table for testing.
       def drop_and_rebuild_table
