@@ -44,4 +44,17 @@ describe Songify::Repositories::Genres do
       expect(genre1.id).to_not be_nil
     end
   end
+
+  describe '#delete_a_genre' do
+    it 'deletes a genre by id' do
+      Songify.genres_repo.save_a_genre(genre1)
+      Songify.genres_repo.save_a_genre(genre2)
+      Songify.genres_repo.save_a_genre(genre3)
+      result = Songify.genres_repo.get_all_genres
+      expect(result.size).to eq(3)
+      Songify.genres_repo.delete_a_genre(genre1.id)
+      result = Songify.genres_repo.get_all_genres
+      expect(result.size).to eq(2)
+    end
+  end
 end

@@ -52,6 +52,12 @@ module Songify
         genre.instance_variable_set("@id", result[0]["id"].to_i)
       end
 
+      def delete_a_genre(id)
+        @db.exec(%q[
+          DELETE FROM genres WHERE id = $1;
+        ], [id])
+      end
+
       def build_genre(genre)
         x = Songify::Genre.new(genre["name"])
         x.instance_variable_set :@id, genre["id"].to_i
