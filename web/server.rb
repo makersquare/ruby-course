@@ -18,11 +18,8 @@ class Songify::Server < Sinatra::Application
   end
 
   post '/create' do
-    # create a new song based on input parameters
     song = Songify::Song.new(params["song-title"],params["song-artist"],params["song-album"],params["song-genre"])
-    # save song & grab the title
     Songify.songs_repo.save_a_song(song)
-    # song.title
     redirect to '/show'
   end
 

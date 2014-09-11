@@ -20,7 +20,6 @@ describe Songify::Server do
       get '/show'
       Songify.songs_repo.save_a_song Songify::Song.new("Fake Title One", "Fake Artist One", "Fake Album One", "Fake Genre One")
       Songify.songs_repo.save_a_song Songify::Song.new("Fake Title Two", "Fake Artist Two", "Fake Album Two", "Fake Genre Two")
-
       expect(last_response.body).to include "Fake Title One", "Fake Artist Two"
     end
   end
@@ -31,19 +30,17 @@ describe Songify::Server do
       get '/new'
       # binding.pry
       # "hello"
-      expect(last_response.body).to include "<form action=\"/users\" method=\"post\">"
-
+      expect(last_response.body).to include "form"
     end
   end
 
   describe "POST /create" do
     #returns the new song after submitted
     it "shows the newly created song" do
-      post '/create', { "song_title" => "Fake Title", "song_artist" => "Fake Artist", "song_album" => "Fake Album", "song_genre" => "Fake Genre" }
-      expect(last_response).to be_ok
-      song = Songify.songs_repo.show_all_songs.last
-
-      expect(last_response.body).to eq(song.title)
+      post '/create', { "song-title" => "Fake Title", "song-artist" => "Fake Artist", "song-album" => "Fake Album", "song-genre" => "Fake Genre" }
+      expect(last_response.status).to eq 302
+      song = Songify.songs_repo.show_all_songs
+      expect(song.last.title).to eq "Fake Title"
     end
   end
 end
