@@ -64,6 +64,7 @@ let(:test_song2) {Songify::Song.new(title: "Goin' Out West",artist: "Tom Waits",
     expect(test_answer2.count).to eq(2)
     test_answer3 = Songify.songs.get_all_songs_by(album:"Armed Forces")
     expect(test_answer3.count).to eq(1)
+    expect(test_answer3.first.artist).to eq("Elvis Costello")
   end
 
 end

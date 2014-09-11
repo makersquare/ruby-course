@@ -1,0 +1,32 @@
+What would you like to see? An artist, an album, an id?
+
+<form action='/show_some' method='post'>
+<div>
+<div>	<label for='query_parameter'>Query parameter:</label> </div>
+<div>	<input type='text' name='query_parameter'> </div>
+</div>
+
+<div>	
+<div>	<label for='search_term'>Search term</label> </div>
+<div>	<input type='text' name='search_term'></div>
+</div>
+<div><input type='submit' name='FLIP'></div>
+</form> 
+
+<% if defined?(song_list) %>
+
+	<% song_list.each do |song| %>
+	<ul>
+    <ul>
+    	<li>Title: <%= song.title %> </li>
+    	<li>Artist: <%= song.artist %> </li>
+    	<li>Album: <%= song.album %> </li>
+    	<li>Year: <%= song.year_published %> </li>
+    	<li>Rating: <%= song.rating %> </li>
+		</ul>
+	</ul>
+ <% end %>
+
+<% end %>
+
+You are viewing layout : show_some.

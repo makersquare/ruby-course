@@ -65,6 +65,10 @@ module Songify
         build_song(result.entries).first
       end
 
+      def delete_all
+        @db.exec("DELETE FROM songs")
+      end
+
       def build_song(entries)
         entries.map do |song_hash|
           x = Songify::Song.new(
