@@ -5,7 +5,6 @@ require "sinatra"
 set :bind, '0.0.0.0'
 
 class Songify::Server < Sinatra::Application
-Songify.songs_repo = Songify::Repo::Songs.new("songify_dev")
 
   get "/" do 
     erb :index
@@ -31,8 +30,8 @@ Songify.songs_repo = Songify::Repo::Songs.new("songify_dev")
   # get "/create" do
   # end
  
-run! if __FILE__ == $0
-  end
+  run! if __FILE__ == $0
+end
 
 ##Questions: should songs be showing up?
 ##Why won't it redirect
