@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Books By Title</title>
+</head>
+  <body>
+    <ol>
+      <% @songs.each do |song| %>
+        <li><%= song[title], song[album], song[artist] %></li>
+      <% end %>
+    </ol>	
+  </body>
+</html>
