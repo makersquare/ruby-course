@@ -5,7 +5,7 @@ module Songify
   module Repositories
     class Songs
 
-      def initialize(dbname='songify_dev')
+      def initialize(dbname)
         @db = PG.connect(host: 'localhost', dbname: dbname)
         build_table
       end

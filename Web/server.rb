@@ -14,14 +14,14 @@ class Songify::Server < Sinatra::Application
   end
 
   get '/new' do 
-    song = Songify::Song.new(params["title"],params["artist"],params["album"])
-    Songify.songs_repo(song)
     erb :new
   end
 
-  # post '/create' do 
-  #   erb :create
-  # end
+  post '/create' do 
+    song = Songify::Song.new(params["title"],params["artist"],params["album"])
+    Songify.songs_repo.save_a_song(song)
+    redirect to '/show'
+  end
   run! if __FILE__ == $0
 end
 
