@@ -3,9 +3,6 @@ require 'server_spec_helper'
 
 describe Songify::Server do
 
-let(:test_song1) {Songify::Song.new(title: "Radio Radio",artist: "Elvis Costello",album: "This Year's Model",year_published: 1978)}
-let(:test_song2) {Songify::Song.new(title: "Goin' Out West",artist: "Tom Waits",album: "Bone Machine",year_published: 1992)}
-
   def app
     Songify::Server.new
   end
@@ -47,7 +44,7 @@ let(:test_song2) {Songify::Song.new(title: "Goin' Out West",artist: "Tom Waits",
 
   describe "POST /create" do
     it "saves the song" do
-      get '/create'
+      post '/create', {'song_title' => "Radio Radio", 'song_artist' => "Elvis Costello", 'song_album' => "This Year's Model", 'song_yearpublished' => "1978", 'song_rating' => "5" }
       expect(last_response).to be_ok
     end
   end
