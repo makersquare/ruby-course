@@ -24,14 +24,14 @@ module Songify
 			end
 
 			def build_genre(data)
-				x = Songify::Genre.new(data['name'], data['id'])
+				x = Songify::Genre.new(data['name'])
 				x.instance_variable_set :@id, data['id'].to_i
 				x
 			end
 
 			def get_a_genre(genre_id)
 				result = @db.exec("SELECT * FROM genres WHERE id=$1", [genre_id])
-				build_song(result.first)
+				build_genre(result.first)
 			end
 
 			def get_all_genres
