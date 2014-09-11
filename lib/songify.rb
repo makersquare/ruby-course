@@ -10,5 +10,6 @@ end
 
 require_relative 'songify/entities/song.rb'
 require_relative 'songify/repositories/songs.rb'
+require_relative 'songify/entities/genre.rb'
 
 Songify.songs_repo = Songify::Repositories::Songs.new
