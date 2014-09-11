@@ -5,7 +5,7 @@ module Songify
     class Song_Repo
 
       def initialize
-        @db = PG.connect(host: 'localhost', dbname: 'songs')
+        @db = PG.connect(host: 'localhost', dbname: 'songify')
         build_table
       end
 

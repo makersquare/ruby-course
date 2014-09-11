@@ -6,6 +6,11 @@ require_relative './server_spec_helper.rb'
 
 describe Songify::Server do 
 
+  after (:all) do
+    Songify.song_repo.drop_table
+    Songify.genre_repo.drop_table
+  end
+
   def app
     Songify::Server.new
   end
@@ -19,6 +24,7 @@ describe Songify::Server do
       expect(last_response).to be_ok
       expect(last_response.body).to include "Show", "new"
     end
+
 
   end
 
@@ -59,6 +65,7 @@ describe Songify::Server do
 
     end
 
+    
 
   end
 
@@ -89,6 +96,7 @@ describe Songify::Server do
         expect(last_response.status).to eq(302)
         expect(Songify.genre_repo.get_all_genres.size).to eq (size)
     end
+
 
   end
 
