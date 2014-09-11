@@ -54,6 +54,4 @@ describe Songify::Repositories::Songs do
     expect(Songify.song_repo.get_all_songs.entries.count).to eq(5)
   end
 
-
-
 end
