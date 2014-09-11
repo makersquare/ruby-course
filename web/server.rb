@@ -1,5 +1,6 @@
 require_relative '../lib/songify.rb'
 require 'sinatra/base'
+require 'pry-byebug'
 
 class Songify::Server < Sinatra::Application
 
@@ -19,9 +20,13 @@ class Songify::Server < Sinatra::Application
   end
 
   post '/create' do
-    song = Songify::Song.new(params["title"], params["artist"], params["album"], params["genre"], params["length"])
-    Songify.songs_repo.save_song(song)
-    erb :create
+    if [params["title"], params["artist"], params["album"], params["genre"], params["length"]].any? {|x| x == nil}
+      erb :error
+    else
+      song = Songify::Song.new(params["title"], params["artist"], params["album"], params["genre"], params["length"])
+      Songify.songs_repo.save_song(song)
+      erb :create
+    end
   end
 
   run! if __FILE__ == $0
@@ -33,3 +38,4 @@ end
 #   <%= song.album %>
 #   <%= song.genre %>
 #   <%= song.length %>
+

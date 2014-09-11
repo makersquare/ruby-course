@@ -4,9 +4,13 @@
 </head>
 <body>
 	<h1>Show Songs</h1>
-	<% @songs.each do |song| %>
-		<%= song.title + ", " + song.artist + ", " + song.album + ", " + song.genre + ", " +song.length %>
-		<br>
+	<% if @songs.empty? %>
+		<%= "Songs database is empty." %>
+	<%else%>
+		<% @songs.each do |song| %>
+			<%= "#{song.id}. #{song.title}, #{song.artist}, #{song.album}, #{song.genre}, #{song.length}"  %>
+			<br>
+		<% end %>
 	<% end %>
 	<br>
 	<a href="/index">Return to index</a>

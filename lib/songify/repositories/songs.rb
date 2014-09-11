@@ -4,8 +4,8 @@ module Songify
   module Repos
     class Songs
 
-      def initialize
-        @db = PG.connect(host: 'localhost', dbname: 'songify')
+      def initialize(db_name='songify_dev')
+        @db = PG.connect(host: 'localhost', dbname: db_name)
         build_table
       end
 
@@ -25,6 +25,10 @@ module Songify
       def drop_table
         @db.exec("DROP TABLE IF EXISTS songs")
         build_table
+      end
+
+      def delete_all
+        @db.exec("DELETE FROM songs")
       end
 
       def get_song(song_id)
