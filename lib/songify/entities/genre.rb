@@ -1,9 +1,9 @@
 module Songify
   class Genre
-    attr_reader :genre, :id
+    attr_reader :name, :id
 
     def initialize(genre)
-      @genre = genre
+      @name = name
       @id = nil
     end
   end
