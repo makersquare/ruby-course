@@ -1,10 +1,11 @@
 require 'pg'
+require 'pry-byebug'
 
 module Songify
   module Repositories
     class Songs
 
-      def initialize(dbname)
+      def initialize(dbname='songify_dev')
         @db = PG.connect(host: 'localhost', dbname: dbname)
         build_table
       end
@@ -35,7 +36,7 @@ module Songify
       def build_a_song(entries)
         #would have been better to not use loop?
         entries.map do |song|
-          x = Songify::Song.new(song["title"],["artist"],["album"])
+          x = Songify::Song.new(song["title"],song["artist"],song["album"])
           x.instance_variable_set :@id, song["id"].to_i
           x
         end
@@ -51,7 +52,7 @@ module Songify
         #this way we don't have to do this in the build song
         #method
       end
-      
+
       def save_a_song(*song)
         song.each do |song|
          result = @db.exec(%q[
