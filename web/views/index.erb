@@ -1,0 +1,7 @@
+<ul>SONGS
+	<% songs.each do |song| %>
+		<li>
+			<%= "#{song.id} #{song.title} #{song.artist} #{song.album}" %>
+		</li>
+	<% end %>
+</ul>
