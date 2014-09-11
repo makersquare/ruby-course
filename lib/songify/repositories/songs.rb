@@ -13,6 +13,7 @@ module Songify
       def build_song(entry)
         song = Songify::Song.new(entry["artist"],entry["title"],entry["album"],entry["length"].to_i,entry["genre_id"])
         song.instance_variable_set :@id, entry["id"].to_i
+        song.instance_variable_set :@genre_id, entry["genre_id"].to_i
         song
       end
 

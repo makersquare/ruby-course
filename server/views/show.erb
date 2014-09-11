@@ -9,16 +9,15 @@
 				<th>GENRE</TH>
 			</tr>
 
-
 		<% all.each do |x| %>
 			<tr>
 				<td><%= x.artist %></td>
 				<td><%= x.title %></td>
 				<td><%= x.album %></td>
 				<td><%= x.length %></td>
-				<td><%= genres[1].genre %></td>
-				<td><%= Songify.genre_repo.get_a_genre(x.genre_id.to_i).class %></td>
-				<td><%= p Songify.genre_repo.get_a_genre(x.genre_id.to_i) %></td>
+				<% if !x.genre_id.nil? && x.genre_id != 0 %>
+				<td><%= Songify.genre_repo.get_a_genre(x.genre_id.to_i).genre %></td>
+				<% end %>
 			</tr>	
 		<% end %>
 	</table>
@@ -28,8 +27,6 @@
 				<th>GENRE</TH>
 				<th>ID</TH>
 			</tr>
-
-
 		<% genres.each do |x| %>
 			<tr>
 				<td><%= x.genre %></td>
@@ -40,6 +37,3 @@
 
 
 </ul>
-<p> <% genres.each do |g| %>
-	<%= g.genre %>
-	<% end %>
