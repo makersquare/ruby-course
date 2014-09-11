@@ -1,9 +1,9 @@
 require_relative '../lib/songify.rb'
 require 'sinatra/base'
 
-set :bind, '0.0.0.0'
-
 class Songify::Server < Sinatra::Application
+  set :bind, '0.0.0.0'
+
   get '/' do
     erb :index
   end
@@ -19,11 +19,12 @@ class Songify::Server < Sinatra::Application
 
   post '/create' do
     # create a new song based on input parameters
-    song = Songify::Song.new(params["song_title"],params["song_artist"],params["song_album"],params["song_genre"])
+    song = Songify::Song.new(params["song-title"],params["song-artist"],params["song-album"],params["song-genre"])
     # save song & grab the title
     Songify.songs_repo.save_a_song(song)
-    song.title
+    # song.title
+    redirect to '/show'
   end
 
-  run! IF __FILE__ == $0
+  run! if __FILE__ == $0
 end
