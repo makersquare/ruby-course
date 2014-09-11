@@ -13,18 +13,18 @@ module Songify
 
     def self.build_tables
       @db.exec(%q[
+          CREATE TABLE IF NOT EXISTS genres(
+                id SERIAL UNIQUE,
+                name TEXT
+          );
           CREATE TABLE IF NOT EXISTS songs(
-            id SERIAL,
+            id SERIAL UNIQUE,
             title TEXT,
             artist TEXT,
             album TEXT,
             year INT,
-            genre_id INT,
+            genre_id INT REFERENCES genres (id),
             rating INT
-          );
-          CREATE TABLE IF NOT EXISTS genres(
-                id SERIAL,
-                name TEXT
           );
         ])
     end

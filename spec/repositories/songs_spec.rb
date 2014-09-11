@@ -9,8 +9,6 @@ describe Songify::Repositories::Songs do
 
   it "Methods: save_song and get_all_songs. Saves a song. Then returns all songs." do
 
-    # songs.drop_and_rebuild_table
-
     expect(song.id).to be_nil
 
     songs.save_song(song)
@@ -29,8 +27,6 @@ describe Songify::Repositories::Songs do
 
   it "Returns the song that was requested by id" do
 
-    # songs.drop_and_rebuild_table
-
     songs.save_song(song)
     songs.save_song(song2)
 
@@ -46,8 +42,6 @@ describe Songify::Repositories::Songs do
 
   it "Saves multiple song objects at once" do
 
-    # songs.drop_and_rebuild_table
-
     songs.save_multiple_songs(song, song2, song3, song4)
 
     song_list = songs.get_all_songs
@@ -56,8 +50,6 @@ describe Songify::Repositories::Songs do
   end
 
   it "Deletes a song from the database" do
-
-    # songs.drop_and_rebuild_table
 
     songs.save_song(song)
     songs.save_song(song2)
@@ -74,8 +66,6 @@ describe Songify::Repositories::Songs do
 
     song_list = songs.get_all_songs
     expect(song_list.length).to eq(0)
-
-    # songs.drop_and_rebuild_table
 
   end
 end

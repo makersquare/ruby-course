@@ -4,34 +4,6 @@ module Songify
   module Repositories
     class Songs
 
-      # def initialize
-      #   Songify::Repositories.adapter = PG.connect(host: 'localhost', dbname: 'songify')
-      #   build_table
-      # end
-
-      # Builds songs table.
-      # def build_table
-      #   Songify::Repositories.adapter.exec(%q[
-      #     CREATE TABLE IF NOT EXISTS songs(
-      #       id SERIAL,
-      #       title TEXT,
-      #       artist TEXT,
-      #       album TEXT,
-      #       year INT,
-      #       genre TEXT,
-      #       rating INT
-      #     );
-      #   ])
-      # end
-
-      # Resets songs table for testing.
-      # def drop_and_rebuild_table
-      #   Songify::Repositories.adapter.exec(%q[
-      #     DROP TABLE IF EXISTS songs;
-      #   ])
-      #   build_table
-      # end
-
       # Helper method. Builds song entry.
       def build_song(entry)
         x = Songify::Song.new(
@@ -61,7 +33,6 @@ module Songify
         delete = Songify::Repositories.adapter.exec(%q[
           DELETE FROM songs WHERE id = $1;
         ], [id])
-        # build_song(delete)
       end
 
       # Parameter should be song ID.
@@ -69,7 +40,6 @@ module Songify
         get_1 = Songify::Repositories.adapter.exec(%q[
           SELECT * FROM songs WHERE id = $1;
         ], [id])
-        # build_song(get_1.entries)
       end
 
       # Attribute argument must be a symbol.
@@ -100,7 +70,7 @@ module Songify
             SELECT * FROM songs WHERE rating = $1;
           ], [keyword])
         end
-        build_song(song)
+        # build_song(song)
       end
 
       # No parameter needed.

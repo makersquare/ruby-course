@@ -4,31 +4,9 @@ module Songify
   module Repositories
     class Genres
 
-      # def initialize
-      #   @db = PG.connect(host: 'localhost', db: 'genres')
-      #   build_table
-      # end
-
-      # Builds genres table.
-      # def build_table
-      #   @db.exec(%q[
-      #     CREATE TABLE IF NOT EXISTS genres(
-      #       id SERIAL,
-      #       name TEXT
-      #     )
-      #   ])
-      # end
-
-      # Build for testing.
-      # def drop_and_rebuild_table
-      #   @db.exec(%q[
-      #     DROP TABLE IF EXISTS genres;
-      #   ])
-      # end
-
       # Builds genre entry. Helper Method.
       def build_genre(entry)
-        x = Songify::Song.new(
+        x = Songify::Genre.new(
           entry["name"]
         )
         x.instance_variable_set :@id, entry["id"].to_i
@@ -36,18 +14,32 @@ module Songify
       end
 
       def add_genre(genre)
-        save = @db.exec(%q[
+        save = Songify::Repositories.adapter.exec(%q[
           INSERT INTO genres (name)
           VALUES ($1)
           RETURNING id;
-        ], [genre.id])
+        ], [genre.name])
         genre.instance_variable_set :@id, save.entries.first["id"].to_i
       end
 
-      def delete_genre(genre)
-        delete = @db.exec(%q[
-          D
+      def get_genre(id)
+        get = Songify::Repositories.adapter.exec(%q[
+          SELECT * FROM genres WHERE id = $1;
+        ], [id])
+        # build_genre(get)
+      end
+
+      def get_all_genres
+        all = Songify::Repositories.adapter.exec(%q[
+          SELECT * FROM genres;
         ])
+        all.map { |genre| build_genre(genre) }
+      end
+
+      def delete_genre(id)
+        delete = Songify::Repositories.adapter.exec(%q[
+          DELETE FROM genres WHERE id = $1
+        ], [id])
       end
 
     end
