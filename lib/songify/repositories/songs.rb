@@ -2,8 +2,9 @@ require 'pg'
 module Songify
   module Repositories
     class Songs
-      def initialize 
-        @db = PG.connect(host: 'localhost', dbname: 'songify')
+      
+      def initialize(db_name) 
+        @db = PG.connect(host: 'localhost', dbname: db_name)
         build_table
       end
       # songid
