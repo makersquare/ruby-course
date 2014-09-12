@@ -14,7 +14,8 @@ module Songify
 						id serial,
 						title text,
 						artist text,
-						album text
+						album text,
+						genre integer REFERENCES genres (id)
 					)
 				])
 			end
