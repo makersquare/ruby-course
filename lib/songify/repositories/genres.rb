@@ -30,13 +30,11 @@ module Songify
 				end
 			end
 
-			# parameter could be song id
-		# 	def get_a_genre(id)
-		# 		result = @db.exec(%q[
-		# 			SELECT * FROM genres WHERE id = $1
-		# 		], [id])
-		# 		build_genres(result.entries).first
-		# 	end
+			def get_a_genre(id)
+				result = @db.exec(%q[
+					SELECT * FROM genres WHERE id = $1], [id])
+					build_genres(result.entries).first
+			end
 
 		# 	# no parameters needed
 			def get_all_genres
@@ -56,14 +54,6 @@ module Songify
 				)
 				genre.instance_variable_set :@id, result.entries.first['id'].to_i
 			end
-
-		# 	# paramter could be a song id
-		# 	def delete_a_song(id)
-		# 		@db.exec(%q[
-		# 			DELETE FROM songs
-		# 			WHERE id = $1],
-		# 		[id])
-		# 	end
 		end
 	end
 end

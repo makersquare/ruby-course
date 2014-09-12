@@ -37,17 +37,27 @@ describe Songify::Server do
 			Songify.songs_repo.drop_table
 			get '/new'
 			expect(last_response).to be_ok
-			expect(last_response.body).to include "submit"
+			expect(last_response.body).to include 'submit'
 		end
 	end
 
 	describe 'post /create' do
 		it "creates a song and puts into the table" do
 			Songify.songs_repo.drop_table
+			Songify.genres_repo.drop_table
 			post '/create', {'title'=>'fake_title', 'artist'=>'fake_artist', 'album'=>'fake_album'}
 			expect(last_response.status).to eq(302)
 			result = Songify.songs_repo.get_all_songs
 			expect(result.last.title).to eq('fake_title')
+		end
+	end
+
+	describe 'get/new_genre' do
+		it "shows a form and takes input" do
+			Songify.genres_repo.drop_table
+			get '/new_genre'
+			expect(last_response).to be_ok
+			expect(last_response.body).to include form
 		end
 	end
 end

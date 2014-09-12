@@ -21,14 +21,13 @@ describe Songify::Repositories::Songs  do
 		expect(result.size).to eq(2)
 	end
 
-	# it "gets a song from the table by its id" do
-	# 	drop
-	# 	song = Songify::Song.new('fake_title', 'fake_artist', 'fake_album')
-	# 	Songify.songs_repo.save_a_song(song)
-	# 	result = Songify.songs_repo.get_a_song(song.id)
-	# 	expect(result).to be_a(Songify::Song)
-	# 	expect(result.id).to eq(song.id)
-	# end
+	it "gets a genre from the table by its id" do
+		drop
+		Songify.genres_repo.save_a_genre(genre)
+		result = Songify.genres_repo.get_a_genre(genre.id)
+		expect(result).to be_a(Songify::Genre)
+		expect(result.id).to eq(genre.id)
+	end
 
 	# it "deletes a song from the table" do 
 	# 	drop
