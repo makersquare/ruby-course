@@ -4,37 +4,50 @@ module Songify
   module Repos
     class Genres
 
-      def initialize
-        @db = PG.connect(host:'localhost',dbname: 'songify')
+      def initialize(db_name)
+        @db = PG.connect(host:'localhost',dbname: db_name)
         build_table
       end
 
       def build_table
         @db.exec(%q[
           CREATE TABLE IF NOT EXISTS genres(
-            id serial,
-            genre text UNIQUE)
+            id serial UNIQUE,
+            genre text
+            )
           ])
       end
 
       def drop_table
-        @db.exec(%q[DROP TABLE genres])
+        @db.exec(%q[DROP TABLE genres CASCADE])
         build_table
       end
 
       def save_a_genre(genre)
-        begin
+        genre_list = self.get_all_genres.map {|gen_obj| gen_obj.genre }
+        if !(genre_list.include?(genre.genre))
           result = @db.exec(%q[
             INSERT INTO genres (genre)
             VALUES ($1)
             RETURNING id
             ], [genre.genre])
           genre.instance_variable_set :@id, result.entries.first["id"].to_i
-          return genre.id
-        rescue  PG::UniqueViolation
-          return Songify.genres.get_a_genre_by_name(genre.genre).id
+          result = result.first['id'].to_i
+        else 
+          result = self.get_a_genre_by_name(genre.genre).id
         end
-
+        return result
+        # begin
+        #   result = @db.exec(%q[
+        #     INSERT INTO genres (genre)
+        #     VALUES ($1)
+        #     RETURNING id
+        #     ], [genre.genre])
+        #   genre.instance_variable_set :@id, result.entries.first["id"].to_i
+        #   return genre.id
+        # rescue  PG::UniqueViolation
+        #   return Songify.genres.get_a_genre_by_name(genre.genre).id
+        # end
       end
 
       def get_a_genre(id)

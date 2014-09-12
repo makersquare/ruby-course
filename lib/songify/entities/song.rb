@@ -8,9 +8,9 @@ module Songify
       @artist = artist
       @album = album
       @year_published = year_published
-      @rating = nil
+      @rating = rating
       @id = nil
-      @genre = nil
+      @genre = genre
     end
 
     def correct_info(type, correction)      
@@ -26,6 +26,8 @@ module Songify
         @year_published = correction
       when "rating"
         @rating = correction
+      when "genre"
+        @genre = correction
       end
     end
 
@@ -35,3 +37,4 @@ module Songify
 
   end
 end
+

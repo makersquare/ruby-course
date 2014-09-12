@@ -6,6 +6,7 @@
     	<li>Artist: <%= song.artist %> </li>
     	<li>Album: <%= song.album %> </li>
     	<li>Year: <%= song.year_published %> </li>
+    	<li>Genre: <%= Songify.genres.get_a_genre_by_name(song.genre).genre %> </li>
     	<li>Rating: <%= song.rating %> </li>
 		</ul>
 	</ul>

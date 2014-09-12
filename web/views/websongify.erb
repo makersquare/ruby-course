@@ -19,6 +19,18 @@
 <div>	<input type='text' name ='song_yearpublished'> </div>
 </div>
 
+<div>	
+	<label>Genre</label>
+		<div><input type="text" name="new_genre" value="" /></div>
+		<div><select name="old_genre">
+			<option  value=""></option>
+		<% genre_list.each do |genre| %>
+			<option value= <% "#{genre.genre}" %> > 
+			<%="#{genre.genre}" %> </option>
+		<% end %>
+		</select></div>
+</div>
+
 <div>
 <div>	<label for='song_rating'>Rating</label> </div>
 <div>	<input type='text' name ='song_rating'> </div>

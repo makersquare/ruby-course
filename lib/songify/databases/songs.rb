@@ -4,8 +4,8 @@ module Songify
   module Repos
     class Songs
 
-      def initialize
-        @db = PG.connect(host:'localhost',dbname: 'songify')
+      def initialize(db_name)
+        @db = PG.connect(host:'localhost',dbname: db_name)
         build_table
       end
 
@@ -29,7 +29,9 @@ module Songify
       end
 
       def save_a_song(song)
-        genre_id = Songify.genres.save_a_genre(Songify::Genre.new(song.genre))
+        # genre_id = Songify.genres.save_a_genre(Songify::Genre.new(genre:song.genre))
+        
+        genre_id = Songify.genres.get_a_genre_by_name(song.genre).id
 
         result = @db.exec(%q[
           INSERT INTO songs (title,artist,album,year_published,rating,genre_id)
