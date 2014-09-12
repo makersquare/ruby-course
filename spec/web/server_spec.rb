@@ -15,8 +15,8 @@ describe Songify::Server do
 
   describe "GET /show" do
     it "displays all songs in database in its own page"  do
-      song1 = Songify::Song.new("song_title1", "Artist Name", "Album Title")
-      song2 = Songify::Song.new("song_title2", "Some Artist", "Horrible Album")
+      song1 = Songify::Song.new("song_title1", "Artist Name", "Album Title", 1)
+      song2 = Songify::Song.new("song_title2", "Some Artist", "Horrible Album", 1)
       Songify.songs_repo.save_a_song(song1)
       Songify.songs_repo.save_a_song(song2)
       get '/show'
@@ -34,12 +34,30 @@ describe Songify::Server do
 
   describe "POST /create" do
     it "creates a new song to add to database" do
-      post '/create', { "title" => "song_title3", "artist" => "some_artist", "album" => "some_album" }
+      genre = Songify::Genre.new("fake_genre")
+      post '/create', { "title" => "song_title3", "artist" => "some_artist", "album" => "some_album", "genre" => "fake_genre"}
       expect(last_response.redirect?).to be_true
       follow_redirect!
       last_song = Songify.songs_repo.get_all_songs.last
+      expect(last_song.genre_id).to eq(1)
       expect(last_response.body).to include(last_song.title)
+    end
+
+    it "creates a new song when the given genre does not yet exist" do
+      post '/create', {"title" => "song_title4", "artist" => "some_other_artist", "album" => "another_album", "genre" => "mindless screaming"}
+      result = Songify.genres_repo.has_genre?('mindless screaming')
+      expect(result).to be(false)
+      expect(last_response.redirect?).to be_true
+      follow_redirect!
+      last_song1 = Songify.songs_repo.get_all_songs.last
+      expect(last_song1.genre_id).to eq(1)
+      expect(last_response.body).to include(last_song1.title)
     end
   end
 
+  Songify.songs_repo.drop_table
+  Songify.genres_repo.drop_table
+
+  Songify.songs_repo =Songify::Repositories::Songs.new
+  Songify.songs_repo = Songify::Repositories::Genres.new
 end

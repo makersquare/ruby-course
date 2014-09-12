@@ -2,11 +2,15 @@ require_relative '../spec_helper.rb'
 require 'pry-byebug'
 
 describe Songify::Repositories::Songs do
-  let(:song) { Songify::Song.new('fake_title', 'fake_artist', 'fake_album') }
+  let(:song) { Songify::Song.new('fake_title', 'fake_artist', 'fake_album', 1) }
+  let(:genre) { Songify::Genre.new('fake_genre') }
   
   it "adds a song to the database" do
+
     Songify.songs_repo.drop_table
+    Songify.genres_repo.drop_table
     expect(song.id).to be_nil
+    Songify.genres_repo.save_a_genre(genre)
     Songify.songs_repo.save_a_song(song)
     result = Songify.songs_repo.get_all_songs
     expect(result.size).to be(1)

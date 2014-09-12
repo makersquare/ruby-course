@@ -49,3 +49,8 @@ body {
 	background-color: #008f43;
 }
 
+select>option {
+	color: #A9A9A9;
+	font-family: serif;
+
+}

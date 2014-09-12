@@ -5,18 +5,18 @@ module Songify
     class Songs
 
       def initialize
-        @db = PG.connect(host:'localhost', dbname:'songify')
+        @db = PG.connect(host:'localhost', dbname: 'songify')
         build_table
       end
 
       def build_table
         @db.exec(%q[
             CREATE TABLE IF NOT EXISTS songs(
-              id serial,
+              id serial PRIMARY KEY,
               title text,
               artist text,
-              album text
-              )
+              album text,
+              genre_id integer REFERENCES genres (id))
           ])
       end
 
@@ -34,15 +34,16 @@ module Songify
       # end
 
       def build_song(data)
-        x = Songify::Song.new(data['title'], data['artist'], data['album'])
+        x = Songify::Song.new(data['title'], data['artist'], data['album'], data['genre_id'])
         x.instance_variable_set :@id, data['id'].to_i
+        x.instance_variable_set :@genre_id, data['genre_id'].to_i
         x
       end
 
 
       # parameter could be song id
       def get_a_song(song_id)
-        result = @db.exec("SELECT * FROM songs WHERE id=($1)", [song_id])
+        result = @db.exec("SELECT * FROM songs WHERE id=$1", [song_id])
         build_song(result.first)
       end
 
@@ -54,19 +55,23 @@ module Songify
       end
 
       # paramter should be song object
-      def save_a_song(*song)
-        song.each do |song|
+      def save_a_song(song)
+
           result = @db.exec(%q[
-            INSERT INTO songs(title, artist, album)
-            VALUES ($1, $2, $3)
-          ], [song.title, song.artist, song.album])
-        end
+            INSERT INTO songs(title, artist, album, genre_id)
+            VALUES ($1, $2, $3, $4)
+          ], [song.title, song.artist, song.album, song.genre_id])
 
       end
 
       # parameter could be song id
       def delete_a_song(song_id)
         @db.exec("DELETE FROM songs WHERE id=($1)", [song_id])
+      end
+
+      def has_genre?(genre)
+        result = @db.exec("SELECT * FROM genres WHERE name = $1", [genre])
+        result.size == 1
       end
 
     end
