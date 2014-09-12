@@ -28,7 +28,6 @@ describe Songify::Repositories::Songs do
   describe '#get_all_songs' do
     it 'returns all songs from the table' do
       Songify.genres_repo.save_a_genre(@genre)
-      binding.pry
       Songify.songs_repo.save_a_song(@song)
       Songify.songs_repo.save_a_song(@song2)
       Songify.songs_repo.save_a_song(@song3)

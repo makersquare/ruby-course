@@ -29,7 +29,11 @@ module Songify
         result = @db.exec(%q[
           SELECT * FROM genres WHERE name = $1;
         ], [name])
-        build_genre(result.first)
+        if result.entries.size > 0
+          build_genre(result.first)
+        else
+          nil
+        end
       end
 
       def get_all_genres

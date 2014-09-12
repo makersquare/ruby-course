@@ -10,6 +10,5 @@ Songify.songs_repo = Songify::Repositories::Songs.new('songify_test')
 RSpec.configure do |config|
   config.before(:each) do
     Songify.genres_repo.truncate_table
-    Songify.songs_repo.build_table
   end
 end

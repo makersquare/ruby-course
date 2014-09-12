@@ -6,6 +6,14 @@
   <input id="artist-input" type="text" name="artist">
   <label for="album-input">Album:</label>
   <input id="album-input" type="text" name="album">
+  <% if @genres.size > 0 %>
+    <label for="genre-selector">Select a genre:</label>
+    <select id="genre-selector" name="genre-drop">
+      <% @genres.each do |genre| %>
+      <option value=<%="#{genre.name}"%>><%="#{genre.name}"%></option>
+      <% end %>
+    </select>
+  <% end %>
   <label for="genre-input">Genre:</label>
   <input id="genre-input" type="text" name="genre">
   <input type="submit">

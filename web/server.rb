@@ -17,8 +17,21 @@ class Songify::Server < Sinatra::Application
   end
 
   post '/create' do
-    genre = Songify::Genre.new(params["genre"])
-    Songify.genres_repo.save_a_genre(genre)
+    # in this case the user wants to select from dropdown
+    if params["genre"].strip == ""
+      genre = Songify.genres_repo.get_a_genre_by_name(params["genre-drop"])
+      if genre.nil?
+        genre = Songify::Genre.new(params["genre-drop"])
+        Songify.genres_repo.save_a_genre(genre)
+      end
+    # user entered something in the text box
+    else
+      genre = Songify.genres_repo.get_a_genre_by_name(params["genre"].strip)
+      if genre.nil?
+        genre = Songify::Genre.new(params["genre"].strip)
+        Songify.genres_repo.save_a_genre(genre)
+      end
+    end
     song = Songify::Song.new(params["title"], params["artist"], params["album"], genre.id)
     Songify.songs_repo.save_a_song(song)
     redirect '/'
