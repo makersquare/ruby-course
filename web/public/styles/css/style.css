@@ -1,0 +1,24 @@
+html,
+body {
+	height: 100%;
+	background-color: #000;
+	font-family: sans-serif;
+}
+
+
+.container {
+	margin-left: auto;
+	margin-right: auto;
+	width: 500px;
+	background-color: #5fcf80; 
+	moz-border-radius: 20px 20px 20px 20px;
+	webkit-border-radius: 20px 20px 20px 20px;
+}
+
+.form {
+	margin-left: auto;
+	margin-right: auto;
+	width: 455px;
+	margin: 10px 40px 10px 40px;
+	background-color: #5fcf80;
+}
