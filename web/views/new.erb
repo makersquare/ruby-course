@@ -22,4 +22,17 @@
 	</form>
 </div>
 
-
+<div class="playlist-box">
+	<div class="table">
+	<table>
+	<% @songs.each do |x| %>
+		<tr>
+			<td class="songid"><%= x.id %></td>
+			<td class="songtitle"><%= x.title %></td>
+			<td class="artist"><%= x.artist %></td>
+			<td class="genre"><%= x.genre_id %></td>
+		</tr>
+	<% end %>
+	</table>
+	</div>
+</div>

@@ -1,9 +1,11 @@
 require_relative '../lib/songify.rb'
 require 'sinatra/base'
+require 'pry-byebug'
 
 class Songify::Server < Sinatra::Application
 
   get '/' do
+
     erb :index
   end
 
@@ -20,7 +22,7 @@ class Songify::Server < Sinatra::Application
   end
 
   get '/new' do
-    @allGenres = Songify.genres_repo.get_all_genres
+    @songs = Songify.songs_repo.get_all_songs
     erb :new
   end
 
@@ -40,20 +42,22 @@ class Songify::Server < Sinatra::Application
 # Song object is added to the songs table, the song's title is returned, and the user
 # is redirected to the /show page.
   post '/create' do
-    test = Songify.genres_repo.get_genre_id(params["genre"])
+    genrename = params["genre"]
+    # binding.pry
+    test = Songify.genres_repo.has_genre?(genrename)
     if test
-      # genre_id = Songify.genres_repo.get_genre_id(params["genre"])
-      song = Songify::Song.new(params["title"], params["artist"], params["album"], test)
+      genre_id = Songify.genres_repo.get_genre_id(params["genre"])
+      song = Songify::Song.new(params["title"], params["artist"], params["album"], genre_id)
       Songify.songs_repo.save_a_song(song)
       song.title
-      redirect to('/show')
+      redirect to('/new')
     else
       genre = Songify::Genre.new(params["genre"])
       genre_id = Songify.genres_repo.save_a_genre(genre)
       song = Songify::Song.new(params["title"], params["artist"], params["album"], genre_id)
       Songify.songs_repo.save_a_song(song)
       song.title
-      redirect to('/show')
+      redirect to('/new')
     end
   end
 

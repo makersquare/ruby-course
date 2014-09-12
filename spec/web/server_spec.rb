@@ -35,9 +35,14 @@ describe Songify::Server do
   describe "POST /create" do
     it "creates a new song to add to database" do
       genre = Songify::Genre.new("fake_genre")
+      genre1 = Songify::Genre.new('fake_genre1')
+      Songify.genres_repo.save_a_genre(genre.name)
+      Songify.genres_repo.save_a_genre(genre1.name)
       post '/create', { "title" => "song_title3", "artist" => "some_artist", "album" => "some_album", "genre" => "fake_genre"}
       expect(last_response.redirect?).to be_true
       follow_redirect!
+      allGenres = Songify.genres_repo.get_all_genres
+      expect(allGenres.size).to be(2)
       last_song = Songify.songs_repo.get_all_songs.last
       expect(last_song.genre_id).to eq(1)
       expect(last_response.body).to include(last_song.title)
@@ -59,5 +64,5 @@ describe Songify::Server do
   Songify.genres_repo.drop_table
 
   Songify.songs_repo =Songify::Repositories::Songs.new
-  Songify.songs_repo = Songify::Repositories::Genres.new
+  Songify.genres_repo = Songify::Repositories::Genres.new
 end

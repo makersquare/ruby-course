@@ -1,5 +1,5 @@
 require_relative '../lib/songify.rb'
-Songify.songs_repo = Songify::Repositories::Genres.new
+Songify.genres_repo = Songify::Repositories::Genres.new
 Songify.songs_repo = Songify::Repositories::Songs.new
 
 RSpec.configure do |config|

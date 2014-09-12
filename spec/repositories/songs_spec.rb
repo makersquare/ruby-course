@@ -6,7 +6,6 @@ describe Songify::Repositories::Songs do
   let(:genre) { Songify::Genre.new('fake_genre') }
   
   it "adds a song to the database" do
-
     Songify.songs_repo.drop_table
     Songify.genres_repo.drop_table
     expect(song.id).to be_nil
