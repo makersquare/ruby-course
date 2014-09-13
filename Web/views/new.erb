@@ -6,4 +6,14 @@
 	<label>Album</label>
 		<input type='text' name='album'>
 		<input type='submit' value='Add Song'>
+	<label>Genre</label>
+		<select>
+			<%@genres.each do |genre|%>
+				<option><%=genre.genre%></option>
+			<%end%>
+		</select>
 </form> 
+
+<!-- name=>artist 
+params => {title=>booty pop}
+params[title] -->

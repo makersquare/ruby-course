@@ -12,7 +12,7 @@ describe Songify::Server do
       
       get '/'
       expect(last_response).to be_ok
-      
+            
     end
   end
   describe 'GET /show' do 
@@ -31,6 +31,11 @@ describe Songify::Server do
       # binding.pry
       expect(last_response).to be_ok
       expect(last_response.body).to include "Title"
+      expect(last_response.body).to include 'Genre'
+
+      new_genre = Songify::Genre.new('punk rock')
+      Songify.genres_repo.save_a_genre(new_genre)
+      # expect(last_response.body).to include "punk rock"
     end
   end
 

@@ -14,6 +14,9 @@ class Songify::Server < Sinatra::Application
   end
 
   get '/new' do 
+    new_genre = Songify::Genre.new('punk rock')
+    Songify.genres_repo.save_a_genre(new_genre)
+    @genres = Songify.genres_repo.get_all_genres
     erb :new
   end
 

@@ -5,24 +5,25 @@ module Songify
   module Repositories
     class Songs
 
-      def initialize(dbname)
+      def initialize(dbname='songify_dev')
         @db = PG.connect(host: 'localhost', dbname: dbname)
         build_table
       end
+            # foreign key(id) REFERENCES genres(id)
 
       def build_table
         @db.exec(%q[
           CREATE TABLE IF NOT EXISTS songs(
-            id serial,
+            id serial primary key,
             title text,
             artist text,
             album text
-            )
+           )
           ])
       end
       
       def drop_table
-        @db.exec( "DROP TABLE songs")
+        @db.exec( "DROP TABLE songs CASCADE;")
         build_table
       end
       
@@ -62,6 +63,12 @@ module Songify
             ], [song.title, song.artist, song.album])
           song.instance_variable_set :@id, result.entries.first["id"].to_i 
         end        
+      end
+
+      def delete_all
+        @db.exec(%q[
+          DELETE FROM songs;
+          ])
       end
   
       def delete_a_song(song_id)
