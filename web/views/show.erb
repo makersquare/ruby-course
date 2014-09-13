@@ -1,5 +1,5 @@
 <h1> Songs </h1>
-<table>
+<table id="song-table">
 	<tr>
 		<th> TITLE </th>
 		<th> ARTIST </th>
@@ -13,9 +13,41 @@
 		<td><%= x.title %> </td>
 		<td><%= x.artist %> </td>
 		<td><%= x.album %> </td>
-		<td><%= song_genres[songs.index(x)].title %> </td>
+		<td class="genre"><%= song_genres[songs.index(x)].title %> </td>
 	</tr>
 <% end %>
-
-
 </table>
+
+	<label> Filter by genre: </label>
+	<select id="select-genre">
+		<option> All genres </option>
+		<%known_genre_titles.each do |title| %>
+			<option> <%=title%> </option>
+		<% end %>
+	</select>
+	<button id="update"> update</button>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+
+$('#update').on('click', function() {
+
+	var selectedGenre = $('#select-genre').val();
+	if (selectedGenre == "All genres"){
+		$('.genre').each(function() {
+			$(this).parent().show(); 
+		});
+	}
+	else {
+		$('.genre').each(function() {
+			if ( $(this).val() != selectedGenre ){
+				$(this).parent().hide();
+			}
+		});
+	}
+
+
+});
+
+</script>

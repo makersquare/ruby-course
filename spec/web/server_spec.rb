@@ -33,9 +33,8 @@ describe Songify::Server do
       song = Songify::Song.new("Dingus", "The Dingus", "Dingus")
       Songify.song_repo.save_song(song)
       get '/show'
-      expect(last_response).to be_ok
+      
       expect(last_response.body).to include "Dingus", "The Dingus", "Dingus"
-
 
     end
 
