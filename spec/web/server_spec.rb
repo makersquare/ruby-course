@@ -1,4 +1,4 @@
-require 'server_spec_helper'
+  require 'server_spec_helper'
 require 'pry-byebug'
 
 describe Songify::Server do

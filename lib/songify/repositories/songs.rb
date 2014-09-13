@@ -45,6 +45,13 @@ module Songify
         result.map { |song| build_song(song) }
       end
 
+      def get_songs_by_genre_id(id)
+        result = @db.exec(%q[
+          SELECT * FROM songs WHERE genre_id = $1;
+        ], [id])
+        result.map { |song| build_song(song) }
+      end
+
       # parameter should be song object
       def save_a_song(song)
         result = @db.exec(%q[

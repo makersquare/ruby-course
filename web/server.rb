@@ -16,6 +16,13 @@ class Songify::Server < Sinatra::Application
     erb :show
   end
 
+  get '/show/genre' do
+    @genre_name = params['genre-show-drop']
+    genre = Songify.genres_repo.get_a_genre_by_name(@genre_name)
+    @songs = Songify.songs_repo.get_songs_by_genre_id(genre.id)
+    erb :genre
+  end
+
   post '/create' do
     # in this case the user wants to select from dropdown
     if params["genre"].strip == ""
