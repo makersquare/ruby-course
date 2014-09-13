@@ -14,7 +14,8 @@ module Songify
           id serial,
           title text,
           artist text,
-          album text);])
+          album text,
+          genre_id int);])
         
       end
 
@@ -29,8 +30,10 @@ module Songify
           album = song["album"]
           title = song["title"]
           id = song["id"]
+          genre_id = song["genre_id"]
           song = Songify::Song.new(title, artist, album)
           song.instance_variable_set(:@id, id.to_i) 
+          song.instance_variable_set(:@genre_id, genre_id)
           song
         end
       end
@@ -54,9 +57,9 @@ module Songify
 
       def save_song(song)
         @db.exec(%q[INSERT INTO songs
-          (title, artist, album)
-          VALUES ($1,$2,$3);],
-          [song.title, song.artist, song.album])
+          (title, artist, album, genre_id)
+          VALUES ($1,$2,$3, $4);],
+          [song.title, song.artist, song.album, song.genre_id])
       end
 
     

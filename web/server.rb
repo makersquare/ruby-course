@@ -12,7 +12,12 @@ class Songify::Server < Sinatra::Application
 
  get '/show' do
     songs = Songify.song_repo.get_all_songs
-    erb :show, :locals => {songs: songs}
+    song_genres = []
+    songs.each do |x|
+        genre = Songify.genre_repo.get_genre(x.genre_id)
+        song_genres.push(genre)
+    end
+    erb :show, :locals => {songs: songs, song_genres: song_genres}
  end
 
  get '/new' do 
@@ -49,8 +54,10 @@ class Songify::Server < Sinatra::Application
     end
 
     song = Songify::Song.new(title, artist, album)
+    puts "genre id is: " + "#{genre_id}"
     #adjust song repo table to have genre_id
-    song.instance_variable_set(:@genre_id, genre_id.to_i)
+    song.instance_variable_set(:@genre_id, genre_id)
+    puts "song.genre_id is : " + "#{song.genre_id}; saving to db"
     Songify.song_repo.save_song(song)
 
     redirect to('/index')
