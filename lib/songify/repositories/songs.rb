@@ -17,7 +17,8 @@ module Songify
             id serial primary key,
             title text,
             artist text,
-            album text
+            album text,
+            genre_id INT REFERENCES genres (id)
            )
           ])
       end
@@ -57,10 +58,10 @@ module Songify
       def save_a_song(*song)
         song.each do |song|
          result = @db.exec(%q[
-            INSERT INTO songs (title, artist, album)
+            INSERT INTO songs (title, artist, album, genre)
             VALUES ($1, $2, $3)
             RETURNING id;
-            ], [song.title, song.artist, song.album])
+            ], [song.title, song.artist, song.album, song.genre])
           song.instance_variable_set :@id, result.entries.first["id"].to_i 
         end        
       end

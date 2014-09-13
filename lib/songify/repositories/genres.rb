@@ -33,6 +33,13 @@ module Songify
         build_a_genre(result.entries)
       end
 
+      def id_by_genre(genre_name)
+        result = @db.exec(%q[
+          SELECT id FROM genres WHERE genre = $1;
+          ], [genre_name])
+        result
+      end
+
       def build_a_genre(entries)
         entries.map do |genre|
           x = Songify::Genre.new(genre["genre"])

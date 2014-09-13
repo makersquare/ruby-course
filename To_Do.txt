@@ -1,0 +1,5 @@
+1) server.rb post request gets the selection from the genres and assigns it to the genre_id of the songs table with the new song being posted. 
+2) Show all songs displays the genres as well
+3) Reformatting the index page
+4) What is config for?
+

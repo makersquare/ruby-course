@@ -5,15 +5,11 @@
 		<input type='text' name='artist'>
 	<label>Album</label>
 		<input type='text' name='album'>
-		<input type='submit' value='Add Song'>
 	<label>Genre</label>
-		<select>
+		<select name='genre'>
 			<%@genres.each do |genre|%>
 				<option><%=genre.genre%></option>
 			<%end%>
 		</select>
+	<input type='submit' value='Add Song'>
 </form> 
-
-<!-- name=>artist 
-params => {title=>booty pop}
-params[title] -->
