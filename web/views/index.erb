@@ -1,5 +1,18 @@
 <h1> Welcome to Songify </h1>
 
 <h3> <a href='/new'> Enter a new song</a><br> </h3>
-<h3> <a href='/show'> Show songs </a> </h3>
+<h3> <a href='/show'> Show all songs </a> </h3>
+<h3>  Or search by genre </h3>
+
+<form action="/searchbysong" method="get">
+	<label for="choose_genre"> Choose a genre:</label>
+	<select name="chosen_genre">
+		<option> select a genre </option>
+		<%genres.each do |g| %>
+			<option> <%= g.title %> </option>
+		<% end %>
+	</select>
+	<input name="submit" type="submit"><br>
+</form>
+
 

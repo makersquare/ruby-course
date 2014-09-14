@@ -1,4 +1,5 @@
 <h1> Songs </h1>
+
 <table id="song-table">
 	<tr>
 		<th> TITLE </th>
@@ -34,19 +35,11 @@
 $('#update').on('click', function() {
 
 	var selectedGenre = $('#select-genre').val();
-	if (selectedGenre == "All genres"){
-		$('.genre').each(function() {
-			$(this).parent().show(); 
-		});
-	}
-	else {
-		$('.genre').each(function() {
-			if ( $(this).val() != selectedGenre ){
-				$(this).parent().hide();
-			}
-		});
-	}
 
+	$('.genre').each(function() {
+		$(this).toggle();
+		
+	});
 
 });
 

@@ -4,10 +4,11 @@ require 'sinatra'
 require 'sinatra/reloader'
 #require 'sinatra/base'
 
-class Songify::Server < Sinatra::Application
+class Songify::Server < Sinatra::Application 
 
  get '/index' do
-    erb :index
+    genres = Songify.genre_repo.get_all_genres
+    erb :index, :locals => {genres: genres}
  end
 
  get '/show' do
@@ -63,6 +64,25 @@ class Songify::Server < Sinatra::Application
     redirect to('/index')
 
  end
+
+
+
+ get '/searchbysong' do
+    songs = Songify.song_repo.get_all_songs
+    song_genres = []
+    songs.each do |x|
+        genre = Songify.genre_repo.get_genre(x.genre_id)
+        song_genres.push(genre)
+    end
+    chosen_genre = params["chosen_genre"]
+    puts chosen_genre
+    songs = Songify.song_repo.get_all_songs
+    erb :searchbysong, :locals => {songs: songs, song_genres: song_genres, chosen_genre: chosen_genre}
+ end
+
+
+
+
 
  run! if __FILE__ == $0
 
