@@ -119,12 +119,15 @@
                                 <th><label for="genre" class="genre">Genre: </label></th>
                                 <td>
                                     <% genres.each do |genre| %>
-                                        <div class="radio" style="display:block;">
-                                            <input type="radio" id="genre" name="genre" value="<%= genre.name %>"><%= genre.name %></input>
+                                        <div class="radio">
+                                            <input type="radio" class="genre" name="genre" value="<%= genre.name %>"><%= genre.name %>
                                         </div>
                                     <% end %>
-                                <label for="other-genre" class="other">New </label>
-                                <input type="text" id="other-genre" name="genre" class="genre text-box">
+                                    <div class="new-genre">
+                                        <button type="button" name="new-genre" class="new-genre btn btn-default submit">New Genre</button>
+                                    </div>
+                                    <!-- <label for="other-genre" class="other">New </label>-->
+                                    <input type="text" name="other-genre" class="new-genre genre text-box">
 
                                 </td>
                             </div>
@@ -236,6 +239,20 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="/javascripts/grayscale.js"></script>
+    <script>
+        $(document).ready(function(){
+
+            var newGenreInput = $('input.new-genre')
+            newGenreInput.hide();
+            $('button.new-genre').on('click', function(){
+                newGenreInput.toggle();
+                $("input.genre").removeAttr("checked");
+                newGenreInput.val("");
+                $('div.radio').toggle();
+            })
+        });
+
+    </script>
 
 </body>
 
