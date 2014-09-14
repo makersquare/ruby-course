@@ -1,2 +1,80 @@
 html {
+	font-family: sans-serif;
+	margin-left: 20px;
 }
+
+body {
+	background: #eee;
+}
+
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+h1 {
+	margin-bottom: .5em;
+	margin-top: .5em;
+	margin-right: 1em;
+	font-size: 2em;
+	float: left;
+}
+
+h1 a {
+	padding: .1em .2em .1em 0;
+}
+
+a {
+	text-decoration: none;
+	color: #555;
+	border-radius: .3em;
+}
+
+h2 {
+	margin: 1em 0;
+	text-align: left;
+	font-size: 1.1em;
+	font-weight: 600;
+	color: #555;
+}
+
+li a {
+	margin-top: 2em;
+	margin-left: 3em;
+	font-size: .75em;
+	text-transform: uppercase;
+	float: left;
+	padding: .5em;
+}
+
+li a:hover {
+	background-color: #555;
+	color: #eee;
+}
+
+span.list, .input-label, p {
+	display: block;
+	margin-top: .5em;
+	color: #555;
+}
+
+.drop-down, .user-input {
+	width: 12em;
+}
+
+.submit-user-input {
+	width: 8em;
+	color: #555;
+	font-weight: 600;
+	text-transform: uppercase;
+	background-color: #ccc;
+	border-radius: .4em;
+	margin-top: .5em;
+	margin-left: 2em;
+}
+

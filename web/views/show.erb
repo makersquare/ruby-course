@@ -6,17 +6,23 @@
 </head>
 </head>
 <body>
-	<h1>Show Songs</h1>
+	<header class="cf">
+		<h1><a href="/index">Songify</a></h1>
+		<ul>
+			<li><a href="/show">Show songs</a></li>
+			<li><a href="/new">Add new song</a></li>
+		</ul>
+	</header>	
+
+	<h2>All Songs</h2>
+
 	<% if @songs.empty? %>
 		<%= "Songs database is empty." %>
 	<%else%>
 		<% @songs.each do |song| %>
 			<% genre = Songify.genres_repo.get_genre(song.genre_id) %>
-			<%= "#{song.id}. #{song.title}, #{song.artist}, #{song.album}, #{genre.genre_name.capitalize}"  %>
-			<br>
+			<span class="list"><%= "#{song.id}. #{song.title}, #{song.artist}, #{song.album}, #{genre.genre_name.capitalize}"  %> </span>
 		<% end %>
 	<% end %>
-	<br>
-	<a href="/index">Return to index</a>
 </body>
 </html>
