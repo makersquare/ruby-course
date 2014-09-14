@@ -21,7 +21,7 @@ describe Songify::Server do
     end
   end
 
-  describe "/show" do
+  describe "GET /show" do
     it "shows all of the songs" do
       post '/create', { "title" => "title1", "artist" => "artist1", "album" => "album1", "genre" => "genre1" }
       get '/show'
@@ -30,10 +30,16 @@ describe Songify::Server do
     end
   end
 
-  describe "/new" do
+  describe "GET /new" do
     it "shows a form to get info about a new song" do
       get '/new'
       expect(last_response.body).to include "Artist:", "Album:", "Title:"
+    end
+  end
+
+  describe "GET /show/genre" do
+    it "shows all of the songs of the selected genre" do
+
     end
   end
 

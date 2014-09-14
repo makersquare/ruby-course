@@ -16,10 +16,10 @@
     </tr>
     <% end %>
 </table>
-<form action="/show/genre" method="get">
+<form action="/show/genre" method="get" class="show-genre-form">
   <div class="form-group">
     <label for="genre-selector">Show songs by genre</label>
-      <select id="genre-selector" name="genre-show-drop" class="form-control">
+      <select id="genre-selector" name="genre-show-drop" class="form-control show-genre">
         <% @genres.each do |genre| %>
         <option value=<%="#{genre.name}"%>><%="#{genre.name}"%></option>
         <% end %>

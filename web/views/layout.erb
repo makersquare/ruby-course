@@ -3,6 +3,7 @@
 <head>
 	<link href='http://fonts.googleapis.com/css?family=Ubuntu+Mono|Raleway' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 	<title>Songify</title>
 	<style type="text/css">
 		* {
@@ -12,12 +13,39 @@
 			text-align: center;
 			font-family: 'Raleway';
 		}
+		.form-control {
+			width: 20%;
+		}
+		.main-nav {
+			margin: 1em;
+		}
 
+		.main-nav a {
+			padding: 1em;
+			font-size: 1.25em;
+		}
+
+		.show-genre-form, .new-song-form {
+			text-align: center;
+		}
+
+		.form-control.show-genre,
+		.form-control.new-song {
+			margin: 0 auto;
+		}
+
+		.form-group {
+			margin-bottom: 2em;
+		}
+
+		label {
+			margin-right: 1em;
+		}
 	</style>
 </head>
 <body>
-<h1 class="header">Songify</h1>
-	<nav>
+<h1 class="header"><i class="fa fa-music"></i>   Songify <i class="fa fa-music"></i></h1>
+	<nav class="main-nav">
 		<a href="/">Home</a>
 		<a href="/show">Show all songs</a>
 		<a href="/new">New song</a>
