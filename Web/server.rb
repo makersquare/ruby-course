@@ -22,10 +22,10 @@ class Songify::Server < Sinatra::Application
   end
 
   post '/create' do 
-    genre_id = SOngify.genres_repo.id_by_genre(params['genre'])
+    genre_id = Songify.genres_repo.id_by_genre(params['genre'])
     song = Songify::Song.new(params["title"],params["artist"],params["album"],genre_id)
     Songify.songs_repo.save_a_song(song)
-    binding.pry
+    # binding.pry
     p "hi"
     redirect to '/show'
   end

@@ -58,8 +58,8 @@ module Songify
       def save_a_song(*song)
         song.each do |song|
          result = @db.exec(%q[
-            INSERT INTO songs (title, artist, album, genre)
-            VALUES ($1, $2, $3)
+            INSERT INTO songs (title, artist, album, genre_id)
+            VALUES ($1, $2, $3, $4)
             RETURNING id;
             ], [song.title, song.artist, song.album, song.genre])
           song.instance_variable_set :@id, result.entries.first["id"].to_i 
