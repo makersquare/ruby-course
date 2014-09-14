@@ -56,6 +56,9 @@
                         <a class="page-scroll" href="#songs">Songs</a>
                     </li>
                     <li>
+                        <a class="page-scroll" href="#genres">Genres</a>
+                    </li>
+                    <li>
                         <a class="page-scroll" href="#contact">Contact</a>
                     </li>
                 </ul>
@@ -124,10 +127,10 @@
                                         </div>
                                     <% end %>
                                     <div class="new-genre">
-                                        <button type="button" name="new-genre" class="new-genre btn btn-default submit">New Genre</button>
+                                        <button type="button" class="new-genre btn btn-default submit">New Genre</button>
                                     </div>
                                     <!-- <label for="other-genre" class="other">New </label>-->
-                                    <input type="text" name="other-genre" class="new-genre genre text-box">
+                                    <input type="text" name="new-genre" class="new-genre genre text-box">
 
                                 </td>
                             </div>
@@ -192,6 +195,48 @@
         </div>
     </section>
 
+    <!-- Genres Section -->
+    <section id="genres" class="content-section text-center">
+        <div class="genres-section">
+            <div class="container">
+                <div class="col-lg-10 col-lg-offset-2">
+                    <h2>Genres</h2>
+                    <div class="genre-list">
+                        <ul class="genre-list">
+                            <% genres.each do |genre| %>
+                                <li><a href="<%= genre.name %>" class="<%= genre.name %>"><%= genre.name %></a></li>
+                            <% end %>
+                        </ul>
+                        <table class="genres-table" cellspacing="1" cellpadding="2" border="1">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Artist</th>
+                                    <th>Album</th>
+                                    <!-- <th>Year</th>
+                                    <th>Genre</th>
+                                    <th>Rating</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- <% #songs.each do |song| %>
+                                <tr>
+                                    <td><%= #song.title %></td>
+                                    <td><%= #song.artist %></td>
+                                    <td><%= #song.album %></td>
+                                    <td><%= #song.year %></td>
+                                    <td><%= #Songify.genres.get_genre(song.genre_id).first["name"] %></td>
+                                    <td><%= #song.rating %></td> -->
+                                <!-- </tr> -->
+                                <!-- <% #end %>-->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="container content-section text-center">
         <div class="row">
@@ -214,7 +259,9 @@
             </div>
         </div>
     </section>
+    <div class="check-genre-list">Hello</div>
 
+    
     <!-- Map Section -->
     <!-- <div id="map"></div> -->
 
@@ -242,13 +289,32 @@
     <script>
         $(document).ready(function(){
 
-            var newGenreInput = $('input.new-genre')
+            // new-genre-button
+            var newGenreInput = $('input.new-genre');
             newGenreInput.hide();
             $('button.new-genre').on('click', function(){
                 newGenreInput.toggle();
                 $("input.genre").removeAttr("checked");
                 newGenreInput.val("");
                 $('div.radio').toggle();
+            });
+
+            // AJAX for genres-list table
+            var genre_list = [];
+            <% genres.each do |genre| %>
+                genre_list.push("<%= genre.name %>");
+            <% end %>
+            $.each(genre_list, function(_,genre){
+                $('a.'+genre).on(click, function() {
+                    $.ajax({
+                        url: "/",
+                        type: "POST",
+                        data: { genre_type: genre },
+                        success: function(genre_table_type){
+                            $('.genre-table tbody').html("<% songs.each { |s| %><tr><td><%= song.title %></td><td><%= song.artist %></td><td><%= song.album %></td></tr><% end %>"});
+                        }
+                    });
+                });
             })
         });
 
