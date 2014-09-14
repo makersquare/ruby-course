@@ -37,8 +37,8 @@ module Songify
         result = @db.exec(%q[
           SELECT id FROM genres WHERE genre = $1;
           ], [genre_name])
-        
-        p 'test'
+        # binding.pry
+        # p 'test'
         result.entries.first["id"]
       end
 

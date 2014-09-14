@@ -58,6 +58,15 @@ module Songify
         #method
       end
 
+      def get_all_by_genre(g_id)
+        result = @db.exec(%q[
+          SELECT * FROM songs WHERE genre_id = $1 ;
+          ], [g_id])
+        x =build_a_song(result.entries)
+        x 
+
+      end
+
       def save_a_song(*song)
         song.each do |song|
          result = @db.exec(%q[

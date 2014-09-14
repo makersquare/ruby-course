@@ -7,18 +7,20 @@ class Songify::Server < Sinatra::Application
   get '/' do 
     erb :index
   end
-  # run!
 
   get '/show' do 
     @songs = Songify.songs_repo.get_all_songs
-    # binding.pry
-    p 'test'
+    erb :show
+  end
+
+  post '/show' do
+    genre_id = Songify.genres_repo.id_by_genre(params['genre_search']).to_i
+    @songs = Songify.songs_repo.get_all_by_genre(genre_id)
+
     erb :show
   end
 
   get '/new' do 
-    # new_genre = Songify::Genre.new('Butt Rok')
-    # Songify.genres_repo.save_a_genre(new_genre)
     @genres = Songify.genres_repo.get_all_genres
     erb :new
   end
@@ -27,7 +29,6 @@ class Songify::Server < Sinatra::Application
     genre_id = Songify.genres_repo.id_by_genre(params['genre']).to_i
     song = Songify::Song.new(params["title"],params["artist"],params["album"],genre_id)
     Songify.songs_repo.save_a_song(song)
-    # binding.pry
     redirect to '/show'
   end
   run! if __FILE__ == $0
