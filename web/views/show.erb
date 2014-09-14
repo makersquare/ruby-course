@@ -19,28 +19,13 @@
 <% end %>
 </table>
 
-	<label> Filter by genre: </label>
-	<select id="select-genre">
-		<option> All genres </option>
-		<%known_genre_titles.each do |title| %>
-			<option> <%=title%> </option>
-		<% end %>
-	</select>
-	<button id="update"> update</button>
+<label> Filter by genre: </label>
+<select id="select-genre">
+	<option> All genres </option>
+	<%known_genre_titles.each do |title| %>
+		<option> <%=title%> </option>
+	<% end %>
+</select>
+<button id="update"> update</button>
 
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script type="text/javascript">
-
-$('#update').on('click', function() {
-
-	var selectedGenre = $('#select-genre').val();
-
-	$('.genre').each(function() {
-		$(this).toggle();
-		
-	});
-
-});
-
-</script>
