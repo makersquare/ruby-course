@@ -17,7 +17,7 @@ describe Songify::Server do
   end
   describe 'GET /show' do 
     it 'prints out the songs in the database' do 
-      song = Songify::Song.new("Booty Pop", "Hootie hoo", "Booty songs")
+      song = Songify::Song.new("Booty Pop", "Hootie hoo", "Booty songs", 1)
       Songify.songs_repo.save_a_song(song)
       get '/show'
 
@@ -41,11 +41,23 @@ describe Songify::Server do
 
   describe 'POST /create' do 
     it 'puts user input into the database' do 
-      post '/create', {"title" => "girls", "artist"=>"beastie boys", "album"=>"stuff"}
-      #somehow get the variable
+      post '/create', {"title" => "girls", "artist"=>"beastie boys", "album"=>"stuff", "genre"=>"punk rock"}
       last_song = Songify.songs_repo.get_all_songs.last
       get '/show'
       expect(last_response.body).to include(last_song.title)
+    end
+  end
+
+  describe 'POST /new' do 
+    it 'retrieves a list of all songs matching genre and displays them' do 
+      genre_id = Songify.genres_repo.id_by_genre('punk rock').to_i
+      song = Songify::Song.new("Booty Pop", "Hootie hoo", "Booty songs", genre_id)
+      Songify.songs_repo.save_a_song(song)
+
+
+      post '/show', {'genre_id'=> 'punk rock'}
+
+      expect(last_response.body).to include('Booty songs')
     end
   end
 end

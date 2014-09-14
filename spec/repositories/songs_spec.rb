@@ -2,7 +2,7 @@ require_relative '../spec_helper.rb'
 
 describe Songify::Repositories::Songs do 
 
-  let(:song) { Songify::Song.new('fake_title', 'fake_artist', 'fake_album') }
+  let(:song) { Songify::Song.new('fake_title', 'fake_artist', 'fake_album', 1) }
 
 
   before do
@@ -27,16 +27,16 @@ describe Songify::Repositories::Songs do
   end
 
   it 'gets all songs' do 
-    song2 = Songify::Song.new("party time", "Bob", "Bob's hits")
-    song3 = Songify::Song.new("party time1", "Bob", "Bob's hits")
+    song2 = Songify::Song.new("party time", "Bob", "Bob's hits", 1)
+    song3 = Songify::Song.new("party time1", "Bob", "Bob's hits", 1)
     Songify.songs_repo.save_a_song(song, song2, song3)
 
     expect(Songify.songs_repo.get_all_songs.length).to eq(3)
   end
 
   it 'deletes a song' do 
-    song2 = Songify::Song.new("party time", "Bob", "Bob's hits")
-    song3 = Songify::Song.new("party time1", "Bob", "Bob's hits")
+    song2 = Songify::Song.new("party time", "Bob", "Bob's hits", 1)
+    song3 = Songify::Song.new("party time1", "Bob", "Bob's hits", 1)
     Songify.songs_repo.save_a_song(song, song2, song3)
     Songify.songs_repo.delete_a_song(song3.id)
     #this block in expect should be written up here and stored in a variable

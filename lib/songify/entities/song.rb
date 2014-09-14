@@ -4,7 +4,7 @@ module Songify
     attr_reader :title, :artist, :album, :id
     attr_accessor :genre
 
-    def initialize(title, artist, album, genre='unknown')
+    def initialize(title, artist, album, genre)
       @title = title
       @artist = artist
       @album = album
