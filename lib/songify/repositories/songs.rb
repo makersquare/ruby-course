@@ -38,7 +38,8 @@ module Songify
       def build_a_song(entries)
         #would have been better to not use loop?
         entries.map do |song|
-          x = Songify::Song.new(song["title"],song["artist"],song["album"])
+          # binding.pry
+          x = Songify::Song.new(song["title"],song["artist"],song["album"],song["genre_id"].to_i)
           x.instance_variable_set :@id, song["id"].to_i
           x
         end
@@ -49,7 +50,9 @@ module Songify
         result = @db.exec(%q[
           SELECT * FROM songs;
           ])
-        build_a_song(result.entries)
+        x =build_a_song(result.entries)
+        x 
+        # binding.pry
         #result.map { |r| build_song(r)}
         #this way we don't have to do this in the build song
         #method

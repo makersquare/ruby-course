@@ -1,7 +1,10 @@
 <ol>
 <% @songs.each do |song_object| %>
-  <li>Song:<%=song_object.title%>
-  Artist:<%=song_object.artist%>
-  Album:<%=song_object.album%></li>
+  <li>Song: <%=song_object.title%>
+  Artist: <%=song_object.artist%>
+  Album: <%=song_object.album%>
+  		<%genre=Songify.genres_repo.get_a_genre(song_object.genre).first.genre%>
+  Genre: <%=genre%>
+</li>
   <% end %>
 </ol>
