@@ -5,7 +5,7 @@
 	<label>Genre</label>
 		<div><input type="text" name="new_genre" value="" /></div>
 		<div><select><% genre_list.each do |genre| %>
-			<option class="new_genre" value= <%"#{genre.genre}"%> > <%="#{genre.genre}" %> </option>
+			<option class="old_genre" value= <% "#{genre.genre}"%> > <%="#{genre.genre}" %> </option>
 		<% end %>
 		</select></div>
 </div>

@@ -1,4 +1,4 @@
-What would you like to see? An artist, an album, an id?
+<div>What would you like to search by? An artist, an album, a genre, a lyric?</div>
 
 <form action='/show_some' method='post'>
 <div>
@@ -10,24 +10,36 @@ What would you like to see? An artist, an album, an id?
 <div>	<label for='search_term'>Search term</label> </div>
 <div>	<input type='text' name='search_term'></div>
 </div>
-<div><input type='submit' name='FLIP'></div>
+<div><input type='submit' name='FLIP' value='Search'></div>
 </form> 
 
-<% if defined?(song_list) %>
+<% content_for :rightmost do %>
+    <% if defined?(song_list) %>
 
-	<% song_list.each do |song| %>
-	<ul>
-    <ul>
-    	<li>Title: <%= song.title %> </li>
-    	<li>Artist: <%= song.artist %> </li>
-    	<li>Album: <%= song.album %> </li>
-    	<li>Year: <%= song.year_published %> </li>
-        <li>Genre: <%= Songify.genres.get_a_genre_by_name(song.genre).genre %> </li>
-    	<li>Rating: <%= song.rating %> </li>
+    <div><form action='/update_change' method='post'>
+    
+    	<% song_list.each do |song| %>
+        <ul>
+            <input type="radio" name="song_picked" value='<%= song.id %>' /> 
+        <ul>
+            <li>Title: <%= song.title %> </li>
+            
+
+        	<li>Artist: <%= song.artist %> </li>
+        	<li>Album: <%= song.album %> </li>
+        	<li>Year: <%= song.year_published %> </li>
+            <li>Genre: <%= Songify.genres.get_a_genre_by_name(song.genre).genre %> </li>
+        	<li>Rating: <%= song.rating %> </li>
+            <li>Lyrics: <%= song.lyrics %> </li>
 		</ul>
-	</ul>
- <% end %>
-
+    	</ul>
+        <% end %>
+    <div>
+        <input type='submit' value="Update">
+    </div>
+    </form>
+    <% end %>
+    </div>
 <% end %>
 
 You are viewing layout : show_some.

@@ -36,7 +36,30 @@
 <div>	<input type='text' name ='song_rating'> </div>
 </div>
 
-<div><input type='submit' name='FLIP'></div>
+<div>
+<div>	<label for='song_lyrics'>Lyrics</label> </div>
+<div>	<textarea rows='5' name ='song_lyrics'> </textarea></div>
+</div>
+
+
+<div><input type='submit' name='FLIP' value='Add'></div>
 </form> 
 
 You are viewing layout : new / websongify.
+
+<% content_for :rightmost do %>
+
+	<% if defined?(your_song) %>
+		<div>Congratulations! You've just added a song:</div>
+
+		<div><%= "#{your_song.title}" %></div>
+		<div><%= "by #{your_song.artist}" %></div> 
+		<div><%= "off of #{your_song.album}" %></div> 
+		<div><%= "from #{your_song.year_published}" %></div> 
+		<div><%= "in the #{your_genre} genre." %></div> 
+		<div><%= "You've rated this song a #{your_song.rating}." %></div>
+
+	<div>You are viewing layout : new / create.</div>
+
+	<% end %>
+<% end %>

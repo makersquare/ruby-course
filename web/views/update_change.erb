@@ -1,0 +1,24 @@
+<div>You've chosen to update:</div>
+<div> </div>
+
+	<div><%= "#{your_song.title}" %></div>
+	<div><%= "by #{your_song.artist}" %></div> 
+	<div><%= "off of #{your_song.album}" %></div> 
+	<div><%= "from #{your_song.year_published}" %></div> 
+	<div><%= "in the #{your_song.genre} genre." %></div> 
+	<div><%= "You've rated this song a #{your_song.rating}." %></div>
+
+<form action='/update' method='post'>	
+<div>
+<div>	<label for='change_parameter'>What would you like to change?</label> </div>
+<div>	<input type='text' name='change_parameter'> </div>
+</div>
+
+<div>	
+<div>	<label for='change_term'>What would you like to change it to?</label> </div>
+<div>	<input type='text' name='change_term'></div>
+</div>
+<div><input type='submit' name='<%= your_song.id %>'  value='Submit update'></div>
+</form> 
+
+You are viewing layout : update / update_change.

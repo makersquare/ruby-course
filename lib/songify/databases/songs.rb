@@ -18,7 +18,8 @@ module Songify
             album text,
             year_published int,
             rating int,
-            genre_id int REFERENCES genres (id)
+            genre_id int REFERENCES genres (id),
+            lyrics text
             )
           ])
       end
@@ -34,10 +35,10 @@ module Songify
         genre_id = Songify.genres.get_a_genre_by_name(song.genre).id
 
         result = @db.exec(%q[
-          INSERT INTO songs (title,artist,album,year_published,rating,genre_id)
-          VALUES ($1,$2,$3,$4,$5,$6)
+          INSERT INTO songs (title,artist,album,year_published,rating,genre_id,lyrics)
+          VALUES ($1,$2,$3,$4,$5,$6,$7)
           RETURNING id
-          ], [song.title,song.artist,song.album,song.year_published,song.rating, genre_id])
+          ], [song.title,song.artist,song.album,song.year_published,song.rating, genre_id, song.lyrics])
         song.instance_variable_set :@id, result.entries.first["id"].to_i
       end
 
@@ -55,10 +56,20 @@ module Songify
 
       def get_all_songs_by(parameter)
         colname = parameter.keys.first.to_s.gsub(/;/, ' ')
-        value = parameter.values.first.gsub(/;/, ' ')
-        sql = "SELECT * FROM songs WHERE #{colname} = '#{value}'"
+        value = parameter.values.first.to_s.gsub(/;/, ' ')
+        sql = "SELECT * FROM songs WHERE #{colname} like '%#{value}%'"
         
         result = @db.exec(sql)
+        build_song(result.entries)
+      end
+
+      def update_song(song, parameter)
+        
+        colname = parameter.keys.first.to_s.gsub(/;/, ' ').gsub(/\%/,'')
+        value = parameter.values.first.to_s.gsub(/;/, ' ').gsub(/\%/,'')
+        sql = "UPDATE songs SET #{colname} = '#{value}' WHERE id = $1 RETURNING *"
+
+        result = @db.exec(sql, [song.id])
         build_song(result.entries)
       end      
 

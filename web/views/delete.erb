@@ -1,11 +1,11 @@
-Would you like to delete one song or all songs?
+Would you like to delete your songs?
 
 <form action='/delete' method='post'>
-<div><input type='submit' name='delete_all_songs'></div>
+<div><input type='submit' name='delete_all_songs' value='Erase evidence'></div>
 </form> 
 
 <% if defined?(@judge) %>
-	You <%= @judge %>!
+	<%= @judge %>!
 <% end %>
 
 You are viewing layout : delete.

@@ -26,7 +26,7 @@ let(:test_song) {Songify::Song.new(title: "Radio Radio",artist: "Elvis Costello"
   end
 
   it "can correct info" do
-    test_song.correct_info("rating",5)
+    test_song.correct_info(rating: 5)
     expect(test_song.rating).to eq(5)
   end
 
