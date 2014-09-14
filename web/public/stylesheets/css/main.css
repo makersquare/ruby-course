@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 html {
 	font-family: sans-serif;
 	margin-left: 20px;
@@ -5,6 +9,63 @@ html {
 
 body {
 	background: #eee;
+	transform: translate3d(0,0,0);
+}
+
+.circle, .text, .string, .text {
+  transform-style: preserve-3d;
+  position: relative;
+  font-size: 15px;
+}
+
+.string {
+  width: 36em;
+  height: .06em;
+  background: black;
+  transform: translateZ(-1em) translate(0em, -.6em);
+  animation: extend 3s 1s forwards;
+}
+
+.outer {
+  width: 6em;
+  height: 6em;
+  border-radius: 6em;
+  margin: .3em .6em;
+  background: linear-gradient(to bottom right, #000, #555, #000);
+  transform: translate(33em, 0) rotate(360deg);
+  animation: roll 3s 1s forwards;
+}
+
+.middle {
+  width: 4.2em;
+  height: 4.2em;
+  border-radius: 4.2em;
+  background: linear-gradient(to bottom right, #000, #555, #000);
+  transform: translate(.9em, .9em);
+}
+
+.inner {
+  width: 2.7em;
+  height: 2.7em;
+  border-radius: 2.7em;
+  background: #222;
+  transform: translate(.75em, .75em);
+}
+
+.inside {
+  width: 1.5em;
+  height: 1.5em;
+  background: white;
+  border-radius: 1.5em;
+  transform: translate(.6em, .6em) rotate(360deg);
+  animation: spin 3s 1s forwards;
+}
+
+.text {
+  color: #eee;
+  transform: translate(-0.8em, 2em);
+  font-family: cursive;
+  
 }
 
 .cf:before,
@@ -15,6 +76,10 @@ body {
 
 .cf:after {
     clear: both;
+}
+
+header.index {
+	transform: translate(0, -5em);
 }
 
 h1 {
@@ -77,4 +142,31 @@ span.list, .input-label, p {
 	margin-top: .5em;
 	margin-left: 2em;
 }
+
+/*@keyframes spin {
+  from {
+	transform: translate(.6em, .6em) rotate(0);
+  }
+  to {
+    transform: translate(.6em, .6em) rotate(360deg);
+  }
+} 
+
+@keyframes roll {
+  from {
+	transform: translateZ(1em, 0);
+  }
+  to {
+    transform: translate(33em, 0) rotate(360deg);
+  }
+}
+
+@keyframes extend {
+  from {
+	transform: translateZ(-1em) translate(-33em, -0.6em);
+  }
+  to {
+    transform: translateZ(-1em) translate(0em, -.6em);
+  }
+}*/
 
