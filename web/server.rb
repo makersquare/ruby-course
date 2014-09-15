@@ -22,15 +22,15 @@ class Songify::Server < Sinatra::Application
   end
 
   post '/show_some' do
-    if params['query_parameter'] == "genre"
-      sym = "genre_id"
+    sym = params['query_parameter']
+    if sym == "genre_id"
       search = Songify.genres.get_a_genre_by_name(params['search_term']).id
-    else 
-      sym = params['query_parameter']
+    else       
       search = params['search_term']
     end
     parameter = {}
     parameter[sym] = search
+    binding.pry
 
     erb :show_some, :locals => {
       song_list: Songify.songs.get_all_songs_by(parameter)
@@ -68,10 +68,6 @@ class Songify::Server < Sinatra::Application
   post '/create' do
 
     params['old_genre'].empty? ? passed_genre = params['new_genre'] : passed_genre = params['old_genre']
-
-
-    z = Songify::Genre.new(genre: passed_genre)
-    genre_id = Songify.genres.save_a_genre(z)
     
     x = 
       {
@@ -80,15 +76,14 @@ class Songify::Server < Sinatra::Application
         album: params['song_album'],
         year_published: params['song_yearpublished'].to_i,
         rating: params['song_rating'].to_i,
-        genre: z.genre,
+        genre: passed_genre,
         lyrics: params['song_lyrics']
-      }
-    y = Songify::Song.new(x) 
-    Songify.songs.save_a_song(y)
+      } 
+
+    song_item = Songify.songs.save_a_song(Songify::Song.new(x))
+
     erb :create, :locals => {
-      your_song: Songify.songs.get_a_song(y.id),
-      your_genre: passed_genre
-      # Songify.genres.get_a_genre(genre_id)
+      song: Songify.songs.get_a_song(song_item.id)
     }
   end
 
@@ -101,22 +96,18 @@ class Songify::Server < Sinatra::Application
   post '/update' do
     if params['change_parameter'] == "genre"
       sym = "genre_id"
-      search = Songify.genres.get_a_genre_by_name(params['change_term']).id
-      if search.nil?
-        search = Songify.genres.save_a_genre(Songify::Genre.new(params['change_term']))
-      end
+      search = Songify.genres.save_a_genre(Songify::Genre.new(genre: params['change_term']))
     else 
       sym = params['change_parameter']
       search = params['change_term']
     end
     parameter = {}
     parameter[sym] = search
+
     this_song = Songify.songs.get_a_song(params.keys.last.to_i)
     
-    updated = Songify.songs.update_song(this_song,parameter).first
-
     erb :update, :locals => {
-      your_song: updated
+      your_song: Songify.songs.update_song(this_song,parameter).first
     }
   end
 
@@ -125,8 +116,10 @@ class Songify::Server < Sinatra::Application
   end
 
   post '/delete' do
-    Songify.genres.delete_all
     Songify.songs.delete_all
+
+    Songify.genres.delete_all
+
     @judge = "You Monster!"
     erb :delete
   end
@@ -153,3 +146,8 @@ end
 # <div> <label for='song_id'>One song (by id)</label> </div>
 # <div> <input type='text' name='song_id'> </div>
 # </div>
+
+
+
+
+

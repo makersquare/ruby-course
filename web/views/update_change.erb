@@ -1,17 +1,26 @@
 <div>You've chosen to update:</div>
 <div> </div>
 
-	<div><%= "#{your_song.title}" %></div>
-	<div><%= "by #{your_song.artist}" %></div> 
-	<div><%= "off of #{your_song.album}" %></div> 
-	<div><%= "from #{your_song.year_published}" %></div> 
-	<div><%= "in the #{your_song.genre} genre." %></div> 
-	<div><%= "You've rated this song a #{your_song.rating}." %></div>
+	<div>Artist <%= " #{your_song.artist}" %></div> 
+	<div>Title: <%= " #{your_song.title}" %></div>
+	<div>Album: <%= " #{your_song.album}" %></div> 
+	<div>Year Published: <%= " #{your_song.year_published}" %></div> 
+	<div>Genre: <%= " #{your_song.genre}" %></div> 
+	<div>Rating: <%= " #{your_song.rating}." %></div>
+	<div>Lyrics: <%= " #{your_song.lyrics}." %></div>
 
 <form action='/update' method='post'>	
 <div>
-<div>	<label for='change_parameter'>What would you like to change?</label> </div>
-<div>	<input type='text' name='change_parameter'> </div>
+<div>	<label for='change_parameter'>What would you like to change?</label> </div> </div>
+<div>   <select name='change_parameter'>
+            <option  value="title">Title</option>
+            <option  value="artist">Artist</option>
+            <option  value="album">Album</option>
+            <option  value="year_published">Year published</option>
+            <option  value="rating">Rating</option>
+            <option  value="genre">Genre</option>
+            <option  value="lyrics">Lyrics</option>
+        </select>
 </div>
 
 <div>	

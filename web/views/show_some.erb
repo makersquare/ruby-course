@@ -1,9 +1,17 @@
-<div>What would you like to search by? An artist, an album, a genre, a lyric?</div>
+<div>What would you like to search by?</div> 
 
 <form action='/show_some' method='post'>
 <div>
 <div>	<label for='query_parameter'>Query parameter:</label> </div>
-<div>	<input type='text' name='query_parameter'> </div>
+<div>   <select name='query_parameter'>
+            <option  value="title">Title</option>
+            <option  value="artist">Artist</option>
+            <option  value="album">Album</option>
+            <option  value="year_published">Year published</option>
+            <option  value="rating">Rating</option>
+            <option  value="genre_id">Genre</option>
+            <option  value="lyrics">Lyrics</option>
+        </select>
 </div>
 
 <div>	
@@ -13,9 +21,8 @@
 <div><input type='submit' name='FLIP' value='Search'></div>
 </form> 
 
-<% content_for :rightmost do %>
     <% if defined?(song_list) %>
-
+<% content_for :rightmost do %>
     <div><form action='/update_change' method='post'>
     
     	<% song_list.each do |song| %>
@@ -42,4 +49,3 @@
     </div>
 <% end %>
 
-You are viewing layout : show_some.

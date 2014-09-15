@@ -1,11 +1,13 @@
 
 <div>Congratulations! You've just added a song:</div>
 
-<div><%= "#{your_song.title}" %></div>
-<div><%= "by #{your_song.artist}" %></div> 
-<div><%= "off of #{your_song.album}" %></div> 
-<div><%= "from #{your_song.year_published}" %></div> 
-<div><%= "in the #{your_genre} genre." %></div> 
-<div><%= "You've rated this song a #{your_song.rating}." %></div>
+<div>Title: <%= song.title %></div>
+<div>Artist: <%= song.artist %> </div> 
+<div>Album: <%= song.album %></div> 
+<div>Year: <%= song.year_published %></div> 
+<div>Genre: <%= Songify.genres.get_a_genre_by_name(song.genre).genre %></div> 
+<div>Rating: <%= song.rating %></div>
 
-<div>You are viewing layout : new / create.</div>
+<% content_for :rightmost do %>
+	<div>Lyrics: <%= song.lyrics %></div>
+<% end %>

@@ -16,7 +16,7 @@ module Songify
             title text,
             artist text,
             album text,
-            year_published int,
+            year_published text,
             rating int,
             genre_id int REFERENCES genres (id),
             lyrics text
@@ -30,9 +30,9 @@ module Songify
       end
 
       def save_a_song(song)
-        # genre_id = Songify.genres.save_a_genre(Songify::Genre.new(genre:song.genre))
+        genre_id = Songify.genres.save_a_genre(Songify::Genre.new(genre:song.genre))
         
-        genre_id = Songify.genres.get_a_genre_by_name(song.genre).id
+        # genre_id = Songify.genres.get_a_genre_by_name(song.genre).id
 
         result = @db.exec(%q[
           INSERT INTO songs (title,artist,album,year_published,rating,genre_id,lyrics)
@@ -40,6 +40,7 @@ module Songify
           RETURNING id
           ], [song.title,song.artist,song.album,song.year_published,song.rating, genre_id, song.lyrics])
         song.instance_variable_set :@id, result.entries.first["id"].to_i
+        return song
       end
 
       def get_a_song(id)
@@ -55,7 +56,11 @@ module Songify
       end
 
       def get_all_songs_by(parameter)
+
         colname = parameter.keys.first.to_s.gsub(/;/, ' ')
+        if colname == "rating"
+          colname = "CAST(rating AS text)"
+        end
         value = parameter.values.first.to_s.gsub(/;/, ' ')
         sql = "SELECT * FROM songs WHERE #{colname} like '%#{value}%'"
         
@@ -64,12 +69,18 @@ module Songify
       end
 
       def update_song(song, parameter)
+        if song.is_a?(Songify::Song)
+          id_no = song.id
+        else
+          id_no = song
+        end
         
         colname = parameter.keys.first.to_s.gsub(/;/, ' ').gsub(/\%/,'')
-        value = parameter.values.first.to_s.gsub(/;/, ' ').gsub(/\%/,'')
+        value = parameter.values.first.to_s.gsub(/;/, ' ').gsub(/\%/,'').gsub(/[']/,'\'')
         sql = "UPDATE songs SET #{colname} = '#{value}' WHERE id = $1 RETURNING *"
 
-        result = @db.exec(sql, [song.id])
+        binding.pry
+        result = @db.exec(sql, [id_no])
         build_song(result.entries)
       end      
 
@@ -93,7 +104,8 @@ module Songify
             artist:song_hash["artist"],
             album:song_hash["album"],
             year_published:song_hash["year_published"].to_i,
-            rating:song_hash["rating"].to_i
+            rating:song_hash["rating"].to_i,
+            lyrics:song_hash["lyrics"]
             )
           x.instance_variable_set :@id, song_hash["id"].to_i
           x.instance_variable_set :@genre, genre
@@ -143,3 +155,10 @@ end
         # songs.each_with_index do |song,i|
         #   song.instance_variable_set :@id, result.entries[i]["id"].to_i
         # end
+
+
+
+
+
+
+        
