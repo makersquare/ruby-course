@@ -1,0 +1,18 @@
+<a href='/'>Home</a>
+<form action='/create' method='post'>
+	<label>Title</label>
+		<input type='text' name='title'>	
+	<label>Artist</title>
+		<input type='text' name='artist'>
+	<label>Album</label>
+		<input type='text' name='album'>
+	<label>Genre</label>
+		<select name='genre'>
+			<%@genres.each do |genre|%>
+				<option><%=genre.genre%></option>
+			<%end%>
+		</select>
+	<label>or add a new genre</label>
+		<input type='text' name='new-genre'>
+	<input type='submit' value='Add Song'>
+</form> 

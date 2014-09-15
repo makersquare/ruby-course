@@ -1,0 +1,17 @@
+<form class="new-item" action="/create" method="post">
+	<input class="name" type="text" name="username">
+	<input class="pass" type="text" name="password">
+</form>
+
+<script type="text/javascript">
+
+$('form.new-item').on('submit', function (e) {
+  e.preventDefault();
+
+  // In jQuery, the value of `this` is the element that triggered the event
+  // In this case, `this` points to the form tag
+  var newItemName = $('.name', this).val();
+  console.log('You entered:', newItemName);
+});
+
+</script>
