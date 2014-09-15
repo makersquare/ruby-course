@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Show all songs</title>
+</head>
+<body>
+	<ul>
+		<% if @songs %>
+			<% @songs.each do |song| %>
+				<li><%= "#{song.title} #{song.artist} #{song.title}" %></li>
+			<% end %>
+		<% end %>
+	</ul>
+</body>
+</html>
