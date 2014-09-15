@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+
+	    <meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <meta name="description" content="">
+	    <meta name="author" content="">
+
+	    <title>Songify</title>
+
+	    <!-- Bootstrap Core CSS -->
+	    <link href="/styles/css/bootstrap.min.css" rel="stylesheet">
+	    <!-- Custom CSS -->
+	    <link href="/styles/css/grayscale.css" rel="stylesheet">
+	    <!-- Custom Fonts -->
+	    <link href="/styles/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	    <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+	    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+
+	    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	    <!--[if lt IE 9]>
+	        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	    <![endif]-->
+
+	</head>
+
+	<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand page-scroll" href="#page-top">
+                        <i class="fa fa-play-circle"></i>  <span class="light">Start</span> Songify
+                    </a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                    <ul class="nav navbar-nav">
+                        <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                        <li class="hidden">
+                            <a href="#page-top"></a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#add">Add a Song</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#songs">Songs</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#genres">Genres</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#contact">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+
+        <!-- Intro Header -->
+        <header class="intro">
+            <div class="intro-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <h1 class="brand-heading">Songify</h1>
+                            <p class="intro-text">where words fail<br><strong>MUSIC SPEAKS</strong></p>
+                            <a href="#songs" class="btn btn-circle page-scroll">
+                                <i class="fa fa-angle-double-down animated"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- About Section -->
+        <section id="add" class="container content-section text-center">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <h2>Add a Song</h2>
+                    <p></p>
+                    <table class="add-song-table">
+                        <form action="/" method="post">
+                            <tr>
+                                <div class="title">
+                                    <th><label for="title">Title: </label></th>
+                                    <td><input type="text" id="title" name="title" class="text-box"></td>
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="artist">
+                                    <th><label for="artist">Artist: </label></th>
+                                    <td><input type="text" id="artist" name="artist" class="text-box"></td>
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="album">
+                                    <th><label for="album">Album: </label></th>
+                                    <td><input type="text" id="album" name="album" class="text-box"></td>
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="year">
+                                    <th><label for="year">Year: </label></th>
+                                    <td><input type="text" id="year" name="year" class="text-box"></td>
+                                </div>
+                            </tr>
+                            
+                            <tr>
+                                <div class="rating">
+                                    <th><label for="rating">Rating: </label></th>
+                                    <td><select id="rating" name="rating" class="select-box">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select></td>
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="genre">
+                                    <th class="genre"><label for="genre" class="genre">Genre: </label>
+
+                                        
+                                    </th>
+                                    <td>
+                                        <% genres.each do |genre| %>
+                                            <div class="radio">
+                                                <input type="radio" class="genre" name="genre" value="<%= genre.name %>"><%= genre.name %>
+                                            </div>
+                                        <% end %>
+                                        <!-- <label for="other-genre" class="other">New </label>-->
+                                        <input type="text" name="new-genre" class="new-genre genre text-box">
+                                        <div class="new-genre">
+                                            <button type="button" class="new-genre btn btn-default submit">New Genre</button>
+                                        </div>
+
+                                    </td>
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="submit">
+                                    <th colspan="2"><input type="submit" class="btn btn-default submit"></th>
+                                </div>
+                            </tr>
+                        </form>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Songs Section -->
+        <section id="songs" class="content-section text-center">
+            <div class="download-section">
+                <div class="container">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <h2>Songs</h2>
+                        <p></p>
+                        <table class="songs-table" cellspacing="1" cellpadding="2" border="1">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Artist</th>
+                                    <th>Album</th>
+                                    <th>Year</th>
+                                    <th>Genre</th>
+                                    <th>Rating</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% songs.each do |song| %>
+                                    <tr>
+                                        <td><%= song.title %></td>
+                                        <td><%= song.artist %></td>
+                                        <td><%= song.album %></td>
+                                        <td><%= song.year %></td>
+                                        <td><%= Songify.genres.get_genre(song.genre_id).first["name"] %></td>
+                                        <td><%= song.rating %></td>
+                                    </tr>
+                                <% end %>
+                            </tbody>
+                        </table>
+                        <!-- <a href="#" class="btn btn-default btn-lg">Visit Songs Page</a> -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Genres Section -->
+        <section id="genres" class="content-section text-center">
+            <div class="genres-section">
+                <div class="container">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <h2>Genres</h2>
+                        <div class="genre-list">
+                            <ul class="genre-list">
+                                <% genres.each do |genre| %>
+                                    <li><a class="<%= genre.id %>"><%= genre.name %></a></li>
+                                <% end %>
+                            </ul>
+                            <table class="genres-table" cellspacing="1" cellpadding="2" border="1">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Artist</th>
+                                        <th>Album</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% songs.each do |song| %>
+                                    <tr class="<%= song.genre_id %> genre-entry">
+                                        <td><%= song.title %></td>
+                                        <td><%= song.artist %></td>
+                                        <td><%= song.album %></td>
+                                    </tr>
+                                    <% end %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="container content-section text-center">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <h2>Contact Songify</h2>
+                    <p>Feel free to email us to provide some feedback, give us suggestions, or to just say hello!</p>
+                    <p><a href="mailto:#"></a>
+                    </p>
+                    <ul class="list-inline banner-social-buttons">
+                        <li>
+                            <a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+                        </li>
+                        <li>
+                            <a href="#" class="btn btn-default btn-lg"><i class="fa fa-facebook fa-fw"></i> <span class="network-name">Facebook</span></a>
+                        </li>
+                        <li>
+                            <a href="https://plus.google.com/+Startbootstrap/posts" class="btn btn-default btn-lg"><i class="fa fa-google-plus fa-fw"></i> <span class="network-name">Google+</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        
+        <!-- Map Section -->
+        <!-- <div id="map"></div> -->
+
+        <!-- Footer -->
+        <footer>
+            <div class="container text-center">
+                <p>Copyright &copy; Songify 2014</p>
+            </div>
+        </footer>
+
+        <!-- jQuery Version 1.11.0 -->
+        <script src="/javascripts/jquery-1.11.0.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="/javascripts/bootstrap.min.js"></script>
+
+        <!-- Plugin JavaScript -->
+        <script src="/javascripts/jquery.easing.min.js"></script>
+
+        <!-- Google Maps API Key - Use your own API key to enable the map feature. More information on the Google Maps API can be found at https://developers.google.com/maps/ -->
+        <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script> -->
+
+        <!-- Custom Theme JavaScript -->
+        <script src="/javascripts/grayscale.js"></script>
+        <script>
+            $(document).ready(function(){
+
+                // new-genre-button
+                var newGenreInput = $('input.new-genre');
+                newGenreInput.hide();
+                $('button.new-genre').on('click', function(){
+                    newGenreInput.slideToggle();
+                    $("input.genre").removeAttr("checked");
+                    newGenreInput.val("");
+                    $('div.radio').slideToggle();
+                });
+
+                <% genres.each do |genre| %>
+                    $("tr.<%= genre.id %>").hide();
+                    $("a.<%= genre.id %>").on('click', function(){
+                        $("tr.genre-entry").hide();
+                        $("tr.<%= genre.id %>").toggle();
+                    })
+                <% end %>
+
+            });
+
+        </script>
+
+    </body>
+
+</html>
