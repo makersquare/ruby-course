@@ -47,8 +47,6 @@
 				var re = /([A-Za-z0-9]*)$/;
 				var found = genre.match(re);
 
-				var re2 = /^(\d*)/;
-
 				$('ol li').hide();
 				$('ol li:contains(' + found[0] + ')').show();
 			};		
