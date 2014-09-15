@@ -1,7 +1,13 @@
+<h1><a href="/index">Songify</a></h1>
 <h3>Songs:</h3>
 <ul>
-<% @songs.each do |x| %>
-<li><%= x.title %>, <%= x.artist %>, <%= x.genre %></li>
+<% @songs.each do |x| %> 
+<% genre = Songify.genres_repo.get_genre(x.genre_id.to_i) %>
+<li><%= "#{x.title}" %>, <%= "#{x.artist}" %>, <%= "#{x.album}" %>, <%= "#{genre.name}" %></li> 
+
 <% end %>
 </ul>
+
+<a href="/new">Add another song</a>
+<a href="/show_genres">Filter to see songs by genre</a>
 

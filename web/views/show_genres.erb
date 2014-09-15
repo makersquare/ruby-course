@@ -1,0 +1,12 @@
+<h1>Songify</h1>
+
+<h3>Select a genre:</h3>
+<form action="/genre" method="post">
+<select name="genres[genre_name]">
+	<% @genres.each do |g| %>
+	<option value=<%="#{g.name}"%>><%= "#{g.name}" %></option>
+	<% end %>
+	</select>
+<input type="submit">
+</form>
+

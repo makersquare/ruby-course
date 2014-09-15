@@ -13,13 +13,13 @@ module Songify
       def build_table
         @db.exec(%q[
           CREATE TABLE IF NOT EXISTS genres(
-           id SERIAL,
+           id SERIAL UNIQUE,
            name TEXT)
           ])
       end
 
       def drop_table
-        @db.exec("DROP TABLE genres")
+        @db.exec("DROP TABLE IF EXISTS genres cascade")
         build_table
       end
 
@@ -32,13 +32,13 @@ module Songify
       def save_genre(genre)
         result = @db.exec(%q[
           INSERT INTO genres (name) VALUES ($1) RETURNING id;], [genre.name]) 
-
         genre.id = result.entries.first["id"].to_i
       end
 
       def get_all_genres
        result = @db.exec("SELECT * from genres;")
-        result.map {|g| build_genre(g)}
+        final_result = result.map {|g| build_genre(g)}
+        final_result ###why has this turned into a hash and not an array
       end
 
       def get_genre(id)
