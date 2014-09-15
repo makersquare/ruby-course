@@ -42,6 +42,13 @@ module Songify
 				build_songs(result.entries).first
 			end
 
+			def get_songs_by_genre(genre_id)
+				result = @db.exec(%q[
+					SELECT * FROM songs WHERE genre = $1
+				], [genre_id])
+				build_songs(result.entries)
+			end
+
 			# no parameters needed
 			def get_all_songs
 				result = @db.exec(%q[
