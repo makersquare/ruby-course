@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search by Genre</title>
+</head>
+  <body>
+
+    <form action = '/search_genre', method = 'post'>
+    <label for = 'Search by Genre'>Search by Genre: </label> 
+    <input name = 'Search by Genre', type = 'text'></br>
+    <input name ='submit', type = 'submit'></br>
+
+  </form>
+      <ol>
+      <% if @genres %>
+      <% if @array_of_genres %>
+        <% @genres.each do |genre| %>
+          <% @array_of_genres.push(genre.name) %>
+          <li><%= puts @array_of_genres.uniq %></li>
+        <% end %>
+      <% end %>
+    <% end %>
+    </ol> 
+  </body>
+</html>
+
+

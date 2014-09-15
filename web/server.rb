@@ -12,16 +12,20 @@ set :bind, '0.0.0.0'
 
   get '/show' do
     @songs = Songify.songs_repo.get_all_songs
-    binding.pry
     @genres = Songify.genres_repo.get_all_genres
-    # binding.pry
     erb :show
   end
 
   get '/new' do
-    @show_genre = Songify.songs_repo.get_all_songs
+    # @show_genre = Songify.songs_repo.get_all_songs
     erb :new
   end
+
+  get '/search_genre' do
+    @genres = Songify.genres_repo.get_all_genres
+    erb :create
+  end
+
 
   post '/create' do
     
@@ -29,17 +33,12 @@ set :bind, '0.0.0.0'
 
     y = Songify::Genre.new(genre_name)
     Songify.genres_repo.save_a_genre(y)
-      # if x.name == params["new_song_genre"]
-      #   "error"
-      # else
-      #   Songify.genres_repo.save_a_genre(y)
-
 
     song_title = params['title']
     song_artist = params['artist']
     song_album = params['album']
     x = Songify::Song.new(song_title, song_album, song_artist, y.id)
-    # binding.pry
+
     Songify.songs_repo.save_a_song(x)
     redirect to('/show') 
   end
