@@ -1,6 +1,9 @@
+
+
 require_relative "../lib/songify.rb"
 require 'sinatra/base'
 require "sinatra"
+require "pry-byebug"
 
 set :bind, '0.0.0.0'
 
@@ -43,19 +46,19 @@ class Songify::Server < Sinatra::Application
 
    post '/genre' do 
    @genres = Songify.genres_repo.get_all_genres
-    @found_genre = @genres.find { |s| s.name == params["genres[genre_name]"]} 
-    @found_genre
-  @selected_songs = Songify.songs_repo.select_song_by_genre(@found_genre) 
-
-    redirect to ('/this_genre')
+    @found_genre = @genres.find { |s| s.name == params["genres"]["genre_name"]} 
+    @selected_songs = Songify.songs_repo.select_song_by_genre(@found_genre) 
+ 
+    erb :this_genre
+    # redirect to ('/this_genre')
 
   end
  
- get '/this_genre' do
+ # get '/this_genre' do
 
 
-  erb :this_genre
-  end
+ #  erb :this_genre
+ #  end
 
 
   run! if __FILE__ == $0

@@ -1,6 +1,6 @@
 <h1>Songify</h1>
-<h3>Selected genre: <%= @selected_genre %> </h3>
+<h3><%= @found_genre.name %> Songs</h3>
 
 <% @selected_songs.each do |s| %>
-<%= '#{s.title}' %>, <%= '#{s.artist}' %>, <%= '#{s.album}' %>
+<%= "#{s.title}" %>, <%= "#{s.artist}" %>, <%= "#{s.album}" %>
 <% end %>
