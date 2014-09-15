@@ -380,9 +380,7 @@ body {
     border-radius: 5px;
     margin: 5px 10px;
 }
-.genre.text-box {
-    width: 152px;
-}
+
 .select-box {
     width: 50px;
     margin: 5px 15px;
@@ -402,15 +400,15 @@ body {
     margin-left: auto;
     background-color: rgba(0,0,0,.8);
     border: 1px solid white;
-    /*clear: both;*/
+    width: 100%;
 }
 input[type=text] {
     color: black;
     padding-left: 5px;
 }
-input[type=text].new-genre {
+/*input[type=text].new-genre {
     display: block;
-}
+}*/
 .songs-table th, td {
     padding: 5px;
     text-align: left;
@@ -420,14 +418,22 @@ div.radio {
     position: relative;
     left: 30px;
 }
-label.genre {
+div.rating {
+    position:absolute;
+}
+th.genre {
     vertical-align: top;
+    position: relative;
+    top: 15px;
 }
 label.other {
     font-weight: 200;
 }
 div.new-genre {
-    display: inline-block;
+    width: 20%;
+    position: relative;
+    left: 13%;
+    display: block;
 }
 
 div.genre-list {
@@ -438,42 +444,32 @@ ul.genre-list {
     list-style: none;
     margin: 0 auto;
     float:left;
-    /*width: 100%;*/
-    /*text-align: center;*/
-    /*display: inline-block;*/
 }
 ul.genre-list li{
-    /*width: 100px;*/
     text-align: left;
-    /*margin: 0 auto;*/
-    /*display: block;*/
     padding: 5px;
     font-size: 1.3em;
 }
 ul.genre-list li a{
-    /*display: block;*/
     padding: 5px 10px;
     color: white;
     background: rgba(0,0,0,.7);
     text-decoration: none;
+    cursor: pointer;
 }
 ul.genre-list li a:hover{
     color: white;
     background: gray;
+    cursor: pointer;
 }
 ul.genre-list li ul{
     display: none;
-    text-decoration: 
-}
-ul.genre-list li:hover ul{
-    z-index: 10;
-    display: inline;  /*display the dropdown*/ 
-}
-ul.genre-list li ul li a{
     text-decoration: none;
 }
+
 table.genres-table {
     background-color: rgba(0,0,0,.8);
+    width: 70%;
     border: 1px solid white;
 }
 /*ul {

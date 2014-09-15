@@ -117,24 +117,7 @@
                                     <td><input type="text" id="year" name="year" class="text-box"></td>
                                 </div>
                             </tr>
-                            <tr>
-                                <div class="genre">
-                                    <th><label for="genre" class="genre">Genre: </label></th>
-                                    <td>
-                                        <% genres.each do |genre| %>
-                                            <div class="radio">
-                                                <input type="radio" class="genre" name="genre" value="<%= genre.name %>"><%= genre.name %>
-                                            </div>
-                                        <% end %>
-                                        <div class="new-genre">
-                                            <button type="button" class="new-genre btn btn-default submit">New Genre</button>
-                                        </div>
-                                        <!-- <label for="other-genre" class="other">New </label>-->
-                                        <input type="text" name="new-genre" class="new-genre genre text-box">
-
-                                    </td>
-                                </div>
-                            </tr>
+                            
                             <tr>
                                 <div class="rating">
                                     <th><label for="rating">Rating: </label></th>
@@ -145,6 +128,27 @@
                                         <option value="4">4</option>
                                         <option value="5">5</option>
                                     </select></td>
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="genre">
+                                    <th class="genre"><label for="genre" class="genre">Genre: </label>
+
+                                        
+                                    </th>
+                                    <td>
+                                        <% genres.each do |genre| %>
+                                            <div class="radio">
+                                                <input type="radio" class="genre" name="genre" value="<%= genre.name %>"><%= genre.name %>
+                                            </div>
+                                        <% end %>
+                                        <!-- <label for="other-genre" class="other">New </label>-->
+                                        <input type="text" name="new-genre" class="new-genre genre text-box">
+                                        <div class="new-genre">
+                                            <button type="button" class="new-genre btn btn-default submit">New Genre</button>
+                                        </div>
+
+                                    </td>
                                 </div>
                             </tr>
                             <tr>
@@ -286,10 +290,10 @@
                 var newGenreInput = $('input.new-genre');
                 newGenreInput.hide();
                 $('button.new-genre').on('click', function(){
-                    newGenreInput.toggle();
+                    newGenreInput.slideToggle();
                     $("input.genre").removeAttr("checked");
                     newGenreInput.val("");
-                    $('div.radio').toggle();
+                    $('div.radio').slideToggle();
                 });
 
                 <% genres.each do |genre| %>
