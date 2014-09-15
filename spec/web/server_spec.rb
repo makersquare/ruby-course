@@ -33,13 +33,18 @@ describe Songify::Server do
   describe "GET /new" do
     it "shows a form to get info about a new song" do
       get '/new'
-      expect(last_response.body).to include "Artist:", "Album:", "Title:"
+      expect(last_response.body).to include "Artist", "Album", "Title"
     end
   end
 
   describe "GET /show/genre" do
     it "shows all of the songs of the selected genre" do
-
+      post '/create', { "title" => "title1", "artist" => "artist1", "album" => "album1", "genre" => "genre1" }
+      post '/create', { "title" => "title2", "artist" => "artist2", "album" => "album2", "genre" => "genre2" }
+      get '/show/genre', { "genre-show-drop" => "genre1" }
+      expect(last_response).to be_ok
+      expect(last_response.body).to include "artist1", "title1"
+      expect(last_response.body).to_not include "artist2", "title2"
     end
   end
 
