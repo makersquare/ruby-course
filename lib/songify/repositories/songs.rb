@@ -11,7 +11,7 @@ module Songify
 			def build_table
 				@db.exec(%q[
 					CREATE TABLE IF NOT EXISTS songs(
-						id serial,
+						id serial PRIMARY KEY,
 						title text,
 						artist text,
 						album text,
@@ -21,7 +21,7 @@ module Songify
 			end
 
 			def drop_table
-				@db.exec("DROP TABLE songs")
+				@db.exec("TRUNCATE TABLE songs")
 				build_table
 			end
 
@@ -29,6 +29,7 @@ module Songify
 				entries.map do |song|
 					x = Songify::Song.new(song['title'], song['artist'], song['album'])
 					x.instance_variable_set :@id, song['id'].to_i
+					x.instance_variable_set :@genre_id, song['genre'].to_i
 					x
 				end
 			end
@@ -50,12 +51,12 @@ module Songify
 			end
 
 			# parameter should be a song object
-			def save_a_song(song)
+			def save_a_song(song, genre)
 				result = @db.exec(%q[
-					INSERT INTO songs (title, artist, album)
-					VALUES ($1, $2, $3)
+					INSERT INTO songs (title, artist, album, genre)
+					VALUES ($1, $2, $3, $4)
 					RETURNING id],
-					[song.title, song.artist, song.album]
+					[song.title, song.artist, song.album, genre.id]
 				)
 				song.instance_variable_set :@id, result.entries.first['id'].to_i
 			end

@@ -7,6 +7,7 @@ module Songify
 			@artist = artist
 			@album = album
 			@id = nil
+			@genre_id = nil
 		end
 	end
 end

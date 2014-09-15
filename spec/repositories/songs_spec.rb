@@ -7,16 +7,20 @@ describe Songify::Repositories::Songs  do
 
 	it "can save song" do
 		drop
+		genre = Songify::Genre.new('electro')
+		Songify.genres_repo.save_a_genre(genre)
 		expect(song.id).to be_nil
-		Songify.songs_repo.save_a_song(song)
+		Songify.songs_repo.save_a_song(song, genre)
 		expect(song.id).to_not be_nil
 	end
 
 	it "gets all songs from the table" do
 		drop
+		genre = Songify::Genre.new('electro')
+		Songify.genres_repo.save_a_genre(genre)
 		song2 = Songify::Song.new('fake_title2', 'fake_artist2', 'fake_album2')
-		Songify.songs_repo.save_a_song(song)
-		Songify.songs_repo.save_a_song(song2)
+		Songify.songs_repo.save_a_song(song, genre)
+		Songify.songs_repo.save_a_song(song2, genre)
 		result = Songify.songs_repo.get_all_songs
 		expect(result.size).to eq(2)
 
@@ -25,7 +29,9 @@ describe Songify::Repositories::Songs  do
 	it "gets a song from the table by its id" do
 		drop
 		song = Songify::Song.new('fake_title', 'fake_artist', 'fake_album')
-		Songify.songs_repo.save_a_song(song)
+		genre = Songify::Genre.new('electro')
+		Songify.genres_repo.save_a_genre(genre)
+		Songify.songs_repo.save_a_song(song, genre)
 		result = Songify.songs_repo.get_a_song(song.id)
 		expect(result).to be_a(Songify::Song)
 		expect(result.id).to eq(song.id)
@@ -34,8 +40,10 @@ describe Songify::Repositories::Songs  do
 	it "deletes a song from the table" do 
 		drop
 		song2 = Songify::Song.new('fake_title2', 'fake_artist2', 'fake_album2')
-		Songify.songs_repo.save_a_song(song)
-		Songify.songs_repo.save_a_song(song2)
+		genre = Songify::Genre.new('electro')
+		Songify.genres_repo.save_a_genre(genre)
+		Songify.songs_repo.save_a_song(song, genre)
+		Songify.songs_repo.save_a_song(song2, genre)
 		result = Songify.songs_repo.get_all_songs
 		expect(result.size).to eq(2)
 

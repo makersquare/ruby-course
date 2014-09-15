@@ -11,14 +11,14 @@ module Songify
 			def build_table
 				@db.exec(%q[
 					CREATE TABLE IF NOT EXISTS genres(
-						id serial,
+						id serial  PRIMARY KEY,
 						name text
 					)
 				])
 			end
 
 			def drop_table
-				@db.exec("DROP TABLE genres")
+				@db.exec("TRUNCATE TABLE genres CASCADE")
 				build_table
 			end
 
@@ -42,6 +42,11 @@ module Songify
 					SELECT * FROM genres
 				])
 				build_genres(result.entries)
+			end
+
+			def delete_a_genre(id)
+				result = @db.exec(%q[
+					DELETE FROM genres WHERE id = $1], [id]) 
 			end
 
 		# 	# parameter should be a song object

@@ -24,7 +24,9 @@ class Songify::Server < Sinatra::Application
 
 	post '/create' do
 		song = Songify::Song.new(params['title'], params['artist'], params['album'])
+		genre = Songify::Genre.new(params['name'])
 		Songify.songs_repo.save_a_song(song)
+		Songify.genres_repo.save_a_genre(genre)
 		song.title
 		redirect to('/index')
 	end
