@@ -23,12 +23,21 @@ module Songify
         song[0]
       end
 
+      def get_a_genre(id)
+        song = get_all_songs(nil,id)
+        song
+      end
+
       # does not need a paramater
-      def get_all_songs(id = nil)
+      def get_all_songs(id = nil,genre_id=nil)
         sql = ''
         if id
           sql = "WHERE id = #{id}"
         end
+        if genre_id
+          sql = "WHERE genre_id = #{id}"
+        end
+        # binding pry-byebug
         songs = @db.exec("SELECT * FROM songs " + sql ).entries
         song = songs.map{|x| build_song(x)}
         song
@@ -56,12 +65,7 @@ module Songify
           WHERE id = ] + id.to_s
         )
       end
-        # @db.exec(%q[ 
-        #   UPDATE songs 
-        #   SET $1 = $2 WHERE id = ] + id.to_s,[piece, artist]
-        # )
 
-      #parameter needed, song id.
       def delete_a_song(id)
         @db.exec(%q[DELETE FROM songs WHERE id = $1],[id])
       end

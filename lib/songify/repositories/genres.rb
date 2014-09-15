@@ -6,7 +6,8 @@ module Songify
 
       def initialize
         @db = PG.connect(host: "localhost", dbname: "songify")  
-          # build_table
+        none = Songify::Genre.new('None')
+        save_genre(none)
       end
 
       def save_genre(type)

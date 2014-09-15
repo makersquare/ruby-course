@@ -17,7 +17,7 @@ describe Songify::Server do
     it "Will Show all songs currently loaded." do
       get '/show'
       expect(last_response).to be_ok
-      expect(last_response.body).to include "artist10" 
+      expect(last_response.body).to include "3" 
     end
   end
 
