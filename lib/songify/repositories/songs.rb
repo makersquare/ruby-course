@@ -32,6 +32,7 @@ module Songify
 
       # parameter should be a song object
       def save_a_song(song, genre)
+        # binding.pry
         result = @db.exec(%q[
             INSERT INTO songs (title, artist, album, genre_id)
             VALUES ($1, $2, $3, $4)
@@ -39,6 +40,7 @@ module Songify
           ], [song.title, song.artist, song.album, genre.id])
           
           song.instance_variable_set :@id, result.first['id'].to_i
+          # song.instance_variable_set :@genre_id, result.first['genre_id'].to_i
       end
 
       # parameter could be song id
@@ -59,7 +61,7 @@ module Songify
 
       # parameter could be song id
       def delete_a_song(id)
-        result = @db.exec(%q[
+        @db.exec(%q[
           DELETE FROM songs 
           WHERE id = $1;
         ], [id])
@@ -70,7 +72,7 @@ module Songify
       end
 
       def build_song(song)
-        x = Songify::Song.new(song['title'], song['artist'], song['album'], song['genre_id'])
+        x = Songify::Song.new(song['title'], song['artist'], song['album'], song['genre_id'].to_i)
         x.instance_variable_set :@id, song['id'].to_i
         x
       end

@@ -41,7 +41,7 @@ module Songify
         result = @db.exec(%q[
           SELECT * FROM genres 
           WHERE genre = $1;
-        ], [genre])
+        ], [genre.genre])
 
         build_genre(result.first)
       end

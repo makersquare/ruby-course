@@ -3,6 +3,14 @@ require 'pry-byebug'
 
 describe Songify::Server do
 
+    before(:each) do
+    Songify.songs_repo.drop_table
+    Songify.genres_repo.drop_table
+    Songify.genres_repo.build_table
+    Songify.songs_repo.build_table
+
+  end
+
   def app
     Songify::Server.new
   end
@@ -41,10 +49,12 @@ describe Songify::Server do
 
   describe "POST /" do
     it "creates song and adds it to /show" do
-      post '/create', {"title" => "rock_title", "artist" => "rock_artist", "album" => "rock_album", "genre_id" => "id"}
-      expect(last_response.status).to eq 302
-      song = Songify.songs_repo.get_all_songs
+      genre = Songify::Genre.new("rock")
+      Songify.genres_repo.save_genre(genre)
+      post '/create', {"title" => "rock_title", "artist" => "rock_artist", "album" => "rock_album", "genre_id" => genre.id}
       # binding.pry
+      song = Songify.songs_repo.get_all_songs
+      expect(last_response.status).to eq 302
       expect(song.first.title).to eq "rock_title"
       expect(song.first.genre_id).to_not be_nil
     end
