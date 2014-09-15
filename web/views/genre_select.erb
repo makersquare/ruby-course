@@ -1,0 +1,27 @@
+<form action="/genre_select" method="post">
+	<select name="select_genre">
+		<% genres.each do |genre| %>
+  		<option value= <%=genre.id.to_s%>><%= genre.name%></option> 
+ 		<% end %>
+	</select>
+	<input type="submit" value="submit">
+</form>
+<%if defined? songs%>
+	<h1>Songs</h1>
+	<table> 
+		<tr>
+    		<td>Song ID</td>
+    		<td>Title</td>
+    		<td>Artist</td>
+    		<td>Album</td>
+    	</tr>
+ 	<% songs.each do |song| %>
+		<tr>
+			<td><%= song.id %></td>
+			<td><%= song.title %></td>
+			<td><%= song.artist %></td>
+			<td><%= song.album %></td>
+		</tr>
+	<% end %>
+	</table>
+<%end%>
