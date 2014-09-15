@@ -26,13 +26,13 @@ describe Songify::Server do
   describe "GET /new" do
     it "loads the homepage" do
       get '/new'
-      expect(last_response.status).to be_ok
+      expect(last_response.status).to eq(200)
     end
   end
 
   describe "POST /create" do
     it "creates a song" do
-      post '/create', {"title" => "Fake Title", "artist" => "Fake Artist", "album" => "Fake Album"}
+      post '/create', {"title" => "Fake Title", "artist" => "Fake Artist", "album" => "Fake Album", "genre" => "Fake Genre"}
       expect(last_response.status).to eq(302)
       expect(Songify.songs_repo.get_all_songs.length).to eq(1)
     end

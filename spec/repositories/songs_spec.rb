@@ -8,9 +8,21 @@ describe Songify::Repositories::Songs do
   end
 
   it "saves a song" do
+  # binding.pry
+    Songify.songs_repo.drop_table
     song_object = Songify::Song.new("Fake Title", "Fake Artist", "Fake Album")
+    song_object2 = Songify::Song.new("Fake Title", "Fake Artist2", "Fake Album")
+
+    #saving the genres the variables will be equal to the genres ID's
     y = Songify.songs_repo.save_a_song(song_object)
-    expect(y.length).to eq(1)
+    x = Songify.songs_repo.save_a_song(song_object2)
+
+    #pulling the objects out of the database by using the ID
+    y = Songify.songs_repo.get_a_song(y)
+    x = Songify.songs_repo.get_a_song(x)
+
+    expect(y.artist).to eq("Fake Artist")
+    expect(x.artist).to eq("Fake Artist2")
   end
 
   it "deletes a song" do 

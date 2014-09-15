@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Books By Title</title>
+  <title>Songify</title>
 </head>
   <body>
     <ol>
-      <% @songs.each do |song| %>
-        <li><%= song[title], song[album], song[artist] %></li>
-      <% end %>
+    	<% if @songs %>
+		    <% @songs.each do |song| %>
+		    	<li><%= "#{song.title} #{song.album} #{song.artist} #{@genres.find {|genre| genre.id == song.genre_id}.name}" %></li>
+		    <% end %>
+        <!-- <% if @songs.each do |song|%> -->
+		<% end %>
     </ol>	
   </body>
 </html>
