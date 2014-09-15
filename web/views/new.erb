@@ -1,0 +1,28 @@
+<form action='/create' method='post'>
+	<label for="title">Title:</label>
+	<input type='text' name='title' id="title"><br>
+
+	<label for='artist'>Artist:</label>
+	<input type='text' name='artist' id="artist"><br>
+
+	<label for='album'>Album:</label>
+	<input type='text' name='album' id="album"><br>
+
+	 <select name = "genre">
+	 	<option>Select a genre</option>
+	 	<option>Add Genre</option>
+	 	<%if @genres != nil%>
+	 		<%@genres.each do |genre|%>
+	 		<option><%=genre.genre%></option>
+	 		<%end%>
+	 	<%end%>
+	 </select>
+
+	<label for='new-genre'>Genre:</label>
+	<input type='text' name="genre" id="new-genre"><br>
+
+	<input type='submit' value='Add Song'>
+</form> 
+
+<p><a href='/'><%= "Go home" %></a></p>
+<p><a href='/show'><%= "See all songs" %></a></p>

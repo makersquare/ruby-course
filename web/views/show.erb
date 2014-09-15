@@ -1,0 +1,16 @@
+<ul>
+	<% @songs.each do |song| %>
+		<li>Song <%= song.id%>: 
+		<ul>
+			<li> Title: <%= song.title %></li>
+			<li> Artist: <%= song.artist %></li> 
+			<li> Album: <%= song.album %></li>
+			<% genre = Songify.genres_repo.get_genre_by_id(song.genre_id.to_i) %>
+			<li> Genre: <%= genre.genre%></li>
+
+		</ul>
+	<% end %>
+</ul>
+
+<p><a href='/'><%= "Go home" %></a></p>
+<p><a href='/new'><%= "Add another song" %></a></p>
