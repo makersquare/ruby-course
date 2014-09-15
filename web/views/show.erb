@@ -1,0 +1,23 @@
+<h1> Songs </h1>
+
+<table id="song-table">
+	<tr>
+		<th> TITLE </th>
+		<th> ARTIST </th>
+		<th> ALBUM </th>
+		<th> GENRE </th> 
+	</tr>
+	<tr>
+
+<% songs.each do |x| %>
+	<tr>
+		<td><%= x.title %> </td>
+		<td><%= x.artist %> </td>
+		<td><%= x.album %> </td>
+		<td class="genre"><%= song_genres[songs.index(x)].title %> </td>
+	</tr>
+<% end %>
+</table>
+
+
+
