@@ -1,0 +1,67 @@
+
+<ul>
+	<select name="genre_id" id="genreselector">
+		<option><%= 'Select Genre to View' %></option>
+		<% genres.each do |g| %>
+			<option value=<%= g.genre %>><%= g.genre %></option>
+		<% end %>
+		<option value="none">No Genre</option>
+	</select>
+
+
+
+
+	<table>
+			<tr>
+				<th>ARTIST</TH>
+				<th>TITLE</TH>
+				<th>ALBUM</TH>
+				<th>LENGTH</TH>
+				<th>GENRE</TH>
+			</tr>
+		<% all.each do |x| %>
+
+			<tr>
+				<td><%= x.artist.capitalize %></td>
+				<td><%= x.title.capitalize %></td>
+				<td><%= x.album %></td>
+				<td><%= x.length %></td>
+					<% if !x.genre_id.nil? && x.genre_id != 0 %>
+						<td class="<%= Songify.genre_repo.get_a_genre(x.genre_id.to_i).genre %> music">
+					<%= Songify.genre_repo.get_a_genre(x.genre_id.to_i).genre %>
+					<% else %>
+						<td class="none music">None
+					<% end %>
+				</td>
+			</tr>	
+		<% end %>
+	</table>
+
+</ul>
+
+
+<form method="get" action="/showgenre">
+	<select name="genre_id" id="genreselector">
+		<option><%= 'Select Genre to View through ERB functionality.' %></option>
+		<% genres.each do |g| %>
+			<option name="option" value=<%= g.id %>><%= g.genre %></option>
+		<% end %>
+		<option name="option" value="0">No Genre</option>
+	</select>
+	<input type="submit" value="View by Genre">
+</form>
+
+
+<script type="text/javascript" src='http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js'>
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#genreselector').change(function () {
+	    var selectedValue = $('#genreselector').val(selectedValue);
+	    $('.music').not($('.selectedValue')).parent().hide();
+	   	$('.music.'+selectedValue).parent().show();
+  });	
+});
+
+</script>

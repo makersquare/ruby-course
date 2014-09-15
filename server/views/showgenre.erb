@@ -1,0 +1,28 @@
+<ul>
+	<table>
+			<tr>
+				<th>ARTIST</TH>
+				<th>TITLE</TH>
+				<th>ALBUM</TH>
+				<th>LENGTH</TH>
+				<th>GENRE</TH>
+			</tr>
+		<% all.each do |x| %>
+
+			<tr>
+				<td><%= x.artist.capitalize %></td>
+				<td><%= x.title.capitalize %></td>
+				<td><%= x.album %></td>
+				<td><%= x.length %></td>
+					<% if !x.genre_id.nil? && x.genre_id != 0 %>
+						<td class="<%= Songify.genre_repo.get_a_genre(x.genre_id.to_i).genre %> music">
+					<%= Songify.genre_repo.get_a_genre(x.genre_id.to_i).genre %>
+					<% else %>
+						<td class="none music">None
+					<% end %>
+				</td>
+			</tr>	
+		<% end %>
+	</table>
+
+</ul>
