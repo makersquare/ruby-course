@@ -125,7 +125,16 @@ li a:hover {
 span.list, .input-label, p {
 	display: block;
 	margin-top: .5em;
+}
+
+ol {
+	list-style-type: decimal;
+	margin-left: 1.5em;
 	color: #555;
+}
+
+.drop-down.show {
+	margin-bottom: 1.5em;
 }
 
 .drop-down, .user-input {

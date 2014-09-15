@@ -14,15 +14,46 @@
 		</ul>
 	</header>	
 
-	<h2>All Songs</h2>
+	<h2>Song List</h2>
+
+	<label class="input-label show" for="genre_id">Sort By Genre</label>
+	<select class="drop-down show" name="genre_id">
+		<option value="" selected>All Genres</option>
+		<% @genres.each do |x| %>
+			<option value=<%= "#{x.genre_name.capitalize}" %>><%="#{x.genre_name.capitalize}"%></option>
+		<% end %>
+	</select>
 
 	<% if @songs.empty? %>
 		<%= "Songs database is empty." %>
+
 	<%else%>
-		<% @songs.each do |song| %>
-			<% genre = Songify.genres_repo.get_genre(song.genre_id) %>
-			<span class="list"><%= "#{song.id}. #{song.title}, #{song.artist}, #{song.album}, #{genre.genre_name.capitalize}"  %> </span>
-		<% end %>
+		<ol class="list">
+			<% @songs.each do |song| %>
+				<% genre = Songify.genres_repo.get_genre(song.genre_id) %>
+				<li><span class="list"><%= "#{song.title}, #{song.artist}, #{song.album}, #{genre.genre_name.capitalize}"  %> </span></li>
+			<% end %>
+		</ol>
 	<% end %>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script type="text/javascript">
+
+		$('select.show').on('change', function(e) {
+			if ($('select option:selected').val() == "") {
+				$('ol li').show();
+			} else {
+				var genre = $('select option:selected').val();
+				var re = /([A-Za-z0-9]*)$/;
+				var found = genre.match(re);
+
+				var re2 = /^(\d*)/;
+
+				$('ol li').hide();
+				$('ol li:contains(' + found[0] + ')').show();
+			};		
+		});
+
+	</script>
 </body>
 </html>

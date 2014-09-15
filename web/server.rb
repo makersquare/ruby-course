@@ -12,6 +12,7 @@ class Songify::Server < Sinatra::Application
 
   get '/show' do
     @songs = Songify.songs_repo.get_all_songs
+    @genres = Songify.genres_repo.get_all_genres
     erb :show
   end
 
