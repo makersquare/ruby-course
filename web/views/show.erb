@@ -1,0 +1,29 @@
+<table class="table">
+  <tr>
+    <th>ID</th>
+    <th>Title</th>
+    <th>Artist</th>
+    <th>Album</th>
+    <th>Genre</th>
+  </tr>
+  <% @songs.each do |song| %>
+    <tr>
+      <td><%= song.id %></td>
+      <td><%= song.title %></td>
+      <td><%= song.artist %></td>
+      <td><%= song.album %></td>
+      <td><%= @genres.find { |genre| genre.id == song.genre_id }.name %></td>
+    </tr>
+    <% end %>
+</table>
+<form action="/show/genre" method="get" class="show-genre-form">
+  <div class="form-group">
+    <label for="genre-selector">Show songs by genre</label>
+      <select id="genre-selector" name="genre-show-drop" class="form-control show-genre">
+        <% @genres.each do |genre| %>
+        <option value=<%="#{genre.name}"%>><%="#{genre.name}"%></option>
+        <% end %>
+      </select>
+  </div>
+  <input type="submit" class="btn btn-success">
+</form>

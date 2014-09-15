@@ -1,0 +1,32 @@
+
+<div class="new-song">
+  <form action="/create" method="post" class="form-horizontal new-song-form" role="form">
+    <div class="form-group">
+      <label for="title-input">Title</label>
+      <input id="title-input" type="text" name="title" placeholder="Enter title">
+    </div>
+    <div class="form-group">
+      <label for="artist-input">Artist</label>
+      <input id="artist-input" type="text" name="artist" placeholder="Enter artist">
+    </div>
+    <div class="form-group">
+      <label for="album-input">Album</label>
+      <input id="album-input" type="text" name="album" placeholder="Enter album">
+    </div>
+    <% if @genres.size > 0 %>
+    <div class="form-group">
+      <label for="genre-selector">Select a genre</label>
+      <select id="genre-selector" name="genre-drop" class="form-control new-song">
+        <% @genres.each do |genre| %>
+        <option value=<%="#{genre.name}"%>><%="#{genre.name}"%></option>
+        <% end %>
+      </select>
+    <% end %>
+    </div>
+    <div class="form-group">
+      <label for="genre-input">Genre (if not found)</label>
+      <input id="genre-input" type="text" name="genre" placeholder="Enter genre">
+    </div>
+    <input type="submit">
+  </form>
+</div>
