@@ -1,7 +1,19 @@
-<ul>SONGS
-	<% songs.each do |song| %>
-		<li>
-			<%= "#{song.id} #{song.title} #{song.artist} #{song.album}" %>
-		</li>
-	<% end %>
-</ul>
+<h1>Songs</h1>
+<table> 
+	<tr>
+    	<td>Song ID</td>
+    	<td>Title</td>
+    	<td>Artist</td>
+    	<td>Album</td>
+    	<td>Genre</td>
+    </tr>
+ <% songs.each do |song| %>
+	<tr>
+		<td><%= song.id %></td>
+		<td><%= song.title %></td>
+		<td><%= song.artist %></td>
+		<td><%= song.album %></td>
+		<td><%= Songify.genres_repo.get_a_genre(song.genre_id).name %></td>
+	</tr>
+<% end %>
+</table>

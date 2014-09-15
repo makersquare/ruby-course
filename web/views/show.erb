@@ -1,1 +1,17 @@
-<p><%= "#{song.id} #{song.title} #{song.artist} #{song.album}" %></p>
+<h1>Song</h1>
+<table> 
+	<tr>
+    	<td>Song ID</td>
+    	<td>Title</td>
+    	<td>Artist</td>
+    	<td>Album</td>
+    	<td>Genre</td>
+    </tr>
+	<tr>
+		<td><%= song.id %></td>
+		<td><%= song.title %></td>
+		<td><%= song.artist %></td>
+		<td><%= song.album %></td>
+		<td><%= Songify.genres_repo.get_a_genre(song.genre_id).name %></td>
+	</tr>
+</table>

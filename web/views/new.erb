@@ -7,5 +7,10 @@
 	<input type="text" name="album"></br>
 	<label for="genre">GENRE:</label>
 	<input type="text" NAME="genre">
+	<select name="select_genre">
+		<% genres.each do |genre| %>
+  		<option value= <%=genre.id.to_s%>><%= genre.name%></option> 
+ 		<% end %>
+	</select>
 	<input type="submit" value="submit">
 </form>
