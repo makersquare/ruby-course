@@ -11,10 +11,10 @@ module PM
       def delete
       end
 
-      def projects_by_employee # what type of parameter should this be?
+      def all_by_employee_id # what type of parameter should this be?
       end
       
-      def employees_on_project # what type of parameter should this be?
+      def all_by_project_id # what type of parameter should this be?
       end
     end
   end
