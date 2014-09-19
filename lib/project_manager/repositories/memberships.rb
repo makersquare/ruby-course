@@ -8,7 +8,7 @@ module PM
       def create(project, employee, type)
       end
 
-      def delete(membership_id)
+      def delete(project, employee)
       end
 
       def delete_all
