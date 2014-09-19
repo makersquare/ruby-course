@@ -1,6 +1,14 @@
 module PM
   module Repos
     class Projects
+      # TO DO
+      # Complete the following method
+      def all_by_employee_id(project_id)
+      end
+
+      ############################################################
+      # You shouldn't have to change anything in the methods below
+      ############################################################
       def save(prj)
         sql = <<-SQL
           INSERT INTO projects (description, priority)
@@ -40,6 +48,11 @@ module PM
         p = PM::Project.new(data['description'], data['priority'])
         p.instance_variable_set :@id, data['id'].to_i
         p
+      end
+
+      def delete_all
+        sql = 'DELETE FROM projects WHERE id > 0'
+        PM::Repos.adapter.exec(sql)
       end
     end
   end

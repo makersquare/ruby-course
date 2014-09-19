@@ -14,6 +14,14 @@ module PM
   def self.projects
     @projects_repo
   end
+
+  def self.memberships=(x)
+    @memberships_repo = x
+  end
+
+  def self.memberships
+    @memberships_repo
+  end
 end
 
 require_relative 'project_manager/entities/employee.rb'
@@ -22,4 +30,5 @@ require_relative 'project_manager/entities/project.rb'
 require_relative 'project_manager/repositories/repo.rb'
 require_relative 'project_manager/repositories/employees.rb'
 require_relative 'project_manager/repositories/projects.rb'
+require_relative 'project_manager/repositories/memberships.rb'
 

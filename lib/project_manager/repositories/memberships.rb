@@ -5,16 +5,15 @@ module PM
   module Repos
     class Memberships
       # TO DO
-      def save # how many parameters should this take?
+      def create(project, employee, type)
       end
 
-      def delete
+      def delete(membership_id)
       end
 
-      def all_by_employee_id # what type of parameter should this be?
-      end
-      
-      def all_by_project_id # what type of parameter should this be?
+      def delete_all
+        sql = 'DELETE FROM memberships WHERE id > 0'
+        PM::Repos.adapter.exec(sql)
       end
     end
   end
