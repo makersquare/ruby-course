@@ -3,15 +3,15 @@ require 'spec_helper'
 describe "Managing Memberships" do
 
   before do
+    PM.memberships.delete_all
     PM.employees.delete_all
     PM.projects.delete_all
-    PM.memberships.delete_all
 
     @alice = PM::Employee.new("Alice", "alice@example.com", 20)
     PM.employees.save(@alice)
 
     @bob = PM::Employee.new("Bob", "bob@example.com", 15)
-    PM.employees.save(@alice)
+    PM.employees.save(@bob)
 
     @code_red = PM::Project.new("Code Red", "urgent")
     PM.projects.save(@code_red)
@@ -28,7 +28,7 @@ describe "Managing Memberships" do
   end
 
   it "returns a projects by user id" do
-    projects = PM.projects.all_by_employee_id(@code_red.id)
+    projects = PM.projects.all_by_employee_id(@alice.id)
     expect(projects.count).to eq 1
     expect(projects.first.id).to eq @code_red.id
   end
@@ -36,8 +36,8 @@ describe "Managing Memberships" do
   it "deletes a membership" do
     PM.memberships.delete(@code_red, @bob)
 
-    employees = PM.employees_repo.all_by_project_id(red.id)
+    employees = PM.employees_repo.all_by_project_id(@code_red.id)
     expect(employees.count).to eq 1
-    expect(employees.first.id).to eq @bob.id
+    expect(employees.first.id).to eq @alice.id
   end
 end
