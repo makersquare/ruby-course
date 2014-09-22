@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Song Input</title>
+</head>
+  <body>
+    <form action = '/create', method = 'post'>
+    <label for = 'song title'>Song Title: </label> 
+    <input name = 'title', type = 'text'></br>
+    <label for = 'song artist'>Song Artist: </label>
+    <input name = 'artist', type = "text"></br>
+    <label for = 'song album'>Song Album: </label>
+    <input name = 'album', type = 'text'></br>
+    <label for = 'song genre'>Select Genre: </label>
+    <select name = 'genre_drop', type = 'text'>
+        <% @genres.each do |genre|  %>
+        <option value="<%="#{genre.name}"%>"> <%="#{genre.name}" %> </option>
+        <% end %>
+    </select>
+
+    <label for = 'song genre2'>If not found add Genre: </label>
+    <input name = 'genre', type = 'text'></br>
+
+    <input name ='submit', type = 'submit'></br>
+
+  </form>
+  </body>
+</html>

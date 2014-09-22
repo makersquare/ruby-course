@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Songify</title>
+</head>
+  <body>
+    <ol>
+    	<% if @songs %>
+		    <% @songs.each do |song| %>
+		    	<li><%= "#{song.title} #{song.album} #{song.artist} #{@genres.find {|genre| genre.id == song.genre_id}.name}" %></li>
+		    <% end %>
+		<% end %>
+    </ol>	
+  </body>
+</html>

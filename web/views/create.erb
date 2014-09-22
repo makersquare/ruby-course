@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search by Genre</title>
+</head>
+  <body>
+
+    <form action = '/search_genre', method = 'post'>
+
+        <select name = 'genre_drop', type = 'text'>
+        <% @genres.each do |genre|  %>
+        <option value="<%="#{genre.name}"%>"> <%="#{genre.name}" %> </option>
+        <% end %>
+    </select>
+    <input name ='submit', type = 'submit'></br>
+  </form>
+
+    <ol>
+    	<% if @all_songs_by_genre %>
+		    <% @all_songs_by_genre.each do |song| %>
+		    	<li><%= "#{song.title}, #{song.album}, #{song.artist}" %></li>
+		    <% end %>
+		<% end %>
+    </ol>	
+
+  </body>
+</html>
+
