@@ -1,0 +1,5 @@
+<h3><%= @found_genre.name %> Songs</h3>
+
+<% @selected_songs.each do |s| %>
+<%= "#{s.title}" %>, <%= "#{s.artist}" %>, <%= "#{s.album}" %>
+<% end %>

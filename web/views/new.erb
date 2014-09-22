@@ -1,0 +1,24 @@
+<h3>Add new song</h3><br />
+<form action="/create" method="post">
+<label for="Title">Title:</label>
+<input name="title" id="Title" type="text"><br />
+<label for="Artist">Artist:</label>
+<input name="artist" id="Artist" type="text"><br />
+<label for="Album">Album:</label>
+<input name="album" id="album" type="text"><br />
+
+
+<h3>Select a genre:</h3>
+<form action="/genre" method="post">
+<select name="genres[genre_name]">
+	<% @genres.each do |g| %>
+	<option value=<%="#{g.name}"%>><%= "#{g.name}" %></option>
+	<% end %>
+	</select>
+
+
+<label for="add_genre_name">Or, add a new genre:</label>
+<input name="add_genre_name" id="add_genre_name" type="text"><br />
+<input type="submit">
+</form>
+

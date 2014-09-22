@@ -1,0 +1,20 @@
+                                     List of databases
+      Name       |  Owner   | Encoding |   Collate   |    Ctype    |   Access privileges   
+-----------------+----------+----------+-------------+-------------+-----------------------
+ bookly_dev      | vagrant  | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+ bookly_test     | vagrant  | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+ myfirstdb       | vagrant  | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+ postgres        | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+ puppy-breederdb | vagrant  | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+ songify         | vagrant  | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+ songify_dev     | vagrant  | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+ songify_test    | vagrant  | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+ template0       | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/postgres          +
+                 |          |          |             |             | postgres=CTc/postgres
+ template1       | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/postgres          +
+                 |          |          |             |             | postgres=CTc/postgres
+ vagrant         | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =T/postgres          +
+                 |          |          |             |             | postgres=CTc/postgres+
+                 |          |          |             |             | vagrant=CTc/postgres
+(11 rows)
+

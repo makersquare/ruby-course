@@ -1,0 +1,48 @@
+
+
+<div class="row">
+
+	<div class="large-3 columns">
+		<h4>Title</h4>
+	</div>
+	<div class="large-3 columns">
+		<h4>Artist</h4>
+   	</div>
+
+	<div class="large-3 columns">
+		<h4>Album</h4>
+   	</div>
+
+   	<div class="large-3 columns">
+   		<h4>Genre</h4>
+   	</div>
+  </div>
+
+<% @songs.each do |x| %> 
+<% genre = Songify.genres_repo.get_genre(x.genre_id.to_i) %>
+<div class="row">
+	<div class="large-3 columns">
+		<%= "#{x.title}" %>
+	</div>
+	<div class="large-3 columns">
+		<%= "#{x.artist}" %>
+   	</div>
+
+	<div class="large-3 columns">
+		<%= "#{x.album}" %>
+   	</div>
+
+   	<div class="large-3 columns">
+   		<%= "#{genre.name}" %>
+   	</div>
+  </div>
+
+
+<% end%> 
+
+
+
+
+ 
+ 
+
