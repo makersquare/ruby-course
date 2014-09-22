@@ -6,7 +6,7 @@ module Songify
 
     def self.adapter
       @__db_conn
-    end
+    end 
 
   end
 end

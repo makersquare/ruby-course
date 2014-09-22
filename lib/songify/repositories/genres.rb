@@ -16,11 +16,6 @@ module Songify
           ])
       end
 
-      # def drop_table
-      #   @db.exec("TRUNCATE TABLE genres;")
-      #   build_table
-      # end
-
       def truncate_table 
         @db.exec("TRUNCATE TABLE genres, songs")
       end
@@ -31,7 +26,7 @@ module Songify
           VALUES ($1)
           RETURNING id;
         ], [genre_object.name])
-        genre_object.instance_variable_set :@id, result.entries.first["id"]
+        genre_object.instance_variable_set("@id", result[0]["id"].to_i)
       end
 
       def get_a_genre_by_id(genre_id)

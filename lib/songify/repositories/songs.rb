@@ -55,8 +55,11 @@ module Songify
       end
 
       #Parameter should be an artist
-      def get_all_songs_by_artist(artist)
-        result = @db.exec('SELECT * FROM songs WHERE artist = $1', [artist])
+      def get_songs_by_genres(genre_id)
+        result = @db.exec('SELECT * FROM songs WHERE genre_id = $1', [genre_id])
+        result.entries.map do |song|
+          build_song_object(song)
+        end
       end
 
       def build_song_object(entries)
