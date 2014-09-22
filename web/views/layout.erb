@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Songify</title>
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.1.1/css/foundation.css">
+  <style type="text/css">
+  a {
+  	color: white;
+  }
+
+  h1 {
+  	font: serif;
+  	font-size: 50px;
+  	margin: 15px;
+
+  }
+  h3 {
+  	color: purple;
+  	font: sans-serif;
+  	font-size: 30px;
+
+  }
+
+  nav {
+  	margin: 20px;
+/*  	padding: 15px;
+*/  	font-size: 25px;
+  	float: right;
+  }
+
+  .row.top {
+  	background-color: gray;
+  	width: 100%;
+  }
+/*  .new {
+  	background-color: teal;
+  	border-radius: 100%;
+  }*/
+
+  </style>
+</head>
+<body>
+<div class="row top">
+	<div class="large-6 columns">
+		<h1><a href="/">Songify</a></h1>
+	</div>
+	<div class="large-6 columns">
+		<nav>
+			<button class="new"><a href="/show">Songs</a></button>
+			<button class="new"><a href="/show_genres">Genres</a></button>
+			<button class="new"><a href="/new">New</a></button>
+		</nav>
+	</div>
+	</div>
+<div class="row">
+	<div class="large-12 columns">
+  		<%= yield %>
+  	</div>
+  </div> 
+</body>
+</html>
+
+
