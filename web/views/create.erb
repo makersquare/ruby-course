@@ -1,0 +1,13 @@
+
+<div>Congratulations! You've just added a song:</div>
+
+<div>Title: <%= song.title %></div>
+<div>Artist: <%= song.artist %> </div> 
+<div>Album: <%= song.album %></div> 
+<div>Year: <%= song.year_published %></div> 
+<div>Genre: <%= Songify.genres.get_a_genre_by_name(song.genre).genre %></div> 
+<div>Rating: <%= song.rating %></div>
+
+<% content_for :rightmost do %>
+	<div>Lyrics: <%= song.lyrics %></div>
+<% end %>

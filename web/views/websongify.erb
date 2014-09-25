@@ -1,0 +1,72 @@
+<form action='/create' method='post'>
+<div>
+<div>	<label for='song_title'>Title</label> </div>
+<div>	<input type='text' name='song_title'> </div>
+</div>
+
+<div>	
+<div>	<label for='song_artist'>Artist</label> </div>
+<div>	<input type='text' name='song_artist'></div>
+</div>
+
+<div>
+<div>	<label for='song_album'>Album</label> </div>
+<div>	<input type='text' name='song_album'> </div>
+</div>
+
+<div>
+<div>	<label for='song_yearpublished'>Year published</label> </div>
+<div>	<input type='text' name ='song_yearpublished'> </div>
+</div>
+
+<div>	
+	<label>Genre</label>
+		<div><input type="text" name="new_genre" value="" /></div>
+		<div><select name="old_genre">
+			<option  value=""></option>
+		<% genre_list.each do |genre| %>
+			<option value= <% "#{genre.genre}" %> > 
+			<%="#{genre.genre}" %> </option>
+		<% end %>
+		</select></div>
+</div>
+
+<div>
+<div>	<label for='song_rating'>Rating</label> </div>
+<div>
+	<select name="song_rating">
+			<option  value="1">1</option>
+			<option  value="2">2</option>
+			<option  value="3">3</option>
+			<option  value="4">4</option>
+			<option  value="5">5</option>
+	</select>
+</div>
+</div>
+<div>
+<div>	<label for='song_lyrics'>Lyrics</label> </div>
+<div>	<textarea rows='5' name ='song_lyrics'> </textarea></div>
+</div>
+
+
+<div><input type='submit' name='FLIP' value='Add'></div>
+</form> 
+
+You are viewing layout : new / websongify.
+
+<% content_for :rightmost do %>
+
+	<% if defined?(your_song) %>
+		<div>Congratulations! You've just added a song:</div>
+
+		<div><%= "#{your_song.title}" %></div>
+		<div><%= "by #{your_song.artist}" %></div> 
+		<div><%= "off of #{your_song.album}" %></div> 
+		<div><%= "from #{your_song.year_published}" %></div> 
+		<div><%= "in the #{your_genre} genre." %></div> 
+		<div><%= "You've rated this song a #{your_song.rating}." %></div>
+
+	<div>You are viewing layout : new / create.</div>
+
+	<% end %>
+<% end %>

@@ -1,0 +1,11 @@
+<div>Congratulations! You've just updated a song:</div>
+
+<div>Title<%= " #{your_song.title}" %></div>
+<div>Artist<%= " #{your_song.artist}" %></div> 
+<div>Album<%= " #{your_song.album}" %></div> 
+<div>Year published<%= " #{your_song.year_published}" %></div> 
+<div>Genre<%= " #{Songify.genres.get_a_genre_by_name(your_song.genre).genre}" %></div> 
+<div>Rating<%= " #{your_song.rating}" %></div>
+<div>Lyrics<%= " #{your_song.lyrics}." %></div>
+
+<div>You are viewing layout : update / update.</div>

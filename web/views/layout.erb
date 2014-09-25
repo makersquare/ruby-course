@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Songify
+	</title>
+	<link rel="stylesheet" type="text/css" href="/css/style.css" />
+</head>
+
+<body>
+
+<div class="left">
+
+<div><a href='/'>Home</a></div>
+
+<div><a href='/show'>Show music database</a></div>
+
+<div><a href='/show_some'>Show music database by query</a></div>
+
+<div><a href='/new'>Add a song</a></div>
+
+<!-- <div><a href='/exp'>Add a genre</a></div> -->
+
+<!-- <div><a href='/show_genre'>Show genres</a></div> -->
+
+<!-- <div><a href='/update'>Update a song</a></div> -->
+
+<div><a href='/delete'>Clean your database</a></div>
+</div>
+
+<div class="middle"><div>
+
+	<%= yield %>
+
+</div></div>
+
+<div class="right"><div> 
+	
+	<%= yield_content :rightmost %>
+
+</div></div>
+
+</body>
+	
+</html>

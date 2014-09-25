@@ -1,0 +1,16 @@
+<form action='/exp' method='post'>
+
+<div>
+<div>	
+	<label>Genre</label>
+		<div><input type="text" name="new_genre" value="" /></div>
+		<div><select><% genre_list.each do |genre| %>
+			<option class="old_genre" value= <% "#{genre.genre}"%> > <%="#{genre.genre}" %> </option>
+		<% end %>
+		</select></div>
+</div>
+<div><input type='submit' name='FLIP'></div>
+</div>
+</form> 
+
+You are viewing layout : exp / genre_maker.

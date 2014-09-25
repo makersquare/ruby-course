@@ -1,0 +1,26 @@
+<!-- # <% if defined?(lyrics) %> -->
+	<!-- <%= "#{lyrics}" %> -->
+	
+	<!-- <% song_list.each do |song| %> -->
+	<!-- <ul> -->
+    <!-- <ul> -->
+    	<!-- <li>Title: <%= song.title %> </li> -->
+    	<!-- <li>Artist: <%= song.artist %> </li> -->
+    	<!-- <li>Album: <%= song.album %> </li> -->
+    	<!-- # <li>Year: <%= song.year_published %> </li> -->
+    	<!-- # <li>Genre: <%= Songify.genres.get_a_genre_by_name(song.genre).genre %> </li> -->
+    	<!-- # <li>Rating: <%= song.rating %> </li> -->
+        <!-- <div><form action='/update_change' method='get'> -->
+            <!-- <div><input type='submit' name='song' value="Update"></div> -->
+        <!-- </form></div> -->
+		<!-- </ul> -->
+	<!-- </ul> -->
+ <!-- # <% end %> -->
+
+ <% content_for :rightmost do %>
+
+  <div>
+    Am I in the rightmost section?
+  </div>
+
+<% end %>

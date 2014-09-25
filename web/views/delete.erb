@@ -1,0 +1,11 @@
+Would you like to delete your songs?
+
+<form action='/delete' method='post'>
+<div><input type='submit' name='delete_all_songs' value='Erase evidence'></div>
+</form> 
+
+<% if defined?(@judge) %>
+	<%= @judge %>!
+<% end %>
+
+You are viewing layout : delete.

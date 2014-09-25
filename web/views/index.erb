@@ -1,0 +1,24 @@
+
+<% song_list.each do |song| %>
+    <ul>
+    	<li>Title: <%= song.title %> </li>
+    	<li>Artist: <%= song.artist %> </li>
+    	<li>Album: <%= song.album %> </li>
+    	<li>Year: <%= song.year_published %> </li>
+    	<li>Genre: <%= Songify.genres.get_a_genre_by_name(song.genre).genre %> </li>
+    	<li>Rating: <%= song.rating %> </li>
+    </ul>
+    <% content_for :rightmost do %>
+        <ul>
+        <li>
+            <%= "Lyrics for '#{song.title}'" %>
+        </li> 
+        <li>
+            <div><%= song.lyrics %></div>
+        </li>
+        </ul>        
+    <% end %>
+<% end %>
+
+
+You are viewing layout : show/index.
