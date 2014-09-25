@@ -7,8 +7,8 @@ Songify.songs = Songify::Repos::Songs.new('songify_test')
 
 RSpec.configure do |config|
   config.before(:each) do
-    Songify.songs.delete_all
     Songify.genres.delete_all
+    Songify.songs.delete_all
   end
 end
 

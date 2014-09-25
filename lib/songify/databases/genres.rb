@@ -13,9 +13,12 @@ module Songify
         @db.exec(%q[
           CREATE TABLE IF NOT EXISTS genres(
             id serial UNIQUE,
-            genre text
+            genre text UNIQUE
             )
           ])
+        # @db.exec(%q[ALTER TABLE genres 
+        #   ADD CONSTRAINT genres_names_key 
+        #   UNIQUE (genre);])
       end
 
       def drop_table
@@ -24,30 +27,30 @@ module Songify
       end
 
       def save_a_genre(genre)
-        genre_list = self.get_all_genres.map {|gen_obj| gen_obj.genre }
-        if !(genre_list.include?(genre.genre))
-          result = @db.exec(%q[
-            INSERT INTO genres (genre)
-            VALUES ($1)
-            RETURNING id
-            ], [genre.genre])
-          genre.instance_variable_set :@id, result.entries.first["id"].to_i
-          result = result.first['id'].to_i
-        else 
-          result = self.get_a_genre_by_name(genre.genre).id
-        end
-        return result
-        # begin
+        # genre_list = self.get_all_genres.map {|gen_obj| gen_obj.genre }
+        # if !(genre_list.include?(genre.genre))
         #   result = @db.exec(%q[
         #     INSERT INTO genres (genre)
         #     VALUES ($1)
         #     RETURNING id
         #     ], [genre.genre])
         #   genre.instance_variable_set :@id, result.entries.first["id"].to_i
-        #   return genre.id
-        # rescue  PG::UniqueViolation
-        #   return Songify.genres.get_a_genre_by_name(genre.genre).id
+        #   result = result.first['id'].to_i
+        # else 
+        #   result = self.get_a_genre_by_name(genre.genre).id
         # end
+        # return result
+        begin
+          result = @db.exec(%q[
+            INSERT INTO genres (genre)
+            VALUES ($1)
+            RETURNING id
+            ], [genre.genre])
+          genre.instance_variable_set :@id, result.entries.first["id"].to_i
+          return genre.id
+        rescue  PG::UniqueViolation
+          return Songify.genres.get_a_genre_by_name(genre.genre).id
+        end
       end
 
       def get_a_genre(id)

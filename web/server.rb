@@ -30,7 +30,6 @@ class Songify::Server < Sinatra::Application
     end
     parameter = {}
     parameter[sym] = search
-    binding.pry
 
     erb :show_some, :locals => {
       song_list: Songify.songs.get_all_songs_by(parameter)
@@ -68,6 +67,7 @@ class Songify::Server < Sinatra::Application
   post '/create' do
 
     params['old_genre'].empty? ? passed_genre = params['new_genre'] : passed_genre = params['old_genre']
+    passed_genre = nil if passed_genre.empty?
     
     x = 
       {
@@ -92,6 +92,8 @@ class Songify::Server < Sinatra::Application
       your_song: Songify.songs.get_a_song(params['song_picked'])
     }
   end
+
+# erb : 'DIRECTORY/FILE_NAME', :locals...
 
   post '/update' do
     if params['change_parameter'] == "genre"

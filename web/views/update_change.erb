@@ -6,8 +6,11 @@
 	<div>Album: <%= " #{your_song.album}" %></div> 
 	<div>Year Published: <%= " #{your_song.year_published}" %></div> 
 	<div>Genre: <%= " #{your_song.genre}" %></div> 
-	<div>Rating: <%= " #{your_song.rating}." %></div>
+	<div>Rating: <%= " #{your_song.rating}" %></div>
+
+<% content_for :rightmost do %>
 	<div>Lyrics: <%= " #{your_song.lyrics}." %></div>
+<% end %>
 
 <form action='/update' method='post'>	
 <div>
