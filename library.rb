@@ -6,14 +6,22 @@ class Book
     @title = title
     @author = author
     @id = nil
-    @status = "available"
+    @status = 'available'
   end
 
   def check_out()
-    if @status = "available"
-      @status =  'checked_out'
-      return true;
-    elsif @status =  'checked_out'
+      if @status == "available"
+        @status =  'checked_out'
+        return true
+    elsif @status ==  'checked_out'
+      return false
+    end
+  end
+  def check_in()
+      if @status == "checked_out"
+        @status =  'available'
+        return true
+    elsif @status ==  'available'
       return false
     end
   end
