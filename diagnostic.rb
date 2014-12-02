@@ -165,11 +165,13 @@ class ArrayProblems
 
   def self.select_higher(array, min)
     # TODO: Select and return all numbers higher than `min`
-    array.each do |element|
+    results = []
+    array.select do |element|
       if element > min
-        puts element
+        results.push(element)
       end
     end
+    results
   end
 
   # # # # # # #
