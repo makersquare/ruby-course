@@ -92,7 +92,6 @@ describe Exercises do
 
   it "find if time is leap year" do
 
-    
     res = Exercises.ex9(DateTime.new(2000))
     expect(res).to eq true
     res = Exercises.ex9(DateTime.new(2004))
@@ -101,6 +100,23 @@ describe Exercises do
     expect(res).to eq false
     res = Exercises.ex9(DateTime.new(1999))
     expect(res).to eq false
+
+  end
+
+  it "is it happy hour" do
+
+    my_time = Time.new(2002, 10, 31, 2)
+    allow(Time).to receive(:now).and_return(my_time)
+
+    res = Exercises.ex10
+    expect(res).to eq 'normal prices'
+
+    new_time = Time.new(2002, 10, 31, 17)
+    allow(Time).to receive(:now).and_return(new_time)
+
+    res = Exercises.ex10
+    expect(res).to eq 'happy hour'
+    
 
   end
 
