@@ -43,6 +43,7 @@ class Library
 attr_reader :books
 attr_reader :name
 attr_reader :next_id
+attr_accessor :borrowers
 
 
   def initialize(name)
@@ -65,14 +66,32 @@ attr_reader :next_id
 
     books.each do |book|
       if (book.id == book_id && book.status == 'available')
-         @borrowers[:book_id] = borrower
+         @borrowers[:book_id] = borrower.name
          book.status = 'checked_out'
          return book
+      else
+        return nil
       end
     end
   end
 
   def check_in_book(book)
+
+    books.each do |b|
+      if (b == book && book.status == 'checked_out')
+         book_id = b.id
+         @borrowers[:book_id] = nil
+         book.status = 'available'
+         return book
+      else
+        return nil
+      end
+    end
+
+  end
+
+  def get_borrower(book_id)
+    return @borrowers[:book_id]
   end
 
   def available_books
