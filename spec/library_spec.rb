@@ -4,39 +4,40 @@ require 'pry-byebug'
 describe Book do
   it "has a title and author, and nil id" do
     book = Book.new("The Stranger", "Albert Camus")
-
-    # binding.pry
-
     expect(book.title).to eq "The Stranger"
     expect(book.author).to eq "Albert Camus"
-    expect(book.id).to be_nil
+    expect(book.id).to eq nil
   end
 
-  xit "has a default status of available" do
-    book = Book.new
+  it "has a default status of available" do
+    book = Book.new("The Stranger", "Albert Camus")
+
     expect(book.status).to eq 'available'
   end
 
-  xit "can be checked out" do
-    book = Book.new
+  it "can be checked out" do
+    book = Book.new("The Stranger", "Albert Camus")
+
     did_it_work = book.check_out
     expect(did_it_work).to be_true
     expect(book.status).to eq 'checked_out'
   end
 
-  xit "can't be checked out twice in a row" do
-    book = Book.new
+  it "can't be checked out twice in a row" do
+    book = Book.new("The Stranger", "Albert Camus")
+
     did_it_work = book.check_out
-    expect(did_it_work).to eq(true)
+    expect(did_it_work).to be_true
 
     did_it_work_again = book.check_out
-    expect(did_it_work_again).to eq(false)
+    expect(did_it_work_again).to be_false
 
     expect(book.status).to eq 'checked_out'
   end
 
-  xit "can be checked in" do
-    book = Book.new
+  it "can be checked in" do
+    book = Book.new("The Stranger", "Albert Camus")
+
     book.check_out
     book.check_in
     expect(book.status).to eq 'available'
