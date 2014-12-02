@@ -45,7 +45,13 @@ module Exercises
   # Exercise 4
   #  - Returns the max number of the given array
   def self.ex4(array)
-    # TODO
+    if (array.count == 0)
+      return nil
+    end
+
+    ans = array.max
+
+    return ans
   end
 
   # Exercise 5

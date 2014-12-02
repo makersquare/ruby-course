@@ -41,5 +41,14 @@ describe Exercises do
 
   end
 
+  it "return second item in array" do
+
+    ans = Exercises.ex4([0,5,6,7,8])
+    expect(ans).to eq 8
+    ans = Exercises.ex4([])
+    expect(ans).to eq nil
+
+  end
+
 
 end
