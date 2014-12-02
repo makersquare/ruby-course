@@ -15,6 +15,7 @@ class Book
       return true;
     elsif @status =  'checked_out'
       return false
+    end
   end
 end
 
