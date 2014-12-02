@@ -79,4 +79,16 @@ describe Exercises do
 
   end
 
+  it "prints name and occupation from hash-filled array" do
+
+    arry = [{:name => "barry", :occupation => "worker"},{:name => "freddy", :occupation => "chef"}]
+    expect(STDOUT).to receive(:puts).and_return('barry')
+    expect(STDOUT).to receive(:puts).and_return('worker')
+    expect(STDOUT).to receive(:puts).and_return('freddy')
+    expect(STDOUT).to receive(:puts).and_return('chef')
+    Exercises.ex8(arry)
+    
+
+  end
+
 end
