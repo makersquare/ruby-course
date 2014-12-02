@@ -3,7 +3,7 @@ class Book
   attr_reader :author
   attr_reader :title
   attr_accessor :id
-  attr_reader :status
+  attr_accessor :status
 
   def initialize(title, author)
     @author = author
@@ -48,6 +48,8 @@ attr_reader :next_id
   def initialize(name)
     @books = []
     @next_id = 1
+    @borrowers = {}
+    @name = name
     
   end
 
@@ -60,6 +62,14 @@ attr_reader :next_id
   end
 
   def check_out_book(book_id, borrower)
+
+    books.each do |book|
+      if (book.id == book_id && book.status == 'available')
+         @borrowers[:book_id] = borrower
+         book.status = 'checked_out'
+         return book
+      end
+    end
   end
 
   def check_in_book(book)
