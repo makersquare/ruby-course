@@ -4,13 +4,17 @@ module Exercises
   #  - Triples a given string `str`
   #  - Returns "nope" if `str` is "wishes"
   def self.ex0(str)
-    # TODO
+    if(str == "wishes")
+      return "nope"
+    else
+      return str+str+str
+    end
   end
 
   # Exercise 1
   #  - Returns the number of elements in the array
   def self.ex1(array)
-    # TODO
+    return array.count
   end
 
   # Exercise 2
