@@ -96,6 +96,14 @@ attr_accessor :borrowers
   end
 
   def available_books
+    avail = []
+
+    books.each do |b|
+      if (b.status == 'available')
+       avail.push(b)
+      end
+    end
+    return avail
   end
 
   def borrowed_books
