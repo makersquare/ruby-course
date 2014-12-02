@@ -94,7 +94,7 @@ describe Library do
     expect(book.status).to eq 'checked_out'
   end
 
-  xit "knows who borrowed a book" do
+  it "knows who borrowed a book" do
     lib = Library.new("Test Library")
     lib.add_book("The Brothers Karamazov", "Fyodor Dostoesvky")
     book_id = lib.books.first.id
@@ -104,7 +104,7 @@ describe Library do
     book = lib.check_out_book(book_id, bro)
 
     # The Library should know that he checked out the book
-    expect( lib.get_borrower(book_id) ).to eq 'Big Brother'
+    expect( lib.get_borrower(book_id) ).to eq bro
   end
 
   xit "does not allow a book to be checked out twice in a row" do
