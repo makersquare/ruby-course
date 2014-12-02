@@ -1,4 +1,5 @@
 
+
 class Book
   attr_reader :author, :title 
   attr_accessor :id, :status
@@ -37,6 +38,8 @@ class Library
   attr_accessor :books
   attr_reader :name
 
+  @@book_id_counter = 0
+
   def initialize(name)
     @name = name
     @books = []
@@ -47,12 +50,19 @@ class Library
   def register_new_book(title, author)
     created_book = Book.new(title, author)
     @books << created_book
-    created_book.id = self.books.count
+    @@book_id_counter += 1
+    created_book.id = @@book_id_counter
   end
   def add_book(title, author)
   end
 
   def check_out_book(book_id, borrower)
+    book = @books.select { |x| x if x.id == book_id }[0]
+
+    book.check_out
+
+    book
+
   end
 
   def check_in_book(book)
