@@ -59,9 +59,13 @@ class Library
 
   def check_out_book(book_id, borrower)
     book = @books.select { |x| x if x.id == book_id }[0]
-    book.check_out
-    book.borrower = borrower
-    book
+    if book.status == "available"
+      book.check_out
+      book.borrower = borrower
+      book
+    else
+      return nil
+    end
 
   end
 
