@@ -29,10 +29,12 @@ class Book
 end
 
 class Borrower
-  attr_reader :name
+  attr_reader :name, :borrowed
   def initialize(name)
     @name = name
+    @borrowed = []
   end
+
 end
 
 class Library
@@ -59,9 +61,10 @@ class Library
 
   def check_out_book(book_id, borrower)
     book = @books.select { |x| x if x.id == book_id }[0]
-    if book.status == "available"
+    if book.status == "available" && (borrower.borrowed.length < 2)
       book.check_out
       book.borrower = borrower
+      borrower.borrowed << book
       book
     else
       return nil
@@ -76,6 +79,7 @@ class Library
 
   def check_in_book(book)
     book.check_in
+    book.borrower = nil
     book
   end
 
