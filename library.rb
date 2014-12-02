@@ -99,5 +99,12 @@ class Library
   end
 
   def borrowed_books
+    checked = []
+    books.each do |b|
+      if b.status == 'checked_out'
+        checked.push(b)
+      end
+    end
+    return checked
   end
 end
