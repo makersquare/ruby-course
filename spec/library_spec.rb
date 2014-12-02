@@ -107,9 +107,9 @@ describe Library do
     expect( lib.get_borrower(book_id) ).to eq bro
   end
 
-  xit "does not allow a book to be checked out twice in a row" do
+  it "does not allow a book to be checked out twice in a row" do
     lib = Library.new("Test Library")
-    lib.add_book = Book.new("Surely You're Joking Mr. Feynman", "Richard Feynman")
+    lib.add_book("Surely You're Joking Mr. Feynman", "Richard Feynman")
     book_id = lib.books.first.id
 
     # Leslie Nielsen wants to double check on that

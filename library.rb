@@ -59,7 +59,7 @@ class Library
       @borrower[book_id] = borrower
       return book
     else
-      return r
+      return nil
     end 
   end
   def find_book_by_id(book_id)
