@@ -32,7 +32,14 @@ module Exercises
   # Exercise 3
   #  - Returns the sum of the given array of numbers
   def self.ex3(array)
-    # TODO
+    if (array.count == 0)
+      return 0
+    end
+
+    ans = array.inject{ |a,b| a+b}
+
+    return ans
+
   end
 
   # Exercise 4
