@@ -61,11 +61,23 @@ class Library
         @borrowers[:book_id] = borrower
         book.status = 'checked_out'
         return book
+      else
+        return nil
       end
     end
   end
 
   def check_in_book(book)
+    books.each do |b|
+      if b == book && book.status == 'checked_out'
+        book_id = b.id
+        @borrowers[:book_id] = nil
+        book.status = 'available'
+        return book
+      else
+        return nil
+      end
+    end
   end
 
   def available_books
