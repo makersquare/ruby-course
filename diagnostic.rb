@@ -211,8 +211,7 @@ class HashProblems
 
   def self.update_father_last_name(hash)
     # TODO: Complete this method by writing A SINGLE LINE
-    puts "value of update_father_last_name #{hash["name"][:last]}"
-    hash["name"][:last]
+    hash["father"]["name"][:last] = "James XXX"
   end
 end
 
