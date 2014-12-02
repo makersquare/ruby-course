@@ -18,6 +18,15 @@ class Book
       return false
     end
   end
+
+  def check_in
+    if @status == 'checked_out'
+      @status = 'available'
+      return true
+    else
+      return false
+    end
+  end
 end
 
 class Borrower
