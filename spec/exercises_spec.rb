@@ -1,6 +1,6 @@
 require "rspec"
 require "./exercises.rb"
-
+require 'date'
 
 
 describe Exercises do
@@ -87,7 +87,20 @@ describe Exercises do
     expect(STDOUT).to receive(:puts).and_return('freddy')
     expect(STDOUT).to receive(:puts).and_return('chef')
     Exercises.ex8(arry)
+
+  end
+
+  it "find if time is leap year" do
+
     
+    res = Exercises.ex9(DateTime.new(2000))
+    expect(res).to eq true
+    res = Exercises.ex9(DateTime.new(2004))
+    expect(res).to eq true
+    res = Exercises.ex9(DateTime.new(2100))
+    expect(res).to eq false
+    res = Exercises.ex9(DateTime.new(1999))
+    expect(res).to eq false
 
   end
 

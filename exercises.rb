@@ -1,3 +1,5 @@
+require 'date'
+
 
 module Exercises
   # Exercise 0
@@ -99,7 +101,12 @@ module Exercises
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
-    # TODO
+    #use datetime object
+    y = time.year.to_i
+
+    return (y % 4 == 0 && ( y % 100 != 0 || y % 400 == 0 ) )
+
+
   end
 
   # Exercise 10
