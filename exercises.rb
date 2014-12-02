@@ -67,14 +67,20 @@ module Exercises
   #  - If the last item is already 'panda', update
   #    it to 'GODZILLA' instead
   def self.ex6(array)
-    # TODO
+    if (array.count > 0 && array[array.count-1] != 'panda')
+      array[array.count-1] = 'panda'
+    elsif array[array.count-1] == 'panda'
+      array[array.count-1] = 'GODZILLA'
+    end
   end
 
   # Exercise 7
   #  - If the string `str` exists in the array,
   #    add `str` to the end of the array
   def self.ex7(array, str)
-    # TODO
+    if array.include?(str)
+      array.push(str)
+    end
   end
 
   # Exercise 8

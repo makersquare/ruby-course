@@ -55,8 +55,28 @@ describe Exercises do
     expect(STDOUT).to receive(:puts).and_return('a')
     expect(STDOUT).to receive(:puts).and_return('b')
     expect(STDOUT).to receive(:puts).and_return('c')
-
     Exercises.ex5(['a','b','c'])
 
   end
+
+  it "last is panda or GODZILLA" do
+
+    arry = ['a', 'b', 'c']
+    Exercises.ex6(arry)
+    expect(arry[arry.count-1]).to eq 'panda'
+    Exercises.ex6(arry)
+    expect(arry[arry.count-1]).to eq 'GODZILLA'
+
+  end
+
+  it "push string to end if exists" do
+
+    arry = ['alpha', 'beta', 'gamma']
+    Exercises.ex7(arry, 'omega')
+    expect(arry[2]).to eq 'gamma'
+    Exercises.ex7(arry, 'beta')
+    expect(arry[arry.count-1]).to eq 'beta'
+
+  end
+
 end
