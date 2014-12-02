@@ -41,7 +41,7 @@ describe Exercises do
 
   end
 
-  it "return second item in array" do
+  it "return max in array" do
 
     ans = Exercises.ex4([0,5,6,7,8])
     expect(ans).to eq 8
@@ -49,6 +49,14 @@ describe Exercises do
     expect(ans).to eq nil
 
   end
+  
+  it "puts print items in array" do
 
+    expect(STDOUT).to receive(:puts).and_return('a')
+    expect(STDOUT).to receive(:puts).and_return('b')
+    expect(STDOUT).to receive(:puts).and_return('c')
 
+    Exercises.ex5(['a','b','c'])
+
+  end
 end
