@@ -144,7 +144,7 @@ describe Library do
     expect(book.status).to eq 'available'
   end
 
-  xit "does not allow a Borrower to check out more than one Book at any given time" do
+  it "does not allow a Borrower to check out more than one Book at any given time" do
     # yeah it's a stingy library
     lib = Library.new("Jason's Library")
     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
@@ -161,11 +161,12 @@ describe Library do
     expect(book.title).to eq "Eloquent JavaScript"
 
     book = lib.check_out_book(book_2.id, jackson)
-    expect(book.title).to eq "Essential JavaScript Design Patterns"
+    #expect(book.title).to eq "Essential JavaScript Design Patterns"
+    expect(book).to be_nil
 
     # However, the third should return nil
-    book = lib.check_out_book(book_3.id, jackson)
-    expect(book).to be_nil
+    #book = lib.check_out_book(book_3.id, jackson)
+    #expect(book).to be_nil
   end
 
   xit "returns available books" do
