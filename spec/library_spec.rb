@@ -45,7 +45,7 @@ describe Book do
 end
 
 describe Borrower do
-  xit "has a name" do
+  it "has a name" do
     borrower = Borrower.new("Mike")
     expect(borrower.name).to eq "Mike"
   end
@@ -53,14 +53,16 @@ end
 
 describe Library do
 
-  xit "starts with an empty array of books" do
-    lib = Library.new
-    expect(lib.books.count).to eq(0)
+  it "starts with an empty array of books" do
+    lib = Library.new("NYPL")
+    expect(lib.books.length).to eq(0)
+
+    
   end
 
-  xit "add new books and assigns it an id" do
-    lib = Library.new
-    lib.register_new_book("Nausea", "Jean-Paul Sartre")
+   it "add new books and assigns it an id" do
+    lib = Library.new("NYPL")
+    lib.add_book("Nausea", "Jean-Paul Sartre")
     expect(lib.books.count).to eq(1)
 
     created_book = lib.books.first
@@ -69,17 +71,17 @@ describe Library do
     expect(created_book.id).to_not be_nil
   end
 
-  xit "can add multiple books" do
-    lib = Library.new
-    lib.register_new_book("One", "Bob")
-    lib.register_new_book("Two", "Bob")
-    lib.register_new_book("Three", "Bob")
+  it "can add multiple books" do
+    lib = Library.new("NYPL")
+    lib.add_book("One", "Bob")
+    lib.add_book("Two", "Bob")
+    lib.add_book("Three", "Bob")
 
     expect(lib.books.count).to eq(3)
   end
 
   xit "allows a Borrower to check out a book by its id" do
-    lib = Library.new
+    lib = Library.new("NYPL")
     lib.register_new_book("Green Eggs and Ham", "Dr. Seuss")
     book_id = lib.books.first.id
 
