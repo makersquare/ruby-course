@@ -71,6 +71,9 @@ class Library
     end
   end
   def check_in_book(book)
+    borrowed_books.delete(book.id)
+    book.check_in()
+
   end
 
   def available_books
