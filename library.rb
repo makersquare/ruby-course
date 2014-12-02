@@ -9,7 +9,12 @@ class Book
   end
 
   def check_out
-    @status = "checked_out"
+    if @status == "available"
+      @status = "checked_out"
+      return true
+    else 
+      return false
+    end
   end
 end
 
