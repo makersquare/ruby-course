@@ -29,5 +29,17 @@ describe Exercises do
 
   end
 
+  it "return second item in array" do
+
+    ans = Exercises.ex2([0,5,6,7,8])
+
+    expect(ans).to eq 5
+
+    ans = Exercises.ex2([])
+
+    expect(ans).to eq 'No Second Element'
+
+  end
+
 
 end
