@@ -90,13 +90,18 @@ module GettersSetters
     def secret 
       return @secret
     end
+
+    def secret=num
+      @secret = num
+    end
   end
 
   # # # # # # # # # # #
   # Getters/Setters 2 #
   # # # # # # # # # # #
   class Person
-
+    attr_reader :age
+    attr_accessor :secret, :name
     def initialize(name, age)
       @name = name
       @age = age
