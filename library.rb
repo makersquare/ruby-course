@@ -43,6 +43,8 @@ class Library
     @books = []
     @borrowed_books = []
     @borrower = {}
+
+
   end
 
   def add_book(title, author)
@@ -53,17 +55,17 @@ class Library
 
   def check_out_book(book_id, borrower)
     book = find_book_by_id(book_id)
-    r = book.check_out
-    if r
+    has_oustanding = find_book_by_borrower(borrower)
+    if book != nil && book.status == 'available' && !(has_oustanding)
       borrowed_books.push(book)
       @borrower[book_id] = borrower
+      book.check_out
       return book
     else
       return nil
-    end 
+    end
   end
   def find_book_by_id(book_id)
-    b = nil
     @books.each do |book|
       if book.id = book_id
         return book
@@ -71,11 +73,19 @@ class Library
     end
   end
   def check_in_book(book)
-    borrowed_books.delete(book.id)
+    @borrowed_books.delete(book.id)
+    @borrower.delete(book.id)
     book.check_in()
 
   end
-
+  def find_book_by_borrower(borrower)
+    @borrower.each do |id, the_borrower|
+      if the_borrower == borrower
+        return find_book_by_id(id)
+      end
+    end
+    return false
+  end
   def available_books
   end
   def get_borrower(book_id)

@@ -5,7 +5,7 @@ describe Book do
   it "has a title and author, and nil id" do
     book = Book.new("The Stranger", "Albert Camus")
 
-    # binding.pry
+     
 
     expect(book.title).to eq "The Stranger"
     expect(book.author).to eq "Albert Camus"
@@ -119,13 +119,16 @@ describe Library do
     # The first time should be successful
     expect(book).to be_a(Book)
 
+    #binding.pry
     # However, you can't check out the same book twice!
     book_again = lib.check_out_book(book_id, nielsen)
+
     expect(book_again).to be_nil
 
     son = Borrower.new('Leslie Nielsen the 2nd')
     book_again = lib.check_out_book(book_id, son)
     expect(book_again).to be_nil
+
   end
 
   it "allows a Borrower to check a book back in" do
@@ -144,7 +147,7 @@ describe Library do
     expect(book.status).to eq 'available'
   end
 
-  xit "does not allow a Borrower to check out more than one Book at any given time" do
+  it "does not allow a Borrower to check out more than one Book at any given time" do
     # yeah it's a stingy library
     lib = Library.new("Test Library")
     lib.add_book("Eloquent JavaScript", "Marijn Haverbeke")
@@ -161,7 +164,7 @@ describe Library do
     expect(book.title).to eq "Eloquent JavaScript"
 
     book = lib.check_out_book(book_2.id, jackson)
-    expect(book.title).to eq "Essential JavaScript Design Patterns"
+    expect(book).to be_nil
 
     # However, the third should return nil
     book = lib.check_out_book(book_3.id, jackson)
