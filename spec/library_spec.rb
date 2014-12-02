@@ -170,18 +170,20 @@ describe Library do
     expect(book).to be_nil
   end
 
-  xit "returns available books" do
-    lib = Library.new
+  it "returns available books" do
+    lib = Library.new("Central")
     lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
     lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
     lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
 
     # At first, all books are available
     expect(lib.available_books.count).to eq(3)
+    # binding.pry
     expect(lib.available_books.first).to be_a(Book)
 
     jordan = Borrower.new("Michael Jordan")
     book = lib.check_out_book(lib.available_books.first.id, jordan)
+    # binding.pry
 
     # But now, there should only be two available books
     expect(lib.available_books.count).to eq(2)

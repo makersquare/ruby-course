@@ -46,6 +46,7 @@ class Library
   def initialize(name)
     @name = name
     @books = []
+    @available_books = []
   end
 
   # def books
@@ -84,6 +85,9 @@ class Library
   end
 
   def available_books
+    avail = @books.map { |x| x if x.status == "available"}
+    avail.compact!
+    avail
   end
 
   def borrowed_books
