@@ -87,6 +87,13 @@ class Library
     return false
   end
   def available_books
+    availables = []
+    @books.each do |b|
+      if !@borrowed_books.include? b
+        availables.push(b)
+      end
+    end
+    return availables
   end
   def get_borrower(book_id)
     return @borrower[book_id]
