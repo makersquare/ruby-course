@@ -156,6 +156,7 @@ class ArrayProblems
 
   def self.iterate_and_print(array)
     # TODO: Iterate over this array and `puts` each element.
+    array.each {|element| puts element}
   end
 
   # # # # # # #
