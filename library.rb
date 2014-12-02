@@ -91,5 +91,8 @@ class Library
   end
 
   def borrowed_books
+    bor = @books.map { |x| x if x.borrower }
+    bor.compact!
+    bor
   end
 end
