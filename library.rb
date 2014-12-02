@@ -33,10 +33,8 @@ end
 
 class Borrower
   attr_reader :name
-  attr_accessor :checked
   def initialize(name)
     @name = name
-    @num_checked = 0
   end
 end
 
@@ -44,10 +42,13 @@ class Library
   attr_reader :books
   attr_reader :name
   attr_reader :borrowers
+  attr_accessor :checked_list
   def initialize(name)
     @name = name
     @books = []
     @borrowers = {}
+    @checked_list = {}
+
   end
 
   def register_new_book(title, author)
@@ -57,11 +58,14 @@ class Library
 
   def check_out_book(book_id, borrower)
     checked = nil
+    if !(@checked_list.has_key?(borrower))
+      @checked_list[borrower] = 0
+    end
     @books.each do |book|
-      if book.id == book_id && book.status == "available" && borrower.num_checked.count <= 2
+      if (book.id == book_id) && (book.status == "available") && (@checked_list[borrower] < 2)
         book.check_out()
         @borrowers[book_id] = borrower
-        borrower.num_checked +=1
+        checked_list[borrower] += 1
         checked = book
       end
     end
@@ -86,8 +90,22 @@ class Library
   
 
   def available_books
+    available = []
+    @books.each do |book|
+      if book.status == "available"
+        available.push(book)
+      end
+    end
+    return available
   end
 
   def borrowed_books
+    borrowed = []
+    @books.each do |book|
+      if book.status == "checked_out"
+        borrowed.push(book)
+      end
+    end
+    return borrowed
   end
 end
