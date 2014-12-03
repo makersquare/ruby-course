@@ -123,7 +123,40 @@ module Extensions
   #   result = Extensions.extremes(['x', 'x', 'y', 'z'])
   #   expect(result).to eq({ :most => 'x', :least => ['y', 'z'] })
   #
+
   def self.extremes(array)
-    # TODO
+    counts = {}
+
+    array.each do |str|
+      counts[str] || counts[str] = 0
+      counts[str] += 1
+    end
+    
+    result = {}
+    most = []
+    least = []
+    strings = counts.keys
+    strings.sort {|a,b| counts[a] <=> counts[b]}
+    strings.each do |str|
+      if most.length == 0 || counts[str] == counts[most.first]
+        most.push(str)
+      end
+      if least.length != 0 && counts[least.first] > counts[str]
+        least = []
+      end
+      if least.length == 0 || counts[str] == counts[least.first]
+        least.push(str)
+      end
+    end
+
+    if least.length == 1
+      least = least.first
+    end
+    if most.length == 1
+      most = most.first
+    end
+    result[:most] = most
+    result[:least] = least
+    return result
   end
 end
