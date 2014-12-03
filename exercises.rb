@@ -82,19 +82,27 @@ module Exercises
     end
   end
 
-  # Exercise 9
+ # Exercise 9
   #  - Returns `true` if the given time is in a leap year
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
-    # TODO
+    y = time.year
+    if y%4 == 0
+     if (y%100 == 0) && !(y%400 == 0)
+      return false
+     end
+     return true
+    else 
+      return false
+    end               
   end
 
   # Exercise 10
   #  - Returns "happy hour" if it is between 4 and 6pm
   #    Otherwise, returns "normal prices"
   # Hint: Read the "Stubbing" documentation on the Learn app.
-  def self.ex10
+  def self.ex10(time)
     # TODO
   end
 end
