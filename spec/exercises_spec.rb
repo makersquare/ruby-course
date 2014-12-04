@@ -48,3 +48,15 @@ describe 'Exercise 5' do
     expect(result).to eq([1, 2, 3, 4])
   end
 end
+
+describe 'Exercise 6' do
+  it "updates last item of an array to be panda" do
+    result = Exercises.ex6([1,2,3,4])
+    expect(result).to eq([1,2,3,'panda'])
+  end
+
+  it "updates last element to be GODZILLA if last element is panda" do
+    result = Exercises.ex6([1,2,3,'panda'])
+  end
+  
+end
