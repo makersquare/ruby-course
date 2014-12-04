@@ -23,18 +23,21 @@ module Exercises
   #  - Returns the second element of an array
   def self.ex2(array)
     # TODO
+    array[1]
   end
 
   # Exercise 3
   #  - Returns the sum of the given array of numbers
   def self.ex3(array)
     # TODO
+    array.reduce(:+)
   end
 
   # Exercise 4
   #  - Returns the max number of the given array
   def self.ex4(array)
     # TODO
+    array.max
   end
 
   # Exercise 5

@@ -20,3 +20,24 @@ describe 'Exercise 1' do
     expect(result).to eq(4)
   end
 end
+
+describe 'Exercise 2' do
+  it "returns the second element of the array" do
+    result = Exercises.ex2([1,2,3,4,5])
+    expect(result).to eq(2)
+  end
+end
+
+describe 'Exercise 3' do
+  it "returns the sum of an array of numbers" do
+    result = Exercises.ex3([1,2,3,4])
+    expect(result).to eq(10)
+  end
+end
+
+describe 'Exercise 4' do
+  it "returns the maximum of an array of numbers" do
+    result = Exercises.ex4([1,2,5,3,7])
+    expect(result).to eq(7)
+  end
+end
