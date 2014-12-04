@@ -21,7 +21,7 @@ module Exercises
   # Exercise 3
   #  - Returns the sum of the given array of numbers
   def self.ex3(array)
-    # TODO
+    array.inject{|s,e| s+e}
   end
 
   # Exercise 4
