@@ -81,6 +81,10 @@ module Exercises
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
     # TODO
+    people.each do |x|
+      puts x[:name]
+      puts x[:occupation]
+    end
   end
 
   # Exercise 9

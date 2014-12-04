@@ -81,10 +81,10 @@ describe 'Exercise 7' do
   end
 end
 
-# describe 'Exercise 8' do
-#   it "given an array of hashes, prints out each hash" do
-#     result = Exercises.ex8([{ :name => 'Bob', :occupation => 'Builder' },
-#      { :name => 'Dora', :occupation => 'Explora'}])
-#     expect(result).to eq('BobBuilderDoraExplora')
-#   end
-# end
+describe 'Exercise 8' do
+  it "given an array of hashes, prints out each hash" do
+    result = capture_stdout { Exercises.ex8([{ :name => 'Bob', :occupation => 'Builder' },
+     { :name => 'Dora', :occupation => 'Explora'}]) }
+    result.should == "Bob\nBuilder\nDora\nExplora\n"
+  end
+end
