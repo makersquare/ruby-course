@@ -75,6 +75,22 @@ module Exercises
   def self.ex10
     # TODO
   end
+  
+  # Exercise 11
+  #  - Returns the sum of two numbers if they are both integers
+  #  - Raises an error if both numbers are not integers
+  def self.ex11
+    # TODO
+  end
+  
+  # Exercise 12
+  #  - Write a method that takes two characters and returns an
+  #    ordered array with all characters need to fill the range
+  #    Eg.
+  #       Exercises.ex12('c', 'g') => ['c', 'd', 'e', 'f', 'g']
+  def self.ex12
+    # TODO
+  end
 end
 
 module Extensions
