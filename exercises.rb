@@ -27,21 +27,30 @@ module Exercises
   # Exercise 4
   #  - Returns the max number of the given array
   def self.ex4(array)
-    # TODO
+     max = array[0]
+     array.each do |x| 
+      if x > max 
+        max = x
+      end
+    end 
+      max 
   end
 
   # Exercise 5
   #  - Iterates through an array and `puts` each element
-  def self.ex5(array)
-    # TODO
-  end
+  # def self.ex5(array)
+  #   array.each do |x|
+  #     puts x
+  #   end
+  # end
 
   # Exercise 6
   #  - Updates the last item in the array to 'panda'
   #  - If the last item is already 'panda', update
   #    it to 'GODZILLA' instead
   def self.ex6(array)
-    # TODO
+    x = array[-1] == 'panda' ? 'GODZILLA' : 'panda' 
+    array[0..-2] << x
   end
 
   # Exercise 7
