@@ -67,31 +67,46 @@ module Exercises
   #  - `people` is an array of hashes. Each hash is like the following:
   #    { :name => 'Bob', :occupation => 'Builder' }
   #    Iterate through `people` and print out their name and occupation.
-  def self.ex8(people)
-    # TODO
-  end
+  # def self.ex8(people)
+  #   people.each do |name, occupation| 
+  #   puts name
+  #   puts occupation
+  #   end 
+  # end
 
   # Exercise 9
   #  - Returns `true` if the given time is in a leap year
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
-  def self.ex9(time)
-    # TODO
-  end
+  #A year will be a leap year 
+  #if it is divisible by 4 but not by 100. If a year is divisible by 4 and by 100, it is not a leap year unless it is also divisible by 400.
+
+
+  # def self.ex9(time)
+  #   time % 4 == 0  && time % 100 !=0
+  # end
 
   # Exercise 10
   #  - Returns "happy hour" if it is between 4 and 6pm
   #    Otherwise, returns "normal prices"
   # Hint: Read the "Stubbing" documentation on the Learn app.
   def self.ex10
-    # TODO
+    t = Time.now.hour
+    if t >=16 && t <=18
+      "happy hour"
+    else 
+      "normal prices"
+    end
   end
   
   # Exercise 11
   #  - Returns the sum of two numbers if they are both integers
   #  - Raises an error if both numbers are not integers
-  def self.ex11
-    # TODO
+  def self.ex11(n,m)
+    if Integer === n && Integer === m
+      n + m 
+    else raise "Enter Integers! "
+    end 
   end
   
   # Exercise 12
