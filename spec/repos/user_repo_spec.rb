@@ -28,6 +28,7 @@ describe Library::UserRepo do
     expect(user_count(db)).to eq 0
 
     user = Library::UserRepo.save(db, :name => "Alice")
+    p user
     expect(user['id']).to_not be_nil
     expect(user['name']).to eq "Alice"
 

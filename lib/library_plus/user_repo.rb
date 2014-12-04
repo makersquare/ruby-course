@@ -15,13 +15,20 @@ module Library
       if user_data['id']
         # TODO: Update SQL statement
       else
-        # TODO: Insert SQL statement
+        userID = ((user_data[:name].hash)/10000000000).abs  
+        r = db.exec("INSERT INTO users (id, name) VALUES (#{userID}, '#{user_data[:name]}')")
+        return db.exec("SELECT * FROM users WHERE id = #{userID}").to_a[0]
+
       end
     end
 
     def self.destroy(db, user_data)
-      # TODO: Delete SQL statement
-    end
+      if(user_data['id'])
+        db.exec("DELETE FROM users WHERE  id = #{user_data['id']}")
+      else
+        db.exec("DELETE FROM users WHERE  name = #{user_data['name']}")
+      end
 
+    end
   end
 end

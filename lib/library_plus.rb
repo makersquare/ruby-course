@@ -2,7 +2,13 @@ require 'pg'
 
 module Library
   def self.create_db_connection(dbname)
-    PG.connect(host: 'localhost', dbname: dbname)
+    cstring = {
+  host: "localhost",
+  dbname: dbname,
+  user: "ruby",
+  password: "rubyRailsJS"
+}
+    PG.connect(cstring)
   end
 
   def self.clear_db(db)
