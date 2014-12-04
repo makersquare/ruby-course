@@ -2,6 +2,17 @@ require "./exercises.rb"
 require 'pry-byebug'
 # require 'spec_helper'
 
+def capture_stdout(&block)
+  original_stdout = $stdout
+  $stdout = fake = StringIO.new
+  begin
+    yield
+  ensure
+    $stdout = original_stdout
+  end
+  fake.string
+end
+
 describe 'Exercise 0' do
   it "triples the length of a string" do
     result = Exercises.ex0("ha")
@@ -44,8 +55,9 @@ end
 
 describe 'Exercise 5' do
   it "puts all elements of the array" do
-    result = Exercises.ex5([1,2,3,4])
-    expect(result).to eq([1, 2, 3, 4])
+    result = capture_stdout { Exercises.ex5([1,2,3,4]) }
+
+    result.should == "1\n2\n3\n4\n"
   end
 end
 
@@ -68,3 +80,11 @@ describe 'Exercise 7' do
     expect(result).to eq([1,2,'str',3,4,'str'])
   end
 end
+
+# describe 'Exercise 8' do
+#   it "given an array of hashes, prints out each hash" do
+#     result = Exercises.ex8([{ :name => 'Bob', :occupation => 'Builder' },
+#      { :name => 'Dora', :occupation => 'Explora'}])
+#     expect(result).to eq('BobBuilderDoraExplora')
+#   end
+# end
