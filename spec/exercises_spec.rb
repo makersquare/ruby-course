@@ -41,3 +41,10 @@ describe 'Exercise 4' do
     expect(result).to eq(7)
   end
 end
+
+describe 'Exercise 5' do
+  it "puts all elements of the array" do
+    result = Exercises.ex5([1,2,3,4])
+    expect(result).to eq([1, 2, 3, 4])
+  end
+end
