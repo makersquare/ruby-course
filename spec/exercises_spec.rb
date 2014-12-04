@@ -88,3 +88,14 @@ describe 'Exercise 8' do
     result.should == "Bob\nBuilder\nDora\nExplora\n"
   end
 end
+
+describe 'Exercise 9' do
+  it "tells whether the given year is a leap year (true case)" do
+    result = Exercises.ex9(2000)
+    expect(result).to eq(true)
+  end
+  it "tells whether the given year is a leap year (false case)" do
+    result = Exercises.ex9(1900)
+    expect(result).to eq(false)
+  end
+end

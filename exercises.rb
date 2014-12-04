@@ -91,8 +91,9 @@ module Exercises
   #  - Returns `true` if the given time is in a leap year
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
-  def self.ex9(time)
+  def self.ex9(year)
     # TODO
+    ((year % 400 == 0) || (year % 100 != 0)) && year % 4 == 0 ? true : false
   end
 
   # Exercise 10
