@@ -57,6 +57,14 @@ describe 'Exercise 6' do
 
   it "updates last element to be GODZILLA if last element is panda" do
     result = Exercises.ex6([1,2,3,'panda'])
+    expect(result).to eq([1,2,3,'GODZILLA'])
   end
-  
+
+end
+
+describe 'Exercise 7' do
+  it "adds str to the end of an array if str is element of array" do
+    result = Exercises.ex7([1,2,'str',3,4], 'str')
+    expect(result).to eq([1,2,'str',3,4,'str'])
+  end
 end
