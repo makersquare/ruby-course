@@ -1,6 +1,7 @@
 require 'pg'
 
 module Library
+  
   def self.create_db_connection(dbname)
     PG.connect(host: 'localhost', dbname: dbname)
   end
@@ -25,7 +26,7 @@ module Library
   def self.drop_tables(db)
     db.exec <<-SQL
       DROP TABLE users;
-      /* TODO: Drop rest of the tables (books, etc.) */
+      /* TODO: Drop rest of the tables (books, etc.) 
     SQL
   end
 end
