@@ -1,4 +1,5 @@
 require 'pg'
+require 'pry-byebug'
 
 module Library
 
