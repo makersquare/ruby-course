@@ -14,7 +14,7 @@ module Library
 
   def self.create_tables(db)
     db.exec <<-SQL
-      CREATE TABLE users(
+      CREATE TABLE if not exists users(
         id SERIAL PRIMARY KEY,
         name VARCHAR
       );

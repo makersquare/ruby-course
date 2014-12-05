@@ -1,6 +1,7 @@
 module Library
   class UserRepo
 
+
     def self.all(db)
       # Other code should not have to deal with the PG:Result.
       # Therefore, convert the results into a plain array.
