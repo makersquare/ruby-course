@@ -23,7 +23,7 @@ module Library
       end
     end
 
-    def self.destroy(db, user_data)
+    def self.destroy(db, user_id)
       # TODO: Delete SQL statement
     end
 
