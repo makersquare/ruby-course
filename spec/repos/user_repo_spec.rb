@@ -9,7 +9,7 @@ describe Library::UserRepo do
   let(:db) { Library.create_db_connection('library_test') }
 
   before(:each) do
-    Library.clear_db(db)
+    Library.clear_db(db)# clearing because it needs to be fresh for testing.
   end
 
   it "gets all users" do

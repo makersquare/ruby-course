@@ -2,7 +2,7 @@ require 'pg'
 
 module Library
   def self.create_db_connection(dbname)
-    PG.connect(host: 'localhost', dbname: dbname)
+    @db = PG.connect(host: 'localhost', dbname: dbname)
   end
 
   def self.clear_db(db)
@@ -13,11 +13,21 @@ module Library
   end
 
   def self.create_tables(db)
-    db.exec <<-SQL
+    @db.exec <<-SQL
       CREATE TABLE users(
         id SERIAL PRIMARY KEY,
         name VARCHAR
       );
+      CREATE TABLE books(
+        title VARCHAR,
+        id INTEGER,
+        author VARCHAR
+      );
+      CREATE TABLE memberships (
+        user_id INTEGER,
+        book_id INTEGER,
+        checked_out BOOLEAN
+        );
       /* TODO: Create rest of the tables (books, etc.) */
     SQL
   end
