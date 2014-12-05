@@ -22,3 +22,24 @@ post '/users' do
   @users = Library::UserRepo.all(db)
   redirect to ('/users')
 end
+
+get '/books' do
+  db = Library.create_db_connection('library_dev')
+  Library.create_tables(db)
+  @books = Library::BookRepo.all(db)
+  erb :'books/index'
+end
+
+post '/books' do
+  db = Library.create_db_connection('library_dev')
+  Library::BookRepo.save(db, params)
+  @books = Library::BookRepo.all(db)
+  redirect to ('/books')
+end
+
+get '/books/:id' do
+  db = Library.create_db_connection('library_dev')
+  id = params['id'].to_i
+  @results = Library::BookRepo.find(db, id)
+  erb :"books/show"
+end
