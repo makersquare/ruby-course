@@ -104,7 +104,7 @@ module Exercises
   def self.ex11(n,m)
     if Integer === n && Integer === m
       n + m 
-    else raise "Enter Integers! "
+    else raise ArgumentError, "Enter Integers!"
     end 
   end
   

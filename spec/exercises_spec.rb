@@ -148,29 +148,17 @@ describe 'Exercise 10' do
 end
 
 
-#   it "does not add string if string is not in the array'" do
-#     array = ["ciao", "panda"]
-#     string = "cat"
-#     result = Exercises.ex7(array, string)
-#     expect(result).to eq(["ciao", "panda"])
-#   end
-# end
+describe 'Exercise 11' do
+  it "returns the sum of two numbers if they are both integers
+    Raises an error if both numbers are not integers" do
+    result = Exercises.ex11(3, 7)
+    expect(result).to eq(10)
+  end
 
-
-# describe 'Exercise 11' do
-#   it "returns the sum of two numbers if they are both integers
-#     Raises an error if both numbers are not integers" do
-#     result = Exercises.ex11(3, 7)
-#     # result1 = Exercises.ex11(1.3, 7)
-#     expect(result).to eq(10)
-#     # expect(result).to eq("error")
-#   end
-#   it "raises an error if both numbers are not integers" do
-#     result = Exercises.ex11(1.3, 7)
-#     expect { raise StandardError, 'Enter Integers!'}.to raise_error('Enter Integers!')
-
-#   end  
-# end
+  it "raises an error if both numbers are not integers" do
+    expect { raise Exercises.ex11(1.3, 7) }.to raise_error
+  end  
+end
 
 describe 'Exercise 12' do
   it "takes two characters and returns and ordered array 
@@ -189,9 +177,7 @@ describe 'Extension' do
     result1 = Extensions.extremes(['x', 'y', 'y', 'z', 't', 'p'])
     expect(result).to eq({ :most => 'x', :least => ['y', 'z'] })
     expect(result1).to eq({ :most => 'y', :least => ['x', 'z', 't', 'p'] })
-
   end
-
 end
 
 
