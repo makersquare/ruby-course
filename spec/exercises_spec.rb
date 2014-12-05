@@ -85,7 +85,7 @@ describe 'Exercise 8' do
   it "given an array of hashes, prints out each hash" do
     result = capture_stdout { Exercises.ex8([{ :name => 'Bob', :occupation => 'Builder' },
      { :name => 'Dora', :occupation => 'Explora'}]) }
-    result.should == "Bob\nBuilder\nDora\nExplora\n"
+    result.should == "BobBuilderDoraExplora"
   end
 end
 
@@ -97,5 +97,31 @@ describe 'Exercise 9' do
   it "tells whether the given year is a leap year (false case)" do
     result = Exercises.ex9(1900)
     expect(result).to eq(false)
+  end
+end
+
+describe 'Exercise 10' do
+  it "determines if happy hour is going on" do
+    result = Exercises.ex10
+    expect(result).to eq("normal prices")
+  end
+end
+
+describe 'Exercise 11' do
+  it "adds two numbers if they are integers" do
+    result = Exercises.ex11(9, 5)
+    expect(result).to eq(14)
+  end
+
+  xit "should raise an error for two non-integers" do
+    result = Exercises.ex11("eb", 3.7)
+    expect(result).to raise(RuntimeError)
+  end
+end
+
+describe 'Exercise 12' do
+  it "should return an array with missing characters" do
+    result = Exercises.ex12('c', 'g')
+    expect(result).to eq(['c','d','e','f','g'])
   end
 end

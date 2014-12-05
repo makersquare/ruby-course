@@ -82,8 +82,8 @@ module Exercises
   def self.ex8(people)
     # TODO
     people.each do |x|
-      puts x[:name]
-      puts x[:occupation]
+      print x[:name]
+      print x[:occupation]
     end
   end
 
@@ -102,13 +102,24 @@ module Exercises
   # Hint: Read the "Stubbing" documentation on the Learn app.
   def self.ex10
     # TODO
+    time = Time.now
+    if time.hour < 18 && time.hour > 16
+      "happy hour"
+    else
+      "normal prices"
+    end
   end
   
   # Exercise 11
   #  - Returns the sum of two numbers if they are both integers
   #  - Raises an error if both numbers are not integers
-  def self.ex11
+  def self.ex11(x, y)
     # TODO
+    if x.class == Fixnum && y.class == Fixnum
+      x + y
+    else
+
+    end
   end
   
   # Exercise 12
@@ -116,9 +127,18 @@ module Exercises
   #    ordered array with all characters need to fill the range
   #    Eg.
   #       Exercises.ex12('c', 'g') => ['c', 'd', 'e', 'f', 'g']
-  def self.ex12
+  def self.ex12(character1, character2)
     # TODO
+    arr = []
+
+    while (character1 != character2) do
+      arr.push(character1)
+      character1 = character1.next
+    end
+    arr.push(character2)
+    arr
   end
+
 end
 
 module Extensions
