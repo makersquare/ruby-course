@@ -11,7 +11,7 @@ module Library
     end
 
     def self.find(db, user_id)
-      # TODO: Insert SQL statement
+      db.exec("SELECT * FROM users WHERE id = #{user_id}").entries.last
     end
 
     def self.save(db, user_data)
@@ -22,14 +22,14 @@ module Library
           # Enter Name and Unique ID gets assigned automatically
           db.exec("INSERT INTO users (name) VALUES ('#{user_data['name']}')")
       end
-      get_user(db, user_data).last
+      get_users(db, user_data).last
     end
 
     def self.destroy(db, user_id)
-      # TODO: Delete SQL statement
+      db.exec("DELETE FROM users WHERE id = #{user_id}")
     end
 
-    def self.get_user(db, user_data)
+    def self.get_users(db, user_data)
       if user_data['id']
         db.exec("SELECT * FROM users WHERE id = #{user_data['id']}").entries
       else
