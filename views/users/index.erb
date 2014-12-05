@@ -1,0 +1,14 @@
+<h1> Users </h1>
+<ul>
+<% @users.each do |x| %>
+	<li><a href="/users/<%= x['id'] %>"> <%= x['name'] %> </a></li>
+<% end %>
+</ul>
+
+<form method="POST" action="/users">
+  <h3>Register New User</h3>
+  <label>Name:</label>
+  <input type="text" name="name" />
+
+  <button>Register</button>
+</form>
