@@ -9,6 +9,7 @@ module Library
     db.exec <<-SQL
       DELETE FROM users;
       /* TODO: Clear rest of the tables (books, etc.) */
+      DELETE FROM books;
     SQL
   end
 
@@ -19,6 +20,11 @@ module Library
         name VARCHAR
       );
       /* TODO: Create rest of the tables (books, etc.) */
+      CREATE TABLE if not exists books(
+        id SERIAL PRIMARY KEY,
+        title VARCHAR,
+        author VARCHAR
+      );
     SQL
   end
 
