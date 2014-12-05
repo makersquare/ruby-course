@@ -1,3 +1,6 @@
+# Library::UserRepo.all(db)
+# Library::BookRepo.all(db)
+
 module Library
   class UserRepo
 

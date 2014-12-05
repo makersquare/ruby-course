@@ -1,13 +1,18 @@
 require 'pg'
 
 module Library
+
+  def self.create_db(dbname)
+    success = system("createdb #{dbname}")
+  end
+
   def self.create_db_connection(dbname)
     PG.connect(host: 'localhost', dbname: dbname)
   end
 
   def self.clear_db(db)
     db.exec <<-SQL
-      DELETE FROM users;
+      DROP TABLE IF EXISTS users;
       /* TODO: Clear rest of the tables (books, etc.) */
     SQL
   end

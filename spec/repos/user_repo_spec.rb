@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'pg'
 
 describe Library::UserRepo do
 
@@ -6,10 +7,19 @@ describe Library::UserRepo do
     db.exec("SELECT COUNT(*) FROM users")[0]["count"].to_i
   end
 
-  let(:db) { Library.create_db_connection('library_test') }
+  # A let(:db) define means you can use db in an it statement below
+  # Also, the code in {} does not run until it sees a 'db' statement in an 'it' block
+  # Therefore, the code will run for each 'it' block
+  let(:db) {
+    Library.create_db('library_test')
+    Library.create_db_connection('library_test')
+  }
 
+  # Before each 'it' block we are clearing the data base
+  # That way when we crete users we know exactly how many should be in the db
   before(:each) do
     Library.clear_db(db)
+    Library.create_tables(db)
   end
 
   it "gets all users" do
@@ -24,7 +34,7 @@ describe Library::UserRepo do
     expect(names).to include "Alice", "Bob"
   end
 
-  it "creates users" do
+  xit "creates users" do
     expect(user_count(db)).to eq 0
 
     user = Library::UserRepo.save(db, :name => "Alice")
