@@ -8,28 +8,31 @@ module Library
     end
 
     def self.find(db, book_data)
-      # TODO: Insert SQL statement
+      db.exec("SELECT * FROM books WHERE id = #{book_data}").to_a[0]
     end
 
     def self.save(db, book_data)
-      if book_data[:id]
-        # TODO: Update SQL statement
+      if book_data["id"]
+        s = ""
+        if(book_data["title"])
+          s+="title = '"+book_data["title"]+"'"
+        end
+        if(book_data["title"] && book_data["author"])
+          s+=","
+        end
+        if(book_data["author"])
+          s+="author = '"+book_data["author"]+"'"
+        end
+          db.exec("UPDATE books SET #{s} WHERE id = #{book_data['id']} returning *").to_a[0]
       else
-          title = book_data[:title]
-          author = book_data[:author]
-        db.exec("INSERT INTO books (title, author) VALUES ('#{title}', '#{author}')")
-        r = db.exec("SELECT id, title FROM books ORDER BY id DESC LIMIT 1").to_a
-        return r[0]
-      end
+        db.exec("INSERT INTO books (title, author) VALUES ('#{book_data["title"]}', '#{book_data["author"]}') returning *").to_a[0]
+      end 
     end
 
     def self.destroy(db, book_data)
-      if(book_data[:id])
-        db.exec("DELETE FROM books WHERE  id = #{book_data[:id]}")
-      else
-        db.exec("DELETE FROM books WHERE  title = #{book_data[:title]}")
+        r = db.exec("DELETE FROM books WHERE  id = #{book_data}")
+        return r.cmd_status()
       end
-    end
   end
 end
 # TODO

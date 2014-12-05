@@ -8,26 +8,20 @@ module Library
     end
 
     def self.find(db, user_data)
-      # TODO: Insert SQL statement
+      db.exec("SELECT * FROM users WHERE id = #{user_data}").to_a[0]
     end
 
     def self.save(db, user_data)
       if user_data['id']
-        # TODO: Update SQL statement
+          db.exec("UPDATE users SET name = '#{user_data['name']}' WHERE id = #{user_data['id']} returning *").to_a[0]
       else
-          name = user_data[:name]
-        db.exec("INSERT INTO users (name) VALUES ('#{name}')")
-        r = db.exec("SELECT id, name FROM users ORDER BY id DESC LIMIT 1").to_a
-        return r[0]
+          db.exec("INSERT INTO users (name) VALUES ('#{user_data['name']}') returning *").to_a[0]
       end
     end
 
     def self.destroy(db, user_data)
-      if(user_data['id'])
-        db.exec("DELETE FROM users WHERE  id = #{user_data[:id]}")
-      else
-        db.exec("DELETE FROM users WHERE  name = #{user_data[:name]}")
-      end
+        r = db.exec("DELETE FROM users WHERE  id = #{user_data}")
+        return r.cmd_status()
 
     end
   end
