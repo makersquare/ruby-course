@@ -32,7 +32,11 @@ module Library
     end
 
     def self.destroy(db, user_id)
-      # TODO: Delete SQL statement
+      sql = %q[
+        DELETE FROM users
+        WHERE id = ($1)
+      ]
+      db.exec(sql,[user_id])
     end
 
   end
