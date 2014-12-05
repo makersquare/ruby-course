@@ -11,5 +11,14 @@ get '/users' do
   db = Library.create_db_connection('library_dev')
   Library.create_tables(db)
   @users = Library::UserRepo.all(db)
+  puts params
+  erb :"users/index"
+end
+
+post '/users' do
+  puts params
+  db = Library.create_db_connection('library_dev')
+  Library::UserRepo.save(db, params)
+  @users = Library::UserRepo.all(db)
   erb :"users/index"
 end
