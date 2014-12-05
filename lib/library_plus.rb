@@ -2,7 +2,7 @@ require 'pg'
 
 module Library
   def self.create_db_connection(dbname)
-    PG.connect(host: 'localhost', dbname: dbname)
+    PG.connect(dbname: dbname)
   end
 
   def self.clear_db(db)
