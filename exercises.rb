@@ -113,8 +113,8 @@ module Exercises
   #    ordered array with all characters need to fill the range
   #    Eg.
   #       Exercises.ex12('c', 'g') => ['c', 'd', 'e', 'f', 'g']
-  def self.ex12
-    # TODO
+  def self.ex12(a,b)
+    (a..b).to_a  
   end
 end
 
