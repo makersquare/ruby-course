@@ -81,9 +81,9 @@ module Exercises
 
   def self.ex9(time)
     t = time.year
-    (t%4  == 0 || t%100 == 0 ) && (t%400 != 0 )
+    (t%4  == 0 && t%100 != 0 ) || (t%400 == 0 )
   end
-
+  
   # Exercise 10
   #  - Returns "happy hour" if it is between 4 and 6pm
   #    Otherwise, returns "normal prices"
