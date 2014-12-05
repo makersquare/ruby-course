@@ -51,7 +51,7 @@ describe Library::UserRepo do
     expect(user2['name']).to eq "Alicia"
 
     # Check for persistence
-    user3 = Library::UserRepo.find(user1['id'])
+    user3 = Library::UserRepo.find(db, user1['id'])
     expect(user3['name']).to eq "Alicia"
   end
 
