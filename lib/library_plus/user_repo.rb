@@ -21,11 +21,15 @@ module Library
         id = user_data['id']
         db.exec("UPDATE movies SET name = $1 WHERE id = $2", [name, id])
         new_data = Library::UserRepo.find(db, id)
+        new_data
 
       else
         # TODO: Insert SQL statement
         name = user_data['name']
-        db.exec("INSERT into users (name) VALUES ($1)", [name])
+        returned = db.exec("INSERT into users (name) VALUES ($1) returning id", [name])
+        # new_data = Library::UserRepo.find(db, id)
+        user_data['id'] = returned
+        user_data
       end
     end
 
