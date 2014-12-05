@@ -38,11 +38,9 @@ module Exercises
 
   # Exercise 5
   #  - Iterates through an array and `puts` each element
-  # def self.ex5(array)
-  #   array.each do |x|
-  #     puts x
-  #   end
-  # end
+  def self.ex5(array)
+    array.each{|a| puts a}
+  end
 
   # Exercise 6
   #  - Updates the last item in the array to 'panda'
