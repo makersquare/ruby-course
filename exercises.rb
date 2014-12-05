@@ -118,7 +118,7 @@ module Exercises
     if x.class == Fixnum && y.class == Fixnum
       x + y
     else
-
+      raise
     end
   end
   

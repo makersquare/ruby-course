@@ -113,7 +113,7 @@ describe 'Exercise 11' do
     expect(result).to eq(14)
   end
 
-  xit "should raise an error for two non-integers" do
+  it "should raise an error for two non-integers" do
     result = Exercises.ex11("eb", 3.7)
     expect(result).to raise(RuntimeError)
   end
