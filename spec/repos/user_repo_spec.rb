@@ -44,7 +44,7 @@ describe Library::UserRepo do
     expect(retrieved_user['name']).to eq "Alice"
   end
 
-  xit "updates users" do
+  it "updates users" do
     user1 = Library::UserRepo.save(db, { 'name' => "Alice" })
     user2 = Library::UserRepo.save(db, { 'id' => user1['id'], 'name' => "Alicia" })
     expect(user2['id']).to eq(user1['id'])

@@ -21,7 +21,7 @@ module Library
         # TODO: Update SQL statement
         name = user_data['name']
         id = user_data['id']
-        db.exec("UPDATE movies SET name = $1 WHERE id = $2", [name, id])
+        db.exec("UPDATE users SET name = $1 WHERE id = $2", [name, id])
         new_data = Library::UserRepo.find(db, id)
         new_data
 
@@ -30,7 +30,7 @@ module Library
         name = user_data['name']
         returned = db.exec("INSERT into users (name) VALUES ($1) returning id", [name])
         # new_data = Library::UserRepo.find(db, id)
-        user_data['id'] = returned.entries[0]['id'].to_i
+        user_data['id'] = returned.entries[0]['id']
         # require 'pry-byebug'; binding.pry
         user_data
       end
