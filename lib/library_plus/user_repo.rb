@@ -8,14 +8,18 @@ module Library
     end
 
     def self.find(db, user_id)
-      # TODO: Insert SQL statement
+      result = db.exec('SELECT name, id FROM users WHERE id = ($1)',[user_id])
+      result.entries[0]
     end
 
     def self.save(db, user_data)
+      user_name = user_data['name']
       if user_data['id']
-        # TODO: Update SQL statement
+        find(db, user_data)
       else
-        # TODO: Insert SQL statement
+        db.exec("INSERT INTO users (name) VALUES ($1)",[user_data['name']])
+        result = db.exec("SELECT name, id FROM users WHERE name = ($1)", [user_name])
+        result.entries[0]
       end
     end
 
