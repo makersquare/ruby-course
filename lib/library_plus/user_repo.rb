@@ -12,32 +12,29 @@ module Library
     end
 
     def self.save(db, user_data)
-      if user_data["id"]
+      # update user data if user exists, otherwise create new user
+      if user_data[:id]
         sql_users = %Q[
-          SELECT *
-          FROM users
-          WHERE id = user[:id]
+          UPDATE users
+          set name =$1
+          where id = $2
+          returning *
         ]
-        db.exec sql
+        result = db.exec sql_users, user_data[:name], user_data[:id]
       else
         # prepared statement
         statement_insert_user = %Q[
           insert into users 
           (name)
           values ($1)
+          returning *
         ]
         db.prepare("insert_user", statement_insert_user)
         # execute prepared statement
-        db.exec_prepared("insert_user", [user_data[:name]])
+        result = db.exec_prepared("insert_user", [user_data[:name]])
       end
-      # grab the user via query and return it
-      sql_users = %Q[
-          SELECT *
-          FROM users
-          WHERE name = $1
-        ]
-      users = db.exec(sql_users, [user_data[:name]])
-      users.first
+      
+      return result.first
     end
 
     def self.destroy(db, user_data)
