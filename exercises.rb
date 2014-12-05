@@ -62,15 +62,15 @@ module Exercises
   end
 
   # Exercise 8
-  #  - `people` is an array of hashes. Each hash is like the following:
-  #    { :name => 'Bob', :occupation => 'Builder' }
-  #    Iterate through `people` and print out their name and occupation.
-  # def self.ex8(people)
-  #   people.each do |name, occupation| 
-  #   puts name
-  #   puts occupation
-  #   end 
-  # end
+  # - `people` is an array of hashes. Each hash is like the following:
+  # { :name => 'Bob', :occupation => 'Builder' }
+  # Iterate through `people` and print out their name and occupation.
+  
+  def self.ex8(people)
+    people.each do |person|  
+    puts person.values.join("")
+    end 
+  end
 
   # Exercise 9
   #  - Returns `true` if the given time is in a leap year
