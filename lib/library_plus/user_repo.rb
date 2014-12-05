@@ -1,3 +1,6 @@
+# Library::UserRepo.all(db)
+#Library::BookRepo.all(db) 
+
 module Library
   class UserRepo
 
@@ -7,10 +10,11 @@ module Library
       db.exec("SELECT * FROM users").to_a
     end
 
-    def self.find(db, user_data)
+    def self.find(db, user_id)
       # TODO: Insert SQL statement
     end
 
+    #Libary::UserRepo.save(db, {'id' => "1"})
     def self.save(db, user_data)
       if user_data['id']
         # TODO: Update SQL statement
