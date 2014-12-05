@@ -1,40 +1,45 @@
-
 module Exercises
   # Exercise 0
   #  - Triples a given string `str`
   #  - Returns "nope" if `str` is "wishes"
   def self.ex0(str)
-    # TODO
+    str == "wishes" ? "nope" : str*3
   end
 
   # Exercise 1
   #  - Returns the number of elements in the array
   def self.ex1(array)
-    # TODO
+    array.size
   end
 
   # Exercise 2
   #  - Returns the second element of an array
   def self.ex2(array)
-    # TODO
+    array[1]
   end
 
   # Exercise 3
   #  - Returns the sum of the given array of numbers
   def self.ex3(array)
-    # TODO
+    array.inject{|s,e| s+e}
   end
 
   # Exercise 4
   #  - Returns the max number of the given array
   def self.ex4(array)
-    # TODO
+     max = array[0]
+     array.each do |x| 
+      if x > max 
+        max = x
+      end
+    end 
+      max 
   end
 
   # Exercise 5
   #  - Iterates through an array and `puts` each element
   def self.ex5(array)
-    # TODO
+    array.each{|a| puts a}
   end
 
   # Exercise 6
@@ -42,45 +47,65 @@ module Exercises
   #  - If the last item is already 'panda', update
   #    it to 'GODZILLA' instead
   def self.ex6(array)
-    # TODO
+    x = array[-1] == 'panda' ? 'GODZILLA' : 'panda' 
+    array[0..-2] << x
   end
 
   # Exercise 7
   #  - If the string `str` exists in the array,
   #    add `str` to the end of the array
   def self.ex7(array, str)
-    # TODO
+    if array.include? str 
+     array << str
+    end 
+    array
   end
 
   # Exercise 8
-  #  - `people` is an array of hashes. Each hash is like the following:
-  #    { :name => 'Bob', :occupation => 'Builder' }
-  #    Iterate through `people` and print out their name and occupation.
+  # - `people` is an array of hashes. Each hash is like the following:
+  # { :name => 'Bob', :occupation => 'Builder' }
+  # Iterate through `people` and print out their name and occupation.
+  
   def self.ex8(people)
-    # TODO
+    people.each do |person|  
+    puts person.values.join("")
+    end 
   end
 
   # Exercise 9
   #  - Returns `true` if the given time is in a leap year
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
-  def self.ex9(time)
-    # TODO
-  end
+  #A year will be a leap year 
+  #if it is divisible by 4 but not by 100. If a year is divisible by 4 and by 100, it is not a leap year unless it is also divisible by 400.
 
+  def self.ex9(time)
+    t = time.year
+    (t%4  == 0 && t%100 != 0 ) || (t%400 == 0 )
+  end
+  
   # Exercise 10
   #  - Returns "happy hour" if it is between 4 and 6pm
   #    Otherwise, returns "normal prices"
   # Hint: Read the "Stubbing" documentation on the Learn app.
+  
   def self.ex10
-    # TODO
+    t = Time.now.hour
+    if t >=16 && t <=18
+      "happy hour"
+    else 
+      "normal prices"
+    end
   end
   
   # Exercise 11
   #  - Returns the sum of two numbers if they are both integers
   #  - Raises an error if both numbers are not integers
-  def self.ex11
-    # TODO
+  def self.ex11(n,m)
+    if Integer === n && Integer === m
+      n + m 
+    else raise ArgumentError, "Enter Integers!"
+    end 
   end
   
   # Exercise 12
@@ -88,8 +113,8 @@ module Exercises
   #    ordered array with all characters need to fill the range
   #    Eg.
   #       Exercises.ex12('c', 'g') => ['c', 'd', 'e', 'f', 'g']
-  def self.ex12
-    # TODO
+  def self.ex12(a,b)
+    (a..b).to_a  
   end
 end
 
@@ -105,6 +130,10 @@ module Extensions
   #   expect(result).to eq({ :most => 'x', :least => ['y', 'z'] })
   #
   def self.extremes(array)
-    # TODO
+    minmax = array.group_by{|str| array.count str}.minmax.map{|x| x.last.uniq}
+    min = minmax.first; max = minmax.last
+    min = min.size == 1 ? min.first : min
+    max = max.size == 1 ? max.first : max
+    {:most => max, :least => min }   
   end
 end
