@@ -5,9 +5,14 @@ describe Library::UserRepo do
   def user_count(db)
     db.exec("SELECT COUNT(*) FROM users")[0]["count"].to_i
   end
+#creates a variable to use //
+#is lazy the code will never run till we use it//
+#let defines the instance variable :db that we will use
+#inside our code
 
   let(:db) { Library.create_db_connection('library_test') }
 
+#before each => we are clearing our db
   before(:each) do
     Library.clear_db(db)
   end
@@ -25,11 +30,12 @@ describe Library::UserRepo do
   end
 
   it "creates users" do
-    expect(user_count(db)).to eq 0
+    users = Library::UserRepo.all(db)
+    expect(users.count(db)).to eq 0
 
-    user = Library::UserRepo.save(db, :name => "Alice")
+    user = Library::UserRepo.save(db, {'name' => 'Alice'})
     expect(user['id']).to_not be_nil
-    expect(user['name']).to eq "Alice"
+    expect(user['name']).to eq 'Alice'
 
     # Check for persistence
     expect(user_count(db)).to eq 1
@@ -38,25 +44,26 @@ describe Library::UserRepo do
     expect(user['name']).to eq "Alice"
   end
 
-  xit "finds users" do
-    user = Library::UserRepo.save(db, :name => "Alice")
+  it "finds users" do
+    user = Library::UserRepo.save(db, {'name' => 'Alice'})
     retrieved_user = Library::UserRepo.find(db, user['id'])
     expect(retrieved_user['name']).to eq "Alice"
   end
 
-  xit "updates users" do
-    user1 = Library::UserRepo.save(db, :name => "Alice")
-    user2 = Library::UserRepo.save(db, :name => "Alicia")
+  it "updates users" do
+    user1 = Library::UserRepo.save(db, {'name' => "Alice"})
+
+    user2 = Library::UserRepo.save(db, {'id' => user1['id'], 'name' => "Alicia"})
     expect(user2['id']).to eq(user1['id'])
     expect(user2['name']).to eq "Alicia"
 
     # Check for persistence
-    user3 = Library::UserRepo.find(user1['id'])
-    expect(user3['name']).to eq "Alicia"
+     user3 = Library::UserRepo.find(db, user1['id'])
+     expect(user3['name']).to eq "Alicia"
   end
 
-  xit "destroys users" do
-    user = Library::UserRepo.save(db, :name => "Alice")
+  it "destroys users" do
+    user = Library::UserRepo.save(db, 'name' => "Alice")
     expect(user_count(db)).to eq 1
 
     Library::UserRepo.destroy(db, user['id'])

@@ -18,7 +18,7 @@ module Library
         id SERIAL PRIMARY KEY,
         name VARCHAR
       );
-      /* TODO: Create rest of the tables (books, etc.) */
+      /* TODO: Create rest of the tables IF  (books, etc.) */
     SQL
   end
 

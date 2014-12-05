@@ -1,3 +1,5 @@
+# Library::UserRepo.all(db)
+
 module Library
   class UserRepo
 
@@ -7,20 +9,23 @@ module Library
       db.exec("SELECT * FROM users").to_a
     end
 
-    def self.find(db, user_data)
-      # TODO: Insert SQL statement
+    def self.find(db, user_id)
+     db.exec("select * from users where id = #{user_id}")[0]
     end
-
+#create, update
+# Library::UserRepo.save(db, {'name' => "Alice"})
+# Library::UserRepo.save(db, {'id' => "Alice"}) update
     def self.save(db, user_data)
       if user_data['id']
-        # TODO: Update SQL statement
+        db.exec("UPDATE users SET name = '#{user_data['name']}'  WHERE id = #{user_data['id']} returning *")[0]
+        
       else
-        # TODO: Insert SQL statement
+        db.exec("INSERT into users (name) values ($1) returning *", [user_data['name']])[0]
       end
     end
 
-    def self.destroy(db, user_data)
-      # TODO: Delete SQL statement
+    def self.destroy(db, user_id)
+     db.exec("DELETE FROM users WHERE id = #{user_id}")
     end
 
   end
