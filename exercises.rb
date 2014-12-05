@@ -130,6 +130,10 @@ module Extensions
   #   expect(result).to eq({ :most => 'x', :least => ['y', 'z'] })
   #
   def self.extremes(array)
-    # TODO
+    minmax = array.group_by{|str| array.count str}.minmax.map{|x| x.last.uniq}
+    min = minmax.first; max = minmax.last
+    min = min.size == 1 ? min.first : min
+    max = max.size == 1 ? max.first : max
+    {:most => max, :least => min }   
   end
 end
