@@ -79,15 +79,16 @@ module Exercises
   #A year will be a leap year 
   #if it is divisible by 4 but not by 100. If a year is divisible by 4 and by 100, it is not a leap year unless it is also divisible by 400.
 
-
-  # def self.ex9(time)
-  #   time % 4 == 0  && time % 100 !=0
-  # end
+  def self.ex9(time)
+    t = time.year
+    (t%4  == 0 || t%100 == 0 ) && (t%400 != 0 )
+  end
 
   # Exercise 10
   #  - Returns "happy hour" if it is between 4 and 6pm
   #    Otherwise, returns "normal prices"
   # Hint: Read the "Stubbing" documentation on the Learn app.
+  
   def self.ex10
     t = Time.now.hour
     if t >=16 && t <=18
