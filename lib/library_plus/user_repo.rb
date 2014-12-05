@@ -7,7 +7,7 @@ module Library
       db.exec("SELECT * FROM users").to_a
     end
 
-    def self.find(db, user_data)
+    def self.find(db, user_id)
       # TODO: Insert SQL statement
     end
 
@@ -21,7 +21,7 @@ module Library
       end
     end
 
-    def self.destroy(db, user_data)
+    def self.destroy(db, user_id)
       # TODO: Delete SQL statement
     end
 
