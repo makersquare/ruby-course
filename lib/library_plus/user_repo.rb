@@ -10,8 +10,10 @@ module Library
 
     def self.find(db, user_id)
       # TODO: Insert SQL statement
-      id = user_id['id']
-      db.exec("SELECT * FROM users WHERE id = $4", [id])
+
+      result = db.exec("SELECT * FROM users WHERE id = $1", [user_id])
+      result.entries[0]
+
     end
 
     def self.save(db, user_data)
@@ -28,7 +30,8 @@ module Library
         name = user_data['name']
         returned = db.exec("INSERT into users (name) VALUES ($1) returning id", [name])
         # new_data = Library::UserRepo.find(db, id)
-        user_data['id'] = returned
+        user_data['id'] = returned.entries[0]['id'].to_i
+        # require 'pry-byebug'; binding.pry
         user_data
       end
     end
