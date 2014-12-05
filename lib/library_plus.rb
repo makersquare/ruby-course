@@ -8,6 +8,7 @@ module Library
   def self.clear_db(db)
     db.exec <<-SQL
       DELETE FROM users;
+      DELETE FROM books;
       /* TODO: Clear rest of the tables (books, etc.) */
     SQL
   end
@@ -17,6 +18,18 @@ module Library
       CREATE TABLE users(
         id SERIAL PRIMARY KEY,
         name VARCHAR
+      );
+      CREATE TABLE books(
+        id SERIAL PRIMARY KEY,
+        title VARCHAR,
+        author VARCHAR
+      );
+      CREATE TABLE checkouts(
+        id SERIAL PRIMARY KEY,
+        user_id INT,
+        book_id INT,
+        status VARCHAR,
+        created_at TIMESTAMP WITH TIME ZONE
       );
       /* TODO: Create rest of the tables IF  (books, etc.) */
     SQL
