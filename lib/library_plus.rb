@@ -16,6 +16,10 @@ module Library
       DELETE FROM users;
       /* TODO: Clear rest of the tables (books, etc.) */
     SQL
+    db.exec <<-SQL
+      DELETE FROM books;
+      /* TODO: Clear rest of the tables (books, etc.) */
+    SQL
   end
 
   def self.create_tables(db)
@@ -26,11 +30,22 @@ module Library
       );
       /* TODO: Create rest of the tables (books, etc.) */
     SQL
+    db.exec <<-SQL
+      CREATE TABLE books(
+        id SERIAL PRIMARY KEY,
+        title VARCHAR,
+        author VARCHAR
+      );
+    SQL
   end
 
   def self.drop_tables(db)
     db.exec <<-SQL
       DROP TABLE users;
+      /* TODO: Drop rest of the tables (books, etc.) */
+    SQL
+    db.exec <<-SQL
+      DROP TABLE books;
       /* TODO: Drop rest of the tables (books, etc.) */
     SQL
   end
