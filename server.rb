@@ -20,5 +20,5 @@ post '/users' do
   db = Library.create_db_connection('library_dev')
   Library::UserRepo.save(db, params)
   @users = Library::UserRepo.all(db)
-  erb :"users/index"
+  redirect to ('/users')
 end
