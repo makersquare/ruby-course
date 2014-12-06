@@ -8,7 +8,15 @@ module Library
     end
 
     def self.find(db, user_data)
-      # TODO: Insert SQL statement
+      # find user by id
+      sql = %Q[
+        select *
+        from users
+        where id = $1
+      ]
+      result = db.exec sql, [user_data]
+
+      return result.first
     end
 
     def self.save(db, user_data)
