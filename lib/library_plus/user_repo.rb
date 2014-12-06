@@ -43,7 +43,10 @@ module Library
     end
 
     def self.destroy(db, user_data)
-      # TODO: Delete SQL statement
+      sql = %Q[
+        delete from users
+      ]
+      db.exec(sql)
     end
 
   end
