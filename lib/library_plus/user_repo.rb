@@ -14,32 +14,29 @@ module Library
         from users
         where id = $1
       ]
-      result = db.exec sql, [user_data]
+      result = db.exec(sql, [user_data])
 
       return result.first
     end
 
     def self.save(db, user_data)
       # update user data if user exists, otherwise create new user
-      if user_data[:id]
+      if user_data.include?(:id)
         sql_users = %Q[
           UPDATE users
           set name =$1
           where id = $2
           returning *
         ]
-        result = db.exec sql_users, user_data[:name], user_data[:id]
+        result = db.exec(sql_users, [user_data[:name], user_data[:id]])
       else
-        # prepared statement
-        statement_insert_user = %Q[
+        sql_insert_user = %Q[
           insert into users 
           (name)
           values ($1)
           returning *
         ]
-        db.prepare("insert_user", statement_insert_user)
-        # execute prepared statement
-        result = db.exec_prepared("insert_user", [user_data[:name]])
+        result = db.exec(sql_insert_user, [user_data[:name]])
       end
       
       return result.first
