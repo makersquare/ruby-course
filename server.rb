@@ -4,9 +4,9 @@ require './lib/library_plus'
 # set :bind, '0.0.0.0' # This is needed for Vagrant
 
 get '/' do
-  erb :index
+  erb :"index"
 end
 
 get "/users" do
-  erb :users
+  erb :"users/index"
 end
