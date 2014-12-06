@@ -14,7 +14,7 @@ module Library
   def self.clear_db(db)
     db.exec <<-SQL
       DROP TABLE IF EXISTS users;
-      /* TODO: Clear rest of the tables (books, etc.) */
+      DROP TABLE IF EXISTS books;
     SQL
   end
 
@@ -24,14 +24,19 @@ module Library
         id SERIAL PRIMARY KEY,
         name VARCHAR
       );
-      /* TODO: Create rest of the tables (books, etc.) */
+      CREATE TABLE IF NOT EXISTS books(
+        id SERIAL PRIMARY KEY,
+        title VARCHAR,
+        author VARCHAR,
+        user_id INTEGER
+      );
     SQL
   end
 
   def self.drop_tables(db)
     db.exec <<-SQL
       DROP TABLE users;
-      /* TODO: Drop rest of the tables (books, etc.) */
+      DROP TABLE books;
     SQL
   end
 end
