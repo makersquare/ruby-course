@@ -56,7 +56,7 @@ describe Library::UserRepo do
     expect(user3['name']).to eq "Alicia"
   end
 
-  xit "destroys users" do
+  it "destroys users" do
     user = Library::UserRepo.save(db, :name => "Alice")
     expect(user_count(db)).to eq 1
 
