@@ -15,19 +15,19 @@ module Library
 
     def self.save(db, user_data)
       if user_data['id']
-        db.exec("UPDATE users SET name = $1 WHERE id = $2;",[user_data['name'], user_data['id']])
+        result = db.exec("UPDATE users SET name = $1 WHERE id = $2 RETURNING *;",[user_data['name'], user_data['id']])
         # TODO: Update SQL statement
       else
-        db.exec("INSERT INTO users (name) VALUES ($1);", [user_data['name']])
-        user_data['id']
+        result = db.exec("INSERT INTO users (name) VALUES ($1) RETURNING *;", [user_data['name']])
         # TODO: Insert SQL statement
       end
-      result = db.exec("SELECT * FROM users WHERE name = $1;", [user_data['name']])
       result.first
 
     end
 
     def self.destroy(db, user_id)
+      db.exec("DELETE FROM users WHERE id = $1;", [user_id])
+
       # TODO: Delete SQL statement
     end
 
