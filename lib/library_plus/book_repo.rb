@@ -4,11 +4,28 @@ module Library
     def self.all(db)
       # Other code should not have to deal with the PG:Result.
       # Therefore, convert the results into a plain array.
-      db.exec("SELECT * FROM books").to_a
+      b = db.exec("SELECT * FROM books").to_a
+      checkouts = Library::CheckoutRepo.all_by_book(db)
+      b.each do |book|
+        book['available'] = true
+        id = book['id']
+        if (checkouts[id])
+          book['checkouts'] = checkouts[id]
+          book['checkouts'].each do |checkout|
+            book['available'] = false if !checkout['return_date']
+          end
+        end
+      end
+      return b
     end
 
     def self.find(db, book_data)
-      db.exec("SELECT * FROM books WHERE id = #{book_data}").to_a[0]
+      book = db.exec("SELECT * FROM books WHERE id = #{book_data}").to_a[0]
+      checkouts = Library::CheckoutRepo.find(db, 'book_id' => book['id']) # should return array
+      if (checkouts)
+        book['checkouts'] = checkouts
+      end
+      return book
     end
 
     def self.save(db, book_data)

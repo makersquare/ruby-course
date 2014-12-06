@@ -17,7 +17,7 @@ end
 post '/users' do
   db = Library.create_db_connection('library_dev')
   @u = Library::UserRepo.save(db, "name" => params["user_name"])
-  erb :"users/create"
+  redirect to("/users")
 end
 
 get '/users/:id/delete' do
@@ -40,7 +40,13 @@ end
 post '/books' do
   db = Library.create_db_connection('library_dev')
   @b = Library::BookRepo.save(db, {"title" => params["book_title"], "author" => params["book_author"]})
-  erb :"books/create"
+  redirect to("/books")
+end
+
+get '/books/:id' do
+  db = Library.create_db_connection('library_dev')
+  @book = Library::BookRepo.find(db, params['id'])
+  erb :"books/info"
 end
 
 get '/books/:id/delete' do
@@ -52,4 +58,16 @@ get '/books/:id/delete' do
     @u = "Error deleting book ##{params["id"]}."
   end
   erb :"books/delete"
+end
+
+get '/books/:id/checkout' do
+  db = Library.create_db_connection('library_dev')
+  @users = Library::UserRepo.all(db)
+  @book = Library::BookRepo.find(db, params['id'])
+  erb :"books/checkout"
+end
+
+post '/books/:id/checkout/to/' do
+  @s = "Checking out #{params['id']} to #{params['user_id']} "
+  erb :"books/checkout_to"
 end

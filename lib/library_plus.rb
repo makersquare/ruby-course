@@ -20,6 +20,10 @@ module Library
       DELETE FROM books;
       /* TODO: Clear rest of the tables (books, etc.) */
     SQL
+    db.exec <<-SQL
+      DELETE FROM checkouts;
+      /* TODO: Clear rest of the tables (books, etc.) */
+    SQL
   end
 
   def self.create_tables(db)
@@ -35,6 +39,16 @@ module Library
         id SERIAL PRIMARY KEY,
         title VARCHAR,
         author VARCHAR
+      );
+    SQL
+    db.exec <<-SQL
+      CREATE TABLE checkouts(
+        id SERIAL PRIMARY KEY,
+        book_id INTEGER,
+        user_id INTEGER,
+        checkout_date date,
+        due_date date,
+        return_date date
       );
     SQL
   end
@@ -53,3 +67,4 @@ end
 
 require_relative 'library_plus/book_repo'
 require_relative 'library_plus/user_repo'
+require_relative 'library_plus/checkout_repo'
