@@ -11,8 +11,9 @@ module PuppyBreeder::Repos
     end
 
     def find_by(params)
-      if(params[:name])
-        key = params[:name].to_sym
+      name = params[:name]
+      if(name)
+        key = name.gsub(' ', '_').to_sym
         [@breeds[key]]
       end
     end

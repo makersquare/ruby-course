@@ -1,7 +1,7 @@
 require_relative '../spec_helper.rb'
 
 describe PuppyBreeder::Repos::Puppies do
-  let(:puppies){ PuppyBreeder.puppies_repo }
+  let(:puppies){ PuppyBreeder::Repos::Puppies.new }
   let(:poodle){ PuppyBreeder::Breed.new({
       name: 'poodle'
     })

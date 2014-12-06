@@ -24,7 +24,7 @@ module PuppyBreeder::Repos
       end
     end
 
-    def filter(type, spec)
+    def filter(type, spec = '')
       array = []
       @puppies.each do |key, puppy|
         if type == 'name' && puppy.name == spec
@@ -33,12 +33,14 @@ module PuppyBreeder::Repos
           array << puppy
         elsif type == 'status' && puppy.status == spec
           array << puppy
+        elsif type == 'all'
+          array << puppy
         end
       end
       array
     end
 
-    def find_by(params)
+    def find_by(params = {})
       name = params[:name]
       breed = params[:breed]
       status = params[:status]
@@ -52,6 +54,8 @@ module PuppyBreeder::Repos
         array = filter('breed', breed)
       elsif status
         array = filter('status', status)
+      else
+        array = filter('all')
       end
     end
 

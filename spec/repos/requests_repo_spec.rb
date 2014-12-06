@@ -1,7 +1,7 @@
 require_relative '../spec_helper.rb'
 
 describe PuppyBreeder::Repos::Requests do
-  let(:requests){ PuppyBreeder.requests_repo }
+  let(:requests){ PuppyBreeder::Repos::Requests.new }
   let(:terrier){ PuppyBreeder.breeds_repo.create({
       name: 'terrier'
     })
@@ -50,21 +50,26 @@ describe PuppyBreeder::Repos::Requests do
 
   describe 'find_by' do
     it 'returns all pending purchase orders' do
-      all = requests.find_by({status: 'pending'})
-      expect(all.length).to eq(5)
+      result = requests.find_by({status: 'pending'})
+      expect(result.length).to eq(4)
     end
 
     it 'returns all completed purchase orders' do
       requests.update({customer: 'Molly', status: 'completed'})
       requests.update({customer: 'Ryan', status: 'completed'})
       all = requests.find_by({status: 'completed'})
-      expect(all.length).to eq(3)
+      expect(all.length).to eq(2)
     end
 
     it 'returns the purchase order of a customer' do
       request = requests.find_by({customer: 'Molly'}).first
       expect(request).to be_a(PuppyBreeder::PurchaseRequest)
       expect(request.customer).to eq('Molly')
+    end
+
+    it 'returns all purchase orders' do
+      result = requests.find_by
+      expect(result.length).to eq(4)
     end
   end
 end
