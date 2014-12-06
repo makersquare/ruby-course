@@ -13,7 +13,7 @@ describe PuppyBreeder::Puppy do
   }
 
   describe 'initialize' do
-    it 'should create an instance of the class Puppy' do
+    it 'creates a new instance of Puppy' do
       expect(pup).to be_a(PuppyBreeder::Puppy)
       expect(pup.name).to eq('Lucky')
       expect(pup.breed).to be_a(PuppyBreeder::Breed)
