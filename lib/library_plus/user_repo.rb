@@ -7,8 +7,8 @@ module Library
       db.exec("SELECT * FROM users").to_a
     end
 
-    def self.find(db, user_data)
-      # TODO: Insert SQL statement
+    def self.find(db, user_id)
+      db.exec("SELECT * FROM users WHERE id = $1", [user_id]).first
     end
     # create, update
     # 
@@ -35,3 +35,7 @@ module Library
 
   end
 end
+
+# akjhdskjhfklsfh
+# lkjsfdkjhsklj
+#lkshfkdjfhlskdjfhlsdkjfhdslkjfhdslkjfhdlkfhj
