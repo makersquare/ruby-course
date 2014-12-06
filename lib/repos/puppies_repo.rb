@@ -14,7 +14,7 @@ module PuppyBreeder::Repos
       else
         breed_obj = PuppyBreeder.breeds_repo.find_by({name: breed}).first
         if !breed_obj
-          breed_obj = PuppyBreeder::Breed.new({name: breed})
+          breed_obj = PuppyBreeder.breeds_repo.create({name: breed})
         end
         puppy = PuppyBreeder::Puppy.new({
           name: name,
