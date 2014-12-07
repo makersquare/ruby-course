@@ -61,9 +61,15 @@ get '/books/:id' do
 end
 
 post '/books/:id/checkout' do 
-  puts params
   db = Library.create_db_connection('library_dev')
   Library::BookRepo.check_out_book(db, params['user_id'], params['id'])
+  Library::BookRepo.status(db, params['id'])
+  redirect to('/books/' + params['id'])
+end
+
+post '/books/:id/checkin' do 
+  db = Library.create_db_connection('library_dev')
+  Library::BookRepo.check_in_book(db, params['id'])
   Library::BookRepo.status(db, params['id'])
   redirect to('/books/' + params['id'])
 end

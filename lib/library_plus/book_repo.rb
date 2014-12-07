@@ -66,5 +66,21 @@ module Library
       result.first
     end
 
+    def self.check_out_history_book(db, book_id)
+      sql = %q[SELECT * from checkouts
+        WHERE book_id = $1
+        ORDER By created_at;
+      ]
+      result = db.exec(sql, [book_id])
+    end
+
+    def self.check_out_history_user(db, user_id)
+      sql = %q[SELECT * from checkouts
+        WHERE user_id = $1
+        ORDER BY created_at;
+      ]
+      result = db.exec(sql, [book_id])
+    end
+
   end
 end
