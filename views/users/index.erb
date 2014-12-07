@@ -1,9 +1,16 @@
 <div>
   <h1>Manage Library Users</h1>
-  <h3>All Users</h3>
+  <h3>All Current Users</h3>
     <ul>
       <% @users.each do |u| %>
       <li><%= u["name"] %></li>
       <% end %>
     </ul>
+    <form method="POST" action="/users">
+      <h3>Register New User</h3>
+      <label>Name:</label>
+      <input type="text" name="user_name" />
+
+      <button>Register</button>
+    </form>
 </div>
