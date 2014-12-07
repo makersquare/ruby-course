@@ -8,7 +8,8 @@ module Library
   def self.clear_db(db)
     db.exec <<-SQL
       DELETE FROM users;
-      /* TODO: Clear rest of the tables (books, etc.) */
+      DELETE FROM books;
+      DELETE FROM memberships;
     SQL
   end
 
@@ -19,8 +20,8 @@ module Library
         name VARCHAR
       );
       CREATE TABLE books(
+        id SERIAL,
         title VARCHAR,
-        id INTEGER,
         author VARCHAR
       );
       CREATE TABLE memberships (
@@ -28,14 +29,14 @@ module Library
         book_id INTEGER,
         checked_out BOOLEAN
         );
-      /* TODO: Create rest of the tables (books, etc.) */
     SQL
   end
 
   def self.drop_tables(db)
     db.exec <<-SQL
       DROP TABLE users;
-      /* TODO: Drop rest of the tables (books, etc.) */
+      DROP TABLE books;
+      DROP TABLE memberships;
     SQL
   end
 end

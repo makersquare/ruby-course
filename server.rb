@@ -21,3 +21,20 @@ post '/users' do
   @users = Library::UserRepo.all(db)
   erb :"users/index"
 end 
+
+get '/books' do
+  puts params
+  @title = params
+  db = Library.create_db_connection('library-dev')
+  @books = Library::BookRepo.all(db)
+  erb :"books/index"
+end
+
+post '/books' do
+  puts params
+  @title = params
+  db =Library.create_db_connection('library-dev')
+  Library::BookRepo.save(db, @title)
+  @books = Library::BookRepo.all(db)
+  erb :"books/index"
+end
