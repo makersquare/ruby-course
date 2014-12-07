@@ -39,10 +39,11 @@ describe Library::BookRepo do
     expect(book['title']).to eq "To Kill a Mockingbird"
   end
 
-  xit "finds books" do
-    book = Library::BookRepo.save(db, :title => "Alice")
-    retrieved_user = Library::BookRepo.find(db, book['id'])
-    expect(retrieved_user['title']).to eq "Alice"
+  it "finds books" do
+    book = Library::BookRepo.save(db, :title => "To Kill a Mockingbird", :author => "Harper Lee")
+    retrieved_book = Library::BookRepo.find(db, book['id'])
+    expect(retrieved_book['title']).to eq "To Kill a Mockingbird"
+    expect(retrieved_book["author"]).to eq "Harper Lee"
   end
 
   xit "updates books" do
