@@ -46,16 +46,16 @@ describe Library::BookRepo do
     expect(retrieved_book["author"]).to eq "Harper Lee"
   end
 
-  xit "updates books" do
-    book1 = Library::BookRepo.save(db, :title => "Alice")
-    book2 = Library::BookRepo.save(db, { :id => book1['id'], :title => "Alicia" })
+  it "updates books" do
+    book1 = Library::BookRepo.save(db, :title => "To Kill a Raven", :author => "Harper Lee")
+    book2 = Library::BookRepo.save(db, { :id => book1['id'], :title => "To Kill a Mockingbird", :author => book1["author"] })
     
     expect(book2['id']).to eq(book1['id'])
-    expect(book2['title']).to eq "Alicia"
+    expect(book2['title']).to eq "To Kill a Mockingbird"
 
     # Check for persistence
     book3 = Library::BookRepo.find(db, book1['id'])
-    expect(book3['title']).to eq "Alicia"
+    expect(book3['title']).to eq "To Kill a Mockingbird"
   end
 
   xit "destroys books" do
