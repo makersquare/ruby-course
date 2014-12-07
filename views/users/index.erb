@@ -1,4 +1,9 @@
 <div>
   <h1>Manage Library Users</h1>
-  <h2>All Users</h2>
+  <h3>All Users</h3>
+    <ul>
+      <% @users.each do |u| %>
+      <li><%= u["name"] %></li>
+      <% end %>
+    </ul>
 </div>
