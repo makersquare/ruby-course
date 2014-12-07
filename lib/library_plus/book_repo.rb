@@ -1,5 +1,52 @@
 module Library
   class BookRepo
+    def self.all(db)
+      # Other code should not have to deal with the PG:Result.
+      # Therefore, convert the results into a plain array.
+      db.exec("SELECT * FROM books").to_a
+    end
 
+    def self.find(db, book_data)
+      # find book by id
+      sql = %Q[
+        select *
+        from books
+        where id = $1
+      ]
+      result = db.exec(sql, [book_data])
+
+      return result.first
+    end
+
+    def self.save(db, book_data)
+      # update book data if book exists, otherwise create new book
+      if book_data.include?(:id)
+        sql_users = %Q[
+          UPDATE books
+          set title =$1
+          set author = $2
+          where id = $3
+          returning *
+        ]
+        result = db.exec(sql_users, [book_data[:title], book_data[:author], book_data[:id]])
+      else
+        sql_insert_user = %Q[
+          insert into books 
+          (title, author)
+          values ($1, $2)
+          returning *
+        ]
+        result = db.exec(sql_insert_user, [book_data[:title], book_data[:author]])
+      end
+      
+      return result.first
+    end
+
+    def self.destroy(db, book_data)
+      sql = %Q[
+        delete from books
+      ]
+      db.exec(sql)
+    end
   end
 end
