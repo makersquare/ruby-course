@@ -30,4 +30,25 @@ describe Library::BookRepo do
     expect(authors).to include 'Lewis Carrol', 'George Orwell'
   end
   
+  it "creates books" do
+    expect(book_count(db)).to eq 0
+
+    book = Library::BookRepo.save(db, { 'title' => "Alice in Wonderland", 'author' => 'Lewis Carrol' })
+    expect(book['id']).to_not be_nil
+    expect(book['title']).to eq "Alice in Wonderland"
+    expect(book['author']).to eq 'Lewis Carrol'
+    expect(book['status']).to eq 'available'
+    expect(book['borrower']).to be_nil
+
+    # Check for persistence
+    expect(book_count(db)).to eq 1
+
+    book = db.exec("SELECT * FROM books")[0]
+    expect(book['id']).to_not be_nil
+    expect(book['title']).to eq "Alice in Wonderland"
+    expect(book['author']).to eq 'Lewis Carrol'
+    expect(book['status']).to eq 'available'
+    expect(book['borrower']).to be_nil
+  end
+  
 end
