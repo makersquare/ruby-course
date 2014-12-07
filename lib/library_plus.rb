@@ -23,14 +23,15 @@ module Library
       CREATE TABLE IF NOT EXISTS books(
         id SERIAL PRIMARY KEY,
         title VARCHAR,
-        author VARCHAR
+        author VARCHAR,
+        status VARCHAR DEFAULT ('available')
         );
       CREATE TABLE IF NOT EXISTS checkouts(
         id SERIAL PRIMARY KEY,
         user_id INTEGER,
         book_id INTEGER,
-        status VARCHAR,
-        created_at TIMESTAMP without time zone);
+        status VARCHAR DEFAULT ('checked_out'),
+        created_at TIMESTAMP without time zone DEFAULT NOW());
       /* TODO: Create rest of the tables (books, etc.) */
     SQL
 

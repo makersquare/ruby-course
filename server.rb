@@ -26,6 +26,13 @@ post '/users' do
   redirect to('/users')
 end
 
+get '/users/:id' do
+  id = params['id']
+  db = Library.create_db_connection('library_dev')
+  @user = Library::UserRepo.find(db, id)
+  erb :"users/show"
+end
+
 get '/books' do
   db = Library.create_db_connection('library_dev')
   @books = Library::BookRepo.all(db)
@@ -33,14 +40,30 @@ get '/books' do
 end
 
 post '/books' do 
-  
-end
-
-get '/books' do
-  #Create a new books
-  erb :"book/show"
+  db = Library.create_db_connection('library_dev')
+  puts params
+  if params['book_title'] && params['book_author']
+    user = {'title' => params['book_title'], 'author' => params['book_author']}
+    Library::BookRepo.save(db, user)
+  elsif params['book_id']
+    id = params["book_id"]
+    Library::BookRepo.destroy(db, id)
+  end
+  redirect to('/books')
 end
 
 get '/books/:id' do
+  id = params['id']
+  db = Library.create_db_connection('library_dev')
+  @book = Library::BookRepo.find(db, id)
+  @users = Library::UserRepo.all(db)
   erb :"books/show"
+end
+
+post '/books/:id/checkout' do 
+  puts params
+  db = Library.create_db_connection('library_dev')
+  Library::BookRepo.check_out_book(db, params['user_id'], params['id'])
+  Library::BookRepo.status(db, params['id'])
+  redirect to('/books/' + params['id'])
 end
