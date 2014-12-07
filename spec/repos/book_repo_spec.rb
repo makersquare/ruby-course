@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe Library::BookRepo do
 
-  def user_count(db)
-    db.exec("SELECT COUNT(*) FROM users")[0]["count"].to_i
+  def book_count(db)
+    db.exec("SELECT COUNT(*) FROM books")[0]["count"].to_i
   end
 
   let(:db) { Library.create_db_connection('library_test') }
@@ -12,55 +12,56 @@ describe Library::BookRepo do
     Library.clear_db(db)
   end
 
-  it "gets all users" do
-    db.exec("INSERT INTO users (name) VALUES ($1)", ["Alice"])
-    db.exec("INSERT INTO users (name) VALUES ($1)", ["Bob"])
+  it "gets all books" do
+    db.exec("INSERT INTO books (title, author) VALUES ($1, $2)", ["To Kill a Mockingbird", "Harper Lee"])
+    db.exec("INSERT INTO books (title, author) VALUES ($1, $2)", ["Fellowship of the Ring", "J.R.R. Tolkien"])
 
-    users = Library::BookRepo.all(db)
-    expect(users).to be_a Array
-    expect(users.count).to eq 2
+    books = Library::BookRepo.all(db)
+    expect(books).to be_a Array
+    expect(books.count).to eq 2
 
-    names = users.map {|u| u['name'] }
-    expect(names).to include "Alice", "Bob"
+    books = books.map {|u| u['title']}
+    expect(books).to include "To Kill a Mockingbird", "Fellowship of the Ring"
   end
 
-  it "creates users" do
-    expect(user_count(db)).to eq 0
+  it "creates books" do
+    expect(book_count(db)).to eq 0
 
-    user = Library::BookRepo.save(db, :name => "Alice")
-    expect(user['id']).to_not be_nil
-    expect(user['name']).to eq "Alice"
+    book = Library::BookRepo.save(db, :title => "To Kill a Mockingbird", :author => "Harper Lee")
+    expect(book['id']).to_not be_nil
+    expect(book['title']).to eq "To Kill a Mockingbird"
+    expect(book["author"]).to eq "Harper Lee"
 
     # Check for persistence
-    expect(user_count(db)).to eq 1
+    expect(book_count(db)).to eq 1
 
-    user = db.exec("SELECT * FROM users")[0]
-    expect(user['name']).to eq "Alice"
+    book = db.exec("SELECT * FROM books")[0]
+    expect(book['title']).to eq "To Kill a Mockingbird"
   end
 
-  it "finds users" do
-    user = Library::BookRepo.save(db, :name => "Alice")
-    retrieved_user = Library::BookRepo.find(db, user['id'])
-    expect(retrieved_user['name']).to eq "Alice"
+  xit "finds books" do
+    book = Library::BookRepo.save(db, :title => "Alice")
+    retrieved_user = Library::BookRepo.find(db, book['id'])
+    expect(retrieved_user['title']).to eq "Alice"
   end
 
-  it "updates users" do
-    user1 = Library::BookRepo.save(db, :name => "Alice")
-    user2 = Library::BookRepo.save(db, { :id => user1['id'], :name => "Alicia" })
+  xit "updates books" do
+    book1 = Library::BookRepo.save(db, :title => "Alice")
+    book2 = Library::BookRepo.save(db, { :id => book1['id'], :title => "Alicia" })
     
-    expect(user2['id']).to eq(user1['id'])
-    expect(user2['name']).to eq "Alicia"
+    expect(book2['id']).to eq(book1['id'])
+    expect(book2['title']).to eq "Alicia"
 
     # Check for persistence
-    user3 = Library::BookRepo.find(db, user1['id'])
-    expect(user3['name']).to eq "Alicia"
+    book3 = Library::BookRepo.find(db, book1['id'])
+    expect(book3['title']).to eq "Alicia"
   end
 
-  it "destroys users" do
-    user = Library::BookRepo.save(db, :name => "Alice")
-    expect(user_count(db)).to eq 1
+  xit "destroys books" do
+    book = Library::BookRepo.save(db, :title => "Alice")
+    expect(book_count(db)).to eq 1
 
-    Library::BookRepo.destroy(db, user['id'])
-    expect(user_count(db)).to eq 0
+    Library::BookRepo.destroy(db, book['id'])
+    expect(book_count(db)).to eq 0
   end
 end
