@@ -70,4 +70,27 @@ describe Library::BookRepo do
     expect(check_out2['borrower_id']).to eq(user1['id'])
   end
   
+  it 'checks in a book' do
+    book = Library::BookRepo.save(db, {'title' => 'Life of Pi', 'author' => 'Yann Martel'})
+    user = Library::UserRepo.save(db, {'name' => 'Fat Richard'})
+    
+    Library::BookRepo.check_out(db, book['id'], user['id'])
+    checkin = Library::BookRepo.check_in(db, book['id'])
+    expect(checkin['status']).to eq 'available'
+    expect(checkin['borrower_id']).to be_nil
+  end
+  
+  it 'finds a book' do
+    book = Library::BookRepo.save(db, {'title' => 'Life of Pi', 'author' => 'Yann Martel'})
+    user = Library::UserRepo.save(db, {'name' => 'Fat Richard'}) 
+  
+    Library::BookRepo.check_out(db, book['id'], user['id'])
+    book_data = Library::BookRepo.find(db, book['id'])
+    expect(book_data).to be_a Hash
+    expect(book_data['title']).to eq('Life of Pi')
+    expect(book_data['author']).to eq('Yann Martel')
+    expect(book_data['status']).to eq('checked out')
+    expect(book_data['borrower_id']).to eq(user['id'])
+  end
+  
 end

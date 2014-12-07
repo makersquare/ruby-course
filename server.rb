@@ -26,4 +26,9 @@ get '/books' do
   @books = Library::BookRepo.all(db)
   erb :'books/index'
 end
-   
+
+post '/books/create' do
+  db = Library.create_db_connection('library_dev')
+  Library::BookRepo.save(db, params)
+  redirect '/books'
+end   

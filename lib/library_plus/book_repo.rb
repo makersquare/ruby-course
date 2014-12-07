@@ -7,7 +7,7 @@ module Library
     end
     
     def self.find(db, book_id)
-      result = db.exec('SELECT title, author, id FROM books WHERE id = ($1)',[book_id])
+      result = db.exec('SELECT * FROM books WHERE id = ($1)',[book_id])
       result.entries[0]
     end
     
@@ -40,10 +40,20 @@ module Library
         result
       else
         book_data
-      end
-      
+      end  
     end
     
+    def self.check_in(db, book_id)
+      sql = %q[
+        UPDATE books
+        SET
+          status = ($1),
+          borrower_id = ($2)
+        WHERE id = ($3)
+      ]
+      db.exec(sql,['available', nil, book_id]).entries[0]
+      db.exec('SELECT * FROM books WHERE id = ($1)',[book_id]).entries[0]
+    end
     
   end
 
