@@ -1,5 +1,4 @@
-# Library::UserRepo.all(db)
-# Library::BookRepo.all(db)
+require 'pry-byebug'
 
 module Library
   class UserRepo

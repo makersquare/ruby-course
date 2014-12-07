@@ -27,7 +27,7 @@ describe Library::BookRepo do
   end
 
   it "gets all books" do
-    db.exec("INSERT INTO books (title, author) VALUES ($1, $2)", ["Alice's Adventures in Wonderland", "Lewis Carrol"])
+    db.exec("INSERT INTO books (title, author) VALUES ($1, $2)", ["Alices Adventures in Wonderland", "Lewis Carrol"])
     db.exec("INSERT INTO books (title, author) VALUES ($1, $2)", ["The Prophet", "Kahlil Gibran"])
 
     books = Library::BookRepo.all(db)
@@ -35,83 +35,93 @@ describe Library::BookRepo do
     expect(books.count).to eq 2
 
     titles = books.map {|u| u['title'] }
-    expect(titles).to include "Alice's Adventures in Wonderland", "The Prophet"
+    expect(titles).to include "Alices Adventures in Wonderland", "The Prophet"
   end
 
-  xit "creates books" do
+  it "creates books" do
     expect(book_count(db)).to eq 0
     expect(checkout_count(db)).to eq 0
 
-    book = Library::UserRepo.save(db, { 'title' => "Alice's Adventures in Wonderland", 'author' => "Lewis Carrol" })
+    book = Library::BookRepo.save(db, { 'title' => "Alices Adventures in Wonderland", 'author' => "Lewis Carrol" })
     expect(book['id']).to_not be_nil
-    expect(book['title']).to eq "Alice's Adventures in Wonderland"
-    expect(book['author']).to eq "Lewis Carol"
+    expect(book['title']).to eq "Alices Adventures in Wonderland"
+    expect(book['author']).to eq "Lewis Carrol"
     expect(book['status']).to eq "available"
 
     # Check for persistence
     expect(book_count(db)).to eq 1
-    expect(checkout_count(db)).to eq 1
+    expect(checkout_count(db)).to eq 0
 
-    book = db.exec("SELECT * FROM users")[0]
-    expect(book['title']).to eq "Alice's Adventures in Wonderland"
+    book = db.exec("SELECT * FROM books")[0]
+    expect(book['title']).to eq "Alices Adventures in Wonderland"
   end
 
-  xit "finds books" do
-    book = Library::BookRepo.save(db, { 'title' => "Alice's Adventures in Wonderland", 'author' => "Lewis Carrol" })
+  it "finds books" do
+    book = Library::BookRepo.save(db, { 'title' => "Alices Adventures in Wonderland", 'author' => "Lewis Carrol" })
     retrieved_book = Library::BookRepo.find(db, book['id'])
-    expect(retrieved_book['title']).to eq "Alice's Adventures in Wonderland"
+    expect(retrieved_book['title']).to eq "Alices Adventures in Wonderland"
   end
 
-  xit "updates books" do
-    book1 = Library::BookRepo.save(db, { 'title' => "Alice's Adventures in Wonderland", 'author' => "Lewis Carrol" })
-    book2 = Library::BookRepo.save(db, { 'id' => user1['id'], 'name' => "Alicia's Adventures in Wonderland", 'author' => "Louis CK" })
+  it "updates books" do
+    book1 = Library::BookRepo.save(db, { 'title' => "Alices Adventures in Wonderland", 'author' => "Lewis Carrol" })
+    book2 = Library::BookRepo.save(db, { 'id' => book1['id'], 'title' => "Alicias Adventures in Wonderland", 'author' => "Louis CK" })
     expect(book2['id']).to eq(book1['id'])
     expect(book2['title']).to include "Alicia"
+    expect(book2['author']).to eq "Louis CK"
 
     # Check for persistence
-    user3 = Library::BookRepo.find(db, book1['id'])
-    expect(user3['title']).to include "Alicia"
+    book3 = Library::BookRepo.find(db, book1['id'])
+    expect(book3['title']).to include "Alicia"
   end
 
-  xit "check-out books" do
-    book = Library::BookRepo.save(db, { 'title' => "Alice's Adventures in Wonderland", 'author' => "Lewis Carrol" })
+  it "check-out books" do
+    book = Library::BookRepo.save(db, { 'title' => "Alices Adventures in Wonderland", 'author' => "Lewis Carrol" })
     user = Library::UserRepo.save(db, { 'name' => "Alice" })
 
     # Checkout Book and Check Book Status
-    book = book.checkout(db, book['id'], user['id'])
-    expect(book['status'].to eq('checked_out'))
+    book = Library::BookRepo.checkout(db, book['id'], user['id'])
+    expect(book['status']).to eq('checked_out')
 
     # Check Checkouts Table Status from book_id
     checkout = Library::BookRepo.get_history(db, { 'book_id' => book['id'] })[0]
-    expect(checkout['status'].to eq('checked_out'))
+    expect(checkout['status']).to eq('checked_out')
 
     # Check Checkouts Table Status from user_id
     checkout_log = Library::BookRepo.get_history(db, { 'user_id' => user['id'] })[0]
-    expect(checkout_log['status'].to eq('checked_out'))
-    expect(checkout_log['book_id'].to eq(book['id']))
-    expect(checkout_log['user_id'].to eq(user['id']))
+    expect(checkout_log['status']).to eq('checked_out')
+    expect(checkout_log['book_id']).to eq(book['id'])
+
+    checkout_log = Library::BookRepo.get_history(db, { 'book_id' => book['id'] })[0]
+    expect(checkout_log['status']).to eq('checked_out')
+    expect(checkout_log['user_id']).to eq(user['id'])
   end
 
-  xit "check-in books" do
-    book = Library::BookRepo.save(db, { 'title' => "Alice's Adventures in Wonderland", 'author' => "Lewis Carrol" })
+  it "check-in books" do
+    book = Library::BookRepo.save(db, { 'title' => "Alices Adventures in Wonderland", 'author' => "Lewis Carrol" })
     user = Library::UserRepo.save(db, { 'name' => "Alice" })
 
     # Check-out Book and Check-In Book
-    book = book.checkout(db, book['id'], user['id'])
-    book = book.checkin(db, book['id'])
+    book = Library::BookRepo.checkout(db, book['id'], user['id'])
+    book = Library::BookRepo.checkin(db, book['id'])
 
-    checkout = Library::BookRepo.get_history(db, { 'user_id' => user['id'] })[0]
-    expect(checkout_log['status'].to eq('returned'))
-    expect(checkout_log['book_id'].to eq(book['id']))
-    expect(checkout_log['user_id'].to eq(user['id']))
+    checkout_log = Library::BookRepo.get_history(db, { 'user_id' => user['id'] })[0]
+    expect(checkout_log['status']).to eq('returned')
+    expect(checkout_log['book_id']).to eq(book['id'])
+    expect(checkout_log['user_id']).to eq(user['id'])
+
+    checkout = Library::BookRepo.get_history(db, { 'book_id' => book['id'] })[0]
+    expect(checkout_log['status']).to eq('returned')
+    expect(checkout_log['book_id']).to eq(book['id'])
+    expect(checkout_log['user_id']).to eq(user['id'])
 
   end
 
-  xit "lose books" do
-    book = Library::BookRepo.save(db, { 'title' => "Alice's Adventures in Wonderland", 'author' => "Lewis Carrol" })
+  it "lose books" do
+    book = Library::BookRepo.save(db, { 'title' => "Alices Adventures in Wonderland", 'author' => "Lewis Carrol" })
     expect(book_count(db)).to eq 1
 
     Library::BookRepo.lose(db, book['id'])
-    expect(book_count(db)).to eq 0
+    lost_book = Library::BookRepo.find(db, book['id'])
+    expect(lost_book['status']).to eq "lost"
   end
 end
