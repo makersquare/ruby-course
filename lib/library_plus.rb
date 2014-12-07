@@ -26,6 +26,11 @@ module Library
       status      VARCHAR,  
       borrower_id INTEGER 
       );
+      CREATE TABLE IF NOT EXISTS checked_out(
+      book_id   INTEGER,
+      user_id   INTEGER,
+      date_out  date DEFAULT now()
+      );
     SQL
   end
 

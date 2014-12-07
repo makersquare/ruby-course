@@ -88,7 +88,7 @@ describe Library::BookRepo do
     book_data = Library::BookRepo.find(db, book['id'])
     expect(book_data).to be_a Hash
     expect(book_data['title']).to eq('Life of Pi')
-    expect(book_data['author']).to eq('Yann Martel')
+    expect(book_data['authzor']).to eq('Yann Martel')
     expect(book_data['status']).to eq('checked out')
     expect(book_data['borrower_id']).to eq(user['id'])
   end
