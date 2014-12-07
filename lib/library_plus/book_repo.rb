@@ -12,16 +12,36 @@ module Library
     end
     
     def self.save(db, book_data)
+      book_title = book_data['title']
+      book_author = book_data['author']
+      book_status = 'available'
       sql = %q[
         INSERT INTO books (title, author, status)
         VALUES ($1,$2,$3)
       ]
-      book_title = book_data['title']
-      book_author = book_data['author']
-      book_status = 'available'
       
       db.exec(sql,[book_title,book_author,book_status])
       db.exec('SELECT * FROM books WHERE title = ($1)',[book_title]).entries[0]
+    end
+    
+    def self.check_out(db, book_id, borrower_id)
+      book_data = db.exec('SELECT * FROM books WHERE id = ($1)',[book_id]).entries[0]
+      book_status = book_data['status']
+      if book_status == 'available'
+        sql = %q[
+          UPDATE books
+          SET 
+            status = ($1),
+            borrower_id = ($2)
+          WHERE id = ($3)
+        ]
+        db.exec(sql,['checked out', borrower_id, book_id])
+        result = db.exec('SELECT * FROM books WHERE id = ($1)',[book_id]).entries[0]
+        result
+      else
+        book_data
+      end
+      
     end
     
     

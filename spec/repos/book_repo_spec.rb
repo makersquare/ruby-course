@@ -51,4 +51,23 @@ describe Library::BookRepo do
     expect(book['borrower']).to be_nil
   end
   
+  it 'checks books out' do
+    book1 = Library::BookRepo.save(db, {'title' => '1984', 'author' => 'George Orwell'})
+    user = Library::UserRepo.save(db, {'name' => 'Chriss'})
+  
+    book2 = Library::BookRepo.check_out(db,book1['id'],user['id'])
+    expect(book2['status']).to eq 'checked out'
+    expect(book2['borrower_id']).to eq(user['id'])
+  end
+  
+  it 'only allows book to be checked out by one person at a time' do
+    book = Library::BookRepo.save(db, {'title' => '1984', 'author' => 'George Orwell'})
+    user1 = Library::UserRepo.save(db, {'name' => 'annabelle'})
+    user2 = Library::UserRepo.save(db, {'name' => 'clairence'})
+   
+    check_out = Library::BookRepo.check_out(db,book['id'], user1['id'])
+    check_out2 = Library::BookRepo.check_out(db, book['id'], user2['id'])
+    expect(check_out2['borrower_id']).to eq(user1['id'])
+  end
+  
 end

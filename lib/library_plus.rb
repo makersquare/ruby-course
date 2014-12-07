@@ -20,11 +20,11 @@ module Library
         name  VARCHAR
       );
       CREATE TABLE IF NOT EXISTS books(
-      id        SERIAL PRIMARY KEY,
-      title     VARCHAR,
-      author    VARCHAR,
-      status    VARCHAR,  
-      borrower  VARCHAR
+      id          SERIAL PRIMARY KEY,
+      title       VARCHAR,
+      author      VARCHAR,
+      status      VARCHAR,  
+      borrower_id INTEGER 
       );
     SQL
   end
