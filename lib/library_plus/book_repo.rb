@@ -45,7 +45,7 @@ module Library
           db.exec("UPDATE books SET author = '#{book_data['author']}' WHERE id = #{book_data['id']}")
         end
       else
-        # Enter Title and Unique ID gets assigned automatically
+        # Enter book_data['title'], book_data['author'] and Status / Unique ID gets assigned automatically
         db.exec("INSERT INTO books (title, author, status) VALUES ('#{book_data['title']}', '#{book_data['author']}', 'available')")
       end
       # puts get_users(db, user_data)
@@ -71,7 +71,7 @@ module Library
     end
 
     def self.get_status(db, book_id)
-      db.exec("SELECT * FROM books WHERE id = #{book_data['id']}").entries.last['status']
+      find(db, book_id)['status']
     end
 
     def self.get_history(db, id)
@@ -80,6 +80,10 @@ module Library
       elsif id['user_id']
         db.exec("SELECT * FROM checkouts WHERE user_id = #{id['user_id']}").entries
       end
+    end
+
+    def self.get_checkedOutBooks(db, user_id)
+      get_history(db, user_id).select{ |entry| entry['status'] == 'checked_out'}
     end
 
   end
