@@ -1,5 +1,4 @@
-<h1>New Guy</h1>
-<form method="POST" action="/users/create">
+<form class="row" method="POST" action="/users/create">
   <h3>Register New Guy</h3>
   <input type="text" placeholder="Put guy's name here" id="name" name="name" />
 
@@ -7,7 +6,7 @@
 </form>
 
 <br/>
-<h1>All Guyz</h1>
+<h2>All Guyz</h2>
 <% @users.each do  |user| %>
-  <p><a href="#"><%= user['name'] %></a></p>
+  <p><a href="#"><%=user['name']%></a></p>
 <% end %>
