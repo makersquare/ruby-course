@@ -10,6 +10,7 @@ module Library
     db.exec <<-SQL
       DELETE FROM users;
       DELETE FROM books;
+      DELETE FROM checked_out;
     SQL
   end
 
@@ -38,6 +39,7 @@ module Library
     db.exec <<-SQL
       DROP TABLE users;
       DROP TABLE books;
+      DROP TABLE checked_out;
     SQL
   end
 end
