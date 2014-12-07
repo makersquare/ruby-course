@@ -23,8 +23,7 @@ module Library
       if book_data.include?(:id)
         sql_users = %Q[
           UPDATE books
-          set title =$1
-          set author = $2
+          set title =$1, author = $2
           where id = $3
           returning *
         ]
