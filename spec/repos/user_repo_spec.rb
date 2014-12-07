@@ -72,4 +72,5 @@ describe Library::UserRepo do
     Library::UserRepo.destroy(db, user['id'])
     expect(user_count(db)).to eq 0
   end
+
 end

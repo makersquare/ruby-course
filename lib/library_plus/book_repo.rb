@@ -13,7 +13,9 @@ module Library
       if book['status'] == 'available'
         # Update Status to 'checked-out'
         db.exec("UPDATE books SET status = 'checked_out' WHERE id = #{book_id}")
-        db.exec("UPDATE books SET user_id = '#{user_id}' WHERE id = #{book_id}")
+
+        # Add book to checkout history table
+        db.exec("INSERT INTO checkouts (book_id, user_id, status, checkout_date) VALUES (#{book_id}, #{user_id}), 'checked_out', '#{Time.now}'")
       end
       find(db, book_id)
     end
@@ -21,9 +23,12 @@ module Library
     def self.check_in(db, book_id)
       book = db.exec("SELECT * FROM books WHERE id = #{book_id}").entries.last
       if book['status'] == 'checked_out'
-        # Update Status to 'available'
+
+        # Update books table to 'available'
         db.exec("UPDATE books SET status = 'available' WHERE id = #{book_id}")
-        db.exec("UPDATE books SET user_id = 'nil' WHERE id = #{book_id}")
+
+        # Update checkout table to 'returned'
+        db.exec("UPDATE checkout SET status = 'returned' WHERE book_id = #{book_id}, status = 'checked_out'")
       end
       find(db, book_id)
     end
@@ -31,16 +36,23 @@ module Library
     def self.save(db, book_data)
       if book_data['id']
         # Update Name
-        db.exec("UPDATE books SET title = '#{book_data['title']}', author = '#{book_data['author']}' WHERE id = #{book_data['id']}")
+        if book_data['title']
+          db.exec("UPDATE books SET title = '#{book_data['title']}' WHERE id = #{book_data['id']}")
+        end
+        if book_data['author']
+          db.exec("UPDATE books SET author = '#{book_data['author']}' WHERE id = #{book_data['id']}")
+        end
       else
         # Enter Name and Unique ID gets assigned automatically
-        db.exec("INSERT INTO books (title, author) VALUES ('#{book_data['name']}', '#{book_data['author']}')")
+        db.exec("INSERT INTO books (title, author, status) VALUES ('#{book_data['name']}', '#{book_data['author']}', 'available')")
       end
       get_books(db, book_data).last
     end
 
-    def self.destroy(db, book_id)
-      db.exec("DELETE FROM books WHERE id = #{book_id}")
+    def self.lose(db, book_id)
+      # Update books table to 'available'
+      db.exec("UPDATE books SET status = 'lost' WHERE id = #{book_id}")
+      db.exec("UPDATE checkout SET status = 'lost' WHERE book_id = #{book_id}, status = 'checked_out'")
     end
 
     def self.get_books(db, book_data)
@@ -57,6 +69,14 @@ module Library
 
     def self.get_status(db, book_id)
       db.exec("SELECT * FROM books WHERE id = #{book_data['id']}").entries.last['status']
+    end
+
+    def self.get_history(db, id)
+      if id['book_id']
+        db.exec("SELECT * FROM checkouts WHERE book_id = #{book_id}").entries
+      elsif id['user_id']
+        db.exec("SELECT * FROM checkouts WHERE user_id = #{user_id}").entries
+      end
     end
 
   end
