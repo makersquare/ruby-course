@@ -41,6 +41,35 @@ module Library
       result.first
     end
 
+    def self.check_out(db, check_out_data)
+      check_out_data.each {|c| puts c}
+      sql = %Q[
+        insert into checkouts
+        (book_id, user_id)
+        values ($1, $2)
+        returning *
+      ]
+      result = db.exec(sql, [check_out_data[:book_id], check_out_data[:user_id]])
+    end
+
+    def self.get_check_outs(db)
+      sql = %Q[
+        SELECT 
+          books.title, 
+          books.author, 
+          books.id, 
+          users.name
+        FROM 
+          books, 
+          checkouts, 
+          users
+        WHERE 
+          books.id = checkouts.book_id AND
+          users.id = checkouts.user_id
+      ]
+      db.exec(sql).to_a
+    end
+
     def self.destroy(db, book_data)
       sql = %Q[
         delete from books
