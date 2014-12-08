@@ -24,6 +24,7 @@ module PuppyBreeder
   end
 end
 
+require_relative 'repo.rb'
 require_relative 'breeds_repo.rb'
 require_relative 'puppies_repo.rb'
 require_relative 'requests_repo.rb'

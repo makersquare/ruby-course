@@ -4,6 +4,7 @@ module PuppyBreeder
     attr_accessor :price
     
     def initialize(params)
+      @id = params[:id]
       @name = params[:name]
       @price = params[:price] || 0
     end
