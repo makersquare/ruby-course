@@ -1,6 +1,6 @@
 module PuppyBreeder
   class Breed
-    attr_reader :name
+    attr_reader :name, :id
     attr_accessor :price
     
     def initialize(params)

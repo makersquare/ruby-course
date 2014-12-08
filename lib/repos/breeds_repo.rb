@@ -30,6 +30,13 @@ module PuppyBreeder::Repos
       build_breed(result)
     end
 
+    def find(id)
+      command = <<-SQL
+        SELECT * FROM breeds WHERE id = $1;
+      SQL
+      @db.exec(command, [id]).map{ |result| build_breed(result)}.first
+    end
+
     def find_by(params)
       name = params[:name]
       command = <<-SQL
