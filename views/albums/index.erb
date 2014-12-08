@@ -4,7 +4,8 @@
 <ul>
     <li>Album Title : song count </li>
   <% @albums.each do |album| %>
-    <li><%= album['title'] %> : <%= album['count'] %></li>
+  <% path = "/albums/#{album['id']}" %>
+    <li><a href=<%= path %>><%= album['title'] %></a> : <%= album['count'] %></li>
   <% end %>
     <li><%= @songs %></li>
 </ul>

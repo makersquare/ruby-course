@@ -7,8 +7,8 @@ module Songify
 
   def self.clear_db(db)
     db.exec <<-SQL
-      DELETE FROM albums;
       DELETE FROM songs;
+      DELETE FROM albums;
       DELETE FROM genres;
       /* TODO: Clear rest of the tables (books, etc.) */
     SQL

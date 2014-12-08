@@ -24,6 +24,13 @@ post '/albums' do
   redirect to '/albums'
 end
 
+get '/albums/:id' do 
+  db = Songify.create_db_connection('songify_dev')
+  @album = Songify::AlbumRepo.find(db, params[:id])
+  @songs = Songify::SongRepo.songs_per_album(db, params[:id]).to_a
+  erb :"albums/show"
+end
+
 
 get '/songs' do
   db = Songify.create_db_connection('songify_dev')
