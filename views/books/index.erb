@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Book Index</title>
+</head>
+<body>
+  <h1>All Books</h1>
+  <form method="POST" action="/books">
+    <h3>Register New Book</h3>
+    <label>Title:</label>
+    <input type="text" name="title" />
+    <label>Author:</label>
+    <input type="text" name="author" />
+
+    <button>Register Book</button>
+  </form>
+  <ul>
+    <% @books.sort_by!{ |b| b['author'].downcase } %>
+    <% @books.each do |book| %>
+      <form method="GET" action='/books/<%= book['id'] %>/checkout'>
+        <li>
+          <a href='/books/<%= book['id'] %>'><%= book['title'] %> - <%= book['author'] %></a>
+          <% if book['status'] == "available" %>
+            <button type="submit">Check Out</button><br>
+          <% end %>
+        </li>
+      </form>
+    <% end %>
+  </ul>
+</body>
+</html>

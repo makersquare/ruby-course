@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Checkout Index</title>
+</head>
+<body>
+  <h1>All Users</h1>
+  <ul>
+    <% @users.sort_by!{ |u| u['name'].downcase } %>
+    <% @users.each do |user| %>
+      <form method="POST" action='/books/<%= @book_id %>/checkout/<%= user['id'] %>'>
+        <button><%= user['name'] %></button>
+      </form>
+    <% end %>
+  </ul>
+</body>
+</html>

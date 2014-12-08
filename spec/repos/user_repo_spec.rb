@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'pg'
 
 describe Library::UserRepo do
 
@@ -6,10 +7,19 @@ describe Library::UserRepo do
     db.exec("SELECT COUNT(*) FROM users")[0]["count"].to_i
   end
 
-  let(:db) { Library.create_db_connection('library_test') }
+  # A let(:db) define means you can use db in an it statement below
+  # Also, the code in {} does not run until it sees a 'db' statement in an 'it' block
+  # Therefore, the code will run for each 'it' block
+  let(:db) {
+    Library.create_db('library_test')
+    Library.create_db_connection('library_test')
+  }
 
+  # Before each 'it' block we are clearing the data base
+  # That way when we crete users we know exactly how many should be in the db
   before(:each) do
     Library.clear_db(db)
+    Library.create_tables(db)
   end
 
   it "gets all users" do
@@ -38,13 +48,13 @@ describe Library::UserRepo do
     expect(user['name']).to eq "Alice"
   end
 
-  xit "finds users" do
+  it "finds users" do
     user = Library::UserRepo.save(db, { 'name' => "Alice" })
     retrieved_user = Library::UserRepo.find(db, user['id'])
     expect(retrieved_user['name']).to eq "Alice"
   end
 
-  xit "updates users" do
+  it "updates users" do
     user1 = Library::UserRepo.save(db, { 'name' => "Alice" })
     user2 = Library::UserRepo.save(db, { 'id' => user1['id'], 'name' => "Alicia" })
     expect(user2['id']).to eq(user1['id'])
@@ -55,11 +65,12 @@ describe Library::UserRepo do
     expect(user3['name']).to eq "Alicia"
   end
 
-  xit "destroys users" do
+  it "destroys users" do
     user = Library::UserRepo.save(db, { 'name' => "Alice" })
     expect(user_count(db)).to eq 1
 
     Library::UserRepo.destroy(db, user['id'])
     expect(user_count(db)).to eq 0
   end
+
 end

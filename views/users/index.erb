@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Index</title>
+</head>
+<body>
+  <h1>All Users</h1>
+  <form method="POST" action="/users">
+    <h3>Register New User</h3>
+    <label>Name:</label>
+    <input type="text" name="user_name" />
+
+    <button>Register</button>
+  </form>
+  <ul>
+    <% @users.sort_by!{ |u| u['name'].downcase } %>
+    <% @users.each do |user| %>
+      <li><a href='/users/<%= user['id'] %>'><%= user['name'] %></a></li>
+    <% end %>
+  </ul>
+</body>
+</html>
