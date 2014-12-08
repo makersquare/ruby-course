@@ -23,5 +23,9 @@ module Library
     def self.destroy(db, book_id)
       # TODO: Delete SQL statement
     end
+    def self.check_out(db, check_out)
+    end
+    def self.check_in(db, book_id)
+    end
   end
 end

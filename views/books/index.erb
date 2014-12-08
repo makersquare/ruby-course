@@ -8,6 +8,30 @@
 	<input type="text" name="author" />	
 	<button>Add</button>
 </form>
-<%= @title %>
+
+<form method="POST" action="/books">
+	<h3>Check a book out.</h3>
+	<label>Book ID</label>
+	<input type="text" name="book_id" />
+	<label>User Name</label>
+	<input type="text" name="user" />
+	<button>Check Out!</button>
+</form>
+
+<form method="POST" action="/books">
+	<h3>Check a book in.</h3>
+	<label>Book ID</label>
+	<input type="text" name="book_id" />
+	<label>User Name</label>
+	<input type="text" name="user" />
+	<button>Check in!</button>
+</form>
+
+<%= params['title'] %> by <%= params['author'] %> added to the collection.
 <br>
-<%= @books %>
+
+<h3>Books currently owned by the library:</h3>
+<br>
+<% @books.each do |x| %>
+<%= x['title']%> by <%= x['author']%>, ID is <%= x['id'] %><br>
+<%end%>

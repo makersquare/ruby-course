@@ -23,8 +23,6 @@ post '/users' do
 end 
 
 get '/books' do
-  puts params
-  @title = params
   db = Library.create_db_connection('library-dev')
   @books = Library::BookRepo.all(db)
   erb :"books/index"
@@ -35,6 +33,20 @@ post '/books' do
   @title = params
   db =Library.create_db_connection('library-dev')
   Library::BookRepo.save(db, @title)
+  @books = Library::BookRepo.all(db)
+  erb :"books/index"
+end
+
+post '/checkin' do
+  db = Library.create_db_connection('library-dev')
+  @books = Library::BookRepo.all(db)
+  erb :"books/index"
+end
+
+post '/checkout' do
+  puts params
+  @checked = params
+  db = Library.create_db_connection('library-dev')
   @books = Library::BookRepo.all(db)
   erb :"books/index"
 end
