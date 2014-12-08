@@ -11,6 +11,10 @@ module Songify
       db.exec("SELECT * FROM albums WHERE id=$1", [album_id]).first
     end
 
+    def self.find_id(db, album_title)
+      db.exec("SELECT * FROM albums WHERE title=$1", [album_title]).first
+    end
+
     def self.save(db, album_data)
       if album_data['id']
         result = db.exec("UPDATE albums SET title = $2 WHERE id = $1", [album_data['id'], album_data['title']])

@@ -22,7 +22,7 @@ module Songify
       );
       CREATE TABLE songs(
         id SERIAL PRIMARY KEY,
-        album_id integer REFERENCES genres (id),
+        album_id integer REFERENCES albums (id),
         title VARCHAR
       );
       CREATE TABLE genres(
