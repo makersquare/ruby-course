@@ -45,6 +45,7 @@ module Songify
       DROP TABLE albums;
       DROP TABLE songs;
       DROP TABLE genres;
+      DROP TABLE song_genres;
       /* TODO: Drop song_genres table */
     SQL
   end

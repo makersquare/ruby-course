@@ -1,15 +1,15 @@
 <a href="/">&lt;- Back to Everything</a>
 <h1>All songs</h1>
 
-<ul>
- <!--  <% @songs.each do |song| %>
-    <li><%= song['title'] %></li>
-  <% end %> -->
-</ul>
 
 <form action="/songs" method="post">
   <h3>New Song</h3>
   <label>Song Title:</label>
   <input name="title" type="text" />
+  <select name='id_select'>
+		<% @albums.each do |x| %>
+		<option value='<%= x['id'] %>'><%= x['title'] %></option>
+		<% end%>
+	</select>
   <button>Create Song</button>
 </form>

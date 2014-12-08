@@ -25,7 +25,18 @@ end
 get '/songs' do
   db = Songify.create_db_connection('songify_dev')
   @songs = Songify::SongRepo.all(db)
+  @albums = Songify::AlbumRepo.all(db)
   erb :"songs/index"
+end
+
+post '/songs' do
+  puts params
+  db = Songify.create_db_connection('songify_dev')
+  song = Songify::SongRepo.save(db, {
+      'title' => params[:title],
+      'album_id' => params[:id_select]
+    })
+  redirect to '/songs'
 end
 
 
