@@ -1,0 +1,31 @@
+<style>
+div {
+	border: 2px solid red;
+	border-radius: 10px;
+	width: 300px;
+}
+</style>
+
+<center>
+	<h1>Books</h1>
+	<% @books.each do |book| %>
+	<h2><a href='/books/<%= book['id'] %>'><%= book['title'] %></a></h2>
+
+	<% end %>
+
+	<div>
+	<form method="post" action="/books">
+		<h3>Regiser New Book</h3>
+		<label>Title:</label>
+		<input type="text" name="title"/>
+		<br>
+		<label>Author:</label>
+		<input type='text' name='author'/>
+
+		<button>Register</button>
+	</form>
+	</div>
+	<br>
+	<a href='/'>HOME</a>
+
+</center>

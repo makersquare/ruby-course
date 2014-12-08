@@ -1,0 +1,18 @@
+<center>
+
+	<h1>All Users</h1>
+	<% @users.each do |user| %>
+	<%= user['name'] %><br>
+	<% end %>
+
+	<form method="post" action="/users">
+		<h3>Regiser New User</h3>
+		<label>Name:</label>
+		<input type="text" name="user_name"/>
+
+		<button>Register</button>
+	</form>
+	<br>
+	<a href='/'>HOME</a>
+
+</center>
