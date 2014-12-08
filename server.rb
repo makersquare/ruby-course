@@ -38,6 +38,7 @@ get '/books' do
 end 
 
 
+
 post '/books' do 
   db = Library.create_db_connection('library_dev')
   @book_title = params['book_title']
@@ -46,6 +47,7 @@ post '/books' do
   id = @book['id']
   redirect to("/books/#{id}")
 end 
+
 
 get '/books/:id' do 
   db = Library.create_db_connection('library_dev')
@@ -76,7 +78,7 @@ post '/books/:id' do
   @user_id = params['user_id']
   db = Library.create_db_connection('library_dev')
   @status_now = Library::BookRepo.checked_out?(db, @id)
-  @book = Library::BookRepo.check_out(db, @id, @user_id, @status_now)
+  @book = Library::BookRepo.check_out(db,  @user_id,@id, @status_now)
   redirect to("/books/#{@id}")
 end 
  
