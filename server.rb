@@ -1,5 +1,6 @@
 require 'sinatra'
 require './lib/songify.rb'
+require 'json'
 
 # set :bind, '0.0.0.0' # This is needed for Vagrant
 
@@ -24,6 +25,14 @@ end
 
 get '/songs' do
   erb :"songs/index"
+end
+
+get '/songs/add' do
+  db = Songify.create_db_connection('songify_dev')
+  @albums = Songify::AlbumRepo.all(db)
+  @genres = JSON.generate(Songify::GenreRepo.all(db))
+
+  erb :"songs/add"
 end
 
 

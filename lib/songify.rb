@@ -2,7 +2,7 @@ require 'pg'
 
 module Songify
   def self.create_db_connection(dbname)
-    PG.connect(host: 'localhost', dbname: dbname)
+    PG.connect(host: 'localhost', dbname: dbname, user: "ruby", password: "rubyRailsJS")
   end
 
   def self.clear_db(db)
@@ -22,7 +22,7 @@ module Songify
       );
       CREATE TABLE songs(
         id SERIAL PRIMARY KEY,
-        album_id integer REFERENCES genres (id),
+        album_id integer REFERENCES albums (id),
         title VARCHAR
       );
       CREATE TABLE genres(
