@@ -15,7 +15,7 @@ module Library
       ]
       result = db.exec(sql, [book_data])
 
-      return result.first
+      result.first
     end
 
     def self.save(db, book_data)
@@ -38,7 +38,7 @@ module Library
         result = db.exec(sql_insert_user, [book_data[:title], book_data[:author]])
       end
       
-      return result.first
+      result.first
     end
 
     def self.destroy(db, book_data)
