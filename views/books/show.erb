@@ -1,0 +1,56 @@
+<h1> Book Information Page </h1>
+<%= @results['title'] %> by <%= @results['author'] %>
+<% id = @results['id'] %>
+<% path1 = "/books/#{id}/checkout" %>
+<% path2 = "/books/#{id}/checkin" %>
+<% if @status != "checked_out" %>
+  <form name="form" method="POST" action=<%= path1 %>>
+    
+    <h3>Checkout This Book</h3>
+
+      <select name="user_name">
+        <% @users.each do |user| %>
+        <option><%= user['name'] %></option>
+        <% end %>
+
+      </select>
+
+      <button>Checkout</button>
+
+  </form>
+
+<% else %>
+
+  <form method="POST" action=<%= path2 %>>
+    <h3>Checkin This Book</h3>
+    <button>Checkin</button>
+  </form>
+
+<% end %>
+
+<p>Checkout Status: <%= @status %></p>
+<h5>Users who have checked out this title: </h5>
+<ul>
+  <% @history.each do |user| %>
+  <li><%= user['name'] %></li>
+  <% end %>
+</ul>
+
+
+
+
+
+<!--   <select>
+    <@users.each do |user|>
+    <option>user</option>
+  </select>
+
+
+    <label>Title:</label>
+  <input type="text" name="title" />
+
+  <label>Author:</label>
+  <input type="text" name="author" />
+
+  <button>Register</button>
+</form> -->
