@@ -57,3 +57,10 @@ post "/checkouts" do
 
   redirect back
 end
+
+get "/checkouts/books-out" do
+  db = Library.create_db_connection("library_dev")
+  @checkouts = Library::BookRepo.get_check_outs(db)
+
+  erb :"checkouts/books-out"
+end
