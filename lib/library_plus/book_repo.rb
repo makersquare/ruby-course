@@ -42,26 +42,42 @@ module Library
       if status.entries[0] == nil
         status = "available"
       else
-        status[0]['status']
+        status[-1]['status']
       end
     end
 
     def self.checkout(db, book_id, user_name)
       response = db.exec("SELECT status FROM checkouts where book_id = $1", [book_id]).to_a
+      user_id = db.exec("SELECT id FROM users where name = $1", [user_name]).to_a[0]['id']
       if response.entries[0] == nil      
         user_id = db.exec("SELECT id FROM users where name = $1", [user_name]).to_a[0]['id']
         status = db.exec("INSERT INTO checkouts (user_id, book_id, status) VALUES ($1, $2, $3) returning status", [user_id, book_id, "checked_out"]).to_a[0]['status']
         # response = "This book has not been checked out."
         status
-      elsif response.entries[0]['status'] == "available"
-        status = db.exec("UPDATE checkouts SET status = $1 WHERE book_id = $2 returning status", ["checked_out", book_id]).to_a[0]['status']
+      elsif response.entries[0]['status'] == "available" || response.entries[0]['status'] == "returned"
+        # former_user_id = ("SELECT user_id from checkouts where book_id = $1", [book_id]).to_a[0]['user_id']
+        # if former_user_id
+        status = db.exec("INSERT INTO checkouts (user_id, book_id, status) VALUES ($1, $2, $3) returning status", [user_id, book_id, "checked_out"]).to_a[0]['status'] #SET status = $1 WHERE book_id = $2 returning status", ["checked_out", book_id]).to_a[0]['status']
         status
       else
         status = "This book is currently checked out, please select another."
       end
     end
 
+    def self.checkin(db, book_id)
+      db.exec("UPDATE checkouts SET status = $1 WHERE book_id = $2", ["returned", book_id])
 
+    end
+
+    def self.checkout_history(db, book_id)
+      response = db.exec("select distinct u.name as name, b.title as title from checkouts c join users u on u.id = c.user_id join books b on b.id = c.book_id where c.book_id = $1", [book_id]).to_a
+      response
+    end
+
+    def self.user_history(db, user_name_id)
+    end
+
+# library_dev=# select u.name as users, b.title as books from checkouts c join users u on u.id = c.user_id join books b on b.id = c.book_id;
  
 
   end

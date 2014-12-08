@@ -47,6 +47,8 @@ get '/books/:id' do
   @results = Library::BookRepo.find(db, book_id)
   @users = Library::UserRepo.all(db)
   @status = Library::BookRepo.checkout_status(db, book_id)
+  puts @status
+  @history = Library::BookRepo.checkout_history(db, book_id)
   # @checkout = Library::BookRepo.checkout(db, book_id, user_name)
   erb :"books/show"
 end
@@ -57,6 +59,7 @@ post '/books/:id/checkout' do
   book_id = params[:id]
   db = Library.create_db_connection('library_dev')
   Library.create_tables(db)
+  status = Library::BookRepo.checkout_status(db,book_id)
   Library::BookRepo.checkout(db, book_id, user_name)
   # book_id = params['id'].to_i
   # user_name = "whatever"
@@ -70,7 +73,16 @@ post '/books/:id/checkout' do
   # @results = Library::BookRepo.find(db, id)
   # @users = Library::UserRepo.all(db)
   # @checkout = Library::BookRepo.checkout(db, id)
-  redirect to ("/books/#{book_id}/unavailable")
+  status = Library::BookRepo.checkout_status(db,book_id)
+  redirect to ("books/#{book_id}")
+end
+
+post '/books/:id/checkin' do
+  book_id = params[:id]
+  db = Library.create_db_connection('library_dev')
+  Library.create_tables(db)
+  Library::BookRepo.checkin(db, book_id)
+  redirect to ("books/#{book_id}")
 end
 
 get '/books/:id/unavailable' do
