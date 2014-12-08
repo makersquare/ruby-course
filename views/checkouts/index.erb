@@ -1,0 +1,26 @@
+<div>
+  <h1>Checkout Library Books</h1>
+  <h3>All Books</h3>
+  <p>Book ID - Book Title/Author</p>
+    <ul>
+      <% @books.each do |b| %>
+      <li><%= b["id"] %> - <%= b["title"] %> : <%= b["author"] %></li>
+      <% end %>
+    </ul>
+  <h3>All Registered Users</h3>
+  <p>User ID - User Name</p>
+    <ul>
+      <% @users.each do |u| %>
+      <li><%= u["id"] %> - <%= u["name"] %></li>
+      <% end %>
+    </ul>
+    <form method="POST" action="/checkouts">
+      <h3>Checkout Book</h3>
+      <label>Book ID:</label>
+      <input type="text" name="book_id" />
+      <label>User ID:</label>
+      <input type="text" name="user_id" />
+
+      <button>Checkout</button>
+    </form>
+</div>
