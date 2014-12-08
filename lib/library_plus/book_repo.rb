@@ -15,10 +15,10 @@ module Library
     def self.save(db, book_data)
       if book_data['id']
         # TODO: Update SQL statement
-        db.exec("UPDATE books SET name = '#{book_data['name']}', author = '#{book_data['author']}' WHERE id = #{book_data['id']}")
+        db.exec("UPDATE books SET name = '#{book_data['name']}', author = '#{book_data['author']}' WHERE id = #{book_data['id']};")
       else
         # TODO: Insert SQL statement
-        db.exec("INSERT INTO books (name, author) VALUES ('#{book_data['name']}', '#{book_data['author']}');")
+        db.exec("INSERT INTO books (name, author, checked_status) VALUES ('#{book_data['name']}', '#{book_data['author']}', FALSE);")
       end
       db.exec("SELECT * FROM books;").first
     end

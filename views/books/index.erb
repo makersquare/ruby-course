@@ -1,9 +1,28 @@
 <h1> Books </h1>
+
 <ul>
 <% @books.each do |x| %>
-	<li><a href="/books/<%= x['id'] %>"> <%= x['name'] %> </a></li>
+	<li>
+		<form method="POST", action="/book_checkout">
+			<a href="/books/<%= x['id'] %>"> <%= x['name'] %></a>
+			<% if x['checked_status'] == 'f' %>
+				<select name="user_id">
+					<option> -Select- </option>
+					<% @users.each do |q| %>
+					<option value="<%= q['id'] %>"><%= q['name'] %></option>
+					<% end %>
+				</select>
+				<button name="book_id" value="<%= x['id']%>">Checkout</button>
+				<h5 style="margin-top: 5px"> <%= x['author'] %> </h5>
+			<% else %>
+				<p style="color: red"> Checked out! </p>
+			<% end %>
+		</form>
+	</li>
 <% end %>
 </ul>
+
+
 
 <form method="POST" action="/books">
   <h3>Register New Book</h3>
@@ -14,3 +33,17 @@
 
   <button>Register</button>
 </form>
+
+	<h1> Checked Out Books </h1>
+	  <ul>
+		  <% @books.each do |y| %>
+		  	<% if y['checked_status'] == 't' %>
+				<li>
+					<form method="POST" action="/book_return">
+					<a href="/books/<%= y['book_id'] %>"> <%= y['name'] %></a> ID: <%= y['id'] %> <button name="id" value="<%= y['id']%>"> Return </button>
+					</form>
+				</li>
+			<% end %>
+		  <% end %>
+	  </ul>
+
