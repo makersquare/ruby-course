@@ -43,35 +43,35 @@ sql = %q[
     end
 
     def self.find(db, book_id)
-       db.exec("select * from books where id = $1",[book_id])[0]
+      db.exec("select * from books where id = $1",[book_id])[0]
     end
 
     def self.find_all_checkeout_user(db, book_id)
-       db.exec("select user_id from checkouts where book_id = $1", [book_id]).entries
+      db.exec("select user_id from checkouts where book_id = $1", [book_id]).entries
     end   
 
     def self.find_all_checkeout_books(db, user_id)
-       db.exec("select book_id from checkouts where user_id = $1", [user_id]).entries
+      db.exec("select book_id from checkouts where user_id = $1", [user_id]).entries
     end 
 
     def self.save(db, book_data)
-        if book_data['id'] 
-          if book_data['title'] && book_data['author']
-            db.exec("UPDATE books SET title = $1, author = $2 WHERE id = $3 returning *",[book_data['title'], book_data['author'], book_data['id']])[0]      
-          elsif book_data['title']
-            db.exec("UPDATE books SET title = $1 WHERE id = $2 returning *",[book_data['title'], book_data['id']])[0]      
-          else   
-            db.exec("UPDATE books SET author = $1 WHERE id = $2 returning *",[book_data['author'], book_data['id']])[0]      
-          end  
-        else
-          db.exec("INSERT into books (title, author) values ($1, $2) returning *", [book_data['title'], book_data['author']])[0]
-        end
+      if book_data['id'] 
+        if book_data['title'] && book_data['author']
+          db.exec("UPDATE books SET title = $1, author = $2 WHERE id = $3 returning *",[book_data['title'], book_data['author'], book_data['id']])[0]      
+        elsif book_data['title']
+          db.exec("UPDATE books SET title = $1 WHERE id = $2 returning *",[book_data['title'], book_data['id']])[0]      
+        else   
+          db.exec("UPDATE books SET author = $1 WHERE id = $2 returning *",[book_data['author'], book_data['id']])[0]      
+        end  
+      else
+        db.exec("INSERT into books (title, author) values ($1, $2) returning *", [book_data['title'], book_data['author']])[0]
+      end
     end
 
     def self.destroy(db, book_id)
        db.exec("DELETE FROM books WHERE id = $1", [book_id])
     end
-
   end
+
 end
 

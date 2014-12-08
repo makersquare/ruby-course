@@ -7,7 +7,6 @@ get '/' do
   erb :index
 end
 
-
 get '/users' do 
   db = Library.create_db_connection('library_dev')
   @users = Library::UserRepo.all(db)
