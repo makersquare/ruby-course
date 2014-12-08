@@ -1,0 +1,20 @@
+<h1>Book Page</h1>
+
+<p>Title: <%= @book['title'] %></p>
+
+<p>Author: <%= @book['author'] %></p>
+
+<%if (@status['status'] == "checked_out")%>
+<p>Currently Checked Out</p>
+<%else%>
+<p>Available</p>
+<%end%>
+
+<form action ="/books/<%= @book['id'] %>/checkout" method="post">
+  <select name="user_id"=>
+    <% @users.each do |u| %>
+    <option value="<%= u['id'] %>"><%= u['name'] %></option>
+    <% end %>
+  </select>
+  <input type="submit" value="Check Out">
+</form>
