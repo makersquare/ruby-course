@@ -57,6 +57,7 @@ get '/books/:id' do
   db = Library.create_db_connection('library_dev')
   @book = Library::BookRepo.find(db, id)
   @users = Library::UserRepo.all(db)
+  @history = Library::BookRepo.check_out_history_book(db, params['id'])
   erb :"books/show"
 end
 
@@ -73,3 +74,10 @@ post '/books/:id/checkin' do
   Library::BookRepo.status(db, params['id'])
   redirect to('/books/' + params['id'])
 end
+
+# get '/books/:id/history' do
+#   puts params['id']
+#   db = Library.create_db_connection('library_dev')
+#   @history = Library::BookRepo.check_out_history_book(db, params['id'])
+#   erb :"books/show"
+# end
