@@ -1,3 +1,8 @@
+# Library ::UserRepo  <-- how to reference this class
+# This is a user class under the Library module
+# Library::UserRepo.all(db)
+# Library::BookRepo.all(db)
+
 module Library
   class UserRepo
 
@@ -7,15 +12,21 @@ module Library
       db.exec("SELECT * FROM users").to_a
     end
 
-    def self.find(db, user_data)
+    def self.find(db, user_id)
       # TODO: Insert SQL statement
     end
+        # Use Create if !exists and Update if does
+        # TODO: Update SQL statement
+        # Library::UserRepo.save(db, { :name => "Alice" })
 
     def self.save(db, user_data)
       if user_data['id']
-        # TODO: Update SQL statement
+
+        #
       else
-        # TODO: Insert SQL statement
+      db.exec("INSERT INTO users (name) VALUES ($1)", [user_data[:name]])  
+      results = db.exec("SELECT * FROM users")
+      results
       end
     end
 

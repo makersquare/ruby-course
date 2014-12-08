@@ -24,7 +24,7 @@ describe Library::UserRepo do
     expect(names).to include "Alice", "Bob"
   end
 
-  it "creates users" do
+  xit "creates users" do
     expect(user_count(db)).to eq 0
 
     user = Library::UserRepo.save(db, :name => "Alice")
