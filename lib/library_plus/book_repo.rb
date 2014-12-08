@@ -21,7 +21,10 @@ module Library
       end
     end
     def self.destroy(db, book_id)
-      # TODO: Delete SQL statement
+        sql = %q[
+            DELETE FROM books WHERE id = $1
+        ]
+        db.exec_params(sql, book_id['book_id'])
     end
     def self.check_out(db, check_out)
         sql= %q[
@@ -29,11 +32,13 @@ module Library
                 VALUES ($1,$2) RETURNING *;
           UPDATE books SET checked_out = true WHERE id = $1 
               ]
-              #UPDATE is deleting the books for some reason. Default value???
         db.exec_params(sql, [check_out['book_id'],check_out['user']]).first
     end
     def self.check_in(db, book_id)
-
+        sql = %q[
+          UPDATE books SET checked_out = false WHERE id = $1 
+        ]
+        db.exec_params(sql, [book_id['id']])
     end
   end
 end

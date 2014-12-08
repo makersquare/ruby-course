@@ -1,6 +1,6 @@
 <h1>All Books</h1>
 
-<form method="POST" action="/books">
+<form method="POST" action="/new_book">
 	<h3>Add new book</h3>
 	<label>Title:</label>
 	<input type="text" name="title" />
@@ -9,7 +9,7 @@
 	<button>Add</button>
 </form>
 
-<form method="POST" action="/books">
+<form method="POST" action="/checkout">
 	<h3>Check a book out.</h3>
 	<label>Book ID</label>
 	<input type="text" name="book_id" />
@@ -18,7 +18,7 @@
 	<button>Check Out!</button>
 </form>
 
-<form method="POST" action="/books">
+<form method="POST" action="/checkin">
 	<h3>Check a book in.</h3>
 	<label>Book ID</label>
 	<input type="text" name="book_id" />
@@ -27,7 +27,7 @@
 	<button>Check in!</button>
 </form>
 
-<%= params['title'] %> by <%= params['author'] %> added to the collection.
+<div><%= params['title'] %> by <%= params['author'] %> added to the collection.</div> <!--need to get this text to hide until called -->
 <br>
 
 <h3>Books currently owned by the library:</h3>

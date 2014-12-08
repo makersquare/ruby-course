@@ -2,16 +2,12 @@ module Library
   class UserRepo
     #library::UserRepo.(method)
     def self.all(db)
-      # Other code should not have to deal with the PG:Result.
-      # Therefore, convert the results into a plain array.
       db.exec("SELECT * FROM users").to_a
     end
 
     def self.find(db, user_id)
       db.exec("SELECT * FROM users WHERE id = $1", [user_id]).first
     end
-    # create, update
-    # 
     def self.save(db, user_data)
       if user_data['id']
         sql = %q[
@@ -25,12 +21,13 @@ module Library
           ]
         db.exec_params(sql,[user_data['name']]).first
       end
-      # id_return = db.exec("SELECT * FROM users WHERE name = $1", [user_data['name']])
-      # id_return.first
     end
 
     def self.destroy(db, user_id)
-      # TODO: Delete SQL statement
+      sql = %[
+          DELETE FROM users WHERE id = $1
+      ]
+      db.exec_params(sql, [user_id['id']])
     end
 
   end

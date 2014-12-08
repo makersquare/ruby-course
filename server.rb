@@ -28,7 +28,7 @@ get '/books' do
   erb :"books/index"
 end
 
-post '/books' do
+post '/new_book' do
   puts params
   @title = params
   db =Library.create_db_connection('library-dev')
