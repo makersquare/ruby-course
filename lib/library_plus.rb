@@ -13,11 +13,11 @@ module Library
   end
 
   def self.create_tables(db)
-    db.exec %q[
+    db.exec <<-SQL
       CREATE TABLE IF NOT EXISTS users(
         id SERIAL PRIMARY KEY,
         name VARCHAR
-      );]
+      );
       # TODO: Create rest of the tables (books, etc.)
     SQL
   end

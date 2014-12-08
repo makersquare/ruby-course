@@ -1,0 +1,33 @@
+<html>
+<head>
+<title></title>
+<style media="screen" type="text/css">
+
+body {
+	padding: 20px;
+	margin-left: 20px;
+}
+form {
+	width: 30%;
+	margin-top: 50px;
+}
+</style>
+</head>
+<body>
+<h1><%= @book["title"] %> by <%= @book["author"] %></h1>
+<p> Book status:</p>
+ <% if @bookstat["status"] == "available" %>
+ <p>This book is available.</p>
+ <p>Select a user to check out this book to: </p>
+ <form method="post" action= <%="/books/" + @book["id"] + "/checkout"%>><select name ="userid">
+ <% @users.each{ |user| %>
+<option value= <%= user["id"]%>><%=user["name"]%></option>
+ 	<% } %> 
+ 	</select>
+ 	<input type ="submit"></form>
+ <% elsif @bookstat["status"] == "checked out" %>
+ <p>This book has been checked out by <%= @borrower["name"] %>.</p> <form method="post" action=<%="/books/" + @book["id"] + "/return"%>><button>Return</button></form>
+ <% end %>
+ <a href="/">Back to home.</a>
+</body>
+</html>
