@@ -10,6 +10,9 @@ end
 get '/albums' do
   db = Songify.create_db_connection('songify_dev')
   @albums = Songify::AlbumRepo.all(db)
+  @albums.each do |x|
+    x['count'] = Songify::SongRepo.songs_per_album(db, x['id']).count
+  end
   erb :"albums/index"
 end
 

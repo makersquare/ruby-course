@@ -32,5 +32,13 @@ module Songify
       end
     end
 
+    def self.songs_per_album(db, album_id)
+      db.exec("SELECT * FROM songs WHERE album_id=$1", [album_id])
+    end
+
+
+
+
+
   end
 end
