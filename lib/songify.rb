@@ -30,6 +30,11 @@ module Songify
         name VARCHAR
       );
       /* TODO: Create song_genres table */
+      CREATE TABLE song_genres(
+        id SERIAL PRIMARY KEY,
+        album_id INTEGER REFERENCES albums (id),
+        genre INTEGER REFERENCES genres (id)
+        );
     SQL
   end
 
