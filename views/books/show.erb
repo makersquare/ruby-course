@@ -1,0 +1,26 @@
+<center>
+	<h1><%= @showbook['title'] %></h1>
+	<br>
+	BY
+	<br>
+	<h2><%= @showbook['author'] %><h2>
+	<br>
+	<h3>Book ID: <%= @showbook['id'] %></h3><br>
+	<%= @status %><br>
+
+	<form method='post' action='/books/<%= @showbook['id'] %>/checkout'>
+		<label>Checkout this book to:</label>
+		<select name='userid'>
+		<% if @status == 'available' %>
+			<% @users.each do |user| %>
+			<option value='<%= user['id'] %>'><%= user['name'] %></option>
+			<% end %>
+		<% else %>
+			<option>Not Available</option>
+		<% end %>
+		</select>
+		<button type="submit" name="checkout">Checkout</button>
+
+	</form><br>
+	<a href='/'>HOME</a>
+</center>

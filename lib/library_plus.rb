@@ -21,7 +21,13 @@ module Library
       /* TODO: Create rest of the tables (books, etc.) */
       CREATE TABLE IF NOT EXISTS books(
         title VARCHAR,
-        author VARCHAR
+        author VARCHAR,
+        id SERIAL PRIMARY KEY
+        );
+      CREATE TABLE IF NOT EXISTS checkout(
+        book_id INTEGER,
+        user_id INTEGER,
+        status VARCHAR
         );
     SQL
   end

@@ -24,6 +24,7 @@ describe Library::UserRepo do
     expect(names).to include "Alice", "Bob"
   end
 
+describe "self.save" do
   it "creates users" do
     expect(user_count(db)).to eq 0
 
@@ -37,14 +38,18 @@ describe Library::UserRepo do
     user = db.exec("SELECT * FROM users")[0]
     expect(user['name']).to eq "Alice"
   end
+end
 
-  xit "finds users" do
+describe "self.find" do
+  it "finds users" do
     user = Library::UserRepo.save(db, { 'name' => "Alice" })
     retrieved_user = Library::UserRepo.find(db, user['id'])
     expect(retrieved_user['name']).to eq "Alice"
   end
+end
 
-  xit "updates users" do
+describe "self.save" do
+  it "updates users" do
     user1 = Library::UserRepo.save(db, { 'name' => "Alice" })
     user2 = Library::UserRepo.save(db, { 'id' => user1['id'], 'name' => "Alicia" })
     expect(user2['id']).to eq(user1['id'])
@@ -54,7 +59,9 @@ describe Library::UserRepo do
     user3 = Library::UserRepo.find(db, user1['id'])
     expect(user3['name']).to eq "Alicia"
   end
+end
 
+describe "self.destroy" do
   xit "destroys users" do
     user = Library::UserRepo.save(db, { 'name' => "Alice" })
     expect(user_count(db)).to eq 1
@@ -62,6 +69,7 @@ describe Library::UserRepo do
     Library::UserRepo.destroy(db, user['id'])
     expect(user_count(db)).to eq 0
   end
+end
 end
 
 
