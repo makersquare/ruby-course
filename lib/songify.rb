@@ -10,6 +10,7 @@ module Songify
       DELETE FROM albums;
       DELETE FROM songs;
       DELETE FROM genres;
+      DELETE FROM song_genres;
       /* TODO: Clear rest of the tables (books, etc.) */
     SQL
   end
@@ -30,6 +31,12 @@ module Songify
         name VARCHAR
       );
       /* TODO: Create song_genres table */
+      CREATE TABLE song_genres(
+        song_id integer REFERENCES songs (id),
+        album_title VARCHAR,
+        song_title VARCHAR,
+        genre_name VARCHAR
+        );
     SQL
   end
 
