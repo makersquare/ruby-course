@@ -1,0 +1,9 @@
+<h1>Please select a user.</h1>
+<form method='post' action='/books/<%= @id%>'>
+  <select name='user_id'>
+    <% @users.each do |u| %>
+      <option value="<%= u['id'] %>"><%= u['name'] %></option>
+    <% end %>
+  </select>
+  <input type='submit' value='Check It Out!'>
+</form>

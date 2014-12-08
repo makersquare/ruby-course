@@ -1,0 +1,17 @@
+<h1>The Library Plus System</h1>
+<a href="/">Return to Home Page</a>
+
+<h1>All Users</h1>
+
+
+<ul>
+  <% @users.each do |user| %>
+  <li> <a href="/users/ <%= user['id'] %>"> <%= user['name'] %></a></li><br>
+  <% end %>
+</ul>
+<form method="POST" action="/users">
+  <h3>Register New User</h3>
+  <label>Name:</label>
+  <input type="text" name="user_name" />
+  <button>Register</button>
+</form>

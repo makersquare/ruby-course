@@ -1,0 +1,13 @@
+<h1>The Library Plus System</h1>
+<a href="/">Return to Home Page</a>
+<a href="/users">Return to Users Page</a>
+<h2><p><%= @user['name'] %>'s Info</p>
+</h2>
+
+
+<h2>See all books that are checked out by this user</h2>
+<ul>
+  <% @books.each do |book| %>
+  <li> <a href="/books/<%= book['book_id'] %>">Click to find <%= book['book_id'] %> book's info</a> </li><br>
+  <% end %>
+</ul>

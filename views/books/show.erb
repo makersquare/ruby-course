@@ -1,0 +1,28 @@
+<h1>The Library Plus System</h1>
+<a href="/">Return to Home Page</a>
+<a href="/books">Return to Books Page</a>
+
+<h2><p><%= @book['title'] %> by <%= @book['author'] %></p>
+</h2>
+
+<h2><p>The book is <%= @status ?  "checked out" : "available" %> !</p></h2>
+
+<% if !@status %>  
+<form method="POST" action="/books/<%= @id%>/checkout">
+<button>Checkout the Book</button>  
+</form> 
+<% end %> 
+
+<% if @status %>  
+<form method="POST" action="/books/<%= @id%>/checkin">
+<button>Checkin the Book</button>  
+</form> 
+<% end %> 
+
+
+<h2>See all the users that checked out this book</h2>
+<ul>
+  <% @users.each do |user| %>
+  <li> <a href="/users/<%= user['user_id'] %>">Click to find <%= user['user_id'] %> user's info</a> </li><br>
+  <% end %>
+</ul>

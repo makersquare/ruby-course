@@ -29,7 +29,7 @@ module Library
         user_id INT,
         book_id INT,
         status VARCHAR,
-        created_at TIMESTAMP WITH TIME ZONE
+        created_at TIMESTAMP default
       );
       /* TODO: Create rest of the tables IF  (books, etc.) */
     SQL

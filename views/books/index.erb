@@ -1,0 +1,17 @@
+<h1>The Library Plus System</h1>
+<a href="/">Return to Home Page</a>
+<h1>All Books</h1>
+
+<ul>
+  <% @books.each do |book| %>
+  <li> <a href="/books/<%= book['id'] %>"><%= book['title'] %> by <%= book['author'] %></a> </li><br>
+  <% end %>
+</ul>
+<form method="POST" action="/books">
+  <h3>Register New Book</h3>
+  <label>Title:</label>
+  <input type="text" name="book_title" />
+  <label>Author (Authors):</label>
+  <input type="text" name="book_author" />
+  <button>Register</button>
+</form>
