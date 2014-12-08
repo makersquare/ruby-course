@@ -8,15 +8,18 @@ module Library
     end
 
     def self.find(db, user_id)
-      # TODO: Insert SQL statement
+      result = db.exec_params("SELECT * FROM users WHERE id = $1", [user_id])
+      result.first
     end
 
     def self.save(db, user_data)
       if user_data['id']
-        # TODO: Update SQL statement
+        db.exec_params("UPDATE users SET name = $2 WHERE id = $1", [user_data['id'], user_data['name']])
       else
-        # TODO: Insert SQL statement
+        db.exec_params("INSERT INTO users (name) VALUES ($1)", [user_data['name']])
       end
+      result = db.exec("SELECT * FROM users WHERE name = $1", [user_data['name']])
+      result.first
     end
 
     def self.destroy(db, user_id)
