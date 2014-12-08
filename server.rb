@@ -1,6 +1,7 @@
 require 'sinatra'
 require './lib/library_plus'
 require 'sinatra/reloader'
+require 'json'
 
 # set :bind, '0.0.0.0' # This is needed for Vagrant
 
@@ -10,10 +11,14 @@ end
 
 get '/users' do
   db = Library.create_db_connection('library_dev')
-  @users = Library::UserRepo.all(db)
+  @users = Library::UserRepo.all_with_checkouts(db)
   erb :"users/index"
 end
-
+get '/users/:id' do
+  db = Library.create_db_connection('library_dev')
+  @user = Library::UserRepo.find_with_checkouts(db, params[:id])
+  erb :"users/info"
+end
 post '/users' do
   db = Library.create_db_connection('library_dev')
   @u = Library::UserRepo.save(db, "name" => params["user_name"])
@@ -34,6 +39,7 @@ end
 get '/books' do
   db = Library.create_db_connection('library_dev')
   @books = Library::BookRepo.all(db)
+  @users = JSON.generate(Library::UserRepo.all(db)) # Querying this to populate checkout list.
   erb :"books/index"
 end
 
@@ -67,7 +73,8 @@ get '/books/:id/checkout' do
   erb :"books/checkout"
 end
 
-post '/books/:id/checkout/to/' do
-  @s = "Checking out #{params['id']} to #{params['user_id']} "
-  erb :"books/checkout_to"
+post '/books/:id/checkout' do
+  db = Library.create_db_connection('library_dev')
+  Library.CheckoutRepo.save(db, checkout_data)
+  redirect to("/books")
 end

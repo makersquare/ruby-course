@@ -21,10 +21,16 @@ module Library
 
     def self.find(db, book_data)
       book = db.exec("SELECT * FROM books WHERE id = #{book_data}").to_a[0]
-      checkouts = Library::CheckoutRepo.find(db, 'book_id' => book['id']) # should return array
+      checkouts = Library::CheckoutRepo.find_with_user(db, 'book_id' => book['id']) # should return array
+      book['available'] = true
+
       if (checkouts)
         book['checkouts'] = checkouts
+        book['checkouts'].each do |checkout|
+          book['available'] = false if !checkout['return_date']
+        end
       end
+      
       return book
     end
 
