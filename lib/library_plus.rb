@@ -24,8 +24,8 @@ module Library
         title VARCHAR,
         author VARCHAR
       );
-      CREATE TABLE memberships (
-        user_id INTEGER,
+      CREATE TABLE checkouts (
+        name VARCHAR,
         book_id INTEGER,
         checked_out BOOLEAN
         );

@@ -38,7 +38,10 @@ post '/books' do
 end
 
 post '/checkin' do
+  puts params
+  @checked_in = params
   db = Library.create_db_connection('library-dev')
+  Library::BookRepo.check_in(db, @checked_in)
   @books = Library::BookRepo.all(db)
   erb :"books/index"
 end
@@ -47,6 +50,7 @@ post '/checkout' do
   puts params
   @checked = params
   db = Library.create_db_connection('library-dev')
+  Library::BookRepo.check_out(db, @checked)
   @books = Library::BookRepo.all(db)
   erb :"books/index"
 end

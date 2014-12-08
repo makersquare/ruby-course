@@ -15,7 +15,7 @@ module Library
       else
         sql = %q[
           INSERT INTO books (title,author) 
-            VALUES ($1, $2) RETURNING *
+            VALUES ($1, $2) RETURNING * 
           ]
         db.exec_params(sql,[book_data['title'],book_data['author']]).first
       end
@@ -24,8 +24,16 @@ module Library
       # TODO: Delete SQL statement
     end
     def self.check_out(db, check_out)
+        sql= %q[
+          INSERT INTO checkouts (book_id, user)
+                VALUES ($1,$2) RETURNING *;
+          UPDATE books SET checked_out = true WHERE id = $1 
+              ]
+              #UPDATE is deleting the books for some reason. Default value???
+        db.exec_params(sql, [check_out['book_id'],check_out['user']]).first
     end
     def self.check_in(db, book_id)
+
     end
   end
 end
