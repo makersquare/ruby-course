@@ -1,4 +1,5 @@
 require 'spec_helper'
+require "./lib/library_plus/user_repo"
 
 describe Library::BookRepo do
 
@@ -58,11 +59,20 @@ describe Library::BookRepo do
     expect(book3['title']).to eq "To Kill a Mockingbird"
   end
 
-  xit "destroys books" do
-    book = Library::BookRepo.save(db, :title => "Alice")
+  it "destroys books" do
+    book = Library::BookRepo.save(db, :title => "To Kill a Mockingbird", :author => "Harper Lee")
     expect(book_count(db)).to eq 1
 
     Library::BookRepo.destroy(db, book['id'])
     expect(book_count(db)).to eq 0
+  end
+
+  it "checks out books" do
+    user = Library::UserRepo.save(db, :name => "Alice") 
+    book = Library::BookRepo.save(db, :title => "Foundation", :author => "Isaac Asimov")
+
+    checkout = Library::BookRepo.check_out(db, :book_id => book['id'], :user_id => user["id"])
+    expect(checkout["user_id"]).to_not be_nil
+    expect(checkout["book_id"]).to_not be_nil
   end
 end
