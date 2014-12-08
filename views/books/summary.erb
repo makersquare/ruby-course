@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Index</title>
+</head>
+<body>
+  <h1>History for Book</h1>
+  <ul>
+    <% @book_history.sort_by!{ |b| b['data'] } %>
+    <% @book_history.each do |entry| %>
+        <li>TODO - Display History</li>
+    <% end %>
+  </ul>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Index</title>
+</head>
+<body>
+  <h1>Summary of Checked- Books For User</h1>
+  <ul>
+    <% @checked_out_books.sort_by!{ |b| b['author'].downcase } %>
+    <% @checked_out_books.each do |book| %>
+      <form method="POST" action='/books/<%= book['id'] %>/return'>
+        <li>
+          <a href='/books/<%= book['id'] %>'><%= book['title'] %> - <%= book['author'] %></a>
+          <button type="submit" name = "checkin">Check In</button>
+          <button type="submit" name = "lost">Report Lost</button><br>
+        </li>
+      </form>
+    <% end %>
+  </ul>
+</body>
+</html>
