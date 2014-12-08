@@ -1,0 +1,19 @@
+<center>
+
+<h2>Book Info</h2>
+<h3><%= @book['title'] %></h3>
+<h4>By: <%= @book['author'] %></h4>
+<h4>Status: <%= @book['status'] || 'Returned' %></h4>
+
+<br>
+
+<form method='POST' action='/books/:id/checkout'>
+	<select name="user_id" style="width: 350px;"
+		<% @users.each do |u| %>
+			<option value="<%= u['id'] %>"><%= u['name'] %></option>
+			<% end %>
+	</select>
+	<input type='submit' value='Checkout Book!'>
+</form>
+
+</center>

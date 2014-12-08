@@ -1,0 +1,20 @@
+<center>
+<h1>All Books</h1>
+
+<% @books.each do |b| %>
+	<ul>
+	<a href="/books/<%= b['id'] %>"
+	<h6><%= b['title']%></h6> By: <%= b['author']%>
+	</ul>
+	<% end %>
+<br>
+
+<form method="POST" action="/books">
+	<h3>Register New Book</h3>
+	<label>Title:</label>
+	<input type="text" name="title" style="width: 350px" /><br>
+	<label>Author:</label>
+	<input type="text" name="author" style="width: 350px" />
+
+	<button>Register</button>
+</center>

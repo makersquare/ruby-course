@@ -38,20 +38,20 @@ describe Library::UserRepo do
     expect(user['name']).to eq "Alice"
   end
 
-  xit "finds users" do
+  it "finds users" do
     user = Library::UserRepo.save(db, { 'name' => "Alice" })
     retrieved_user = Library::UserRepo.find(db, user['id'])
     expect(retrieved_user['name']).to eq "Alice"
   end
 
-  xit "updates users" do
+  it "updates users" do
     user1 = Library::UserRepo.save(db, { 'name' => "Alice" })
     user2 = Library::UserRepo.save(db, { 'id' => user1['id'], 'name' => "Alicia" })
     expect(user2['id']).to eq(user1['id'])
     expect(user2['name']).to eq "Alicia"
 
     # Check for persistence
-    user3 = Library::UserRepo.find(user1['id'])
+    user3 = Library::UserRepo.find(db, user1['id'])
     expect(user3['name']).to eq "Alicia"
   end
 
