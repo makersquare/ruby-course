@@ -10,35 +10,40 @@ module Songify
       DELETE FROM albums;
       DELETE FROM songs;
       DELETE FROM genres;
-      /* TODO: Clear rest of the tables (books, etc.) */
+      DELETE FROM song_genres;
     SQL
   end
 
   def self.create_tables(db)
     db.exec <<-SQL
-      CREATE TABLE albums(
+      CREATE TABLE IF NOT EXISTS albums(
         id SERIAL PRIMARY KEY,
         title VARCHAR
       );
-      CREATE TABLE songs(
+      CREATE TABLE IF NOT EXISTS songs(
         id SERIAL PRIMARY KEY,
         album_id integer REFERENCES albums (id),
         title VARCHAR
       );
-      CREATE TABLE genres(
+      CREATE TABLE IF NOT EXISTS genres(
         id SERIAL PRIMARY KEY,
         name VARCHAR
       );
-      /* TODO: Create song_genres table */
+      CREATE TABLE IF NOT EXISTS song_genres(
+        id        SERIAL PRIMARY KEY,
+        song_id   INTEGER REFERENCES songs(id),
+        genre_id  INTEGER REFERENCES genres(id),
+        album_id  INTEGER REFERENCES albums(id)
+      );
     SQL
   end
 
   def self.drop_tables(db)
     db.exec <<-SQL
-      DROP TABLE albums;
-      DROP TABLE songs;
-      DROP TABLE genres;
-      /* TODO: Drop song_genres table */
+      DROP TABLE albums CASCADE;
+      DROP TABLE songs CASCADE;
+      DROP TABLE genres CASCADE;
+      DROP TABLE song_genres CASCADE;
     SQL
   end
 end
