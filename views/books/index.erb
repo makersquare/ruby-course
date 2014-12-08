@@ -1,0 +1,14 @@
+<h1>Calm the hell down, here they are, Jesus</h1>
+
+<form class="row" method="POST" action="/books/create">
+  <h3>Add another book!!!!</h3>
+  <input type="text" placeholder="Title" id="title" name="title" />
+  <input type="text" placeholder="Author" id="author" name="author" />
+
+  <button>To Literacy!</button>
+</form>
+
+<h2>Readin' Materials</h2>
+<% @books.each do |book| %>
+  <p><a href=<%="/books/"+book['id']%>><%= book['title'] + ' -- ' + book['author'] %></a></p>
+<% end %>

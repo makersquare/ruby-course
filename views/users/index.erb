@@ -1,0 +1,12 @@
+<form class="row" method="POST" action="/users/create">
+  <h3>Register New Guy</h3>
+  <input type="text" placeholder="Put guy's name here" id="name" name="name" />
+
+  <button>To Literacy!</button>
+</form>
+
+<br/>
+<h2>All Guyz</h2>
+<% @users.each do  |user| %>
+  <p><a href="#"><%=user['name']%></a></p>
+<% end %>

@@ -1,0 +1,27 @@
+<h1><%= @title %></h1>
+
+
+<p>Author: <%= @author%></p>
+<p>ID #: <%= @id%></p>
+<p>Status: <%= @status%></p>
+
+<%if @status == 'available' %>
+  <form method="POST" action="/books/<%= @id%>/check-out">
+    <label for="user">Check Out <%=@title%></label>
+    <div class="row">
+    <select class="small-4 colum" name="user">
+    <% @users.each do  |user| %> 
+    <option value=<%=user['id']%>><%=user['name']%> </option>
+    <%end%>
+    </select>
+    <br/> 
+    <button>Check Out</button>
+    </div>
+  </form>
+<%else%>
+  <p>Borrower: <%= @name%></p>
+  <p>Borrower ID #: <%=@borrower_id%>
+  <form method="POST" action="/books/check-in">
+    <button name="id" value=<%=@id%>>Check In <%= @title %></button>
+  </form>
+<%end%>
