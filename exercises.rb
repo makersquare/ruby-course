@@ -4,37 +4,40 @@ module Exercises
   #  - Triples a given string `str`
   #  - Returns "nope" if `str` is "wishes"
   def self.ex0(str)
-    # TODO
+    return "nope" if str == "wishes"
+    str * 3
   end
 
   # Exercise 1
   #  - Returns the number of elements in the array
   def self.ex1(array)
-    # TODO
+    array.length
   end
 
   # Exercise 2
   #  - Returns the second element of an array
   def self.ex2(array)
-    # TODO
+    array[1]
   end
 
   # Exercise 3
   #  - Returns the sum of the given array of numbers
   def self.ex3(array)
-    # TODO
+    return array.inject(:+)
   end
 
   # Exercise 4
   #  - Returns the max number of the given array
   def self.ex4(array)
-    # TODO
+    max = array[0]
+    array.each {|ele| max = ele if max < ele }
+    max
   end
 
   # Exercise 5
   #  - Iterates through an array and `puts` each element
   def self.ex5(array)
-    # TODO
+    array.each {|ele| puts ele}
   end
 
   # Exercise 6
@@ -42,14 +45,22 @@ module Exercises
   #  - If the last item is already 'panda', update
   #    it to 'GODZILLA' instead
   def self.ex6(array)
-    # TODO
+    if array.empty?
+      array[0] = 'panda'
+    elsif array.last == 'panda'
+      array[-1] = 'GODZILLA'
+    else
+      array[-1] = 'panda'
+    end
   end
 
   # Exercise 7
   #  - If the string `str` exists in the array,
   #    add `str` to the end of the array
   def self.ex7(array, str)
-    # TODO
+    if array.find {|ele| ele == str }
+      array << str
+    end
   end
 
   # Exercise 8
@@ -57,7 +68,7 @@ module Exercises
   #    { :name => 'Bob', :occupation => 'Builder' }
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
-    # TODO
+    people.each {|hash| print "#{hash[:name]} is a #{hash[:occupation]}" } 
   end
 
   # Exercise 9
@@ -65,7 +76,7 @@ module Exercises
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
-    # TODO
+    time % 4 == 0 && !(time % 100 == 0 && !(time % 400 == 0))
   end
 
   # Exercise 10
@@ -73,7 +84,12 @@ module Exercises
   #    Otherwise, returns "normal prices"
   # Hint: Read the "Stubbing" documentation on the Learn app.
   def self.ex10
-    # TODO
+    time_test = Time.now.hour
+    if time_test == 16 || time_test == 17
+      return "happy hour"
+    else
+      return "normal prices"
+    end
   end
   
   # Exercise 11
@@ -105,6 +121,15 @@ module Extensions
   #   expect(result).to eq({ :most => 'x', :least => ['y', 'z'] })
   #
   def self.extremes(array)
-    # TODO
+    histogram = Hash.new(0)
+    array.each {|str| histogram[str] += 1}
+    swapped = Hash.new {|hash,key| hash[key] = []}
+    histogram.each { |key,val| swapped[val] << key }
+    sorted = swapped.sort_by {|k,_| k}.to_a
+    least = sorted.first[1]
+    most = sorted.last[1]
+    least = least[0] if least.length == 1
+    most = most[0] if most.length == 1
+    result = {:most => most, :least => least}
   end
 end
