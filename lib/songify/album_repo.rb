@@ -8,7 +8,18 @@ module Songify
     end
 
     def self.find(db, album_id)
-      db.exec("SELECT * FROM albums WHERE id=$1", [album_id]).first
+      album = db.exec("SELECT * FROM albums WHERE id=$1", [album_id]).first
+      sql = %q[
+        SELECT genres.name
+        FROM album_genres
+        INNER JOIN genres
+        ON genres.id = album_genres.genre_id
+        INNER JOIN albums
+        ON albums.id = album_genres.album_id
+        where albums.id = $1
+      ]
+      album['genres'] = db.exec(sql, [album_id]).entries
+      album
     end
 
     def self.save(db, album_data)
@@ -18,6 +29,11 @@ module Songify
       else
         raise "title is required." if album_data['title'].nil? || album_data['title'] == ''
         result = db.exec("INSERT INTO albums (title) VALUES ($1) RETURNING id", [album_data['title']])
+        sql = %q[
+          INSERT INTO album_genres(album_id, genre_id)
+          VALUES ($1,$2)
+        ]
+        db.exec( 
         album_data['id'] = result.entries.first['id']
         album_data
       end
