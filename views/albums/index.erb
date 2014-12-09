@@ -13,7 +13,7 @@
     <label>Album Title:</label>
     <input name="title" type="text" />
     <label>Genre:</label>
-    <select name="genres[]" style="width: 25%; margins: auto">
+    <select class="genres" name="genres[]" style="width: 25%; margins: auto">
       <% @genres.each do |g| %>
         <option value=<%= g["id"] %>><%= g["name"] %></option>
       <% end %>
@@ -24,9 +24,12 @@
   </form>
 </div>
 
-<script type="text/javascript">
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script>
   $(".add-genre").click(function(e) {
-    $("select").clone().append("select")
+    e.preventDefault()
+  
+    $("button").before( $(".genres").last().clone())
 
   })
 
