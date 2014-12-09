@@ -17,10 +17,12 @@
       <% @genres.each do |g| %>
         <option value=<%= g["id"] %>><%= g["name"] %></option>
       <% end %>
-    </select>
-    &nbsp;&nbsp;&nbsp;<a href="#" class="add-genre">add another genre</a>
-    <br />
-    <button>Create Album</button>
+    </select><br />
+    
+    <a href="#" class="add-genre">add another genre</a><br />
+    &nbsp;&nbsp;&nbsp;<div><button>Create Album</button></div><br />
+    
+    
   </form>
 </div>
 
@@ -29,7 +31,8 @@
   $(".add-genre").click(function(e) {
     e.preventDefault()
   
-    $("button").before( $(".genres").last().clone())
+    $(this).before( $(".genres").last().clone())
+    $(this).before( "<br />")
 
   })
 
