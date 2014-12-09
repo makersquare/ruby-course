@@ -13,13 +13,15 @@ get '/albums' do
   @albums.each do |x|
     x['count'] = Songify::SongRepo.songs_per_album(db, x['id']).count
   end
+  @genres = Songify::GenreRepo.all(db)
   erb :"albums/index"
 end
 
 post '/albums' do
   db = Songify.create_db_connection('songify_dev')
   album = Songify::AlbumRepo.save(db, {
-    'title' => params[:title]
+    'title' => params[:title],
+    'genres' => params[:genre_ids]
   })
   redirect to '/albums'
 end

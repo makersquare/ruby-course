@@ -8,6 +8,7 @@ module Songify
   def self.clear_db(db)
     db.exec <<-SQL
       DELETE FROM songs;
+      DELETE FROM albums_genres;
       DELETE FROM albums;
       DELETE FROM genres;
       /* TODO: Clear rest of the tables (books, etc.) */
@@ -16,18 +17,23 @@ module Songify
 
   def self.create_tables(db)
     db.exec <<-SQL
-      CREATE TABLE albums(
+      CREATE TABLE if not exists albums(
         id SERIAL PRIMARY KEY,
         title VARCHAR
       );
-      CREATE TABLE songs(
+      CREATE TABLE if not exists songs(
         id SERIAL PRIMARY KEY,
         album_id integer REFERENCES albums (id),
         title VARCHAR
       );
-      CREATE TABLE genres(
+      CREATE TABLE if not exists genres(
         id SERIAL PRIMARY KEY,
         name VARCHAR
+      );
+      CREATE TABLE if not exists albums_genres(
+        id SERIAL PRIMARY KEY,
+        album_id integer REFERENCES albums (id),
+        genre_id integer REFERENCES genres (id)
       );
       /* TODO: Create song_genres table */
     SQL
