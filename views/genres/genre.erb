@@ -1,0 +1,8 @@
+<a href="/">&lt;- Back to Everything</a>
+<h1> <%= @genres.first['genre'] %> - All Albums </h1>
+
+<ul>
+  <% @genres.each do |album| %>
+    <li><a href="/albums/<%= album['album_id']%>"><%= album['title'] %></a></li>
+  <% end %>
+</ul>

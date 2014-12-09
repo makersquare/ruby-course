@@ -1,0 +1,13 @@
+<a href="/">&lt;- Back to Everything</a>
+<h1> <%= @songs.first['title'] %> - All Songs </h1>
+<p>
+<% @genres.each do |genre| %>
+	<a href="/genres/<%= genre['id'] %>"><%= genre['name'] %></a> |
+<% end %>
+</p>
+
+<ul>
+  <% @songs.each do |song| %>
+    <li><%= song['name'] %></li>
+  <% end %>
+</ul>

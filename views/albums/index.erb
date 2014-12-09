@@ -3,7 +3,7 @@
 
 <ul>
   <% @albums.each do |album| %>
-    <li><%= album['title'] %></li>
+    <li><a href="/albums/<%=album['id']%>"><%= album['title'] %></a> - <%= @db.exec("SELECT * FROM songs where album_id = #{album['id']}").to_a.count %> songs</li>
   <% end %>
 </ul>
 

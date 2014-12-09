@@ -1,5 +1,8 @@
 module Songify
   class GenreRepo
+    def self.albums(db, genre_id)
+      db.exec("SELECT g.name AS genre, a.title AS title, a.id AS album_id FROM genres g JOIN album_genres j ON g.id = j.genre_id JOIN albums a ON a.id = j.album_id WHERE g.id = $1", [genre_id])
+    end
 
     def self.all(db)
       # Other code should not have to deal with the PG:Result.
@@ -9,6 +12,10 @@ module Songify
 
     def self.find(db, genre_id)
       db.exec("SELECT * FROM genres WHERE id=$1", [genre_id]).first
+    end
+
+    def self.genres_by_album(db, album_id)
+      db.exec("SELECT g.name, g.id FROM album_genres a JOIN genres g ON g.id = a.genre_id WHERE a.album_id = $1", [album_id]).to_a
     end
 
     def self.save(db, genre_data)
