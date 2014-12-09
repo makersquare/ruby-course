@@ -8,25 +8,31 @@ module Songify
     end
 
     def self.find(db, album_id)
-      db.exec("SELECT * FROM albums WHERE id = $1", [album_id]).first
-    end
+      result = db.exec("SELECT * FROM albums WHERE id = $1", [album_id]).first
+      
+      if result
+        genres = []
+        genre_result = {}
+        sql = %Q[
+          SELECT 
+            albums.title, 
+            genres.name
+          FROM 
+            album_genres, 
+            genres, 
+            albums
+          WHERE 
+            album_genres.genres_id = genres.id AND
+            album_genres.album_id = $1
+        ]
+        genre_result = db.exec(sql, [album_id])
 
-    def self.find_genres(db, album_id)
-      sql = %Q[
-        SELECT 
-          albums.title, 
-          genres.name
-        FROM 
-          album_genres, 
-          genres, 
-          albums
-        WHERE 
-          album_genres.genres_id = genres.id AND
-          album_genres.album_id = $1
-      ]
-      result = db.exec(sql, [album_id])
-      result.each {|r| p r}
-      puts result.flatten
+        genre_result.each do |r|
+          genres << {'id' => r['genre_id'], 'name' => r['name']}
+        end
+        result['genres'] = genres
+      end
+      result
     end
 
     def self.save(db, album_data)
@@ -47,7 +53,6 @@ module Songify
             values ($1, $2)
           ]
           album_data["genre_ids"].each do |g_id|
-            p album_data["id"].to_i, g_id.to_i
             db.exec(sql, [album_data["id"].to_i, g_id.to_i])
           end
         end
