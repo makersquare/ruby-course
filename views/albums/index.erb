@@ -9,7 +9,46 @@
 
 <form action="/albums" method="post">
   <h3>New Album</h3>
-  <label>Album Title:</label>
-  <input name="title" type="text" />
-  <button>Create Album</button>
+  <label for='title'>Album Title:</label>
+  <input name="title" type="text" /><br><br>
+  <div class="genre-add" style="margin-top:3px">
+  <select class="genres" name="genres[]"></select><span style="margin-left:3px" class="remove btn btn-warning glyphicon glyphicon-minus">Remove Genre</span>
+  </div>
+  <span id="add">Add a genre</span><br><br>
+  
+  <button class="btn btn-default">Create Album</button>
 </form>
+<script>
+genres = <%= @genres %>
+$(document).ready(function(){
+	
+	selectcount = 1
+	option = $("<option>")
+	option.text('-- Please select a Genre --')
+	$("select.genres").append(option)
+	$.each(genres, function(k,g){
+		option = $("<option>")
+		option.val(g.id)
+		option.text(g.name)
+		$("select.genres").append(option)
+	})
+	$('#add').addClass('btn')
+	$('#add').addClass('glyphicon')
+	$('#add').addClass('glyphicon-plus')
+	$('#add').addClass('btn-success')
+	$('#add').click(function(e){
+		
+		element = $(e.currentTarget)
+		$('.genre-add').clone().insertBefore(element)
+		$('.remove').click(function(e){
+			console.log(e)
+			element = $(e.currentTarget)
+			$($(element).parent()).remove()
+		
+		})
+		
+	})
+	
+
+})
+</script>

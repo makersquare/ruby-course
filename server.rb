@@ -11,13 +11,15 @@ end
 get '/albums' do
   db = Songify.create_db_connection('songify_dev')
   @albums = Songify::AlbumRepo.all(db)
+  @genres = JSON.generate(Songify::GenreRepo.all(db))
   erb :"albums/index"
 end
 
 post '/albums' do
   db = Songify.create_db_connection('songify_dev')
   album = Songify::AlbumRepo.save(db, {
-    'title' => params[:title]
+    'title' => params[:title],
+    'genre_ids' => params[:genres]
   })
   redirect to '/albums'
 end
