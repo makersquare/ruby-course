@@ -40,6 +40,7 @@ describe Songify::SongRepo do
     expect(song['title']).to eq "The Ally"
   end
 
+  # ASK HOW THIS WORKS
   it "requires a title" do
     expect { repo.save(db, {}) }.to raise_error {|e|
       expect(e.message).to match /title/
@@ -63,6 +64,7 @@ describe Songify::SongRepo do
       expect(e.message).to match /album_id/
     }
   end
+  # END EXPLAIN HOW THIS WORKS
 
   it "finds songs" do
     song = repo.save(db, { 'album_id' => @album_id, 'title' => "The Ally" })
