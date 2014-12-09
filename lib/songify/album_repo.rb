@@ -10,8 +10,7 @@ module Songify
     def self.find(db, album_id)
       album = db.exec("SELECT * FROM albums WHERE id=$1", [album_id]).first
       genres = db.exec('SELECT * FROM album_genres WHERE album_id = $1',[album_id]).entries
-      puts "genres #{genres}"
-      if genres == nil
+      if genres.length > 0 
         sql = %q[
           SELECT genres.name
           FROM album_genres
@@ -21,34 +20,45 @@ module Songify
           ON albums.id = album_genres.album_id
           where albums.id = $1
         ]
+        
         album['genres'] = db.exec(sql, [album_id]).entries
-        puts album['genres']
       end
       album
     end
 
     def self.save(db, album_data)
+      album_title = album_data['title']
+      
       if album_data['id']
-        result = db.exec("UPDATE albums SET title = $2 WHERE id = $1", [album_data['id'], album_data['title']])
+        sql = %q[
+          UPDATE albums
+          SET title = $2
+          WHERE id = $1
+        ]
+        result = db.exec(sql, [album_data['id'], album_title])
         self.find(db, album_data['id'])
+        
       else
-        if album_data['title'].nil? || album_data['title'] == ''
+        if album_title.nil? || album_title == ''
           raise Errors::InvalidRecordData.new("title is required.")
         end
+        sql2 = %q[
+          INSERT INTO albums (title)
+          VALUES ($1)
+          RETURNING id;
+        ]
+        album_id = db.exec(sql2, [album_title]).entries.first['id']
 
-        result = db.exec("INSERT INTO albums (title) VALUES ($1) RETURNING id", [album_data['title']])
-        
         if album_data['genre_ids']
-          sql = %q[
+          sql3 = %q[
             INSERT INTO album_genres(album_id, genre_id)
             VALUES ($1,$2)
             ]
             album_data['genre_ids'].each do |id|
-              db.exec(sql, [album_data['id'], id])
+              db.exec(sql3, [album_id, id])
             end
         end
-        album_data['id'] = result.entries.first['id']
-        puts album_data
+        album_data['id'] = album_id
         album_data
       end
     end

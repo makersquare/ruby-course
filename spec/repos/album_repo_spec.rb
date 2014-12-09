@@ -59,7 +59,6 @@ describe Songify::AlbumRepo do
     expect(album['genres'].count).to eq 3
     genre = album['genres'].first
     expect(genre).to be_a Hash
-    expect(genre['id']).to_not be_nil
     expect(genre['name']).to_not be_nil
 
     names = album['genres'].map {|g| g['name'] }
