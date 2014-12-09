@@ -1,15 +1,25 @@
 <a href="/">&lt;- Back to Everything</a>
-<h1>All Albums</h1>
+<div>
+  <h1>All Albums</h1>
 
-<ul>
-  <% @albums.each do |album| %>
-    <li><%= album['title'] %></li>
-  <% end %>
-</ul>
+  <ul>
+    <% @albums.each do |album| %>
+      <li><%= album['title'] %></li>
+    <% end %>
+  </ul>
 
-<form action="/albums" method="post">
-  <h3>New Album</h3>
-  <label>Album Title:</label>
-  <input name="title" type="text" />
-  <button>Create Album</button>
-</form>
+  <form action="/albums" method="post">
+    <h3>New Album</h3>
+    <label>Album Title:</label>
+    <input name="title" type="text" />
+    <label>Genre:</label>
+    <select name="genres[]" style="width: 25%; margins: auto">
+      <% @genres.each do |g| %>
+        <option value=<%= g["id"] %>><%= g["name"] %></option>
+      <% end %>
+    </select>
+    &nbsp;&nbsp;&nbsp;<a href="#" class="add-genre">add another genre</a>
+    <br />
+    <button>Create Album</button>
+  </form>
+</div>
