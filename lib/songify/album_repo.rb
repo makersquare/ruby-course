@@ -10,7 +10,7 @@ module Songify
     def self.find(db, album_id)
       album = db.exec("SELECT * FROM albums WHERE id=$1", [album_id]).first
       genres = db.exec('SELECT * FROM album_genres WHERE album_id = $1',[album_id]).entries
-      puts "genres: #{genres}"
+      puts "genres #{genres}"
       if genres == nil
         sql = %q[
           SELECT genres.name
@@ -22,7 +22,7 @@ module Songify
           where albums.id = $1
         ]
         album['genres'] = db.exec(sql, [album_id]).entries
-        puts album
+        puts album['genres']
       end
       album
     end
@@ -35,15 +35,15 @@ module Songify
         raise "title is required." if album_data['title'].nil? || album_data['title'] == ''
         result = db.exec("INSERT INTO albums (title) VALUES ($1) RETURNING id", [album_data['title']])
         
-#         if ablum_data['genres']
-#           sql = %q[
-#             INSERT INTO album_genres(album_id, genre_id)
-#             VALUES ($1,$2)
-#             ]
-#             album_data['genres'].each do |genre|
-#               db.exec(sql, [album_id, genre])
-#             end
-#         end
+        if album_data['genre_ids']
+          sql = %q[
+            INSERT INTO album_genres(album_id, genre_id)
+            VALUES ($1,$2)
+            ]
+            album_data['genre_ids'].each do |id|
+              db.exec(sql, [album_data['id'], id])
+            end
+        end
         album_data['id'] = result.entries.first['id']
         puts album_data
         album_data
