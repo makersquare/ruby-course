@@ -72,6 +72,7 @@ describe Songify::SongRepo do
 
   it "updates songs" do
     song1 = repo.save(db, { 'album_id' => @album_id, 'title' => "The Ally" })
+    song1['id']
     song2 = repo.save(db, { 'id' => song1['id'], 'title' => "Alicia" })
     expect(song2['id']).to eq(song1['id'])
     expect(song2['title']).to eq "Alicia"

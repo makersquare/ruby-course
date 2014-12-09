@@ -49,7 +49,6 @@ describe Songify::AlbumRepo do
     gid_1 = Songify::GenreRepo.save(db, { 'name' => 'rock' })
     gid_2 = Songify::GenreRepo.save(db, { 'name' => 'avant-garde' })
     gid_3 = Songify::GenreRepo.save(db, { 'name' => 'jazz' })
-
     album = repo.save(db, { 'title' => 'Suspicious Activity?',
                             'genre_ids' => [gid_1['id'], gid_2['id'], gid_3['id']] })
     album = repo.find(db, album['id'])

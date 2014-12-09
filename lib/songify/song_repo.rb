@@ -25,6 +25,7 @@ module Songify
         result = db.exec("INSERT INTO songs (title, album_id) VALUES ($1, $2) RETURNING id", [song_data['title'], song_data['album_id']])
         song_data['id'] = result.entries.first['id']
       end
+      return song_data
     end
     def self.all_with_album(db)
       r = db.exec <<-SQL 

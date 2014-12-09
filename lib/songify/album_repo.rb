@@ -4,8 +4,26 @@ module Songify
     def self.all(db)
       # Other code should not have to deal with the PG:Result.
       # Therefore, convert the results into a plain array.
-      db.exec("SELECT * FROM albums").to_a
-      #r2 = db.exec("SELECT genres.name FROM genres g JOIN albumgenres ag ON ag.genre_id = g.id WHERE a.id = $1", [album_id])
+      r1 = db.exec("SELECT * FROM albums").to_a
+      q =  <<-SQL 
+      SELECT
+      ag.album_id,
+      g.name
+      FROM genres g
+      JOIN albumgenres ag 
+      ON g.id = ag.genre_id
+      SQL
+
+      genres = db.exec(q).to_a
+      genres.each do |genre|
+        r1.each do |album|
+          if(album['id'] == genre['album_id'])
+            album['genres']||album['genres'] = []
+            album['genres'].push(genre['name'])
+          end
+        end
+      end
+      return r1
     end
 
     def self.find(db, album_id)
@@ -22,10 +40,12 @@ module Songify
       SQL
 
       r2 = db.exec(q, [album_id]).to_a
-      r1['genres'] = []
+      if(r2 != [])
+        r1['genres'] = []
 
-      r2.each do |genre|
-        r1['genres'].push(genre['name'])
+        r2.each do |genre|
+          r1['genres'].push(genre)
+        end
       end
       return r1
     end
@@ -36,13 +56,17 @@ module Songify
         self.find(db, album_data['id'])
       else
         raise "title is required." if album_data['title'].nil? || album_data['title'] == ''
-        result = db.exec("INSERT INTO albums (title) VALUES ($1) RETURNING id", [album_data['title']])
+
+        result = db.exec("INSERT INTO albums (title) VALUES ($1) RETURNING *", [album_data['title']])
         album_data['id'] = result.entries.first['id']
-        album_data["genre_ids"].each do |genre_id|
-          db.exec("INSERT INTO albumgenres (album_id, genre_id) VALUES ($1, $2)", [album_data["album_id"], genre_id])
+
+        if album_data["genre_ids"]
+          album_data["genre_ids"].each do |genre_id|
+          db.exec("INSERT INTO albumgenres (album_id, genre_id) VALUES ($1, $2)", [album_data["id"], genre_id])
         end
         
-        album_data
+      end
+        return album_data
       end
     end
 
