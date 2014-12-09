@@ -29,7 +29,7 @@ module Songify
     end
 
     def self.songs_per_album(db)
-      db.exec("SELECT album_id, COUNT(DISTINCT album_id) AS tracks FROM songs GROUP BY album_id").to_a
+      db.exec("SELECT album_id, COUNT(album_id) AS tracks FROM songs GROUP BY album_id").to_a
     end
 
     def self.songs_by_album(db, album_id)

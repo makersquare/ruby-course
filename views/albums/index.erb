@@ -14,17 +14,21 @@
     <label>Album Title:</label>
     <input name="title" type="text" />
     <label>Genre:</label>
-    <select name="select">
-      <option value="genre0" selected disabled>Select Genre</option>
-      <% @genres.each_index do |i| %>
-        <option value="genre<%= i+1 %>"><%= @genres[i]['name']%></option>
-      <% end %>
-    </select>
+    <div id="genreSelectors">
+      <select name="genre_ids[]" class = "main genre">
+        <option value="genre0" selected disabled>Select Genre</option>
+        <% @genres.each_index do |i| %>
+          <option value="<%= @genres[i]['id']%>"><%= @genres[i]['name']%></option>
+        <% end %>
+      </select>
+      <a href="#" class="add-genre">add genre</a><br />
+    </div>
   </p>
   <p>
     <label>Songs:</label><br>
     <div id="songlist">
-      <input class = "song" name="songs[]" type="text" value="Track 1"/><a href="#" class="add">add song</a><br />
+      <input class = "song" name="songs[]" type="text" value="Track 1"/>
+      <a href="#" class="add-song">add song</a><br />
     </div>
   </p>
   <button type="submit" value="Create Album">Create Album</button>
@@ -35,9 +39,8 @@
   <script type="text/javascript">
 
     // Add a New Song Textbox
-    $('a.add').on('click', function(e) {
+    $('a.add-song').on('click', function(e) {
       e.preventDefault()
-      var url = "http://10.10.10.10:4567" + '/albums'
 
       // Create Next Track Number
       var trackText = "Track " + ($('input.song').length + 1)
@@ -47,6 +50,17 @@
 
       // Append Textbox
       $('#songlist').append($newSong).append('<br />')
+    })
+
+    // Add a New Genre Selector
+    $('a.add-genre').on('click', function(e) {
+      e.preventDefault()
+
+      // Create New Song Textbox
+      var $newGenreSelector = $('select.main').clone().removeClass('main')
+
+      // Append Textbox
+      $('#genreSelectors').append($newGenreSelector).append('<br />')
     })
 
 </script>

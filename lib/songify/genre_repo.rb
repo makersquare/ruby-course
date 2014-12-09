@@ -8,7 +8,22 @@ module Songify
     end
 
     def self.find(db, genre_id)
-      db.exec("SELECT * FROM genres WHERE id=$1", [genre_id]).first
+
+      sql_all_albums_for_genre = %Q[
+        SELECT
+          a.id,
+          a.title
+        FROM album_genres ag
+        JOIN albums a
+        ON a.id = ag.album_id
+        WHERE ag.genre_id = $1
+      ]
+
+      genre = db.exec("SELECT * FROM genres WHERE id=$1", [genre_id]).first
+      return genre if genre.nil?
+
+      genre['albums'] = db.exec(sql_all_albums_for_genre, [genre_id]).to_a
+      genre
     end
 
     def self.save(db, genre_data)

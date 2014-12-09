@@ -20,14 +20,14 @@ end
 post '/albums' do
   db = Songify.create_db_connection('songify_dev')
 
-  # Add Album to album db
+  # Add Album to album db with title and genres
   album = Songify::AlbumRepo.save(db, {
-    'title' => params[:title]
+    'title' => params[:title],
+    'genre_ids' => params[:genre_ids]
   })
-  songs = params[:songs]
 
   # Add all songs to the songs db
-  songs.each do |song|
+  params[:songs].each do |song|
     Songify::SongRepo.save(db, { 'album_id' => album['id'], 'title' => song })
   end
 
@@ -38,7 +38,6 @@ get '/albums/:id' do
   db = Songify.create_db_connection('songify_dev')
 
   @songs = Songify::SongRepo.songs_by_album(db, params[:id])
-  binding.pry
   erb :"albums/showpage"
 end
 
@@ -59,4 +58,14 @@ post '/genres' do
     'name' => params[:name]
   })
   redirect to '/genres'
+end
+
+get '/genres/:id' do
+  db = Songify.create_db_connection('songify_dev')
+  @genres = Songify::GenreRepo.find(db, params[:id])
+  @albums = []
+  @genres['albums'].each do |album|
+    @albums.push(Songify::AlbumRepo.find(db, album['id']))
+  end
+  erb :"genres/showpage"
 end
