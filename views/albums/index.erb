@@ -11,5 +11,10 @@
   <h3>New Album</h3>
   <label>Album Title:</label>
   <input name="title" type="text" />
+  <select name="genre_ids[]">
+	<% @genres.each do |genre| %>
+  		<option value="<%= genre['id'] %>"><%= genre['name'] %></option>
+	<% end %>
+  </select>
   <button>Create Album</button>
 </form>
