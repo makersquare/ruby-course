@@ -24,6 +24,8 @@ end
 
 
 get '/songs' do
+  db = Songify.create_db_connection('songify_dev')
+  @songs = Songify::SongRepo.all_with_album(db)
   erb :"songs/index"
 end
 
@@ -33,6 +35,15 @@ get '/songs/add' do
   @genres = JSON.generate(Songify::GenreRepo.all(db))
 
   erb :"songs/add"
+end
+post '/songs/add' do
+  db = Songify.create_db_connection('songify_dev')
+  data = {}
+  data["title"] = params["title"]
+  data["album_id"] = params["album"]
+  Songify::SongRepo.save(db, data)
+
+  redirect to '/songs'
 end
 
 

@@ -29,15 +29,20 @@ module Songify
         id SERIAL PRIMARY KEY,
         name VARCHAR
       );
-      /* TODO: Create song_genres table */
+      CREATE TABLE albumgenres(
+        id SERIAL PRIMARY KEY,
+        album_id integer REFERENCES albums (id),
+        genre_id integer REFERENCES genres (id)
+      );
     SQL
   end
 
   def self.drop_tables(db)
     db.exec <<-SQL
-      DROP TABLE albums;
-      DROP TABLE songs;
-      DROP TABLE genres;
+      DROP TABLE albums CASCADE;
+      DROP TABLE songs CASCADE;
+      DROP TABLE genres CASCADE;
+      DROP TABLE albumgenres CASCADE;
       /* TODO: Drop song_genres table */
     SQL
   end
