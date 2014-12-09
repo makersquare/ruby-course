@@ -10,7 +10,7 @@ module Songify
       DELETE FROM albums;
       DELETE FROM songs;
       DELETE FROM genres;
-      /* TODO: Clear rest of the tables (books, etc.) */
+      
     SQL
   end
 
@@ -22,14 +22,19 @@ module Songify
       );
       CREATE TABLE songs(
         id SERIAL PRIMARY KEY,
-        album_id integer REFERENCES genres (id),
+        album_id integer REFERENCES albums (id),
         title VARCHAR
       );
       CREATE TABLE genres(
         id SERIAL PRIMARY KEY,
         name VARCHAR
       );
-      /* TODO: Create song_genres table */
+      CREATE TABLE album_genres(
+        id SERIAL PRIMARY KEY,
+        album_id integer REFERENCES albums (id),
+        genre_id integer REFERENCES genres (id)
+      );
+      /* TODO: Create album_genres table */
     SQL
   end
 

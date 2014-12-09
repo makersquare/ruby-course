@@ -1,0 +1,12 @@
+<h1>Songs</h1>
+<a href="/">Return to Home Page</a>
+
+<h2><p><%= @song['title'] %></p>
+</h2>
+
+
+<ul>
+  <% @songs.each do |song| %>
+  <li><%= song['title'] %></li><br>
+  <% end %>
+</ul>

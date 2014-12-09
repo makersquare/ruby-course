@@ -1,0 +1,10 @@
+
+<title>Register a song for <%= @album['title'] %> </title>
+
+<form method="post" action="/albums/<%= @album['id'] %>/songs">
+
+<label>Title:</label>
+  <input type="text" name="song_title" />
+  <button>New Song</button>
+
+</form>

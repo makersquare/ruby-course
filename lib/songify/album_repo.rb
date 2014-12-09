@@ -29,5 +29,33 @@ module Songify
       #  ALSO DELETE JOIN TABLE ENTRIES BETWEEN THIS ALBUM AND ITS GENRES
     end
 
+    def self.all_songs_by_album(db, album_id)
+      sql = %q[
+            SELECT s.title FROM songs s
+            JOIN albums a
+            ON a.id = s.album_id
+            WHERE album_id = $1]
+      db.exec(sql, [album_id]).to_a
+    end 
+
+    def self.all_songs_join_albums(db)
+      sql = %q[
+            SELECT s.title as song, a.title FROM songs s 
+            JOIN albums a
+            ON a.id = s.album_id
+          ]
+      db.exec(sql).to_a
+    end
+
+
+    def self.count_songs_join_albums(db)
+          sql = %q[
+                select  a.id, a.title, count(s.id) as numberOfSongs
+                from albums a LEFT OUTER join songs s
+                ON a.id = s.album_id
+                group by a.title, a.id ;
+              ]
+      db.exec(sql).to_a
+    end 
   end
 end
