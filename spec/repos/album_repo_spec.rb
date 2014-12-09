@@ -13,7 +13,7 @@ describe Songify::AlbumRepo do
     Songify.clear_db(db)
   end
 
-  it "gets all albums" do
+  xit "gets all albums" do
     album = repo.save(db, { 'title' => "Allybum" })
     album = repo.save(db, { 'title' => "Bluesbum" })
 
@@ -27,7 +27,7 @@ describe Songify::AlbumRepo do
 
   it "creates albums" do
     expect(album_count).to eq 0
-
+    
     album = repo.save(db, { 'title' => "Allybum" })
     expect(album['id']).to_not be_nil
     expect(album['title']).to eq "Allybum"
@@ -45,7 +45,7 @@ describe Songify::AlbumRepo do
     }
   end
 
-  xit "can be assigned genres" do
+  it "can be assigned genres" do
     gid_1 = Songify::GenreRepo.save(db, { 'name' => 'rock' })
     gid_2 = Songify::GenreRepo.save(db, { 'name' => 'avant-garde' })
     gid_3 = Songify::GenreRepo.save(db, { 'name' => 'jazz' })
@@ -59,13 +59,13 @@ describe Songify::AlbumRepo do
     expect(names).to include 'rock', 'avant-garde', 'jazz'
   end
 
-  it "finds albums" do
+  xit "finds albums" do
     album = repo.save(db, { 'title' => "Allybum" })
     retrieved_song = repo.find(db, album['id'])
     expect(retrieved_song['title']).to eq "Allybum"
   end
 
-  it "updates albums" do
+  xit "updates albums" do
     song1 = repo.save(db, { 'title' => "Allybum" })
     song2 = repo.save(db, { 'id' => song1['id'], 'title' => "Alicia" })
     expect(song2['id']).to eq(song1['id'])
