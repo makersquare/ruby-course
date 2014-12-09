@@ -60,19 +60,19 @@
       console.log("Add")
       // Create New Song Textbox
 
-      var $newGenreSelector = $('select.main').clone().removeClass('main')
+      var $cloneSelector = $('select.main').clone().removeClass('main')
 
       // Include 'Remove-Genre' Anchor
       var $removeAnchor = $('<a>').attr('href', "#").addClass('remove-genre').text("remove genre")
 
-      var $genreSelector = $('<div>').attr('id', "genreSelector").append($newGenreSelector).append($removeAnchor).append('<br />')
+      var $genreSelector = $('<div>').attr('id', "genreSelector").append($cloneSelector).append($removeAnchor).append('<br />')
 
       // Add Genre Selector
       $('#genreSelectors').append($genreSelector)
 
     })
 
-    // Add a New Genre Selector
+    // Remove Genre Selector
     $(document).on('click', 'a.remove-genre', function(e) {
       e.preventDefault()
       console.log("Remove")
