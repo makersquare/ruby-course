@@ -22,10 +22,12 @@ module Songify
         album = AlbumRepo.find(db, song_data['id'])
         raise "A valid album_id is required." if album.nil?
 
+
         result = db.exec("INSERT INTO songs (title, album_id) VALUES ($1, $2)", [song_data["title"], song_data["id"]])
         # song_data['id'] = result.entries.first['id']
         # song_data
       # end
+
     end
 
   end

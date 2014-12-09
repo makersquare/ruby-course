@@ -13,6 +13,9 @@ form {
 <body>
 <a href="/">&lt;- Back to Everything</a>
 <h3><%= @album["title"] %></h3>
+<p>Genre(s): <% @albgenres.each{|g| %>
+	<%= g["name"]+"," %>
+	<% } %></p>
 <h4>Songs:</h4>
 <ol><%  @songs.each{|song| %>
 	<li><%= song["title"] %></li>
@@ -24,4 +27,25 @@ form {
   <input name="title" type="text" />
   <button>Submit</button>
 </form>
+
+<form action=<%= "/albums/" + @album["id"] + "/genres"%> method="post">
+  <h4>Add Genres:</h4>
+<div class="selectors">
+ <select name ="genreid[]">
+ <option value="" disabled selected>Select genre</option>
+ <% @genres.each{ |g| %>
+<option value= <%= g["id"]%>><%=g["name"]%></option>
+ 	<% } %> 
+ 	</select><br></div><a class="addlink">add another genre</a><br><br>
+  <button>Submit</button>
+</form>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+ $('.addlink').on('click', function(e){
+ 	$('.addlink').before($('.selectors:first').clone());
+ })
+})
+</script>
 </body>

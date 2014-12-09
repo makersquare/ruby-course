@@ -32,7 +32,8 @@ select {
  <% @genres.each{ |g| %>
 <option value= <%= g["id"]%>><%=g["name"]%></option>
  	<% } %> 
- 	</select><a class="addlink">add another genre</a><br></div>
+ 	</select><br></div>
+ 	<a class="addlink">add another genre</a><br><br>
   <button>Create Album</button>
 </form>
 
@@ -40,7 +41,7 @@ select {
 <script type="text/javascript">
 $(document).ready(function(){
  $('.addlink').on('click', function(e){
- 	$('.selectors').append('<select name ="genreid[]"><option value="" disabled selected>Select genre</option><% @genres.each{ |g| %><option value= <%= g["id"]%>><%=g["name"]%></option><% } %><br>')
+ 	$('.addlink').before($('.selectors:first').clone());
  })
 })
 </script>
