@@ -1,0 +1,16 @@
+<a href="/">&lt;- Back to Everything</a>
+<div> 
+  <form method="post" action="/songs">
+    <h3>Add a Song</h3>
+      <label>Title:</label>
+      <input type="text" name="title" />
+      <label>Album:</label>
+      <select name="album_id">
+        <% @albums.each do |a| %>
+        <option value=<%= a["id"] %>><%= a["title"] %></option>               
+        <% end %>
+      </select>
+
+      <button>Add Song</button>
+  </form>
+</div> 
