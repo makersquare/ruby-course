@@ -1,15 +1,13 @@
-<a href="/">&lt;- Back to Everything</a>
 <h1>All Genres</h1>
-
-<ul>
-  <% @genres.each do |genre| %>
-    <li><%= genre['name'] %></li>
-  <% end %>
-</ul>
-
+<% @genres.each do |genre| %>
+  <p><%= genre['name'] %></p>
+<% end %>
+  
 <form action="/genres" method="post">
-  <h3>New Genre</h3>
-  <label>Genre Name:</label>
-  <input name="name" type="text" />
-  <button>Create Genre</button>
+  <div class="row">
+    <div class="medium-6"> 
+      <input name="name" type="text" placeholder="Enter New Genre"/>
+      <button>Create Genre</button> 
+    </div>
+  </div>
 </form>

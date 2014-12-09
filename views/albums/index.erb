@@ -1,15 +1,12 @@
-<a href="/">&lt;- Back to Everything</a>
 <h1>All Albums</h1>
-
-<ul>
   <% @albums.each do |album| %>
-    <li><%= album['title'] %></li>
+    <p><%= album['title'] %></p>
   <% end %>
-</ul>
-
+  
 <form action="/albums" method="post">
-  <h3>New Album</h3>
-  <label>Album Title:</label>
-  <input name="title" type="text" />
+  <div class="row">
+  <div class="medium-4"><input name="title" type="text" placeholder="New Album Title"/></div>
   <button>Create Album</button>
+  </div>
 </form>
+

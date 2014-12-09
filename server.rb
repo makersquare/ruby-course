@@ -43,3 +43,10 @@ post '/genres' do
   })
   redirect to '/genres'
 end
+
+post '/songs' do
+  db = Songify.create_db_connection('songify_dev')
+  Songify::SongRepo.save(db, params)
+  redirect '/songs'
+  
+end

@@ -1,23 +1,20 @@
-<a href="/">&lt;- Back to Everything</a>
 <h1>All Songs</h1>
-
-<ul>
   <% @songs.each do |song| %>
-    <li><%=song['title'] %>
-    <% end %>
-    </li>
-</ul>
-
-<form action="/songs" method="post">
-  <h3>New Song</h3>
-  <label>Song Title</label>
-  <input name="title" type="text" />
-  <label>Album</label>
-  <select name="album">
-  <% @albums.each do |album| %>
-    <option value='<%= album['id'] %>'><%= album['title'] %></option>
+    <p><%=song['title'] %></p>
   <% end %>
+    
+<form action="/songs" method="post">
+  <div class="row">
+    <input class="row small-4" name="title" type="text" placeholder="New Song Title" />
+    <label>Select Album</label>
+    <div class="medium-4">
+      <select name="album_id">
+        <% @albums.each do |album| %>
+          <option value='<%= album['id'] %>'><%= album['title'] %></option>
+        <% end %>
+      </select>
+    </div>
+  </div>
   <button>Create Song</button>
 </form>
     
-    <button>test</button>
