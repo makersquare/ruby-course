@@ -7,20 +7,42 @@
   <% path = "/albums/#{album['id']}" %>
     <li><a href=<%= path %>><%= album['title'] %></a> : <%= album['count'] %></li>
   <% end %>
-    <li><%= @songs %></li>
+<!--     <li><%= @songs %></li> -->
 </ul>
 
 
 
-<form action="/albums" method="post">
-  <h3>New Album</h3>
-  <label>Album Title:</label>
-  <input name="title" type="text" />
-  <select name="genre_ids[]">
-    <% @genres.each do |x| %>
-    <option><%= x['name'] %></option>
-    <% end %>
-  </select>
-  <a href="#">add another </a>
-  <button>Create Album</button>
-</form>
+  <form action="/albums" method="post">
+    <h3>New Album</h3>
+    <label>Album Title:</label>
+    <input name="title" type="text" />
+    <label>Please Select a Genre: </label>
+    <select name="genre_ids[]">
+      <% @genres.each do |x| %>
+      <option name="genre"><%= x['name'] %></option>
+      <% end %>
+    </select>
+
+      <a class="add-genre" href="#">add genre</a>
+
+    <button>Create Album</button>
+  </form>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+
+$(document).on('click', 'a.add-genre', function(e) {
+  e.preventDefault()
+  $select = $("[name='genre_ids[]'").last()
+  $placement = $('a.add-genre')
+  // $genre = $("[name='genre']")
+  // $select.clone().before($placement)
+  // $placement.
+  $placement.before($select.clone())
+
+})
+
+</script>
+
+
