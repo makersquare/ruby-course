@@ -1,3 +1,5 @@
+require 'pry-byebug'
+
 module Songify
   class AlbumRepo
 
@@ -8,13 +10,16 @@ module Songify
     end
 
     def self.find(db, album_id)
-      # if album_id.count > 1
-      #   db.exec("SELECT * FROM album_genres WHERE album_id = $1", [album_id]).first
-      # else
-        result = db.exec("SELECT * FROM albums WHERE id = $1", [album_id]).first
-        genres = db.exec("SELECT * FROM album_genres WHERE album_id = $1", [album_id]).first
-        result
-      # end
+      genres = []
+      result = db.exec("SELECT * FROM albums WHERE id = $1", [album_id]).first
+      if result
+        album_genres = db.exec("SELECT * FROM album_genres a JOIN genres g ON g.id = a.genre_id WHERE a.album_id = $1", [album_id]).to_a
+        album_genres.each do |line|
+          genres << {'id' => line['genre_id'], 'name' => line['name']}
+        end
+        result['genres'] = genres
+      end
+      result
     end
 
     def self.save(db, album_data)
@@ -23,13 +28,11 @@ module Songify
         self.find(db, album_data['id'])
       elsif album_data['genre_ids']
         album_id = db.exec("INSERT INTO albums (title) VALUES ($1) RETURNING id", [album_data['title']]).first
+        album_data['id'] = album_id['id']
         album_data['genre_ids'].each do |genre|
-          puts album_id['id']
-          puts genre
-          result = db.exec("INSERT INTO album_genres (album_id, genre_id) VALUES ($1, $2)", [album_id['id'], genre])
+          db.exec("INSERT INTO album_genres (album_id, genre_id) VALUES ($1, $2)", [album_id['id'], genre])
         end
-        puts result.first
-        album = {'id' => album_id, 'genres' => album_data['genre_ids']}
+        album_id
       else
         raise "title is required." if album_data['title'].nil? || album_data['title'] == ''
         result = db.exec("INSERT INTO albums (title) VALUES ($1) RETURNING id", [album_data['title']])
