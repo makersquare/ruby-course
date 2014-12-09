@@ -15,13 +15,15 @@
     <input name="title" type="text" />
     <label>Genre:</label>
     <div id="genreSelectors">
-      <select name="genre_ids[]" class = "main genre">
-        <option value="genre0" selected disabled>Select Genre</option>
-        <% @genres.each_index do |i| %>
-          <option value="<%= @genres[i]['id']%>"><%= @genres[i]['name']%></option>
-        <% end %>
-      </select>
-      <a href="#" class="add-genre">add genre</a><br />
+      <div id="genreSelector">
+        <select name="genre_ids[]" class = "main genre">
+          <option value="genre0" selected disabled>Select Genre</option>
+          <% @genres.each_index do |i| %>
+            <option value="<%= @genres[i]['id']%>"><%= @genres[i]['name']%></option>
+          <% end %>
+        </select>
+        <a href="#" class="add-genre">add genre</a><br />
+      </div>
     </div>
   </p>
   <p>
@@ -55,12 +57,26 @@
     // Add a New Genre Selector
     $('a.add-genre').on('click', function(e) {
       e.preventDefault()
-
+      console.log("Add")
       // Create New Song Textbox
+
       var $newGenreSelector = $('select.main').clone().removeClass('main')
 
-      // Append Textbox
-      $('#genreSelectors').append($newGenreSelector).append('<br />')
+      // Include 'Remove-Genre' Anchor
+      var $removeAnchor = $('<a>').attr('href', "#").addClass('remove-genre').text("remove genre")
+
+      var $genreSelector = $('<div>').attr('id', "genreSelector").append($newGenreSelector).append($removeAnchor).append('<br />')
+
+      // Add Genre Selector
+      $('#genreSelectors').append($genreSelector)
+
+    })
+
+    // Add a New Genre Selector
+    $(document).on('click', 'a.remove-genre', function(e) {
+      e.preventDefault()
+      console.log("Remove")
+      $(e.target).parent().remove()
     })
 
 </script>
