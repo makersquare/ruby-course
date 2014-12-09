@@ -7,6 +7,7 @@ module Songify
 
   def self.clear_db(db)
     db.exec <<-SQL
+      DELETE FROM song_genres;
       DELETE FROM songs;
       DELETE FROM albums;
       DELETE FROM genres;
@@ -40,8 +41,8 @@ module Songify
 
   def self.drop_tables(db)
     db.exec <<-SQL
-      DROP TABLE albums;
       DROP TABLE songs;
+      DROP TABLE albums;
       DROP TABLE genres;
       /* TODO: Drop song_genres table */
       DROP TABLE song_genres;

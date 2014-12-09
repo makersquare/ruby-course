@@ -21,6 +21,12 @@ module Songify
         album_data['id'] = result.entries.first['id']
         album_data
       end
+      if album_data['genres']
+        album_data['genre_ids'].each do |genre|
+          db.exec("INSERT INTO song_genres (album_id, genre) VALUES ($1, $2) RETURNING genre", [album_data['id'], genre])
+        end
+      end
+      album_data
     end
 
     def self.destroy(db, album_id)
@@ -31,3 +37,5 @@ module Songify
 
   end
 end
+
+
