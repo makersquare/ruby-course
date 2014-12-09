@@ -7,10 +7,10 @@ module Songify
 
   def self.clear_db(db)
     db.exec <<-SQL
-      DELETE FROM albums;
-      DELETE FROM songs;
-      DELETE FROM genres;
-      /* TODO: Clear rest of the tables (books, etc.) */
+      DELETE FROM albums cascade;
+      DELETE FROM songs cascade;
+      DELETE FROM genres cascade;
+      delete from song_genres cascade;
     SQL
   end
 
@@ -29,16 +29,20 @@ module Songify
         id SERIAL PRIMARY KEY,
         name VARCHAR
       );
-      /* TODO: Create song_genres table */
+      create table song_genres(
+        id serial primary key,
+        album_id integer references albums (id),
+        genres_id integer references genres (id)
+      )
     SQL
   end
 
   def self.drop_tables(db)
     db.exec <<-SQL
-      DROP TABLE albums;
-      DROP TABLE songs;
-      DROP TABLE genres;
-      /* TODO: Drop song_genres table */
+      DROP TABLE if exists albums;
+      DROP TABLE if exists songs;
+      DROP TABLE if exists genres;
+      drop table if exists song_genres;
     SQL
   end
 end
