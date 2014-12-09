@@ -14,7 +14,7 @@ describe Songify::SongRepo do
     @album_id = Songify::AlbumRepo.save(db, { 'title' => "MegaCorps" })['id']
   end
 
-  xit "gets all songs" do
+  it "gets all songs" do
     song = repo.save(db, { 'album_id' => @album_id, 'title' => "The Ally" })
     song = repo.save(db, { 'album_id' => @album_id, 'title' => "Barnway Blues" })
 
@@ -26,7 +26,7 @@ describe Songify::SongRepo do
     expect(titles).to include "The Ally", "Barnway Blues"
   end
 
-  xit "creates songs" do
+  it "creates songs" do
     expect(song_count).to eq 0
 
     song = repo.save(db, { 'album_id' => @album_id, 'title' => "The Ally" })
@@ -40,13 +40,13 @@ describe Songify::SongRepo do
     expect(song['title']).to eq "The Ally"
   end
 
-  xit "requires a title" do
+  it "requires a title" do
     expect { repo.save(db, {}) }.to raise_error {|e|
       expect(e.message).to match /title/
     }
   end
 
-  xit "requires an album id" do
+  it "requires an album id" do
     expect {
       repo.save(db, { 'title' => "The Ally" })
     }
@@ -55,7 +55,7 @@ describe Songify::SongRepo do
     }
   end
 
-  xit "requires an album id that exists" do
+  it "requires an album id that exists" do
     expect {
       repo.save(db, { 'album_id' => 999, 'title' => "The Ally" })
     }
@@ -64,13 +64,13 @@ describe Songify::SongRepo do
     }
   end
 
-  xit "finds songs" do
+  it "finds songs" do
     song = repo.save(db, { 'album_id' => @album_id, 'title' => "The Ally" })
     retrieved_song = repo.find(db, song['id'])
     expect(retrieved_song['title']).to eq "The Ally"
   end
 
-  xit "updates songs" do
+  it "updates songs" do
     song1 = repo.save(db, { 'album_id' => @album_id, 'title' => "The Ally" })
     song2 = repo.save(db, { 'id' => song1['id'], 'title' => "Alicia" })
     expect(song2['id']).to eq(song1['id'])
