@@ -8,7 +8,16 @@ module Songify
     end
 
     def self.find(db, album_id)
-      db.exec("SELECT * FROM albums WHERE id=$1", [album_id]).first
+      result = db.exec("SELECT * FROM albums WHERE id=$1;", [album_id]).first
+      if result
+        genres = db.exec("Select genres.name, genres.id from song_genres Join genres on (song_genres.genre = genres.id) WHERE album_id = $1;", [album_id]).to_a
+        genres_array = []
+        genres.each do |genre|
+          genres_array << genre
+        end
+        result['genres'] = genres_array
+      end
+      result
     end
 
     def self.save(db, album_data)
@@ -21,10 +30,16 @@ module Songify
         album_data['id'] = result.entries.first['id']
         album_data
       end
-      if album_data['genres']
+      if album_data['genre_ids']
         album_data['genre_ids'].each do |genre|
           db.exec("INSERT INTO song_genres (album_id, genre) VALUES ($1, $2) RETURNING genre", [album_data['id'], genre])
         end
+      genres = db.exec("Select genres.name from song_genres Join genres on (song_genres.genre = genres.id) WHERE album_id = $1;", [album_data['id']]).to_a
+      genres_array = []
+      genres.each do |genre|
+        genres_array << genre['name']
+      end
+      album_data['genres'] = genres_array
       end
       album_data
     end
@@ -37,5 +52,3 @@ module Songify
 
   end
 end
-
-

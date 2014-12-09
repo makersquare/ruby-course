@@ -53,6 +53,7 @@ describe Songify::AlbumRepo do
     album = repo.save(db, { 'title' => 'Suspicious Activity?',
                             'genre_ids' => [gid_1['id'], gid_2['id'], gid_3['id']] })
     album = repo.find(db, album['id'])
+    album
     expect(album['genres'].count).to eq 3
 
     names = album['genres'].map {|g| g['name'] }
