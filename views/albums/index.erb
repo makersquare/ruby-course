@@ -32,7 +32,7 @@ select {
  <% @genres.each{ |g| %>
 <option value= <%= g["id"]%>><%=g["name"]%></option>
  	<% } %> 
- 	</select><br></div>
+ 	</select></div>
  	<a class="addlink">add another genre</a><br><br>
   <button>Create Album</button>
 </form>
@@ -41,7 +41,12 @@ select {
 <script type="text/javascript">
 $(document).ready(function(){
  $('.addlink').on('click', function(e){
+ 	var remove = ('<a class="remove">remove</a>')
  	$('.addlink').before($('.selectors:first').clone());
+ 	$('.selectors:last').append(remove);
+ })
+ $(document).on('click', '.remove',function(e){
+	$(this).parent().remove();
  })
 })
 </script>
