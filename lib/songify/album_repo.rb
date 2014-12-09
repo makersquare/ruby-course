@@ -9,16 +9,21 @@ module Songify
 
     def self.find(db, album_id)
       album = db.exec("SELECT * FROM albums WHERE id=$1", [album_id]).first
-#       sql = %q[
-#         SELECT genres.name
-#         FROM album_genres
-#         INNER JOIN genres
-#         ON genres.id = album_genres.genre_id
-#         INNER JOIN albums
-#         ON albums.id = album_genres.album_id
-#         where albums.id = $1
-#       ]
-#       album['genres'] = db.exec(sql, [album_id]).entries
+      genres = db.exec('SELECT * FROM album_genres WHERE album_id = $1',[album_id]).entries
+      puts "genres: #{genres}"
+      if genres == nil
+        sql = %q[
+          SELECT genres.name
+          FROM album_genres
+          INNER JOIN genres
+          ON genres.id = album_genres.genre_id
+          INNER JOIN albums
+          ON albums.id = album_genres.album_id
+          where albums.id = $1
+        ]
+        album['genres'] = db.exec(sql, [album_id]).entries
+        puts album
+      end
       album
     end
 
@@ -40,6 +45,7 @@ module Songify
 #             end
 #         end
         album_data['id'] = result.entries.first['id']
+        puts album_data
         album_data
       end
     end

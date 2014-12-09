@@ -57,7 +57,7 @@ describe Songify::SongRepo do
 
   it "requires an album id that exists" do
     expect {
-      repo.save(db, { 'album_id' => 999, 'title' => "The Ally" })
+      repo.save(db, { 'album_id' => 9999, 'title' => "The Ally" })
     }
     .to raise_error {|e|
       expect(e.message).to match /album_id/
