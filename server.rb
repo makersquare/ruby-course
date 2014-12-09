@@ -17,7 +17,8 @@ end
 post '/albums' do
   db = Songify.create_db_connection('songify_dev')
   album = Songify::AlbumRepo.save(db, {
-    'title' => params[:title]
+    'title' => params[:title],
+    'genres' => params[:genre_ids]
   })
   redirect to '/albums'
 end
@@ -38,8 +39,9 @@ end
 
 post '/genres' do
   db = Songify.create_db_connection('songify_dev')
-  album = Songify::GenreRepo.save(db, {
-    'name' => params[:name]
+  album = Songify::AlbumRepo.save(db, {
+    'title' => params[:title],
+    'genres' => params[:genre_ids]
   })
   redirect to '/genres'
 end

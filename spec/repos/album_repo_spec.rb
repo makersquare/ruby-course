@@ -45,22 +45,15 @@ describe Songify::AlbumRepo do
     }
   end
 
-  xit "can be assigned genres" do
+  it "can be assigned genres" do
     gid_1 = Songify::GenreRepo.save(db, { 'name' => 'rock' })
     gid_2 = Songify::GenreRepo.save(db, { 'name' => 'avant-garde' })
     gid_3 = Songify::GenreRepo.save(db, { 'name' => 'jazz' })
 
-    album_data = repo.save(db, {
-      'title' => 'Suspicious Activity?',
-      'genre_ids' => [gid_1['id'], gid_2['id'], gid_3['id']]
-    })
-    album = repo.find(db, album_data['id'])
-
+    album = repo.save(db, { 'title' => 'Suspicious Activity?',
+                            'genre_ids' => [gid_1['id'], gid_2['id'], gid_3['id']] })
+    album = repo.find(db, album['id'])
     expect(album['genres'].count).to eq 3
-    genre = album['genres'].first
-    expect(genre).to be_a Hash
-    expect(genre['id']).to_not be_nil
-    expect(genre['name']).to_not be_nil
 
     names = album['genres'].map {|g| g['name'] }
     expect(names).to include 'rock', 'avant-garde', 'jazz'
