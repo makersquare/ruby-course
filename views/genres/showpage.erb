@@ -1,0 +1,9 @@
+<a href="/">&lt;- Back to Everything</a>
+<h1>All Albums for Genre</h1>
+
+<ul>
+  <% @albums.each do |album_data| %>
+    <ul class="album"><%= album_data['title'] %>
+    <li class="genre"><%= album_data['genre'] %>
+  <% end %>
+</ul>

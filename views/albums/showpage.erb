@@ -1,0 +1,8 @@
+<a href="/">&lt;- Back to Everything</a>
+<h1>All Songs for Album</h1>
+
+<ul>
+  <% @songs.each_index do |i| %>
+    <li><%= i+1 %>. <%= @songs[i]['title'] %></li>
+  <% end %>
+</ul>

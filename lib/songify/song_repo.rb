@@ -22,11 +22,18 @@ module Songify
         album = AlbumRepo.find(db, song_data['album_id'])
         raise "A valid album_id is required." if album.nil?
 
-        result = db.exec("INSERT INTO songs (title) VALUES ($1) RETURNING id", [song_data['title']])
+        result = db.exec("INSERT INTO songs (title, album_id) VALUES ($1, $2) RETURNING id", [song_data['title'], song_data['album_id']])
         song_data['id'] = result.entries.first['id']
         song_data
       end
     end
 
+    def self.songs_per_album(db)
+      db.exec("SELECT album_id, COUNT(DISTINCT album_id) AS tracks FROM songs GROUP BY album_id").to_a
+    end
+
+    def self.songs_by_album(db, album_id)
+      db.exec("SELECT title FROM songs WHERE album_id = $1", [album_id]).to_a
+    end
   end
 end

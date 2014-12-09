@@ -31,13 +31,22 @@ describe Songify::SongRepo do
 
     song = repo.save(db, { 'album_id' => @album_id, 'title' => "The Ally" })
     expect(song['id']).to_not be_nil
+    expect(song['album_id']).to_not be_nil
     expect(song['title']).to eq "The Ally"
 
     # Check for persistence
     expect(song_count).to eq 1
 
+    song_count_by_album = repo.songs_per_album(db)
+    song_count_by_album.each do |album_id|
+      expect(album_id['tracks'].to_i).to eq 1
+    end
+
     song = repo.all(db).first
     expect(song['title']).to eq "The Ally"
+    expect(song['id']).to_not be_nil
+    expect(song['album_id']).to_not be_nil
+
   end
 
   it "requires a title" do

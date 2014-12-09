@@ -45,7 +45,7 @@ describe Songify::AlbumRepo do
     }
   end
 
-  xit "can be assigned genres" do
+  it "can be assigned genres" do
     gid_1 = Songify::GenreRepo.save(db, { 'name' => 'rock' })
     gid_2 = Songify::GenreRepo.save(db, { 'name' => 'avant-garde' })
     gid_3 = Songify::GenreRepo.save(db, { 'name' => 'jazz' })

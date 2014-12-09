@@ -3,13 +3,50 @@
 
 <ul>
   <% @albums.each do |album| %>
-    <li><%= album['title'] %></li>
+    <% album_data = @song_count_by_album_id.find { |h| h['album_id'] == album['id'] } %>
+    <li><a href='/albums/<%= album['id'] %>'><%= album['title'] %> - <%= album_data['tracks'] %> Track(s)</a></li>
   <% end %>
 </ul>
 
-<form action="/albums" method="post">
+<form class="album" action="/albums" method="post">
   <h3>New Album</h3>
-  <label>Album Title:</label>
-  <input name="title" type="text" />
-  <button>Create Album</button>
+  <p>
+    <label>Album Title:</label>
+    <input name="title" type="text" />
+    <label>Genre:</label>
+    <select name="select">
+      <option value="genre0" selected disabled>Select Genre</option>
+      <% @genres.each_index do |i| %>
+        <option value="genre<%= i+1 %>"><%= @genres[i]['name']%></option>
+      <% end %>
+    </select>
+  </p>
+  <p>
+    <label>Songs:</label><br>
+    <div id="songlist">
+      <input class = "song" name="songs[]" type="text" value="Track 1"/><a href="#" class="add">add song</a><br />
+    </div>
+  </p>
+  <button type="submit" value="Create Album">Create Album</button>
+
 </form>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script type="text/javascript">
+
+    // Add a New Song Textbox
+    $('a.add').on('click', function(e) {
+      e.preventDefault()
+      var url = "http://10.10.10.10:4567" + '/albums'
+
+      // Create Next Track Number
+      var trackText = "Track " + ($('input.song').length + 1)
+
+      // Create New Song Textbox
+      var $newSong = $('<input>').addClass('song').attr('name', 'songs[]').attr('type', 'text').attr('value', trackText)
+
+      // Append Textbox
+      $('#songlist').append($newSong).append('<br />')
+    })
+
+</script>
