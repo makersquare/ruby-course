@@ -11,6 +11,10 @@ module Songify
       db.exec("SELECT * FROM songs WHERE id=$1", [song_id]).first
     end
 
+    def self.album_songs(db, album_id)
+      db.exec("SELECT * FROM songs WHERE album_id=$1", [album_id]).first
+    end
+
     def self.save(db, song_data)
       if song_data['id']
         result = db.exec("UPDATE songs SET title = $2 WHERE id = $1", [song_data['id'], song_data['title']])
@@ -22,7 +26,7 @@ module Songify
         album = AlbumRepo.find(db, song_data['album_id'])
         raise "A valid album_id is required." if album.nil?
 
-        result = db.exec("INSERT INTO songs (title) VALUES ($1) RETURNING id", [song_data['title']])
+        result = db.exec("INSERT INTO songs (title, album_id) VALUES ($1, $2) RETURNING id", [song_data['title'], song_data['album_id']])
         song_data['id'] = result.entries.first['id']
         song_data
       end
