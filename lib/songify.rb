@@ -7,8 +7,8 @@ module Songify
 
   def self.clear_db(db)
     db.exec <<-SQL
-      DELETE FROM songs;
       DELETE FROM song_genres;
+      DELETE FROM songs;
       DELETE FROM albums;
       DELETE FROM genres;
     SQL
@@ -30,7 +30,6 @@ module Songify
         name VARCHAR
       );
       CREATE TABLE IF NOT EXISTS song_genres(
-        id SERIAL PRIMARY KEY,
         album_id integer REFERENCES albums(id),
         genre_id integer REFERENCES genres(id)
       );

@@ -10,6 +10,36 @@
 <form action="/albums" method="post">
   <h3>New Album</h3>
   <label>Album Title:</label>
-  <input name="title" type="text" />
-  <button>Create Album</button>
+  <input name="title" class = "genre-form" type="text" />
+      <div class="new-genre">
+      <ul><select name="genre_id[]">
+        <option>-- Please select a Genre --</option>
+        <% @genres.each do |g| %>
+        <option value="<%= g['id'].to_i %>"><%= g['name'] %></option>
+        <% end %>
+      </select>
+      <a class="remove-genre" href= "#">Remove</a>
+      </ul>
+      </div>
+      <a class="add-genre" href= "#">Add Genre</a>
+
+  <ul><button>Create Album</button></ul>
 </form>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+var $newGenreSelector = $('div.new-genre').clone()
+
+$(document).on('click', 'a.add-genre', function(e){
+  e.preventDefault();
+  $location = $(e.currentTarget)
+  $location.before($newGenreSelector.clone())
+});
+
+$(document).on('click', 'a.remove-genre', function(e){
+  e.preventDefault();
+  $item = $(e.currentTarget).parent().parent()
+  $item.remove()
+});
+</script>
