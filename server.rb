@@ -21,11 +21,20 @@ post '/albums' do
   redirect to '/albums'
 end
 
-
 get '/songs' do
+  db = Songify.create_db_connection("songify_dev")
+  @albums = Songify::AlbumRepo.all(db)
+
   erb :"songs/index"
 end
 
+post '/songs' do
+  db = Songify.create_db_connection("songify_dev")
+  puts params.inspect
+  Songify::SongRepo.save(db, {"title" => params[:title], "album_id" => params[:album_id]})
+  
+  redirect back
+end
 
 get '/genres' do
   db = Songify.create_db_connection('songify_dev')
