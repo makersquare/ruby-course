@@ -8,7 +8,17 @@ module Songify
     end
 
     def self.find(db, album_id)
-      db.exec("SELECT * FROM albums WHERE id=$1", [album_id]).first
+      result = db.exec("SELECT * FROM albums WHERE id=$1", [album_id]).first
+      if result
+        newresult = db.exec("SELECT albums.title, albums.id, albums_genres.genre_id, genres.name FROM albums, albums_genres, genres WHERE albums.id = albums_genres.album_id AND genres.id = albums_genres.genre_id AND albums.id=$1;", [album_id]).to_a
+        genres = []
+        newresult.each do |entry|
+          genres << {"name" => entry['name'], "id" => entry["genre_id"]}
+        end
+        result['genres'] = genres 
+      end
+      puts result
+      result
     end
 
     def self.save(db, album_data)
@@ -20,7 +30,13 @@ module Songify
         result = db.exec("INSERT INTO albums (title) VALUES ($1) RETURNING id", [album_data['title']])
         album_data['id'] = result.entries.first['id']
         album_data
+        if album_data['genre_ids']
+          album_data['genre_ids'].each do |genre_id|
+            db.exec("INSERT INTO albums_genres (album_id, genre_id) VALUES ($1, $2)", [album_data['id'], genre_id])
+          end
+        end
       end
+      album_data
     end
 
     def self.destroy(db, album_id)
@@ -31,3 +47,6 @@ module Songify
 
   end
 end
+
+#ewoijfweofij
+#ewoijfweofijewoijfweofijewoijfweofij

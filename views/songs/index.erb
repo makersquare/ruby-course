@@ -1,0 +1,38 @@
+<a href="/">&lt;- Back to Everything</a>
+<h1>All Songs</h1>
+
+<ul>
+  <% @songs.each do |song| %>
+    <li><%= song['title'] %></li>
+  <% end %>
+</ul>
+
+<form action="/songs" method="post">
+  <h3>New Song</h3>
+  <label>Song Title:</label>
+  <input name="title" type="text" />
+  <label> Album: </label>
+  <select name="album">
+  	<% @albums.each do |album| %>
+  		<option value="<%= album['id'] %>"> <%= album['title'] %> </option>
+  	<% end %>
+  </select>
+  <br>
+  <br>
+  <label> Genres: </label>
+  <select name="genre_ids[]" class="genre">
+  	<% @genres.each do |genre| %>
+  		<option value="<%= genre['id'] %>"> <%= genre['name'] %> </option>
+  	<% end %>
+  </select>
+  <br>
+  <br>
+  <button>Create Song</button>
+</form>
+
+<!-- weiufhwieufwieufh -->
+<!-- weiufhwieufwieufh -->
+<!-- weiufhwieufwieufh -->
+<!-- weiufhwieufwieufh -->
+<!-- weiufhwieufwieufh -->
+<!-- weiufhwieufwieufh -->
