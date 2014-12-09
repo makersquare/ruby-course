@@ -38,11 +38,9 @@ module PuppyBreeder::Repos
       breed_obj = PuppyBreeder.breeds_repo.find_by({
         name: breed
       }).first
-      if !breed_obj
-        breed_obj = PuppyBreeder.breeds_repo.create({
-          name: breed
-        })
-      end
+      breed_obj = PuppyBreeder.breeds_repo.create({
+        name: breed
+      }) if !breed_obj
       breed_obj.id
     end
 
@@ -52,7 +50,7 @@ module PuppyBreeder::Repos
       breed_id = get_breed_id(breed)
       status = params[:status]
       command = <<-SQL
-        SELECT * FROM puppies 
+        SELECT * FROM puppies
       SQL
 
       if name

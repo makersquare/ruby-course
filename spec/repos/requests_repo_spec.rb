@@ -1,7 +1,7 @@
 require_relative '../spec_helper.rb'
 
 describe PuppyBreeder::Repos::Requests do
-  let(:requests){ PuppyBreeder::Repos::Requests.new }
+  let(:requests){ PuppyBreeder.requests_repo }
   let(:terrier){ PuppyBreeder.breeds_repo.create({
       name: 'terrier'
     })
@@ -24,6 +24,8 @@ describe PuppyBreeder::Repos::Requests do
   }
 
   before(:each){
+    PuppyBreeder.drop_tables
+    PuppyBreeder.create_tables
     requests.create({customer: 'Billy', breed: terrier})
     requests.create({customer: 'Molly', breed: poodle})
     requests.create({customer: 'Jake', breed: pit_bull})

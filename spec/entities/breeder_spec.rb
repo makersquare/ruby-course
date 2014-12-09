@@ -10,7 +10,7 @@ describe PuppyBreeder::Breeder do
       price: 1000
     })
   }
-  let(:brutus){ PuppyBreeder::Puppy.new({
+  let(:brutus){ PuppyBreeder.puppies_repo.create({
       name: 'Brutus',
       breed: pit_bull
     })
