@@ -1,3 +1,7 @@
+<!-- <!DOCTYPE html>
+<html>
+<body> -->
+
 <a href="/">&lt;- Back to Everything</a>
 <h1>All Albums</h1>
 
@@ -11,5 +15,34 @@
   <h3>New Album</h3>
   <label>Album Title:</label>
   <input name="title" type="text" />
+  <br>
+  <br>
+  <label> Genres: </label>
+  <select name="genre_ids[]" class="genre">
+  	<% @genres.each do |genre| %>
+  		<option value="<%= genre['id'] %>"> <%= genre['name'] %> </option>
+  	<% end %>
+  </select>
+  <a href=# class="add-genre">Add Genre</a>
+  <a href=# class="remove-genre">Remove</a>
+  <br>
+  <br>
   <button>Create Album</button>
 </form>
+
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script>
+	
+	$(".add-genre").click(function(){
+		$( "button" ).before( $(".genre").last().clone())
+		$( "button" ).before ( "<br>")
+	})
+
+	$(".remove-genre").click(function(){
+		$(".genre").last().remove()
+		$( "br" ).last().remove()
+	})
+
+</script>
+</body>
+
