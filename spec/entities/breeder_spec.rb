@@ -16,6 +16,11 @@ describe PuppyBreeder::Breeder do
     })
   }
 
+  before(:each){
+    PuppyBreeder.drop_tables
+    PuppyBreeder.create_tables
+  }
+
   describe 'initialize' do
     it 'creates a new instance of Breeder' do
       expect(jimmy).to be_a(PuppyBreeder::Breeder)

@@ -46,57 +46,43 @@ module PuppyBreeder::Repos
       breed_obj.id
     end
 
-    # def filter(type, spec = '')
-    #   array = []
-    #   @puppies.each do |key, puppy|
-    #     if type == 'name' && puppy.name == spec
-    #       array << puppy
-    #     elsif type == 'breed' && puppy.breed.name == spec
-    #       array << puppy
-    #     elsif type == 'status' && puppy.status == spec
-    #       array << puppy
-    #     elsif type == 'all'
-    #       array << puppy
-    #     end
-    #   end
-    #   array
-    # end
-
-    def filter(type, spec= '')
-      case type
-      when 'name'
-      when 'breed'
-      when 'status'
-      when 'all'
-      end
-    end
-
     def find_by(params = {})
       name = params[:name]
       breed = params[:breed]
+      breed_id = get_breed_id(breed)
       status = params[:status]
-      if breed.class == PuppyBreeder::Breed
-        breed = breed.name
-      end
+      command = <<-SQL
+        SELECT * FROM puppies 
+      SQL
 
       if name
-        array = filter('name', name)
+        spec = <<-SQL
+          WHERE name = $1;
+        SQL
+        results = @db.exec(command + spec, [name])
       elsif breed
-        array = filter('breed', breed)
+        spec = <<-SQL
+          WHERE breed = $1;
+        SQL
+        results = @db.exec(command + spec, [breed_id])
       elsif status
-        array = filter('status', status)
+        spec = <<-SQL
+          WHERE status = $1;
+        SQL
+        results = @db.exec(command + spec, [status])
       else
-        array = filter('all')
+        results = @db.exec(command)
       end
+      results.map{ |result| build_puppy(result) }
     end
 
     def update(params)
       name = params[:name]
       status = params[:status]
       command = <<-SQL
-        UPDATE puppies SET status = $1 WHERE name = $2;
+        UPDATE puppies SET status = $1 WHERE name = $2 RETURNING *;
       SQL
-      @db.exec(command, [name, status])
+      @db.exec(command, [status, name])
         .map{ |result| build_puppy(result) }.first
     end
 
