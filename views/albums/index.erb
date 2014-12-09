@@ -11,22 +11,27 @@
 </ul>
 
 
-
+<div class="form">
   <form action="/albums" method="post">
     <h3>New Album</h3>
     <label>Album Title:</label>
     <input name="title" type="text" />
     <label>Please Select a Genre: </label>
+  <div class="genre">
     <select name="genre_ids[]">
       <% @genres.each do |x| %>
       <option name="genre"><%= x['name'] %></option>
       <% end %>
     </select>
-
+<!--     <div class="add"> -->
+  </div>
       <a class="add-genre" href="#">add genre</a>
-
+<!--     </div> -->
+    <br>
+    <br>
     <button>Create Album</button>
   </form>
+</div>
 
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -34,13 +39,36 @@
 
 $(document).on('click', 'a.add-genre', function(e) {
   e.preventDefault()
-  $select = $("[name='genre_ids[]'").last()
-  $placement = $('a.add-genre')
-  // $genre = $("[name='genre']")
-  // $select.clone().before($placement)
-  // $placement.
-  $placement.before($select.clone())
+    $select = $("div.genre").last()
+    $br = $('<br>')
+    $remove = $('<a>').attr('href', '#').addClass('remove-genre').text('remove genre')
+    $remove.append($br)
+    $div = $('div.genre').last()
+    $placement = $('a.add-genre')
+  if ($('a.remove-genre').length === 0) {
+    $div.append($remove)
 
+    // $genre = $("[name='genre']")
+    // $select.clone().before($placement)
+    // $placement.
+    $placement.before($div.clone())
+  } else {
+    $placement.before($div.clone())
+  }
+
+})
+
+$(document).on('click', 'a.remove-genre', function(e) {
+  e.preventDefault()
+  $remove = $("div.genre").last()
+  // this.remove()
+  // this.remove()
+  $remove.remove()
+  this.remove()
+  if ($('a.remove-genre').length === 1) {
+    $rere = $('a.remove-genre')
+    $rere.remove()
+  }
 })
 
 </script>
