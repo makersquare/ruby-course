@@ -40,7 +40,7 @@ describe Songify::AlbumRepo do
   end
 
   it "requires a title" do
-    expect { repo.save(db, {}) }.to raise_error {|e|
+    expect { repo.save(db, {}) }.to raise_error(Songify::Errors::InvalidRecordData) {|e|
       expect(e.message).to match /title/
     }
   end

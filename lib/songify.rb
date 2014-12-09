@@ -10,8 +10,8 @@ module Songify
       DELETE FROM song_album;
       DELETE FROM album_genres;
       DELETE FROM songs;
+      DELETE FROM albums;
       DELETE FROM genres;
-      DELETE FROM albums; 
     SQL
   end
 
@@ -54,6 +54,7 @@ module Songify
   end
 end
 
+require_relative 'songify/errors/invalid_record_data.rb'
 require_relative 'songify/album_repo'
 require_relative 'songify/genre_repo'
 require_relative 'songify/song_repo'

@@ -32,7 +32,10 @@ module Songify
         result = db.exec("UPDATE albums SET title = $2 WHERE id = $1", [album_data['id'], album_data['title']])
         self.find(db, album_data['id'])
       else
-        raise "title is required." if album_data['title'].nil? || album_data['title'] == ''
+        if album_data['title'].nil? || album_data['title'] == ''
+          raise Errors::InvalidRecordData.new("title is required.")
+        end
+
         result = db.exec("INSERT INTO albums (title) VALUES ($1) RETURNING id", [album_data['title']])
         
         if album_data['genre_ids']
