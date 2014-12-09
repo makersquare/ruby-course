@@ -1,9 +1,24 @@
+<head>
+<style media="screen" type="text/css">
+
+body {
+	padding: 20px;
+	margin-left: 20px;
+}
+select {
+	width: 40%;
+}
+
+
+</style>
+</head>
+<body>
 <a href="/">&lt;- Back to Everything</a>
 <h1>All Albums</h1>
 
 <ul>
   <% @albums.each do |album| %>
-    <li><%= album['title'] %></li>
+    <li><a href=<%= "/albums/" + album['id'] %>><%= album['title'] %></a></li>
   <% end %>
 </ul>
 
@@ -11,5 +26,23 @@
   <h3>New Album</h3>
   <label>Album Title:</label>
   <input name="title" type="text" />
+ <div class="selectors">
+ <select name ="genreid[]">
+ <option value="" disabled selected>Select genre</option>
+ <% @genres.each{ |g| %>
+<option value= <%= g["id"]%>><%=g["name"]%></option>
+ 	<% } %> 
+ 	</select><a class="addlink">add another genre</a><br></div>
   <button>Create Album</button>
 </form>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+ $('.addlink').on('click', function(e){
+ 	$('.selectors').append('<select name ="genreid[]"><option value="" disabled selected>Select genre</option><% @genres.each{ |g| %><option value= <%= g["id"]%>><%=g["name"]%></option><% } %><br>')
+ })
+})
+</script>
+</body>
+

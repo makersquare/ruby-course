@@ -28,6 +28,5 @@ module Songify
       #  ALSO DELETE SONGS
       #  ALSO DELETE JOIN TABLE ENTRIES BETWEEN THIS ALBUM AND ITS GENRES
     end
-
   end
 end

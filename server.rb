@@ -10,6 +10,8 @@ end
 get '/albums' do
   db = Songify.create_db_connection('songify_dev')
   @albums = Songify::AlbumRepo.all(db)
+  @genres = Songify::GenreRepo.all(db)
+  puts @genres
   erb :"albums/index"
 end
 
@@ -19,6 +21,19 @@ post '/albums' do
     'title' => params[:title]
   })
   redirect to '/albums'
+end
+
+get '/albums/:id' do
+  db = Songify.create_db_connection('songify_dev')
+  @album = Songify::AlbumRepo.find(db, params[:id])
+  @songs = Songify::SongRepo.findbyalbum(db, params[:id] )
+  erb :"albums/show"
+end
+
+post '/albums/:id/songs' do
+  db = Songify.create_db_connection('songify_dev')
+  Songify::SongRepo.save(db, params)
+redirect to '/albums/' + params[:id]
 end
 
 

@@ -1,0 +1,27 @@
+<head>
+<style media="screen" type="text/css">
+
+body {
+	padding: 20px;
+	margin-left: 20px;
+}
+form {
+	width: 30%;
+}
+</style>
+</head>
+<body>
+<a href="/">&lt;- Back to Everything</a>
+<h3><%= @album["title"] %></h3>
+<h4>Songs:</h4>
+<ol><%  @songs.each{|song| %>
+	<li><%= song["title"] %></li>
+	<% } %>
+	</ol>
+<form action=<%= "/albums/" + @album["id"] + "/songs"%> method="post">
+  <h4>Add Songs</h4>
+  <label>Song Title:</label>
+  <input name="title" type="text" />
+  <button>Submit</button>
+</form>
+</body>
