@@ -3,7 +3,15 @@
 
 <ul>
   <% @genres.each do |genre| %>
-    <li><a href='/genres/<%= genre['id'] %>'><%= genre['name'] %></a></li>
+    <li>
+      <a href='/genres/<%= genre['id'] %>'><%= genre['name'] %></a>
+      <button 
+        href='/genres/<%= genre['id'] %>/delete'
+        class="delete" 
+        data-confirm="Are you sure to delete this genre?">
+        Delete
+      </button>
+    </li>
   <% end %>
 </ul>
 
@@ -13,3 +21,20 @@
   <input name="name" type="text" />
   <button>Create Genre</button>
 </form>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script type="text/javascript">
+
+    // Delete Genre Listeners
+    $(document).on('click', 'button.delete', function(event) {
+      event.preventDefault();
+      
+      var choice = confirm(this.getAttribute('data-confirm'));
+      
+      if (choice) {
+        window.location.href = this.getAttribute('href');
+      }
+    });
+
+</script>
+

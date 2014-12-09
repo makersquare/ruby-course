@@ -41,6 +41,12 @@ get '/albums/:id' do
   erb :"albums/showpage"
 end
 
+get '/albums/:id/delete' do
+  db = Songify.create_db_connection('songify_dev')
+  Songify::AlbumRepo.destroy(db, params[:id])
+  redirect to '/albums'
+end
+
 get '/songs' do
   erb :"songs/index"
 end
@@ -68,4 +74,10 @@ get '/genres/:id' do
     @albums.push(Songify::AlbumRepo.find(db, album['id']))
   end
   erb :"genres/showpage"
+end
+
+get '/genres/:id/delete' do
+  db = Songify.create_db_connection('songify_dev')
+  Songify::GenreRepo.destroy(db, params[:id])
+  redirect to '/genres'
 end

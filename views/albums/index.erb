@@ -4,7 +4,15 @@
 <ul>
   <% @albums.each do |album| %>
     <% album_data = @song_count_by_album_id.find { |h| h['album_id'] == album['id'] } %>
-    <li><a href='/albums/<%= album['id'] %>'><%= album['title'] %> - <%= album_data['tracks'] %> Track(s)</a></li>
+    <li>
+      <a href='/albums/<%= album['id'] %>'><%= album['title'] %> - <%= album_data['tracks'] %> Track(s)</a>
+      <button 
+        href='/albums/<%= album['id'] %>/delete' 
+        class="delete" 
+        data-confirm="Are you sure to delete this album?">
+        Delete
+      </button>
+    </li>
   <% end %>
 </ul>
 
@@ -13,7 +21,6 @@
   <p>
     <label>Album Title:</label>
     <input name="title" type="text" />
-    <label>Genre:</label>
     <div id="genreSelectors">
       <div id="genreSelector">
         <select name="genre_ids[]" class = "main genre">
@@ -78,5 +85,16 @@
       console.log("Remove")
       $(e.target).parent().remove()
     })
+
+    // Delete Album Listeners
+    $(document).on('click', 'button.delete', function(event) {
+      event.preventDefault();
+      
+      var choice = confirm(this.getAttribute('data-confirm'));
+      
+      if (choice) {
+        window.location.href = this.getAttribute('href');
+      }
+    });
 
 </script>
