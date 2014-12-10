@@ -18,14 +18,17 @@
   <br>
   <br>
   <label> Genres: </label>
-  <select name="genre_ids[]" class="genre">
+  <br>
+  <div class="genre">
+  <select name="genre_ids[]">
   	<% @genres.each do |genre| %>
   		<option value="<%= genre['id'] %>"> <%= genre['name'] %> </option>
   	<% end %>
   </select>
-  <a href=# class="add-genre">Add Genre</a>
   <a href=# class="remove-genre">Remove</a>
   <br>
+  </div>
+  <a href=# class="add-genre">Add Genre</a>
   <br>
   <button>Create Album</button>
 </form>
@@ -33,16 +36,22 @@
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <script>
 	
-	$(".add-genre").click(function(){
+	$(document).on("click", ".add-genre", function(e){
+		e.preventDefault()
 		$( "button" ).before( $(".genre").last().clone())
-		$( "button" ).before ( "<br>")
+		// $( ".add-genre" ).last().remove()
+		// $( ".genre" ).last().append( $( ".add-genre" ) )
+		
 	})
 
-	$(".remove-genre").click(function(){
-		$(".genre").last().remove()
-		$( "br" ).last().remove()
+	$(document).on("click", ".remove-genre", function(e){
+		e.preventDefault()
+		$(this).parent().remove()
 	})
 
 </script>
 </body>
-
+<!-- eoifjweofiwej -->
+<!-- eoifjweofiwej -->
+<!-- eoifjweofiwej -->
+<!-- eoifjweofiwej -->
