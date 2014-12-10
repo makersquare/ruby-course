@@ -32,7 +32,7 @@ class Songify::ArtistRepo
     SELECT * FROM artists
     WHERE name = '#{params[:name]}'
     SQL
-    result = @db.exec(command)
+    result = @db.exec(query)
     build_artist(result.first)
   end
 
@@ -40,7 +40,7 @@ class Songify::ArtistRepo
     query = <<-SQL
     SELECT * FROM artists
     SQL
-    result = @db.exec(command)
+    result = @db.exec(query)
     artists = []
     result.each do |res|
       artists << build_artist(res)

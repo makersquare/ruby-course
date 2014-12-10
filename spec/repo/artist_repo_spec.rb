@@ -7,6 +7,7 @@ describe 'the artist repo' do
 
   it 'can add an artist to the database' do
     result = @artist_repo.add_new_artist({name: 'Willie Nelson'})
+    binding.pry
     artists = @artist_repo.get_all
     expect(result.name).to eq('Willie Nelson')
     expect(artists.length).to eq(1)
