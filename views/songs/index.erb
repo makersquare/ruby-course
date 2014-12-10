@@ -9,6 +9,7 @@
     <label>Select Album</label>
     <div class="medium-4">
       <select name="album_id">
+        <option>-- Select album -- </option>
         <% @albums.each do |album| %>
           <option value='<%= album['id'] %>'><%= album['title'] %></option>
         <% end %>
