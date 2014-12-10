@@ -53,18 +53,6 @@ get '/albums/:id/' do
   erb :"albums/show"
 end 
 
-# post '/create' do
-#   db = Songify.create_db_connection('songify_dev')
-#   id = params[:album_id]
-#   redirect to "/albums/#{id}/songs/create"
-# end
-
-# get '/albums/:id/songs/create' do
-#   db = Songify.create_db_connection('songify_dev')
-#   @album = Songify::AlbumRepo.find(db, params[:id])
-#   erb :"songs/create"
-# end
-
 post '/albums/:id/songs' do
   db = Songify.create_db_connection('songify_dev')
   song =  Songify::SongRepo.save(db, {
