@@ -1,9 +1,13 @@
-<a href="/">&lt;- Back to Everything</a>
+<script  src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+</script>
+
+<a href="/">&lt;- Back to...</a>
 <h1>All Albums</h1>
 
 <ul>
+	<h2>Title  -  ID  -  # Songs</h2>
   <% @albums.each do |album| %>
-    <li><%= album['title'] %></li>
+    <li><%= album['title'] + "  -  " + album['id'] + "  -  " + album['count']%></li>
   <% end %>
 </ul>
 
@@ -11,5 +15,32 @@
   <h3>New Album</h3>
   <label>Album Title:</label>
   <input name="title" type="text" />
+  </br>
+  
+  <label>Select Genre:</label>
+  <select name="genre_id[]" id="genre_pulldown" class="genre_pulldown">
+  	<option>---Please select a Genre---</option>
+    <% @album.each do |album| %>
+    <option value= <%= album['id'] %>><%= album['name'] %></option>
+  <% end %>
+  </select><a href='http://dosomething'>remove</a>
+  </br></br>
+  <a class="add-genre"></a>
+
+
   <button>Create Album</button>
 </form>
+
+<script>
+  $('#genre_pulldown').change(function(){
+  	$(".add-genre").after("<div class='somediv'>");
+  	$(".genre_pulldown:last").clone().appendTo(".somediv:last");
+  	$(".add-genre").after("<a href='http://dosomething'>remove</a><br/></div>");
+  	//alert("Yup!");
+  });
+
+//$("#sort").change(function(){
+//    alert('Selected value: ' + $(this).val());
+//});
+
+</script>

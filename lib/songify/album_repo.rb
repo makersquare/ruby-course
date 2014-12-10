@@ -4,7 +4,7 @@ module Songify
     def self.all(db)
       # Other code should not have to deal with the PG:Result.
       # Therefore, convert the results into a plain array.
-      db.exec("SELECT * FROM albums").to_a
+      db.exec("SELECT albums.title, albums.id, count(songs.album_id) FROM albums LEFT OUTER JOIN  songs on ( albums.id = songs.album_id) Group By albums.id").to_a
     end
 
     def self.find(db, album_id)
@@ -25,8 +25,8 @@ module Songify
 
     def self.destroy(db, album_id)
       # TODO: Delete SQL statement
-      #  ALSO DELETE SONGS
-      #  ALSO DELETE JOIN TABLE ENTRIES BETWEEN THIS ALBUM AND ITS GENRES
+      resultSongs = db.exec("delete from songs where album_id = $1", album_id)
+      resultsAlbum = db.exec("delete from songs where album_id = $1", album_id)
     end
 
   end
