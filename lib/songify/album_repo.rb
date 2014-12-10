@@ -3,6 +3,13 @@ require 'pry-byebug'
 module Songify
   class AlbumRepo
 
+    def self.add_genres(db, album_data)
+      album_id = album_data['id']
+      album_data['genre_ids'].each do |genre_id|
+        db.exec("INSERT INTO album_genres (album_id, genre_id) VALUES ($1, $2)", [album_id, genre_id])
+      end
+    end
+
     def self.all(db)
       db.exec("SELECT * FROM albums").to_a
     end

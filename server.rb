@@ -28,7 +28,7 @@ get '/albums/:id' do
   db = Songify.create_db_connection('songify_dev')
   @albums = Songify::AlbumRepo.find(db, params[:id])
   @songs = Songify::SongRepo.list(db, params[:id])
-  @genres = Songify::GenreRepo.genres_by_album(db, params[:id])
+  @genres_join = Songify::GenreRepo.genres_by_album(db, params[:id])
   erb :"albums/album"
 end
 
@@ -36,6 +36,25 @@ delete '/albums/:id' do
   db = Songify.create_db_connection('songify_dev')
   Songify::AlbumRepo.destroy(db, params[:album_id])
   redirect to '/albums'
+end
+
+get '/albums/:id/edit' do
+  db = Songify.create_db_connection('songify_dev')
+  @albums = Songify::AlbumRepo.find(db, params[:id])
+  @genres_join = Songify::GenreRepo.genres_by_album(db, params[:id])
+  @genres = Songify::GenreRepo.all(db)
+  erb :"albums/edit"
+end
+
+post '/albums/:id/edit' do
+  db = Songify.create_db_connection('songify_dev')
+  puts params[:id].class
+  puts params[:genre_ids].class
+  Songify::AlbumRepo.add_genres(db, {
+    'id' => params[:id],
+    'genre_ids' => params[:genre_ids]
+  })
+  redirect to "/albums/#{params[:id]}/edit"
 end
 
 get '/songs' do

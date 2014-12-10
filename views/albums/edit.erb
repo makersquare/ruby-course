@@ -1,0 +1,39 @@
+<a href="/">&lt;- Back to Everything</a>
+<h1> <%= @albums['title'] %> - Edit Genres </h1>
+<p>
+<% @genres_join.each do |genre| %>
+	<a href="/genres/<%= genre['id'] %>"><%= genre['name'] %></a> |
+<% end %>
+</p>
+
+<form action="/albums/<%=@albums['id']%>/edit" method="post">
+	<label>Add genres to album:</label>
+	<div class="container" style="display:inline">
+		<select name="genre_ids[]" class='drop-down'>
+	  		<option> -- Please select a genre </option>
+			<% @genres.each do |genre| %>
+	  		<option value="<%= genre['id'] %>"><%= genre['name'] %></option>
+			<% end %>
+	  	</select>
+	  	<a href="#" class="add-genre">add genre</a>
+	</div>
+	<button>Add Genre(s)</button>
+</form>
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript">
+$(".add-genre").on("click", function(e) {
+	e.preventDefault()
+	var orig = $('select',$('drop-down').last());
+	var copy = $('.drop-down').last().clone();
+	$('select',copy).val(orig.val());
+	copy.appendTo('.container');
+	$('<a>').attr('href', '#').attr('class', 'remove-genre').text('remove genre').appendTo('.container');
+})
+$(document).on("click", ".remove-genre", function(e){
+	e.preventDefault()
+	console.log('clicked')
+	$('.drop-down').last().remove();
+	$('.remove-genre').last().remove();
+})
+</script>
