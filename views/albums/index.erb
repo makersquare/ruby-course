@@ -9,7 +9,36 @@
 
 <form action="/albums" method="post">
   <h3>New Album</h3>
-  <label>Album Title:</label>
-  <input name="title" type="text" />
-  <button>Create Album</button>
+    <label>Album Title:</label>
+      <input name="title" type="text" /></br>
+          <button>Create Album</button>
+            <div class="duplicaters">
+            <div class="duplicater">
+              <select class="select" name="genre_ids[]">
+                <option>-- Please select a Genre --</option>
+                  <% @genres.each do |genre| %>
+                    <option value="<%= genre['id'] %>"><%= genre['name'] %></option>
+                  <% end %> 
+              </select>
+              <a href='#' class="remove-genre"></a>
+            </div>
+          </div>
+        <a href='#' class="add-genre">Add</a>
 </form>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+
+$("a.add-genre").click(function(e){
+  e.preventDefault();
+  var $newdiv = $('div.duplicater').first().clone()
+  $('div.duplicaters').append($newdiv);
+  $("a.remove-genre").text("Remove")
+})
+
+$(document).on("click", "a.remove-genre", function(e){
+  e.preventDefault();
+  $(this).parent().remove()
+})
+
+</script>

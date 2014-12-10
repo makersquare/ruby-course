@@ -32,7 +32,7 @@ module Songify
       end
       if album_data['genre_ids']
         album_data['genre_ids'].each do |genre|
-          db.exec("INSERT INTO song_genres (album_id, genre) VALUES ($1, $2) RETURNING genre", [album_data['id'], genre])
+          db.exec("INSERT INTO song_genres (album_id, genre) VALUES ($1, $2) RETURNING genre;", [album_data['id'], genre])
         end
       genres = db.exec("Select genres.name from song_genres Join genres on (song_genres.genre = genres.id) WHERE album_id = $1;", [album_data['id']]).to_a
       genres_array = []
