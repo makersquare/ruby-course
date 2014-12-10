@@ -1,10 +1,45 @@
-<h1>Songify</h1>
+<body>
 <a href="/">Return to Home Page</a>
+<div class="wrapper">
+  <h1 class="font-effect-shadow-multiple">The Songify System</h1>
+  <h3><%= @album["title"] %></h3>
+  <p>Genre(s): <% @genres.each{|g| %>
+    <%= g["name"]+"," %>
+    <% } %></p>
+  <h4>Songs:</h4>
+  <ol><%  @songs.each{|song| %>
+    <li><%= song["title"] %></li>
+    <% } %>
+    </ol>
+  <form action=<%= "/albums/" + @album["id"] + "/songs"%> method="post">
+    <h4>Add Songs</h4>
+    <label>Song Title:</label>
+    <input name="title" type="text" />
+    <button class="btn">Submit</button>
+  </form>
 
-<h2><p><%= @album['title'] %></p>
-</h2>
-<ul>
-  <% @songs.each do |song| %>
-  <li><%= song['title'] %></li><br>
-  <% end %>
-</ul>
+  <form action=<%= "/albums/" + @album["id"] + "/genres"%> method="post">
+    <h4>Add Genres:</h4>
+    <div class="selectors">
+      <select name ="genreid[]">
+      <option value="" disabled selected>Select genre</option>
+      <% @genres.each{ |g| %>
+      <option value= <%= g["id"]%>><%=g["name"]%></option>
+      <% } %> 
+      </select><br>
+    </div>
+    <a class="add-genre">add another genre</a><br><br>
+    <button>Submit</button>
+  </form>
+
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+ $('.add-genre').on('click', function(e){
+  $('.add-genre').before($('.selectors:first').clone());
+ })
+})
+</script>
+</body>

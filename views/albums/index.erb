@@ -1,33 +1,59 @@
 <a href="/">&lt;- Back to Everything</a>
-<h1>All Albums</h1>
+<body>
 
-<form action="/create" method="post">
-  <select name='album_id'>
-     <% @albums.each do |album| %>
-      <option value="<%= album['id'] %>"><%= album['title'] %> </option>
-    <% end %>
+<div class="wrapper">
+  
+  <div class="row">
+  <div class="large-6 columns">
+    <h1 class="font-effect-shadow-multiple">Create a New Album</h1>
+    <form action="/albums" method="post">
+      <label>Album Title:</label>
+      <input name="title" class="input_album" type="text" />
+      <div class="selectors">
+      <select class="select" name ="genre_ids[]">
+      <option value="" disabled selected>Select genre</option>
+      <% @genres.each{ |g| %>
+      <option value= <%= g["id"]%>><%=g["name"]%></option>
+      <% } %> 
+      </select></div>
+      <a class="addlink">add another genre</a><br><br>
+      <button class="btn ">Create Album</button>
+    </form>
+  </div>
+  <div class="large-6 columns">
+    <h1 class="font-effect-shadow-multiple">Select an Album</h1>
+    <form action="/albums/show" method="post">
+      <select class="album-title" name='album_id'>
+         <% @songs.each do |album| %>
+          <option  value="<%= album['id'] %>"><%= album['title'] %> <%= album['numberofsongs'] %> songs</option>
+        <% end %>   
+      </select>
+      <br>
+     <button class="btn">select an album</button>
+    </form>
+  </div>  
+</div> <!--  end of row   -->
+</div>
 
-  </select>
- <button>register a new song</button>
-</form>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="script.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+ $('.addlink').on('click', function(e){
+  var remove = ('<a class="remove">remove</a>')
+  $('.addlink').before($('.selectors:first').clone());
+  $('.selectors:last').append(remove);
+ })
+ $(document).on('click', '.remove',function(e){
+  $(this).parent().remove();
+ })
+})
+</script>
+</body>
 
 
-<h1>View Albums</h1>
 
-<form action="/albums/show" method="post">
-  <select name='album_id'>
-     <% @songs.each do |album| %>
-      <option value="<%= album['id'] %>"><%= album['title'] %> <%= album['numberofsongs'] %> </option>
-    <% end %>   
-  </select>
- <button>select an album</button>
-</form>
 
-<form action="/albums" method="post">
-  <h3>New Album</h3>
-  <label>Album Title:</label>
-  <input name="title" type="text" />
-  <button>Create Album</button>
-</form>
+
 
 

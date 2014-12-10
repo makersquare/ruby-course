@@ -24,6 +24,10 @@ module Songify
       end
     end
 
+    def self.all_album_genres(db, album_id)
+      db.exec("SELECT name from genres g join album_genres a on g.id = a.genre_id  where album_id = $1", [album_id])
+    end
+
     def self.destroy(db, genre_id)
       # TODO: Delete SQL statement
       #  ALSO DELETE JOIN TABLE ENTRIES BETWEEN THIS GENRE AND ITS ALBUMS
