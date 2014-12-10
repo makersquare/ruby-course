@@ -1,7 +1,8 @@
 class Songify::Artist
-  attr_reader :name
+  attr_reader :name, :id
   def initialize(params)
-    @name = params[:name]
+    @name = params['name']
+    @id = params['id'].to_i
   end
 
 end
