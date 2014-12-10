@@ -1,8 +1,28 @@
 <a href="/">&lt;- Back to Everything</a>
-<h1> <%= @genres.first['genre'] %> - All Albums </h1>
+<h1> <%= @genres['name'] %> - All Albums </h1>
 
 <ul>
-  <% @genres.each do |album| %>
-    <li><a href="/albums/<%= album['album_id']%>"><%= album['title'] %></a></li>
-  <% end %>
+	<% if @genres_join.first %>
+  		<% @genres_join.each do |album| %>
+    		<li> <a href="/albums/<%= album['album_id']%>"><%= album['title'] %> </a></li>
+  		<% end %>
+  	<% else %>
+  		<li> There are no albums associated with this genre. </li>
+	<% end %>
 </ul>
+
+<form method="post" action="/genres/<%= @genres['id'] %>">
+	<input type="hidden" name="_method" value="delete">
+	<input type="hidden" name="genre_id" value="<%= @genres['id']%>">
+	<button type="submit" class="delete_button">Delete</button>
+</form>	
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript">
+$(document).on("click", ".delete_button", function(e){
+	var r = confirm("Are you sure?");
+	if (r == false){
+		e.preventDefault()
+	}
+})
+</script>

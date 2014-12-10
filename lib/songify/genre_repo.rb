@@ -1,7 +1,7 @@
 module Songify
   class GenreRepo
     def self.albums(db, genre_id)
-      db.exec("SELECT g.name AS genre, a.title AS title, a.id AS album_id FROM genres g JOIN album_genres j ON g.id = j.genre_id JOIN albums a ON a.id = j.album_id WHERE g.id = $1", [genre_id])
+      db.exec("SELECT g.name AS genre, a.title AS title, a.id AS album_id, g.id AS genre_id FROM genres g JOIN album_genres j ON g.id = j.genre_id JOIN albums a ON a.id = j.album_id WHERE g.id = $1", [genre_id])
     end
 
     def self.all(db)
@@ -34,6 +34,8 @@ module Songify
     def self.destroy(db, genre_id)
       # TODO: Delete SQL statement
       #  ALSO DELETE JOIN TABLE ENTRIES BETWEEN THIS GENRE AND ITS ALBUMS
+      db.exec("DELETE FROM album_genres WHERE genre_id = $1", [genre_id])
+      db.exec("DELETE FROM genres WHERE id = $1", [genre_id])
     end
 
   end

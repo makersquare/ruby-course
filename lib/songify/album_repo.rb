@@ -4,8 +4,6 @@ module Songify
   class AlbumRepo
 
     def self.all(db)
-      # Other code should not have to deal with the PG:Result.
-      # Therefore, convert the results into a plain array.
       db.exec("SELECT * FROM albums").to_a
     end
 
@@ -42,9 +40,9 @@ module Songify
     end
 
     def self.destroy(db, album_id)
-      # TODO: Delete SQL statement
-      #  ALSO DELETE SONGS
-      #  ALSO DELETE JOIN TABLE ENTRIES BETWEEN THIS ALBUM AND ITS GENRES
+      db.exec("DELETE FROM album_genres WHERE album_id = $1", [album_id])
+      db.exec("DELETE FROM songs WHERE album_id = $1", [album_id])
+      db.exec("DELETE FROM albums WHERE id = $1", [album_id])
     end
 
   end

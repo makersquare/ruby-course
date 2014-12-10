@@ -12,7 +12,7 @@ module Songify
     end
 
     def self.list(db, album_id)
-      db.exec("SELECT a.title AS title, s.title AS name FROM songs s JOIN albums a ON a.id = s.album_id WHERE album_id = $1", [album_id]).to_a
+      db.exec("SELECT a.title AS title, s.title AS name, a.id AS album_id FROM songs s JOIN albums a ON a.id = s.album_id WHERE album_id = $1", [album_id]).to_a
     end
 
     def self.save(db, song_data)

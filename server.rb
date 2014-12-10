@@ -1,5 +1,6 @@
 require 'sinatra'
 require './lib/songify.rb'
+# Rack::MethodOverride
 
 set :bind, '0.0.0.0' # This is needed for Vagrant
 
@@ -17,16 +18,24 @@ end
 post '/albums' do
   db = Songify.create_db_connection('songify_dev')
   album = Songify::AlbumRepo.save(db, {
-    'title' => params[:title]
+    'title' => params[:title],
+    'genre_ids' => params[:genre_ids]
   })
   redirect to '/albums'
 end
 
-get'/albums/:id' do
+get '/albums/:id' do
   db = Songify.create_db_connection('songify_dev')
+  @albums = Songify::AlbumRepo.find(db, params[:id])
   @songs = Songify::SongRepo.list(db, params[:id])
   @genres = Songify::GenreRepo.genres_by_album(db, params[:id])
   erb :"albums/album"
+end
+
+delete '/albums/:id' do
+  db = Songify.create_db_connection('songify_dev')
+  Songify::AlbumRepo.destroy(db, params[:album_id])
+  redirect to '/albums'
 end
 
 get '/songs' do
@@ -61,6 +70,13 @@ end
 
 get '/genres/:id' do
   db = Songify.create_db_connection('songify_dev')
-  @genres = Songify::GenreRepo.albums(db, params[:id])
+  @genres = Songify::GenreRepo.find(db, params[:id])
+  @genres_join = Songify::GenreRepo.albums(db, params[:id])
   erb :"genres/genre"
+end
+
+delete '/genres/:id' do
+  db = Songify.create_db_connection('songify_dev')
+  Songify::GenreRepo.destroy(db, params[:genre_id])
+  redirect to '/genres'
 end
