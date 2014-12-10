@@ -36,6 +36,18 @@ class Songify::ArtistRepo
     build_artist(result.first)
   end
 
+  def get_all
+    query = <<-SQL
+    SELECT * FROM artists
+    SQL
+    result = @db.exec(command)
+    artists = []
+    result.each do |res|
+      artists << build_artist(res)
+    end
+  end
+
+
   def update_artist
   end
 
