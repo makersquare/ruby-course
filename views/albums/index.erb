@@ -14,15 +14,16 @@
   		<br>
   	<label>Genre(s)</label>
   	<br>
-  	<div class='remove'>
+  	<div class='lists'>
 		  <select name='genre_id[]' class='selecta'>
 			  	<% @genres.each do |x|%>
 			  	<option value='<%= x['id']%>'><%= x['name']%></option>
 			  	<%end%>
 		  </select>
+		  <a href=# class='show-it'></a>
+		  </div>
   			<br>
   	<a class='add-genre' href='#'>Add another genre</a> 
-  </div>
 		  <br>
 		  <br>
   	<button>Create Album</button>
@@ -30,13 +31,14 @@
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript">
-$('.add-genre').on('click', function(){
-	$('.selecta').clone().last().insertBefore('.add-genre').after('<br>');
-	$('.remove').last().append('<a href=#>remove</a>')
+$(document).on('click','.add-genre', function(e){
+	e.preventDefault()
+	$('.lists').clone().last().insertBefore('.add-genre');
+	$('.show-it').text('Remove').child()
 })
-
-
-
-
+$(document).on('click','.show-it',function(e){
+	e.preventDefault()
+	$(this).parent().remove()
+})
 
 </script>
