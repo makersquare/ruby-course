@@ -30,10 +30,19 @@
 <script>
   $(".add-genre").click(function(e) {
     e.preventDefault()
-  
+    console.log("in add")
     $(this).before( $(".genres").last().clone())
+    $(this).before("<a href='#' class='remove-genre' style='margin: auto auto auto 10px;'>remove this genre</a>")
     $(this).before( "<br />")
 
+  })
+
+  $(document).on("click", ".remove-genre", function(e) {
+    e.preventDefault()
+    console.log("in remove")
+    $(this).prev().remove()
+    $(this).prev().remove()
+    $(this).remove()
   })
 
 </script>
