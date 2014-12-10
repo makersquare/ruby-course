@@ -21,6 +21,10 @@ module Songify
       result
     end
 
+    def self.albums_with_songs(db)
+      db.exec("select count(songs.album_id), albums.title , albums.id FROM songs, albums WHERE songs.album_id = albums.id GROUP BY albums.title, albums.id;")
+    end
+
     def self.save(db, album_data)
       if album_data['id']
         result = db.exec("UPDATE albums SET title = $2 WHERE id = $1", [album_data['id'], album_data['title']])
@@ -48,5 +52,4 @@ module Songify
   end
 end
 
-#ewoijfweofij
-#ewoijfweofijewoijfweofijewoijfweofij
+

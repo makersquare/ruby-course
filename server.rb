@@ -9,7 +9,7 @@ end
 
 get '/albums' do
   db = Songify.create_db_connection('songify_dev')
-  @albums = Songify::AlbumRepo.all(db)
+  @albums = Songify::AlbumRepo.albums_with_songs(db)
   @genres = Songify::GenreRepo.all(db)
   erb :"albums/index"
 end

@@ -7,7 +7,7 @@
 
 <ul>
   <% @albums.each do |album| %>
-    <li><%= album['title'] %></li>
+    <li><%= album['title'] %>: <%= album['count'] %> songs</li>
   <% end %>
 </ul>
 
