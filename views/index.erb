@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Songify</title>
+</head>
+<body>
+  <%= @message %>
+  <div>
+    <ul>
+      <% @remarks.each do |remark| %>
+        <li> 
+          <%= remark %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</body>
+</html>
