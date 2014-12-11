@@ -11,7 +11,9 @@ GEM
     debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
     method_source (0.8.2)
+    mime-types (1.25.1)
     multi_json (1.10.1)
+    netrc (0.8.0)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -24,6 +26,9 @@ GEM
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
+    rest-client (1.7.2)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -51,6 +56,7 @@ PLATFORMS
 
 DEPENDENCIES
   pry-byebug
+  rest-client
   rspec (~> 2.14.1)
-  sinatra
-  sinatra-contrib
+  sinatra (~> 1.4.5)
+  sinatra-contrib (~> 1.4.2)
