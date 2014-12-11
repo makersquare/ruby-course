@@ -21,16 +21,27 @@ get '/shops' do
   RestClient.get("http://pet-shop.api.mks.io/shops")
 end
 
+get '/signup' do
+
+  erb :"signup"
+end
+post '/signup' do
+  db = PetShop.create_db_connection()
+  password_hash = BCrypt::Password.create(params['password'])
+  Petshop::UsersRepo.save db, {username: params['username'], password: password_hash}
+  erb :"signup"
+end
 post '/signin' do
   params = JSON.parse request.body.read
 
   username = params['username']
   password = params['password']
-
+  user = Petshop::UsersRepo.find_by_name(db, username)
   # TODO: Grab user by username from database and check password
-  user = { 'username' => 'alice', 'password' => '123' }
 
-  if password == user['password']
+  pass_from_db = BCrypt::Password.new(user['password'])
+
+  if pass_from_db == password
     headers['Content-Type'] = 'application/json'
     # TODO: Return all pets adopted by this user
     # TODO: Set session[:user_id] so the server will remember this user has logged in

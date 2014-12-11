@@ -68,11 +68,14 @@ module PetShop
     db.exec(q,[shopid, caturl])
     q = "INSERT INTO dogs (shopid, imageurl, name, happiness, adopted) values ($1, $2, 'dog1', '5', 'false')"
     db.exec(q,[shopid, dogurl])
-    q = "INSERT INTO users (username, password) values ('ilovepets', 'ilovepets')"
+    password_hash = BCrypt::Password.create('ilovepets')
+    q = "INSERT INTO users (username, password) values ('ilovepets', '#{password_hash}')"
     db.exec(q)
-    q = "INSERT INTO users (username, password) values ('someuser', 'someuser')"
+    password_hash = BCrypt::Password.create('someuser')
+    q = "INSERT INTO users (username, password) values ('someuser', '#{password_hash}')"
     db.exec(q)
-    q = "INSERT INTO users (username, password) values ('someotherperson', 'someotherperson')"
+    password_hash = BCrypt::Password.create('someotherperson')
+    q = "INSERT INTO users (username, password) values ('someotherperson', '#{password_hash}')"
     db.exec(q)
   
   end
