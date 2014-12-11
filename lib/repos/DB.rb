@@ -20,6 +20,21 @@ class DB
     cats
   end
 
+    def self.get_dogs(db, shop_id)  
+    mappings = {"shop_id" => "shopId", "dog_id" => "id", "name" => "name", "imageurl" => "imageUrl", "adoption_status" => "adopted"}
+     response = db.exec("SELECT * FROM dogs WHERE shop_id = $1", [shop_id]).entries
+     dogs = []
+     response.each do |dog| 
+      if dog['adoption_status'] == "t"
+        dog['adoption_status'] = "true"
+      else 
+        dog['adoption_status'] = "false"
+      end
+      dogs << Hash[dog.map {|k, v| [mappings[k], v] }]
+     end
+     dogs
+  end
+
 
 end #end DB
 end#end module

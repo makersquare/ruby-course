@@ -79,8 +79,11 @@ end
 get '/shops/:id/dogs' do
   headers['Content-Type'] = 'application/json'
   id = params[:id]
+    db = PetShop::Database.dbconnect
+  dogs = PetShop::DB.get_dogs(db, id)
+  dogs.to_json
   # TODO: Update database instead
-  RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/dogs")
+  # RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/dogs")
 end
 
 put '/shops/:shop_id/dogs/:id/adopt' do
