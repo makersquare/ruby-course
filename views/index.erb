@@ -21,7 +21,9 @@
 (function () {
 
   var server = {
+    <% if @current_user %>
     user: <%= @current_user.to_json %>
+    <% end %>
   }
 
 
