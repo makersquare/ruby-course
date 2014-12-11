@@ -2,6 +2,7 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'rest-client'
 
+set :bind, '0.0.0.0'
 # #
 # This is our only html view...
 #
