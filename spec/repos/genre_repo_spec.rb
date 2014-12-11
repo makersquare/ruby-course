@@ -40,7 +40,7 @@ describe Songify::GenreRepo do
   end
 
   it "requires a name" do
-    expect { repo.save(db, {}) }.to raise_error {|e|
+    expect { repo.save(db, {}) }.to raise_error(Songify::Errors::InvalidRecordData) {|e|
       expect(e.message).to match /name/
     }
   end

@@ -42,7 +42,7 @@ describe Songify::SongRepo do
 
   # ASK HOW THIS WORKS
   it "requires a title" do
-    expect { repo.save(db, {}) }.to raise_error {|e|
+    expect { repo.save(db, {}) }.to raise_error(Songify::Errors::InvalidRecordData) {|e|
       expect(e.message).to match /title/
     }
   end
@@ -51,7 +51,7 @@ describe Songify::SongRepo do
     expect {
       repo.save(db, { 'title' => "The Ally" })
     }
-    .to raise_error {|e|
+    .to raise_error(Songify::Errors::InvalidRecordData) {|e|
       expect(e.message).to match /album_id/
     }
   end
@@ -60,7 +60,7 @@ describe Songify::SongRepo do
     expect {
       repo.save(db, { 'album_id' => 999, 'title' => "The Ally" })
     }
-    .to raise_error {|e|
+    .to raise_error(Songify::Errors::InvalidRecordData) {|e|
       expect(e.message).to match /album_id/
     }
   end

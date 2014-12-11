@@ -55,6 +55,7 @@ module Songify
   end
 end
 
+require_relative 'songify/errors/invalid_record_data.rb'
 require_relative 'songify/album_repo'
 require_relative 'songify/genre_repo'
 require_relative 'songify/song_repo'

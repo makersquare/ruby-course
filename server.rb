@@ -14,20 +14,20 @@ end
 get '/albums' do
   db = Songify.create_db_connection('songify_dev')
   @albums = Songify::AlbumRepo.all(db) #Brought back as an 'array of arrays' (for .each method)
-  @songs = Songify::SongRepo.all(db)    #FOR EXTENSION #6
-  @genres = Songify::GenreRepo.all(db)  #FOR EX2/#3
-  
+  #@songs = Songify::SongRepo.all(db)    #FOR EXTENSION #6
+  @genres = Songify::GenreRepo.all(db)   #FOR EX3
+
   erb :"albums/index"
 end
 
 post '/albums' do
   db = Songify.create_db_connection('songify_dev')
-  Songify::GenreRepo.save(db, {
-    'name' => params[:name]
-  })
-  album = Songify::AlbumRepo.save(db, {   #returns the album hash { "id" => " "; "title" => " "}
-    'title' => params[:title],
-    'name' => params[:name]
+  # genre = Songify::GenreRepo.save(db, {    ## DON'T KNOW IF THIS IS CORRECT 
+  #   'name' => params[:genre_names]
+  # })
+  album = Songify::AlbumRepo.save(db, {   #Returns the album hash { "id" => " "; "title" => " "}
+    'title' => params[:album_title],
+    'genre_ids' => params[:genre_ids]
   })
   redirect to '/albums'
 end
@@ -45,7 +45,7 @@ post '/genres' do
   db = Songify.create_db_connection('songify_dev')
   genre = Songify::GenreRepo.save(db, {   #Returns the genre hash { "id" => " "; "title" => " "}
     #'title' => params[:title]            #Changed 'album =' to 'genre =' above 
-    'name' => params[:name]
+    'name' => params[:genre_name]         #'name' needs to reference genre name column(?)
   })
   redirect to '/genres'
 end
@@ -62,10 +62,10 @@ end
 
 post '/songs' do
  db = Songify.create_db_connection('songify_dev')
- Songify::SongRepo.save(db,  {
-  'album_id' => params[:album_id],
-  'title' => params[:title]
+ song = Songify::SongRepo.save(db,  {
+  'album_id' => params[:album_name],     #'album_id' needs to reference song album_id column(?)
+  'title' => params[:song_title]         #'title' needs to reference song title column(?)
    })
- redirect to '/songs'
+ redirect to '/songs'                    
 end
 ## END SONGS
