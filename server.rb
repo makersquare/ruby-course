@@ -56,6 +56,9 @@ get '/shops/:id/cats' do
   id = params[:id]
   # TODO: Grab from database instead
   # RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/cats")
+  db = PetShop::Database.dbconnect
+  cats = PetShop::DB.get_cats(db, id)
+  cats.to_json
 end
 
 put '/shops/:shop_id/cats/:id/adopt' do
