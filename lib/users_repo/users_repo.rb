@@ -25,13 +25,21 @@ module Petshop
       result.first
     end
     def self.adopt db, user_data
-      sql = %q[INSERT INTO users (type, user_id, pet_id) VALUES ($1, $2, $3) RETURNING *]
+      sql = <<-SQL
+        INSERT INTO pet_adptions (type, user_id, pet_id) 
+        VALUES ($1, $2, $3) RETURNING * SQL
       result = db.exec(sql, user_data[:type]], [user_data[:id], user_data[:pet_id]])
       result.first
     end
-    def self.save db, user_data
-      sql = %q[INSERT INTO pet_adptions (username, password) VALUES ($1, $2) RETURNING *]
-      result = db.exec(sql, [user_data[:username], user_data[:password]])
+    def self.show_adoptions db, user_data
+      sql = <<-SQL SELECT u.id, u.name, a.name
+        FROM pet_adptions p
+        JOIN users u ON p.user_id = u.id
+        JOIN cats a ON p.cat_id = a.id
+        WHERE p.type = 'cat' and u.id = $1 
+
+        SQL
+      result = db.exec(sql, [user_data[:id])
       result.first
     end
   end
