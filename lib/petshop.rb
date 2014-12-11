@@ -27,7 +27,7 @@ module Petshop
       );
       CREATE TABLE IF NOT EXISTS users(
         id SERIAL PRIMARY KEY,
-        name VARCHAR,
+        username VARCHAR,
         password VARCHAR
       );
       CREATE TABLE IF NOT EXISTS dogs(
@@ -52,7 +52,7 @@ module Petshop
 
   def self.seed_db(db)
     db.exec <<-SQL
-      INSERT INTO users (name, password) values ('anonymous', 'anonymous');
+      INSERT INTO users (username, password) values ('anonymous', 'anonymous');
       INSERT INTO shops (name) values ('Rufinos Ruffers');
       INSERT INTO dogs (name, imageUrl, adopted, happiness) values ('Barky', 'http://www.google.com/barky.jpg', 'false', 4);
       INSERT INTO cats (name, imageUrl, adopted) values ('Catzy', 'http://www.cats.com/catzy.jpg', 'false')
