@@ -6,6 +6,9 @@ require 'json'
 # #
 # This is our only html view...
 #
+
+set :bind, '0.0.0.0'
+
 get '/' do
   if session[:user_id]
     # TODO: Grab user from database
