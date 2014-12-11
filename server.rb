@@ -59,7 +59,6 @@ get '/shops/:id/cats' do
   # RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/cats")
   db = PetShop::Database.dbconnect
   cats = PetShop::DB.get_cats(db, id)
-  puts cats.to_json
   cats.to_json
 end
 

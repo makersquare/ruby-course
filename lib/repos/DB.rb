@@ -5,7 +5,7 @@ class DB
     db.exec("SELECT * FROM shops").entries
   end
 
-  def self.get_cats(db, shop_id)
+  def self.get_cats(db, shop_id)  
     mappings = {"shop_id" => "shopId", "cat_id" => "id", "name" => "name", "imageurl" => "imageUrl", "adoption_status" => "adopted"}
     response = db.exec("SELECT * FROM cats WHERE shop_id = $1", [shop_id]).entries
     cats = []
@@ -21,8 +21,9 @@ class DB
   end
 
 
-end
-end
+end #end DB
+end#end module
+
 # {"shop_id":"3",
 #   "cat_id":"5",
 #   "name":"karthurian",
@@ -33,3 +34,4 @@ end
 #     "imageUrl":"http://i.imgur.com/TOEskNX.jpg",
 #     "adopted":true,
 #     "id":1}
+
