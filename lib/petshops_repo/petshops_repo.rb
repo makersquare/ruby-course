@@ -3,6 +3,6 @@ module PetShop
     def get_all_shops
       db.exec('SELECT * FROM shops')
     end
-    def 
+
   end
 end
