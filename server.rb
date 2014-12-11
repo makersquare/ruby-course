@@ -82,6 +82,7 @@ end
 # # # #
 get '/shops/:id/dogs' do
   headers['Content-Type'] = 'application/json'
+  db = PetShop.create_db_connection()
   id = params[:id]
 
   dogs = PetShop::DogsRepo.all_from_shop(db, id)
@@ -94,6 +95,7 @@ put '/shops/:shop_id/dogs/:id/adopt' do
   headers['Content-Type'] = 'application/json'
   shop_id = params[:shop_id]
   id = params[:id]
+  db = PetShop.create_db_connection()
   # TODO: Update database instead
   Petshop::DogsRepo.adopt_dog(db, id)
   adopt_data = {
