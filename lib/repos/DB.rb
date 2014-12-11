@@ -6,9 +6,9 @@ class DB
   end
 
   def self.get_cats(db, shop_id)
-     db.exec("SELECT * FROM cats WHERE shop_id = $1", [shop_id]).entries
+     db.exec("SELECT * FROM cats WHERE shopid = $1", [shop_id]).entries
   end
 
 
-end
-end
+end #end DB
+end#end module
