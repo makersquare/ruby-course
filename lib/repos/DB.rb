@@ -7,17 +7,17 @@ class DB
 
   def self.get_cats(db, shop_id)
     mappings = {"shop_id" => "shopId", "cat_id" => "id", "name" => "name", "imageurl" => "imageUrl", "adoption_status" => "adopted"}
-     response = db.exec("SELECT * FROM cats WHERE shop_id = $1", [shop_id]).entries
-     cats = []
-     response.each do |cat| 
+    response = db.exec("SELECT * FROM cats WHERE shop_id = $1", [shop_id]).entries
+    cats = []
+    response.each do |cat| 
       if cat['adoption_status'] == "t"
         cat['adoption_status'] = "true"
       else 
         cat['adoption_status'] = "false"
       end
       cats << Hash[cat.map {|k, v| [mappings[k], v] }]
-     end
-     cats
+    end
+    cats
   end
 
 
