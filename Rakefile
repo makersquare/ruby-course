@@ -14,11 +14,13 @@ namespace :db do
 
   task :create do
     `createdb petshop_dev`
+    `createdb petshop_test`
     puts "Created."
   end
 
   task :drop do
     `dropdb petshop_dev`
+    `dropdb petshop_test`
     puts "Dropped."
   end
 

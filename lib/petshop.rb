@@ -92,4 +92,7 @@ module Petshop
   end
 end
 
-require_relative 'petshop/petshop_repo'
+require_relative 'petshop/shop_repo'
+require_relative 'petshop/owner_repo'
+# require_relative 'petshop/dog_repo'
+# require_relative 'petshop/cat_repo'
