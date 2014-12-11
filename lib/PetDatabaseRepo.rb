@@ -29,7 +29,7 @@ require 'json'
 #  imageurl        | character varying | 
 #  adoption_status | boolean           | 
 
-module PetShop
+
 class Database
   def initialize
   @db = PG.connect(host: 'localhost', dbname:'petshop_db')
@@ -51,7 +51,7 @@ class Database
     url = "pet-shop.api.mks.io/shops/" + shopid.to_s + "/dogs/"
     tempdogs = RestClient.get(url)
     dogs = JSON.parse(tempdogs)
-    dogs.each { |dog| #each dog
+    dogs.each { |dog| #each dogs
     shop = dog["shopId"]    
     name = dog["name"]
     happiness = dog["happiness"]
@@ -62,7 +62,7 @@ class Database
         INSERT INTO dogs (shop_id, dog_id, name, imageurl, happiness, adoption_status)
         VALUES ($1, $2, $3, $4, $5, $6)
             ]
-    @db.exec_params(sql, [shop, id, name, image, happiness, adopt])
+    @db.exec(sql, [shop, id, name, image, happiness, adopt])
   }#end each dog
 
     url = "pet-shop.api.mks.io/shops/" + shopid.to_s + "/cats/"
