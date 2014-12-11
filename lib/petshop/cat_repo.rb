@@ -4,16 +4,15 @@ module Petshop
   class CatsRepo
 
     def self.all(db)
-      # Other code should not have to deal with the PG:Result.
-      # Therefore, convert the results into a plain array.
-      # TODO: This has to be a JOIN table
       result = db.exec("SELECT * FROM cats").to_a
     end
 
     def self.find(db, cat_id)
-      # TODO: This has to be a JOIN table
-
       shop = db.exec("SELECT * FROM cats WHERE id=$1", [cat_id]).first
+    end
+
+    def self.find_all_by_shop(db, shop_id)
+      cats = db.exec("SELECT * FROM cats WHERE shop_id=$1", [shop_id]).to_a
     end
 
     def self.save(db, cat_data)
