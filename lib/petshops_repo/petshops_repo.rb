@@ -1,8 +1,8 @@
 module PetShop
   class Shops
     def get_all_shops
-      sql = %q[
-          SELECT * FROM shops
-      ]
+      db.exec('SELECT * FROM shops')
     end
-   
+    def 
+  end
+end
