@@ -21,12 +21,12 @@ module Petshop
 
         # Ensure shop exists
         shop = find(db, shop_data['id'])
-        raise "A valid shop_id is required." if shop.nil?
+        raise "A valid shop id is required." if shop.nil?
 
         result = db.exec("UPDATE shops SET title = $2 WHERE id = $1", [shop_data['id'], shop_data['title']])
         self.find(db, shop_data['id'])
       else
-        raise "title is required." if shop_data['title'].nil? || shop_data['title'] == ''
+        raise "shop title is required." if shop_data['title'].nil? || shop_data['title'] == ''
         result = db.exec("INSERT INTO shops (title) VALUES ($1) RETURNING *", [shop_data['title']])
         self.find(db, result.entries.first['id'])
       end

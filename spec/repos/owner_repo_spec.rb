@@ -15,7 +15,7 @@ describe Petshop::OwnerRepo do
     @owner_id2 = Petshop::OwnerRepo.save(db, { 'name' => "Leonardo", 'password' => 'Swordfish' })['id']
   end
 
-  xit "gets all owners" do
+  it "gets all owners" do
 
     owners = repo.all(db)
     expect(owners).to be_a Array
@@ -25,7 +25,7 @@ describe Petshop::OwnerRepo do
     expect(names).to include "Leonardo", "Giovanni"
   end
 
-  xit "creates owners" do
+  it "creates owners" do
     expect(owner_count).to eq 2
 
     owner = repo.save(db, { 'name' => "Brian", 'password' => 'puppyfan102' })
@@ -43,13 +43,13 @@ describe Petshop::OwnerRepo do
 
   end
 
-  xit "requires a name" do
+  it "requires a name" do
     expect { repo.save(db, {}) }.to raise_error {|e|
       expect(e.message).to match /name/
     }
   end
 
-  xit "requires an owner id that exists" do
+  it "requires an owner id that exists" do
     expect {
       repo.save(db, { 'id' => 999, 'name' => "Mr FunGuy" })
     }
@@ -58,12 +58,12 @@ describe Petshop::OwnerRepo do
     }
   end
 
-  xit "finds owners" do
+  it "finds owners" do
     retrieved_owner = repo.find(db, @owner_id1)
     expect(retrieved_owner['name']).to eq "Giovanni"
   end
 
-  xit "updates owners" do
+  it "updates owners" do
     owner1 = repo.save(db, { 'id' => @owner_id1, 'name' => "Billy Boy" })
     owner2 = repo.save(db, { 'id' => @owner_id1, 'password' => "bigDogsRCool14" })
     expect(owner2['id']).to eq(owner1['id'])

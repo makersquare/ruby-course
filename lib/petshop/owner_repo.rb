@@ -18,7 +18,7 @@ module Petshop
 
         # Ensure owner exists
         owner = find(db, owner_data['id'])
-        raise "A valid owner_id is required." if owner.nil?
+        raise "A valid owner id is required." if owner.nil?
 
         if owner_data['name'] # Update Owner Name
           result = db.exec("UPDATE owners SET name = $2 WHERE id = $1", [owner_data['id'], owner_data['name']])
