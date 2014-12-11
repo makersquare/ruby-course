@@ -1,15 +1,18 @@
 require 'sinatra'
-require 'sinatra/reloader'
+# require 'sinatra/reloader'
 require 'rest-client'
 
+
+set :bind, '0.0.0.0'
 # #
 # This is our only html view...
 #
 get '/' do
   if session[:user_id]
     # TODO: Grab user from database
-    user = Petshop::UsersRepo.find(db, session[:user_id])
+    @user = Petshop::UsersRepo.find(db, session[:user_id])
     @current_user = user['name']
+
   end
   erb :index
 end
@@ -20,6 +23,7 @@ end
 get '/shops' do
   headers['Content-Type'] = 'application/json'
   RestClient.get("http://pet-shop.api.mks.io/shops")
+
 end
 
 get '/signup' do
@@ -80,6 +84,8 @@ end
 get '/shops/:id/dogs' do
   headers['Content-Type'] = 'application/json'
   id = params[:id]
+
+  dogs = PetShop::DogsRepo.all_from_shop(db, id)
   # TODO: Update database instead
   RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/dogs")
 end
@@ -89,6 +95,13 @@ put '/shops/:shop_id/dogs/:id/adopt' do
   shop_id = params[:shop_id]
   id = params[:id]
   # TODO: Update database instead
+  Petshop::DogsRepo.adopt_dog(db, id)
+  adopt_data = {
+    type: 'dog',
+    user_id: @user['id'],
+    pet_id: id
+    }
+  Petshop::UsersRepo.adopt(db, adopt_data)
   RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/dogs/#{id}",
     { adopted: true }, :content_type => 'application/json')
   # TODO (after you create users table): Attach new dog to logged in user
