@@ -16,6 +16,7 @@ module Songify
         result = db.exec("UPDATE genres SET name = $2 WHERE id = $1", [genre_data['id'], genre_data['name']])
         self.find(db, genre_data['id'])
       else
+
         if genre_data['name'].nil? || genre_data['name'] == ''
           raise Errors::InvalidRecordData.new("name is required.")
         end

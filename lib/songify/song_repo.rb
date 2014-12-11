@@ -17,7 +17,7 @@ module Songify
         self.find(db, song_data['id'])
       else
         if song_data['title'].nil? || song_data['title'] == ''
-          raise Errors::InvalidRecordData.new("title is required.")
+          raise Errors::InvalidRecordData.new("A title is required.")
         end
 
         # Ensure album exists
@@ -28,7 +28,7 @@ module Songify
 
         result = db.exec("INSERT INTO songs (title, album_id) VALUES ($1, $2) RETURNING id", [song_data['title'], song_data['album_id']])
         song_data['id'] = result.entries.first['id']
-        song_data
+        song_data   #returns Hash { "id" => "x", "album_id" => "y", title" => "z"}
       end
     end
 

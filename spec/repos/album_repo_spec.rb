@@ -39,13 +39,16 @@ describe Songify::AlbumRepo do
     expect(album['title']).to eq "Allybum"
   end
 
+
   it "requires a title" do
     expect { repo.save(db, {}) }.to raise_error(Songify::Errors::InvalidRecordData) {|e|
       expect(e.message).to match /title/
     }
+
   end
 
-  xit "can be assigned genres" do
+  ## UPDATED ON 12/9 (twice)
+  it "can be assigned genres" do
     gid_1 = Songify::GenreRepo.save(db, { 'name' => 'rock' })
     gid_2 = Songify::GenreRepo.save(db, { 'name' => 'avant-garde' })
     gid_3 = Songify::GenreRepo.save(db, { 'name' => 'jazz' })
@@ -64,6 +67,7 @@ describe Songify::AlbumRepo do
 
     names = album['genres'].map {|g| g['name'] }
     expect(names).to include 'rock', 'avant-garde', 'jazz'
+
   end
 
   it "finds albums" do
@@ -72,7 +76,7 @@ describe Songify::AlbumRepo do
     expect(retrieved_song['title']).to eq "Allybum"
   end
 
-  it "updates albums" do
+ it "updates albums" do
     song1 = repo.save(db, { 'title' => "Allybum" })
     song2 = repo.save(db, { 'id' => song1['id'], 'title' => "Alicia" })
     expect(song2['id']).to eq(song1['id'])
