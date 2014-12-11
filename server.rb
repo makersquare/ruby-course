@@ -3,6 +3,8 @@ require 'sinatra/reloader'
 require 'rest-client'
 require 'json'
 
+set :bind, '0.0.0.0'
+
 # #
 # This is our only html view...
 #
