@@ -31,8 +31,8 @@ require 'json'
 
 
 class Database
-  def initialize
-  @db = PG.connect(host: 'localhost', dbname:'petshop_db')
+  def self.dbconnect
+   PG.connect(host: 'localhost', dbname:'petshop_db')
   end 
 
   def addData
@@ -82,6 +82,11 @@ class Database
   }#end each cat
   }#end each shop
   end
+
+
+
+
+#####################################################
 
   def print_shops
     sql = %q[
@@ -191,6 +196,4 @@ class Database
 end
 
 end #end of class
-
-
-
+end #end of module
