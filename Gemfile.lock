@@ -52,5 +52,5 @@ PLATFORMS
 DEPENDENCIES
   pry-byebug
   rspec (~> 2.14.1)
-  sinatra
-  sinatra-contrib
+  sinatra (~> 1.4.5)
+  sinatra-contrib (~> 1.4.2)
