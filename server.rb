@@ -42,9 +42,11 @@ post '/signin' do
 
   if pass_from_db == password
     headers['Content-Type'] = 'application/json'
-    session['user_id'] = user['id']
+    session[:user_id] = user['id']
     # TODO: Return all pets adopted by this user
+    pets = PetShop::UsersRepo.show_adoptions(db, user)
     # TODO: Set session[:user_id] so the server will remember this user has logged in
+
   else
     status 401
   end
