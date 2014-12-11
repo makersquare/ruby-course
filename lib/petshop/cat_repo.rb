@@ -1,48 +1,45 @@
 require 'pry-byebug'
 
 module Petshop
-  class ShopRepo
+  class CatsRepo
 
     def self.all(db)
       # Other code should not have to deal with the PG:Result.
       # Therefore, convert the results into a plain array.
       # TODO: This has to be a JOIN table
-      result = db.exec("SELECT * FROM shops").to_a
+      result = db.exec("SELECT * FROM cats").to_a
     end
 
-    def self.find(db, shop_id)
+    def self.find(db, cat_id)
       # TODO: This has to be a JOIN table
 
-      shop = db.exec("SELECT * FROM shops WHERE id=$1", [shop_id]).first
+      shop = db.exec("SELECT * FROM cats WHERE id=$1", [cat_id]).first
     end
 
-    def self.save(db, shop_data)
-      if shop_data['id'] # Edit Shop
+    def self.save(db, cat_data)
+      if cat_data['id'] # Update
 
-        # Ensure album exists
-        album = find(db, album_data['id'])
-        raise "A valid album_id is required." if album.nil?
+        # Ensure cat exists
+        cat = find(db, cat_data['id'])
+        raise "A valid cat_id is required." if cat.nil?
+        raise "A valid owner_id is required." if cat.nil?
 
-        result = db.exec("UPDATE albums SET title = $2 WHERE id = $1", [album_data['id'], album_data['title']])
-        self.find(db, album_data['id'])
+        #Assign owner
+        result = db.exec("UPDATE cats SET owner_id = $2, adopted_status = $3 WHERE id = $1", [cat_data['id'], cat_data['owner_id'], cat_data['adopted_status']])
+        self.find(db, cat_data['id'])
       else
-        raise "title is required." if album_data['title'].nil? || album_data['title'] == ''
-        result = db.exec("INSERT INTO albums (title) VALUES ($1) RETURNING id", [album_data['title']])
-        album_data['id'] = result.entries.first['id']
-        if album_data['genre_ids']
-          album_data['genre_ids'].each do |genre_id|
-            result = db.exec("INSERT INTO album_genres (album_id, genre_id) VALUES ($1, $2) RETURNING id", [album_data['id'], genre_id])
-          end
-        end
-        album_data
+        raise "name is required." if cat_data['name'].nil? || cat_data['name'] == ''
+        raise "shop_id is required." if cat_data['shop_id'].nil? || cat_data['shop_id'] == ''
+        raise "imageUrl is required." if cat_data['imageUrl'].nil? || cat_data['imageUrl'] == ''
+        result = db.exec("INSERT INTO cats (name, shop_id, imageUrl, adopted_status) values ($1, $2, $3, false); RETURNING id", [dog_data['id'], dog_data['shop_id'], dog_data['imageUrl']])
+        cat_data['id'] = result.entries.first['id']
+        cat_data
       end
     end
 
-    def self.destroy(db, album_id)
+    def self.destroy(db, cat_id)
       # Delete SQL statement
-      db.exec("DELETE FROM songs WHERE album_id = $1", [album_id])
-      db.exec("DELETE FROM album_genres WHERE album_id = $1", [album_id])
-      db.exec("DELETE FROM albums WHERE id = $1", [album_id])
+      db.exec("DELETE FROM cats WHERE id = $1", [cat_id])
     end
 
   end
