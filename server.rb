@@ -1,6 +1,7 @@
 require 'sinatra'
 # require 'sinatra/reloader'
 require 'rest-client'
+require 'json'
 
 
 set :bind, '0.0.0.0'
@@ -86,8 +87,9 @@ get '/shops/:id/dogs' do
   id = params[:id]
 
   dogs = PetShop::DogsRepo.all_from_shop(db, id)
+  JSON.generate(dogs)
   # TODO: Update database instead
-  RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/dogs")
+  # RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/dogs")
 end
 
 put '/shops/:shop_id/dogs/:id/adopt' do
@@ -102,8 +104,8 @@ put '/shops/:shop_id/dogs/:id/adopt' do
     pet_id: id
     }
   Petshop::UsersRepo.adopt(db, adopt_data)
-  RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/dogs/#{id}",
-    { adopted: true }, :content_type => 'application/json')
+  # RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/dogs/#{id}",
+  #   { adopted: true }, :content_type => 'application/json')
   # TODO (after you create users table): Attach new dog to logged in user
 end
 
