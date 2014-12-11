@@ -1,36 +1,23 @@
 require 'pry-byebug'
 
-module Songify
-  class AlbumRepo
+module Petshop
+  class ShopRepo
 
     def self.all(db)
       # Other code should not have to deal with the PG:Result.
       # Therefore, convert the results into a plain array.
       # TODO: This has to be a JOIN table
-      result = db.exec("SELECT * FROM albums").to_a
+      result = db.exec("SELECT * FROM shops").to_a
     end
 
-    def self.find(db, album_id)
+    def self.find(db, shop_id)
       # TODO: This has to be a JOIN table
-      sql_all_genres_for_album = %Q[
-        SELECT
-          g.id,
-          g.name
-        FROM album_genres ag
-        JOIN genres g
-        ON g.id = ag.genre_id
-        WHERE ag.album_id = $1
-      ]
 
-      album = db.exec("SELECT * FROM albums WHERE id=$1", [album_id]).first
-      return album if album.nil?
-
-      album['genres'] = db.exec(sql_all_genres_for_album, [album_id]).to_a
-      album
+      shop = db.exec("SELECT * FROM shops WHERE id=$1", [shop_id]).first
     end
 
-    def self.save(db, album_data)
-      if album_data['id']
+    def self.save(db, shop_data)
+      if shop_data['id'] # Edit Shop
 
         # Ensure album exists
         album = find(db, album_data['id'])
