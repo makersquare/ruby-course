@@ -38,14 +38,13 @@ post '/signin' do
   password = params['password']
   user = Petshop::UsersRepo.find_by_name(db, username)
   # TODO: Grab user by username from database and check password
-
   pass_from_db = BCrypt::Password.new(user['password'])
 
   if pass_from_db == password
     headers['Content-Type'] = 'application/json'
+    session['user_id'] = user['id']
     # TODO: Return all pets adopted by this user
     # TODO: Set session[:user_id] so the server will remember this user has logged in
-    $sample_user.to_json
   else
     status 401
   end
