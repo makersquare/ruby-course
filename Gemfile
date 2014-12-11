@@ -9,4 +9,3 @@ gem 'pg'
 
 # Testing
 gem 'pry-byebug'
-gem 'pg'

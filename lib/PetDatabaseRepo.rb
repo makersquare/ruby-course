@@ -29,7 +29,7 @@ require 'json'
 #  imageurl        | character varying | 
 #  adoption_status | boolean           | 
 
-
+module PetShop
 class Database
   def self.dbconnect
    PG.connect(host: 'localhost', dbname:'petshop_db')
