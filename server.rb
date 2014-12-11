@@ -8,7 +8,8 @@ require 'rest-client'
 get '/' do
   if session[:user_id]
     # TODO: Grab user from database
-    @current_user = $sample_user
+    user = Petshop::UsersRepo.find(db, session[:user_id])
+    @current_user = user['name']
   end
   erb :index
 end
