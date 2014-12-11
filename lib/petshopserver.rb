@@ -5,7 +5,7 @@ require_relative 'repo/dog_repo.rb'
 require_relative 'repo/shop_repo.rb'
 require_relative 'repo/user_repo.rb'
 
-module Petshop
+module Petshops
   def self.create_db_connection(dbname)
     PG.connect(host:'localhost', dbname: dbname)
   end
