@@ -29,6 +29,12 @@ module Petshop
         INSERT INTO pet_adptions (type, user_id, pet_id) 
         VALUES ($1, $2, $3) RETURNING * SQL
       result = db.exec(sql, user_data[:type]], [user_data[:id], user_data[:pet_id]])
+      if(user_data[:type] == "cat")
+        PetShop::CatsRepo.adopt(user_data[:pet_id])
+      end
+      if(user_data[:type] == "dog")
+        PetShop::DogsRepo.adopt(user_data[:pet_id])
+      end
       result.first
     end
     def self.show_adoptions db, user_data
@@ -39,7 +45,7 @@ module Petshop
         WHERE p.type = 'cat' and u.id = $1 
 
         SQL
-      result = db.exec(sql, [user_data[:id])
+      result = db.exec(sql, [user_data[:id]])
       result.first
     end
   end
