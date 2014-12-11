@@ -70,7 +70,7 @@ module Petshop
    db.exec(sql2, ['Tom',2,"http://cdn.sheknows.com/articles/2013/06/25-random-cat-behaviors-finally-explained-01.jpg"])
    
    sql3 = %q[
-     INSERT INTO dogs values (name, shop_id, img_url)
+     INSERT INTO dogs (name, shop_id, img_url)
      VALUES ($1,$2,$3)
    ]
    db.exec(sql3, ['grumpy',1,'http://www.prevention.com/sites/default/files/imagecache/slideshow_display/dog-dogue-de-bordeaux-puppy-410x290.jpg'])
@@ -89,11 +89,11 @@ module Petshop
     
   def self.drop_tables(db)
     db.exec %q[
-      DROP TABLE users_posts;
-      DROP TABLE cats;
-      DROP TABLE dogs;
-      DROP TABLE users;
-      DROP TABLE shops
+      DROP TABLE users_pets CASCADE;
+      DROP TABLE cats CASCADE;
+      DROP TABLE dogs CASCADE;
+      DROP TABLE users CASCADE;
+      DROP TABLE shops CASCADE;
     ]
   end
 end
