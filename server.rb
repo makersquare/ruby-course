@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'rest-client'
+require 'pg'
 require 'json'
 
 # #
@@ -18,8 +19,7 @@ end
 # ...the rest are JSON endpoints
 #
 get '/shops' do
-  headers['Content-Type'] = 'application/json'
-  RestClient.get("http://pet-shop.api.mks.io/shops")
+  
 end
 
 post '/signin' do
