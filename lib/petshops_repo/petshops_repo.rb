@@ -1,7 +1,7 @@
 module PetShop
   class Shops
-    def get_all_shops
-      db.exec('SELECT * FROM shops')
+    def self.get_all_shops(db)
+      db.exec('SELECT * FROM petshops').to_a
     end
 
   end

@@ -9,3 +9,4 @@ gem 'netrc'
 # Testing
 gem 'pry-byebug'
 gem 'pg'
+gem 'json'

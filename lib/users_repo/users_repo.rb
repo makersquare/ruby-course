@@ -1,4 +1,4 @@
-module Petshop
+module PetShop
   class UsersRepo
     # find a user by user ID. Intended to be used when
     # someone is already authenticated. We keep their

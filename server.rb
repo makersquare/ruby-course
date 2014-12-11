@@ -2,9 +2,7 @@ require 'sinatra'
 # require 'sinatra/reloader'
 require 'rest-client'
 require 'json'
-
-
-set :bind, '0.0.0.0'
+require_relative 'lib/pet-shop.rb'
 # #
 # This is our only html view...
 #
@@ -23,8 +21,8 @@ end
 #
 get '/shops' do
   headers['Content-Type'] = 'application/json'
-  RestClient.get("http://pet-shop.api.mks.io/shops")
-
+  db = PetShop.create_db_connection()
+  JSON.generate(PetShop::Shops.get_all_shops(db))
 end
 
 get '/signup' do
