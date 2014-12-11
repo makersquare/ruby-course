@@ -6,6 +6,7 @@ require 'pry-byebug'
 require_relative 'lib/PetDatabaseRepo.rb'
 require_relative 'lib/repos/DB.rb'
 
+set :bind, '0.0.0.0'
 # #
 # This is our only html view...
 #
@@ -79,7 +80,7 @@ get '/shops/:id/dogs' do
   headers['Content-Type'] = 'application/json'
   id = params[:id]
   # TODO: Update database instead
-  # RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/dogs")
+  RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/dogs")
 end
 
 put '/shops/:shop_id/dogs/:id/adopt' do
@@ -87,8 +88,8 @@ put '/shops/:shop_id/dogs/:id/adopt' do
   shop_id = params[:shop_id]
   id = params[:id]
   # TODO: Update database instead
-  # RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/dogs/#{id}",
-    # { adopted: true }, :content_type => 'application/json')
+  RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/dogs/#{id}",
+    { adopted: true }, :content_type => 'application/json')
   # TODO (after you create users table): Attach new dog to logged in user
 end
 
