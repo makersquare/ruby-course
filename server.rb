@@ -2,6 +2,9 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'rest-client'
 require 'json'
+require 'pry-byebug'
+require_relative 'lib/PetDatabaseRepo.rb'
+require_relative 'lib/repos/DB.rb'
 
 # #
 # This is our only html view...
@@ -19,7 +22,11 @@ end
 #
 get '/shops' do
   headers['Content-Type'] = 'application/json'
-  RestClient.get("http://pet-shop.api.mks.io/shops")
+  # RestClient.get("http://pet-shop.api.mks.io/shops")
+  db = PetShop::Database.dbconnect
+  shops = PetShop::DB.get_shops(db)
+  shops.to_json
+ 
 end
 
 post '/signin' do
@@ -48,7 +55,7 @@ get '/shops/:id/cats' do
   headers['Content-Type'] = 'application/json'
   id = params[:id]
   # TODO: Grab from database instead
-  RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/cats")
+  # RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/cats")
 end
 
 put '/shops/:shop_id/cats/:id/adopt' do
@@ -56,8 +63,8 @@ put '/shops/:shop_id/cats/:id/adopt' do
   shop_id = params[:shop_id]
   id = params[:id]
   # TODO: Grab from database instead
-  RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/cats/#{id}",
-    { adopted: true }, :content_type => 'application/json')
+  # RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/cats/#{id}",
+    # { adopted: true }, :content_type => 'application/json')
   # TODO (after you create users table): Attach new cat to logged in user
 end
 
@@ -69,7 +76,7 @@ get '/shops/:id/dogs' do
   headers['Content-Type'] = 'application/json'
   id = params[:id]
   # TODO: Update database instead
-  RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/dogs")
+  # RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/dogs")
 end
 
 put '/shops/:shop_id/dogs/:id/adopt' do
@@ -77,8 +84,8 @@ put '/shops/:shop_id/dogs/:id/adopt' do
   shop_id = params[:shop_id]
   id = params[:id]
   # TODO: Update database instead
-  RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/dogs/#{id}",
-    { adopted: true }, :content_type => 'application/json')
+  # RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/dogs/#{id}",
+    # { adopted: true }, :content_type => 'application/json')
   # TODO (after you create users table): Attach new dog to logged in user
 end
 
