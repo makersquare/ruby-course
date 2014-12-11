@@ -17,12 +17,17 @@ get '/' do
   erb :index
 end
 
+def mydb
+  Petshop.create_db_connection('petserver')
+end
+
 # #
 # ...the rest are JSON endpoints
 #
 get '/shops' do
-  headers['Content-Type'] = 'application/json'
-  RestClient.get("http://pet-shop.api.mks.io/shops")
+
+  # headers['Content-Type'] = 'application/json'
+  # RestClient.get("http://pet-shop.api.mks.io/shops")
 end
 
 post '/signin' do
