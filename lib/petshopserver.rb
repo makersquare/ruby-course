@@ -5,10 +5,12 @@ require_relative 'petshopserver/repos/cats_repo.rb'
 require_relative 'petshopserver/repos/dogs_repo.rb'
 require_relative 'petshopserver/repos/users_repo.rb'
 
+
 # in irb - 
 # db = Petshopserver.create_db_connection('petshopserver')
 # Petshopserver.create_tables(db)
 # Petshopserver.seed_db(db)
+
 
 module Petshopserver
   def self.create_db_connection(dbname)
@@ -32,7 +34,8 @@ module Petshopserver
         password VARCHAR
       );
       CREATE TABLE IF NOT EXISTS shops(
-        id SERIAL PRIMARY KEY,
+
+        id SERIAL PRIMARY KEY,        
         name VARCHAR
       );
       CREATE TABLE IF NOT EXISTS cats(
@@ -67,4 +70,4 @@ module Petshopserver
       DROP TABLE users;
     SQL
   end
-end
+end 
