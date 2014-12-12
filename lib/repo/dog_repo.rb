@@ -16,7 +16,7 @@ module Petshops
 
     def self.save(db, dog_data)
       if dog_data['id']
-        sql = %q[UPDATE dogs set owner_id = $1, adopted = 'true' WHERE id = $2, shop_id = $3]
+        sql = %q[UPDATE dogs set owner_id = $1, adopted = t WHERE id = $2, shop_id = $3]
         result = db.exec(sql, [dog_data['owner_id'], dog_data['id'], dog_data['shop_id']])
         result.entries.first
       else
@@ -29,7 +29,7 @@ module Petshops
     def self.find_by_shop_id(db, shop_id)
       sql = %q[SELECT shop_id AS "shopId", name, image_url AS "imageUrl", adopted, id FROM dogs WHERE shop_id = $1]
       result = db.exec(sql, [shop_id])
-      result.entries
+      result.entries.first
     end
 
   end
