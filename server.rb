@@ -3,6 +3,9 @@ require 'sinatra'
 require 'rest-client'
 require 'json'
 require_relative 'lib/pet-shop.rb'
+
+set :bind, '0.0.0.0'
+
 # #
 # This is our only html view...
 #
@@ -63,7 +66,9 @@ get '/shops/:id/cats' do
   headers['Content-Type'] = 'application/json'
   id = params[:id]
   # TODO: Grab from database instead
-  RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/cats")
+  db = PetShop.create_db_connection()
+  cats = PetShop::CatsRepo.all_from_shop(db, id)
+  JSON.generate(cats)
 end
 
 put '/shops/:shop_id/cats/:id/adopt' do
@@ -71,6 +76,7 @@ put '/shops/:shop_id/cats/:id/adopt' do
   shop_id = params[:shop_id]
   id = params[:id]
   # TODO: Grab from database instead
+  PetShop::UsersRepo.adopt
   RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/cats/#{id}",
     { adopted: true }, :content_type => 'application/json')
   # TODO (after you create users table): Attach new cat to logged in user
