@@ -114,12 +114,13 @@ get '/shops/:id/cats' do
 end
 
 put '/shops/:shop_id/cats/:id/adopt' do
-  headers['Content-Type'] = 'application/json'
+  # headers['Content-Type'] = 'application/json'
   shop_id = params[:shop_id]
   id = params[:id]
+
   # TODO: Grab from database instead
-  RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/cats/#{id}",
-    { adopted: true }, :content_type => 'application/json')
+  # RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/cats/#{id}",
+   # { adopted: true }, :content_type => 'application/json')
   # TODO (after you create users table): Attach new cat to logged in user
 end
 
@@ -130,7 +131,7 @@ end
 get '/shops/:id/dogs' do
   # headers['Content-Type'] = 'application/json'
   id = params[:id]
-  dogs = Petshopserver::CatsRepo.all_by_shop mydb, id
+  dogs = Petshopserver::DogsRepo.all_by_shop mydb, id
   dogs.to_json
   # TODO: Update database instead
   # RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/dogs")
@@ -141,8 +142,8 @@ put '/shops/:shop_id/dogs/:id/adopt' do
   shop_id = params[:shop_id]
   id = params[:id]
   # TODO: Update database instead
-  RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/dogs/#{id}",
-    { adopted: true }, :content_type => 'application/json')
+  # RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/dogs/#{id}",
+    # { adopted: true }, :content_type => 'application/json')
   # TODO (after you create users table): Attach new dog to logged in user
 end
 

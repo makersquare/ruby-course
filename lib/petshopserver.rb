@@ -124,7 +124,7 @@ module Petshopserver
     cats.each do |cat|
       name = cat['name']
       imageurl = cat['imageUrl']
-      adopted = cat['adopted'] ? true : false
+      adopted = cat['adopted']
       shopid = cat['shopId']
  
       db.exec(sql, [shopid, name, imageurl, adopted])
@@ -140,11 +140,20 @@ module Petshopserver
       name = dog['name']
       imageurl = dog['imageUrl']
       happiness = dog['happiness'].to_i
-      x ||= dog['adopted'] ||= dog['adoptedstatus']
-      adopted = x ? true : false
+      x ||= dog['adopted'] 
       shopid = dog['shopId']
  
       db.exec(sql, [shopid, name, imageurl, happiness, adopted])
     end
-  end 
+  end
+
+  def self.boolean_type_cast object, key
+    if object[key] == 't'
+      object[key] = true
+    else
+      object[key] = false
+    end
+    object
+  end
+
 end 

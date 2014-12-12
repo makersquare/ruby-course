@@ -4,6 +4,7 @@ module Petshopserver
     # find a user by user ID. Intended to be used when
     # someone is already authenticated. We keep their
     # user id in the cookie.
+    
     def self.find db, shop_id
       sql = %q[SELECT * FROM shops WHERE id = $1]
       result = db.exec(sql, [shop_id])
@@ -12,6 +13,7 @@ module Petshopserver
 
     # find shops by name. Intended to be used when
     # someone tries to sign in.
+
     def self.find_by_name db, name
       sql = %q[SELECT * FROM shops WHERE name = $1]
       result = db.exec(sql, [name])
