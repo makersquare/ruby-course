@@ -24,14 +24,14 @@ describe Petshops::DogRepo do
     expect(dog_count(db)).to eq(1)
   end
   
-  xit 'changes status to adopted and adds owner to dog' do
+  it 'changes status to adopted and adds owner to dog' do
     shop = Petshops::ShopRepo.save(db, 'pet shop')
     dog = Petshops::DogRepo.save(db, {'name' => 'bob barker', 'image_url' => 'www.dogpic.com', 'shop_id' => shop['id']})
     owner = Petshops::UserRepo.save(db, {'name' => 'John', 'password' => '123'})
-    result = Petshops::DogRepo.save(db, ('id' => dog['id'], 'owner_id' => owner['id'], 'shop_id' => shop['id'])
+    result = Petshops::DogRepo.save(db, {'id' => dog['id'], 'owner_id' => owner['id'], 'shop_id' => shop['id']})
     expect(result['owner_id']).to eq(owner['id'])
     expect(result['shop_id']).to eq(shop['id'])
-    expect(result['adopted']).to eq(true)
+    expect(result['adopted']).to eq('true')
   end
   
 
@@ -46,14 +46,13 @@ describe Petshops::DogRepo do
     expect(result.count).to eq(2)
   end
   
-  it 'finds a dog by shop id' do
+  it 'finds all dogs by shop id' do
       shop = Petshops::ShopRepo.save(db, 'super pets')
-      dog = Petshops::DogRepo.save(db, {'name' => 'griz', 'image_url' => 'www.dogpic.com', 'shop_id' => shop['id']})
+      Petshops::DogRepo.save(db, {'name' => 'griz', 'image_url' => 'www.dogpic.com', 'shop_id' => shop['id']})
+      Petshops::DogRepo.save(db, {'name' => 'grizzly', 'image_url' => 'www.dogpic.com', 'shop_id' => shop['id']})
       result = Petshops::DogRepo.find_by_shop_id(db, shop['id'])
-      expect(result['name']).to eq('griz')
-      expect(result['id']).to eq(dog['id'])
-      expect(result['imageUrl']).to eq('www.dogpic.com')
-      expect(result['adopted']).to be_nil
+      expect(result).to be_a Array
+      expect(result.count).to eq(dog_count(db))
   end
   
   it 'finds a dog by name' do
