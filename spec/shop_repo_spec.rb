@@ -10,7 +10,7 @@ describe Petshops::ShopRepo do
   let(:db) {Petshops.create_db_connection('pet_test')}
   
   before(:each) do
-    Petshops.clear_db(db)
+    Petshops.clear_tables(db)
   end
 
   it "saves a shop to database" do
