@@ -51,7 +51,7 @@ module Petshopserver
   def self.seed_db(db)
     db.exec <<-SQL
       INSERT INTO users (username, password) values ('anonymous', 'anonymous')
-      INSERT INTO users (username, password) values ('Cristina', '1234')
+      INSERT INTO users (username, password) values ('Jessica', '123')
 
     SQL
   end

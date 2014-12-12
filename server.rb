@@ -19,7 +19,7 @@ require_relative 'lib/petshopserver.rb'
 
   helpers do
     def mydb
-      # establish connection to db here
+      db = Petshopserver.create_db_connection 'petshopserver'
     end
   end
 
@@ -36,11 +36,10 @@ require_relative 'lib/petshopserver.rb'
 get '/' do
   if session['user_id']
     user_id = session['user_id']
-    db = Petshopserver.create_db_connection 'petshopserver'
-    @current_user = Petshopserver::UsersRepo.find db, user_id
+    @current_user = Petshopserver::UsersRepo.find mydb, user_id
   else
       @current_user = {'username' => 'anonymous', 'id' => 1}
-    end
+  end
   erb :index
 end
 
@@ -60,8 +59,7 @@ post '/signin' do
 
   # TODO: Grab user by username from database and check password
   #user = { 'username' => 'alice', 'password' => '123' }
-  db = Petshopserver.create_db_connection 'petshopserver'
-  user = Petshopserver::UsersRepo.find_by_username(db, username)
+  user = Petshopserver::UsersRepo.find_by_username(mydb, username)
 
   if password == user['password']
     headers['Content-Type'] = 'application/json'
