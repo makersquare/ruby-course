@@ -2,7 +2,7 @@ require 'pg'
 require 'rest-client'
 require 'json'
 
-module PetShops
+module Petshops
   def self.create_db_connection dbname
     PG.connect(host: 'localhost', dbname: dbname)
   end
@@ -27,11 +27,19 @@ module PetShops
         id SERIAL PRIMARY KEY,
         name VARCHAR
       );
+      CREATE TABLE IF NOT EXISTS users(
+        id SERIAL PRIMARY KEY,
+        username VARCHAR,
+        password VARCHAR
+      );
       CREATE TABLE IF NOT EXISTS cats(
         id SERIAL PRIMARY KEY,
         name VARCHAR,
         adopted VARCHAR,
         imageUrl VARCHAR,
+        ownerId INTEGER REFERENCES users(id)
+          ON DELETE CASCADE
+          ON UPDATE CASCADE,
         shopId INTEGER REFERENCES shops(id)
           ON DELETE CASCADE
           ON UPDATE CASCADE
@@ -41,14 +49,12 @@ module PetShops
         name VARCHAR,
         adopted VARCHAR,
         imageUrl VARCHAR,
+        ownerId INTEGER REFERENCES users(id)
+          ON DELETE CASCADE
+          ON UPDATE CASCADE,
         shopId INTEGER REFERENCES shops(id)
           ON DELETE CASCADE
           ON UPDATE CASCADE
-      );
-      CREATE TABLE IF NOT EXISTS users(
-        id SERIAL PRIMARY KEY,
-        username VARCHAR,
-        password VARCHAR
       );
     SQL
   end
@@ -96,7 +102,6 @@ module PetShops
     dogs_by_shop.each do |shop|
       dog_shop += 1
       shop.each do |dog|
-        # dog["name"].gsub!(/[^a-zA-Z]/, "")
         dogs_query << "(\'" + db.escape_string(dog["name"]) + "\', \'" + (dog["adopted"].to_s != "true" ? "false" : "#{dog["adopted"].to_s}") + "\', \'" + db.escape_string(dog["imageUrl"]) + "\', \'#{dog_shop.to_s}\')"
       end
     end
@@ -104,7 +109,7 @@ module PetShops
     shops_query = shops_query.join(",")
     cats_query = cats_query.join(",")
     dogs_query = dogs_query.join(",")
-    users_query = "('Glenn', 'password'), ('Bonnie', 'ladybug'), ('Steve', 'avanti'), ('Stephen', 'broncos')"
+    users_query = "('Glenn', 'password'), ('James', 'jamespets'), ('Melissa', 'jarjarbinks')"
 
     db.exec("INSERT INTO shops (name) VALUES " + shops_query)
     db.exec("INSERT INTO cats (name, adopted, imageUrl, shopId) VALUES " + cats_query)
