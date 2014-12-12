@@ -21,17 +21,17 @@ module PetShop
       CREATE TABLE IF NOT EXISTS cats(
         id SERIAL PRIMARY KEY,
         shopid INTEGER references petshops(id),
-        imageurl VARCHAR,
+        imageUrl VARCHAR,
         name VARCHAR,
-        adopted BOOLEAN
+        adopted VARCHAR
       );
       CREATE TABLE IF NOT EXISTS dogs(
         id SERIAL PRIMARY KEY,
         shopid INTEGER references petshops(id),
-        imageurl VARCHAR,
+        imageUrl VARCHAR,
         name VARCHAR,
         happiness VARCHAR,
-        adopted BOOLEAN 
+        adopted VARCHAR 
       );
       CREATE TABLE IF NOT EXISTS users(
         id SERIAL PRIMARY KEY,
@@ -65,9 +65,9 @@ module PetShop
     dogurl = "http://www.oldyelladogranch.com/puppies.jpg"
     caturl = "http://nextranks.com/data_images/main/cats/cats-04.jpg"
     shopid = r[0]['id']
-    q = "INSERT INTO cats (shopid, imageurl, name, adopted) values ($1, $2,  'cat1', 'false')"
+    q = "INSERT INTO cats (shopid, imageUrl, name) values ($1, $2,  'cat1')"
     db.exec(q,[shopid, caturl])
-    q = "INSERT INTO dogs (shopid, imageurl, name, happiness, adopted) values ($1, $2, 'dog1', '5', 'false')"
+    q = "INSERT INTO dogs (shopid, imageUrl, name, happiness) values ($1, $2, 'dog1', '5')"
     db.exec(q,[shopid, dogurl])
     password_hash = BCrypt::Password.create('ilovepets')
     q = "INSERT INTO users (username, password) values ('ilovepets', '#{password_hash}')"

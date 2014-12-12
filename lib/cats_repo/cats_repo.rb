@@ -9,7 +9,8 @@ module PetShop
       db.exec("UPDATE cats WHERE id = $1 SET adopted = 'true'",[id])
     end
     def self.all_from_shop(db, id)
-      db.exec("SELECT * FROM cats WHERE shopid = $1",[id]).to_a
+      db.exec(%q[SELECT id, shopid, name,  imageurl AS "imageUrl", adopted FROM cats WHERE shopid = $1],[id]).to_a
+
     end
   end
 end

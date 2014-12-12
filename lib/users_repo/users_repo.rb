@@ -40,9 +40,9 @@ module PetShop
     end
 
     def self.show_adoptions db, user_data
-      sql = %q[SELECT a.pet_id, c.name, c.imageurl FROM pet_adoptions a JOIN cats c on a.pet_id = c.id WHERE a.type = 'cat' and a.user_id = $1]
+      sql = %q[SELECT a.pet_id, c.name, c.imageUrl FROM pet_adoptions a JOIN cats c on a.pet_id = c.id WHERE a.type = 'cat' and a.user_id = $1]
       user_data['cats'] = db.exec(sql, [user_data[:id]]).to_a
-      sql = %q[SELECT a.pet_id, d.name, d.imageurl FROM pet_adoptions a JOIN dogs d on a.pet_id = d.id WHERE a.type = 'dog' and a.user_id = $1]
+      sql = %q[SELECT a.pet_id, d.name, d.imageUrl FROM pet_adoptions a JOIN dogs d on a.pet_id = d.id WHERE a.type = 'dog' and a.user_id = $1]
       user_data['dogs'] = db.exec(sql, [user_data[:id]]).to_a
        
       user_data

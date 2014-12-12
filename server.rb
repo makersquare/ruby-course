@@ -66,7 +66,7 @@ end
 get '/shops/:id/cats' do
   headers['Content-Type'] = 'application/json'
   id = params[:id]
-  # TODO: Grab from database instead
+  # TODO: Grab from database   instead
   db = PetShop.create_db_connection()
   cats = PetShop::CatsRepo.all_from_shop(db, id)
   JSON.generate(cats)
