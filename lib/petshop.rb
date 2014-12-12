@@ -2,7 +2,7 @@ require 'pg'
 require 'rest-client'
 require 'json'
 
-module PetShops
+module Petshops
   def self.create_db_connection dbname
     PG.connect(host: 'localhost', dbname: dbname)
   end
