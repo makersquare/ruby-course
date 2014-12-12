@@ -37,21 +37,22 @@ module Petshopserver
         id SERIAL PRIMARY KEY,        
         name VARCHAR
       );
-      CREATE TABLE IF NOT EXISTS cats(
-        id SERIAL PRIMARY KEY,
-        shop_id INTEGER references shops(id),
-        name VARCHAR,
-        user_id INTEGER references users(id),
-        adopted BOOLEAN,
-        imageUrl VARCHAR
-      );
       CREATE TABLE IF NOT EXISTS dogs(
-        id SERIAL PRIMARY KEY,
-        shop_id INTEGER references shops(id),
-        name VARCHAR,
-        user_id INTEGER references users(id),
-        adopted BOOLEAN,
-        imageUrl VARCHAR
+        id int,
+        shopId int references shops(id),
+        name varchar,
+        imageUrl varchar,
+        happiness int,
+        adopted boolean,
+        user_id INTEGER references users(id)
+      );
+      CREATE TABLE IF NOT EXISTS cats(
+        id int,
+        shopId int references shops(id),
+        name varchar,
+        imageUrl varchar,
+        adopted boolean,
+        user_id INTEGER references users(id)
       );
     SQL
   end
