@@ -34,7 +34,6 @@ module Petshopserver
         password VARCHAR
       );
       CREATE TABLE IF NOT EXISTS shops(
-
         id SERIAL PRIMARY KEY,        
         name VARCHAR
       );
@@ -43,20 +42,27 @@ module Petshopserver
         shop_id INTEGER references shops(id),
         name VARCHAR,
         user_id INTEGER references users(id),
-        adopted BOOLEAN
+        adopted BOOLEAN,
+        imageUrl VARCHAR
       );
       CREATE TABLE IF NOT EXISTS dogs(
         id SERIAL PRIMARY KEY,
         shop_id INTEGER references shops(id),
         name VARCHAR,
         user_id INTEGER references users(id),
-        adopted BOOLEAN
+        adopted BOOLEAN,
+        imageUrl VARCHAR
+        # happiness VARCHAR
       );
     SQL
   end
 
+
   def self.seed_db(db)
     db.exec <<-SQL
+       INSERT INTO shops (name, id) VALUES ($1, $2)
+
+  
       INSERT INTO users (username, password) values ('anonymous', 'anonymous')
       INSERT INTO users (username, password) values ('Jessica', '123')
     SQL
