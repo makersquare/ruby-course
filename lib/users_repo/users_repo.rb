@@ -41,6 +41,22 @@ module PetShop
       return "Adopted: true"
     end
 
+    def self.unadopt db, user_data
+      sql = %q[DELETE FROM pet_adoptions WHERE type = $1 user_id = $2 and pet_id = $3]]
+      result = db.exec(sql, [user_data[:type], user_data[:user_id], user_data[:pet_id]])
+
+      if(user_data[:type] == "cat")
+        sql = %q[UPDATE cats SET adopted = NULL WHERE id = $1]
+        result = db.exec(sql, [user_data[:pet_id]])
+      end
+
+      if(user_data[:type] == "dog")
+        sql = %q[UPDATE dogs SET adopted = NULL WHERE id = $1]
+        result = db.exec(sql, [user_data[:pet_id]])
+       end
+      return "Adopted: true"
+    end
+
     def self.get_adoptions db, user_data
       user_id = user_data['id']
       sql = %q[SELECT d.id, d.name,  d.imageurl AS "imageUrl" FROM pet_adoptions a JOIN dogs d ON d.id = a.pet_id WHERE user_id = $1 and type = 'dog']
