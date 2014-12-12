@@ -9,6 +9,7 @@ module Chatitude
   def self.clear db
     db.exec <<-SQL
       DELETE FROM users;
+      DELETE FROM sessions;
     SQL
   end
 
@@ -19,12 +20,18 @@ module Chatitude
         username VARCHAR,
         password VARCHAR
       );
+      CREATE TABLE IF NOT EXISTS sessions(
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER REFERENCES users (id),
+        token TEXT UNIQUE
+      );
     SQL
   end
 
   def self.drop_tables db
     db.exec <<-SQL
-      DROP TABLE users;
+      DROP TABLE IF EXISTS users;
+      DROP TABLE IF EXISTS sessions;
     SQL
   end
 

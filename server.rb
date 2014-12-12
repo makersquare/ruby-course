@@ -51,8 +51,8 @@ class Chatitude::Server < Sinatra::Application
   # run this before every endpoint to get the current user
   before do
     # this condition assign the current user if someone is logged in
-    if session[:user_id]
-      @current_user = Chatitude::UsersRepo.find db, session[:user_id]
+    if params[:apiToken]
+      @current_user = Chatitude::UsersRepo.find_by_token db, params[:apiToken]
     end
 
     # the next few lines are to allow cross domain requests
@@ -85,8 +85,10 @@ class Chatitude::Server < Sinatra::Application
     user = Chatitude::UsersRepo.find_by_name db, params[:username]
 
     if user && user['password'] == params[:password]
-      session[:user_id] = user['id']
-      {action: 'signin', success: true}.to_json
+      token = Chatitude::UsersRepo.sign_in db, user['id']
+      { apiToken: token }.to_json
+    else
+      status 401
     end
   end
 
