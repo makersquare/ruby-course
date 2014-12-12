@@ -43,7 +43,6 @@ get '/' do
     # TODO: Grab user from database
     # @current_user = $sample_user
     user_id = session['user_id']
-    db = Petshopserver.create_db_connection 'petshopserver'
     @current_user = Petshopserver::UsersRepo.find mydb, user_id
   end
   erb :index
@@ -59,9 +58,12 @@ end
 #
 
 get '/shops' do
-  headers['Content-Type'] = 'application/json'
-  RestClient.get("http://pet-shop.api.mks.io/shops")
+  # shops = Petshopserver.seed_shops_db(mydb)
+  
+  # headers['Content-Type'] = 'application/json'
+  # RestClient.get("http://pet-shop.api.mks.io/shops")
 end
+
 
 
 post '/signin' do
