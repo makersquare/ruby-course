@@ -36,11 +36,11 @@ module Petshops
         id SERIAL PRIMARY KEY,
         name VARCHAR,
         adopted VARCHAR,
-        imageUrl VARCHAR,
-        ownerId INTEGER REFERENCES users(id)
+        image_url VARCHAR,
+        owner_id INTEGER REFERENCES users(id)
           ON DELETE CASCADE
           ON UPDATE CASCADE,
-        shopId INTEGER REFERENCES shops(id)
+        shop_id INTEGER REFERENCES shops(id)
           ON DELETE CASCADE
           ON UPDATE CASCADE
       );
@@ -48,11 +48,11 @@ module Petshops
         id SERIAL PRIMARY KEY,
         name VARCHAR,
         adopted VARCHAR,
-        imageUrl VARCHAR,
-        ownerId INTEGER REFERENCES users(id)
+        image_url VARCHAR,
+        owner_id INTEGER REFERENCES users(id)
           ON DELETE CASCADE
           ON UPDATE CASCADE,
-        shopId INTEGER REFERENCES shops(id)
+        shop_id INTEGER REFERENCES shops(id)
           ON DELETE CASCADE
           ON UPDATE CASCADE
       );
@@ -112,8 +112,8 @@ module Petshops
     users_query = "('Glenn', 'password'), ('James', 'jamespets'), ('Melissa', 'jarjarbinks')"
 
     db.exec("INSERT INTO shops (name) VALUES " + shops_query)
-    db.exec("INSERT INTO cats (name, adopted, imageUrl, shopId) VALUES " + cats_query)
-    db.exec("INSERT INTO dogs (name, adopted, imageUrl, shopId) VALUES " + dogs_query)
+    db.exec("INSERT INTO cats (name, adopted, image_url, shop_id) VALUES " + cats_query)
+    db.exec("INSERT INTO dogs (name, adopted, image_url, shop_id) VALUES " + dogs_query)
 
     db.exec("INSERT INTO users (username, password) VALUES " + users_query)
   end  
