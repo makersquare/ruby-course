@@ -7,6 +7,7 @@ require_relative 'petshopserver/repos/users_repo.rb'
 
 
 # in irb - 
+# load 'file_name.rb'
 # db = Petshopserver.create_db_connection('petshopserver')
 # Petshopserver.create_tables(db)
 # Petshopserver.seed_db(db)
