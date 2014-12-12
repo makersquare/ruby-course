@@ -25,36 +25,36 @@ namespace :db do
   end
 
   task :create_tables => :environment do
-    db1 = Petshop.create_db_connection('petshop_test')
-    db2 = Petshop.create_db_connection('petshop_dev')
-    Petshop.create_tables(db1)
-    Petshop.create_tables(db2)
+    db1 = PetShop.create_db_connection('petshop_test')
+    db2 = PetShop.create_db_connection('petshop_dev')
+    PetShop.create_tables(db1)
+    PetShop.create_tables(db2)
     puts "Created tables."
   end
 
   task :drop_tables => :environment do
-    db1 = Petshop.create_db_connection('petshop_test')
-    db2 = Petshop.create_db_connection('petshop_dev')
-    Petshop.drop_tables(db1)
-    Petshop.drop_tables(db2)
+    db1 = PetShop.create_db_connection('petshop_test')
+    db2 = PetShop.create_db_connection('petshop_dev')
+    PetShop.drop_tables(db1)
+    PetShop.drop_tables(db2)
     puts "Dropped tables."
   end
 
   task :clear => :environment do
     # The test db clears all the time, so there's no point in doing it here.
-    db = Petshop.create_db_connection('petshop_dev')
-    db1 = Petshop.create_db_connection('petshop_test')
-    Petshop.drop_tables(db)
-    Petshop.drop_tables(db1)
-    Petshop.create_tables(db)
-    Petshop.create_tables(db1)
+    db = PetShop.create_db_connection('petshop_dev')
+    db1 = PetShop.create_db_connection('petshop_test')
+    PetShop.drop_tables(db)
+    PetShop.drop_tables(db1)
+    PetShop.create_tables(db)
+    PetShop.create_tables(db1)
     puts "Cleared tables."
   end
 
   task :seed => :environment do
-    db = Petshop.create_db_connection('petshop_dev')
-    db1 = Petshop.create_db_connection('petshop_test')
-    Petshop.seed_db(db)
+    db = PetShop.create_db_connection('petshop_dev')
+    db1 = PetShop.create_db_connection('petshop_test')
+    PetShop.seed_db(db)
     puts "Seeded."
   end
 

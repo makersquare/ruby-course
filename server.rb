@@ -17,12 +17,15 @@ class PetShop::Server < Sinatra::Application
   end
 
   before do
+    @db = PetShop.create_db_connection 'petshop_dev'
     if session[:user_id]
       owner_id = session['user_id']
-      @db = PetShop.create_db_connection 'petshop_dev'
       @current_user = PetShop::OwnerRepo.find @db, owner_id
+      @current_user['cats'] = PetShop::CatRepo.find_all_by_owner(@db, @current_user['id'])
+      @current_user['dogs'] = PetShop::DogRepo.find_all_by_owner(@db, @current_user['id'])
+      @current_user
     else
-      @current_user = $sample_user
+      #@current_user = $sample_user
     end
   end
 
@@ -76,7 +79,7 @@ class PetShop::Server < Sinatra::Application
     id = params[:id]
     # TODO: Grab from database instead
     # RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/cats")
-    
+
     PetShop::CatRepo.find_all_by_shop(@db, id).to_json
   end
 
@@ -87,7 +90,7 @@ class PetShop::Server < Sinatra::Application
     # Grab Cat data from database
 
     owner = PetShop::OwnerRepo.find(@db, @current_user['id'])
-    cat = PetShop::CatRepo.save(@db, {'id' => id, 'owner_id' => owner['id'], 'adopted' => true}).to_json
+    cat = PetShop::CatRepo.save(@db, {'id' => id, 'owner_id' => owner['id'], 'adopted' => 'true'}).to_json
   end
 
 
@@ -106,7 +109,7 @@ class PetShop::Server < Sinatra::Application
     id = params[:id]
     
     owner = PetShop::OwnerRepo.find(@db, @current_user['id'])
-    cat = PetShop::DogRepo.save(@db, {'id' => id, 'owner_id' => owner['id'], 'adopted' => true}).to_json
+    cat = PetShop::DogRepo.save(@db, {'id' => id, 'owner_id' => owner['id'], 'adopted' => 'true'}).to_json
 
   end
 
@@ -115,11 +118,11 @@ class PetShop::Server < Sinatra::Application
     id: 999,
     username: 'anonymous',
     cats: [
-      { shopid: 1, name: "NaN Cat", imageurl: "http://i.imgur.com/TOEskNX.jpg", adopted: true, id: 44 },
-      { shopid: 8, name: "Meowzer", imageurl: "http://www.randomkittengenerator.com/images/cats/rotator.php", id: 8, adopted: true }
+      { shopid: 1, name: "NaN Cat", imageurl: "http://i.imgur.com/TOEskNX.jpg", adopted: 'true', id: 44 },
+      { shopid: 8, name: "Meowzer", imageurl: "http://www.randomkittengenerator.com/images/cats/rotator.php", id: 8, adopted: 'true' }
     ],
     dogs: [
-      { shopid: 1, name: "Leaf Pup", imageurl: "http://i.imgur.com/kuSHji2.jpg", happiness: 2, id: 2, adopted: true }
+      { shopid: 1, name: "Leaf Pup", imageurl: "http://i.imgur.com/kuSHji2.jpg", happiness: 2, id: 2, adopted: 'true' }
     ]
   }
 end
