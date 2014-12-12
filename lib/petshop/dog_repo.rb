@@ -11,8 +11,8 @@ module PetShop
       dog = db.exec("SELECT * FROM dogs WHERE id=$1", [dog_id]).first
     end
 
-    def self.find_all_by_shop(db, shop_id)
-      dogs = db.exec("SELECT * FROM dogs WHERE shop_id=$1", [shop_id]).to_a
+    def self.find_all_by_shop(db, shopid)
+      dogs = db.exec("SELECT * FROM dogs WHERE shopid=$1", [shopid]).to_a
     end
 
     def self.find_all_by_owner(db, owner_id)
@@ -28,19 +28,19 @@ module PetShop
         raise "A valid owner_id is required." if dog.nil?
 
         #Assign owner
-        if dog_data['adopted_status'] && dog_data['name']
-          result = db.exec("UPDATE dogs SET owner_id = $2, adopted_status = $3, name = $4 WHERE id = $1", [dog_data['id'], dog_data['owner_id'], dog_data['adopted_status'], dog_data['name']])
+        if dog_data['adopted'] && dog_data['name']
+          result = db.exec("UPDATE dogs SET owner_id = $2, adopted = $3, name = $4 WHERE id = $1", [dog_data['id'], dog_data['owner_id'], dog_data['adopted'], dog_data['name']])
         elsif dog_data['name']
           result = db.exec("UPDATE dogs SET owner_id = $2, name = $3 WHERE id = $1", [dog_data['id'], dog_data['owner_id'], dog_data['name']])
-        elsif dog_data['adopted_status']
-          result = db.exec("UPDATE dogs SET owner_id = $2, adopted_status = $3 WHERE id = $1", [dog_data['id'], dog_data['owner_id'], dog_data['adopted_status']])
+        elsif dog_data['adopted']
+          result = db.exec("UPDATE dogs SET owner_id = $2, adopted = $3 WHERE id = $1", [dog_data['id'], dog_data['owner_id'], dog_data['adopted']])
         end
         self.find(db, dog_data['id'])
       else
         raise "name is required." if dog_data['name'].nil? || dog_data['name'] == ''
-        raise "shop_id is required." if dog_data['shop_id'].nil? || dog_data['shop_id'] == ''
-        raise "imageUrl is required." if dog_data['imageUrl'].nil? || dog_data['imageUrl'] == ''
-        result = db.exec("INSERT INTO dogs (name, shop_id, imageUrl, adopted_status) values ($1, $2, $3, false) RETURNING id", [dog_data['name'], dog_data['shop_id'], dog_data['imageUrl']])
+        raise "shopid is required." if dog_data['shopid'].nil? || dog_data['shopid'] == ''
+        raise "imageurl is required." if dog_data['imageurl'].nil? || dog_data['imageurl'] == ''
+        result = db.exec("INSERT INTO dogs (name, shopid, imageurl, adopted) values ($1, $2, $3, 'false') RETURNING id", [dog_data['name'], dog_data['shopid'], dog_data['imageurl']])
         self.find(db, result.entries.first['id'])
       end
     end

@@ -38,7 +38,7 @@ class PetShop::Server < Sinatra::Application
   #
   get '/shops' do
     headers['Content-Type'] = 'application/json'
-    shops = PetShop::ShopRepo.all(@db)
+    shops = PetShop::ShopRepo.all(@db).to_json
   end
 
   post '/signin' do
@@ -48,21 +48,21 @@ class PetShop::Server < Sinatra::Application
     password = params['password']
 
     # TODO: Grab user by username from database and check password
-    owner = Petshop::OwnerRepo.find_by_name(@db, username)
+    owner = PetShop::OwnerRepo.find_by_name(@db, username)
     # user = { 'username' => 'alice', 'password' => '123' }
 
     # Validate credentials Valid
-    if password == owner['password']
+    if !owner.nil? && password == owner['password']
       headers['Content-Type'] = 'application/json'
 
       # TODO: Return all pets adopted by this user
-      @current_user['cats'] = Petshop::CatRepo.find_all_by_owner(@db, owner_id)
-      @current_user['dogs'] = Petshop::DogRepo.find_all_by_owner(@db, owner_id)
+      owner['cats'] = PetShop::CatRepo.find_all_by_owner(@db, owner['id'])
+      owner['dogs'] = PetShop::DogRepo.find_all_by_owner(@db, owner['id'])
 
       # TODO: Set session[:user_id] so the server will remember this user has logged in
       session['user_id'] = owner['id']
 
-      @current_user.to_json
+      owner.to_json
     else
       status 401
     end
@@ -77,17 +77,17 @@ class PetShop::Server < Sinatra::Application
     # TODO: Grab from database instead
     # RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/cats")
     
-    Petshop::CatRepo.find_all_by_shop(@db, id)
+    PetShop::CatRepo.find_all_by_shop(@db, id).to_json
   end
 
-  put '/shops/:shop_id/cats/:id/adopt' do
+  put '/shops/:shopid/cats/:id/adopt' do
     headers['Content-Type'] = 'application/json'
-    # shop_id = params[:shop_id]
+    # shopid = params[:shopid]
     id = params[:id]
     # Grab Cat data from database
 
-    owner = Petshop::OwnerRepo.find(@db, @current_user['id'])
-    cat = Petshop::CatRepo.save(@db, {'id' => id, 'owner_id' => owner['id'], 'adopted_status' => true})
+    owner = PetShop::OwnerRepo.find(@db, @current_user['id'])
+    cat = PetShop::CatRepo.save(@db, {'id' => id, 'owner_id' => owner['id'], 'adopted' => true}).to_json
   end
 
 
@@ -97,16 +97,16 @@ class PetShop::Server < Sinatra::Application
   get '/shops/:id/dogs' do
     headers['Content-Type'] = 'application/json'
     id = params[:id]
-    dogs = Petshop::DogRepo.find_all_by_shop(@db, id)
+    dogs = PetShop::DogRepo.find_all_by_shop(@db, id).to_json
   end
 
-  put '/shops/:shop_id/dogs/:id/adopt' do
+  put '/shops/:shopid/dogs/:id/adopt' do
     headers['Content-Type'] = 'application/json'
-    shop_id = params[:shop_id]
+    shopid = params[:shopid]
     id = params[:id]
     
-    owner = Petshop::OwnerRepo.find(@db, @current_user['id'])
-    cat = Petshop::DogRepo.save(@db, {'id' => id, 'owner_id' => owner['id'], 'adopted_status' => true})
+    owner = PetShop::OwnerRepo.find(@db, @current_user['id'])
+    cat = PetShop::DogRepo.save(@db, {'id' => id, 'owner_id' => owner['id'], 'adopted' => true}).to_json
 
   end
 
@@ -115,11 +115,11 @@ class PetShop::Server < Sinatra::Application
     id: 999,
     username: 'anonymous',
     cats: [
-      { shopId: 1, name: "NaN Cat", imageUrl: "http://i.imgur.com/TOEskNX.jpg", adopted_status: true, id: 44 },
-      { shopId: 8, name: "Meowzer", imageUrl: "http://www.randomkittengenerator.com/images/cats/rotator.php", id: 8, adopted_status: true }
+      { shopid: 1, name: "NaN Cat", imageurl: "http://i.imgur.com/TOEskNX.jpg", adopted: true, id: 44 },
+      { shopid: 8, name: "Meowzer", imageurl: "http://www.randomkittengenerator.com/images/cats/rotator.php", id: 8, adopted: true }
     ],
     dogs: [
-      { shopId: 1, name: "Leaf Pup", imageUrl: "http://i.imgur.com/kuSHji2.jpg", happiness: 2, id: 2, adopted_status: true }
+      { shopid: 1, name: "Leaf Pup", imageurl: "http://i.imgur.com/kuSHji2.jpg", happiness: 2, id: 2, adopted: true }
     ]
   }
 end

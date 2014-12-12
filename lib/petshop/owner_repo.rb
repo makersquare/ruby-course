@@ -46,8 +46,8 @@ module PetShop
 
     def self.destroy(db, owner_id)
       # Delete SQL statement
-      db.exec("UPDATE cats SET owner_id = null, adopted_status = false WHERE owner_id = $1", [owner_id])
-      db.exec("UPDATE dogs SET owner_id = null, adopted_status = false WHERE owner_id = $1", [owner_id])
+      db.exec("UPDATE cats SET owner_id = null, adopted = false WHERE owner_id = $1", [owner_id])
+      db.exec("UPDATE dogs SET owner_id = null, adopted = false WHERE owner_id = $1", [owner_id])
       db.exec("DELETE FROM owners WHERE id = $1", [owner_id])
     end
 
