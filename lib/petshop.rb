@@ -27,11 +27,19 @@ module PetShops
         id SERIAL PRIMARY KEY,
         name VARCHAR
       );
+      CREATE TABLE IF NOT EXISTS users(
+        id SERIAL PRIMARY KEY,
+        username VARCHAR,
+        password VARCHAR
+      );
       CREATE TABLE IF NOT EXISTS cats(
         id SERIAL PRIMARY KEY,
         name VARCHAR,
         adopted VARCHAR,
         imageUrl VARCHAR,
+        ownerId INTEGER REFERENCES users(id)
+          ON DELETE CASCADE
+          ON UPDATE CASCADE,
         shopId INTEGER REFERENCES shops(id)
           ON DELETE CASCADE
           ON UPDATE CASCADE
@@ -41,14 +49,12 @@ module PetShops
         name VARCHAR,
         adopted VARCHAR,
         imageUrl VARCHAR,
+        ownerId INTEGER REFERENCES users(id)
+          ON DELETE CASCADE
+          ON UPDATE CASCADE,
         shopId INTEGER REFERENCES shops(id)
           ON DELETE CASCADE
           ON UPDATE CASCADE
-      );
-      CREATE TABLE IF NOT EXISTS users(
-        id SERIAL PRIMARY KEY,
-        username VARCHAR,
-        password VARCHAR
       );
     SQL
   end
@@ -104,7 +110,7 @@ module PetShops
     shops_query = shops_query.join(",")
     cats_query = cats_query.join(",")
     dogs_query = dogs_query.join(",")
-    users_query = "('Glenn', 'password'), ('Bonnie', 'ladybug'), ('Steve', 'avanti'), ('Stephen', 'broncos')"
+    users_query = "('Glenn', 'password'), ('James', 'jamespets'), ('Melissa', 'jarjarbinks')"
 
     db.exec("INSERT INTO shops (name) VALUES " + shops_query)
     db.exec("INSERT INTO cats (name, adopted, imageUrl, shopId) VALUES " + cats_query)
