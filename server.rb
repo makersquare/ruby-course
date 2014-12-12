@@ -4,9 +4,16 @@ require 'rest-client'
 require 'pg'
 require 'json'
 
+require_relative "lib/petshops.rb"
+
 # #
 # This is our only html view...
 #
+configure do
+  enable :sessions
+  use Rack::Flash
+end
+
 get '/' do
   if session[:user_id]
     # TODO: Grab user from database
