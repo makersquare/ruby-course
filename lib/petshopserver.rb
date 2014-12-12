@@ -78,34 +78,28 @@ module Petshopserver
     SQL
   end
  
-def self.seed_shops_db(db)
+  def self.seed_db(db)
     shops = JSON.parse RestClient.get("http://pet-shop.api.mks.io/shops")
     shops.shift
-    # cats = shops.map do |shop|
-    #   shop_id = shop['id']
-    #   JSON.parse RestClient.get("http://pet-shop.api.mks.io/shops/#{shop_id}/cats")
-    # end
+    cats = shops.map do |shop|
+      shop_id = shop['id']
+      JSON.parse RestClient.get("http://pet-shop.api.mks.io/shops/#{shop_id}/cats")
+    end
  
-    # dogs = shops.map do |shop|
-    #   shop_id = shop['id']
-    #   JSON.parse RestClient.get("http://pet-shop.api.mks.io/shops/#{shop_id}/dogs")
-    # end
+    dogs = shops.map do |shop|
+      shop_id = shop['id']
+      JSON.parse RestClient.get("http://pet-shop.api.mks.io/shops/#{shop_id}/dogs")
+    end
  
-    save_shops_to_db(shops,db)
-    # save_cats_to_db(cats.flatten)
-    # save_dogs_to_db(dogs.flatten)
+    # save_shops_to_db(shops,db)
+    save_cats_to_db(cats.flatten,db)
+    save_dogs_to_db(dogs.flatten,db)
   end
  
   def self.save_shops_to_db(shops,db) 
     sq = []
     # "(1, 'Jo's Palace'), (2, Nicks Shop)"
     shops.each do |shop|  
-      # if shop["name"].include? ("'")
-      #   sq << shop
-      #   shops.delete(shop)
-      # # k = shops.count
-      # end  
-      # sq
       shop["name"].gsub(/'/, "///'")
     end 
     values = shops.map do |shop|
@@ -121,4 +115,39 @@ def self.seed_shops_db(db)
 
     db.exec(sql)
   end
+
+
+
+  def self.save_cats_to_db(cats,db)
+    sql = %q[
+      INSERT INTO cats (shopId, name, imageUrl, adopted)
+      VALUES ($1, $2, $3, $4)
+    ]
+    cats.each do |cat|
+      name = cat['name']
+      imageurl = cat['imageUrl']
+      adopted = cat['adopted'] ? true : false
+      shopid = cat['shopId']
+ 
+      db.exec(sql, [shopid, name, imageurl, adopted])
+    end
+  end
+ 
+ 
+  def self.save_dogs_to_db(dogs,db)
+    sql = %q[
+      INSERT INTO dogs (shopId, name, imageUrl, happiness, adopted)
+      VALUES ($1, $2, $3, $4, $5)
+    ]
+    dogs.each do |dog|
+      name = dog['name']
+      imageurl = dog['imageUrl']
+      happiness = dog['happiness'].to_i
+      x ||= dog['adopted'] ||= dog['adoptedstatus']
+      adopted = x ? true : false
+      shopid = dog['shopId']
+ 
+      db.exec(sql, [shopid, name, imageurl, happiness, adopted])
+    end
+  end 
 end 

@@ -6,7 +6,7 @@ module Petshopserver
     # user id in the cookie.
     def self.find db, shop_id
       sql = %q[SELECT * FROM shops WHERE id = $1]
-      result = db.exec(sql, [user_id])
+      result = db.exec(sql, [shop_id])
       result.first
     end
 
@@ -25,7 +25,7 @@ module Petshopserver
     # save shop info
     def self.save db, shop_data
       sql = %q[INSERT INTO shops (name) VALUES ($1) RETURNING *]
-      result = db.exec(sql, [user_data[:name]])
+      result = db.exec(sql, [shop_data[:name]])
       result.first
     end
 
