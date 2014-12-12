@@ -2,10 +2,10 @@ require 'pg'
 require 'json'
 require 'rest-client'
 
-# require_relative 'blogtastic/repos/posts_repo.rb'
-# require_relative 'blogtastic/repos/comments_repo.rb'
-# require_relative 'blogtastic/repos/users_repo.rb'
-
+require_relative 'petshop/repos/cats_repo.rb'
+require_relative 'petshop/repos/dogs_repo.rb'
+require_relative 'petshop/repos/shops_repo.rb'
+require_relative 'petshop/repos/users_repo.rb'
 
 module Petshop
   def self.create_db_connection(dbname)
