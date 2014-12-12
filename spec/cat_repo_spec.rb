@@ -21,7 +21,7 @@ describe Petshops::CatRepo do
     expect(cat['id']).to_not be_nil
     expect(cat['image_url']).to eq('www.catpic.com')
     expect(cat['shop_id']).to eq(shop['id'])
-    expect(cat['adopted']).to eq('false')
+    expect(cat['adopted']).to_be nil
     expect(cat_count(db)).to eq(1)
   end
 
@@ -43,7 +43,7 @@ describe Petshops::CatRepo do
       expect(result['name']).to eq('grizzabella')
       expect(result['id']).to eq(cat['id'])
       expect(result['imageUrl']).to eq('www.catpic.com')
-      expect(result['adopted']).to eq('false')
+      expect(result['adopted']).to_be nil
   end
   
   it 'finds a cat by name' do
