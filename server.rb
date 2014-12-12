@@ -73,11 +73,22 @@ class Chatitude::Server < Sinatra::Application
   end
 
   post '/signup' do
-    if params[:password] == params[:password_confirmation]
+    errors = []
+    if !params[:password] || params[:password] == ''
+      errors << 'blank_password'
+    end
+    if !params[:username] || params[:username] == ''
+      errors << 'blank_username'
+    end
+
+    if errors.count == 0
       user_data = {username: params[:username], password: params[:password]}
       user = Chatitude::UsersRepo.save db, user_data
       session[:user_id] = user['id']
-      {action: 'signup', success: true}.to_json
+      status 200
+    else
+      status 400
+      { errors: errors }.to_json
     end
   end
 
