@@ -8,12 +8,15 @@ require './lib/petshop.rb'
 # This is our only html view...
 #
 
-set :bind, '0.0.0.0'
+configure do
+  set :bind, '0.0.0.0'
+  enable :sessions
+end
 
 get '/' do
   if session[:user_id]
     # TODO: Grab user from database
-    @current_user = $sample_user
+    @current_user = JSON.generate(Petshops::UserRepo.find_by_name(mydb, username))
   end
   erb :index
 end
@@ -37,15 +40,19 @@ post '/signin' do
 
   username = params['username']
   password = params['password']
+  creds = JSON.generate(Petshops::UserRepo.find_by_name(mydb, username))
 
   # TODO: Grab user by username from database and check password
-  user = { 'username' => 'alice', 'password' => '123' }
+  # user = { 'username' => 'alice', 'password' => '123' }
 
-  if password == user['password']
+  if creds[:password] == password
     headers['Content-Type'] = 'application/json'
     # TODO: Return all pets adopted by this user
     # TODO: Set session[:user_id] so the server will remember this user has logged in
-    $sample_user.to_json
+    session[:user_id] = creds[:id]
+    creds[:cats] = [{ shopId: 1, name: "NaN Cat", imageUrl: "http://i.imgur.com/TOEskNX.jpg", adopted: true, id: 44 },{shopId: 8, name: "Meowzer", imageUrl: "http://www.randomkittengenerator.com/images/cats/rotator.php", id: 8, adopted: "true"}]
+    creds[:dogs] = [{shopId: 1, name: "Leaf Pup", imageUrl: "http://i.imgur.com/kuSHji2.jpg", happiness: 2, id: 2, adopted: "true" }]
+    creds
   else
     status 401
   end
