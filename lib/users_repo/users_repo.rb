@@ -30,18 +30,24 @@ module PetShop
       result = db.exec(sql, [user_data[:type], user_data[:user_id], user_data[:pet_id]])
 
       if(user_data[:type] == "cat")
-        PetShop::CatsRepo.adopt_cat(db, user_data[:pet_id])
+        sql = %q[UPDATE cats SET adopted = 'true' WHERE id = $1]
+        result = db.exec(sql, [user_data[:pet_id]])
       end
 
       if(user_data[:type] == "dog")
-        PetShop::DogsRepo.adopt_dog(db, user_data[:pet_id])
-      end
+        sql = %q[UPDATE dogs SET adopted = 'true' WHERE id = $1]
+        result = db.exec(sql, [user_data[:pet_id]])
+       end
       return "Adopted: true"
     end
 
-    def self.show_adoptions db, user_data
-            
-      user_data
+    def self.get_adoptions db, user_data
+      user_id = user_data['id']
+      sql = %q[SELECT d.id, d.name,  d.imageurl AS "imageUrl" FROM pet_adoptions a JOIN dogs d ON d.id = a.pet_id WHERE user_id = $1 and type = 'dog']
+      user_data["dogs"] = db.exec(sql, [user_id]).to_a       
+      sql = %q[SELECT c.id, c.name,  c.imageurl AS "imageUrl" FROM pet_adoptions a JOIN cats c ON c.id = a.pet_id WHERE a.user_id = $1 and type = 'cat']
+      user_data["cats"] = db.exec(sql, [user_id]).to_a
+      return user_data
     end
   end
 end

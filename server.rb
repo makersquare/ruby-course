@@ -56,9 +56,8 @@ post '/signin' do
     session['user_id'] = user['id']
     # TODO: Return all pets adopted by this user
     # TODO: Set session[:user_id] so the server will remember this user has logged in
-    user["dogs"] = PetShop::DogsRepo.find_by_user(db, user['id'])
+    user = PetShop::UsersRepo.get_adoptions(db, user)
     user.delete('password')
-    user["cats"] = PetShop::CatsRepo.find_by_user(db, user['id'])
     JSON.generate(user)
   else
     status 401
