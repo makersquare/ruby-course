@@ -22,7 +22,7 @@ module Petshops
     end
 
     def self.find_by_name(db, user_name)
-      sql = %q[SELECT name, id FROM users where name = $1]
+      sql = %q[SELECT name, password, id FROM users where name = $1]
       result = db.exec(sql, [user_name])
       result.entries.first
     end

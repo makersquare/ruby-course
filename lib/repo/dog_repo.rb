@@ -29,7 +29,7 @@ module Petshops
     def self.find_by_shop_id(db, shop_id)
       sql = %q[SELECT shop_id AS "shopId", name, image_url AS "imageUrl", adopted, id FROM dogs WHERE shop_id = $1]
       result = db.exec(sql, [shop_id])
-      result.entries.first
+      result.entries
     end
 
   end
