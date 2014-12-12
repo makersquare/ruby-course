@@ -16,8 +16,8 @@ module Petshops
 
     def self.save(db, dog_data)
       if dog_data['id']
-        sql = %q[UPDATE dogs set owner_id = $2 where id = $1]
-        result = db.exec(sql, [dog_data['id'], dog_data['owner_id']])
+        sql = %q[UPDATE dogs set owner_id = $1, adopted = 'true' WHERE id = $2, shop_id = $3]
+        result = db.exec(sql, [dog_data['owner_id'], dog_data['id'], dog_data['shop_id']])
         result.entries.first
       else
         sql = %q[INSERT INTO dogs (name, image_url, shop_id) values ($1, $2, $3) returning *]
