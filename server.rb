@@ -77,9 +77,12 @@ end
 # # # #
 get '/shops/:id/cats' do
   headers['Content-Type'] = 'application/json'
-  id = params[:id]
+  shop_id = params[:id]
   # TODO: Grab from database instead
-  RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/cats")
+  # RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/cats")
+  db = Petshop.create_db_connection('Petshop_Test')
+  cats = Petshop::CatsRepo.find_by_shopid(db, shop_id)
+  cats.to_json
 end
 
 put '/shops/:shop_id/cats/:id/adopt' do
