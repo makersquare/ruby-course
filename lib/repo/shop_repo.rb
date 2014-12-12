@@ -16,7 +16,7 @@ module Petshops
     end
 
     def self.find_by_name(db, shop_name)
-      sql = %q[SELECT * FROM shops where name = ($1) returning *]
+      sql = %q[SELECT * FROM shops where name = $1]
       result = db.exec(sql, [shop_name])
       result.entries.first
     end

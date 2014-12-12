@@ -29,5 +29,16 @@ describe Petshops::ShopRepo do
     expect(shop_count(db)).to eq(2)
     expect(result.count).to eq(2)
   end
-
+  
+  it 'finds a shop by id' do
+      shop = Petshops::ShopRepo.save(db, 'super pets')
+      result = Petshops::ShopRepo.find_by_id(db, shop['id'])
+      expect(result['name']).to eq('super pets')
+  end
+  
+  it 'finds a shop by name' do
+      shop = Petshops::ShopRepo.save(db, 'super pets')
+      result = Petshops::ShopRepo.find_by_name(db, 'super pets')
+      expect(result['id']).to eq(shop['id'])
+    end
 end
