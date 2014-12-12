@@ -2,7 +2,7 @@ require 'pg'
 require 'rest-client'
 require 'json'
 
-module PetShops
+module Petshops
   def self.create_db_connection dbname
     PG.connect(host: 'localhost', dbname: dbname)
   end
@@ -102,7 +102,6 @@ module PetShops
     dogs_by_shop.each do |shop|
       dog_shop += 1
       shop.each do |dog|
-        # dog["name"].gsub!(/[^a-zA-Z]/, "")
         dogs_query << "(\'" + db.escape_string(dog["name"]) + "\', \'" + (dog["adopted"].to_s != "true" ? "false" : "#{dog["adopted"].to_s}") + "\', \'" + db.escape_string(dog["imageUrl"]) + "\', \'#{dog_shop.to_s}\')"
       end
     end
