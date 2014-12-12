@@ -43,6 +43,20 @@ class DB
     db.exec("UPDATE dogs set adoption_status = 'true' where dog_id = $1", [dog_id])
   end
 
+  def self.find db, user_id
+    sql = %q[SELECT * FROM users WHERE id = $1]
+    result = db.exec(sql, [user_id])
+    result.first
+  end
+
+  # find user by username. Intended to be used when
+  # someone tries to sign in.
+  def self.find_by_name db, username
+    sql = %q[SELECT * FROM users WHERE username = $1]
+    result = db.exec(sql, [username])
+    result.first
+  end
+
 end #end DB
 end#end module
 

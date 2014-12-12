@@ -13,7 +13,7 @@ set :bind, '0.0.0.0'
 get '/' do
   if session[:user_id]
     # TODO: Grab user from database
-    @current_user = $sample_user
+    # @current_user = $sample_user
   end
   erb :index
 end
@@ -37,13 +37,19 @@ post '/signin' do
   password = params['password']
 
   # TODO: Grab user by username from database and check password
-  user = { 'username' => 'alice', 'password' => '123' }
+  # user = { 'username' => 'alice', 'password' => '123' }
+  db = PetShop::Database.dbconnect
+  user = PetShop::DB.find_by_name(db, username)
 
   if password == user['password']
+    
     headers['Content-Type'] = 'application/json'
+    
     # TODO: Return all pets adopted by this user
     # TODO: Set session[:user_id] so the server will remember this user has logged in
-    $sample_user.to_json
+    # $sample_user.to_json
+    session[:user_id] = user['id']
+    user.to_json
   else
     status 401
   end
