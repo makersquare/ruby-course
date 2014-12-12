@@ -20,8 +20,6 @@ before do
     user_id = session['user_id']
     db = PetShop::Database.dbconnect
     @current_user = PetShop::DB.find db, user_id
-  else
-    @current_user = {'username' => 'anonymous', 'id' => 1}
   end
 end
 
@@ -92,6 +90,11 @@ put '/shops/:shop_id/cats/:id/adopt' do
    db = PetShop::Database.dbconnect
    PetShop::DB.adopt_cat(db, id)
   # TODO (after you create users table): Attach new cat to logged in user
+end
+
+get '/logout' do
+  session.delete('user_id')
+  redirect to '/'
 end
 
 
