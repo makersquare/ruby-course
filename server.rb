@@ -19,7 +19,7 @@ get '/' do
 end
 
 def mydb
-  Petshop.create_db_connection('petserver')
+  Petshops.create_db_connection('petserver')
 end
 
 # #
@@ -27,8 +27,8 @@ end
 #
 get '/shops' do
 
-  # headers['Content-Type'] = 'application/json'
-  # RestClient.get("http://pet-shop.api.mks.io/shops")
+  headers['Content-Type'] = 'application/json'
+  RestClient.get("http://pet-shop.api.mks.io/shops")
 end
 
 post '/signin' do
@@ -57,19 +57,24 @@ get '/shops/:id/cats' do
   headers['Content-Type'] = 'application/json'
   id = params[:id]
   # TODO: Grab from database instead
-  RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/cats")
-  JSON.generate(PetShopServer::CatRepo.(mydb))
+  # RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/cats")
+  JSON.generate(Petshops::CatRepo.find_by_shop_id(mydb, id))
 end
 
 put '/shops/:shop_id/cats/:id/adopt' do
   headers['Content-Type'] = 'application/json'
   shop_id = params[:shop_id]
   id = params[:id]
+  owner_id = session[:user_id]
   # TODO: Grab from database instead
   RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/cats/#{id}",
     { adopted: true }, :content_type => 'application/json')
   # TODO (after you create users table): Attach new cat to logged in user
-  JSON.generate(PetShopServer::CatRepo.(mydb, ))
+  JSON.generate(Petshops::CatRepo.save(mydb, {
+      'id' => id,
+      'shop_id' => shop_id,
+      'ownerId' => owner_id
+    }))
 end
 
 
@@ -81,7 +86,7 @@ get '/shops/:id/dogs' do
   id = params[:id]
   # TODO: Update database instead
   RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/dogs")
-  JSON.generate(PetShopServer::DogRepo.(mydb, ))
+  # JSON.generate(Petshops::DogRepo.(mydb, ))
 end
 
 put '/shops/:shop_id/dogs/:id/adopt' do
@@ -92,7 +97,7 @@ put '/shops/:shop_id/dogs/:id/adopt' do
   RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/dogs/#{id}",
     { adopted: true }, :content_type => 'application/json')
   # TODO (after you create users table): Attach new dog to logged in user
-  JSON.generate(PetShopServer::DogRepo.(mydb, ))
+  # JSON.generate(PetShopServer::DogRepo.(mydb, ))
 end
 
 
