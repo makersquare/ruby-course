@@ -35,7 +35,7 @@ module Petshops
       CREATE TABLE IF NOT EXISTS cats(
         id SERIAL PRIMARY KEY,
         name VARCHAR,
-        adopted BOOLEAN,
+        adopted VARCHAR,
         image_url VARCHAR,
         owner_id INTEGER REFERENCES users(id)
           ON DELETE CASCADE
@@ -47,7 +47,7 @@ module Petshops
       CREATE TABLE IF NOT EXISTS dogs(
         id SERIAL PRIMARY KEY,
         name VARCHAR,
-        adopted BOOLEAN,
+        adopted VARCHAR,
         image_url VARCHAR,
         owner_id INTEGER REFERENCES users(id)
           ON DELETE CASCADE
