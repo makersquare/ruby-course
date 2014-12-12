@@ -1,4 +1,4 @@
-module Petshop
+module PetShop
   class DogsRepo
 
     def self.all_from_shop(db, id)

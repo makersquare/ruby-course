@@ -38,7 +38,7 @@ module PetShop
         username VARCHAR,
         password VARCHAR 
       );
-      CREATE TABLE IF NOT EXISTS pet_adptions(
+      CREATE TABLE IF NOT EXISTS pet_adoptions(
         id SERIAL PRIMARY KEY,
         type VARCHAR,
         user_id INTEGER references users(id),
@@ -53,7 +53,7 @@ module PetShop
       DROP TABLE cats CASCADE;
       DROP TABLE dogs CASCADE;
       DROP TABLE users CASCADE;
-      DROP TABLE pet_adptions;
+      DROP TABLE pet_adoptions;
     SQL
   end
 

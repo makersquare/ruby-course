@@ -43,7 +43,8 @@ post '/signin' do
 
   username = params['username']
   password = params['password']
-  user = Petshop::UsersRepo.find_by_name(db, username)
+  db = PetShop.create_db_connection()
+  user = PetShop::UsersRepo.find_by_name(db, username)
   # TODO: Grab user by username from database and check password
   pass_from_db = BCrypt::Password.new(user['password'])
 
@@ -53,7 +54,7 @@ post '/signin' do
     # TODO: Return all pets adopted by this user
     pets = PetShop::UsersRepo.show_adoptions(db, user)
     # TODO: Set session[:user_id] so the server will remember this user has logged in
-
+    JSON.generate(pets)
   else
     status 401
   end
