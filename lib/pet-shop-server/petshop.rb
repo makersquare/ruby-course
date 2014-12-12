@@ -7,6 +7,6 @@ require_relative 'repos/users_repo.rb'
 
 module PetShopServer
   def self.create_db_connection(dbname)
-    PG::Connection.new(:dbname: dbname)
+    PG::Connection.new(dbname: dbname)
   end
 end
