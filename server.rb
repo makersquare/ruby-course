@@ -59,7 +59,11 @@ get '/shops/:id/cats' do
   id = params[:id]
   # TODO: Grab from database instead
   # RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/cats")
-  JSON.generate(Petshops::CatRepo.find_by_shop_id(mydb, id))
+  data = Petshops::CatRepo.find_by_shop_id(mydb, id)
+  data.each do |line|
+    line['adopted'] = (line['adopted'] == 't' ? true : false)
+  end
+  JSON.generate(data)
 end
 
 put '/shops/:shop_id/cats/:id/adopt' do
@@ -68,8 +72,8 @@ put '/shops/:shop_id/cats/:id/adopt' do
   id = params[:id]
   owner_id = session[:user_id]
   # TODO: Grab from database instead
-  RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/cats/#{id}",
-    { adopted: true }, :content_type => 'application/json')
+  # RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/cats/#{id}",
+  #   { adopted: true }, :content_type => 'application/json')
   # TODO (after you create users table): Attach new cat to logged in user
   JSON.generate(Petshops::CatRepo.save(mydb, {
       'id' => id,
@@ -87,7 +91,13 @@ get '/shops/:id/dogs' do
   id = params[:id]
   # TODO: Update database instead
   # RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/dogs")
-  JSON.generate(Petshops::DogRepo.find_by_shop_id(mydb, id))
+  data = Petshops::DogRepo.find_by_shop_id(mydb, id)
+  
+  data.each do |line|
+    line['adopted'] = (line['adopted'] == 't' ? true : false)
+  end
+
+  JSON.generate(data)
 end
 
 put '/shops/:shop_id/dogs/:id/adopt' do
