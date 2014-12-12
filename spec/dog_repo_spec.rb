@@ -31,7 +31,7 @@ describe Petshops::DogRepo do
     result = Petshops::DogRepo.save(db, {'id' => dog['id'], 'owner_id' => owner['id'], 'shop_id' => shop['id']})
     expect(result['owner_id']).to eq(owner['id'])
     expect(result['shop_id']).to eq(shop['id'])
-    expect(result['adopted']).to eq(true)
+    expect(result['adopted']).to eq('true')
   end
   
 
@@ -52,7 +52,7 @@ describe Petshops::DogRepo do
       Petshops::DogRepo.save(db, {'name' => 'grizzly', 'image_url' => 'www.dogpic.com', 'shop_id' => shop['id']})
       result = Petshops::DogRepo.find_by_shop_id(db, shop['id'])
       expect(result).to be_a Array
-      expect(result.count).to eq(dog_count(db)
+      expect(result.count).to eq(dog_count(db))
   end
   
   it 'finds a dog by name' do

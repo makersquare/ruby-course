@@ -24,6 +24,16 @@ describe Petshops::CatRepo do
     expect(cat['adopted']).to be_nil
     expect(cat_count(db)).to eq(1)
   end
+  
+  it 'changes status to adopted and adds owner to cat' do
+    shop = Petshops::ShopRepo.save(db, 'pet shop')
+    cat = Petshops::CatRepo.save(db, {'name' => 'kitty', 'image_url' => 'www.catpic.com', 'shop_id' => shop['id']})
+    owner = Petshops::UserRepo.save(db, {'name' => 'John', 'password' => '123'})
+    result = Petshops::CatRepo.save(db, {'id' => cat['id'], 'owner_id' => owner['id'], 'shop_id' => shop['id']})
+    expect(result['owner_id']).to eq(owner['id'])
+    expect(result['shop_id']).to eq(shop['id'])
+    expect(result['adopted']).to eq('true')
+  end
 
   it "gets all cats" do
     shop = Petshops::ShopRepo.save(db, 'super pets')
@@ -40,10 +50,7 @@ describe Petshops::CatRepo do
       shop = Petshops::ShopRepo.save(db, 'super pets')
       cat = Petshops::CatRepo.save(db, {'name' => 'grizzabella', 'image_url' => 'www.catpic.com', 'shop_id' => shop['id']})
       result = Petshops::CatRepo.find_by_shop_id(db, shop['id'])
-      expect(result['name']).to eq('grizzabella')
-      expect(result['id']).to eq(cat['id'])
-      expect(result['imageUrl']).to eq('www.catpic.com')
-      expect(result['adopted']).to be_nil
+      expect(result).to be_a Array
   end
   
   it 'finds a cat by name' do
