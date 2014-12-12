@@ -10,5 +10,5 @@ Chat users are identified by their ID which is stored in the session. Users have
 
 This line in the `get '/chat'` endpoint adds a method called `user` to the instance of Sinatra::Helpers::Stream so that they can be identified for keeping connections open and later for private messages.
 ```
-def out.user; @current_user['id']; end
+def out.user; @current_user; end
 ```
