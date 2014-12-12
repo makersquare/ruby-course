@@ -11,8 +11,11 @@ configure do
 end
 
 before do
+
   if session[:user_id]
     # TODO: Grab user from database
+    db = PetShopServer.create_db_connection 'petshop'
+    
     @current_user = $sample_user
   end
 end
