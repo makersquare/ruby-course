@@ -6,13 +6,13 @@ require 'pry-byebug'
 require './lib/chatitude'
 
 class Chatitude::Server < Sinatra::Application
-  
+
   # use thin instead of webrick
   configure do
     enable :sessions
     set server: 'thin'
   end
-  
+
   # helpers for connecting to db and prerparing json responses
   helpers do
     def db
@@ -66,7 +66,7 @@ class Chatitude::Server < Sinatra::Application
 
   # Array used to store event streams
   # connections = []
-  
+
   messages, message_count = [], 0
 
   ############ MAIN ROUTES ###############
