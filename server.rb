@@ -33,12 +33,6 @@ require_relative 'lib/petshopserver.rb'
   #   end
   # end
 
-get '/' do
-  if session['user_id']
-    user_id = session['user_id']
-    @current_user = Petshopserver::UsersRepo.find mydb, user_id
-  else
-      @current_user = {'username' => 'anonymous', 'id' => 1}
 
 
 require_relative 'lib/petshopserver.rb'
@@ -71,7 +65,7 @@ get '/' do
     # @current_user = $sample_user
     user_id = session['user_id']
     db = Petshopserver.create_db_connection 'petshopserver'
-    @current_user = Petshopserver::UsersRepo.find db, user_id
+    @current_user = Petshopserver::UsersRepo.find mydb, user_id
   end
   erb :index
 end
@@ -176,5 +170,5 @@ end
 #   ]
 # }
 
-# end
+
 
