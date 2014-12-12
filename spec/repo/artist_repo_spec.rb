@@ -58,12 +58,6 @@ describe 'the artist repo' do
       artists = artist_repo.get_all
       expect(artists.length).to eq(1)
     end
-
-    it 'can delete an artist from the database using name' do 
-      artist_repo.delete_artist({name: 'Johhny Cash'})
-      artists = artist_repo.get_all
-      expect(artists.length).to eq(1)
-    end
   end
 
 end

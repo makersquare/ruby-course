@@ -1,0 +1,20 @@
+a {
+  text-decoration: none;
+  color: black;
+}
+.album-wrapper {
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.album-cover {
+ margin: auto;
+}
+
+.album-artist {
+  padding-bottom: 5%;
+}
+
+img {
+  max-width: 90%;
+}

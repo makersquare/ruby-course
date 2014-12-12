@@ -70,7 +70,7 @@ class Songify::ArtistRepo
   def delete_artist(params)
     command = <<-SQL
       DELETE FROM artists
-      WHERE (id = '#{params[:id]}') OR (name = '#{params[:name]}')
+      WHERE id = '#{params[:id]}'
       RETURNING *;
     SQL
     result = @db.exec(command)
