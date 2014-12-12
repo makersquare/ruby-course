@@ -23,27 +23,6 @@ require_relative 'lib/petshopserver.rb'
     end
   end
 
-  # before do
-  #   if session['user_id']
-  #     user_id = session['user_id']
-  #     db = Petshopserver.create_db_connection 'petshopserver'
-  #     @current_user = Petshopserver::UsersRepo.find db, user_id
-  #   else
-  #     @current_user = {'username' => 'anonymous', 'id' => 1}
-  #   end
-  # end
-
-
-
-require_relative 'lib/petshopserver.rb'
-
-# class Petshopserver::Server < Sinatra::Application
-  
-  configure do
-    set :bind, '0.0.0.0'
-    enable :sessions
-    use Rack::Flash
-  end
 
 #   before do
 #     if session['user_id'] # if it exists, the user is logged in
