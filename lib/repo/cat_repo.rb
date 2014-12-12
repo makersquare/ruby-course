@@ -15,8 +15,13 @@ module Petshops
         result = db.exec(sql, cat_data['id'], cat_data['ownerId'])
         result.entries.first
       else
+<<<<<<< HEAD
         sql = %q[INSERT INTO cats (name, image_url, shopid) VALUES ($1, $2, $3) RETURNING *]
         result = db.exec(sql, [cat_data['name'], cat_data['imageurl'], cat_data['shopid']])
+=======
+        sql = %q[INSERT INTO cats (name, imageurl, shopid) values ($1, $2, $3) returning *]
+        result = db.exec(sql, [cat_data['name'], cat_data['imageurl'], cat_data['shopId']])
+>>>>>>> a21baaf6668f820a6a4d2d49a1e626a7353947ab
         result.entries.first
       end
     end
