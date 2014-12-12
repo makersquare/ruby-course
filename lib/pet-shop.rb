@@ -1,4 +1,5 @@
 require 'pg'
+require 'bcrypt'
 
 require_relative 'petshops_repo/petshops_repo.rb'
 require_relative 'cats_repo/cats_repo.rb'
