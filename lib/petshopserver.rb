@@ -52,17 +52,13 @@ module Petshopserver
         user_id INTEGER references users(id),
         adopted BOOLEAN,
         imageUrl VARCHAR
-        # happiness VARCHAR
       );
     SQL
   end
 
 
   def self.seed_db(db)
-    db.exec <<-SQL
-       INSERT INTO shops (name, id) VALUES ($1, $2)
-
-  
+    db.exec <<-SQL  
       INSERT INTO users (username, password) values ('anonymous', 'anonymous')
       INSERT INTO users (username, password) values ('Jessica', '123')
     SQL
