@@ -61,6 +61,7 @@ DEPENDENCIES
   pg
   pry-byebug
   rack-flash3
+  rack-test
   rest-client
   rspec (~> 2.14.1)
   sinatra (~> 1.4.5)

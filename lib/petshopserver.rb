@@ -7,6 +7,7 @@ require_relative 'petshopserver/repos/users_repo.rb'
 
 
 # in irb - 
+# load 'file_name.rb'
 # db = Petshopserver.create_db_connection('petshopserver')
 # Petshopserver.create_tables(db)
 # Petshopserver.seed_db(db)
@@ -60,9 +61,6 @@ module Petshopserver
 
   def self.seed_db(db)
     db.exec <<-SQL
-       INSERT INTO shops (name, id) VALUES ($1, $2)
-
-  
       INSERT INTO users (username, password) values ('anonymous', 'anonymous')
       INSERT INTO users (username, password) values ('Jessica', '123')
     SQL

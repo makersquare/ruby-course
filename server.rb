@@ -3,14 +3,14 @@ require 'sinatra/reloader'
 require 'rest-client'
 require 'rack-flash'
 require 'pry-byebug'
-require 'json' #why?
+require 'json' # why?
+require 'pg'   # new
 
 #bundle exec ruby server.rb
-
+#bundle exec rspec
 
 require_relative 'lib/petshopserver.rb'
-
-# class Petshopserver::Server < Sinatra::Application
+  
   configure do
     set :bind, '0.0.0.0'
     enable :sessions
@@ -148,6 +148,5 @@ end
 #     { shopId: 1, name: "Leaf Pup", imageUrl: "http://i.imgur.com/kuSHji2.jpg", happiness: 2, id: 2, adopted: "true" }
 #   ]
 # }
-
-
+ 
 
