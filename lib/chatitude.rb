@@ -1,3 +1,4 @@
+require 'pg'
 require_relative 'chatitude/repos/users_repo.rb'
 
 module Chatitude
@@ -5,7 +6,7 @@ module Chatitude
     PG.connect(host: 'localhost', dbname: dbname)
   end
 
-  def self.clear_db db
+  def self.clear db
     db.exec <<-SQL
       DELETE FROM users;
     SQL
@@ -24,6 +25,13 @@ module Chatitude
   def self.drop_tables db
     db.exec <<-SQL
       DROP TABLE users;
+    SQL
+  end
+
+  def self.seed_dummy_users db
+    db.exec <<-SQL
+      INSERT INTO users (username, password)
+      VALUES ('nick','nick'), ('kate','kate');
     SQL
   end
 end

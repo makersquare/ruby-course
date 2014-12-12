@@ -1,6 +1,5 @@
 require 'sinatra'
 require 'sinatra/reloader'
-require 'eventmachine'
 require 'json'
 require 'pry-byebug'
 
@@ -10,6 +9,7 @@ class Chatitude::Server < Sinatra::Application
   
   # use thin instead of webrick
   configure do
+    enable :sessions
     set server: 'thin'
   end
   
@@ -20,7 +20,7 @@ class Chatitude::Server < Sinatra::Application
     end
 
     def timestamp
-      Time.now.strftime("%H:%M:%S")
+      Time.now.to_i
     end
 
     def respond sender, message
@@ -50,14 +50,24 @@ class Chatitude::Server < Sinatra::Application
 
   # run this before every endpoint to get the current user
   before do
+    # this condition assign the current user if someone is logged in
     if session[:user_id]
       @current_user = Chatitude::UsersRepo.find db, session[:user_id]
     end
+
+    # the next few lines are to allow cross domain requests
+    cors = {
+      "Access-Control-Allow-Origin"  => "*",
+      "Access-Control-Allow-Methods" => "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Headers" => "Origin, X-Requested-With, Content-Type, Accept"
+    }
+    headers.merge! cors
   end
 
   # Array used to store event streams
-  connections = []
-
+  # connections = []
+  
+  messages, message_count = [], 0
 
   ############ MAIN ROUTES ###############
 
@@ -85,43 +95,30 @@ class Chatitude::Server < Sinatra::Application
 
   get '/logout' do
     session.delete('user_id')
-    redirect to '/'
+    status 200
   end
 
   ##########################################
   # event stream stuff.
 
-  # this endpoint is where the user goes in the
-  # browser to see incoming messages.
-  get '/chat', provides: 'text/event-stream' do
-    if @current_user
-      stream :keep_open do |out|
-        def out.user; @current_user; end
-        connections << out
-        out.callback { connections.delete(out) }
-      end
+  get '/chat' do
+    content_type 'application/json'
+    if params[:since]
+      messages.select { |m| params[:since] < m['time'] }
     else
-      redirect to 'sign'
-    end
-  end
-  
-  # this endpoint is where messages are sent to.
-  post '/chat' do
-    sender = @current_user['username']
-    input  = parse_message params[:chat_message]
-    if input[:recipient] == :all
-      connections.each { |out| out << respond(sender, params[:chat_message]) }
-    else
-      rconn = connections.find { |out| out.user['username'] == input[:recipient] }
-      rconn << respond(input[:sender], input[:message]) if rconn
-    end
+      messages.last 10
+    end.to_json
   end
 
-  # possibly not needed?
-  # post '/chatping' do
-  #   if params[:ping]
-  #     conn = connections.find { |out| out.user == @current_user['id'] }
-  #     conn << "PONG"
-  #   end
-  # end
+  post '/chat' do
+    message_count += 1
+    messages << {
+      user: @current_user['username'],
+      message: params[:chat_message],
+      time: timestamp,
+      id: message_count
+    }
+    status 200
+  end
+
 end

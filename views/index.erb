@@ -1,0 +1,64 @@
+<!doctype html>
+<head>
+  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+</head>
+<body>
+
+
+<input type='text' id='username' placeholder='username'>
+<input type='password' id='password' placeholder='password'>
+<input type='submit' id='submit' value='sign in'>
+
+<br /><br />
+
+<input type='text' id='chatmessage' placeholder='message'>
+<input type='submit' id='sendchat' value='send'>
+
+
+
+
+<script>
+$(document).ready(function(){
+  $('#submit').click(function(e){
+    $.ajax({
+      url: '/signin',
+      type: 'POST',
+      data: {
+        username: $('#username').val(),
+        password: $('#password').val()
+      },
+      success: function(result){
+        $('#response').append(result);
+      }
+    });
+  });
+});
+
+var getstuff = function() {
+  $.ajax({
+    url: '/chat',
+    type: 'GET',
+    success: function(result){
+      console.log(result);
+    }
+  });
+}
+
+$(document).ready(function(){
+  $('#sendchat').click(function(e){
+    $.ajax({
+      url: '/chat',
+      type: 'POST',
+      data: { chat_message: $('#chatmessage').val() },
+      success: function(result){
+      console.log(result);
+        getstuff();
+      }
+    });
+  });
+});
+</script>
+
+
+</body>
+</html>
