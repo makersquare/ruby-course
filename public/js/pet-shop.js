@@ -46,6 +46,10 @@
         onclick: ctrl.adopt.coldCurry(type, pet.id),
         href: '#'
       }, 'Adopt this pet')
+      var unAdoptLink = m('a', {
+          onclick: ctrl.adopt.coldCurry(type, pet.id),
+          href: '#'
+      }, 'Ditch this loser pet.')
 
       return m('.pet', [
         m('.photo',
@@ -57,6 +61,7 @@
           m('span', pet.adopted ? "Yes!" : "No..."),
           m('br'),
           pet.adopted ? null : adoptLink
+          pet.adopted ? 'true' : unAdoptLink
         ])
       ])
     })
