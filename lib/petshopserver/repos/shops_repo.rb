@@ -28,5 +28,11 @@ module Petshopserver
       result = db.exec(sql, [user_data[:name]])
       result.first
     end
+
+    def self.destroy db, id
+      sql = %q[DELETE FROM shops WHERE id = $1]
+      db.exec(sql, [id])
+    end
+    
   end
 end
