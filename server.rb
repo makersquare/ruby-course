@@ -68,9 +68,9 @@ class Chatitude::Server < Sinatra::Application
 
   ############ MAIN ROUTES ###############
 
-  get '/' do
-    erb :index
-  end
+  # get '/' do
+  #   erb :index
+  # end
 
   post '/signup' do
     errors = []
