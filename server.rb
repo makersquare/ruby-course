@@ -108,14 +108,18 @@ class Chatitude::Server < Sinatra::Application
   end
 
   post '/chat' do
-    message_count += 1
-    messages << {
-      user: @current_user['username'],
-      message: params[:chat_message],
-      time: timestamp,
-      id: message_count
-    }
-    status 200
+    if @current_user
+      message_count += 1
+      messages << {
+        user: @current_user['username'],
+        message: params[:chat_message],
+        time: timestamp,
+        id: message_count
+      }
+      status 200
+    else
+      status 403
+    end
   end
 
 end
