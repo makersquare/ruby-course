@@ -16,7 +16,7 @@ module Petshops
         result = db.exec(sql, [cat_data['owner_id'], cat_data['id'], cat_data['shop_id']])
         result.entries.first
       else
-        sql = %q[INSERT INTO cats (name, image_url, shopid) VALUES ($1, $2, $3) RETURNING *]
+        sql = %q[INSERT INTO cats (name, image_url, shop_id) VALUES ($1, $2, $3) RETURNING *]
         result = db.exec(sql, [cat_data['name'], cat_data['image_url'], cat_data['shop_id']])
         result.entries.first
       end
@@ -31,7 +31,7 @@ module Petshops
     def self.find_by_shop_id(db, shop_id)
       sql = %q[SELECT shop_id AS "shopId", name, image_url AS "imageUrl", adopted, id FROM cats WHERE shop_id = $1]
       result = db.exec(sql, [shop_id])
-      result.entries
+      result.entries.first
     end
 
   end
