@@ -18,7 +18,7 @@
 
       m.request({ method: 'put', url: adoptUrl }).then(function() {
         var pet = pets().find(function(p){ return p.id == petId })
-        pet.adopted = true
+        pet.adopted = "true"
         appCtrl.user()[type].push(pet)
       }, genericError)
     }
@@ -40,23 +40,22 @@
 
   var petsView = function (ctrl, type, pets) {
     if (!pets) return null
-
+    debugger
     var petDivs = pets.map(function(pet) {
       var adoptLink = m('a', {
         onclick: ctrl.adopt.coldCurry(type, pet.id),
         href: '#'
       }, 'Adopt this pet')
-
       return m('.pet', [
         m('.photo',
-          m('img', { src: pet.imageUrl })
+          m('img', { src: pet.imageurl })
         ),
         m('.info', [
           m('h4', pet.name),
           m('b', "Adopted: "),
-          m('span', pet.adopted ? "Yes!" : "No..."),
+          m('span', pet.adopted == "true" ? "Yes!" : "No..."),
           m('br'),
-          pet.adopted ? null : adoptLink
+          pet.adopted == "true" ? null : adoptLink
         ])
       ])
     })
