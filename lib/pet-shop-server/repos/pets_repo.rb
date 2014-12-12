@@ -15,7 +15,7 @@ module PetShopServer
     def self.build_user db, id
       # sql = %[select * from pets where id = $1]
       # result = db.exec(sql, [id])
-      catSql = %q[SELECT
+      catSql = %Q[SELECT
                    users.username,
                    users.password,
                    pets.id,
@@ -32,8 +32,8 @@ module PetShopServer
                   WHERE
                    users.id = $1 AND
                    users.id = pets.userid AND
-                   pets.species = 'cat'; ]
-      dogSql = %q[SELECT
+                   pets.species = 'cat' ]
+      dogSql = %Q[SELECT
                    users.username,
                    users.password,
                    pets.id,
@@ -50,12 +50,15 @@ module PetShopServer
                   WHERE
                    users.id = $1 AND
                    users.id = pets.userid AND
-                   pets.species = 'dog'; ]
-        catResult = db.exec(catSql, 999)
-        dogResult = db.exec(dogSql, 999)
+                   pets.species = 'dog' ]
+        catResult = db.exec(catSql, [999])
+        dogResult = db.exec(dogSql, [999])
+        puts 'hi'
+        # puts catResult.first
       $real_user = {}
         $real_user['id'] = catResult.first['id']
         $real_user['username'] = catResult.first['username']
+        $real_user['cats'] = []
         # push cats
         catResult.each do |cat|
           push_object = {
@@ -65,10 +68,13 @@ module PetShopServer
                         'adopted' => cat['adopted'],
                         'happiness' => cat['happiness']
                         }
-          $real_user['cats'].push(push_object)
+          puts 'Puts push object:********************************'
+          puts push_object
+          $real_user['cats'] << push_object
           end
 
-        #push dogs
+        # push dogs
+        $real_user['dogs'] = []
         dogResult.each do |dog|
           push_object = {
                         'shopId' => dog['shop_id'],
@@ -77,10 +83,12 @@ module PetShopServer
                         'adopted' => dog['adopted'],
                         'happiness' => dog['happiness']
                         }
-          $real_user['dogs'].push(push_object)
-          $real_user
+          $real_user['dogs'] << push_object
+
+
           end
-        
+                  puts "**********************************************"
+          puts $real_user
 
     end
 

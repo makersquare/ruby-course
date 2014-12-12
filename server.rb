@@ -15,7 +15,6 @@ before do
   if session[:user_id]
     # TODO: Grab user from database
     db = PetShopServer.create_db_connection 'petshop'
-
     @current_user = PetshopServer::PetsRepo.build_user
   end
 end
@@ -23,7 +22,8 @@ end
 # This is our only html view...
 #
 get '/' do
-  
+  db = PetShopServer.create_db_connection 'petshop'
+  puts PetShopServer::PetsRepo.build_user(db, 999)
   erb :index
 end
 
@@ -96,14 +96,14 @@ put '/shops/:shop_id/dogs/:id/adopt' do
 end
 
 
-$sample_user = {
-  id: 999,
-  username: 'alice',
-  cats: [
-    { shopId: 1, name: "NaN Cat", imageUrl: "http://i.imgur.com/TOEskNX.jpg", adopted: true, id: 44 },
-    { shopId: 8, name: "Meowzer", imageUrl: "http://www.randomkittengenerator.com/images/cats/rotator.php", id: 8, adopted: "true" }
-  ],
-  dogs: [
-    { shopId: 1, name: "Leaf Pup", imageUrl: "http://i.imgur.com/kuSHji2.jpg", happiness: 2, id: 2, adopted: "true" }
-  ]
-}
+# $sample_user = {
+#   id: 999,
+#   username: 'alice',
+#   cats: [
+#     { shopId: 1, name: "NaN Cat", imageUrl: "http://i.imgur.com/TOEskNX.jpg", adopted: true, id: 44 },
+#     { shopId: 8, name: "Meowzer", imageUrl: "http://www.randomkittengenerator.com/images/cats/rotator.php", id: 8, adopted: "true" }
+#   ],
+#   dogs: [
+#     { shopId: 1, name: "Leaf Pup", imageUrl: "http://i.imgur.com/kuSHji2.jpg", happiness: 2, id: 2, adopted: "true" }
+#   ]
+# }
