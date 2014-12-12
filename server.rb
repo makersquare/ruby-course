@@ -56,12 +56,9 @@ class Chatitude::Server < Sinatra::Application
     end
 
     # the next few lines are to allow cross domain requests
-    cors = {
-      "Access-Control-Allow-Origin"  => "*",
-      "Access-Control-Allow-Methods" => "GET, POST, PUT, DELETE, OPTIONS",
-      "Access-Control-Allow-Headers" => "Origin, X-Requested-With, Content-Type, Accept"
-    }
-    headers.merge! cors
+    headers["Access-Control-Allow-Origin"] = "*"
+    headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+    headers["Access-Control-Allow-Headers"] = "Origin, X-Requested-With, Content-Type, Accept"
   end
 
   # Array used to store event streams
