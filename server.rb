@@ -72,11 +72,14 @@ class Chatitude::Server < Sinatra::Application
   # this endpoint is where the user goes in the
   # browser to see incoming messages.
   get '/chat', provides: 'text/event-stream' do
-    stream :keep_open do |out|
-      # EventMachine::PeriodicTimer.new(20) { out << '\0' } # keep connection open
-      def out.user; @current_user['id']; end
-      connections << out
-      out.callback { connections.delete(out) }
+    if @current_user
+      stream :keep_open do |out|
+        def out.user; @current_user['id']; end
+        connections << out
+        out.callback { connections.delete(out) }
+      end
+    else
+      # something to make them sign in
     end
   end
   
