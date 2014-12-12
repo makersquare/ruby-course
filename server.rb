@@ -10,6 +10,21 @@ set :bind, '0.0.0.0'
 # #
 # This is our only html view...
 #
+configure do
+  set :bind, '0.0.0.0'
+  enable :sessions
+end
+
+before do
+  if session['user_id']
+    user_id = session['user_id']
+    db = PetShop::Database.dbconnect
+    @current_user = PetShop::DB.find db, user_id
+  else
+    @current_user = {'username' => 'anonymous', 'id' => 1}
+  end
+end
+
 get '/' do
   if session[:user_id]
     # TODO: Grab user from database
@@ -40,7 +55,6 @@ post '/signin' do
   # user = { 'username' => 'alice', 'password' => '123' }
   db = PetShop::Database.dbconnect
   user = PetShop::DB.find_by_name(db, username)
-
   if password == user['password']
     
     headers['Content-Type'] = 'application/json'
