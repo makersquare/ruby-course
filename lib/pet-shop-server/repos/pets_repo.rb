@@ -51,10 +51,9 @@ module PetShopServer
                    users.id = $1 AND
                    users.id = pets.userid AND
                    pets.species = 'dog' ]
-        catResult = db.exec(catSql, [999])
-        dogResult = db.exec(dogSql, [999])
-        puts 'hi'
-        # puts catResult.first
+        catResult = db.exec(catSql, [id])
+        dogResult = db.exec(dogSql, [id])
+
       $real_user = {}
         $real_user['id'] = catResult.first['id']
         $real_user['username'] = catResult.first['username']
@@ -68,8 +67,7 @@ module PetShopServer
                         'adopted' => cat['adopted'],
                         'happiness' => cat['happiness']
                         }
-          puts 'Puts push object:********************************'
-          puts push_object
+         
           $real_user['cats'] << push_object
           end
 
@@ -87,8 +85,8 @@ module PetShopServer
 
 
           end
-                  puts "**********************************************"
-          puts $real_user
+                  
+          $real_user
 
     end
 

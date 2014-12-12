@@ -13,7 +13,9 @@ module PetShopServer
     end
 
     def self.find_by_name db, name
-      sql = %[select * from users]
+      sql = %[select * from users WHERE username = $1]
+      result = db.exec(sql, [name])
+      result.first
     end
   end
 end
