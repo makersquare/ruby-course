@@ -9,7 +9,6 @@ module PetShop
     def self.find_by_user(db, user_id)
       sql = %q[SELECT d.id, d.name,  d.imageurl AS "imageUrl" FROM pet_adoptions a JOIN dogs d ON d.id = a.pet_id WHERE user_id = $1 and type = 'dog']
       result = db.exec(sql, [user_id]).to_a
-      result.first
     end
 
     def self.adopt_dog(db, dog_id)

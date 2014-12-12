@@ -59,11 +59,11 @@ post '/signin' do
     user["dogs"] = PetShop::DogsRepo.find_by_user(db, user['id'])
     user.delete('password')
     user["cats"] = PetShop::CatsRepo.find_by_user(db, user['id'])
-    
+    JSON.generate(user)
   else
     status 401
   end
-  JSON.generate(user)
+  
 end
 
  # # # #
