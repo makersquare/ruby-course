@@ -58,7 +58,7 @@ end
 #
 
 get '/shops' do
-  # shopscatsdogs = Petshopserver.seed_db(mydb)
+  # shopscatsdogs = Petshopserver.seed_all_db(mydb)
   
   # headers['Content-Type'] = 'application/json'
   # RestClient.get("http://pet-shop.api.mks.io/shops")
@@ -104,10 +104,13 @@ end
 # Cats #
 # # # #
 get '/shops/:id/cats' do
-  headers['Content-Type'] = 'application/json'
+  # headers['Content-Type'] = 'application/json'
   id = params[:id]
+  cats = Petshopserver::CatsRepo.all_by_shop mydb, id
+  cats.to_json
   # TODO: Grab from database instead
-  RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/cats")
+  # RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/cats")
+
 end
 
 put '/shops/:shop_id/cats/:id/adopt' do
@@ -125,10 +128,12 @@ end
 # Dogs #
 # # # #
 get '/shops/:id/dogs' do
-  headers['Content-Type'] = 'application/json'
+  # headers['Content-Type'] = 'application/json'
   id = params[:id]
+  dogs = Petshopserver::CatsRepo.all_by_shop mydb, id
+  dogs.to_json
   # TODO: Update database instead
-  RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/dogs")
+  # RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/dogs")
 end
 
 put '/shops/:shop_id/dogs/:id/adopt' do

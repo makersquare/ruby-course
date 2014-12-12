@@ -1,9 +1,16 @@
-module Petshop
+module Petshopserver
   class DogsRepo
+
     def self.all db
       sql = %q[SELECT * FROM dogs]
       result = db.exec(sql)
       result.entries
+    end
+
+    def self.all_by_shop db, id
+      sql = %q[SELECT * FROM dogs WHERE "shopId" = $1]
+      result = db.exec(sql, [id])
+      result.first
     end
 
     def self.find db, id

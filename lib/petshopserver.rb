@@ -40,17 +40,17 @@ module Petshopserver
       );
       CREATE TABLE IF NOT EXISTS dogs(
         id SERIAL PRIMARY KEY,
-        shopId int references shops(id),
+        "shopId" int references shops(id),
         name varchar,
-        imageUrl varchar,
+        "imageUrl" varchar,
         happiness int,
         adopted boolean
       );
       CREATE TABLE IF NOT EXISTS cats(
         id SERIAL PRIMARY KEY,
-        shopId int references shops(id),
+        "shopId" int references shops(id),
         name varchar,
-        imageUrl varchar,
+        "imageUrl" varchar,
         adopted boolean
       );
       CREATE TABLE IF NOT EXISTS userPets(
@@ -78,7 +78,7 @@ module Petshopserver
     SQL
   end
  
-  def self.seed_db(db)
+  def self.seed_all_db(db)
     shops = JSON.parse RestClient.get("http://pet-shop.api.mks.io/shops")
     shops.shift
     cats = shops.map do |shop|
