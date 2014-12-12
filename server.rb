@@ -19,7 +19,7 @@ get '/' do
 end
 
 def mydb
-  Petshop.create_db_connection('petserver')
+  Petshops.create_db_connection('petserver')
 end
 
 # #
@@ -27,8 +27,8 @@ end
 #
 get '/shops' do
 
-  # headers['Content-Type'] = 'application/json'
-  # RestClient.get("http://pet-shop.api.mks.io/shops")
+  headers['Content-Type'] = 'application/json'
+  RestClient.get("http://pet-shop.api.mks.io/shops")
 end
 
 post '/signin' do
@@ -57,8 +57,14 @@ get '/shops/:id/cats' do
   headers['Content-Type'] = 'application/json'
   id = params[:id]
   # TODO: Grab from database instead
-  RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/cats")
-  JSON.generate(PetShopServer::CatRepo.(mydb))
+  # RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/cats")
+  data = Petshops::CatRepo.find_by_shop_id(mydb, id)
+  # data.each do |x|
+  #   x['shopId'] = x['shopId'].to_i
+  #   x['id'] = x['id'].to_i
+  #   x['adopted'] = (x['adopted'] == 'true' ? true : false)
+  # end
+  JSON.generate(data)
 end
 
 put '/shops/:shop_id/cats/:id/adopt' do
@@ -69,7 +75,10 @@ put '/shops/:shop_id/cats/:id/adopt' do
   RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/cats/#{id}",
     { adopted: true }, :content_type => 'application/json')
   # TODO (after you create users table): Attach new cat to logged in user
-  JSON.generate(PetShopServer::CatRepo.(mydb, ))
+  # JSON.generate(Petshops::CatRepo.find_cat_id_shop_id(mydb, {
+  #     'id' => id,
+  #     'shop_id' => shop_id
+  #   }))
 end
 
 
@@ -81,7 +90,7 @@ get '/shops/:id/dogs' do
   id = params[:id]
   # TODO: Update database instead
   RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/dogs")
-  JSON.generate(PetShopServer::DogRepo.(mydb, ))
+  # JSON.generate(Petshops::DogRepo.(mydb, ))
 end
 
 put '/shops/:shop_id/dogs/:id/adopt' do
@@ -92,7 +101,7 @@ put '/shops/:shop_id/dogs/:id/adopt' do
   RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/dogs/#{id}",
     { adopted: true }, :content_type => 'application/json')
   # TODO (after you create users table): Attach new dog to logged in user
-  JSON.generate(PetShopServer::DogRepo.(mydb, ))
+  # JSON.generate(PetShopServer::DogRepo.(mydb, ))
 end
 
 
