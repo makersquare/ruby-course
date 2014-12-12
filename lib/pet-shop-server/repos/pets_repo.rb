@@ -1,4 +1,4 @@
-module Blogtastic
+module PetShopServer
   class PetsRepo
     def self.all db 
       sql = %q[select * from pets]
