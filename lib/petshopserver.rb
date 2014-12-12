@@ -6,6 +6,12 @@ require_relative 'petshopserver/repos/dogs_repo.rb'
 require_relative 'petshopserver/repos/users_repo.rb'
 
 
+# in irb - 
+# db = Petshopserver.create_db_connection('petshopserver')
+# Petshopserver.create_tables(db)
+# Petshopserver.seed_db(db)
+
+
 module Petshopserver
   def self.create_db_connection(dbname)
     PG.connect(host: 'localhost', dbname: dbname)
@@ -28,21 +34,22 @@ module Petshopserver
         password VARCHAR
       );
       CREATE TABLE IF NOT EXISTS shops(
-        id SERIAL PRIMARY KEY,  
+
+        id SERIAL PRIMARY KEY,        
         name VARCHAR
       );
       CREATE TABLE IF NOT EXISTS cats(
         id SERIAL PRIMARY KEY,
-        shop_id INT references shops(id),
+        shop_id INTEGER references shops(id),
         name VARCHAR,
-        user_id INT references users(id),
+        user_id INTEGER references users(id),
         adopted BOOLEAN
       );
       CREATE TABLE IF NOT EXISTS dogs(
         id SERIAL PRIMARY KEY,
-        shop_id INT references shops(id),
+        shop_id INTEGER references shops(id),
         name VARCHAR,
-        user_id INT references users(id),
+        user_id INTEGER references users(id),
         adopted BOOLEAN
       );
     SQL
@@ -52,7 +59,6 @@ module Petshopserver
     db.exec <<-SQL
       INSERT INTO users (username, password) values ('anonymous', 'anonymous')
       INSERT INTO users (username, password) values ('Jessica', '123')
-
     SQL
   end
 
@@ -64,5 +70,4 @@ module Petshopserver
       DROP TABLE users;
     SQL
   end
-end
-
+end 
