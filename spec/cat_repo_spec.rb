@@ -35,15 +35,20 @@ describe Petshops::CatRepo do
     expect(result.count).to eq(2)
   end
   
-  it 'finds a shop by id' do
+  xit 'finds a cat by shop id' do
       shop = Petshops::ShopRepo.save(db, 'super pets')
-      result = Petshops::ShopRepo.find_by_id(db, shop['id'])
-      expect(result['name']).to eq('super pets')
+      cat = Petshops::CatRepo.save(db, {'name' => 'grizzabella', 'imageUrl' => 'www.catpic.com', 'shopId' => shop['id']})
+      result = Petshops::CatRepo.find_cat_id_shop_id(db, shop['id'])
+      expect(result['name']).to eq('grizzabella')
+      expect(result['id']).to eq(cat['id'])
+      expect(result['image_url']).to eq('www.catpic.com')
+      expect(result['adopted']).to eq(false)
   end
   
-  it 'finds a shop by name' do
+  it 'finds a cat by name' do
       shop = Petshops::ShopRepo.save(db, 'super pets')
-      result = Petshops::ShopRepo.find_by_name(db, 'super pets')
-      expect(result['id']).to eq(shop['id'])
+      cat = Petshops::CatRepo.save(db, {'name' => 'blinksy', 'imageUrl' => 'www.catpic.com', 'shopId' => shop['id']})
+      result = Petshops::CatRepo.find_by_name(db, 'blinksy')
+      expect(result['id']).to eq(cat['id'])
     end
 end
