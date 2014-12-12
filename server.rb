@@ -16,7 +16,7 @@ class Chatitude::Server < Sinatra::Application
   # helpers for connecting to db and prerparing json responses
   helpers do
     def db
-      Chatitude.create_db_connection 'blogtastic'
+      Chatitude.create_db_connection 'chatitude'
     end
 
     def timestamp
