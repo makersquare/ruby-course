@@ -91,7 +91,7 @@ module Petshopserver
       JSON.parse RestClient.get("http://pet-shop.api.mks.io/shops/#{shop_id}/dogs")
     end
  
-    # save_shops_to_db(shops,db)
+    save_shops_to_db(shops,db)
     save_cats_to_db(cats.flatten,db)
     save_dogs_to_db(dogs.flatten,db)
   end
@@ -116,8 +116,6 @@ module Petshopserver
     db.exec(sql)
   end
 
-
-
   def self.save_cats_to_db(cats,db)
     sql = %q[
       INSERT INTO cats (shopId, name, imageUrl, adopted)
@@ -132,7 +130,6 @@ module Petshopserver
       db.exec(sql, [shopid, name, imageurl, adopted])
     end
   end
- 
  
   def self.save_dogs_to_db(dogs,db)
     sql = %q[

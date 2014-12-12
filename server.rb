@@ -58,7 +58,7 @@ end
 #
 
 get '/shops' do
-   shops = Petshopserver.seed_db(mydb)
+  # shopscatsdogs = Petshopserver.seed_db(mydb)
   
   # headers['Content-Type'] = 'application/json'
   # RestClient.get("http://pet-shop.api.mks.io/shops")
