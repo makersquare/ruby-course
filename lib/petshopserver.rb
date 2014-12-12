@@ -38,29 +38,29 @@ module Petshopserver
         id SERIAL PRIMARY KEY,        
         name VARCHAR
       );
-      CREATE TABLE IF NOT EXISTS cats(
-        id SERIAL PRIMARY KEY,
-        shop_id INTEGER references shops(id),
-        name VARCHAR,
-        user_id INTEGER references users(id),
-        adopted BOOLEAN,
-        imageUrl VARCHAR
-      );
       CREATE TABLE IF NOT EXISTS dogs(
-        id SERIAL PRIMARY KEY,
-        shop_id INTEGER references shops(id),
-        name VARCHAR,
-        user_id INTEGER references users(id),
-        adopted BOOLEAN,
-        imageUrl VARCHAR
-        # happiness VARCHAR
+        id int,
+        shopId int references shops(id),
+        name varchar,
+        imageUrl varchar,
+        happiness int,
+        adopted boolean,
+        user_id INTEGER references users(id)
+      );
+      CREATE TABLE IF NOT EXISTS cats(
+        id int,
+        shopId int references shops(id),
+        name varchar,
+        imageUrl varchar,
+        adopted boolean,
+        user_id INTEGER references users(id)
       );
     SQL
   end
 
 
   def self.seed_db(db)
-    db.exec <<-SQL
+    db.exec <<-SQL  
       INSERT INTO users (username, password) values ('anonymous', 'anonymous')
       INSERT INTO users (username, password) values ('Jessica', '123')
     SQL
@@ -73,5 +73,49 @@ module Petshopserver
       DROP TABLE cats;
       DROP TABLE users;
     SQL
+  end
+ 
+def self.seed_shops_db(db)
+    shops = JSON.parse RestClient.get("http://pet-shop.api.mks.io/shops")
+    shops.shift
+    # cats = shops.map do |shop|
+    #   shop_id = shop['id']
+    #   JSON.parse RestClient.get("http://pet-shop.api.mks.io/shops/#{shop_id}/cats")
+    # end
+ 
+    # dogs = shops.map do |shop|
+    #   shop_id = shop['id']
+    #   JSON.parse RestClient.get("http://pet-shop.api.mks.io/shops/#{shop_id}/dogs")
+    # end
+ 
+    save_shops_to_db(shops,db)
+    # save_cats_to_db(cats.flatten)
+    # save_dogs_to_db(dogs.flatten)
+  end
+ 
+  def self.save_shops_to_db(shops,db) 
+    sq = []
+    # "(1, 'Jo's Palace'), (2, Nicks Shop)"
+    shops.each do |shop|  
+      # if shop["name"].include? ("'")
+      #   sq << shop
+      #   shops.delete(shop)
+      # # k = shops.count
+      # end  
+      # sq
+      shop["name"].gsub(/'/, "///'")
+    end 
+    values = shops.map do |shop|
+      id = shop['id'].to_i
+      name = shop['name']
+      db.escape_string(name.to_s)
+      ["(#{id}, '#{name}')"]
+    end
+    values = values.flatten.join(',')
+    sql  = %Q[
+    insert into shops (id, name) values #{values} 
+    ]
+
+    db.exec(sql)
   end
 end 
