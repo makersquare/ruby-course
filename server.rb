@@ -41,6 +41,9 @@ post '/signin' do
   username = params['username']
   password = params['password']
 
+  db = PetShopServer.create_db_connection 'petshop'
+  puts PetShopServer::PetsRepo.build_user(db, 999)
+
   # TODO: Grab user by username from database and check password
   user = { 'username' => 'alice', 'password' => '123' }
 
@@ -48,7 +51,7 @@ post '/signin' do
     headers['Content-Type'] = 'application/json'
     # TODO: Return all pets adopted by this user
     # TODO: Set session[:user_id] so the server will remember this user has logged in
-    $sample_user.to_json
+    $real_user.to_json
   else
     status 401
   end
@@ -96,14 +99,14 @@ put '/shops/:shop_id/dogs/:id/adopt' do
 end
 
 
-# $sample_user = {
-#   id: 999,
-#   username: 'alice',
-#   cats: [
-#     { shopId: 1, name: "NaN Cat", imageUrl: "http://i.imgur.com/TOEskNX.jpg", adopted: true, id: 44 },
-#     { shopId: 8, name: "Meowzer", imageUrl: "http://www.randomkittengenerator.com/images/cats/rotator.php", id: 8, adopted: "true" }
-#   ],
-#   dogs: [
-#     { shopId: 1, name: "Leaf Pup", imageUrl: "http://i.imgur.com/kuSHji2.jpg", happiness: 2, id: 2, adopted: "true" }
-#   ]
-# }
+$sample_user = {
+  id: 999,
+  username: 'alice',
+  cats: [
+    { shopId: 1, name: "NaN Cat", imageUrl: "http://i.imgur.com/TOEskNX.jpg", adopted: true, id: 44 },
+    { shopId: 8, name: "Meowzer", imageUrl: "http://www.randomkittengenerator.com/images/cats/rotator.php", id: 8, adopted: "true" }
+  ],
+  dogs: [
+    { shopId: 1, name: "Leaf Pup", imageUrl: "http://i.imgur.com/kuSHji2.jpg", happiness: 2, id: 2, adopted: "true" }
+  ]
+}
