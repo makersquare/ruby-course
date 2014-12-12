@@ -20,7 +20,7 @@ class DB
     cats
   end
 
-    def self.get_dogs(db, shop_id)  
+  def self.get_dogs(db, shop_id)  
     mappings = {"shop_id" => "shopId", "dog_id" => "id", "name" => "name", "imageurl" => "imageUrl", "adoption_status" => "adopted"}
      response = db.exec("SELECT * FROM dogs WHERE shop_id = $1", [shop_id]).entries
      dogs = []
@@ -35,6 +35,13 @@ class DB
      dogs
   end
 
+  def self.adopt_cat(db, cat_id)
+    db.exec("UPDATE cats set adoption_status = 'true' where cat_id = $1", [cat_id])
+  end
+
+  def self.adopt_dog(db, dog_id)
+    db.exec("UPDATE dogs set adoption_status = 'true' where dog_id = $1", [dog_id])
+  end
 
 end #end DB
 end#end module

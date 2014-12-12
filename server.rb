@@ -69,6 +69,8 @@ put '/shops/:shop_id/cats/:id/adopt' do
   # TODO: Grab from database instead
   # RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/cats/#{id}",
     # { adopted: true }, :content_type => 'application/json')
+   db = PetShop::Database.dbconnect
+   PetShop::DB.adopt_cat(db, id)
   # TODO (after you create users table): Attach new cat to logged in user
 end
 
@@ -79,7 +81,7 @@ end
 get '/shops/:id/dogs' do
   headers['Content-Type'] = 'application/json'
   id = params[:id]
-    db = PetShop::Database.dbconnect
+  db = PetShop::Database.dbconnect
   dogs = PetShop::DB.get_dogs(db, id)
   dogs.to_json
   # TODO: Update database instead
@@ -91,8 +93,10 @@ put '/shops/:shop_id/dogs/:id/adopt' do
   shop_id = params[:shop_id]
   id = params[:id]
   # TODO: Update database instead
-  RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/dogs/#{id}",
-    { adopted: true }, :content_type => 'application/json')
+  # RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/dogs/#{id}",
+  #   { adopted: true }, :content_type => 'application/json')
+   db = PetShop::Database.dbconnect
+   PetShop::DB.adopt_dog(db, id)
   # TODO (after you create users table): Attach new dog to logged in user
 end
 
