@@ -2,12 +2,12 @@ require 'pg'
 require 'rest-client'
 require 'json'
 
-module PetShopServer
+module PetShops
   def self.create_db_connection dbname
     PG.connect(host: 'localhost', dbname: dbname)
   end
 
-  def get(url)
+  def self.get(url)
     response = RestClient.get(url)
     JSON.parse(response)
   end
@@ -65,7 +65,7 @@ module PetShopServer
 
   def self.seed_tables
     #### Testing ####
-    db = create_db_connection 'pet_shop_server'
+    db = create_db_connection 'petserver'
     clear_tables db
     drop_tables db
     create_tables db
@@ -96,7 +96,7 @@ module PetShopServer
     dogs_by_shop.each do |shop|
       dog_shop += 1
       shop.each do |dog|
-        dog["name"].gsub!(/[^a-zA-Z]/, "")
+        # dog["name"].gsub!(/[^a-zA-Z]/, "")
         dogs_query << "(\'" + db.escape_string(dog["name"]) + "\', \'" + (dog["adopted"].to_s != "true" ? "false" : "#{dog["adopted"].to_s}") + "\', \'" + db.escape_string(dog["imageUrl"]) + "\', \'#{dog_shop.to_s}\')"
       end
     end
@@ -114,7 +114,7 @@ module PetShopServer
   end  
 end
 
-require_relative 'pet-shop-server/repos/cat_repo.rb'
-require_relative 'pet-shop-server/repos/dog_repo.rb'
-require_relative 'pet-shop-server/repos/shop_repo.rb'
-require_relative 'pet-shop-server/repos/user_repo.rb'
+require_relative 'repo/cat_repo.rb'
+require_relative 'repo/dog_repo.rb'
+require_relative 'repo/shop_repo.rb'
+require_relative 'repo/user_repo.rb'
