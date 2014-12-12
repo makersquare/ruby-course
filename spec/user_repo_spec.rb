@@ -41,4 +41,15 @@ describe Petshops::UserRepo do
       result = Petshops::UserRepo.find_by_id(db, user['id'])
       expect(result['username']).to eq('jill')
     end
+    
+    it 'gets all pets user owns' do
+    shop = Petshops::ShopRepo.save(db, 'pet shop')
+    dog = Petshops::DogRepo.save(db, {'name' => 'bob barker', 'image_url' => 'www.dogpic.com', 'shop_id' => shop['id']})
+    cat = Petshops::CatRepo.save(db, {'name' => 'kitty', 'image_url' => 'www.catpic.com', 'shop_id' => shop['id']})
+    owner = Petshops::UserRepo.save(db, {'name' => 'John', 'password' => '123'})
+    Petshops::DogRepo.save(db, {'id' => dog['id'], 'owner_id' => owner['id'], 'shop_id' => shop['id']})
+    Petshops::CatRepo.save(db, {'id' => cat['id'], 'owner_id' => owner['id'], 'shop_id' => shop['id']})
+    result = Petshops::UserRepo.grab_all_pets(db, owner['id'])
+    expect(result).to be_a Array
+    end
 end

@@ -26,6 +26,12 @@ module Petshops
       result = db.exec(sql, [user_name])
       result.entries.first
     end
+    
+    def self.grab_all_pets(db, user_id)
+      cats = CatRepo.find_by_owner_id(db, user_id)
+      dogs = DogRepo.find_by_owner_id(db, user_id)
+      cats << dogs
+    end
 
   end
 end

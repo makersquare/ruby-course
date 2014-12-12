@@ -33,6 +33,20 @@ module Petshops
       result = db.exec(sql, [shop_id])
       result.entries
     end
+    
+    def self.find_by_owner_id(db, owner_id)
+      sql = %q[
+        SELECT 
+          owner_id AS "ownerId", 
+          name, 
+          image_url AS "imageUrl",
+          adopted, 
+          id 
+      FROM cats 
+      WHERE owner_id = $1
+      ]
+      db.exec(sql, [owner_id]).entries
+    end 
 
   end
 end
