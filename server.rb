@@ -64,6 +64,7 @@ get '/shops' do
   # RestClient.get("http://pet-shop.api.mks.io/shops")
 
   shops = Petshopserver::ShopsRepo.all mydb
+  shops.to_json
 end
 
 

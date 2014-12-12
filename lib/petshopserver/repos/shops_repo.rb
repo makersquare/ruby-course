@@ -19,7 +19,7 @@ module Petshopserver
     end
 
     def self.all(db)
-      db.exec("SELECT * FROM songs").to_a
+      db.exec("SELECT * FROM shops").to_a
     end
 
     # save shop info
