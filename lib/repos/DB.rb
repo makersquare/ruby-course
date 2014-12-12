@@ -11,9 +11,9 @@ class DB
     cats = []
     response.each do |cat| 
       if cat['adoption_status'] == "t"
-        cat['adoption_status'] = "true"
+        cat['adoption_status'] = true
       else 
-        cat['adoption_status'] = "false"
+        cat['adoption_status'] = false
       end
       cats << Hash[cat.map {|k, v| [mappings[k], v] }]
     end
@@ -26,9 +26,9 @@ class DB
      dogs = []
      response.each do |dog| 
       if dog['adoption_status'] == "t"
-        dog['adoption_status'] = "true"
+        dog['adoption_status'] = true
       else 
-        dog['adoption_status'] = "false"
+        dog['adoption_status'] = false
       end
       dogs << Hash[dog.map {|k, v| [mappings[k], v] }]
      end
