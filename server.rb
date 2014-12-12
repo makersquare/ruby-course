@@ -9,15 +9,33 @@ require_relative 'lib/repos/DB.rb'
 set :bind, '0.0.0.0'
 # #
 # This is our only html view...
-#
+
+configure do
+    enable :sessions
+  end
+
+ before do
+    if session['user_id']
+      user_id = session['user_id']
+      db = PetShop::Database.dbconnect
+      @current_user = PetShop::DB.find db, user_id
+     end
+  end
+
+
 get '/' do
-  if session[:user_id]
+  if session['user_id']
     # TODO: Grab user from database
-    # @current_user = $sample_user
+     db = PetShop::Database.dbconnect
+    @current_user = PetShop::DB.find(db, session[:user_id])
   end
   erb :index
 end
 
+get '/logout' do
+    session.delete('user_id')
+    redirect to '/'
+end
 # #
 # ...the rest are JSON endpoints
 #

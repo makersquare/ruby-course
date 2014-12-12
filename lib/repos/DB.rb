@@ -35,12 +35,14 @@ class DB
      dogs
   end
 
-  def self.adopt_cat(db, cat_id)
+  def self.adopt_cat(db, cat_id, user_id)
     db.exec("UPDATE cats set adoption_status = 'true' where cat_id = $1", [cat_id])
+    db.exec("INSERT INTO adoptions (user_id, catid) VALUES ($1, $2)", [user_id, cat_id])
   end
 
-  def self.adopt_dog(db, dog_id)
+  def self.adopt_dog(db, dog_id, user_id)
     db.exec("UPDATE dogs set adoption_status = 'true' where dog_id = $1", [dog_id])
+    db.exec("INSERT INTO adoptions (user_id, dogid) VALUES ($1, $2)", [user_id, dog_id])
   end
 
   def self.find db, user_id
