@@ -11,30 +11,37 @@ class DB
      cats = []
      response.each do |cat| 
       if cat['adoption_status'] == "t"
-        cat['adoption_status'] = "true"
+        cat['adoption_status'] = true
       else 
-        cat['adoption_status'] = "false"
+        cat['adoption_status'] = false
       end
       cats << Hash[cat.map {|k, v| [mappings[k], v] }]
      end
      cats
   end
 
-    def self.get_dogs(db, shop_id)  
+  def self.get_dogs(db, shop_id)  
     mappings = {"shop_id" => "shopId", "dog_id" => "id", "name" => "name", "imageurl" => "imageUrl", "adoption_status" => "adopted"}
      response = db.exec("SELECT * FROM dogs WHERE shop_id = $1", [shop_id]).entries
      dogs = []
      response.each do |dog| 
       if dog['adoption_status'] == "t"
-        dog['adoption_status'] = "true"
+        dog['adoption_status'] = true
       else 
-        dog['adoption_status'] = "false"
+        dog['adoption_status'] = false
       end
       dogs << Hash[dog.map {|k, v| [mappings[k], v] }]
      end
      dogs
   end
 
+  def self.adopt_cat(db, cat_id)
+    db.exec("UPDATE cats set adoption_status = 'true' where cat_id = $1", [cat_id])
+  end
+
+  def self.adopt_dog(db, dog_id)
+    db.exec("UPDATE dogs set adoption_status = 'true' where dog_id = $1", [dog_id])
+  end
 
 end #end DB
 end#end module
