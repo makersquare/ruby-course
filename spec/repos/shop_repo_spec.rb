@@ -1,18 +1,18 @@
 require 'spec_helper'
 
-describe Petshop::ShopRepo do
+describe PetShop::ShopRepo do
 
   def shop_count
     repo.all(db).count
   end
 
-  let(:repo) { Petshop::ShopRepo }
-  let(:db) { Petshop.create_db_connection('petshop_test') }
+  let(:repo) { PetShop::ShopRepo }
+  let(:db) { PetShop.create_db_connection('petshop_test') }
 
   before(:each) do
-    Petshop.clear_db(db)
-    @shop_id1 = Petshop::ShopRepo.save(db, { 'title' => "Pup By Pup Best" })['id']
-    @shop_id2 = Petshop::ShopRepo.save(db, { 'title' => "U Buy Cat Now" })['id']
+    PetShop.clear_db(db)
+    @shop_id1 = PetShop::ShopRepo.save(db, { 'title' => "Pup By Pup Best" })['id']
+    @shop_id2 = PetShop::ShopRepo.save(db, { 'title' => "U Buy Cat Now" })['id']
   end
 
   it "gets all shops" do

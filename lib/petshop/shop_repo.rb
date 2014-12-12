@@ -1,6 +1,6 @@
 require 'pry-byebug'
 
-module Petshop
+module PetShop
   class ShopRepo
 
     def self.all(db)

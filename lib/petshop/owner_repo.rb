@@ -1,6 +1,6 @@
 require 'pry-byebug'
 
-module Petshop
+module PetShop
   class OwnerRepo
 
     def self.all(db)
@@ -13,6 +13,14 @@ module Petshop
       owner = db.exec("SELECT * FROM owners WHERE id=$1", [owner_id]).first
     end
 
+    # find user by username. Intended to be used when
+    # someone tries to sign in.
+    def self.find_by_name db, username
+      sql = %q[SELECT * FROM owners WHERE username = $1]
+      result = db.exec(sql, [username])
+      result.first
+    end
+
     def self.save(db, owner_data)
       if owner_data['id'] # Edit owner
 
@@ -20,8 +28,8 @@ module Petshop
         owner = find(db, owner_data['id'])
         raise "A valid owner id is required." if owner.nil?
 
-        if owner_data['name'] # Update Owner Name
-          result = db.exec("UPDATE owners SET name = $2 WHERE id = $1", [owner_data['id'], owner_data['name']])
+        if owner_data['username'] # Update Owner Name
+          result = db.exec("UPDATE owners SET username = $2 WHERE id = $1", [owner_data['id'], owner_data['username']])
         end
 
         if owner_data['password'] # Update Owner Password
@@ -29,9 +37,9 @@ module Petshop
         end
         self.find(db, owner_data['id'])
       else
-        raise "name is required." if owner_data['name'].nil? || owner_data['name'] == ''
+        raise "username is required." if owner_data['username'].nil? || owner_data['username'] == ''
         raise "password is required." if owner_data['password'].nil? || owner_data['password'] == ''
-        result = db.exec("INSERT INTO owners (name, password) VALUES ($1, $2) RETURNING *", [owner_data['name'], owner_data['password']])
+        result = db.exec("INSERT INTO owners (username, password) VALUES ($1, $2) RETURNING *", [owner_data['username'], owner_data['password']])
         self.find(db, result.entries.first['id'])
       end
     end

@@ -1,6 +1,6 @@
 require 'pry-byebug'
 
-module Petshop
+module PetShop
   class DogRepo
 
     def self.all(db)
@@ -15,6 +15,10 @@ module Petshop
       dogs = db.exec("SELECT * FROM dogs WHERE shop_id=$1", [shop_id]).to_a
     end
 
+    def self.find_all_by_owner(db, owner_id)
+      dogs = db.exec("SELECT * FROM dogs WHERE owner_id=$1", [owner_id]).to_a
+    end
+
     def self.save(db, dog_data)
       if dog_data['id'] # Update
 
@@ -24,7 +28,13 @@ module Petshop
         raise "A valid owner_id is required." if dog.nil?
 
         #Assign owner
-        result = db.exec("UPDATE dogs SET owner_id = $2, adopted_status = $3, name = $4 WHERE id = $1", [dog_data['id'], dog_data['owner_id'], dog_data['adopted_status'], dog_data['name']])
+        if dog_data['adopted_status'] && dog_data['name']
+          result = db.exec("UPDATE dogs SET owner_id = $2, adopted_status = $3, name = $4 WHERE id = $1", [dog_data['id'], dog_data['owner_id'], dog_data['adopted_status'], dog_data['name']])
+        elsif dog_data['name']
+          result = db.exec("UPDATE dogs SET owner_id = $2, name = $3 WHERE id = $1", [dog_data['id'], dog_data['owner_id'], dog_data['name']])
+        elsif dog_data['adopted_status']
+          result = db.exec("UPDATE dogs SET owner_id = $2, adopted_status = $3 WHERE id = $1", [dog_data['id'], dog_data['owner_id'], dog_data['adopted_status']])
+        end
         self.find(db, dog_data['id'])
       else
         raise "name is required." if dog_data['name'].nil? || dog_data['name'] == ''

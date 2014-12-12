@@ -1,17 +1,17 @@
 require 'spec_helper'
 
-describe Petshop::DogRepo do
+describe PetShop::DogRepo do
 
   def dog_count
     repo.all(db).count
   end
 
-  let(:repo) { Petshop::DogRepo }
-  let(:db) { Petshop.create_db_connection('petshop_test') }
+  let(:repo) { PetShop::DogRepo }
+  let(:db) { PetShop.create_db_connection('petshop_test') }
 
   before(:each) do
-    Petshop.clear_db(db)
-    @shop_id = Petshop::ShopRepo.save(db, { 'title' => "SuperShop" })['id']
+    PetShop.clear_db(db)
+    @shop_id = PetShop::ShopRepo.save(db, { 'title' => "SuperShop" })['id']
   end
 
   it "gets all dogs" do

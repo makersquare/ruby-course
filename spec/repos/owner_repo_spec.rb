@@ -1,18 +1,18 @@
 require 'spec_helper'
 
-describe Petshop::OwnerRepo do
+describe PetShop::OwnerRepo do
 
   def owner_count
     repo.all(db).count
   end
 
-  let(:repo) { Petshop::OwnerRepo }
-  let(:db) { Petshop.create_db_connection('petshop_test') }
+  let(:repo) { PetShop::OwnerRepo }
+  let(:db) { PetShop.create_db_connection('petshop_test') }
 
   before(:each) do
-    Petshop.clear_db(db)
-    @owner_id1 = Petshop::OwnerRepo.save(db, { 'name' => "Giovanni", 'password' => 'Swordfish' })['id']
-    @owner_id2 = Petshop::OwnerRepo.save(db, { 'name' => "Leonardo", 'password' => 'Swordfish' })['id']
+    PetShop.clear_db(db)
+    @owner_id1 = PetShop::OwnerRepo.save(db, { 'username' => "Giovanni", 'password' => 'Swordfish' })['id']
+    @owner_id2 = PetShop::OwnerRepo.save(db, { 'username' => "Leonardo", 'password' => 'Swordfish' })['id']
   end
 
   it "gets all owners" do
@@ -21,16 +21,16 @@ describe Petshop::OwnerRepo do
     expect(owners).to be_a Array
     expect(owners.count).to eq 2
 
-    names = owners.map {|u| u['name'] }
-    expect(names).to include "Leonardo", "Giovanni"
+    usernames = owners.map {|u| u['username'] }
+    expect(usernames).to include "Leonardo", "Giovanni"
   end
 
   it "creates owners" do
     expect(owner_count).to eq 2
 
-    owner = repo.save(db, { 'name' => "Brian", 'password' => 'puppyfan102' })
+    owner = repo.save(db, { 'username' => "Brian", 'password' => 'puppyfan102' })
     expect(owner['id']).to_not be_nil
-    expect(owner['name']).to eq "Brian"
+    expect(owner['username']).to eq "Brian"
     expect(owner['password']).to eq "puppyfan102"
 
     # Check for persistence
@@ -38,20 +38,20 @@ describe Petshop::OwnerRepo do
 
     owner = repo.all(db).first
     expect(owner['id']).to_not be_nil
-    expect(owner['name']).to eq "Giovanni"
+    expect(owner['username']).to eq "Giovanni"
     expect(owner['password']).to eq "Swordfish"
 
   end
 
-  it "requires a name" do
+  it "requires a username" do
     expect { repo.save(db, {}) }.to raise_error {|e|
-      expect(e.message).to match /name/
+      expect(e.message).to match /username/
     }
   end
 
   it "requires an owner id that exists" do
     expect {
-      repo.save(db, { 'id' => 999, 'name' => "Mr FunGuy" })
+      repo.save(db, { 'id' => 999, 'username' => "Mr FunGuy" })
     }
     .to raise_error {|e|
       expect(e.message).to match /owner id/
@@ -60,18 +60,18 @@ describe Petshop::OwnerRepo do
 
   it "finds owners" do
     retrieved_owner = repo.find(db, @owner_id1)
-    expect(retrieved_owner['name']).to eq "Giovanni"
+    expect(retrieved_owner['username']).to eq "Giovanni"
   end
 
   it "updates owners" do
-    owner1 = repo.save(db, { 'id' => @owner_id1, 'name' => "Billy Boy" })
+    owner1 = repo.save(db, { 'id' => @owner_id1, 'username' => "Billy Boy" })
     owner2 = repo.save(db, { 'id' => @owner_id1, 'password' => "bigDogsRCool14" })
     expect(owner2['id']).to eq(owner1['id'])
     expect(owner2['password']).to eq "bigDogsRCool14"
 
     # Check for persistence
     owner3 = repo.find(db, owner1['id'])
-    expect(owner3['name']).to eq "Billy Boy"
+    expect(owner3['username']).to eq "Billy Boy"
   end
 
 end

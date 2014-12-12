@@ -1,6 +1,6 @@
 require 'pg'
 
-module Petshop
+module PetShop
   def self.create_db_connection(dbname)
     PG.connect(host: 'localhost', dbname: dbname)
   end
@@ -22,7 +22,7 @@ module Petshop
       );
       CREATE TABLE IF NOT EXISTS owners(
         id SERIAL PRIMARY KEY,
-        name VARCHAR,
+        username VARCHAR,
         password VARCHAR
       );
       CREATE TABLE IF NOT EXISTS cats(
@@ -64,8 +64,8 @@ module Petshop
 
     db.exec <<-SQL
       -- Insert Owners
-      INSERT INTO owners (name, password) values ('Jason', 'pass');
-      INSERT INTO owners (name, password) values ('Alex', 'pass');
+      INSERT INTO owners (username, password) values ('Jason', 'pass');
+      INSERT INTO owners (username, password) values ('Alex', 'pass');
     SQL
 
     db.exec <<-SQL
