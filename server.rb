@@ -2,7 +2,7 @@ require 'sinatra'
 # require 'sinatra/reloader'
 require 'rest-client'
 require 'json'
-require_relatived 'lib/pet-shop.rb'
+require_relative 'lib/pet-shop.rb'
 # #
 # This is our only html view...
 #
