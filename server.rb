@@ -2,6 +2,7 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'rest-client'
 require 'json'
+require './lib/petshop.rb'
 
 # #
 # This is our only html view...
@@ -57,6 +58,7 @@ get '/shops/:id/cats' do
   id = params[:id]
   # TODO: Grab from database instead
   RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/cats")
+  JSON.generate(PetShopServer::CatRepo.(mydb))
 end
 
 put '/shops/:shop_id/cats/:id/adopt' do
@@ -67,6 +69,7 @@ put '/shops/:shop_id/cats/:id/adopt' do
   RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/cats/#{id}",
     { adopted: true }, :content_type => 'application/json')
   # TODO (after you create users table): Attach new cat to logged in user
+  JSON.generate(PetShopServer::CatRepo.(mydb, ))
 end
 
 
@@ -78,6 +81,7 @@ get '/shops/:id/dogs' do
   id = params[:id]
   # TODO: Update database instead
   RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/dogs")
+  JSON.generate(PetShopServer::DogRepo.(mydb, ))
 end
 
 put '/shops/:shop_id/dogs/:id/adopt' do
@@ -88,6 +92,7 @@ put '/shops/:shop_id/dogs/:id/adopt' do
   RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/dogs/#{id}",
     { adopted: true }, :content_type => 'application/json')
   # TODO (after you create users table): Attach new dog to logged in user
+  JSON.generate(PetShopServer::DogRepo.(mydb, ))
 end
 
 
