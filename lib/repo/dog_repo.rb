@@ -16,8 +16,9 @@ module Petshops
 
     def self.save(db, dog_data)
       if dog_data['id']
-        sql = %q[UPDATE dogs set owner_id = $1, adopted = t WHERE id = $2, shop_id = $3]
-        result = db.exec(sql, [dog_data['owner_id'], dog_data['id'], dog_data['shop_id']])
+        sql = %q[UPDATE dogs set owner_id = $1, adopted = $2, shop_id = $3 WHERE id = $4 RETURNING *]
+        result = db.exec(sql, [dog_data['owner_id'], 'true', dog_data['shop_id'], dog_data['id']])
+        puts result.entries.first
         result.entries.first
       else
         sql = %q[INSERT INTO dogs (name, image_url, shop_id) values ($1, $2, $3) returning *]
@@ -31,7 +32,20 @@ module Petshops
       result = db.exec(sql, [shop_id])
       result.entries
     end
-
+    
+    def self.find_by_owner_id(db, owner_id)
+      sql = %q[
+        SELECT 
+          owner_id AS "ownerId", 
+          name, 
+          image_url AS "imageUrl",
+          adopted, 
+          id 
+      FROM dogs 
+      WHERE owner_id = $1
+      ]
+      db.exec(sql, [owner_id]).entries
+    end 
   end
 
 end
