@@ -88,6 +88,12 @@ put '/shops/:shop_id/cats/:id/adopt' do
     }
   # TODO: Grab from database instead
   db = PetShop.create_db_connection()
+  cat = PetShop::UsersRepo.get_cat_by_id(db, id)
+  if(cat['adopted'].class.name == "string")
+    PetShop::UsersRepo.adopt(db, adopt_data)
+  else
+    PetShop::UsersRepo.unadopt(db, adopt_data)
+  end
   PetShop::UsersRepo.adopt(db, adopt_data)
   # TODO (after you create users table): Attach new cat to logged in user
 end
@@ -113,13 +119,19 @@ put '/shops/:shop_id/dogs/:id/adopt' do
   id = params[:id]
   db = PetShop.create_db_connection()
   @user = PetShop::UsersRepo.find(db, session["user_id"])
+  dog = PetShop::UsersRepo.get_dog_by_id(db, id)
+
   # TODO: Update database instead
   adopt_data = {
     type: 'dog',
     user_id: session[:user_id].to_i,
     pet_id: id
     }  
-  PetShop::UsersRepo.adopt(db, adopt_data)
+  if(dog['adopted'].class.name == "string")
+    PetShop::UsersRepo.adopt(db, adopt_data)
+  else
+    PetShop::UsersRepo.unadopt(db, adopt_data)
+  end
   # RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/dogs/#{id}",
   #   { adopted: true }, :content_type => 'application/json')
   # TODO (after you create users table): Attach new dog to logged in user

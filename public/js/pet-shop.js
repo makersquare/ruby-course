@@ -16,6 +16,7 @@
       var pets = shop[type]
       var adoptUrl = "/shops/" + shop.id + "/" + type + "/" + petId + "/adopt"
 
+
       m.request({ method: 'put', url: adoptUrl }).then(function() {
         var pet = pets().find(function(p){ return p.id == petId })
         pet.adopted = true
@@ -60,8 +61,7 @@
           m('b', "Adopted: "),
           m('span', pet.adopted ? "Yes!" : "No..."),
           m('br'),
-          pet.adopted ? null : adoptLink
-          pet.adopted ? 'true' : unAdoptLink
+          pet.adopted ? unAdoptLink : adoptLink
         ])
       ])
     })

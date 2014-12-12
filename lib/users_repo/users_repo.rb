@@ -42,7 +42,7 @@ module PetShop
     end
 
     def self.unadopt db, user_data
-      sql = %q[DELETE FROM pet_adoptions WHERE type = $1 user_id = $2 and pet_id = $3]]
+      sql = %q[DELETE FROM pet_adoptions WHERE type = $1 and user_id = $2 and pet_id = $3]
       result = db.exec(sql, [user_data[:type], user_data[:user_id], user_data[:pet_id]])
 
       if(user_data[:type] == "cat")
@@ -54,8 +54,19 @@ module PetShop
         sql = %q[UPDATE dogs SET adopted = NULL WHERE id = $1]
         result = db.exec(sql, [user_data[:pet_id]])
        end
-      return "Adopted: true"
+      return "something to prevent server err."
     end
+
+    def self.get_dog_by_id db, user_data
+      sql = %q[SELECT * FROM dogs WHERE id = $1]
+      db.exec(sql, [user_data]).to_a.first
+    end
+
+    def self.get_cat_by_id db, user_data
+      sql = %q[SELECT * FROM cats WHERE id = $1]
+      db.exec(sql, [user_data]).to_a.first
+    end
+
 
     def self.get_adoptions db, user_data
       user_id = user_data['id']
