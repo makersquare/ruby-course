@@ -22,10 +22,15 @@ module Petshops
     end
 
     def self.find_by_name(db, cat_name)
-      sql = %q[SELECT * FROM shops where name = $1]
+      sql = %q[SELECT * FROM cats where name = $1]
       result = db.exec(sql, [cat_name])
       result.entries.first
     end
 
+    def self.find_by_shop_id(db, shop_id)
+      sql = %q[SELECT * FROM cats WHERE shopId = $1]
+      result = db.exec(sql, [shop_id])
+      result.entries
+    end
   end
 end
