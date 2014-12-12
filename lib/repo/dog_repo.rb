@@ -40,7 +40,8 @@ module Petshops
           name, 
           image_url AS "imageUrl",
           adopted, 
-          id 
+          id,
+          shop_id AS "shopId"
       FROM dogs 
       WHERE owner_id = $1
       ]

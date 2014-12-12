@@ -16,7 +16,7 @@ end
 get '/' do
   if session[:user_id]
     # TODO: Grab user from database
-    @current_user = JSON.generate(Petshops::UserRepo.find_by_name(mydb, username))
+    Petshops::UserRepo.find_by_id(mydb, session[:user_id])
   end
   erb :index
 end
@@ -40,19 +40,32 @@ post '/signin' do
 
   username = params['username']
   password = params['password']
-  creds = JSON.generate(Petshops::UserRepo.find_by_name(mydb, username))
+  creds = Petshops::UserRepo.find_by_name(mydb, username)
 
   # TODO: Grab user by username from database and check password
   # user = { 'username' => 'alice', 'password' => '123' }
 
-  if creds[:password] == password
+  if creds['password'] == password
     headers['Content-Type'] = 'application/json'
     # TODO: Return all pets adopted by this user
     # TODO: Set session[:user_id] so the server will remember this user has logged in
-    session[:user_id] = creds[:id]
-    creds[:cats] = [{ shopId: 1, name: "NaN Cat", imageUrl: "http://i.imgur.com/TOEskNX.jpg", adopted: true, id: 44 },{shopId: 8, name: "Meowzer", imageUrl: "http://www.randomkittengenerator.com/images/cats/rotator.php", id: 8, adopted: "true"}]
-    creds[:dogs] = [{shopId: 1, name: "Leaf Pup", imageUrl: "http://i.imgur.com/kuSHji2.jpg", happiness: 2, id: 2, adopted: "true" }]
-    creds
+    session[:user_id] = creds['id']
+
+    
+
+    cats = Petshops::CatRepo.find_by_owner_id(mydb, session[:user_id])
+    creds['cats'] = []
+    cats.each do |cat|
+      creds['cats'] << {shopid: cat['shopId'], name: cat['name'], imageUrl: cat['imageUrl'], adopted: true, id: cat['id']}
+    end
+    
+    dogs = Petshops::DogRepo.find_by_owner_id(mydb, session[:user_id])
+    creds['dogs'] = []
+    dogs.each do |dog|
+      creds['dogs'] << {shopid: dog['shopId'], name: dog['name'], imageUrl: dog['imageUrl'], adopted: true, id: dog['id']}
+    end
+
+    JSON.generate(creds)
   else
     status 401
   end
@@ -111,6 +124,7 @@ put '/shops/:shop_id/dogs/:id/adopt' do
   headers['Content-Type'] = 'application/json'
   shop_id = params[:shop_id]
   id = params[:id]
+  owner_id = session[:user_id]
   # TODO: Update database instead
   # RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/dogs/#{id}",
   #   { adopted: true }, :content_type => 'application/json')
