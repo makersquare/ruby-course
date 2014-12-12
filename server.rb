@@ -111,7 +111,7 @@ class Chatitude::Server < Sinatra::Application
   ##########################################
   # event stream stuff.
 
-  get '/chat' do
+  get '/chats' do
     content_type 'application/json'
     if params[:since]
       messages.select { |m| params[:since] < m['time'] }
@@ -120,12 +120,12 @@ class Chatitude::Server < Sinatra::Application
     end.to_json
   end
 
-  post '/chat' do
+  post '/chats' do
     if @current_user
       message_count += 1
       messages << {
         user: @current_user['username'],
-        message: params[:chat_message],
+        message: params[:message],
         time: timestamp,
         id: message_count
       }
