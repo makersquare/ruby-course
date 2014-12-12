@@ -80,12 +80,12 @@ post '/signin' do
   user = Petshopserver::UsersRepo.find_by_username(mydb, username)
 
   if password == user['password']
-    headers['Content-Type'] = 'application/json'
+    # headers['Content-Type'] = 'application/json'
     session['user_id'] = user['id']
     # 
-    user[:cats] =[]
-    user[:dogs] =[]
-
+    # user[:cats] =[]
+    # user[:dogs] =[]
+    
 
     user.to_json
     # TODO: Return all pets adopted by this user

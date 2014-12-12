@@ -38,25 +38,28 @@ module Petshopserver
         name VARCHAR
       );
       CREATE TABLE IF NOT EXISTS dogs(
-        id int,
+        id SERIAL PRIMARY KEY,
         shopId int references shops(id),
         name varchar,
         imageUrl varchar,
         happiness int,
-        adopted boolean,
-        user_id INTEGER references users(id)
+        adopted boolean
       );
       CREATE TABLE IF NOT EXISTS cats(
-        id int,
+        id SERIAL PRIMARY KEY,
         shopId int references shops(id),
         name varchar,
         imageUrl varchar,
-        adopted boolean,
-        user_id INTEGER references users(id)
+        adopted boolean
+      );
+      CREATE TABLE IF NOT EXISTS userPets(
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER references users(id),
+        cat_id INTEGER references cats(id),
+        dog_id INTEGER references dogs(id)
       );
     SQL
   end
-
 
   def self.seed_db(db)
     db.exec <<-SQL  
