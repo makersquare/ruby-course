@@ -4,20 +4,22 @@ require 'rest-client'
 require 'pg'
 require 'json'
 
-require_relative "lib/petshops.rb"
+require_relative "lib/pet-shop-server/petshop.rb"
 
 # #
 # This is our only html view...
 #
 configure do
   enable :sessions
-  use Rack::Flash
+  #use Rack::Flash
 end
 
 get '/' do
   if session[:user_id]
     # TODO: Grab user from database
-    @current_user = $sample_user
+    db = PetShopServer.create_db_connection 'petshop'
+    @current_user = PetShopServer::UsersRepo.find db, user_id
+    #@current_user = $sample_user
   end
   erb :index
 end
