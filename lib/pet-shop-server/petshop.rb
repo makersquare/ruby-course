@@ -1,8 +1,8 @@
 require 'pg'
 
-require_relative 'pet-shop-server/repos/pets_repo.rb'
-require_relative 'pet-shop-server/repos/shops_repo.rb'
-require_relative 'pet-shop-server/repos/users_repo.rb'
+require_relative 'repos/pets_repo.rb'
+require_relative 'repos/shops_repo.rb'
+require_relative 'repos/users_repo.rb'
 #pet-shop-server
 
 module PetShopServer
