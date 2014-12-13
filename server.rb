@@ -19,6 +19,10 @@ before do
     # @current_user = PetshopServer::PetsRepo.find
   end
 end
+
+# before '/shops/*' do
+#   status(401) unless @current_user
+# end
 # #
 # This is our only html view...
 #
@@ -62,10 +66,10 @@ post '/signin' do
     headers['Content-Type'] = 'application/json'
     # TODO: Return all pets adopted by this user
     # TODO: Set session[:user_id] so the server will remember this user has logged in
-    @real_user = PetShopServer::PetsRepo.build_user(db, user['id'])
-    @real_user.to_json
+    # @real_user = PetShopServer::PetsRepo.build_user(db, user['id'])
 
     session["user_id"] = user['id']
+    user.to_json
   else
     status 401
   end
@@ -82,13 +86,17 @@ get '/shops/:id/cats' do
 end
 
 put '/shops/:shop_id/cats/:id/adopt' do
-  headers['Content-Type'] = 'application/json'
-  shop_id = params[:shop_id]
-  id = params[:id]
-  # TODO: Grab from database instead
-  RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/cats/#{id}",
-    { adopted: true }, :content_type => 'application/json')
-  # TODO (after you create users table): Attach new cat to logged in user
+  if @current_user
+    headers['Content-Type'] = 'application/json'
+    shop_id = params[:shop_id]
+    id = params[:id]
+    # TODO: Grab from database instead
+    RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/cats/#{id}",
+      { adopted: true }, :content_type => 'application/json')
+    # TODO (after you create users table): Attach new cat to logged in user
+  else
+    status 401
+  end
 end
 
 
