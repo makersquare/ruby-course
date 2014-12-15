@@ -94,6 +94,9 @@ class Chatitude::Server < Sinatra::Application
     if !params[:username] || params[:username] == ''
       errors << 'blank_username'
     end
+    if Chatitude::UsersRepo.find_by_name(db, params[:username])
+      errors << 'username_taken'
+    end
 
     if errors.count == 0
       user_data = {username: params[:username], password: params[:password]}
