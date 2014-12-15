@@ -103,8 +103,8 @@ class Chatitude::Server < Sinatra::Application
     end
   end
 
-  get '/logout' do
-    session.delete('user_id')
+  delete '/signout' do
+    Chatitude::UsersRepo.sign_out db, params[:apiToken]
     status 200
   end
 

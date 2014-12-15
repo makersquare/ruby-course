@@ -41,5 +41,9 @@ module Chatitude
       result = db.exec(sql, [id, token])
       token
     end
+
+    def self.sign_out db, token
+      db.exec("DELETE FROM sessions WHERE token = $1", [token])
+    end
   end
 end
