@@ -3,8 +3,8 @@ require 'sinatra/reloader'
 require 'rest-client'
 require 'rack-flash'
 require 'pry-byebug'
-require 'json' # why?
-require 'pg'   # new
+require 'json' 
+require 'pg'  
 
 #bundle exec ruby server.rb
 #bundle exec rspec
@@ -23,51 +23,30 @@ require_relative 'lib/petshopserver.rb'
     end
   end
 
-
-#   before do
-#     if session['user_id'] # if it exists, the user is logged in
-#       user_id = session['user_id']
-#       db = Petshopserver.create_db_connection 'petshopserver'
-#       @current_user = Petshopserver::UsersRepo.find db, user_id
-#     else
-#       @current_user = {'username' => 'anonymous', 'id' => 1}
-#     end
-#   end
-# #
-# for session you use a symbol 
-
-# This is our only html view...
-#
 get '/' do
   if session['user_id']
-    # TODO: Grab user from database
-    # @current_user = $sample_user
     user_id = session['user_id']
     @current_user = Petshopserver::UsersRepo.find mydb, user_id
+    cats  = Petshopserver::UsersRepo.find_all_cats_by_user_id mydb, user_id
+    dogs = Petshopserver::UsersRepo.find_all_dogs_by_user_id mydb, user_id
+    @current_user['cats'] = cats
+    @current_user['dogs'] = dogs
+    @current_user.to_json
   end
   erb :index
 end
+
 
 get '/logout' do
   session.delete 'user_id'
   redirect to '/'
 end
 
-# #
-# ...the rest are JSON endpoints
-#
-
 get '/shops' do
-  # shopscatsdogs = Petshopserver.seed_all_db(mydb)
-  
-  # headers['Content-Type'] = 'application/json'
-  # RestClient.get("http://pet-shop.api.mks.io/shops")
-
+  headers['Content-Type'] = 'application/json'
   shops = Petshopserver::ShopsRepo.all mydb
   shops.to_json
 end
-
-
 
 post '/signin' do
   params = JSON.parse request.body.read
@@ -75,76 +54,62 @@ post '/signin' do
   username = params['username']
   password = params['password']
 
-  # TODO: Grab user by username from database and check password
-  #user = { 'username' => 'alice', 'password' => '123' }
   user = Petshopserver::UsersRepo.find_by_username(mydb, username)
-
+ 
   if password == user['password']
-    # headers['Content-Type'] = 'application/json'
+    headers['Content-Type'] = 'application/json'
     session['user_id'] = user['id']
-    # 
-    # user[:cats] =[]
-    # user[:dogs] =[]
-    
-
-    user.to_json
-    # TODO: Return all pets adopted by this user
-    # TODO: Set session[:user_id] so the server will remember this user has logged in
-    #$sample_user.to_json
+    @current_user = Petshopserver::UsersRepo.find mydb, user['id']
+    cats  = Petshopserver::UsersRepo.find_all_cats_by_user_id mydb, user['id']
+    dogs = Petshopserver::UsersRepo.find_all_dogs_by_user_id mydb, user['id']
+    @current_user['cats'] = cats
+    @current_user['dogs'] = dogs
+    @current_user.to_json
   else
     status 401
   end
 end
 
-# user_id = session['user_id']
-# db = Petshopserver.create_db_connection 'petshopserver'
-# @current_user = Petshopserver::UsersRepo.find db, user_id
 
  # # # #
 # Cats #
 # # # #
+
 get '/shops/:id/cats' do
-  # headers['Content-Type'] = 'application/json'
+  headers['Content-Type'] = 'application/json'
   id = params[:id]
   cats = Petshopserver::CatsRepo.all_by_shop mydb, id
   cats.to_json
-  # TODO: Grab from database instead
-  # RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/cats")
-
 end
 
 put '/shops/:shop_id/cats/:id/adopt' do
-  # headers['Content-Type'] = 'application/json'
+  headers['Content-Type'] = 'application/json'
   shop_id = params[:shop_id]
-  id = params[:id]
+  cat_id = params[:id]
+  user_id = session['user_id']
 
-  # TODO: Grab from database instead
-  # RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/cats/#{id}",
-   # { adopted: true }, :content_type => 'application/json')
-  # TODO (after you create users table): Attach new cat to logged in user
+  cat = Petshopserver::UsersRepo.adopt_cat mydb, user_id, cat_id
+  cat.to_json
 end
-
 
  # # # #
 # Dogs #
 # # # #
+
 get '/shops/:id/dogs' do
-  # headers['Content-Type'] = 'application/json'
+  headers['Content-Type'] = 'application/json'
   id = params[:id]
   dogs = Petshopserver::DogsRepo.all_by_shop mydb, id
   dogs.to_json
-  # TODO: Update database instead
-  # RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/dogs")
 end
 
 put '/shops/:shop_id/dogs/:id/adopt' do
   headers['Content-Type'] = 'application/json'
   shop_id = params[:shop_id]
-  id = params[:id]
-  # TODO: Update database instead
-  # RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/dogs/#{id}",
-    # { adopted: true }, :content_type => 'application/json')
-  # TODO (after you create users table): Attach new dog to logged in user
+  dog_id = params[:id]
+  user_id = session['user_id']
+  dog = Petshopserver::UsersRepo.adopt_dog mydb, user_id, dog_id
+  dog.to_json
 end
 
 

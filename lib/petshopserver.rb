@@ -5,14 +5,6 @@ require_relative 'petshopserver/repos/cats_repo.rb'
 require_relative 'petshopserver/repos/dogs_repo.rb'
 require_relative 'petshopserver/repos/users_repo.rb'
 
-
-# in irb - 
-# load 'file_name.rb'
-# db = Petshopserver.create_db_connection('petshopserver')
-# Petshopserver.create_tables(db)
-# Petshopserver.seed_db(db)
-
-
 module Petshopserver
   def self.create_db_connection(dbname)
     PG.connect(host: 'localhost', dbname: dbname)
@@ -55,9 +47,9 @@ module Petshopserver
       );
       CREATE TABLE IF NOT EXISTS userPets(
         id SERIAL PRIMARY KEY,
-        user_id INTEGER references users(id),
-        cat_id INTEGER references cats(id),
-        dog_id INTEGER references dogs(id)
+        "user_id" INTEGER references users(id),
+        "cat_id" INTEGER references cats(id),
+        "dog_id" INTEGER references dogs(id)
       );
     SQL
   end
