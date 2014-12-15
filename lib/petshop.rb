@@ -34,19 +34,19 @@ module Petshop
       );
       CREATE TABLE IF NOT EXISTS dogs(
         id SERIAL PRIMARY KEY,
-        shopId INT references shops(id),
-        userId INT references users(id),
+        shopid INT references shops(id),
+        userid INT references users(id),
         name VARCHAR,
-        imageUrl VARCHAR,
+        imageurl VARCHAR,
         adopted BOOLEAN,
         happiness INT
       );
       CREATE TABLE IF NOT EXISTS cats(
         id SERIAL PRIMARY KEY,
-        shopId INT references shops(id),
-        userId INT references users(id),
+        shopid INT references shops(id),
+        userid INT references users(id),
         name VARCHAR,
-        imageUrl VARCHAR,
+        imageurl VARCHAR,
         adopted BOOLEAN
       );
     SQL
@@ -92,18 +92,18 @@ module Petshop
     flatcats = cats.flatten
 
    sql = %q[
-     INSERT INTO cats(id, shopId, name, imageUrl, adopted)
+     INSERT INTO cats(id, shopid, name, imageurl, adopted)
      VALUES ($1, $2, $3, $4, $5)
    ]
 
    flatcats.each do |cat|
      id = cat["id"]
-     shopId = cat["shopId"]
+     shopid = cat["shopid"]
      name = cat["name"]
-     imageUrl = cat["imageUrl"]
+     imageurl = cat["imageurl"]
      adopted = cat["adopted"] ? true : false
 
-     db.exec(sql, [id, shopId, name, imageUrl, adopted])
+     db.exec(sql, [id, shopid, name, imageurl, adopted])
   end
 
 end
@@ -122,19 +122,19 @@ end
     flatdogs = dogs.flatten
 
     sql = %q[
-     INSERT INTO dogs(id, shopId, name, imageUrl, adopted, happiness)
+     INSERT INTO dogs(id, shopid, name, imageurl, adopted, happiness)
      VALUES ($1, $2, $3, $4, $5, $6)
      ]
 
    flatdogs.each do |dog|
      id = dog["id"]
-     shopId = dog["shopId"]
+     shopid = dog["shopid"]
      name = dog["name"]
-     imageUrl = dog["imageUrl"]
+     imageurl = dog["imageurl"]
      adopted = dog["adopted"] ? true : false
      happiness = dog["happiness"]
 
-     db.exec(sql, [id, shopId, name, imageUrl, adopted, happiness])
+     db.exec(sql, [id, shopid, name, imageurl, adopted, happiness])
     end
 
   end

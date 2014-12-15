@@ -12,6 +12,12 @@ module Petshop
       result.first
     end
 
+    def self.find_by_shopid db, shop_id
+      sql = %q[SELECT shopid, id, userid, name, imageurl as "imageUrl", happiness FROM dogs WHERE shopid = $1]
+      result = db.exec(sql, [shop_id])
+      result.to_a
+    end
+
     def self.save db, dog_name
       if dog_name[:id]
         sql = %q[UPDATE dogs SET content = $1 WHERE id = $2 RETURNING *]

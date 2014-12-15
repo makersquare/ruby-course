@@ -43,14 +43,13 @@ post '/signin' do
   db = Petshop.create_db_connection('Petshop_Test')
   user = Petshop::UsersRepo.find_by_name(db, params['username'])
 
-  $awesome_user = {
-      username: params['username']
-  }
+  $awesome_user = { username: params['username']}
 
   if user
     if password == user['password']
     headers['Content-Type'] = 'application/json'
-    session['user_id'] = user['id']
+  #   # TODO: Return all pets adopted by this user
+    session[:user_id] = user['id']
     $awesome_user.to_json
 
     else
@@ -64,7 +63,7 @@ post '/signin' do
 
   # if password == user['password']
   #   headers['Content-Type'] = 'application/json'
-  #   # TODO: Return all pets adopted by this user
+  
   #   # TODO: Set session[:user_id] so the server will remember this user has logged in
   #   $sample_user.to_json
   # else
@@ -77,21 +76,30 @@ end
 # # # #
 get '/shops/:id/cats' do
   headers['Content-Type'] = 'application/json'
+  #id = params[:id]
   shop_id = params[:id]
   # TODO: Grab from database instead
-  # RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/cats")
+  #RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/cats")
   db = Petshop.create_db_connection('Petshop_Test')
   cats = Petshop::CatsRepo.find_by_shopid(db, shop_id)
   cats.to_json
 end
 
+## CAT ADOPTION: WORK IN PROGRESS
 put '/shops/:shop_id/cats/:id/adopt' do
   headers['Content-Type'] = 'application/json'
+  params = JSON.parse request.body.read
+  
   shop_id = params[:shop_id]
   id = params[:id]
+
+  db = Petshop.create_db_connection('Petshop_Test')
+  avail_cats = Petshop::CatsRepo.find_available(db, adopted)
+  avail_cats.to_json  
+  
   # TODO: Grab from database instead
-  RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/cats/#{id}",
-    { adopted: true }, :content_type => 'application/json')
+  # RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/cats/#{id}",
+  #   { adopted: true }, :content_type => 'application/json')
   # TODO (after you create users table): Attach new cat to logged in user
 end
 
@@ -101,11 +109,15 @@ end
 # # # #
 get '/shops/:id/dogs' do
   headers['Content-Type'] = 'application/json'
-  id = params[:id]
+  shop_id = params[:id]
   # TODO: Update database instead
-  RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/dogs")
+  #RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/dogs")
+  db = Petshop.create_db_connection('Petshop_Test')
+  dogs = Petshop::DogsRepo.find_by_shopid(db, shop_id)
+  dogs.to_json
 end
 
+## DOG ADOPTION: WORK IN PROGRESS
 put '/shops/:shop_id/dogs/:id/adopt' do
   headers['Content-Type'] = 'application/json'
   shop_id = params[:shop_id]
