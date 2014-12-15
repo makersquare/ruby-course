@@ -103,6 +103,7 @@ class Chatitude::Server < Sinatra::Application
       user = Chatitude::UsersRepo.save db, user_data
       session[:user_id] = user['id']
       status 200
+      '{}'
     else
       status 400
       { errors: errors }.to_json
@@ -123,6 +124,7 @@ class Chatitude::Server < Sinatra::Application
   delete '/signout' do
     Chatitude::UsersRepo.sign_out db, params[:apiToken]
     status 200
+    '{}'
   end
 
   ##########################################
@@ -156,6 +158,7 @@ class Chatitude::Server < Sinatra::Application
         id: message_count
       }
       status 200
+      '{}'
     else
       status 403
       { errors: "invalid_api_key" }.to_json
