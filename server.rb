@@ -69,9 +69,22 @@ class Chatitude::Server < Sinatra::Application
 
   ############ MAIN ROUTES ###############
 
-  # get '/' do
-  #   erb :index
-  # end
+  get '/' do
+    {
+      endpoints: [
+        { name: "GET /chats",
+          description: "List all chats" },
+        { name: "POST /signup",
+          description: "Sign up for an account" },
+        { name: "POST /signin",
+          description: "Retrieve an API token for an existing account" },
+        { name: "POST /chats",
+          description: "Create a new chat message" },
+        { name: "DELETE /signout",
+          description: "Invalidate your API token" },
+      ]
+    }.to_json
+  end
 
   post '/signup' do
     errors = []
