@@ -50,6 +50,7 @@ class Chatitude::Server < Sinatra::Application
 
   # run this before every endpoint to get the current user
   before do
+    content_type 'application/json'
     # this condition assign the current user if someone is logged in
     if params[:apiToken]
       @current_user = Chatitude::UsersRepo.find_by_token db, params[:apiToken]
@@ -112,7 +113,6 @@ class Chatitude::Server < Sinatra::Application
   # event stream stuff.
 
   get '/chats' do
-    content_type 'application/json'
     if params[:since]
       messages.select { |m| params[:since] < m['time'] }
     else
