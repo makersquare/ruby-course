@@ -11,16 +11,6 @@ module Petshopserver
       sql = %q[SELECT * FROM dogs WHERE "shopId" = $1]
       result = db.exec(sql, [id])
       result.entries.map { |x| Petshopserver.boolean_type_cast(x, 'adopted') }
-
-      # dogs = result.entries
-      # dogs.each do |d|
-      #   if d['adopted'] == 't'
-      #     d['adopted'] = true
-      #   else
-      #     d['adopted'] = false
-      #   end
-      # end
-      # dogs
     end
 
     def self.find db, id

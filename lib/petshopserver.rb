@@ -57,7 +57,7 @@ module Petshopserver
   def self.seed_db(db)
     db.exec <<-SQL  
       INSERT INTO users (username, password) values ('anonymous', 'anonymous')
-      INSERT INTO users (username, password) values ('Jessica', '123')
+      # INSERT INTO users (username, password) values ('Jessica', '123')
     SQL
   end
 
@@ -142,7 +142,7 @@ module Petshopserver
   def self.boolean_type_cast object, key
     if object[key] == 't'
       object[key] = true
-    else
+    elsif object[key] == 'f'
       object[key] = false
     end
     object
