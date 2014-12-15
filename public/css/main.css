@@ -15,6 +15,9 @@ a {
   padding-bottom: 5%;
 }
 
+.add-inner, .edit-inner {
+  padding: 5px;
+}
 img {
   max-width: 90%;
 }

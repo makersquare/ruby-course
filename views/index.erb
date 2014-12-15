@@ -1,14 +1,16 @@
 <div class='album_list pure-g'>
   <div class='add-wrapper pure-u-1-3'>
-    <form action'/' method='POST' class='pure-form-stacked'>
-      <label for="title">Title</label>
-      <input type='text' name='title' id='title' placeholder='album title'>
-      <label for='artist'>Artist</label>
-      <input type='text' name='artist' id='artist' placeholder='album artist'>
-      <label for='cover'>Cover URL</label>
-      <input type='text' name='cover' id='cover' placeholder='album cover url'>
-      <input type='submit'>
-    </form>
+    <div class="add-inner">
+      <form action='/' method='POST' class='pure-form-stacked'>
+        <label for="title">Title</label>
+        <input type='text' name='title' id='title' placeholder='album title'>
+        <label for='artist'>Artist</label>
+        <input type='text' name='artist' id='artist' placeholder='album artist'>
+        <label for='cover'>Cover URL</label>
+        <input type='text' name='cover' id='cover' placeholder='album cover url'>
+        <input type='submit'>
+      </form>
+    </div>
   </div>
   <% @albums.each do |album| %>
     <div class='album-wrapper pure-u-1-3' data-id='<%= album.id%>'>

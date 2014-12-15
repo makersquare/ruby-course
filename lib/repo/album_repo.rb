@@ -32,17 +32,15 @@ class Songify::AlbumRepo < Songify::Repo
   end
 
   def build_album(params)
-    new_params = {}
-    params.each_pair {|k,v| new_params[k.to_sym] = v}
-    Songify::Album.new(new_params)
+    Songify::Album.new(Hash[params.map{|k,v| [k.to_sym, v]}])
   end
 
   def find_album(params)
     col = params.keys.first
     val = params[col]
     query = <<-SQL
-    SELECT * FROM albums
-    WHERE #{col} = '#{val}'
+      SELECT * FROM albums
+      WHERE #{col} = '#{val}'
     SQL
     result = @db.exec(query).to_a
     result.map {|album| build_album(album)}
@@ -70,7 +68,7 @@ class Songify::AlbumRepo < Songify::Repo
   def delete_album(params)
     command = <<-SQL
       DELETE FROM albums
-      WHERE id = '#{params[:id]}'
+      WHERE id = #{params[:id]}
       RETURNING *;
     SQL
     result = @db.exec(command).first

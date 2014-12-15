@@ -1,12 +1,15 @@
 require_relative 'spec_helper.rb'
 
 @album_repo = Songify::AlbumRepo.new
+@song_repo = Songify::SongRepo.new
 
 task :seed do 
   @album_repo.drop_table
-  puts 'table dropped'
+  @song_repo.drop_table
+  puts 'tables dropped'
   @album_repo.create_table
-  puts 'table created'
+  @song_repo.create_table
+  puts 'tables created'
   @album_repo.add_new_album(
         {title: 'Darkness on the Edge of Town',
         artist: 'Bruce Springsteen',

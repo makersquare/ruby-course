@@ -1,0 +1,24 @@
+<div class='song-list pure-g'>
+  <div class='edit-wrapper pure-u-1-3'>
+    <div class="edit-inner">
+      <form action='/albums/<%=@album.id%>' method='POST'>
+        <input type="hidden" name="_method" value='put'>
+        <label for="album-title">Title</label>
+        <input type="text" name="title" id="album-title" placeholder="<%=@album.title%>">
+        <label for="artist-name">Artist</label>
+        <input type="text" name="artist" id="artist-name" placeholder="<%=@album.artist%>"
+        <label for="cover-url">Cover URL</label>
+        <input type="text" name="cover" it="cover-url" placeholder="<%=@album.cover%>">
+        <input type='submit' value="Edit Album">
+      </form>
+    </div>
+  </div>
+  <% @songs.each do |song| %>
+  <div class="song-wrapper pure-u-1-3" data-id="<%=song.id%>">
+    <div class='song-title'><%= song.name %></div>
+    <div class='song-embed'>
+      <iframe src="<%=song.embed%>" width="100%" frameborder="0" allowtransparency="true"></iframe>
+    </div>
+  </div>
+  <% end %>
+</div>
