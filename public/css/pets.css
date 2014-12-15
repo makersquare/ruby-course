@@ -1,0 +1,22 @@
+
+.pets-view {
+  overflow: auto;
+}
+
+.pet {
+  float: left;
+  margin-right: 1em;
+}
+
+.pet .photo {
+  height: 150px;
+}
+
+.pet img {
+  max-width: 200px;
+  max-height: 150px;
+}
+
+.pet .info {
+  height: 100px;
+}

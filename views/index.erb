@@ -1,0 +1,94 @@
+<html>
+<head>
+  <title>Pet Shop: Resurrection</title>
+  <link rel="stylesheet" type="text/css" href="/css/app.css">
+  <link rel="stylesheet" type="text/css" href="/css/pets.css">
+</head>
+<body>
+
+<div id="app">
+  <h4>Loading...</h4>
+</div>
+
+<script type="text/javascript" src="/js/polyfill.js"></script>
+<script type="text/javascript" src="/js/vendor/mithril.js"></script>
+
+<script type="text/javascript" src="/js/pet-container.js"></script>
+<script type="text/javascript" src="/js/pet-shop.js"></script>
+<script type="text/javascript" src="/js/signin-panel.js"></script>
+
+<script type="text/javascript">
+(function () {
+
+  var server = {
+    <% if @current_user %>
+    user: <%= @current_user.to_json %>
+    <% end %>
+  }
+
+
+  window.App = {}
+
+  App.controller = function () {
+    var ctrl = {
+      user: m.prop(server.user),
+      tab: m.prop('browse'),
+      activePetShop: m.prop(),
+      petShops: m.prop([]),
+    }
+    // This is for debugging purposes
+    window.app = ctrl
+
+    m.request({ method: 'get', url: '/shops' }).then(ctrl.petShops)
+
+    ctrl.selectShop = function (id) {
+      var shop = ctrl.petShops().find(function(s){ return s.id == id })
+      var shopUrl = "/shops/" + shop.id
+
+      shop.cats || ( shop.cats = m.request({ method: 'get', url: shopUrl + '/cats' }) )
+      shop.dogs || ( shop.dogs = m.request({ method: 'get', url: shopUrl + '/dogs' }) )
+
+      ctrl.activePetShop(shop)
+    }
+
+    ctrl.petShopCtrl       = new PetShop.controller(ctrl)
+    ctrl.signinCtrl        = new SigninPanel.controller(ctrl)
+    ctrl.petContainerCtrl  = new PetContainer.controller(ctrl)
+    return ctrl
+  }
+
+  App.view = function (ctrl) {
+    var petShopOptions = ctrl.petShops().map(function(shop) {
+      return m('option', { value: shop.id }, shop.name)
+    })
+    var defaultOption = m('option', '-- Select a Pet Shop --')
+    petShopOptions.unshift(defaultOption)
+
+    var tabView
+    if (ctrl.tab() === 'browse') {
+      tabView = [
+        m('select', { onchange: m.withAttr('value', ctrl.selectShop) }, petShopOptions),
+        PetShop.view(ctrl.petShopCtrl)
+      ]
+    }
+    else {
+      tabView = PetContainer.view(ctrl.petContainerCtrl)
+    }
+
+    return [
+      SigninPanel.view(ctrl.signinCtrl),
+      m('.tabs', [
+        m('a.tab', { onclick: ctrl.tab.coldCurry('browse'), href: '#' }, 'Browse Pet Shops'),
+        m('a.tab', { onclick: ctrl.tab.coldCurry('container'), href: '#' }, 'View Your Pets')
+      ]),
+      m('.tab-content', tabView)
+    ]
+  }
+
+  // Wire up the app
+  m.module(document.getElementById('app'), App)
+
+})()
+</script>
+</body>
+</html>
