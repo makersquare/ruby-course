@@ -6,8 +6,6 @@ require 'pry-byebug'
 require 'json' 
 require 'pg'  
 
-#bundle exec ruby server.rb
-#bundle exec rspec
 
 require_relative 'lib/petshopserver.rb'
   
@@ -43,21 +41,18 @@ get '/logout' do
 end
 
 get '/shops' do
-  headers['Content-Type'] = 'application/json'
   shops = Petshopserver::ShopsRepo.all mydb
   shops.to_json
 end
 
 post '/signin' do
   params = JSON.parse request.body.read
-
   username = params['username']
   password = params['password']
-
   user = Petshopserver::UsersRepo.find_by_username(mydb, username)
  
   if password == user['password']
-    headers['Content-Type'] = 'application/json'
+    # headers['Content-Type'] = 'application/json'
     session['user_id'] = user['id']
     @current_user = Petshopserver::UsersRepo.find mydb, user['id']
     cats  = Petshopserver::UsersRepo.find_all_cats_by_user_id mydb, user['id']
@@ -71,23 +66,20 @@ post '/signin' do
 end
 
 
- # # # #
+# # # #
 # Cats #
 # # # #
 
 get '/shops/:id/cats' do
-  headers['Content-Type'] = 'application/json'
   id = params[:id]
   cats = Petshopserver::CatsRepo.all_by_shop mydb, id
   cats.to_json
 end
 
 put '/shops/:shop_id/cats/:id/adopt' do
-  headers['Content-Type'] = 'application/json'
   shop_id = params[:shop_id]
   cat_id = params[:id]
   user_id = session['user_id']
-
   cat = Petshopserver::UsersRepo.adopt_cat mydb, user_id, cat_id
   cat.to_json
 end
@@ -97,14 +89,12 @@ end
 # # # #
 
 get '/shops/:id/dogs' do
-  headers['Content-Type'] = 'application/json'
   id = params[:id]
   dogs = Petshopserver::DogsRepo.all_by_shop mydb, id
   dogs.to_json
 end
 
 put '/shops/:shop_id/dogs/:id/adopt' do
-  headers['Content-Type'] = 'application/json'
   shop_id = params[:shop_id]
   dog_id = params[:id]
   user_id = session['user_id']
