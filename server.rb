@@ -122,16 +122,27 @@ class Chatitude::Server < Sinatra::Application
 
   post '/chats' do
     if @current_user
+
+      msg = params[:message]
+      if msg.nil? || msg == ''
+        status 400
+        return { errors: ["blank_message"] }.to_json
+      elsif messages.find {|m| m[:message] == msg }
+        status 400
+        return { errors: ["message_already_exists"] }.to_json
+      end
+
       message_count += 1
       messages << {
         user: @current_user['username'],
-        message: params[:message],
+        message: msg,
         time: timestamp,
         id: message_count
       }
       status 200
     else
       status 403
+      { errors: "invalid_api_key" }.to_json
     end
   end
 
