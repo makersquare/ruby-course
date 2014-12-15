@@ -1,96 +1,116 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'rest-client'
-require 'json'
+require 'rack-flash'
+require 'pry-byebug'
+require 'json' 
+require 'pg'  
 
-# #
-# This is our only html view...
-#
+
+require_relative 'lib/petshopserver.rb'
+  
+  configure do
+    set :bind, '0.0.0.0'
+    enable :sessions
+    use Rack::Flash
+  end
+
+  helpers do
+    def mydb
+      db = Petshopserver.create_db_connection 'petshopserver'
+    end
+  end
+
 get '/' do
-  if session[:user_id]
-    # TODO: Grab user from database
-    @current_user = $sample_user
+  if session['user_id']
+    user_id = session['user_id']
+    @current_user = Petshopserver::UsersRepo.find mydb, user_id
+    cats  = Petshopserver::UsersRepo.find_all_cats_by_user_id mydb, user_id
+    dogs = Petshopserver::UsersRepo.find_all_dogs_by_user_id mydb, user_id
+    @current_user['cats'] = cats
+    @current_user['dogs'] = dogs
+    @current_user.to_json
   end
   erb :index
 end
 
-# #
-# ...the rest are JSON endpoints
-#
+
+get '/logout' do
+  session.delete 'user_id'
+  redirect to '/'
+end
+
 get '/shops' do
-  headers['Content-Type'] = 'application/json'
-  RestClient.get("http://pet-shop.api.mks.io/shops")
+  shops = Petshopserver::ShopsRepo.all mydb
+  shops.to_json
 end
 
 post '/signin' do
   params = JSON.parse request.body.read
-
   username = params['username']
   password = params['password']
-
-  # TODO: Grab user by username from database and check password
-  user = { 'username' => 'alice', 'password' => '123' }
-
+  user = Petshopserver::UsersRepo.find_by_username(mydb, username)
+ 
   if password == user['password']
-    headers['Content-Type'] = 'application/json'
-    # TODO: Return all pets adopted by this user
-    # TODO: Set session[:user_id] so the server will remember this user has logged in
-    $sample_user.to_json
+    # headers['Content-Type'] = 'application/json'
+    session['user_id'] = user['id']
+    @current_user = Petshopserver::UsersRepo.find mydb, user['id']
+    cats  = Petshopserver::UsersRepo.find_all_cats_by_user_id mydb, user['id']
+    dogs = Petshopserver::UsersRepo.find_all_dogs_by_user_id mydb, user['id']
+    @current_user['cats'] = cats
+    @current_user['dogs'] = dogs
+    @current_user.to_json
   else
     status 401
   end
 end
 
- # # # #
+
+# # # #
 # Cats #
 # # # #
+
 get '/shops/:id/cats' do
-  headers['Content-Type'] = 'application/json'
   id = params[:id]
-  # TODO: Grab from database instead
-  RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/cats")
+  cats = Petshopserver::CatsRepo.all_by_shop mydb, id
+  cats.to_json
 end
 
 put '/shops/:shop_id/cats/:id/adopt' do
-  headers['Content-Type'] = 'application/json'
   shop_id = params[:shop_id]
-  id = params[:id]
-  # TODO: Grab from database instead
-  RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/cats/#{id}",
-    { adopted: true }, :content_type => 'application/json')
-  # TODO (after you create users table): Attach new cat to logged in user
+  cat_id = params[:id]
+  user_id = session['user_id']
+  cat = Petshopserver::UsersRepo.adopt_cat mydb, user_id, cat_id
+  cat.to_json
 end
-
 
  # # # #
 # Dogs #
 # # # #
+
 get '/shops/:id/dogs' do
-  headers['Content-Type'] = 'application/json'
   id = params[:id]
-  # TODO: Update database instead
-  RestClient.get("http://pet-shop.api.mks.io/shops/#{id}/dogs")
+  dogs = Petshopserver::DogsRepo.all_by_shop mydb, id
+  dogs.to_json
 end
 
 put '/shops/:shop_id/dogs/:id/adopt' do
-  headers['Content-Type'] = 'application/json'
   shop_id = params[:shop_id]
-  id = params[:id]
-  # TODO: Update database instead
-  RestClient.put("http://pet-shop.api.mks.io/shops/#{shop_id}/dogs/#{id}",
-    { adopted: true }, :content_type => 'application/json')
-  # TODO (after you create users table): Attach new dog to logged in user
+  dog_id = params[:id]
+  user_id = session['user_id']
+  dog = Petshopserver::UsersRepo.adopt_dog mydb, user_id, dog_id
+  dog.to_json
 end
 
 
-$sample_user = {
-  id: 999,
-  username: 'alice',
-  cats: [
-    { shopId: 1, name: "NaN Cat", imageUrl: "http://i.imgur.com/TOEskNX.jpg", adopted: true, id: 44 },
-    { shopId: 8, name: "Meowzer", imageUrl: "http://www.randomkittengenerator.com/images/cats/rotator.php", id: 8, adopted: "true" }
-  ],
-  dogs: [
-    { shopId: 1, name: "Leaf Pup", imageUrl: "http://i.imgur.com/kuSHji2.jpg", happiness: 2, id: 2, adopted: "true" }
-  ]
-}
+# $sample_user = {
+#   id: 999,
+#   username: 'alice',
+#   cats: [
+#     { shopId: 1, name: "NaN Cat", imageUrl: "http://i.imgur.com/TOEskNX.jpg", adopted: true, id: 44 },
+#     { shopId: 8, name: "Meowzer", imageUrl: "http://www.randomkittengenerator.com/images/cats/rotator.php", id: 8, adopted: "true" }
+#   ],
+#   dogs: [
+#     { shopId: 1, name: "Leaf Pup", imageUrl: "http://i.imgur.com/kuSHji2.jpg", happiness: 2, id: 2, adopted: "true" }
+#   ]
+# }
