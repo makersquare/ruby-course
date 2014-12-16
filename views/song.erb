@@ -1,0 +1,14 @@
+<form action='/albums/<%= @album.id%>/songs/<%=@song.id%>' method='POST' class="pure-form-stacked">
+  <input type="hidden" name="_method" value="put">
+  <label for='song-title'>Update Name</label>
+  <input type="text" id='song-title' name='name' value="<%=@song.name%>">
+  <label for='change-album'>Switch Album</label>
+  <input type="text" id='change-album' name='album' value="<%=@album.title%>">
+  <label for='embed-link'>Change Embed</label>
+  <input type="text" id='embed-link' name='embed' value="<%=@song.embed%>">
+  <input type="submit" value="Edit Song">
+</form>
+<form action='/albums/<%= @album.id%>/songs/<%=@song.id%>' method='POST' class="pure-form-stacked">
+  <input type="hidden" name="_method" value="delete">
+  <input type="submit" value="DELETE SONG">
+</form>

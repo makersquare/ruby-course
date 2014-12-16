@@ -78,11 +78,11 @@ describe 'the song repo' do
     end
 
     it 'can update a song' do 
-      result = song_repo.update_song({id: 1, album_id: 1, name: 'Sloop John B'})
+      result = song_repo.update_song({id: 1, album_id: 1, name: 'Sloop John'})
       album = song_repo.find_songs({album_id: 1})
       expect(album.length).to eq(2)
       expect(result.id).to eq(1)
-      expect(result.name).to eq('Sloop John B')
+      expect(result.name).to eq('Sloop John')
     end
 
     it 'can delete a song' do 
@@ -91,5 +91,6 @@ describe 'the song repo' do
       expect(songs.length).to eq(1)
       expect(result.name).to eq('Sloop John B')
     end
+    
   end
 end

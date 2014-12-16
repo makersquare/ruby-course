@@ -7,7 +7,7 @@ class Songify::SongRepo < Songify::Repo
         id SERIAL PRIMARY KEY,
         name TEXT,
         embed TEXT,
-        album_id INTEGER REFERENCES albums (id)
+        album_id INTEGER REFERENCES albums (id) ON DELETE CASCADE
       );
     SQL
     @db.exec(command)
@@ -57,7 +57,7 @@ class Songify::SongRepo < Songify::Repo
   def update_song(params)
     command = <<-SQL
       UPDATE songs
-      SET (name, album_id, embed) = ('#{params[:name]}', #{params[:album_id]}, '#{params[:embed]}')
+      SET (name, embed, album_id) = ('#{params[:name]}', '#{params[:embed]}', #{params[:album_id]})
       WHERE id = #{params[:id]}
       RETURNING *;
     SQL
@@ -73,6 +73,15 @@ class Songify::SongRepo < Songify::Repo
     SQL
     result = @db.exec(command).first
     build_song(result)
+  end
+
+  def get_songs_in_playlist(params)
+    query = <<-SQL
+      SELECT * FROM song_playlists, songs, playlists
+      WHERE song_playlists.playlist_id = #{params[:playlist_id]} AND songs.id = song_playlists.song_id
+    SQL
+    result = @db.exec(query)
+    result.map{|song| build_song(song)}
   end
 
 end
