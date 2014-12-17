@@ -50,7 +50,6 @@ class Chatitude::Server < Sinatra::Application
 
   # run this before every endpoint to get the current user
   before do
-    content_type 'application/json'
     # this condition assign the current user if someone is logged in
     if params[:apiToken]
       @current_user = Chatitude::UsersRepo.find_by_token db, params[:apiToken]
@@ -70,20 +69,7 @@ class Chatitude::Server < Sinatra::Application
   ############ MAIN ROUTES ###############
 
   get '/' do
-    {
-      endpoints: [
-        { name: "GET /chats",
-          description: "List all chats" },
-        { name: "POST /signup",
-          description: "Sign up for an account" },
-        { name: "POST /signin",
-          description: "Retrieve an API token for an existing account" },
-        { name: "POST /chats",
-          description: "Create a new chat message" },
-        { name: "DELETE /signout",
-          description: "Invalidate your API token" },
-      ]
-    }.to_json
+    send_file 'public/index.html'
   end
 
   post '/signup' do
