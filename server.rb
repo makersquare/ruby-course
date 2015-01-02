@@ -118,7 +118,7 @@ class Chatitude::Server < Sinatra::Application
 
   get '/chats' do
     if params[:since]
-      messages.select { |m| params[:since] < m['time'] }
+      messages.select { |m| params[:since].to_f < m[:time] }
     else
       messages.last 10
     end.to_json
