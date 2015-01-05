@@ -1,6 +1,7 @@
 ## Setup
 
 Run the following commands to clone down the exercise and get your Gems installed.
+
 ```console
 $ git clone https://github.com/makersquare/ruby-course migrations
 $ cd migrations
@@ -13,8 +14,28 @@ $ bundle install
 
 One call Gems are installed you need to use some Rake tasks to create your database (just the DB, not tables yet). You can do this by running `bundle exec rake db:create`. If successful there will be no feedback (isn't that nice?). You can double check that it worked by running `psql -l` in your terminal and looking for databases called `migrations_dev` and `migrations_test`.
 
+ActiveRecord generally assumes a single database per application. Even though each exercise is for a totally different application we'll create all the tables in a single database to keep things simple.
+
 
 # Exercise 1
+
+When we started our exploration of databases we used the PG gem to create a simple table called `classmates` that contained information about your classmates. Do this again however instead of writing out the raw SQL you will write an ActiveRecord migration.
+
+Your table should have the following columns.
+
+* name
+* age
+* hair_color
+
+Once you've written *and* run this migration then it's time to make some changes.
+
+* get rid of the name column
+* add a first_name column
+* add a last_name column
+* add a social security number column with a unique constraint
+
+
+# Exercise 2
 
 In this exercise you will will write migrations (and run them!) to build out a database for a fictional wholesale business. You will use user stories to determine what attributes each item needs which should inform on how to structure your database.
 
@@ -31,12 +52,12 @@ Design your schema in any way you'd like. Once complete begin writing your migra
 
 After entering only a few products into inventory we discovered that we had many products with very similar descriptions. For instance two different pairs of brown gloves simply have descriptions from the manufacturer as "BROWN GLOVES" even though one is leather and one is wool. The warehouse team has come up with a product numbering system. You now need to add this new attribute to the products table.
 
+Note: this new attribute is a unique identifier that we can search by. We would like this attribute to be an index to speed up the search process.
 
 
-# Exercise 2
+# Exercise 3
 
-You are creating a simple blogging platform so users can create simple posts and view other posts by other users. There are some rules on this service and so an administrator 
-
+You are rebuilding the Blogtastic platform so users can create simple posts and view other posts by other users. Use the following user stories to design a database schema and then write your migrations.
 
 ## User Stories
 
@@ -54,7 +75,6 @@ The senior dev leading your team is worried about people signing up with duplica
 
 In the past when a post was deemed to be inappropriate it was simply deleted from the database. The owners of Blogtastic do not like losing this data and have come up with a way to not show inappropriate posts without permanently removing them from the database: flags. When an admin sees an inappropriate post he can flag it. Then anywhere in the application, when retrieving all posts, ones that have been flagged will not be returned.
 
-There's more... 
 
 ## Resources
 
