@@ -1,0 +1,11 @@
+development:
+  adapter: postgresql
+  database: migrations_dev
+  pool: 5
+  timeout: 5000
+
+test:
+  adapter: postgresql
+  database: migrations_test
+  pool: 5
+  timeout: 5000
