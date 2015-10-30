@@ -4,37 +4,41 @@ module Exercises
   #  - Triples a given string `str`
   #  - Returns "nope" if `str` is "wishes"
   def self.ex0(str)
-    # TODO
+    if str == "wishes"
+      "nope"
+    else "#{str}#{str}#{str}"
+    end
   end
 
   # Exercise 1
   #  - Returns the number of elements in the array
-  def self.ex1(array)
-    # TODO
+  
+  def self.ex1(array)  
+    array.size
   end
 
   # Exercise 2
   #  - Returns the second element of an array
   def self.ex2(array)
-    # TODO
+    array[2]
   end
 
   # Exercise 3
   #  - Returns the sum of the given array of numbers
   def self.ex3(array)
-    # TODO
+    array.inject(0){ |sum,elem| result = (sum + elem); result}
   end
 
   # Exercise 4
   #  - Returns the max number of the given array
   def self.ex4(array)
-    # TODO
+    array.max
   end
 
   # Exercise 5
   #  - Iterates through an array and `puts` each element
   def self.ex5(array)
-    # TODO
+    array.each{ |x| puts x }
   end
 
   # Exercise 6
@@ -42,14 +46,24 @@ module Exercises
   #  - If the last item is already 'panda', update
   #    it to 'GODZILLA' instead
   def self.ex6(array)
-    # TODO
+    if array[-1] == 'panda'
+      array[-1] = "GODZILLA"
+      array
+    else 
+      array[-1] = 'panda'
+      array
+    end
   end
 
   # Exercise 7
   #  - If the string `str` exists in the array,
   #    add `str` to the end of the array
   def self.ex7(array, str)
-    # TODO
+    if array.include?("str")
+      array << ("str")
+    else
+      array 
+    end
   end
 
   # Exercise 8
@@ -57,7 +71,7 @@ module Exercises
   #    { :name => 'Bob', :occupation => 'Builder' }
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
-    # TODO
+    people.each{|x| x }
   end
 
   # Exercise 9
@@ -65,7 +79,15 @@ module Exercises
   #    Otherwise, returns `false`
   # Hint: Google for the wikipedia article on leap years
   def self.ex9(time)
-    # TODO
+    if time % 4 != 0
+      false
+    elsif time % 100 != 0
+      true
+    elsif time % 400 != 0
+      false
+    else
+      true
+    end
   end
 
   # Exercise 10
