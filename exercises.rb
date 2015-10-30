@@ -5,36 +5,49 @@ module Exercises
   #  - Returns "nope" if `str` is "wishes"
   def self.ex0(str)
     # TODO
+    if str == "wishes"
+      return 'nope'
+    else
+      return "#{str}#{str}#{str}"
+      end
+    
   end
 
   # Exercise 1
   #  - Returns the number of elements in the array
   def self.ex1(array)
     # TODO
+    
+    array.count
+    
   end
 
   # Exercise 2
   #  - Returns the second element of an array
   def self.ex2(array)
     # TODO
+    array[1]
   end
 
   # Exercise 3
   #  - Returns the sum of the given array of numbers
   def self.ex3(array)
     # TODO
+    array.inject(:+)
   end
 
   # Exercise 4
   #  - Returns the max number of the given array
   def self.ex4(array)
     # TODO
+    array.max
   end
 
   # Exercise 5
   #  - Iterates through an array and `puts` each element
   def self.ex5(array)
     # TODO
+    array.each { |x| puts x }
   end
 
   # Exercise 6
@@ -43,6 +56,12 @@ module Exercises
   #    it to 'GODZILLA' instead
   def self.ex6(array)
     # TODO
+    if array.last == 'panda'
+      array[-1] = 'GODZILLA'
+    else
+      array[-1] = 'panda'
+    end
+    array
   end
 
   # Exercise 7
@@ -50,6 +69,10 @@ module Exercises
   #    add `str` to the end of the array
   def self.ex7(array, str)
     # TODO
+    if array.find do |x|
+      x<<str
+    end
+    end
   end
 
   # Exercise 8
@@ -58,6 +81,9 @@ module Exercises
   #    Iterate through `people` and print out their name and occupation.
   def self.ex8(people)
     # TODO
+    people.each do |x|
+      puts "#{x[:name]} is a #{x[:occupation]}"
+    end
   end
 
   # Exercise 9
